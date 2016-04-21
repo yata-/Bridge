@@ -324,7 +324,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             this.i = i;
         },
         equals: function (o) {
-            return Bridge.is(o, Bridge.ClientTest.ArrayTests1.ArrayTestsSet1.C) && this.i === (Bridge.cast(o, Bridge.ClientTest.ArrayTests1.ArrayTestsSet1.C)).i;
+            return Bridge.is(o, Bridge.ClientTest.ArrayTests1.ArrayTestsSet1.C) && this.i === Bridge.cast(o, Bridge.ClientTest.ArrayTests1.ArrayTestsSet1.C).i;
         },
         getHashCode: function () {
             return this.i;
@@ -458,7 +458,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 v = Bridge.Array.getItem(il, 2);
                 Bridge.Test.Assert.areEqual(v, 3);
                 Bridge.Array.setItem(il, 2, 42);
-                Bridge.Test.Assert.areEqual((Bridge.cast(a, Array))[2], 42);
+                Bridge.Test.Assert.areEqual(Bridge.cast(a, Array)[2], 42);
     
                 var a2 = Bridge.Array.create(0, [[1, 2, 3], [4, 5, 6]], 2, 3);
                 Bridge.Test.Assert.areEqual(Bridge.Array.getLength(a2, 0), 2);
@@ -601,7 +601,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 idirect = [7, 8, 9];
     
-                Bridge.Array.clear((Bridge.cast(idirect, Bridge.IList$1(Bridge.Int32))), Bridge.Int32);
+                Bridge.Array.clear(Bridge.cast(idirect, Bridge.IList$1(Bridge.Int32)), Bridge.Int32);
                 Bridge.Test.Assert.areEqual(idirect[0], 0);
                 Bridge.Test.Assert.areEqual(idirect[1], 0);
                 Bridge.Test.Assert.areEqual(idirect[2], 0);
@@ -656,7 +656,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 sdirect = ["7", "8", "9"];
     
-                Bridge.Array.clear((Bridge.cast(sdirect, Bridge.IList$1(String))), String);
+                Bridge.Array.clear(Bridge.cast(sdirect, Bridge.IList$1(String)), String);
                 Bridge.Test.Assert.$null(sdirect[0]);
                 Bridge.Test.Assert.$null(sdirect[1]);
                 Bridge.Test.Assert.$null(sdirect[2]);
@@ -1671,10 +1671,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return ((x - y) | 0);
         },
         equals: function (x, y) {
-            return (Bridge.cast(x, Bridge.Int32)) === (Bridge.cast(y, Bridge.Int32));
+            return Bridge.cast(x, Bridge.Int32) === Bridge.cast(y, Bridge.Int32);
         },
         getHashCode: function (obj) {
-            return (Bridge.cast(obj, Bridge.Int32)) >> 2;
+            return Bridge.cast(obj, Bridge.Int32) >> 2;
         }
     });
     
@@ -1829,7 +1829,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             }
     
             if (Bridge.is(p[4], Bridge.Decimal)) {
-                this.setDecimalA(Bridge.Decimal(Bridge.cast(p[4], Bridge.Decimal)));
+                this.setDecimalA(Bridge.cast(p[4], Bridge.Decimal));
             }
     
             if (Bridge.is(p[5], Bridge.ClientTest.BasicCSharp.ClassA.Aux1)) {
@@ -9534,7 +9534,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             if (!(Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge795A))) {
                 return false;
             }
-            return (Bridge.cast(o, Bridge.ClientTest.BridgeIssues.Bridge795A)).getValue() === this.getValue();
+            return Bridge.cast(o, Bridge.ClientTest.BridgeIssues.Bridge795A).getValue() === this.getValue();
         },
         getHashCode: function () {
             return this.getValue();
@@ -9585,7 +9585,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 return false;
             }
     
-            return (Bridge.cast(o, Bridge.ClientTest.BridgeIssues.Bridge795B)).getValue() === this.getValue();
+            return Bridge.cast(o, Bridge.ClientTest.BridgeIssues.Bridge795B).getValue() === this.getValue();
         },
         getHashCode: function () {
             return this.getValue();
@@ -13694,13 +13694,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$true(Bridge.is(new Bridge.ClientTest.Collections.Generic.ICollectionTests.MyCollection(Bridge.Array.init(0, null)), Bridge.ICollection$1(String)));
         },
         arrayCastToICollectionCountWorks: function () {
-            Bridge.Test.Assert.areEqual(3, Bridge.Array.getCount((Bridge.cast(["x", "y", "z"], Bridge.ICollection$1(String)))));
+            Bridge.Test.Assert.areEqual(3, Bridge.Array.getCount(Bridge.cast(["x", "y", "z"], Bridge.ICollection$1(String))));
         },
         classImplementingICollectionCountWorks: function () {
             Bridge.Test.Assert.areEqual(2, new Bridge.ClientTest.Collections.Generic.ICollectionTests.MyCollection(["x", "y"]).getCount());
         },
         classImplementingICollectionCastToICollectionCountWorks: function () {
-            Bridge.Test.Assert.areEqual(3, Bridge.Array.getCount((Bridge.cast(new Bridge.ClientTest.Collections.Generic.ICollectionTests.MyCollection(["x", "y", "z"]), Bridge.ICollection$1(String)))));
+            Bridge.Test.Assert.areEqual(3, Bridge.Array.getCount(Bridge.cast(new Bridge.ClientTest.Collections.Generic.ICollectionTests.MyCollection(["x", "y", "z"]), Bridge.ICollection$1(String))));
         },
         classImplementingICollectionAddWorks: function () {
             var c = new Bridge.ClientTest.Collections.Generic.ICollectionTests.MyCollection(["x", "y"]);
@@ -13761,7 +13761,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             this._i = i;
         },
         equals: function (o) {
-            return Bridge.is(o, Bridge.ClientTest.Collections.Generic.ICollectionTests.C) && this._i === (Bridge.cast(o, Bridge.ClientTest.Collections.Generic.ICollectionTests.C))._i;
+            return Bridge.is(o, Bridge.ClientTest.Collections.Generic.ICollectionTests.C) && this._i === Bridge.cast(o, Bridge.ClientTest.Collections.Generic.ICollectionTests.C)._i;
         },
         getHashCode: function () {
             return this._i;
@@ -14180,7 +14180,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         classImplementingIListCastToIListInsertWorks: function () {
             var l = new Bridge.ClientTest.Collections.Generic.IListTests.MyList(["x", "y"]);
             Bridge.Array.insert(l, 1, "z");
-            Bridge.Test.Assert.areDeepEqual(["x", "z", "y"], (Bridge.cast(l, Bridge.ClientTest.Collections.Generic.IListTests.MyList)).getItems().toArray());
+            Bridge.Test.Assert.areDeepEqual(["x", "z", "y"], Bridge.cast(l, Bridge.ClientTest.Collections.Generic.IListTests.MyList).getItems().toArray());
         },
         classImplementingIListRemoveAtWorks: function () {
             var l = new Bridge.ClientTest.Collections.Generic.IListTests.MyList(["x", "y", "z"]);
@@ -14190,7 +14190,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         classImplementingIListCastToIListRemoveAtWorks: function () {
             var l = new Bridge.ClientTest.Collections.Generic.IListTests.MyList(["x", "y", "z"]);
             Bridge.Array.removeAt(l, 1);
-            Bridge.Test.Assert.areDeepEqual(["x", "z"], (Bridge.cast(l, Bridge.ClientTest.Collections.Generic.IListTests.MyList)).getItems().toArray());
+            Bridge.Test.Assert.areDeepEqual(["x", "z"], Bridge.cast(l, Bridge.ClientTest.Collections.Generic.IListTests.MyList).getItems().toArray());
         }
     });
     
@@ -14200,7 +14200,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             this._i = i;
         },
         equals: function (o) {
-            return Bridge.is(o, Bridge.ClientTest.Collections.Generic.IListTests.C) && this._i === (Bridge.cast(o, Bridge.ClientTest.Collections.Generic.IListTests.C))._i;
+            return Bridge.is(o, Bridge.ClientTest.Collections.Generic.IListTests.C) && this._i === Bridge.cast(o, Bridge.ClientTest.Collections.Generic.IListTests.C)._i;
         },
         getHashCode: function () {
             return this._i;
@@ -14918,7 +14918,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 ["z"]
             ] );
             Bridge.Array.add(l, "a");
-            Bridge.Test.Assert.areDeepEqual(["x", "y", "z", "a"], (Bridge.cast(l, Bridge.List$1(String))).toArray());
+            Bridge.Test.Assert.areDeepEqual(["x", "y", "z", "a"], Bridge.cast(l, Bridge.List$1(String)).toArray());
         },
         iCollectionClearWorks: function () {
             var l = Bridge.merge(new Bridge.List$1(String)(), [
@@ -14927,7 +14927,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 ["z"]
             ] );
             Bridge.Array.clear(l, String);
-            Bridge.Test.Assert.areDeepEqual(Bridge.Array.init(0, null), (Bridge.cast(l, Bridge.List$1(String))).toArray());
+            Bridge.Test.Assert.areDeepEqual(Bridge.Array.init(0, null), Bridge.cast(l, Bridge.List$1(String)).toArray());
         },
         iCollectionContainsWorks: function () {
             var l = Bridge.merge(new Bridge.List$1(String)(), [
@@ -14967,7 +14967,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 [null]
             ] );
             Bridge.Test.Assert.$true(Bridge.Array.remove(list, null));
-            Bridge.Test.Assert.areDeepEqual(["a", "c", null], (Bridge.cast(list, Bridge.List$1(String))).toArray());
+            Bridge.Test.Assert.areDeepEqual(["a", "c", null], Bridge.cast(list, Bridge.List$1(String)).toArray());
         },
         iCollectionRemoveUsesEqualsMethod: function () {
             var list = Bridge.merge(new Bridge.List$1(Bridge.ClientTest.Collections.Generic.ListTests.C)(), [
@@ -14988,7 +14988,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             ] );
             Bridge.Test.Assert.areEqual("y", Bridge.Array.getItem(l, 1));
             Bridge.Array.setItem(l, 1, "a");
-            Bridge.Test.Assert.areDeepEqual(["x", "a", "z"], (Bridge.cast(l, Bridge.List$1(String))).toArray());
+            Bridge.Test.Assert.areDeepEqual(["x", "a", "z"], Bridge.cast(l, Bridge.List$1(String)).toArray());
         },
         iListIndexOfWorks: function () {
             var l = Bridge.merge(new Bridge.List$1(String)(), [
@@ -15015,7 +15015,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 ["z"]
             ] );
             Bridge.Array.insert(l, 1, "a");
-            Bridge.Test.Assert.areDeepEqual(["x", "a", "y", "z"], (Bridge.cast(l, Bridge.List$1(String))).toArray());
+            Bridge.Test.Assert.areDeepEqual(["x", "a", "y", "z"], Bridge.cast(l, Bridge.List$1(String)).toArray());
         },
         iListRemoveAtWorks: function () {
             var l = Bridge.merge(new Bridge.List$1(String)(), [
@@ -15024,7 +15024,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 ["z"]
             ] );
             Bridge.Array.removeAt(l, 1);
-            Bridge.Test.Assert.areDeepEqual(["x", "z"], (Bridge.cast(l, Bridge.List$1(String))).toArray());
+            Bridge.Test.Assert.areDeepEqual(["x", "z"], Bridge.cast(l, Bridge.List$1(String)).toArray());
         },
         toArrayWorks: function () {
             var l = new Bridge.List$1(String)();
@@ -15051,7 +15051,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             this.i = i;
         },
         equals: function (o) {
-            return Bridge.is(o, Bridge.ClientTest.Collections.Generic.ListTests.C) && this.i === (Bridge.cast(o, Bridge.ClientTest.Collections.Generic.ListTests.C)).i;
+            return Bridge.is(o, Bridge.ClientTest.Collections.Generic.ListTests.C) && this.i === Bridge.cast(o, Bridge.ClientTest.Collections.Generic.ListTests.C).i;
         },
         getHashCode: function () {
             return this.i;
@@ -15186,7 +15186,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             this.i = i;
         },
         equals: function (o) {
-            return Bridge.is(o, Bridge.ClientTest.Collections.Generic.StackTests.C) && this.i === (Bridge.cast(o, Bridge.ClientTest.Collections.Generic.StackTests.C)).i;
+            return Bridge.is(o, Bridge.ClientTest.Collections.Generic.StackTests.C) && this.i === Bridge.cast(o, Bridge.ClientTest.Collections.Generic.StackTests.C).i;
         },
         getHashCode: function () {
             return this.i;
@@ -16585,7 +16585,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     var a = input.get([i, ((lowerBound + 2) | 0)]);
                     var b = input.get([i, ((lowerBound + 3) | 0)]);
                     var expected = input.get([i, ((lowerBound + 4) | 0)]);
-                    var result = Bridge.ClientTest.DecimalMathTests.runOperation(Bridge.Decimal(Bridge.cast(a, Bridge.Decimal)), Bridge.Decimal(Bridge.cast(b, Bridge.Decimal)), operation);
+                    var result = Bridge.ClientTest.DecimalMathTests.runOperation(Bridge.cast(a, Bridge.Decimal), Bridge.cast(b, Bridge.Decimal), operation);
     
                     logger.onLog([dotNetDiff, a, b, result]);
     
@@ -16606,7 +16606,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     var dotNetDiff = Bridge.ClientTest.DecimalMathTests.parseDotNetDiff(input, i, lowerBound);
                     var a = input.get([i, ((lowerBound + 2) | 0)]);
                     var expected = input.get([i, ((lowerBound + 3) | 0)]);
-                    var result = Bridge.ClientTest.DecimalMathTests.runOperation$1(Bridge.Decimal(Bridge.cast(a, Bridge.Decimal)), operation);
+                    var result = Bridge.ClientTest.DecimalMathTests.runOperation$1(Bridge.cast(a, Bridge.Decimal), operation);
     
                     logger.onLog([dotNetDiff, a, result]);
     
@@ -16628,12 +16628,12 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     return Bridge.Decimal(o.toString());
                 }
     
-                var dotNetDiff = Bridge.Decimal.lift(Bridge.cast(input.get([i, ((lowerBound + 1) | 0)]), Bridge.Decimal, true));
+                var dotNetDiff = Bridge.cast(input.get([i, ((lowerBound + 1) | 0)]), Bridge.Decimal, true);
                 return dotNetDiff;
             },
             assertDecimal: function (dotNetDiff, expected, result, differenceReport, message) {
                 if (Bridge.ClientTest.DecimalMathTests.jSMode) {
-                    Bridge.ClientTest.DecimalMathTests.assertIsDecimalAndEqualTo(result, Bridge.Decimal(Bridge.cast(expected, Bridge.Decimal)).sub((Bridge.Nullable.hasValue(dotNetDiff) ? Bridge.Nullable.getValue(dotNetDiff) : Bridge.Decimal(0.0))), message);
+                    Bridge.ClientTest.DecimalMathTests.assertIsDecimalAndEqualTo(result, Bridge.cast(expected, Bridge.Decimal).sub((Bridge.Nullable.hasValue(dotNetDiff) ? Bridge.Nullable.getValue(dotNetDiff) : Bridge.Decimal(0.0))), message);
                 }
                 else  {
                     Bridge.ClientTest.DecimalMathTests.assertIsDecimalAndEqualTo(result, expected, message);
@@ -16650,7 +16650,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             getDifference: function (expected, result) {
                 var difference;
                 if ((Bridge.is(result, Bridge.Decimal) || Bridge.is(result, Bridge.Int32)) && (Bridge.is(expected, Bridge.Decimal) || Bridge.is(expected, Bridge.Int32))) {
-                    difference = Bridge.Decimal(Bridge.cast(expected, Bridge.Decimal)).sub(Bridge.Decimal(Bridge.cast(result, Bridge.Decimal)));
+                    difference = Bridge.cast(expected, Bridge.Decimal).sub(Bridge.cast(result, Bridge.Decimal));
                 }
                 else  {
                     difference = Bridge.Decimal(0.0);
@@ -16701,7 +16701,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 for (var i = 0; i < parameters.length; i = (i + 1) | 0) {
                     if (i === 0) {
-                        var d = Bridge.Decimal.lift(Bridge.cast(parameters[0], Bridge.Decimal, true));
+                        var d = Bridge.cast(parameters[0], Bridge.Decimal, true);
                         result[0] = Bridge.Nullable.hasValue(d) ? "HasDotNetDiff" : "NoDotNetDiff";
                         result[1] = Bridge.Nullable.hasValue(d) ? Bridge.Nullable.toString(d, function ($t) { return Bridge.Int.format($t, 'G'); }) + "m" : "null";
     
@@ -16711,7 +16711,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     var o = parameters[i];
                     var j = (i + 1) | 0;
                     if (Bridge.is(o, Bridge.Decimal)) {
-                        var d1 = Bridge.Decimal(Bridge.cast(o, Bridge.Decimal));
+                        var d1 = Bridge.cast(o, Bridge.Decimal);
                         if (d1.equalsT(Bridge.ClientTest.DecimalMathTests.maxValue)) {
                             result[j] = "DecimalMathTests.MaxValue";
                         }
@@ -18635,11 +18635,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         callingMethodThroughIComparableInterfaceInvokesImplementingMethod: function () {
             var a = new Bridge.ClientTest.IComparableTests.MyComparable(), b = new Bridge.ClientTest.IComparableTests.MyComparable();
             a.result = 534;
-            Bridge.Test.Assert.areEqual(534, Bridge.compare((Bridge.cast(a, Bridge.IComparable$1(Bridge.ClientTest.IComparableTests.MyComparable))), b));
+            Bridge.Test.Assert.areEqual(534, Bridge.compare(Bridge.cast(a, Bridge.IComparable$1(Bridge.ClientTest.IComparableTests.MyComparable)), b));
             Bridge.Test.Assert.areStrictEqual(b, a.other);
     
             a.result = -42;
-            Bridge.Test.Assert.areEqual(-42, Bridge.compare((Bridge.cast(a, Bridge.IComparable$1(Bridge.ClientTest.IComparableTests.MyComparable))), null));
+            Bridge.Test.Assert.areEqual(-42, Bridge.compare(Bridge.cast(a, Bridge.IComparable$1(Bridge.ClientTest.IComparableTests.MyComparable)), null));
             Bridge.Test.Assert.areStrictEqual(null, a.other);
     
             a.result = -534;
@@ -18666,16 +18666,16 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         callingMethodThroughIComparableInterfaceInvokesImplementingMethod: function () {
             var a = new Bridge.ClientTest.IEquatableTests.MyEquatable(), b = new Bridge.ClientTest.IEquatableTests.MyEquatable();
             a.result = true;
-            Bridge.Test.Assert.$true(Bridge.equalsT((Bridge.cast(a, Bridge.IEquatable$1(Bridge.ClientTest.IEquatableTests.MyEquatable))), b));
+            Bridge.Test.Assert.$true(Bridge.equalsT(Bridge.cast(a, Bridge.IEquatable$1(Bridge.ClientTest.IEquatableTests.MyEquatable)), b));
             Bridge.Test.Assert.areStrictEqual(b, a.other);
             a.result = false;
-            Bridge.Test.Assert.$false(Bridge.equalsT((Bridge.cast(a, Bridge.IEquatable$1(Bridge.ClientTest.IEquatableTests.MyEquatable))), b));
+            Bridge.Test.Assert.$false(Bridge.equalsT(Bridge.cast(a, Bridge.IEquatable$1(Bridge.ClientTest.IEquatableTests.MyEquatable)), b));
     
             a.result = true;
-            Bridge.Test.Assert.$true(Bridge.equalsT((Bridge.cast(a, Bridge.IEquatable$1(Bridge.ClientTest.IEquatableTests.MyEquatable))), null));
+            Bridge.Test.Assert.$true(Bridge.equalsT(Bridge.cast(a, Bridge.IEquatable$1(Bridge.ClientTest.IEquatableTests.MyEquatable)), null));
             Bridge.Test.Assert.areStrictEqual(null, a.other);
             a.result = false;
-            Bridge.Test.Assert.$false(Bridge.equalsT((Bridge.cast(a, Bridge.IEquatable$1(Bridge.ClientTest.IEquatableTests.MyEquatable))), null));
+            Bridge.Test.Assert.$false(Bridge.equalsT(Bridge.cast(a, Bridge.IEquatable$1(Bridge.ClientTest.IEquatableTests.MyEquatable)), null));
     
             a.result = true;
             Bridge.Test.Assert.$true(a.equalsT(b));
@@ -21100,10 +21100,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$false((false) === true);
             Bridge.Test.Assert.$true((false) === false);
     
-            Bridge.Test.Assert.$true(Bridge.equalsT((true), true));
-            Bridge.Test.Assert.$false(Bridge.equalsT((true), false));
-            Bridge.Test.Assert.$false(Bridge.equalsT((false), true));
-            Bridge.Test.Assert.$true(Bridge.equalsT((false), false));
+            Bridge.Test.Assert.$true(Bridge.equalsT(true, true));
+            Bridge.Test.Assert.$false(Bridge.equalsT(true, false));
+            Bridge.Test.Assert.$false(Bridge.equalsT(false, true));
+            Bridge.Test.Assert.$true(Bridge.equalsT(false, false));
         },
         logicalExclusiveOrWorks: function () {
             Bridge.Test.Assert.$true(true);
@@ -21228,10 +21228,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$true(Bridge.compare((false), false) === 0);
         },
         iComparableCompareToWorks: function () {
-            Bridge.Test.Assert.$true(Bridge.compare((true), true) === 0);
-            Bridge.Test.Assert.$true(Bridge.compare((true), false) > 0);
-            Bridge.Test.Assert.$true(Bridge.compare((false), true) < 0);
-            Bridge.Test.Assert.$true(Bridge.compare((false), false) === 0);
+            Bridge.Test.Assert.$true(Bridge.compare(true, true) === 0);
+            Bridge.Test.Assert.$true(Bridge.compare(true, false) > 0);
+            Bridge.Test.Assert.$true(Bridge.compare(false, true) < 0);
+            Bridge.Test.Assert.$true(Bridge.compare(false, false) === 0);
         },
         parseWorks: function () {
             Bridge.Test.Assert.areStrictEqual$1(Bridge.Boolean.parse("true"), true, "true");
@@ -21494,10 +21494,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$false((0) === 1);
             Bridge.Test.Assert.$true((1) === 1);
     
-            Bridge.Test.Assert.$true(Bridge.equalsT((0), 0));
-            Bridge.Test.Assert.$false(Bridge.equalsT((1), 0));
-            Bridge.Test.Assert.$false(Bridge.equalsT((0), 1));
-            Bridge.Test.Assert.$true(Bridge.equalsT((1), 1));
+            Bridge.Test.Assert.$true(Bridge.equalsT(0, 0));
+            Bridge.Test.Assert.$false(Bridge.equalsT(1, 0));
+            Bridge.Test.Assert.$false(Bridge.equalsT(0, 1));
+            Bridge.Test.Assert.$true(Bridge.equalsT(1, 1));
         },
         compareToWorks: function () {
             Bridge.Test.Assert.$true(Bridge.compare((0), 0) === 0);
@@ -21505,9 +21505,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$true(Bridge.compare((0), 1) < 0);
         },
         iComparableCompareToWorks: function () {
-            Bridge.Test.Assert.$true(Bridge.compare((0), 0) === 0);
-            Bridge.Test.Assert.$true(Bridge.compare((1), 0) > 0);
-            Bridge.Test.Assert.$true(Bridge.compare((0), 1) < 0);
+            Bridge.Test.Assert.$true(Bridge.compare(0, 0) === 0);
+            Bridge.Test.Assert.$true(Bridge.compare(1, 0) > 0);
+            Bridge.Test.Assert.$true(Bridge.compare(0, 1) < 0);
         }
     });
     
@@ -21780,22 +21780,22 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areDeepEqual(Bridge.Decimal(5.0), Bridge.Decimal((((((x + 5) | 0))) & 65535)));
             Bridge.Test.Assert.areDeepEqual(Bridge.Decimal(6.0), Bridge.Decimal((((x + 6) | 0))));
             Bridge.Test.Assert.areDeepEqual(Bridge.Decimal(7.0), Bridge.Decimal((((((x + 7) | 0))) >>> 0)));
-            Bridge.Test.Assert.areDeepEqual(Bridge.Decimal(8.0), Bridge.Decimal(Bridge.Long(((x + 8) | 0))));
+            Bridge.Test.Assert.areDeepEqual(Bridge.Decimal(8.0), Bridge.Decimal(Bridge.Long((((x + 8) | 0)))));
             Bridge.Test.Assert.areDeepEqual(Bridge.Decimal(9.0), Bridge.Decimal(Bridge.Int.clipu64((((x + 9) | 0)))));
             Bridge.Test.Assert.areDeepEqual(Bridge.Decimal(10.5), Bridge.Decimal((x + 10.5)));
             Bridge.Test.Assert.areDeepEqual(Bridge.Decimal(11.5), Bridge.Decimal((x + 11.5)));
         },
         conversionsFromDecimalWork: function () {
             var x = 0;
-            Bridge.Test.Assert.areEqual(1, Bridge.Decimal.toInt(Bridge.Decimal(((x + 1) | 0)), Bridge.Byte));
-            Bridge.Test.Assert.areEqual(2, Bridge.Decimal.toInt(Bridge.Decimal(((x + 2) | 0)), Bridge.SByte));
-            Bridge.Test.Assert.areEqual(3, Bridge.Decimal.toInt(Bridge.Decimal(((x + 3) | 0)), Bridge.Int16));
-            Bridge.Test.Assert.areEqual(4, Bridge.Decimal.toInt(Bridge.Decimal(((x + 4) | 0)), Bridge.UInt16));
-            Bridge.Test.Assert.areEqual(5, Bridge.Decimal.toInt(Bridge.Decimal(((x + 5) | 0)), Bridge.Char));
-            Bridge.Test.Assert.areEqual(6, Bridge.Decimal.toInt(Bridge.Decimal(((x + 6) | 0)), Bridge.Int32));
-            Bridge.Test.Assert.areEqual(7, Bridge.Decimal.toInt(Bridge.Decimal(((x + 7) | 0)), Bridge.UInt32));
-            Bridge.Test.Assert.$true(Bridge.Long(8).equals(Bridge.Decimal.toInt(Bridge.Decimal(((x + 8) | 0)), Bridge.Long)));
-            Bridge.Test.Assert.$true(Bridge.ULong(9).equals(Bridge.Decimal.toInt(Bridge.Decimal(((x + 9) | 0)), Bridge.ULong)));
+            Bridge.Test.Assert.areEqual(1, Bridge.Decimal.toInt(Bridge.Decimal((((x + 1) | 0))), Bridge.Byte));
+            Bridge.Test.Assert.areEqual(2, Bridge.Decimal.toInt(Bridge.Decimal((((x + 2) | 0))), Bridge.SByte));
+            Bridge.Test.Assert.areEqual(3, Bridge.Decimal.toInt(Bridge.Decimal((((x + 3) | 0))), Bridge.Int16));
+            Bridge.Test.Assert.areEqual(4, Bridge.Decimal.toInt(Bridge.Decimal((((x + 4) | 0))), Bridge.UInt16));
+            Bridge.Test.Assert.areEqual(5, Bridge.Decimal.toInt(Bridge.Decimal((((x + 5) | 0))), Bridge.Char));
+            Bridge.Test.Assert.areEqual(6, Bridge.Decimal.toInt(Bridge.Decimal((((x + 6) | 0))), Bridge.Int32));
+            Bridge.Test.Assert.areEqual(7, Bridge.Decimal.toInt(Bridge.Decimal((((x + 7) | 0))), Bridge.UInt32));
+            Bridge.Test.Assert.$true(Bridge.Long(8).equals(Bridge.Decimal.toInt(Bridge.Decimal((((x + 8) | 0))), Bridge.Long)));
+            Bridge.Test.Assert.$true(Bridge.ULong(9).equals(Bridge.Decimal.toInt(Bridge.Decimal((((x + 9) | 0))), Bridge.ULong)));
             Bridge.Test.Assert.areEqual(10.5, Bridge.Decimal.toFloat(Bridge.Decimal((x + 10.5))));
             Bridge.Test.Assert.areEqual(11.5, Bridge.Decimal.toFloat(Bridge.Decimal((x + 11.5))));
         },
@@ -21944,10 +21944,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$true((Bridge.Decimal(1.0)).compareTo(Bridge.Decimal(1.0)) === 0);
         },
         iComparableCompareToWorks: function () {
-            Bridge.Test.Assert.$true(Bridge.compare((Bridge.Decimal(0.0)), Bridge.Decimal(0.0)) === 0);
-            Bridge.Test.Assert.$true(Bridge.compare((Bridge.Decimal(1.0)), Bridge.Decimal(0.0)) > 0);
-            Bridge.Test.Assert.$true(Bridge.compare((Bridge.Decimal(0.0)), Bridge.Decimal(0.5)) < 0);
-            Bridge.Test.Assert.$true(Bridge.compare((Bridge.Decimal(1.0)), Bridge.Decimal(1.0)) === 0);
+            Bridge.Test.Assert.$true(Bridge.compare(Bridge.Decimal(0.0), Bridge.Decimal(0.0)) === 0);
+            Bridge.Test.Assert.$true(Bridge.compare(Bridge.Decimal(1.0), Bridge.Decimal(0.0)) > 0);
+            Bridge.Test.Assert.$true(Bridge.compare(Bridge.Decimal(0.0), Bridge.Decimal(0.5)) < 0);
+            Bridge.Test.Assert.$true(Bridge.compare(Bridge.Decimal(1.0), Bridge.Decimal(1.0)) === 0);
         },
         fullCoalesceWorks: function () {
             var a = Bridge.Decimal(1.0);
@@ -22081,10 +22081,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$true(Bridge.compare((1.0), 1.0) === 0);
         },
         iComparableCompareToWorks: function () {
-            Bridge.Test.Assert.$true(Bridge.compare((0.0), 0.0) === 0);
-            Bridge.Test.Assert.$true(Bridge.compare((1.0), 0.0) > 0);
-            Bridge.Test.Assert.$true(Bridge.compare((0.0), 0.5) < 0);
-            Bridge.Test.Assert.$true(Bridge.compare((1.0), 1.0) === 0);
+            Bridge.Test.Assert.$true(Bridge.compare(0.0, 0.0) === 0);
+            Bridge.Test.Assert.$true(Bridge.compare(1.0, 0.0) > 0);
+            Bridge.Test.Assert.$true(Bridge.compare(0.0, 0.5) < 0);
+            Bridge.Test.Assert.$true(Bridge.compare(1.0, 1.0) === 0);
         }
     });
     
@@ -22283,10 +22283,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$false((0) === 1);
             Bridge.Test.Assert.$true((1) === 1);
     
-            Bridge.Test.Assert.$true(Bridge.equalsT((0), 0));
-            Bridge.Test.Assert.$false(Bridge.equalsT((1), 0));
-            Bridge.Test.Assert.$false(Bridge.equalsT((0), 1));
-            Bridge.Test.Assert.$true(Bridge.equalsT((1), 1));
+            Bridge.Test.Assert.$true(Bridge.equalsT(0, 0));
+            Bridge.Test.Assert.$false(Bridge.equalsT(1, 0));
+            Bridge.Test.Assert.$false(Bridge.equalsT(0, 1));
+            Bridge.Test.Assert.$true(Bridge.equalsT(1, 1));
         },
         compareToWorks: function () {
             Bridge.Test.Assert.$true(Bridge.compare((0), 0) === 0);
@@ -22294,9 +22294,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$true(Bridge.compare((0), 1) < 0);
         },
         iComparableCompareToWorks: function () {
-            Bridge.Test.Assert.$true(Bridge.compare((0), 0) === 0);
-            Bridge.Test.Assert.$true(Bridge.compare((1), 0) > 0);
-            Bridge.Test.Assert.$true(Bridge.compare((0), 1) < 0);
+            Bridge.Test.Assert.$true(Bridge.compare(0, 0) === 0);
+            Bridge.Test.Assert.$true(Bridge.compare(1, 0) > 0);
+            Bridge.Test.Assert.$true(Bridge.compare(0, 1) < 0);
         }
     });
     
@@ -22487,10 +22487,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$false((0) === 1);
             Bridge.Test.Assert.$true((1) === 1);
     
-            Bridge.Test.Assert.$true(Bridge.equalsT((0), 0));
-            Bridge.Test.Assert.$false(Bridge.equalsT((1), 0));
-            Bridge.Test.Assert.$false(Bridge.equalsT((0), 1));
-            Bridge.Test.Assert.$true(Bridge.equalsT((1), 1));
+            Bridge.Test.Assert.$true(Bridge.equalsT(0, 0));
+            Bridge.Test.Assert.$false(Bridge.equalsT(1, 0));
+            Bridge.Test.Assert.$false(Bridge.equalsT(0, 1));
+            Bridge.Test.Assert.$true(Bridge.equalsT(1, 1));
         },
         compareToWorks: function () {
             Bridge.Test.Assert.$true(Bridge.compare((0), 0) === 0);
@@ -22498,9 +22498,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$true(Bridge.compare((0), 1) < 0);
         },
         iComparableCompareToWorks: function () {
-            Bridge.Test.Assert.$true(Bridge.compare((0), 0) === 0);
-            Bridge.Test.Assert.$true(Bridge.compare((1), 0) > 0);
-            Bridge.Test.Assert.$true(Bridge.compare((0), 1) < 0);
+            Bridge.Test.Assert.$true(Bridge.compare(0, 0) === 0);
+            Bridge.Test.Assert.$true(Bridge.compare(1, 0) > 0);
+            Bridge.Test.Assert.$true(Bridge.compare(0, 1) < 0);
         },
         integerDivisionWorks: function () {
             var a = 17, b = 4, c = 0;
@@ -22760,7 +22760,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areEqual(Bridge.getHashCode((Bridge.Long(0))), Bridge.getHashCode((Bridge.Long(0))));
             Bridge.Test.Assert.areEqual(Bridge.getHashCode((Bridge.Long(1))), Bridge.getHashCode((Bridge.Long(1))));
             Bridge.Test.Assert.areNotEqual(Bridge.getHashCode((Bridge.Long(1))), Bridge.getHashCode((Bridge.Long(0))));
-            Bridge.Test.Assert.$true(Bridge.Long(Bridge.Long(Bridge.getHashCode(Bridge.Long([0,1])))).lte(Bridge.Long([-1,0])));
+            Bridge.Test.Assert.$true(Bridge.Long(Bridge.getHashCode(Bridge.Long([0,1]))).lte(Bridge.Long([-1,0])));
         },
         equalsWorks: function () {
             Bridge.Test.Assert.$true(Bridge.equals((Bridge.Long(0)), Bridge.Long(0)));
@@ -22774,10 +22774,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$false((Bridge.Long(0)).equalsT(Bridge.Long(1)));
             Bridge.Test.Assert.$true((Bridge.Long(1)).equalsT(Bridge.Long(1)));
     
-            Bridge.Test.Assert.$true(Bridge.equalsT((Bridge.Long(0)), Bridge.Long(0)));
-            Bridge.Test.Assert.$false(Bridge.equalsT((Bridge.Long(1)), Bridge.Long(0)));
-            Bridge.Test.Assert.$false(Bridge.equalsT((Bridge.Long(0)), Bridge.Long(1)));
-            Bridge.Test.Assert.$true(Bridge.equalsT((Bridge.Long(1)), Bridge.Long(1)));
+            Bridge.Test.Assert.$true(Bridge.equalsT(Bridge.Long(0), Bridge.Long(0)));
+            Bridge.Test.Assert.$false(Bridge.equalsT(Bridge.Long(1), Bridge.Long(0)));
+            Bridge.Test.Assert.$false(Bridge.equalsT(Bridge.Long(0), Bridge.Long(1)));
+            Bridge.Test.Assert.$true(Bridge.equalsT(Bridge.Long(1), Bridge.Long(1)));
         },
         compareToWorks: function () {
             Bridge.Test.Assert.$true((Bridge.Long(0)).compareTo(Bridge.Long(0)) === 0);
@@ -22785,9 +22785,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$true((Bridge.Long(0)).compareTo(Bridge.Long(1)) < 0);
         },
         iComparableCompareToWorks: function () {
-            Bridge.Test.Assert.$true(Bridge.compare((Bridge.Long(0)), Bridge.Long(0)) === 0);
-            Bridge.Test.Assert.$true(Bridge.compare((Bridge.Long(1)), Bridge.Long(0)) > 0);
-            Bridge.Test.Assert.$true(Bridge.compare((Bridge.Long(0)), Bridge.Long(1)) < 0);
+            Bridge.Test.Assert.$true(Bridge.compare(Bridge.Long(0), Bridge.Long(0)) === 0);
+            Bridge.Test.Assert.$true(Bridge.compare(Bridge.Long(1), Bridge.Long(0)) > 0);
+            Bridge.Test.Assert.$true(Bridge.compare(Bridge.Long(0), Bridge.Long(1)) < 0);
         },
         shiftWorks: function () {
             var x = Bridge.Long(1);
@@ -23176,7 +23176,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areEqual(Bridge.getHashCode(new Date(Bridge.Long(0).toNumber())), Bridge.getHashCode(new Date(Bridge.Long(0).toNumber())));
             Bridge.Test.Assert.areEqual(Bridge.getHashCode(new Date(Bridge.Long(1).toNumber())), Bridge.getHashCode(new Date(Bridge.Long(1).toNumber())));
             Bridge.Test.Assert.areNotEqual(Bridge.getHashCode(new Date(Bridge.Long(1).toNumber())), Bridge.getHashCode(new Date(Bridge.Long(0).toNumber())));
-            Bridge.Test.Assert.$true(Bridge.Long(Bridge.Long(Bridge.getHashCode(new Date(3000, 1 - 1, 1)))).lt(Bridge.Long([-1,0])));
+            Bridge.Test.Assert.$true(Bridge.Long(Bridge.getHashCode(new Date(3000, 1 - 1, 1))).lt(Bridge.Long([-1,0])));
         },
         equalsWorks: function () {
             Bridge.Test.Assert.$true(Bridge.equals(new Date(Bridge.Long(0).toNumber()), new Date(Bridge.Long(0).toNumber())));
@@ -23191,10 +23191,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$true(Bridge.equalsT(new Date(Bridge.Long(1).toNumber()), new Date(Bridge.Long(1).toNumber())));
         },
         iEquatableEqualsWorks: function () {
-            Bridge.Test.Assert.$true(Bridge.equalsT((Bridge.cast(new Date(Bridge.Long(0).toNumber()), Bridge.IEquatable$1(Date))), new Date(Bridge.Long(0).toNumber())));
-            Bridge.Test.Assert.$false(Bridge.equalsT((Bridge.cast(new Date(Bridge.Long(1).toNumber()), Bridge.IEquatable$1(Date))), new Date(Bridge.Long(0).toNumber())));
-            Bridge.Test.Assert.$false(Bridge.equalsT((Bridge.cast(new Date(Bridge.Long(0).toNumber()), Bridge.IEquatable$1(Date))), new Date(Bridge.Long(1).toNumber())));
-            Bridge.Test.Assert.$true(Bridge.equalsT((Bridge.cast(new Date(Bridge.Long(1).toNumber()), Bridge.IEquatable$1(Date))), new Date(Bridge.Long(1).toNumber())));
+            Bridge.Test.Assert.$true(Bridge.equalsT(Bridge.cast(new Date(Bridge.Long(0).toNumber()), Bridge.IEquatable$1(Date)), new Date(Bridge.Long(0).toNumber())));
+            Bridge.Test.Assert.$false(Bridge.equalsT(Bridge.cast(new Date(Bridge.Long(1).toNumber()), Bridge.IEquatable$1(Date)), new Date(Bridge.Long(0).toNumber())));
+            Bridge.Test.Assert.$false(Bridge.equalsT(Bridge.cast(new Date(Bridge.Long(0).toNumber()), Bridge.IEquatable$1(Date)), new Date(Bridge.Long(1).toNumber())));
+            Bridge.Test.Assert.$true(Bridge.equalsT(Bridge.cast(new Date(Bridge.Long(1).toNumber()), Bridge.IEquatable$1(Date)), new Date(Bridge.Long(1).toNumber())));
         },
         compareToWorks: function () {
             Bridge.Test.Assert.$true(Bridge.compare(new Date(Bridge.Long(0).toNumber()), new Date(Bridge.Long(0).toNumber())) === 0);
@@ -23202,9 +23202,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$true(Bridge.compare(new Date(Bridge.Long(0).toNumber()), new Date(Bridge.Long(1).toNumber())) < 0);
         },
         iComparableCompareToWorks: function () {
-            Bridge.Test.Assert.$true(Bridge.compare((Bridge.cast(new Date(Bridge.Long(0).toNumber()), Bridge.IComparable$1(Date))), new Date(Bridge.Long(0).toNumber())) === 0);
-            Bridge.Test.Assert.$true(Bridge.compare((Bridge.cast(new Date(Bridge.Long(1).toNumber()), Bridge.IComparable$1(Date))), new Date(Bridge.Long(0).toNumber())) > 0);
-            Bridge.Test.Assert.$true(Bridge.compare((Bridge.cast(new Date(Bridge.Long(0).toNumber()), Bridge.IComparable$1(Date))), new Date(Bridge.Long(1).toNumber())) < 0);
+            Bridge.Test.Assert.$true(Bridge.compare(Bridge.cast(new Date(Bridge.Long(0).toNumber()), Bridge.IComparable$1(Date)), new Date(Bridge.Long(0).toNumber())) === 0);
+            Bridge.Test.Assert.$true(Bridge.compare(Bridge.cast(new Date(Bridge.Long(1).toNumber()), Bridge.IComparable$1(Date)), new Date(Bridge.Long(0).toNumber())) > 0);
+            Bridge.Test.Assert.$true(Bridge.compare(Bridge.cast(new Date(Bridge.Long(0).toNumber()), Bridge.IComparable$1(Date)), new Date(Bridge.Long(1).toNumber())) < 0);
         }
     });
     
@@ -23394,10 +23394,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$false((0) === 1);
             Bridge.Test.Assert.$true((1) === 1);
     
-            Bridge.Test.Assert.$true(Bridge.equalsT((0), 0));
-            Bridge.Test.Assert.$false(Bridge.equalsT((1), 0));
-            Bridge.Test.Assert.$false(Bridge.equalsT((0), 1));
-            Bridge.Test.Assert.$true(Bridge.equalsT((1), 1));
+            Bridge.Test.Assert.$true(Bridge.equalsT(0, 0));
+            Bridge.Test.Assert.$false(Bridge.equalsT(1, 0));
+            Bridge.Test.Assert.$false(Bridge.equalsT(0, 1));
+            Bridge.Test.Assert.$true(Bridge.equalsT(1, 1));
         },
         compareToWorks: function () {
             Bridge.Test.Assert.$true(Bridge.compare((0), 0) === 0);
@@ -23405,9 +23405,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$true(Bridge.compare((0), 1) < 0);
         },
         iComparableCompareToWorks: function () {
-            Bridge.Test.Assert.$true(Bridge.compare((0), 0) === 0);
-            Bridge.Test.Assert.$true(Bridge.compare((1), 0) > 0);
-            Bridge.Test.Assert.$true(Bridge.compare((0), 1) < 0);
+            Bridge.Test.Assert.$true(Bridge.compare(0, 0) === 0);
+            Bridge.Test.Assert.$true(Bridge.compare(1, 0) > 0);
+            Bridge.Test.Assert.$true(Bridge.compare(0, 1) < 0);
         }
     });
     
@@ -23543,10 +23543,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$false((0.0) === 0.5);
             Bridge.Test.Assert.$true((1.0) === 1.0);
     
-            Bridge.Test.Assert.$true(Bridge.equalsT((0.0), 0.0));
-            Bridge.Test.Assert.$false(Bridge.equalsT((1.0), 0.0));
-            Bridge.Test.Assert.$false(Bridge.equalsT((0.0), 0.5));
-            Bridge.Test.Assert.$true(Bridge.equalsT((1.0), 1.0));
+            Bridge.Test.Assert.$true(Bridge.equalsT(0.0, 0.0));
+            Bridge.Test.Assert.$false(Bridge.equalsT(1.0, 0.0));
+            Bridge.Test.Assert.$false(Bridge.equalsT(0.0, 0.5));
+            Bridge.Test.Assert.$true(Bridge.equalsT(1.0, 1.0));
         },
         compareToWorks: function () {
             Bridge.Test.Assert.$true(Bridge.compare((0.0), 0.0) === 0);
@@ -23555,10 +23555,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$true(Bridge.compare((1.0), 1.0) === 0);
         },
         iComparableCompareToWorks: function () {
-            Bridge.Test.Assert.$true(Bridge.compare((0.0), 0.0) === 0);
-            Bridge.Test.Assert.$true(Bridge.compare((1.0), 0.0) > 0);
-            Bridge.Test.Assert.$true(Bridge.compare((0.0), 0.5) < 0);
-            Bridge.Test.Assert.$true(Bridge.compare((1.0), 1.0) === 0);
+            Bridge.Test.Assert.$true(Bridge.compare(0.0, 0.0) === 0);
+            Bridge.Test.Assert.$true(Bridge.compare(1.0, 0.0) > 0);
+            Bridge.Test.Assert.$true(Bridge.compare(0.0, 0.5) < 0);
+            Bridge.Test.Assert.$true(Bridge.compare(1.0, 1.0) === 0);
         }
     });
     
@@ -24201,7 +24201,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areEqual(Bridge.getHashCode(("b")), Bridge.getHashCode(("b")));
             Bridge.Test.Assert.areNotEqual(Bridge.getHashCode(("b")), Bridge.getHashCode(("a")));
             Bridge.Test.Assert.areNotEqual(Bridge.getHashCode(("ab")), Bridge.getHashCode(("a")));
-            Bridge.Test.Assert.$true(Bridge.Long(Bridge.Long(Bridge.getHashCode(("abcdefghijklmnopq")))).lt(Bridge.Long([-1,0])));
+            Bridge.Test.Assert.$true(Bridge.Long(Bridge.getHashCode(("abcdefghijklmnopq"))).lt(Bridge.Long([-1,0])));
         },
         instanceEqualsWorks: function () {
             var r = "a";
@@ -24223,12 +24223,12 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$false(Bridge.String.equals(("a"), "A"));
             Bridge.Test.Assert.$false(Bridge.String.equals(("a"), "ab"));
     
-            Bridge.Test.Assert.$true(Bridge.equalsT(("a"), "a"));
-            Bridge.Test.Assert.$false(Bridge.equalsT(("b"), "a"));
-            Bridge.Test.Assert.$false(Bridge.equalsT(("a"), "b"));
-            Bridge.Test.Assert.$true(Bridge.equalsT(("b"), "b"));
-            Bridge.Test.Assert.$false(Bridge.equalsT(("a"), "A"));
-            Bridge.Test.Assert.$false(Bridge.equalsT(("a"), "ab"));
+            Bridge.Test.Assert.$true(Bridge.equalsT("a", "a"));
+            Bridge.Test.Assert.$false(Bridge.equalsT("b", "a"));
+            Bridge.Test.Assert.$false(Bridge.equalsT("a", "b"));
+            Bridge.Test.Assert.$true(Bridge.equalsT("b", "b"));
+            Bridge.Test.Assert.$false(Bridge.equalsT("a", "A"));
+            Bridge.Test.Assert.$false(Bridge.equalsT("a", "ab"));
         },
         stringEqualsWorks: function () {
             Bridge.Test.Assert.$true(Bridge.String.equals(("a"), "a"));
@@ -24245,12 +24245,12 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$true(Bridge.String.compare("abcd", "abce") < 0);
         },
         iComparableCompareToWorks: function () {
-            Bridge.Test.Assert.$true(Bridge.compare(("abcd"), "abcd") === 0);
-            Bridge.Test.Assert.$true(Bridge.compare(("abcd"), "abcD") !== 0);
-            Bridge.Test.Assert.$true(Bridge.compare(("abcd"), "abcb") > 0);
-            Bridge.Test.Assert.$true(Bridge.compare(("abcd"), "abce") < 0);
+            Bridge.Test.Assert.$true(Bridge.compare("abcd", "abcd") === 0);
+            Bridge.Test.Assert.$true(Bridge.compare("abcd", "abcD") !== 0);
+            Bridge.Test.Assert.$true(Bridge.compare("abcd", "abcb") > 0);
+            Bridge.Test.Assert.$true(Bridge.compare("abcd", "abce") < 0);
     
-            Bridge.Test.Assert.$true(Bridge.compare((""), null) > 0);
+            Bridge.Test.Assert.$true(Bridge.compare("", null) > 0);
         },
         joinWorks: function () {
             Bridge.Test.Assert.areEqual("a, ab, abc, abcd", ["a", "ab", "abc", "abcd"].join(", "));
@@ -24618,8 +24618,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var time2 = new Bridge.TimeSpan(14, 10, 20, 5, 14);
             var time3 = new Bridge.TimeSpan(15, 10, 20, 5, 14);
     
-            Bridge.Test.Assert.$false(Bridge.equalsT((Bridge.cast(time1, Bridge.IEquatable$1(Bridge.TimeSpan))), time2));
-            Bridge.Test.Assert.$true(Bridge.equalsT((Bridge.cast(time1, Bridge.IEquatable$1(Bridge.TimeSpan))), time3));
+            Bridge.Test.Assert.$false(Bridge.equalsT(Bridge.cast(time1, Bridge.IEquatable$1(Bridge.TimeSpan)), time2));
+            Bridge.Test.Assert.$true(Bridge.equalsT(Bridge.cast(time1, Bridge.IEquatable$1(Bridge.TimeSpan)), time3));
         },
         toStringWorks: function () {
             var time1 = new Bridge.TimeSpan(15, 10, 20, 5, 14);
@@ -24943,10 +24943,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$false((0) === 1);
             Bridge.Test.Assert.$true((1) === 1);
     
-            Bridge.Test.Assert.$true(Bridge.equalsT((0), 0));
-            Bridge.Test.Assert.$false(Bridge.equalsT((1), 0));
-            Bridge.Test.Assert.$false(Bridge.equalsT((0), 1));
-            Bridge.Test.Assert.$true(Bridge.equalsT((1), 1));
+            Bridge.Test.Assert.$true(Bridge.equalsT(0, 0));
+            Bridge.Test.Assert.$false(Bridge.equalsT(1, 0));
+            Bridge.Test.Assert.$false(Bridge.equalsT(0, 1));
+            Bridge.Test.Assert.$true(Bridge.equalsT(1, 1));
         },
         compareToWorks: function () {
             Bridge.Test.Assert.$true(Bridge.compare((0), 0) === 0);
@@ -24954,9 +24954,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$true(Bridge.compare((0), 1) < 0);
         },
         iComparableCompareToWorks: function () {
-            Bridge.Test.Assert.$true(Bridge.compare((0), 0) === 0);
-            Bridge.Test.Assert.$true(Bridge.compare((1), 0) > 0);
-            Bridge.Test.Assert.$true(Bridge.compare((0), 1) < 0);
+            Bridge.Test.Assert.$true(Bridge.compare(0, 0) === 0);
+            Bridge.Test.Assert.$true(Bridge.compare(1, 0) > 0);
+            Bridge.Test.Assert.$true(Bridge.compare(0, 1) < 0);
         }
     });
     
@@ -25118,10 +25118,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$false((0) === 1);
             Bridge.Test.Assert.$true((1) === 1);
     
-            Bridge.Test.Assert.$true(Bridge.equalsT((0), 0));
-            Bridge.Test.Assert.$false(Bridge.equalsT((1), 0));
-            Bridge.Test.Assert.$false(Bridge.equalsT((0), 1));
-            Bridge.Test.Assert.$true(Bridge.equalsT((1), 1));
+            Bridge.Test.Assert.$true(Bridge.equalsT(0, 0));
+            Bridge.Test.Assert.$false(Bridge.equalsT(1, 0));
+            Bridge.Test.Assert.$false(Bridge.equalsT(0, 1));
+            Bridge.Test.Assert.$true(Bridge.equalsT(1, 1));
         },
         compareToWorks: function () {
             Bridge.Test.Assert.$true(Bridge.compare((0), 0) === 0);
@@ -25129,9 +25129,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$true(Bridge.compare((0), 1) < 0);
         },
         iComparableCompareToWorks: function () {
-            Bridge.Test.Assert.$true(Bridge.compare((0), 0) === 0);
-            Bridge.Test.Assert.$true(Bridge.compare((1), 0) > 0);
-            Bridge.Test.Assert.$true(Bridge.compare((0), 1) < 0);
+            Bridge.Test.Assert.$true(Bridge.compare(0, 0) === 0);
+            Bridge.Test.Assert.$true(Bridge.compare(1, 0) > 0);
+            Bridge.Test.Assert.$true(Bridge.compare(0, 1) < 0);
         }
     });
     
@@ -25355,10 +25355,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$false((Bridge.ULong(0)).equalsT(Bridge.ULong(1)));
             Bridge.Test.Assert.$true((Bridge.ULong(1)).equalsT(Bridge.ULong(1)));
     
-            Bridge.Test.Assert.$true(Bridge.equalsT((Bridge.ULong(0)), Bridge.ULong(0)));
-            Bridge.Test.Assert.$false(Bridge.equalsT((Bridge.ULong(1)), Bridge.ULong(0)));
-            Bridge.Test.Assert.$false(Bridge.equalsT((Bridge.ULong(0)), Bridge.ULong(1)));
-            Bridge.Test.Assert.$true(Bridge.equalsT((Bridge.ULong(1)), Bridge.ULong(1)));
+            Bridge.Test.Assert.$true(Bridge.equalsT(Bridge.ULong(0), Bridge.ULong(0)));
+            Bridge.Test.Assert.$false(Bridge.equalsT(Bridge.ULong(1), Bridge.ULong(0)));
+            Bridge.Test.Assert.$false(Bridge.equalsT(Bridge.ULong(0), Bridge.ULong(1)));
+            Bridge.Test.Assert.$true(Bridge.equalsT(Bridge.ULong(1), Bridge.ULong(1)));
         },
         compareToWorks: function () {
             Bridge.Test.Assert.$true((Bridge.ULong(0)).compareTo(Bridge.ULong(0)) === 0);
@@ -25366,9 +25366,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.$true((Bridge.ULong(0)).compareTo(Bridge.ULong(1)) < 0);
         },
         iComparableCompareToWorks: function () {
-            Bridge.Test.Assert.$true(Bridge.compare((Bridge.ULong(0)), Bridge.ULong(0)) === 0);
-            Bridge.Test.Assert.$true(Bridge.compare((Bridge.ULong(1)), Bridge.ULong(0)) > 0);
-            Bridge.Test.Assert.$true(Bridge.compare((Bridge.ULong(0)), Bridge.ULong(1)) < 0);
+            Bridge.Test.Assert.$true(Bridge.compare(Bridge.ULong(0), Bridge.ULong(0)) === 0);
+            Bridge.Test.Assert.$true(Bridge.compare(Bridge.ULong(1), Bridge.ULong(0)) > 0);
+            Bridge.Test.Assert.$true(Bridge.compare(Bridge.ULong(0), Bridge.ULong(1)) < 0);
         }
     });
     
@@ -27112,7 +27112,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.true$1(Bridge.is(task.exception, Bridge.AggregateException), "Exception should be an AggregateException");
                 Bridge.Test.Assert.areEqual$1(1, task.exception.innerExceptions.getCount(), "Exception should have one inner exception");
                 Bridge.Test.Assert.true$1(Bridge.is(task.exception.innerExceptions.get(0), Bridge.PromiseException), "Inner exception should be a PromiseException");
-                Bridge.Test.Assert.areDeepEqual$1([42, "result 123", 101], (Bridge.cast(task.exception.innerExceptions.get(0), Bridge.PromiseException)).arguments, "The PromiseException arguments should be correct");
+                Bridge.Test.Assert.areDeepEqual$1([42, "result 123", 101], Bridge.cast(task.exception.innerExceptions.get(0), Bridge.PromiseException).arguments, "The PromiseException arguments should be correct");
     
                 completeAsync();
             });
@@ -28970,10 +28970,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             }, "Small period int ");
     
             Bridge.Test.Assert.throws$7(Bridge.ArgumentOutOfRangeException, function () {
-                new Bridge.Threading.Timer("constructor$2", tc, null, Bridge.Long(Bridge.Long(small)), Bridge.Long(1));
+                new Bridge.Threading.Timer("constructor$2", tc, null, Bridge.Long(small), Bridge.Long(1));
             }, "Small due long");
             Bridge.Test.Assert.throws$7(Bridge.ArgumentOutOfRangeException, function () {
-                new Bridge.Threading.Timer("constructor$2", tc, null, Bridge.Long(1), Bridge.Long(Bridge.Long(small)));
+                new Bridge.Threading.Timer("constructor$2", tc, null, Bridge.Long(1), Bridge.Long(small));
             }, "Small period long");
             Bridge.Test.Assert.throws$7(Bridge.ArgumentOutOfRangeException, function () {
                 new Bridge.Threading.Timer("constructor$2", tc, null, big, Bridge.Long(1));
