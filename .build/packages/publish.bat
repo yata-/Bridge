@@ -7,9 +7,9 @@ SET /p apikey=NuGet API Key?
 SET /p version=Release version number?
 
 IF "%proceed%"=="y" (
-	:: This process will take a long time to run
+	:: This process may take a long time to run
 	..\..\.nuget\NuGet.exe push %key1%.%version%.nupkg  %apikey%
-	ECHO DONE!
+	ECHO SUCCESS!
 )
 
 PAUSE
