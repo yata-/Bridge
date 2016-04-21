@@ -411,5 +411,11 @@ namespace Bridge.Contract
         {
             get;
         }
+
+        bool IsRefArg
+        {
+            get;
+            set;
+        }
     }
 }

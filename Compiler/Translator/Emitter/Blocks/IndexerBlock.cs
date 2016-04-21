@@ -37,6 +37,8 @@ namespace Bridge.Translator
 
     public class IndexerBlock : ConversionBlock
     {
+        private bool isRefArg;
+
         public IndexerBlock(IEmitter emitter, IndexerExpression indexerExpression)
             : base(emitter, indexerExpression)
         {
@@ -62,6 +64,9 @@ namespace Bridge.Translator
 
         protected void VisitIndexerExpression()
         {
+            this.isRefArg = this.Emitter.IsRefArg;
+            this.Emitter.IsRefArg = false;
+
             IndexerExpression indexerExpression = this.IndexerExpression;
             int pos = this.Emitter.Output.Length;
             var resolveResult = this.Emitter.Resolver.ResolveNode(indexerExpression, this.Emitter);
@@ -694,7 +699,15 @@ namespace Bridge.Translator
                 }
             }
 
-            this.WriteDot();
+            if (this.isRefArg)
+            {
+                this.WriteComma();
+            }
+            else
+            {
+                this.WriteDot();    
+            }
+            
 
             var argsInfo = new ArgumentsInfo(this.Emitter, indexerExpression);
             var argsExpressions = argsInfo.ArgumentsExpressions;
@@ -968,12 +981,19 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    this.Write("get");
-                    this.WriteOpenParentheses();
+                    if (!this.isRefArg)
+                    {
+                        this.Write("get");
+                        this.WriteOpenParentheses();    
+                    }
+                    
                     this.WriteOpenBracket();
                     new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
                     this.WriteCloseBracket();
-                    this.WriteCloseParentheses();
+                    if (!this.isRefArg)
+                    {
+                        this.WriteCloseParentheses();
+                    }
                 }
             }
             else
@@ -1058,16 +1078,37 @@ namespace Bridge.Translator
             if (primitive != null && primitive.Value != null &&
                 Regex.Match(primitive.Value.ToString(), "^[_$a-z][_$a-z0-9]*$", RegexOptions.IgnoreCase).Success)
             {
-                this.WriteDot();
-                this.Write(primitive.Value);
+                if (this.isRefArg)
+                {
+                    this.WriteComma();
+                    this.WriteScript(primitive.Value);    
+                }
+                else
+                {
+                    this.WriteDot();
+                    this.Write(primitive.Value);    
+                }
             }
             else
             {
                 this.Emitter.IsAssignment = false;
                 this.Emitter.IsUnaryAccessor = false;
-                this.WriteOpenBracket();
+                if (this.isRefArg)
+                {
+                   this.WriteComma(); 
+                }
+                else
+                {
+                    this.WriteOpenBracket();    
+                }
+                
                 index.AcceptVisitor(this.Emitter);
-                this.WriteCloseBracket();
+
+                if (!this.isRefArg)
+                {
+                    this.WriteCloseBracket();    
+                }
+                
                 this.Emitter.IsAssignment = oldIsAssignment;
                 this.Emitter.IsUnaryAccessor = oldUnary;
             }
