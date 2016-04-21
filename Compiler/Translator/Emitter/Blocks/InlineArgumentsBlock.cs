@@ -418,7 +418,38 @@ namespace Bridge.Translator
                             {
                                 var writer = this.SaveWriter();
                                 this.NewWriter();
-                                exprs[0].AcceptVisitor(this.Emitter);
+
+                                var directExpr = exprs[0] as DirectionExpression;
+                                if (directExpr != null)
+                                {
+                                    var rr = this.Emitter.Resolver.ResolveNode(exprs[0], this.Emitter) as ByReferenceResolveResult;
+
+                                    if (rr != null && !(rr.ElementResult is LocalResolveResult))
+                                    {
+                                        this.Write("Bridge.ref(");
+
+                                        this.Emitter.IsRefArg = true;
+                                        exprs[0].AcceptVisitor(this.Emitter);
+                                        this.Emitter.IsRefArg = false;
+
+                                        if (this.Emitter.Writers.Count != count)
+                                        {
+                                            this.PopWriter();
+                                            count = this.Emitter.Writers.Count;
+                                        }
+
+                                        this.Write(")");
+                                    }
+                                    else
+                                    {
+                                        exprs[0].AcceptVisitor(this.Emitter);
+                                    }
+                                }
+                                else
+                                {
+                                    exprs[0].AcceptVisitor(this.Emitter);
+                                }
+                                
                                 s = this.Emitter.Output.ToString();
                                 this.RestoreWriter(writer);
 
