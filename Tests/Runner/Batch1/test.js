@@ -1098,6 +1098,7 @@
                 QUnit.test("#1197 - TestGetHashCodeOnDictionary", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1197.testGetHashCodeOnDictionary);
                 QUnit.test("#1199 - TestEventNameCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1199.testEventNameCase);
                 QUnit.test("#1202 - TestRefOutField", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202.testRefOutField);
+                QUnit.test("#1202 - TestInlineRefOutField", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202.testInlineRefOutField);
                 QUnit.test("#1203 - TestLiftedFunctionsInsideInitMethod", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1203.testLiftedFunctionsInsideInitMethod);
                 QUnit.test("#1206 - TestDocumentURLProperty", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1206.testDocumentURLProperty);
                 QUnit.test("#1217 - TestTypeInferenceWithNamedArguments", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1217.testTypeInferenceWithNamedArguments);
@@ -3177,6 +3178,10 @@
             testRefOutField: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202);
                 Bridge.ClientTest.BridgeIssues.Bridge1202.testRefOutField();
+            },
+            testInlineRefOutField: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202);
+                Bridge.ClientTest.BridgeIssues.Bridge1202.testInlineRefOutField();
             }
         }
     });
