@@ -9,8 +9,9 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
         _escapedChars: "abtrvfnexcu",
         _escapedCharClasses: "pPwWsSdD",
         _escapedAnchors: "AZzGbB",
-        _escapedSpecialSymbols: ".$^{}[]()|*+?\\",
+        _escapedSpecialSymbols: ".$^{}[]()|*+?\\ ",
 
+        _whiteSpaceChars: " \r\n\t\v\f\u00A0\uFEFF",    //TODO: This is short version of .NET WhiteSpace category.
         _unicodeCategories: ["Lu", "Ll", "Lt", "Lm", "Lo", "L", "Mn", "Mc", "Me", "M", "Nd", "Nl", "No", "N", "Pc", "Pd", "Ps", "Pe", "Pi", "Pf", "Po", "P", "Sm", "Sc", "Sk", "So", "S", "Zs", "Zl", "Zp", "Z", "Cc", "Cf", "Cs", "Co", "Cn", "C"],
         _namedCharBlocks: ["IsBasicLatin", "IsLatin-1Supplement", "IsLatinExtended-A", "IsLatinExtended-B", "IsIPAExtensions", "IsSpacingModifierLetters", "IsCombiningDiacriticalMarks", "IsGreek", "IsGreekandCoptic", "IsCyrillic", "IsCyrillicSupplement", "IsArmenian", "IsHebrew", "IsArabic", "IsSyriac", "IsThaana", "IsDevanagari", "IsBengali", "IsGurmukhi", "IsGujarati", "IsOriya", "IsTamil", "IsTelugu", "IsKannada", "IsMalayalam", "IsSinhala", "IsThai", "IsLao", "IsTibetan", "IsMyanmar", "IsGeorgian", "IsHangulJamo", "IsEthiopic", "IsCherokee", "IsUnifiedCanadianAboriginalSyllabics", "IsOgham", "IsRunic", "IsTagalog", "IsHanunoo", "IsBuhid", "IsTagbanwa", "IsKhmer", "IsMongolian", "IsLimbu", "IsTaiLe", "IsKhmerSymbols", "IsPhoneticExtensions", "IsLatinExtendedAdditional", "IsGreekExtended", "IsGeneralPunctuation", "IsSuperscriptsandSubscripts", "IsCurrencySymbols", "IsCombiningDiacriticalMarksforSymbols", "IsCombiningMarksforSymbols", "IsLetterlikeSymbols", "IsNumberForms", "IsArrows", "IsMathematicalOperators", "IsMiscellaneousTechnical", "IsControlPictures", "IsOpticalCharacterRecognition", "IsEnclosedAlphanumerics", "IsBoxDrawing", "IsBlockElements", "IsGeometricShapes", "IsMiscellaneousSymbols", "IsDingbats", "IsMiscellaneousMathematicalSymbols-A", "IsSupplementalArrows-A", "IsBraillePatterns", "IsSupplementalArrows-B", "IsMiscellaneousMathematicalSymbols-B", "IsSupplementalMathematicalOperators", "IsMiscellaneousSymbolsandArrows", "IsCJKRadicalsSupplement", "IsKangxiRadicals", "IsIdeographicDescriptionCharacters", "IsCJKSymbolsandPunctuation", "IsHiragana", "IsKatakana", "IsBopomofo", "IsHangulCompatibilityJamo", "IsKanbun", "IsBopomofoExtended", "IsKatakanaPhoneticExtensions", "IsEnclosedCJKLettersandMonths", "IsCJKCompatibility", "IsCJKUnifiedIdeographsExtensionA", "IsYijingHexagramSymbols", "IsCJKUnifiedIdeographs", "IsYiSyllables", "IsYiRadicals", "IsHangulSyllables", "IsHighSurrogates", "IsHighPrivateUseSurrogates", "IsLowSurrogates", "IsPrivateUse or IsPrivateUseArea", "IsCJKCompatibilityIdeographs", "IsAlphabeticPresentationForms", "IsArabicPresentationForms-A", "IsVariationSelectors", "IsCombiningHalfMarks", "IsCJKCompatibilityForms", "IsSmallFormVariants", "IsArabicPresentationForms-B", "IsHalfwidthandFullwidthForms", "IsSpecials"],
 
@@ -46,15 +47,24 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
             quantifierN: 501,
             quantifierNM: 502,
 
-            commentInline: 600
+            alternation: 600,
+            alternationGroup: 601,
+            alternationGroupExpr: 602,
+
+            commentInline: 700,
+            commentXMode: 701
         },
 
-        parsePattern: function (pattern) {
+        parsePattern: function (pattern, isIgnoreWhitespaceMode) {
+            var settings = {
+                ignoreWhitespace: isIgnoreWhitespaceMode
+            };
+
             var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
-            return scope._parsePatternImpl(pattern, 0, pattern.length);
+            return scope._parsePatternImpl(pattern, settings, 0, pattern.length);
         },
 
-        _parsePatternImpl: function (pattern, startIndex, endIndex) {
+        _parsePatternImpl: function (pattern, settings, startIndex, endIndex) {
             if (pattern == null) {
                 throw new Bridge.ArgumentNullException("pattern");
             }
@@ -78,14 +88,23 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                 ch = pattern[i];
                 token = null;
 
+                // Ignore whitespaces (if it was requested):
+                if (settings.ignoreWhitespace && scope._whiteSpaceChars.indexOf(ch) >= 0) {
+                    continue; 
+                }
+
                 if (ch === "\\") {
                     token = scope._parseEscapeToken(pattern, i, endIndex);
                 } else if (ch === "[") {
-                    token = scope._parseCharRangeTokens(pattern, i, endIndex);
+                    token = scope._parseCharRangeToken(pattern, i, endIndex);
                 } else if (ch === "^" || ch === "$") {
                     token = scope._parseAnchorToken(pattern, i);
                 } else if (ch === "(") {
-                    token = scope._parseGroupTokens(pattern, i, endIndex);
+                    token = scope._parseGroupToken(pattern, settings, i, endIndex);
+                } else if (ch === "|") {
+                    token = scope._parseAlternationToken(pattern, i);
+                } else if (ch === "#" && settings.ignoreWhitespace) {
+                    token = scope._parseXModeCommentToken(pattern, i, endIndex);
                 } else {
                     token = scope._parseQuantifierToken(pattern, i, endIndex);
                 }
@@ -343,7 +362,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
             return null;
         },
 
-        _parseCharRangeTokens: function (pattern, i, endIndex) {
+        _parseCharRangeToken: function (pattern, i, endIndex) {
             var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
             var tokens = [];
@@ -402,7 +421,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
             return scope._createPatternToken(pattern, tokenTypes.anchor, i, 1);
         },
 
-        _parseGroupTokens: function (pattern, i, endIndex) {
+        _parseGroupToken: function (pattern, settings, i, endIndex) {
             var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
 
@@ -416,14 +435,20 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
             var closeBracketIndex = -1;
 
             var isComment = false;
-            var constructToken = scope._parseGroupConstructToken(pattern, i + 1, endIndex);
+            var isAlternation = false;
+
+            // Parse the Group construct, if any:
+            var constructToken = scope._parseGroupConstructToken(pattern, settings, i + 1, endIndex);
             if (constructToken != null) {
                 index += constructToken.length;
                 if (constructToken.type === tokenTypes.commentInline) {
                     isComment = true;
+                } else if (constructToken.type === tokenTypes.alternationGroupExpr) {
+                    isAlternation = true;
                 }
             }
 
+            // Find the closing bracket of the group:
             while (index < endIndex) {
                 ch = pattern[index];
                 if (ch === "(" && !isComment) {
@@ -442,26 +467,49 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
 
             if (isComment) {
                 if (closeBracketIndex < 0) {
-                        throw new Bridge.ArgumentException("Unterminated (?#...) comment.");
+                    throw new Bridge.ArgumentException("Unterminated (?#...) comment.");
                 }
                 return scope._createPatternToken(pattern, tokenTypes.commentInline, i, 1 + closeBracketIndex - i);
             }
-
-
+            
             if (closeBracketIndex < 0) {
                 throw new Bridge.ArgumentException("Not enough )'s.");
             }
 
-            var innerTokens = scope._parsePatternImpl(pattern, i + 1, closeBracketIndex);
+            // Parse the "Body" of the group
+            var innerTokens = scope._parsePatternImpl(pattern, settings, i + 1, closeBracketIndex);
             if (constructToken != null) {
                 innerTokens.splice(0, 0, constructToken);
             }
 
+            // If there is an Alternation expression, treat the group as Alternation group
+            if (isAlternation) {
+                var innerTokensLen = innerTokens.length;
+                var innerToken;
+                var j;
+
+                // Check that there is only 1 alternation symbol:
+                var altCount = 0;
+                for (j = 0; j < innerTokensLen; j++) {
+                    innerToken = innerTokens[j];
+                    if (innerToken.type === tokenTypes.alternation) {
+                        ++altCount;
+                        if (altCount > 1) {
+                            throw new Bridge.ArgumentException("Too many | in (?()|).");
+                        }
+                    }
+                }
+
+                var altGroupToken = scope._createPatternToken(pattern, tokenTypes.alternationGroup, i, 1 + closeBracketIndex - i, innerTokens);
+                return altGroupToken;
+            }
+
+            // Create Group token:
             var groupToken = scope._createPatternToken(pattern, tokenTypes.group, i, 1 + closeBracketIndex - i, innerTokens);
             return groupToken;
         },
 
-        _parseGroupConstructToken: function (pattern, i, endIndex) {
+        _parseGroupConstructToken: function (pattern, settings, i, endIndex) {
             // ?<name1>
             // ?'name1'
             // ?<name1-name2>
@@ -490,6 +538,10 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
 
             if (ch === "#") {
                 return scope._createPatternToken(pattern, tokenTypes.commentInline, i, 2);
+            }
+
+            if (ch === "(") {
+                return scope._parseAlternationGroupExprToken(pattern, settings, i, endIndex);
             }
 
             if (ch === "<" && i + 2 < endIndex) {
@@ -559,6 +611,69 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
             }
 
             return scope._createPatternToken(pattern, tokenTypes.quantifierNM, i, 1 + dec1Chars.matchLength + 1 + dec2Chars.matchLength + 1);
+        },
+
+        _parseAlternationToken: function (pattern, i) {
+            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var tokenTypes = scope.tokenTypes;
+
+            var ch = pattern[i];
+            if (ch !== "|") {
+                return null;
+            }
+
+            return scope._createPatternToken(pattern, tokenTypes.alternation, i, 1);
+        },
+
+        _parseAlternationGroupExprToken: function (pattern, settings, i, endIndex) {
+            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var tokenTypes = scope.tokenTypes;
+
+            var ch = pattern[i];
+            if (ch !== "?" || i + 1 >= endIndex || pattern[i + 1] !== "(") {
+                return null;
+            }
+
+            // Parse Alternation expression as a group:
+            var expr = scope._parseGroupToken(pattern, settings, i + 1, endIndex);
+            if (expr == null) {
+                return null;
+            }
+
+            if (expr.children && expr.children.length) {
+                //TODO: .NET Regex allows some of these. Need to be clarified:
+                switch (expr.children[0].type) {
+                    case tokenTypes.groupConstruct:
+                    case tokenTypes.groupConstructName:
+                    case tokenTypes.groupConstructImnsx:
+                        throw new Bridge.NotSupportedException("Group constructs are not supported for Alternation expressions.");
+                }
+            }
+
+            // Transform Group token to Alternation expression token:
+            return scope._createPatternToken(pattern, tokenTypes.alternationGroupExpr, expr.index - 1, 1 + expr.length, expr.children);
+        },
+
+        _parseXModeCommentToken: function(pattern, i, endIndex) {
+            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var tokenTypes = scope.tokenTypes;
+
+            var ch = pattern[i];
+            if (ch !== "#") {
+                return null;
+            }
+
+            var index = i + 1;
+            while (index < endIndex) {
+                ch = pattern[index];
+                ++ index;   // index should be changed before breaking
+
+                if (ch === "\n") {
+                    break;
+                }
+            }
+
+            return scope._createPatternToken(pattern, tokenTypes.commentXMode, i, index - i);
         },
 
         _createPatternToken: function (pattern, type, i, len, innerTokens) {
