@@ -18,6 +18,26 @@
 
         identity: function (x) { return x; },
 
+        ref: function(o, n) {
+            if (Bridge.isArray(n)) {
+                n = Bridge.Array.toIndex(o, n);
+            }
+
+            var proxy = {};
+
+            Object.defineProperty(proxy, "v", {
+                get: function () {
+                    return o[n];
+                },
+
+                set: function (value) {
+                    o[n] = value;
+                }
+            });
+
+            return proxy;
+        },
+        
         property : function (scope, name, v) {
             scope[name] = v;
 
@@ -14152,12 +14172,12 @@ Bridge.define('Bridge.ReadOnlyCollection$1', function (T) {
         },
         constructor: function () {
             Bridge.Random.prototype.constructor$1.call(this, Bridge.Long.clip32(Bridge.Long((new Date()).getTime()).mul(10000)));
-    
+
         },
         constructor$1: function (Seed) {
             var ii;
             var mj, mk;
-    
+
             //Initialize our Seed array.
             //This algorithm comes from Numerical Recipes in C (2nd Ed.)
             var subtraction = (Seed === -2147483648) ? 2147483647 : Math.abs(Seed);
@@ -14194,30 +14214,30 @@ Bridge.define('Bridge.ReadOnlyCollection$1', function (T) {
             var retVal;
             var locINext = this.inext;
             var locINextp = this.inextp;
-    
+
             if (((locINext = (locINext + 1) | 0)) >= 56) {
                 locINext = 1;
             }
-    
+
             if (((locINextp = (locINextp + 1) | 0)) >= 56) {
                 locINextp = 1;
             }
-    
+
             retVal = (this.seedArray[locINext] - this.seedArray[locINextp]) | 0;
-    
+
             if (retVal === Bridge.Random.MBIG) {
                 retVal = (retVal - 1) | 0;
             }
-    
+
             if (retVal < 0) {
                 retVal = (retVal + Bridge.Random.MBIG) | 0;
             }
-    
+
             this.seedArray[locINext] = retVal;
-    
+
             this.inext = locINext;
             this.inextp = locINextp;
-    
+
             return retVal;
         },
         next: function () {
@@ -14227,12 +14247,12 @@ Bridge.define('Bridge.ReadOnlyCollection$1', function (T) {
             if (minValue > maxValue) {
                 throw new Bridge.ArgumentOutOfRangeException("minValue", "'minValue' cannot be greater than maxValue.");
             }
-    
-            var range = Bridge.Long(Bridge.Long(maxValue)).sub(Bridge.Long(minValue));
+
+            var range = Bridge.Long(maxValue).sub(Bridge.Long(minValue));
             if (range.lte(Bridge.Long(2147483647))) {
                 return (((Bridge.Int.clip32(this.sample() * Bridge.Long.toNumber(range)) + minValue) | 0));
             }
-            else  {
+            else {
                 return Bridge.Long.clip32(Bridge.Int.clip64(this.getSampleForLargeRange() * Bridge.Long.toNumber(range)).add(Bridge.Long(minValue)));
             }
         },
@@ -14247,7 +14267,7 @@ Bridge.define('Bridge.ReadOnlyCollection$1', function (T) {
             // is not distributed well enough for a large range.
             // If we use Sample for a range [Int32.MinValue..Int32.MaxValue)
             // We will end up getting even numbers only.
-    
+
             var result = this.internalSample();
             // Note we can't use addition here. The distribution will be bad if we do that.
             var negative = (this.internalSample() % 2 === 0) ? true : false; // decide the sign based on second sample
@@ -14263,7 +14283,7 @@ Bridge.define('Bridge.ReadOnlyCollection$1', function (T) {
             return this.sample();
         },
         nextBytes: function (buffer) {
-            if (!Bridge.hasValue(buffer)) {
+            if (buffer == null) {
                 throw new Bridge.ArgumentNullException("buffer");
             }
             for (var i = 0; i < buffer.length; i = (i + 1) | 0) {
@@ -14271,10 +14291,9 @@ Bridge.define('Bridge.ReadOnlyCollection$1', function (T) {
             }
         }
     });
-    
+
     Bridge.init();
 })(this);
-
 // @source Text/RegularExpressions/Regex.js
 
 Bridge.define("Bridge.Text.RegularExpressions.Regex", {
