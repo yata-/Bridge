@@ -4922,6 +4922,162 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     }; });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1202', {
+        statics: {
+            decimalField: Bridge.Decimal(0.0),
+            intField: 0,
+            array: null,
+            outMethod$1: function (value) {
+                value.v = 3;
+            },
+            outMethod: function (value) {
+                value.v = Bridge.Decimal(7);
+            },
+            refMethod$1: function (value) {
+                value.v = (value.v + 1) | 0;
+            },
+            refMethod: function (value) {
+                value.v = value.v.inc();
+            },
+            testRefOutStaticIntField: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1202.intField = 0;
+    
+                Bridge.ClientTest.BridgeIssues.Bridge1202.outMethod$1(Bridge.ref(Bridge.ClientTest.BridgeIssues.Bridge1202, "intField"));
+                Bridge.Test.Assert.areEqual(3, Bridge.ClientTest.BridgeIssues.Bridge1202.intField);
+    
+                Bridge.ClientTest.BridgeIssues.Bridge1202.refMethod$1(Bridge.ref(Bridge.ClientTest.BridgeIssues.Bridge1202, "intField"));
+                Bridge.Test.Assert.areEqual(4, Bridge.ClientTest.BridgeIssues.Bridge1202.intField);
+            },
+            testRefOutLocal1DIntArray: function () {
+                var localArr = [0, 0];
+    
+                Bridge.ClientTest.BridgeIssues.Bridge1202.outMethod$1(Bridge.ref(localArr, 0));
+                Bridge.Test.Assert.areEqual(3, localArr[0]);
+    
+                Bridge.ClientTest.BridgeIssues.Bridge1202.refMethod$1(Bridge.ref(localArr, 0));
+                Bridge.Test.Assert.areEqual(4, localArr[0]);
+    
+                Bridge.ClientTest.BridgeIssues.Bridge1202.outMethod$1(Bridge.ref(localArr, localArr[1]));
+                Bridge.Test.Assert.areEqual(3, localArr[localArr[1]]);
+    
+                Bridge.ClientTest.BridgeIssues.Bridge1202.refMethod$1(Bridge.ref(localArr, localArr[1]));
+                Bridge.Test.Assert.areEqual(4, localArr[localArr[1]]);
+            },
+            testRefOutStatic1DIntArray: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1202.array = [0, 0];
+    
+                Bridge.ClientTest.BridgeIssues.Bridge1202.outMethod$1(Bridge.ref(Bridge.ClientTest.BridgeIssues.Bridge1202.array, 0));
+                Bridge.Test.Assert.areEqual(3, Bridge.ClientTest.BridgeIssues.Bridge1202.array[0]);
+    
+                Bridge.ClientTest.BridgeIssues.Bridge1202.refMethod$1(Bridge.ref(Bridge.ClientTest.BridgeIssues.Bridge1202.array, 0));
+                Bridge.Test.Assert.areEqual(4, Bridge.ClientTest.BridgeIssues.Bridge1202.array[0]);
+    
+                Bridge.ClientTest.BridgeIssues.Bridge1202.outMethod$1(Bridge.ref(Bridge.ClientTest.BridgeIssues.Bridge1202.array, Bridge.ClientTest.BridgeIssues.Bridge1202.array[1]));
+                Bridge.Test.Assert.areEqual(3, Bridge.ClientTest.BridgeIssues.Bridge1202.array[Bridge.ClientTest.BridgeIssues.Bridge1202.array[1]]);
+    
+                Bridge.ClientTest.BridgeIssues.Bridge1202.refMethod$1(Bridge.ref(Bridge.ClientTest.BridgeIssues.Bridge1202.array, Bridge.ClientTest.BridgeIssues.Bridge1202.array[1]));
+                Bridge.Test.Assert.areEqual(4, Bridge.ClientTest.BridgeIssues.Bridge1202.array[Bridge.ClientTest.BridgeIssues.Bridge1202.array[1]]);
+            },
+            testRefOutLocal2DIntArray: function () {
+                var array2D = Bridge.Array.create(0, [[0, 0]], 1, 2);
+    
+                Bridge.ClientTest.BridgeIssues.Bridge1202.outMethod$1(Bridge.ref(array2D, [0, 0]));
+                Bridge.Test.Assert.areEqual(3, array2D.get([0, 0]));
+    
+                Bridge.ClientTest.BridgeIssues.Bridge1202.refMethod$1(Bridge.ref(array2D, [0, 0]));
+                Bridge.Test.Assert.areEqual(4, array2D.get([0, 0]));
+    
+                Bridge.ClientTest.BridgeIssues.Bridge1202.outMethod$1(Bridge.ref(array2D, [array2D.get([0, 1]), array2D.get([0, 1])]));
+                Bridge.Test.Assert.areEqual(3, array2D.get([array2D.get([0, 1]), array2D.get([0, 1])]));
+    
+                Bridge.ClientTest.BridgeIssues.Bridge1202.refMethod$1(Bridge.ref(array2D, [array2D.get([0, 1]), array2D.get([0, 1])]));
+                Bridge.Test.Assert.areEqual(4, array2D.get([array2D.get([0, 1]), array2D.get([0, 1])]));
+            },
+            testRefOutStaticDecimalField: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1202.decimalField = Bridge.Decimal(0);
+    
+                Bridge.ClientTest.BridgeIssues.Bridge1202.outMethod(Bridge.ref(Bridge.ClientTest.BridgeIssues.Bridge1202, "decimalField"));
+                Bridge.Test.Assert.areEqual("7", Bridge.Int.format(Bridge.ClientTest.BridgeIssues.Bridge1202.decimalField, 'G'));
+    
+                Bridge.ClientTest.BridgeIssues.Bridge1202.refMethod(Bridge.ref(Bridge.ClientTest.BridgeIssues.Bridge1202, "decimalField"));
+                Bridge.Test.Assert.areEqual("8", Bridge.Int.format(Bridge.ClientTest.BridgeIssues.Bridge1202.decimalField, 'G'));
+            },
+            testRefOutLocal1DDecimalArray: function () {
+                var localArr = [Bridge.Decimal(0), Bridge.Decimal(0)];
+    
+                Bridge.ClientTest.BridgeIssues.Bridge1202.outMethod(Bridge.ref(localArr, 0));
+                Bridge.Test.Assert.areEqual("7", Bridge.Int.format(localArr[0], 'G'));
+    
+                Bridge.ClientTest.BridgeIssues.Bridge1202.refMethod(Bridge.ref(localArr, 0));
+                Bridge.Test.Assert.areEqual("8", Bridge.Int.format(localArr[0], 'G'));
+            },
+            testRefOutLocal2DDecimalArray: function () {
+                var array2D = Bridge.Array.create(Bridge.Decimal(0.0), [[Bridge.Decimal(0), Bridge.Decimal(0)]], 1, 2);
+    
+                Bridge.ClientTest.BridgeIssues.Bridge1202.outMethod(Bridge.ref(array2D, [0, 0]));
+                Bridge.Test.Assert.areEqual("7", Bridge.Int.format(array2D.get([0, 0]), 'G'));
+    
+                Bridge.ClientTest.BridgeIssues.Bridge1202.refMethod(Bridge.ref(array2D, [0, 0]));
+                Bridge.Test.Assert.areEqual("8", Bridge.Int.format(array2D.get([0, 0]), 'G'));
+            },
+            testInlineOutStaticIntField: function () {
+                var s = "1";
+                var i = { };
+                Bridge.ClientTest.BridgeIssues.Bridge1202.intField = 0;
+    
+                if (Bridge.Int32.tryParse(s, i)) {
+                    Bridge.Test.Assert.areEqual(1, i.v);
+                }
+                else  {
+                    Bridge.Test.Assert.fail();
+                }
+    
+                if (Bridge.Int32.tryParse(s, Bridge.ref(Bridge.ClientTest.BridgeIssues.Bridge1202, "intField"))) {
+                    Bridge.Test.Assert.areEqual(1, Bridge.ClientTest.BridgeIssues.Bridge1202.intField);
+                }
+                else  {
+                    Bridge.Test.Assert.fail();
+                }
+            },
+            testInlineOutStatic1DIntArray: function () {
+                var s = "1";
+                Bridge.ClientTest.BridgeIssues.Bridge1202.array = [0, 0];
+    
+                if (Bridge.Int32.tryParse(s, Bridge.ref(Bridge.ClientTest.BridgeIssues.Bridge1202.array, 0))) {
+                    Bridge.Test.Assert.areEqual(1, Bridge.ClientTest.BridgeIssues.Bridge1202.array[0]);
+                }
+                else  {
+                    Bridge.Test.Assert.fail();
+                }
+    
+                if (Bridge.Int32.tryParse(s, Bridge.ref(Bridge.ClientTest.BridgeIssues.Bridge1202.array, Bridge.ClientTest.BridgeIssues.Bridge1202.array[1]))) {
+                    Bridge.Test.Assert.areEqual(1, Bridge.ClientTest.BridgeIssues.Bridge1202.array[Bridge.ClientTest.BridgeIssues.Bridge1202.array[1]]);
+                }
+                else  {
+                    Bridge.Test.Assert.fail();
+                }
+            },
+            testInlineOutLocal2DIntArray: function () {
+                var s = "1";
+                var array2D = Bridge.Array.create(0, [[0, 0]], 1, 2);
+    
+                if (Bridge.Int32.tryParse(s, Bridge.ref(array2D, [0, 0]))) {
+                    Bridge.Test.Assert.areEqual(1, array2D.get([0, 0]));
+                }
+                else  {
+                    Bridge.Test.Assert.fail();
+                }
+    
+                if (Bridge.Int32.tryParse(s, Bridge.ref(array2D, [array2D.get([0, 1]), array2D.get([0, 1])]))) {
+                    Bridge.Test.Assert.areEqual(1, array2D.get([array2D.get([0, 1]), array2D.get([0, 1])]));
+                }
+                else  {
+                    Bridge.Test.Assert.fail();
+                }
+            }
+        }
+    });
+    
     (function(){
         var Bridge1203_a2 = function () {
         };

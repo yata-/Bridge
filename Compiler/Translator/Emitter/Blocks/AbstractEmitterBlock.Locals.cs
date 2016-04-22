@@ -77,10 +77,6 @@ namespace Bridge.Translator
                     }
                     this.Emitter.LocalsMap[identifierExpression.Identifier] = name + ".v";
                 }
-                else
-                {
-                    throw new EmitterException(expr, "Only local variables can be passed by reference");
-                }
             }
         }
 

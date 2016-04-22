@@ -1097,6 +1097,16 @@
                 QUnit.test("#1189 - TestTaskNumber", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1189.testTaskNumber);
                 QUnit.test("#1197 - TestGetHashCodeOnDictionary", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1197.testGetHashCodeOnDictionary);
                 QUnit.test("#1199 - TestEventNameCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1199.testEventNameCase);
+                QUnit.test("#1202 - TestRefOutStaticIntField", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202.testRefOutStaticIntField);
+                QUnit.test("#1202 - TestRefOutLocal1DIntArray", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202.testRefOutLocal1DIntArray);
+                QUnit.test("#1202 - TestRefOutStatic1DIntArray", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202.testRefOutStatic1DIntArray);
+                QUnit.test("#1202 - TestRefOutLocal2DIntArray", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202.testRefOutLocal2DIntArray);
+                QUnit.test("#1202 - TestRefOutStaticDecimalField", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202.testRefOutStaticDecimalField);
+                QUnit.test("#1202 - TestRefOutLocal1DDecimalArray", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202.testRefOutLocal1DDecimalArray);
+                QUnit.test("#1202 - TestRefOutLocal2DDecimalArray", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202.testRefOutLocal2DDecimalArray);
+                QUnit.test("#1202 - TestInlineOutStaticIntField", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202.testInlineOutStaticIntField);
+                QUnit.test("#1202 - TestInlineOutStatic1DIntArray", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202.testInlineOutStatic1DIntArray);
+                QUnit.test("#1202 - TestInlineOutLocal2DIntArray", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202.testInlineOutLocal2DIntArray);
                 QUnit.test("#1203 - TestLiftedFunctionsInsideInitMethod", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1203.testLiftedFunctionsInsideInitMethod);
                 QUnit.test("#1206 - TestDocumentURLProperty", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1206.testDocumentURLProperty);
                 QUnit.test("#1217 - TestTypeInferenceWithNamedArguments", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1217.testTypeInferenceWithNamedArguments);
@@ -3167,6 +3177,52 @@
             testEventNameCase: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1199).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1199);
                 Bridge.ClientTest.BridgeIssues.Bridge1199.testEventNameCase();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202)],
+        statics: {
+            testRefOutStaticIntField: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202);
+                Bridge.ClientTest.BridgeIssues.Bridge1202.testRefOutStaticIntField();
+            },
+            testRefOutLocal1DIntArray: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202);
+                Bridge.ClientTest.BridgeIssues.Bridge1202.testRefOutLocal1DIntArray();
+            },
+            testRefOutStatic1DIntArray: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202);
+                Bridge.ClientTest.BridgeIssues.Bridge1202.testRefOutStatic1DIntArray();
+            },
+            testRefOutLocal2DIntArray: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202);
+                Bridge.ClientTest.BridgeIssues.Bridge1202.testRefOutLocal2DIntArray();
+            },
+            testRefOutStaticDecimalField: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202);
+                Bridge.ClientTest.BridgeIssues.Bridge1202.testRefOutStaticDecimalField();
+            },
+            testRefOutLocal1DDecimalArray: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202);
+                Bridge.ClientTest.BridgeIssues.Bridge1202.testRefOutLocal1DDecimalArray();
+            },
+            testRefOutLocal2DDecimalArray: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202);
+                Bridge.ClientTest.BridgeIssues.Bridge1202.testRefOutLocal2DDecimalArray();
+            },
+            testInlineOutStaticIntField: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202);
+                Bridge.ClientTest.BridgeIssues.Bridge1202.testInlineOutStaticIntField();
+            },
+            testInlineOutStatic1DIntArray: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202);
+                Bridge.ClientTest.BridgeIssues.Bridge1202.testInlineOutStatic1DIntArray();
+            },
+            testInlineOutLocal2DIntArray: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202);
+                Bridge.ClientTest.BridgeIssues.Bridge1202.testInlineOutLocal2DIntArray();
             }
         }
     });

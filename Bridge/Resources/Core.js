@@ -7,6 +7,26 @@
 
         identity: function (x) { return x; },
 
+        ref: function(o, n) {
+            if (Bridge.isArray(n)) {
+                n = Bridge.Array.toIndex(o, n);
+            }
+
+            var proxy = {};
+
+            Object.defineProperty(proxy, "v", {
+                get: function () {
+                    return o[n];
+                },
+
+                set: function (value) {
+                    o[n] = value;
+                }
+            });
+
+            return proxy;
+        },
+        
         property : function (scope, name, v) {
             scope[name] = v;
 
