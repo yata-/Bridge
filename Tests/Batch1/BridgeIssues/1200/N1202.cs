@@ -6,7 +6,8 @@ namespace Bridge.ClientTest.BridgeIssues
     [TestFixture(TestNameFormat = "#1202 - {0}")]
     public class Bridge1202
     {
-        static int field;
+        static decimal decimalField;
+        static int intField;
         static int[] array;
 
         static void OutMethod(out int value)
@@ -19,33 +20,32 @@ namespace Bridge.ClientTest.BridgeIssues
             value++;
         }
 
-        [Test]
-        public static void TestRefOutField()
+        static void OutMethod(out decimal value)
         {
-            field = 0;
-            array = new[]{0,0};
+            value = 7;
+        }
 
-            OutMethod(out field);
-            Assert.AreEqual(3, field);
+        static void RefMethod(ref decimal value)
+        {
+            value++;
+        }
 
-            RefMethod(ref field);
-            Assert.AreEqual(4, field);
+        [Test]
+        public static void TestRefOutStaticIntField()
+        {
+            intField = 0;
 
-            
-            OutMethod(out array[0]);
-            Assert.AreEqual(3, array[0]);
+            OutMethod(out intField);
+            Assert.AreEqual(3, intField);
 
-            RefMethod(ref array[0]);
-            Assert.AreEqual(4, array[0]);
+            RefMethod(ref intField);
+            Assert.AreEqual(4, intField);
+        }
 
-            OutMethod(out array[array[1]]);
-            Assert.AreEqual(3, array[array[1]]);
-
-            RefMethod(ref array[array[1]]);
-            Assert.AreEqual(4, array[array[1]]);
-
-            
-            int[] localArr = new int[]{0, 0};
+        [Test]
+        public static void TestRefOutLocal1DIntArray()
+        {
+            int[] localArr = new int[] { 0, 0 };
 
             OutMethod(out localArr[0]);
             Assert.AreEqual(3, localArr[0]);
@@ -58,12 +58,33 @@ namespace Bridge.ClientTest.BridgeIssues
 
             RefMethod(ref localArr[localArr[1]]);
             Assert.AreEqual(4, localArr[localArr[1]]);
+        }
 
-            
+        [Test]
+        public static void TestRefOutStatic1DIntArray()
+        {
+            array = new int[] { 0, 0 };
+
+            OutMethod(out array[0]);
+            Assert.AreEqual(3, array[0]);
+
+            RefMethod(ref array[0]);
+            Assert.AreEqual(4, array[0]);
+
+            OutMethod(out array[array[1]]);
+            Assert.AreEqual(3, array[array[1]]);
+
+            RefMethod(ref array[array[1]]);
+            Assert.AreEqual(4, array[array[1]]);
+        }
+
+        [Test]
+        public static void TestRefOutLocal2DIntArray()
+        {
             int[,] array2D = new int[,] { { 0, 0 } };
-            
-            OutMethod(out array2D[0,0]);
-            Assert.AreEqual(3, array2D[0,0]);
+
+            OutMethod(out array2D[0, 0]);
+            Assert.AreEqual(3, array2D[0, 0]);
 
             RefMethod(ref array2D[0, 0]);
             Assert.AreEqual(4, array2D[0, 0]);
@@ -76,13 +97,47 @@ namespace Bridge.ClientTest.BridgeIssues
         }
 
         [Test]
-        public static void TestInlineRefOutField()
+        public static void TestRefOutStaticDecimalField()
+        {
+            decimalField = 0;
+
+            OutMethod(out decimalField);
+            Assert.AreEqual("7", decimalField.ToString());
+
+            RefMethod(ref decimalField);
+            Assert.AreEqual("8", decimalField.ToString());
+        }
+
+        [Test]
+        public static void TestRefOutLocal1DDecimalArray()
+        {
+            decimal[] localArr = new decimal[] { 0, 0 };
+
+            OutMethod(out localArr[0]);
+            Assert.AreEqual("7", localArr[0].ToString());
+
+            RefMethod(ref localArr[0]);
+            Assert.AreEqual("8", localArr[0].ToString());
+        }
+
+        [Test]
+        public static void TestRefOutLocal2DDecimalArray()
+        {
+            decimal[,] array2D = new decimal[,] { { 0, 0 } };
+
+            OutMethod(out array2D[0, 0]);
+            Assert.AreEqual("7", array2D[0, 0].ToString());
+
+            RefMethod(ref array2D[0, 0]);
+            Assert.AreEqual("8", array2D[0, 0].ToString());
+        }
+
+        [Test]
+        public static void TestInlineOutStaticIntField()
         {
             string s = "1";
             int i;
-            field = 0;
-            array = new[] { 0, 0 };
-            int[,] array2D = new int[,] { { 0, 0 } };
+            intField = 0;
 
             if (int.TryParse(s, out i))
             {
@@ -93,14 +148,21 @@ namespace Bridge.ClientTest.BridgeIssues
                 Assert.Fail();
             }
 
-            if (int.TryParse(s, out field))
+            if (int.TryParse(s, out intField))
             {
-                Assert.AreEqual(1, field);
+                Assert.AreEqual(1, intField);
             }
             else
             {
                 Assert.Fail();
             }
+        }
+
+        [Test]
+        public static void TestInlineOutStatic1DIntArray()
+        {
+            string s = "1";
+            array = new[] { 0, 0 };
 
             if (int.TryParse(s, out array[0]))
             {
@@ -119,6 +181,13 @@ namespace Bridge.ClientTest.BridgeIssues
             {
                 Assert.Fail();
             }
+        }
+
+        [Test]
+        public static void TestInlineOutLocal2DIntArray()
+        {
+            string s = "1";
+            int[,] array2D = new int[,] { { 0, 0 } };
 
             if (int.TryParse(s, out array2D[0, 0]))
             {
