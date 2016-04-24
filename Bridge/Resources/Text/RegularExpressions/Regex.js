@@ -185,7 +185,8 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         this._runner = new scope.RegexRunner();
 
         //TODO: cache
-        var groupInfos = Bridge.Text.RegularExpressions.RegexNetEngine.parsePatternGroups(this._pattern);
+        var patternInfo = Bridge.Text.RegularExpressions.RegexNetEngine.parsePattern(this._pattern);
+        var groupInfos = patternInfo.groups;
 
         this._capsize = groupInfos.length;
         this._capslist = [];

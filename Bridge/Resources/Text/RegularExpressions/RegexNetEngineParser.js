@@ -56,22 +56,317 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         parsePattern: function (pattern, isIgnoreWhitespaceMode) {
+            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
             var settings = {
                 ignoreWhitespace: isIgnoreWhitespaceMode
             };
 
+            // Parse tokens in the original pattern:
+            var tokens = scope._parsePatternImpl(pattern, settings, 0, pattern.length);
+            scope._parsePatternPostImpl(pattern, tokens);
+
+            // Collect and fill group descriptors into Group tokens.
+            // We need do it before any token modification.
+            var groups = [];
+            scope._fillGroupDescriptors(groups, tokens, null);
+
+            // Transform tokens for usage in JS RegExp:
+            scope._transformTokensForJsPattern(tokens);
+
+            // Update group descriptors as tokens have been transformed (at least indexes were changed):
+            scope._updateGroupDescriptors(tokens);
+
+            // Create pattern supported by JS RegExp:
+            var jsPattern = scope._constructPattern(tokens);
+
+            var result = {
+                originalPattern: pattern,
+                jsPattern: jsPattern,
+                groups: groups
+            };
+
+            return result;
+        },
+
+        _fillGroupDescriptors: function (groups, tokens, parentGroup) {
             var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
-            return scope._parsePatternImpl(pattern, settings, 0, pattern.length);
+            var tokenTypes = scope.tokenTypes;
+            var group;
+            var token;
+            var constructCandidateToken;
+            var hasChildren;
+            var i;
+
+            for (i = 0; i < tokens.length; i++) {
+                token = tokens[i];
+                hasChildren = token.children && token.children.length;
+
+                if (token.type === tokenTypes.group) {
+                    group = {
+                        rawIndex: groups.length + 1,
+                        parentGroup: null,
+                        innerGroups: [],
+
+                        name: null,
+                        hasName: false,
+
+                        constructs: null,
+                        quantifier: null,
+
+                        exprIndex: -1,
+                        exprLength: 0,
+                        expr: null,
+                        exprFull: null
+                    };
+
+                    token.group = group;
+                    groups.push(group);
+
+                    if (parentGroup != null) {
+                        token.group.parentGroup = parentGroup;
+                        parentGroup.innerGroups.push(group);
+                    }
+
+                    // fill group constructs:
+                    constructCandidateToken = hasChildren ? token.children[0] : null;
+                    group.constructs = scope._fillGroupConstructs(constructCandidateToken);
+                }
+
+                // fill group descriptors for inner tokens:
+                if (hasChildren) {
+                    scope._fillGroupDescriptors(groups, token.children, token.group);
+                }
+            }
+
+            var groupId = 1;
+            for (i = 0; i < groups.length; i++) {
+                group = groups[i];
+
+                if (group.constructs.name1 != null) {
+                    group.name = group.constructs.name1;
+                    group.hasName = true;
+                } else {
+                    group.hasName = false;
+                    group.name = groupId.toString();
+                    ++groupId;
+                }
+            }
+        },
+
+        _fillGroupConstructs: function (childToken) {
+            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var tokenTypes = scope.tokenTypes;
+            var constructs = {
+                name1: null,
+                name2: null,
+
+                isNonCapturing: false,
+
+                isIgnoreCase: null,
+                isMultiline: null,
+                isExplicitCapture: null,
+                isSingleLine: null,
+                isIgnoreWhitespace: null,
+
+                isPositiveLookahead: false,
+                isNegativeLookahead: false,
+                isPositiveLookbehind: false,
+                isNegativeLookbehind: false,
+
+                isNonbacktracking: false
+            };
+
+            if (childToken == null) {
+                return constructs;
+            }
+
+            if (childToken.type === tokenTypes.groupConstruct) {
+                // ?:
+                // ?=
+                // ?!
+                // ?<=
+                // ?<!
+                // ?>
+
+                switch (childToken.value) {
+                    case "?:":
+                        constructs.isNonCapturing = true;
+                        break;
+
+                    case "?=":
+                        constructs.isPositiveLookahead = true;
+                        break;
+
+                    case "?!":
+                        constructs.isNegativeLookahead = true;
+                        break;
+
+                    case "?>":
+                        constructs.isNonbacktracking = true;
+                        break;
+
+                    case "?<=":
+                        constructs.isPositiveLookbehind = true;
+                        break;
+
+                    case "?<!":
+                        constructs.isNegativeLookbehind = true;
+                        break;
+
+                    default:
+                        throw new Bridge.ArgumentException("Unrecognized grouping construct.");
+                }
+
+            } else if (childToken.type === tokenTypes.groupConstructName) {
+                // ?<name1>
+                // ?'name1'
+                // ?<name1-name2>
+                // ?'name1-name2'
+
+                var nameExpr = childToken.value.slice(2, childToken.length - 1);
+                var groupNames = nameExpr.split("-");
+                if (groupNames.length === 0 || groupNames.length > 2) {
+                    throw new Bridge.ArgumentException("Invalid group name.");
+                }
+
+                constructs.name1 = groupNames[0];
+                if (groupNames.length === 2) {
+                    constructs.name2 = groupNames[1];
+                }
+
+            } else if (childToken.type === tokenTypes.groupConstructImnsx) {
+                // ?imnsx-imnsx
+
+                var imnsxExprLen = childToken.length - 2;
+                var imnsxVal = true;
+                var ch;
+                var i;
+
+                for (i = 1; i < imnsxExprLen; i++) {
+                    ch = childToken.value[i];
+
+                    if (ch === "-") {
+                        imnsxVal = false;
+                    } else if (ch === "i") {
+                        constructs.isIgnoreCase = imnsxVal;
+                    } else if (ch === "m") {
+                        constructs.isMultiline = imnsxVal;
+                    } else if (ch === "n") {
+                        constructs.isExplicitCapture = imnsxVal;
+                    } else if (ch === "s") {
+                        constructs.isSingleLine = imnsxVal;
+                    } else if (ch === "x") {
+                        constructs.isIgnoreWhitespace = imnsxVal;
+                    }
+                }
+            }
+
+            return constructs;
+        },
+
+        _transformTokensForJsPattern: function (tokens, parentIndex) {
+            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var tokenTypes = scope.tokenTypes;
+            var childUpdated;
+            var updated = false;
+            var token;
+            var childrenValue;
+            var childrenIndex;
+            var i;
+
+            // Transform/adjust tokens collection to work with JS RegExp:
+            var index = parentIndex || 0;
+            for (i = 0; i < tokens.length; i++) {
+                token = tokens[i];
+                token.index = index;
+
+                if (token.type === tokenTypes.groupConstructName) {
+                    tokens.splice(i, 1);
+                    updated = true;
+                    --i;
+                    continue;
+                }
+
+                // Update children token and indexes:
+                if (token.children && token.children.length) {
+                    childrenIndex = token.childrenPostfix.length;
+                    childUpdated = scope._transformTokensForJsPattern(token.children, index + childrenIndex);
+
+                    // Update parent value if children have been changed:
+                    if (childUpdated) {
+                        childrenValue = scope._constructPattern(token.children);
+                        token.value = token.childrenPrefix + childrenValue + token.childrenPostfix;
+                        token.length = token.value.length;
+                        updated = true;
+                    }
+                }
+
+                index += token.length;
+            }
+
+            return updated;
+        },
+
+        _updateGroupDescriptors: function(tokens) {
+            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var tokenTypes = scope.tokenTypes;
+            var group;
+            var token;
+            var quantCandidateToken;
+            var i;
+
+            for (i = 0; i < tokens.length; i++) {
+                token = tokens[i];
+
+                if (token.type === tokenTypes.group) {
+                    group = token.group;
+                    group.exprIndex = token.index;
+                    group.exprLength = token.length;
+
+                    if (i + 1 < tokens.length) {
+                        quantCandidateToken = tokens[i + 1];
+                        if (quantCandidateToken.type === tokenTypes.quantifier ||
+                            quantCandidateToken.type === tokenTypes.quantifierN ||
+                            quantCandidateToken.type === tokenTypes.quantifierNM) {
+
+                            group.quantifier = quantCandidateToken.value;
+                        }
+                    }
+
+                    group.expr = token.value;
+                    group.exprFull = group.expr + (group.quantifier != null ? group.quantifier : "");
+
+                    // Remove unnecessary fields:
+                    delete token.group;
+                }
+
+                if (token.children && token.children.length) {
+                    scope._updateGroupDescriptors(token.children);
+                }
+            }
+        },
+
+        _constructPattern: function(tokens) {
+            var pattern = "";
+            var token;
+            var i;
+
+            for (i = 0; i < tokens.length; i++) {
+                token = tokens[i];
+                pattern += token.value;
+            }
+
+            return pattern;
         },
 
         _parsePatternImpl: function (pattern, settings, startIndex, endIndex) {
             if (pattern == null) {
                 throw new Bridge.ArgumentNullException("pattern");
             }
-            if (startIndex < 0 || startIndex >= pattern.length) {
+            if (startIndex < 0 || startIndex > pattern.length) {
                 throw new Bridge.ArgumentOutOfRangeException("startIndex");
             }
-            if (endIndex <= startIndex || endIndex > pattern.length) {
+            if (endIndex < startIndex || endIndex > pattern.length) {
                 throw new Bridge.ArgumentOutOfRangeException("endIndex");
             }
 
@@ -111,7 +406,8 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
 
                 if (token == null) {
                     if (prevToken != null && prevToken.type === tokenTypes.literal) {
-                        prevToken.length ++;
+                        prevToken.value += ch;
+                        prevToken.length++;
                         i++;
                         continue;
                     }
@@ -126,18 +422,14 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                 }
             }
 
-            scope._prepareRawTokens(pattern, tokens);
             return tokens;
         },
 
-        _prepareRawTokens: function(pattern, tokens) {
+        _parsePatternPostImpl: function(pattern, tokens) {
             var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
-            var backrefNumberTokenType = scope.tokenTypes.escBackrefNumber;
-            var octalNumberTokenType = scope.tokenTypes.escCharOctal;
-            var groupTokenType = scope.tokenTypes.group;
-           
+            var tokenTypes = scope.tokenTypes;
+
             var groupsCount = scope._getGroupsTokenCount(tokens);
-            var groupNumberTokenValue;
             var groupNumberStr;
             var groupNumber;
             var octalCharToken;
@@ -148,9 +440,8 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
 
             for (i = 0; i < tokens.length; i++) {
                 token = tokens[i];
-                if (token.type === backrefNumberTokenType) {
-                    groupNumberTokenValue = pattern.slice(token.index, token.index + token.length);
-                    groupNumberStr = groupNumberTokenValue.slice(1);
+                if (token.type === tokenTypes.escBackrefNumber) {
+                    groupNumberStr = token.value.slice(1);
                     groupNumber = parseInt(groupNumberStr, 10);
 
                     if (groupNumber >= 1 && groupNumber <= groupsCount) {
@@ -166,21 +457,22 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                     }
 
                     // Otherwise, transform the token to OctalNumber:
-                    octalCharToken = scope._parseOctalCharToken(groupNumberTokenValue, 0, groupNumberTokenValue.length);
+                    octalCharToken = scope._parseOctalCharToken(token.value, 0, token.length);
                     if (octalCharToken == null) {
-                        throw new Bridge.ArgumentException("Unrecognized escape sequence " + groupNumberTokenValue.slice(0, 2) + ".");
+                        throw new Bridge.ArgumentException("Unrecognized escape sequence " + token.value.slice(0, 2) + ".");
                     }
 
                     extraLength = token.length - octalCharToken.length;
-                    token.type = octalNumberTokenType;
-                    token.length = octalCharToken.length;
+                    scope._modifyPatternToken(token, pattern, tokenTypes.escCharOctal, null, octalCharToken.length);
 
                     if (extraLength > 0) {
                         literalToken = scope._createPatternToken(pattern, tokenTypes.literal, token.index + token.length, extraLength);
                         tokens.splice(i + 1, 0, literalToken);
                     }
-                } else if (token.type === groupTokenType && token.children && token.children.length > 0) {
-                    scope._prepareRawTokens(pattern, token.children);
+                }
+
+                if (token.children && token.children.length) {
+                    scope._parsePatternPostImpl(pattern, token.children);
                 }
             }
         },
@@ -188,20 +480,22 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
         _getGroupsTokenCount: function(tokens) {
             var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
             var groupTokenType = scope.tokenTypes.group;
-            var tokensLen = tokens.length;
-            var token;
-            var i;
 
             var groupsCount = 0;
+            var tokensLen = tokens.length;
             var childGroupsCount;
+            var token;
+            var i;
 
             for (i = 0; i < tokensLen; i++) {
                 token = tokens[i];
                 if (token.type === groupTokenType) {
                     ++ groupsCount;
 
-                    childGroupsCount = scope._getGroupsTokenCount(token.children);
-                    groupsCount += childGroupsCount;
+                    if (token.chldren && token.children.length) {
+                        childGroupsCount = scope._getGroupsTokenCount(token.children);
+                        groupsCount += childGroupsCount;
+                    }
                 }
             }
 
@@ -405,7 +699,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                 throw new Bridge.ArgumentException("Unterminated [] set.");
             }
 
-            var groupToken = scope._createPatternToken(pattern, tokenTypes.charGroup, i, 1 + closeBracketIndex - i, tokens);
+            var groupToken = scope._createPatternToken(pattern, tokenTypes.charGroup, i, 1 + closeBracketIndex - i, tokens, "[", "]");
             return groupToken;
         },
 
@@ -431,7 +725,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
             }
 
             var bracketLvl = 1;
-            var index = i + 1;
+            var bodyIndex = i + 1;
             var closeBracketIndex = -1;
 
             var isComment = false;
@@ -440,7 +734,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
             // Parse the Group construct, if any:
             var constructToken = scope._parseGroupConstructToken(pattern, settings, i + 1, endIndex);
             if (constructToken != null) {
-                index += constructToken.length;
+                bodyIndex += constructToken.length;
                 if (constructToken.type === tokenTypes.commentInline) {
                     isComment = true;
                 } else if (constructToken.type === tokenTypes.alternationGroupExpr) {
@@ -449,6 +743,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
             }
 
             // Find the closing bracket of the group:
+            var index = bodyIndex;
             while (index < endIndex) {
                 ch = pattern[index];
                 if (ch === "(" && !isComment) {
@@ -477,7 +772,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
             }
 
             // Parse the "Body" of the group
-            var innerTokens = scope._parsePatternImpl(pattern, settings, i + 1, closeBracketIndex);
+            var innerTokens = scope._parsePatternImpl(pattern, settings, bodyIndex, closeBracketIndex);
             if (constructToken != null) {
                 innerTokens.splice(0, 0, constructToken);
             }
@@ -500,12 +795,12 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                     }
                 }
 
-                var altGroupToken = scope._createPatternToken(pattern, tokenTypes.alternationGroup, i, 1 + closeBracketIndex - i, innerTokens);
+                var altGroupToken = scope._createPatternToken(pattern, tokenTypes.alternationGroup, i, 1 + closeBracketIndex - i, innerTokens, "(", ")");
                 return altGroupToken;
             }
 
             // Create Group token:
-            var groupToken = scope._createPatternToken(pattern, tokenTypes.group, i, 1 + closeBracketIndex - i, innerTokens);
+            var groupToken = scope._createPatternToken(pattern, tokenTypes.group, i, 1 + closeBracketIndex - i, innerTokens, "(", ")");
             return groupToken;
         },
 
@@ -552,13 +847,14 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
             }
 
             if (ch === "<" || ch === "'") {
-                var nameChars = scope._matchUntil(pattern, i + 2, endIndex, ch);
+                var closingCh = ch === "<" ? ">" : ch;
+                var nameChars = scope._matchUntil(pattern, i + 2, endIndex, closingCh);
                 if (nameChars.unmatchLength !== 1 || nameChars.matchLength === 0) {
                     throw new Bridge.ArgumentException("Unrecognized grouping construct.");
                 }
 
                 var nameFirstCh = nameChars.match.slice(0, 1);
-                if ("`~@#$%^&*()-+{}[]|\\/|'\";:,.?".indexOf(nameFirstCh)) {
+                if ("`~@#$%^&*()-+{}[]|\\/|'\";:,.?".indexOf(nameFirstCh) >= 0) {
                     // TODO: replace the "black list" of wrong characters with char class check:
                     // According to UTS#18 Unicode Regular Expressions (http://www.unicode.org/reports/tr18/)
                     // RL 1.4 Simple Word Boundaries  The class of <word_character> includes all Alphabetic
@@ -651,7 +947,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
             }
 
             // Transform Group token to Alternation expression token:
-            return scope._createPatternToken(pattern, tokenTypes.alternationGroupExpr, expr.index - 1, 1 + expr.length, expr.children);
+            return scope._createPatternToken(pattern, tokenTypes.alternationGroupExpr, expr.index - 1, 1 + expr.length, expr.children, "?(", ")");
         },
 
         _parseXModeCommentToken: function(pattern, i, endIndex) {
@@ -676,18 +972,38 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
             return scope._createPatternToken(pattern, tokenTypes.commentXMode, i, index - i);
         },
 
-        _createPatternToken: function (pattern, type, i, len, innerTokens) {
+        _createPatternToken: function (pattern, type, i, len, innerTokens, innerTokensPrefix, innerTokensPostfix) {
             var token = {
                 type: type,
                 index: i,
-                length: len
+                length: len,
+                value: pattern.slice(i, i + len)
             };
 
             if (innerTokens != null && innerTokens.length > 0) {
                 token.children = innerTokens;
+                token.childrenPrefix = innerTokensPrefix;
+                token.childrenPostfix = innerTokensPostfix;
             }
 
             return token;
+        },
+
+        _modifyPatternToken: function(token, pattern, type, i, len) {
+            if (type != null) {
+                token.type = type;
+            }
+            
+            if (i != null || len != null) {
+                if (i != null) {
+                    token.index = i;
+                }
+                if (len != null) {
+                    token.length = len;
+                }
+
+                token.value = pattern.slice(token.index, token.index + token.length);
+            }
         },
 
         _matchChars: function (str, startIndex, endIndex, allowedChars, maxLength) {

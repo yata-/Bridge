@@ -2,7 +2,7 @@
 
 Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
     statics: {
-        jsRegex: function (text, textStart, pattern, isMultiLine, isCaseInsensitive, returnAllMatches, re) {
+        jsRegex: function(text, textStart, pattern, isMultiLine, isCaseInsensitive, returnAllMatches, re) {
             if (text == null) {
                 throw new Bridge.ArgumentNullException("text");
             }
@@ -43,353 +43,26 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                 } while (match != null)
 
                 return matches;
-            } 
+            }
 
             return match;
         },
 
-        parsePatternGroups: function (pattern) {
-            var group;
-            var groups = [];
-            var nestedGroups = [];
-
-            var sBracketLvl = 0;
-            var isEscape = false;
-            var parent;
-            var ch;
-            var i;
-
-            for (i = 0; i < pattern.length; i++) {
-                if (isEscape) {
-                    isEscape = false;
-                    continue;
-                }
-
-                ch = pattern[i];
-                if (ch === "\\") {
-                    isEscape = true;
-                    continue;
-                }
-
-                if (ch === "[") {
-                    sBracketLvl++;
-                    continue;
-                }
-
-                if (ch === "]") {
-                    if (sBracketLvl > 0) {
-                        sBracketLvl--;
-                    }
-                    continue;
-                }
-
-                if (ch === "(") {
-                    if (sBracketLvl === 0) {
-                        parent = nestedGroups.length > 0 ? nestedGroups[nestedGroups.length - 1] : null;
-
-                        group = {
-                            exprIndex: i,
-                            exprLength: 0,
-                            parentGroup: parent,
-                            innerGroups: []
-                        };
-
-                        groups.push(group);
-                        nestedGroups.push(group);
-
-                        if (parent != null) {
-                            parent.innerGroups.push(group);
-                        }
-
-                        group.constructs = Bridge.Text.RegularExpressions.RegexNetEngine._getGroupConstructs(pattern, i + 1);
-                        i += group.constructs.exprLength; // Skip group Constructs in the pattern
-                    }
-                    continue;
-                }
-                if (ch === ")") {
-                    if (sBracketLvl === 0 && nestedGroups.length > 0) {
-                        group = nestedGroups.pop();
-                        group.exprLength = 1 + i - group.exprIndex;
-                        Bridge.Text.RegularExpressions.RegexNetEngine._fillPatternGroupInfo(group, pattern);
-                    }
-                    continue;
-                }
-            }
-
-            var groupId = 1;
-            var j;
-
-            for (j = 0; j < groups.length; j++) {
-                if (groups[j].constructs.name1 != null) {
-                    //TODO: check balancing case: name1-name2
-                    groups[j].name = groups[j].constructs.name1;
-                    groups[j].hasName = true;
-                } else if (!groups[j].constructs.isNonCapturing) {
-                    groups[j].hasName = false;
-                    groups[j].name = groupId.toString();
-                    ++groupId;
-                }
-            }
-
-            return groups;
-        },
-
-        _getGroupConstructs: function (pattern, i) {
-            // ?<name1>
-            // ?'name1'
-            // ?<name1-name2>
-            // ?'name1-name2'
-            // ?:
-            // ?imnsx-imnsx
-            // ?=
-            // ?!
-            // ?<=
-            // ?<!
-            // ?>
-            var constructs = {
-                name1: null,
-                name2: null,
-
-                isNonCapturing: false,
-
-                isIgnoreCase: null,
-                isMultiline: null,
-                isExplicitCapture: null,
-                isSingleLine: null,
-                isIgnoreWhitespace: null,
-
-                isPositiveLookahead: false,
-                isNegativeLookahead: false,
-                isPositiveLookbehind: false,
-                isNegativeLookbehind: false,
-
-                isNonbacktracking: false,
-
-                exprLength: 0
-            };
-
-            if (i+1 >= pattern.length) {
-                return constructs;
-            }
-
-            if (pattern[i] !== "?") {
-                return constructs;
-            }
-
-            ++i;
-            var sfx2 = pattern.slice(i, i + 2);
-            if (sfx2.length === 2) {
-                if (sfx2 === "<=") {
-                    constructs.isPositiveLookbehind = true;
-                    constructs.exprLength = 3;
-                    return constructs;
-                }
-                if (sfx2 === "<!") {
-                    constructs.isNegativeLookbehind = true;
-                    constructs.exprLength = 3;
-                    return constructs;
-                }
-            }
-            var ch = pattern[i];
-            if (ch === ":") {
-                constructs.isNonCapturing = true;
-                constructs.exprLength = 2;
-                return constructs;
-            }
-            if (ch === "=") {
-                constructs.isPositiveLookahead = true;
-                constructs.exprLength = 2;
-                return constructs;
-            }
-            if (ch === "!") {
-                constructs.isNegativeLookahead = true;
-                constructs.exprLength = 2;
-                return constructs;
-            }
-            if (ch === ">") {
-                constructs.isNonbacktracking = true;
-                constructs.exprLength = 2;
-                return constructs;
-            }
-            if (ch === "<" || ch === "'") {
-                var endBracket = ch === "<" ? ">" : "'";
-                var name1Match = Bridge.Text.RegularExpressions.RegexNetEngine._matchUntil(pattern, i + 1, pattern.length, ["-", endBracket]);
-                constructs.name1 = name1Match.matched;
-                constructs.exprLength = name1Match.lastIndex - i + 2;
-                                                                    
-                if (name1Match.lastCh === "-") {
-                    var name2Match = Bridge.Text.RegularExpressions.RegexNetEngine._matchUntil(pattern, name1Match.lastIndex + 1, pattern.length, [endBracket]);
-                    constructs.name2 = name2Match.matched;
-                    constructs.exprLength = name2Match.lastIndex - i + 2;
-                }
-                return constructs;
-            }
-
-            var imnsx = ["i", "m", "n", "s", "x"];
-            var imnsx1Match = Bridge.Text.RegularExpressions.RegexNetEngine._matchAllowedChars(pattern, i + 1, pattern.length, imnsx);
-            if (imnsx1Match.lastCh === "-" || imnsx1Match.lastCh === ":") {
-                Bridge.Text.RegularExpressions.RegexNetEngine._parseImnsx(constructs, imnsx1Match.matched, true);
-
-                if (imnsx1Match.lastCh === "-") {
-                    var imnsx2Match = Bridge.Text.RegularExpressions.RegexNetEngine._matchAllowedChars(pattern, imnsx1Match.lastCh + 1, pattern.length, imnsx);
-                    Bridge.Text.RegularExpressions.RegexNetEngine._parseImnsx(constructs, imnsx2Match.matched, false);
-                    constructs.exprLength = imnsx2Match.lastIndex - i + 2;
-                } else {
-                    constructs.exprLength = imnsx1Match.lastIndex - i + 2;
-                }
-            }
-
-            return constructs;
-        },
-
-        _parseImnsx: function (prefix, imnsxString, value) {
-            var ch;
-            var i;
-
-            for (i = 0; i < imnsxString.length; i++) {
-                ch = imnsxString[i];
-                if (ch === "i") {
-                    prefix.isIgnoreCase = value;
-                }
-                else if (ch === "m") {
-                    prefix.isMultiline = value;
-                }
-                else if (ch === "n") {
-                    prefix.isExplicitCapture = value;
-                }
-                else if (ch === "s") {
-                    prefix.isSingleLine = value;
-                }
-                else if (ch === "x") {
-                    prefix.isIgnoreWhitespace = value;
-                }
-            }
-        },
-
-        _fillPatternGroupInfo: function (group, pattern) {
-            var quantifier = "";
-            var basicQuantifiers = ["+", "*", "?"];
-            var digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-
-            var outerCh;
-            var hasQuantifier = false;
-            var outerIndex = group.exprIndex + group.exprLength;
-            if (outerIndex < pattern.length) {
-                var res = Bridge.Text.RegularExpressions.RegexNetEngine._matchAllowedChars(pattern, outerIndex, outerIndex + 1, basicQuantifiers);
-
-                if (res.matched.length === 1) { // ["+", "*", "?"]
-                    quantifier = res.matched;
-                    outerIndex++;
-                    hasQuantifier = true;
-                } else {
-                    outerCh = pattern[outerIndex];
-                    outerIndex++;
-
-                    if (outerCh === "{") {
-                        var nRes = Bridge.Text.RegularExpressions.RegexNetEngine._matchAllowedChars(pattern, outerIndex, pattern.length, digits);
-                        if (nRes.matched.length > 0) {
-                            if (nRes.lastCh === "}") {
-                                quantifier = "{" + nRes.matched + "}";
-                                hasQuantifier = true;
-                                outerIndex = nRes.lastIndex + 1;
-                            }
-                            else if (nRes.lastCh === ",") {
-                                var mRes = Bridge.Text.RegularExpressions.RegexNetEngine._matchAllowedChars(pattern, nRes.lastIndex + 1, pattern.length, digits);
-                                if (mRes.lastCh === "}") {
-                                    quantifier = "{" + nRes.matched + "," + mRes.matched + "}";
-                                    hasQuantifier = true;
-                                    outerIndex = mRes.lastIndex + 1;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (hasQuantifier && outerIndex < pattern.length) {
-                    outerCh = pattern[outerIndex];
-                    if (outerCh === "?") {
-                        quantifier += "?";
-                    }
-                }
-            }
-
-            group.quantifier = quantifier;
-            group.expr = pattern.slice(group.exprIndex, group.exprIndex + group.exprLength);
-            group.exprFull = group.expr + group.quantifier;
-        },
-
-        _matchAllowedChars: function (str, index, endIndex, allowedChars) {
-            var res = {
-                matched: "",
-                lastCh: "",
-                lastIndex: 0
-            };
-
-            var ch;
-            var isAllowed;
-            var i;
-
-
-            while (index < endIndex) {
-
-                ch = str[index];
-                isAllowed = false;
-                for (i = 0; i < allowedChars.length; i++) {
-                    if (ch === allowedChars[i]) {
-                        isAllowed = true;
-                        break;
-                    }
-                }
-
-                if (isAllowed) {
-                    res.matched += ch;
-                } else {
-                    res.lastCh = ch;
-                    res.lastIndex = index;
-                    break;
-                }
-
-                index++;
-            }
-
-            return res;
-        },
-
-        _matchUntil: function(str, index, endIndex, unallowedChars) {
-            var res = {
-                matched: "",
-                lastCh: "",
-                lastIndex: 0
-            };
-
-            var ch;
-            var i;
-
-            while (index < endIndex) {
-
-                ch = str[index];
-                for (i = 0; i < unallowedChars.length; i++) {
-                    if (ch === unallowedChars[i]) {
-                        res.lastCh = ch;
-                        res.lastIndex = index;
-                        return res;
-                    }
-                }
-
-                res.matched += ch;
-                index++;
-            }
-
-            return res;
+        parsePattern: function(pattern) {
+            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var result = scope.parsePattern(pattern);
+            return result;
         }
     },
 
     _pattern: "",
+    _originalPattern: "",
+    _patternInfo: null,
+
     _isMultiLine: false,
     _isCaseInsensitive: false,
     _text: "",
     _textStart: 0,
-    _groupDescriptors: null,
     _timeoutMs: -1,
     _timeoutTime: -1,
 
@@ -399,6 +72,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         }
 
         this._pattern = pattern;
+        this._originalPattern = pattern;
         this._isMultiLine = isMultiLine;
         this._isCaseInsensitive = isCaseInsensitive;
         this._timeoutMs = timeoutMs;
@@ -426,7 +100,8 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         };
 
         // Get group descriptors (+ remove group name before any processing);
-        var groupDescs = this._getGroupDescriptors();
+        var patternInfo = this._parseAndFixPattern();
+        var groupDescs = patternInfo.groups;
 
         this._checkTimeout();
 
@@ -680,59 +355,15 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         return null;
     },
 
-    _getGroupDescriptors: function () {
-        if (this._groupDescriptors == null) {
-            this._groupDescriptors = Bridge.Text.RegularExpressions.RegexNetEngine.parsePatternGroups(this._pattern);
-            this._removeGroupNamesFromPattern();
+    _parseAndFixPattern: function () {
+        if (this._patternInfo == null) {
+            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var patternInfo = scope.parsePattern(this._pattern);
+
+            this._patternInfo = patternInfo;
+            this._pattern = patternInfo.jsPattern;
         }
-        return this._groupDescriptors;
-    },
-
-    _removeGroupNamesFromPattern: function() {
-        // Remove group names (JS RegExp does not support them):
-
-        var updatedPattern = this._pattern;
-        var gr;
-        var name;
-        var nameConstrLen;
-        var parent;
-        var nextGr;
-        var i;
-        var j;
-
-        for (i = 0; i < this._groupDescriptors.length; i++) {
-            gr = this._groupDescriptors[i];
-            if (gr.hasName) {
-                // Remove name from the group:
-                name = gr.constructs.name1;
-                nameConstrLen = 3 + name.length;
-                gr.expr = this._removeSubstring(gr.expr, 1, nameConstrLen);
-                gr.exprFull = gr.expr + gr.quantifier;
-                gr.exprLength -= nameConstrLen;
-
-                // Update parent groups (remove name from their templates as well)
-                parent = gr.parentGroup;
-                while (parent != null) {
-                    parent.exprLength -= nameConstrLen;
-                    parent.expr = this._removeSubstring(parent.expr, gr.exprIndex + 1 - parent.exprIndex, nameConstrLen);
-                    parent.exprFull = parent.expr + parent.quantifier;
-                    parent = parent.parentGroup;
-                }
-
-                // Update all consequent groups (shift their indexes according to the length of the removed group name)
-                updatedPattern = this._removeSubstring(updatedPattern, gr.exprIndex + 1, nameConstrLen);
-                for (j = i + 1; j < this._groupDescriptors.length; j++) {
-                    nextGr = this._groupDescriptors[j];
-                    nextGr.exprIndex -= nameConstrLen;
-                }
-            }
-        }
-        this._pattern = updatedPattern;
-    },
-
-    _removeSubstring: function(str, index, length) {
-        var result = str.slice(0, index) + str.slice(index + length, str.length);
-        return result;
+        return this._patternInfo;
     },
 
     _checkTimeout: function () {
