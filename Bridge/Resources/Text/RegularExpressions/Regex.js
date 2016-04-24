@@ -186,9 +186,9 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
         //TODO: cache
         var patternInfo = this._runner.parsePattern();
-        var groupInfos = patternInfo.groups;
+        var groupNames = patternInfo.groupNames;
 
-        this._capsize = groupInfos.length;
+        this._capsize = groupNames.length;
         this._capslist = [];
         this._capnames = {};
 
@@ -197,24 +197,13 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         this._capnames["0"] = 0;
 
         var i;
-        var groupInfo;
+        var groupName;
 
         // Add group without names first (their names are indexes)
-        for (i = 0; i < groupInfos.length; i++) {
-            groupInfo = groupInfos[i];
-            if (!groupInfo.hasName && !groupInfo.constructs.isNonCapturing) {
-                this._capslist.push(groupInfo.name);
-                this._capnames[groupInfo.name] = this._capslist.length - 1;
-            }
-        }
-
-        // Then add named groups:
-        for (i = 0; i < groupInfos.length; i++) {
-            groupInfo = groupInfos[i];
-            if (groupInfo.hasName) {
-                this._capslist.push(groupInfo.name);
-                this._capnames[groupInfo.name] = this._capslist.length - 1;
-            }
+        for (i = 0; i < groupNames.length; i++) {
+            groupName = groupNames[i];
+            this._capslist.push(groupName);
+            this._capnames[groupName] = i + 1;
         }
     },
 

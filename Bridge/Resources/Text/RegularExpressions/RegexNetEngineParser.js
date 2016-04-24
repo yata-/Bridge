@@ -68,7 +68,8 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
             // Collect and fill group descriptors into Group tokens.
             // We need do it before any token modification.
             var groups = [];
-            scope._fillGroupDescriptors(groups, tokens, null);
+            var groupNames = [];
+            scope._fillGroupDescriptors(tokens, groups, groupNames);
 
             // Transform tokens for usage in JS RegExp:
             scope._transformTokensForJsPattern(tokens);
@@ -82,13 +83,54 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
             var result = {
                 originalPattern: pattern,
                 jsPattern: jsPattern,
-                groups: groups
+                groups: groups,
+                groupNames: groupNames
             };
 
             return result;
         },
 
-        _fillGroupDescriptors: function (groups, tokens, parentGroup) {
+        _fillGroupDescriptors: function (tokens, groups, groupNames) {
+            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var group;
+            var i;
+
+            // Fill group structure:
+            scope._fillGroupStructure(groups, tokens, null);
+
+            // Assign name or id:
+            var groupId = 1;
+            for (i = 0; i < groups.length; i++) {
+                group = groups[i];
+
+                if (group.constructs.name1 != null) {
+                    group.name = group.constructs.name1;
+                    group.hasName = true;
+                } else {
+                    group.hasName = false;
+                    group.name = groupId.toString();
+                    ++groupId;
+                }
+            }
+
+            // Add group without names first:
+            for (i = 0; i < groups.length; i++) {
+                group = groups[i];
+                if (!group.hasName && !group.constructs.isNonCapturing) {
+                    groupNames.push(group.name);
+                }
+            }
+
+            // Then add named groups:
+            for (i = 0; i < groups.length; i++) {
+                group = groups[i];
+                if (group.hasName) {
+                    groupNames.push(group.name);
+                }
+            }
+        },
+
+        _fillGroupStructure: function (groups, tokens, parentGroup) {
             var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
             var group;
@@ -134,21 +176,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
 
                 // fill group descriptors for inner tokens:
                 if (hasChildren) {
-                    scope._fillGroupDescriptors(groups, token.children, token.group);
-                }
-            }
-
-            var groupId = 1;
-            for (i = 0; i < groups.length; i++) {
-                group = groups[i];
-
-                if (group.constructs.name1 != null) {
-                    group.name = group.constructs.name1;
-                    group.hasName = true;
-                } else {
-                    group.hasName = false;
-                    group.name = groupId.toString();
-                    ++groupId;
+                    scope._fillGroupStructure(groups, token.children, token.group);
                 }
             }
         },
@@ -285,6 +313,14 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                     updated = true;
                     --i;
                     continue;
+                }
+
+                if (token.type === tokenTypes.escBackrefNumber) {
+
+                }
+
+                if (token.type === tokenTypes.escBackrefName) {
+                    
                 }
 
                 // Update children token and indexes:
@@ -539,9 +575,10 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                 if (i + 2 < endIndex) {
                     var nameQuoteCh = pattern[i + 2];
                     if (nameQuoteCh === "'" || nameQuoteCh === "<") {
-                        var refNameChars = scope._matchUntil(pattern, i + 3, endIndex, nameQuoteCh);
+                        var closingCh = nameQuoteCh === "<" ? ">" : "'";
+                        var refNameChars = scope._matchUntil(pattern, i + 3, endIndex, closingCh);
                         if (refNameChars.unmatchLength === 1 && refNameChars.matchLength > 0) {
-                            var refName = refNameChars.slice(1);
+                            var refName = refNameChars.match.slice(1);
                             if (refName.length > 0) {
                                 return scope._createPatternToken(pattern, tokenTypes.escBackrefName, i, 3 + refName.length + 1); // "\k<Name>" or "\k'Name'"
                             }

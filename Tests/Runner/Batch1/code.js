@@ -30765,6 +30765,227 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         inherits: [Bridge.ClientTest.SimpleTypes.ObjectTests.C1]
     });
     
+    Bridge.define('Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests', {
+        inherits: [Bridge.ClientTest.Text.RegularExpressions.RegexTestBase],
+        numberedBackrefTest: function () {
+            var pattern = "(\\w)\\1";
+            var text = "trellis llama webbing dresser swagger";
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var ms = rgx.matches(text);
+    
+            Bridge.Test.Assert.areEqual$1(5, ms.getCount(), "Matches count is correct.");
+    
+            // Match #0:
+            this.validateMatch(ms.get(0), 3, 2, "ll", 2, true);
+    
+            this.validateGroup(ms.get(0), 0, 3, 2, true, "ll", 1);
+            this.validateCapture(ms.get(0), 0, 0, 3, 2, "ll");
+    
+            this.validateGroup(ms.get(0), 1, 3, 1, true, "l", 1);
+            this.validateCapture(ms.get(0), 1, 0, 3, 1, "l");
+    
+            // Match #1:
+            this.validateMatch(ms.get(1), 8, 2, "ll", 2, true);
+    
+            this.validateGroup(ms.get(1), 0, 8, 2, true, "ll", 1);
+            this.validateCapture(ms.get(1), 0, 0, 8, 2, "ll");
+    
+            this.validateGroup(ms.get(1), 1, 8, 1, true, "l", 1);
+            this.validateCapture(ms.get(1), 1, 0, 8, 1, "l");
+    
+            // Match #2:
+            this.validateMatch(ms.get(2), 16, 2, "bb", 2, true);
+    
+            this.validateGroup(ms.get(2), 0, 16, 2, true, "bb", 1);
+            this.validateCapture(ms.get(2), 0, 0, 16, 2, "bb");
+    
+            this.validateGroup(ms.get(2), 1, 16, 1, true, "b", 1);
+            this.validateCapture(ms.get(2), 1, 0, 16, 1, "b");
+    
+            // Match #3:
+            this.validateMatch(ms.get(3), 25, 2, "ss", 2, true);
+    
+            this.validateGroup(ms.get(3), 0, 25, 2, true, "ss", 1);
+            this.validateCapture(ms.get(3), 0, 0, 25, 2, "ss");
+    
+            this.validateGroup(ms.get(3), 1, 25, 1, true, "s", 1);
+            this.validateCapture(ms.get(3), 1, 0, 25, 1, "s");
+    
+            // Match #4:
+            this.validateMatch(ms.get(4), 33, 2, "gg", 2, true);
+    
+            this.validateGroup(ms.get(4), 0, 33, 2, true, "gg", 1);
+            this.validateCapture(ms.get(4), 0, 0, 33, 2, "gg");
+    
+            this.validateGroup(ms.get(4), 1, 33, 1, true, "g", 1);
+            this.validateCapture(ms.get(4), 1, 0, 33, 1, "g");
+        },
+        namedBackrefTest: function () {
+            var pattern = "(?<char>\\w)\\k<char>";
+            var text = "trellis llama webbing dresser swagger";
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var ms = rgx.matches(text);
+    
+            Bridge.Test.Assert.areEqual$1(5, ms.getCount(), "Matches count is correct.");
+    
+            // Match #0:
+            this.validateMatch(ms.get(0), 3, 2, "ll", 2, true);
+    
+            this.validateGroup(ms.get(0), 0, 3, 2, true, "ll", 1);
+            this.validateCapture(ms.get(0), 0, 0, 3, 2, "ll");
+    
+            this.validateGroup(ms.get(0), 1, 3, 1, true, "l", 1);
+            this.validateCapture(ms.get(0), 1, 0, 3, 1, "l");
+    
+            // Match #1:
+            this.validateMatch(ms.get(1), 8, 2, "ll", 2, true);
+    
+            this.validateGroup(ms.get(1), 0, 8, 2, true, "ll", 1);
+            this.validateCapture(ms.get(1), 0, 0, 8, 2, "ll");
+    
+            this.validateGroup(ms.get(1), 1, 8, 1, true, "l", 1);
+            this.validateCapture(ms.get(1), 1, 0, 8, 1, "l");
+    
+            // Match #2:
+            this.validateMatch(ms.get(2), 16, 2, "bb", 2, true);
+    
+            this.validateGroup(ms.get(2), 0, 16, 2, true, "bb", 1);
+            this.validateCapture(ms.get(2), 0, 0, 16, 2, "bb");
+    
+            this.validateGroup(ms.get(2), 1, 16, 1, true, "b", 1);
+            this.validateCapture(ms.get(2), 1, 0, 16, 1, "b");
+    
+            // Match #3:
+            this.validateMatch(ms.get(3), 25, 2, "ss", 2, true);
+    
+            this.validateGroup(ms.get(3), 0, 25, 2, true, "ss", 1);
+            this.validateCapture(ms.get(3), 0, 0, 25, 2, "ss");
+    
+            this.validateGroup(ms.get(3), 1, 25, 1, true, "s", 1);
+            this.validateCapture(ms.get(3), 1, 0, 25, 1, "s");
+    
+            // Match #4:
+            this.validateMatch(ms.get(4), 33, 2, "gg", 2, true);
+    
+            this.validateGroup(ms.get(4), 0, 33, 2, true, "gg", 1);
+            this.validateCapture(ms.get(4), 0, 0, 33, 2, "gg");
+    
+            this.validateGroup(ms.get(4), 1, 33, 1, true, "g", 1);
+            this.validateCapture(ms.get(4), 1, 0, 33, 1, "g");
+    
+    
+    
+        },
+        namedBackrefWithNumberAsNameTest: function () {
+            var pattern = "(?<2>\\w)\\k<2>";
+            var text = "trellis llama webbing dresser swagger";
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var ms = rgx.matches(text);
+    
+            Bridge.Test.Assert.areEqual$1(5, ms.getCount(), "Matches count is correct.");
+    
+            // Match #0:
+            this.validateMatch(ms.get(0), 3, 2, "ll", 2, true);
+    
+            this.validateGroup(ms.get(0), 0, 3, 2, true, "ll", 1);
+            this.validateCapture(ms.get(0), 0, 0, 3, 2, "ll");
+    
+            this.validateGroup(ms.get(0), 1, 0, 0, false, "", 0);
+    
+            // Match #1:
+            this.validateMatch(ms.get(1), 8, 2, "ll", 2, true);
+    
+            this.validateGroup(ms.get(1), 0, 8, 2, true, "ll", 1);
+            this.validateCapture(ms.get(1), 0, 0, 8, 2, "ll");
+    
+            this.validateGroup(ms.get(1), 1, 0, 0, false, "", 0);
+    
+            // Match #2:
+            this.validateMatch(ms.get(2), 16, 2, "bb", 2, true);
+    
+            this.validateGroup(ms.get(2), 0, 16, 2, true, "bb", 1);
+            this.validateCapture(ms.get(2), 0, 0, 16, 2, "bb");
+    
+            this.validateGroup(ms.get(2), 1, 0, 0, false, "", 0);
+    
+            // Match #3:
+            this.validateMatch(ms.get(3), 25, 2, "ss", 2, true);
+    
+            this.validateGroup(ms.get(3), 0, 25, 2, true, "ss", 1);
+            this.validateCapture(ms.get(3), 0, 0, 25, 2, "ss");
+    
+            this.validateGroup(ms.get(3), 1, 0, 0, false, "", 0);
+    
+            // Match #4:
+            this.validateMatch(ms.get(4), 33, 2, "gg", 2, true);
+    
+            this.validateGroup(ms.get(4), 0, 33, 2, true, "gg", 1);
+            this.validateCapture(ms.get(4), 0, 0, 33, 2, "gg");
+    
+            this.validateGroup(ms.get(4), 1, 0, 0, false, "", 0);
+    
+    
+    
+        },
+        namedBackrefWithRedefinedGroupTest: function () {
+            var pattern = "(?<1>a)(?<1>\\1b)*";
+            var text = "aababb";
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var m = rgx.match(text);
+    
+            this.validateMatch(m, 0, 6, "aababb", 2, true);
+    
+            this.validateGroup(m, 0, 0, 6, true, "aababb", 1);
+            this.validateCapture(m, 0, 0, 0, 6, "aababb");
+    
+            this.validateGroup(m, 1, 3, 3, true, "abb", 3);
+            this.validateCapture(m, 1, 0, 0, 1, "a");
+            this.validateCapture(m, 1, 1, 1, 2, "ab");
+            this.validateCapture(m, 1, 2, 3, 3, "abb");
+    
+        },
+        namedBackrefWithEmptyCaptureTest1: function () {
+            var pattern = "\\b([A-Z]{2})(\\d{2})?([A-Z]{2})\\b";
+            var text = "AA22ZZ";
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var m = rgx.match(text);
+    
+            this.validateMatch(m, 0, 6, "AA22ZZ", 4, true);
+    
+            this.validateGroup(m, 0, 0, 6, true, "AA22ZZ", 1);
+            this.validateCapture(m, 0, 0, 0, 6, "AA22ZZ");
+    
+            this.validateGroup(m, 1, 0, 2, true, "AA", 1);
+            this.validateCapture(m, 1, 0, 0, 2, "AA");
+    
+            this.validateGroup(m, 2, 2, 2, true, "22", 1);
+            this.validateCapture(m, 2, 0, 2, 2, "22");
+    
+            this.validateGroup(m, 3, 4, 2, true, "ZZ", 1);
+            this.validateCapture(m, 3, 0, 4, 2, "ZZ");
+        },
+        namedBackrefWithEmptyCaptureTest2: function () {
+            var pattern = "\\b([A-Z]{2})(\\d{2})?([A-Z]{2})\\b";
+            var text = "AABB";
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor", pattern);
+            var m = rgx.match(text);
+    
+            this.validateMatch(m, 0, 4, "AABB", 4, true);
+    
+            this.validateGroup(m, 0, 0, 4, true, "AABB", 1);
+            this.validateCapture(m, 0, 0, 0, 4, "AABB");
+    
+            this.validateGroup(m, 1, 0, 2, true, "AA", 1);
+            this.validateCapture(m, 1, 0, 0, 2, "AA");
+    
+            this.validateGroup(m, 2, 0, 0, false, "", 0);
+    
+            this.validateGroup(m, 3, 2, 2, true, "BB", 1);
+            this.validateCapture(m, 3, 0, 2, 2, "BB");
+    
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexEscapeTests', {
         inherits: [Bridge.ClientTest.Text.RegularExpressions.RegexTestBase],
         escapeTest: function () {
