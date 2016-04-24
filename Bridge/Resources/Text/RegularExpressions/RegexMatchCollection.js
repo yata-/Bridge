@@ -93,7 +93,7 @@ Bridge.define("Bridge.Text.RegularExpressions.MatchCollection", {
 
         var match;
         do {
-            match = this._regex._runner.run(this._regex, false, this._prevLen, this._input, this._beginning, this._length, this._startat);
+            match = this._regex._runner.run(false, this._prevLen, this._input, this._beginning, this._length, this._startat);
             if (!match.getSuccess()) {
                 this._done = true;
                 return null;

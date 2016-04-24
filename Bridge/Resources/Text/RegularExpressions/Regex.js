@@ -182,10 +182,10 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         this._pattern = pattern;
         this._options = options;
         this._matchTimeout = matchTimeout;
-        this._runner = new scope.RegexRunner();
+        this._runner = new scope.RegexRunner(this);
 
         //TODO: cache
-        var patternInfo = Bridge.Text.RegularExpressions.RegexNetEngine.parsePattern(this._pattern);
+        var patternInfo = this._runner.parsePattern();
         var groupInfos = patternInfo.groups;
 
         this._capsize = groupInfos.length;
@@ -245,7 +245,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
 
 
-        var match = this._runner.run(this, true, -1, input, 0, input.length, startat);
+        var match = this._runner.run(true, -1, input, 0, input.length, startat);
         return match == null;
     },
 
@@ -263,7 +263,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
             throw new Bridge.ArgumentNullException("input");
         }
 
-        return this._runner.run(this, false, -1, input, 0, input.length, startat);
+        return this._runner.run(false, -1, input, 0, input.length, startat);
     },
 
     match$2: function (input, beginning, length) {
@@ -272,7 +272,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
 
         var startat = this.getRightToLeft() ? beginning + length : beginning;
-        return this._runner.run(this, false, -1, input, beginning, length, startat);
+        return this._runner.run(false, -1, input, beginning, length, startat);
     },
 
     matches: function (input) {

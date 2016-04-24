@@ -46,12 +46,6 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
             }
 
             return match;
-        },
-
-        parsePattern: function(pattern) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
-            var result = scope.parsePattern(pattern);
-            return result;
         }
     },
 
@@ -76,7 +70,6 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         this._isMultiLine = isMultiLine;
         this._isCaseInsensitive = isCaseInsensitive;
         this._timeoutMs = timeoutMs;
-        this._timeoutTime = timeoutMs > 0 ? new Date().getTime() + Bridge.Convert.toInt32(timeoutMs + 0.5) : -1;
     },
 
     match: function (text, textStart) {
@@ -89,6 +82,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
         this._text = text;
         this._textStart = textStart;
+        this._timeoutTime = this._timeoutMs > 0 ? new Date().getTime() + Bridge.Convert.toInt32(this._timeoutMs + 0.5) : -1;
 
         var match = {
             capIndex: 0,       // start index of total capture
@@ -100,7 +94,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         };
 
         // Get group descriptors (+ remove group name before any processing);
-        var patternInfo = this._parseAndFixPattern();
+        var patternInfo = this.parsePattern();
         var groupDescs = patternInfo.groups;
 
         this._checkTimeout();
@@ -223,6 +217,17 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         }
 
         return match;
+    },
+
+    parsePattern: function() {
+        if (this._patternInfo == null) {
+            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var patternInfo = scope.parsePattern(this._pattern);
+
+            this._patternInfo = patternInfo;
+            this._pattern = patternInfo.jsPattern;
+        }
+        return this._patternInfo;
     },
 
     _matchGroup: function (ctx, group, parentGroupTextOffset) {
@@ -353,17 +358,6 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
             };
         }
         return null;
-    },
-
-    _parseAndFixPattern: function () {
-        if (this._patternInfo == null) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
-            var patternInfo = scope.parsePattern(this._pattern);
-
-            this._patternInfo = patternInfo;
-            this._pattern = patternInfo.jsPattern;
-        }
-        return this._patternInfo;
     },
 
     _checkTimeout: function () {

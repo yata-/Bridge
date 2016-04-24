@@ -83,7 +83,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
             return this;
         }
 
-        return this._regex._runner.run(this._regex, false, this._length, this._text, this._textbeg, this._textend - this._textbeg, this._textpos);
+        return this._regex._runner.run(false, this._length, this._text, this._textbeg, this._textend - this._textbeg, this._textpos);
     },
 
     result: function (replacement) {
