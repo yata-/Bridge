@@ -92,7 +92,15 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
             return Bridge.Text.RegularExpressions.Match.getEmpty();
         }
 
-        var match = new Bridge.Text.RegularExpressions.Match(this._runregex, jsMatch.groups.length, this._runtext, 0, this._runtext.length, this._runtextstart);
+        var patternInfo = this.parsePattern();
+        var match;
+
+        if (patternInfo.isSparse) {
+            match = new Bridge.Text.RegularExpressions.MatchSparse(this._runregex, patternInfo.sparseMap, jsMatch.groups.length, this._runtext, 0, this._runtext.length, this._runtextstart);
+        } else {
+            match = new Bridge.Text.RegularExpressions.Match(this._runregex, jsMatch.groups.length, this._runtext, 0, this._runtext.length, this._runtextstart);
+        }
+
         var jsGroup;
         var jsCapture;
         var grOrder;

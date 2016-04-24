@@ -186,9 +186,9 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
         //TODO: cache
         var patternInfo = this._runner.parsePattern();
-        var groupNames = patternInfo.groupNames;
+        var orderedGroups = patternInfo.orderedGroups;
 
-        this._capsize = groupNames.length;
+        this._capsize = orderedGroups.length;
         this._capslist = [];
         this._capnames = {};
 
@@ -200,8 +200,8 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         var groupName;
 
         // Add group without names first (their names are indexes)
-        for (i = 0; i < groupNames.length; i++) {
-            groupName = groupNames[i];
+        for (i = 0; i < orderedGroups.length; i++) {
+            groupName = orderedGroups[i].name;
             this._capslist.push(groupName);
             this._capnames[groupName] = i + 1;
         }

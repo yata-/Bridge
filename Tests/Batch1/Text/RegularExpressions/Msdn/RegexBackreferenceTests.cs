@@ -117,15 +117,12 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
 
             ValidateGroup(ms[4], 1, 33, 1, true, "g", 1);
             ValidateCapture(ms[4], 1, 0, 33, 1, "g");
-
-
-
         }
 
         [Test]
         public void NamedBackrefWithNumberAsNameTest()
         {
-            const string pattern = @"(?<2>\w)\k<2>";
+            const string pattern = @"(?<2>\w)\2";
             const string text = @"trellis llama webbing dresser swagger";
             var rgx = new Regex(pattern);
             var ms = rgx.Matches(text);
@@ -133,6 +130,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
             Assert.AreEqual(5, ms.Count, "Matches count is correct.");
 
             // Match #0:
+            Assert.NotNull(ms[0], "Match[0] is not null.");
             ValidateMatch(ms[0], 3, 2, "ll", 2, true);
 
             ValidateGroup(ms[0], 0, 3, 2, true, "ll", 1);
@@ -141,6 +139,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
             ValidateGroup(ms[0], 1, 0, 0, false, "", 0);
 
             // Match #1:
+            Assert.NotNull(ms[1], "Match[1] is not null.");
             ValidateMatch(ms[1], 8, 2, "ll", 2, true);
 
             ValidateGroup(ms[1], 0, 8, 2, true, "ll", 1);
@@ -149,6 +148,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
             ValidateGroup(ms[1], 1, 0, 0, false, "", 0);
 
             // Match #2:
+            Assert.NotNull(ms[2], "Match[2] is not null.");
             ValidateMatch(ms[2], 16, 2, "bb", 2, true);
 
             ValidateGroup(ms[2], 0, 16, 2, true, "bb", 1);
@@ -157,6 +157,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
             ValidateGroup(ms[2], 1, 0, 0, false, "", 0);
 
             // Match #3:
+            Assert.NotNull(ms[3], "Match[3] is not null.");
             ValidateMatch(ms[3], 25, 2, "ss", 2, true);
 
             ValidateGroup(ms[3], 0, 25, 2, true, "ss", 1);
@@ -165,15 +166,13 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
             ValidateGroup(ms[3], 1, 0, 0, false, "", 0);
 
             // Match #4:
+            Assert.NotNull(ms[4], "Match[4] is not null.");
             ValidateMatch(ms[4], 33, 2, "gg", 2, true);
 
             ValidateGroup(ms[4], 0, 33, 2, true, "gg", 1);
             ValidateCapture(ms[4], 0, 0, 33, 2, "gg");
 
             ValidateGroup(ms[4], 1, 0, 0, false, "", 0);
-
-
-
         }
 
         [Test]
@@ -193,7 +192,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
             ValidateCapture(m, 1, 0, 0, 1, "a");
             ValidateCapture(m, 1, 1, 1, 2, "ab");
             ValidateCapture(m, 1, 2, 3, 3, "abb");
-
         }
 
         [Test]
@@ -239,7 +237,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
 
             ValidateGroup(m, 3, 2, 2, true, "BB", 1);
             ValidateCapture(m, 3, 0, 2, 2, "BB");
-
         }
     }
 }

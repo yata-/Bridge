@@ -201,3 +201,26 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
         return this._groupToStringImpl(this._matchcount.length - 1);
     }
 });
+
+Bridge.define("Bridge.Text.RegularExpressions.MatchSparse", {
+    inherits: function () {
+        return [Bridge.Text.RegularExpressions.Match];
+    },
+
+    _caps: null,
+
+    constructor: function (regex, caps, capcount, text, begpos, len, startpos) {
+        var scope = Bridge.Text.RegularExpressions;
+        scope.Match.prototype.$constructor.call(this, regex, capcount, text, begpos, len, startpos);
+
+        this._caps = caps;
+    },
+
+    getGroups: function () {
+        if (this._groupColl == null) {
+            this._groupColl = new Bridge.Text.RegularExpressions.GroupCollection(this, this._caps);
+        }
+        return this._groupColl;
+    },
+
+});
