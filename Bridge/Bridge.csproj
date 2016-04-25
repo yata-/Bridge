@@ -84,6 +84,7 @@
     <Compile Include="Script.cs" />
     <Compile Include="System\Action.cs" />
     <Compile Include="System\Activator.cs" />
+    <Compile Include="System\Guid.cs" />
     <Compile Include="System\Random.cs" />
     <Compile Include="System\IndexOutOfRangeException.cs" />
     <Compile Include="System\ArgumentNullException.cs" />
@@ -664,6 +665,7 @@
     <Content Include="Resources\Diagnostics.js" />
     <Content Include="Resources\Convert.js" />
     <Content Include="Resources\Enum.js" />
+    <Content Include="Resources\Guid.js" />
     <Content Include="Resources\LongLib.js" />
     <Content Include="Resources\Long.js" />
     <Content Include="Resources\Math.js" />
