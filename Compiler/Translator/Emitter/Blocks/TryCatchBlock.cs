@@ -117,7 +117,7 @@ namespace Bridge.Translator
 
                 this.WriteNewLine();
                 this.EndBlock();
-
+                
                 this.WriteSpace();
                 this.WriteElse();
                 this.WriteIf();
@@ -126,7 +126,16 @@ namespace Bridge.Translator
                 this.WriteCloseParentheses();
                 this.WriteSpace();
                 this.BeginBlock();
-                this.Write("$tcs.setException($async_e);");
+                
+                if (this.Emitter.AsyncBlock.IsTaskReturn)
+                {
+                    this.Write("$tcs.setException($async_e);");
+                }
+                else
+                {
+                    this.Write("throw $async_e;");
+                } 
+                
                 this.WriteNewLine();
                 this.WriteReturn(false);
                 this.WriteSemiColon();
