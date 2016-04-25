@@ -283,6 +283,7 @@
     <Compile Include="Exceptions\OperationCanceledExceptionTests.cs" />
     <Compile Include="Exceptions\CultureNotFoundExceptionTests.cs" />
     <Compile Include="Exceptions\TimeoutExceptionTests.cs" />
+    <Compile Include="GuidTests.cs" />
     <Compile Include="Linq\TestLinqGroupingOperators.cs" />
     <Compile Include="Linq\TestLinqConversionOperators.cs" />
     <Compile Include="Linq\TestLinqAggregateOperators.cs" />
