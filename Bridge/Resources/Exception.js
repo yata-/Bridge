@@ -406,8 +406,7 @@
                     // simply add it to the list of flattened exceptions to be returned.
                     if (Bridge.hasValue(currentInnerAsAggregate)) {
                         exceptionsToFlatten.add(currentInnerAsAggregate);
-                    }
-                    else {
+                    } else {
                         flattenedExceptions.add(currentInnerException);
                     }
                 }

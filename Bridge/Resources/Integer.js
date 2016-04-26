@@ -287,8 +287,7 @@
                     } else if ((decimalPart.length - 1) > maxDecLen) {
                         decimalPart = decimalPart.substr(0, maxDecLen + 1);
                     }
-                }
-                else if (minDecLen > 0) {
+                } else if (minDecLen > 0) {
                     decimalPart = nf[name + "DecimalSeparator"] + Array(minDecLen + 1).join("0");
                 }
 
@@ -645,14 +644,14 @@
                 if (y === 0) {
                     throw new Bridge.DivideByZeroException();
                 }
+
                 return x % y;
             },
 
             check: function (x, type) {
                 if (Bridge.Long.is64Bit(x)) {
                     return Bridge.Long.check(x, type);
-                }
-                else if (x instanceof Bridge.Decimal) {
+                } else if (x instanceof Bridge.Decimal) {
                     return Bridge.Decimal.toInt(x, type);
                 }
 
@@ -664,6 +663,7 @@
                     if (type === Bridge.Long || type === Bridge.ULong) {
                         return type.MinValue;
                     }
+
                     return type.min;
                 }
                 
@@ -756,4 +756,5 @@
             format: Bridge.Double.format
         }
     });
+
     Bridge.Class.addExtend(Bridge.Single, [Bridge.IComparable$1(Bridge.Single), Bridge.IEquatable$1(Bridge.Single)]);
