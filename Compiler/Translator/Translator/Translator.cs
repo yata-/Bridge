@@ -71,7 +71,7 @@ namespace Bridge.Translator
             var l = logger as Bridge.Translator.Logging.Logger;
             if (l != null)
             {
-                l.LoggerLevel = config.LoggerLevel ?? LoggerLevel.Info;
+                l.LoggerLevel = config.LoggerLevel ?? LoggerLevel.None;
 
                 if (config.NoLoggerTimeStamps.HasValue)
                 {

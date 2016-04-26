@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using Bridge.Contract;
 
@@ -21,7 +20,7 @@ namespace Bridge.Translator.Logging
             {
                 if (value <= 0)
                 {
-                    this.loggerLevel = 0;
+                    this.loggerLevel = LoggerLevel.None;
                 }
                 else
                 {
@@ -42,11 +41,6 @@ namespace Bridge.Translator.Logging
         {
             this.Name = name ?? string.Empty;
 
-            if (loggerLevel == 0)
-            {
-                loggerLevel = LoggerLevel.Info;
-            }
-
             this.LoggerWriters = loggerWriters.Where(x => x != null).ToList();
             this.UseTimeStamp = useTimeStamp;
             this.LoggerLevel = loggerLevel;
@@ -61,8 +55,7 @@ namespace Bridge.Translator.Logging
         {
             string wrappedMessage;
 
-            var level = LoggerLevel.Error;
-            if (this.LoggerLevel >= level && (wrappedMessage = this.WrapMessage(message, level)) != null)
+            if ((wrappedMessage = CheckIfCanLog(message, LoggerLevel.Error)) != null)
             {
                 foreach (var logger in this.LoggerWriters)
                 {
@@ -75,8 +68,7 @@ namespace Bridge.Translator.Logging
         {
             string wrappedMessage;
 
-            var level = LoggerLevel.Warning;
-            if (this.LoggerLevel >= level && (wrappedMessage = this.WrapMessage(message, level)) != null)
+            if ((wrappedMessage = CheckIfCanLog(message, LoggerLevel.Warning)) != null)
             {
                 foreach (var logger in this.LoggerWriters)
                 {
@@ -89,8 +81,7 @@ namespace Bridge.Translator.Logging
         {
             string wrappedMessage;
 
-            var level = LoggerLevel.Info;
-            if (this.LoggerLevel >= level && (wrappedMessage = this.WrapMessage(message, level)) != null)
+            if ((wrappedMessage = CheckIfCanLog(message, LoggerLevel.Info)) != null)
             {
                 foreach (var logger in this.LoggerWriters)
                 {
@@ -103,14 +94,24 @@ namespace Bridge.Translator.Logging
         {
             string wrappedMessage;
 
-            var level = LoggerLevel.Trace;
-            if (this.LoggerLevel >= level && (wrappedMessage = this.WrapMessage(message, level)) != null)
+            if ((wrappedMessage = CheckIfCanLog(message, LoggerLevel.Trace)) != null)
             {
                 foreach (var logger in this.LoggerWriters)
                 {
                     logger.Trace(wrappedMessage);
                 }
             }
+        }
+
+        private string CheckIfCanLog(string message, LoggerLevel level)
+        {
+            if (this.LoggerLevel >= level)
+            {
+                return null;
+            }
+
+
+            return this.WrapMessage(message, level);
         }
 
         private string WrapMessage(string message, LoggerLevel logLevel)
