@@ -214,7 +214,7 @@
             }
         },
 
-        getHashCode: function (value, safe, store) {
+        getHashCode: function (value, safe, store = true) {
             if (Bridge.isEmpty(value, true)) {
                 if (safe) {
                     return 0;
@@ -299,7 +299,7 @@
                     delete Bridge.$$hashCodeCache;
                 }
 
-                if (result !== 0) {
+                if (result !== 0 && !store) {
                     return result;
                 }
             }
