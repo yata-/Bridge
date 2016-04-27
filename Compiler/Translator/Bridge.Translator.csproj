@@ -179,7 +179,7 @@
     <Compile Include="Emitter\TypeScript\IndexerBlock.cs" />
     <Compile Include="Logging\ConsoleLoggerWriter.cs" />
     <Compile Include="Logging\Logger.cs" />
-    <Compile Include="Logging\SimpleFileLoggerWriter.cs" />
+    <Compile Include="Logging\FileLoggerWriter.cs" />
     <Compile Include="Translator\Plugins.cs" />
     <Compile Include="Translator\Translator.Config.cs" />
     <Compile Include="Utils\CombinedAstAndResolveResultVisitor.cs" />

@@ -104,7 +104,7 @@ namespace Bridge.Translator.Tests
 
             Directory.SetCurrentDirectory(logDir);
 
-            var logger = new Logger("Bridge.Test.Runner", true, new SimpleFileLoggerWriter(logDir), new ConsoleLoggerWriter());
+            var logger = new Logger("Bridge.Test.Runner", true, new FileLoggerWriter(logDir), new ConsoleLoggerWriter());
 
             GetPaths(folder);
 

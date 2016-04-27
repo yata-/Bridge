@@ -72,11 +72,14 @@ namespace Bridge.Translator
             if (l != null)
             {
                 l.LoggerLevel = config.LoggerLevel ?? LoggerLevel.None;
-
+                l.BufferedMode = false;
+                
                 if (config.NoLoggerTimeStamps.HasValue)
                 {
                     l.UseTimeStamp = !config.NoLoggerTimeStamps.Value;
                 }
+
+                l.Flush();
             }
 
             logger.Trace("Read config file: " + Utils.AssemblyConfigHelper.ConfigToString(config));

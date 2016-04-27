@@ -2,6 +2,12 @@ namespace Bridge.Contract
 {
     public interface ILogger
     {
+        bool BufferedMode { get; set; }
+
+        void Flush();
+
+        LoggerLevel LoggerLevel { get; set; }
+
         void Warn(string message);
 
         void Error(string message);
