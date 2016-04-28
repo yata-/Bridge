@@ -177,11 +177,11 @@ namespace Bridge.Translator
                         }
                         catch (ReflectionTypeLoadException ex)
                         {
-                            LogAssemblyLoaderException(ex, logger);
+                            LogAssemblyLoaderException("Could not load assembly from resources", ex, logger);
                         }
                         catch (System.Exception ex)
                         {
-                            logger.Error(ex.ToString());
+                            logger.Error("Could not load assembly from resources: " + ex.ToString());
                         }
 
                     }
@@ -207,11 +207,11 @@ namespace Bridge.Translator
             }
             catch (ReflectionTypeLoadException ex)
             {
-                LogAssemblyLoaderException(ex, logger);
+                LogAssemblyLoaderException("Could not compose Plugin parts", ex, logger);
             }
             catch (System.Exception ex)
             {
-                logger.Error(ex.ToString());
+                logger.Error("Could not compose Plugin parts: " +  ex.ToString());
             }
 
             if (plugins.Parts != null)
@@ -272,9 +272,9 @@ namespace Bridge.Translator
             return assembly;
         }
 
-        private static void LogAssemblyLoaderException(ReflectionTypeLoadException ex, ILogger logger)
+        private static void LogAssemblyLoaderException(string reason, ReflectionTypeLoadException ex, ILogger logger)
         {
-            var sb = new System.Text.StringBuilder();
+            var sb = new System.Text.StringBuilder(reason + ": ");
 
             sb.AppendLine(ex.ToString());
 
