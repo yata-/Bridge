@@ -1,10 +1,12 @@
 ﻿{
-    "output": "..\\Runner\\Batch1",
-    "cleanOutputFolderBeforeBuild": true,
-    "outputFormatting": "Formatted",
-    "fileName": "code.js",
-    "outputBy": "Project",
-    "localesOutput": "locales",
-    "locales": "ru-RU;en-US;es*",
+  "output": "..\\Runner\\Batch1",
+  "cleanOutputFolderBeforeBuild": true,
+  "outputFormatting": "Formatted",
+  "fileName": "code.js",
+  "outputBy": "Project",
+  "localesOutput": "locales",
+  "locales": "ru-RU;en-US;es*",
+  "logging": {
     "loggerLevel": "Info"
+  }    
 }

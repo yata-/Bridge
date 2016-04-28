@@ -7,27 +7,6 @@ namespace Bridge.Translator
 {
     public partial class Translator
     {
-        protected AssemblyConfigHelper assemblyConfigHelper;
-        protected AssemblyConfigHelper AssemblyConfigHelper
-        {
-            get
-            {
-                if (this.assemblyConfigHelper == null)
-                {
-                    this.assemblyConfigHelper = new AssemblyConfigHelper(this.Log);
-                }
-
-                return this.assemblyConfigHelper;
-            }
-        }
-
-        protected virtual IAssemblyInfo ReadConfig()
-        {
-            var config = this.AssemblyConfigHelper.ReadConfig(this.FolderMode, this.Location, this.Configuration);
-
-            return config;
-        }
-
         public virtual void RunEvent(string e)
         {
             var info = new ProcessStartInfo()

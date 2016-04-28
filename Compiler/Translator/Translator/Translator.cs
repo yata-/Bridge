@@ -40,23 +40,23 @@ namespace Bridge.Translator
 
         public const string LocalesPrefix = "Bridge.Resources.Locales.";
 
-        public Translator(string location, bool fromTask = false)
+        protected Translator(string location)
         {
             this.Location = location;
             this.Validator = this.CreateValidator();
             this.DefineConstants = new List<string>() { "BRIDGE" };
+        }
+
+        public Translator(string location, bool fromTask = false): this(location)
+        {
             this.FromTask = fromTask;
         }
 
-        public Translator(string folder, string source, bool recursive, string lib)
+        public Translator(string location, string source, bool recursive, string lib) : this(location, true)
         {
             this.Recursive = recursive;
             this.Source = source;
-            this.FolderMode = true;
-            this.Location = folder;
             this.AssemblyLocation = lib;
-            this.Validator = this.CreateValidator();
-            this.DefineConstants = new List<string>() { "BRIDGE" };
         }
 
         public Dictionary<string, string> Translate()
@@ -66,29 +66,7 @@ namespace Bridge.Translator
 
             this.LogProductInfo();
 
-            var config = this.ReadConfig();
-
-            var l = logger as Bridge.Translator.Logging.Logger;
-            if (l != null)
-            {
-                l.LoggerLevel = config.Logging.LoggerLevel ?? LoggerLevel.None;
-                l.BufferedMode = false;
-                
-                if (config.Logging.NoLoggerTimeStamps.HasValue)
-                {
-                    l.UseTimeStamp = !config.Logging.NoLoggerTimeStamps.Value;
-                }
-
-                var fileLoggerWriter = l.GetFileLogger();
-                if (fileLoggerWriter != null)
-                {
-                    fileLoggerWriter.SetParameters(config.Logging.Folder, config.Logging.FileName, config.Logging.MaxLogFileSize);
-                }
-
-                l.Flush();
-            }
-
-            logger.Trace("Read config file: " + Utils.AssemblyConfigHelper.ConfigToString(config));
+            var config = this.AssemblyInfo;
 
             if (!string.IsNullOrWhiteSpace(config.Configuration))
             {
@@ -353,7 +331,7 @@ namespace Bridge.Translator
                 }
                 catch (System.Exception ex)
                 {
-                    var message = "Error: Unable to run afterBuild event command: " + ex.Message + "\nStack trace:\n" + ex.StackTrace;
+                    var message = "Error: Unable to run afterBuild event command: " + ex.ToString();
 
                     logger.Error(message);
                     throw new Bridge.Translator.TranslatorException(message);

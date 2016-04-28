@@ -1,5 +1,7 @@
 using Bridge.Contract;
+using Bridge.Translator;
 using Bridge.Translator.Logging;
+
 
 using System;
 using System.IO;
@@ -12,11 +14,7 @@ namespace Bridge.Builder
     {
         private static int Main(string[] args)
         {
-            var consoleLoggerWriter = new ConsoleLoggerWriter();
-
-            var logger = new Logger(null, false, LoggerLevel.Info, true, consoleLoggerWriter, new FileLoggerWriter());
-
-            consoleLoggerWriter.LoggerLevel = LoggerLevel.Trace;
+            var logger = new Logger(null, false, LoggerLevel.Info, true, new ConsoleLoggerWriter(), new FileLoggerWriter());
 
             var bridgeOptions = GetBridgeOptionsFromCommandLine(args, logger);
 
@@ -30,84 +28,25 @@ namespace Bridge.Builder
                 return 0;
             }
 
-            logger.Name = "Bridge.Builder.Console";
-            logger.UseTimeStamp = !bridgeOptions.NoTimeStamp;
+            //System.Diagnostics.Debugger.Launch();
 
             logger.Info("Command line arguments:");
             logger.Info("\t" + (string.Join(" ", args) ?? ""));
 
-            logger.Info("Generating script...");
+            var processor = new TranslatorProcessor(bridgeOptions, logger);
 
-            Bridge.Translator.Translator translator = null;
+            var result = processor.PreProcess();
+
+            if (result != null)
+            {
+                return 1;
+            }
 
             try
             {
-                // FIXME: detect by extension whether first argument is a project or DLL
-                if (!string.IsNullOrWhiteSpace(bridgeOptions.ProjectLocation))
-                {
-                    translator = new Bridge.Translator.Translator(bridgeOptions.ProjectLocation);
-                }
-                else
-                {
-                    if (string.IsNullOrWhiteSpace(bridgeOptions.Lib))
-                    {
-                        throw new Exception("Please define path to assembly using -lib option");
-                    }
+                processor.Process();
 
-                    bridgeOptions.Lib = Path.Combine(bridgeOptions.Folder, bridgeOptions.Lib);
-                    translator = new Bridge.Translator.Translator(bridgeOptions.Folder, bridgeOptions.Source, bridgeOptions.Recursive, bridgeOptions.Lib);
-                }
-
-                bridgeOptions.BridgeLocation = !string.IsNullOrEmpty(bridgeOptions.BridgeLocation) ? bridgeOptions.BridgeLocation : Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Bridge.dll");
-
-                translator.BridgeLocation = bridgeOptions.BridgeLocation;
-                translator.Rebuild = bridgeOptions.Rebuild;
-                translator.Log = logger;
-                translator.Configuration = bridgeOptions.Cfg;
-                if (bridgeOptions.Def != null)
-                {
-                    translator.DefineConstants.AddRange(bridgeOptions.Def.Split(';').Select(s => s.Trim()).Where(s => s != ""));
-                    translator.DefineConstants = translator.DefineConstants.Distinct().ToList();
-                }
-
-                translator.Log.Info("Translator properties:");
-                translator.Log.Info("\tBridgeLocation:" + translator.BridgeLocation ?? "");
-                translator.Log.Info("\tBuildArguments:" + translator.BuildArguments ?? "");
-                translator.Log.Info("\tConfiguration:" + translator.Configuration ?? "");
-                translator.Log.Info("\tDefineConstants:" + (translator.DefineConstants != null ? string.Join(" ", translator.DefineConstants) : ""));
-                translator.Log.Info("\tRebuild:" + translator.Rebuild);
-
-                translator.Translate();
-
-                string path = string.IsNullOrWhiteSpace(Path.GetFileName(bridgeOptions.OutputLocation))
-                    ? bridgeOptions.OutputLocation : Path.GetDirectoryName(bridgeOptions.OutputLocation);
-                string outputPath = null;
-
-                if (!string.IsNullOrWhiteSpace(translator.AssemblyInfo.Output))
-                {
-                    outputPath = Path.Combine(!string.IsNullOrWhiteSpace(bridgeOptions.ProjectLocation)
-                        ? Path.GetDirectoryName(bridgeOptions.ProjectLocation) : bridgeOptions.Folder, translator.AssemblyInfo.Output);
-                }
-                else
-                {
-                    outputPath = Path.Combine(!string.IsNullOrWhiteSpace(bridgeOptions.ProjectLocation)
-                        ? Path.GetDirectoryName(bridgeOptions.ProjectLocation) : bridgeOptions.Folder, !string.IsNullOrWhiteSpace(translator.AssemblyInfo.Output) ? translator.AssemblyInfo.Output : path);
-                }
-
-                translator.CleanOutputFolderIfRequired(outputPath);
-
-                if (bridgeOptions.ExtractCore)
-                {
-                    logger.Info("Extracting core scripts...");
-                    translator.ExtractCore(outputPath);
-                }
-
-                logger.Info("Saving to " + outputPath);
-                translator.SaveTo(outputPath, Path.GetFileName(bridgeOptions.OutputLocation));
-                translator.Flush(outputPath, Path.GetFileName(bridgeOptions.OutputLocation));
-                translator.Plugins.AfterOutput(translator, outputPath, !bridgeOptions.ExtractCore);
-
-                logger.Info("Done translating Bridge files.");
+                processor.PostProcess();
             }
             catch (EmitterException ex)
             {
@@ -116,7 +55,7 @@ namespace Bridge.Builder
             }
             catch (Exception ex)
             {
-                var ee = translator != null ? translator.CreateExceptionFromLastNode() : null;
+                var ee = processor.Translator != null ? processor.Translator.CreateExceptionFromLastNode() : null;
 
                 if (ee != null)
                 {
@@ -200,6 +139,8 @@ namespace Bridge.Builder
 
             var bridgeOptions = new BridgeOptions();
 
+            bridgeOptions.Name = "Bridge.Builder.Console";
+
             int i = 0;
 
             while (i < args.Length)
@@ -234,14 +175,14 @@ namespace Bridge.Builder
                     case "-cfg": // backwards compatibility
                     case "-configuration": // backwards compatibility
                     case "--configuration":
-                        bridgeOptions.Cfg = args[++i];
+                        bridgeOptions.Configuration = args[++i];
                         break;
 
                     case "-def": // backwards compatibility
                     case "-D":
                     case "-define": // backwards compatibility
                     case "--define":
-                        bridgeOptions.Def = args[++i];
+                        bridgeOptions.DefinitionConstants = args[++i];
                         break;
 
                     case "-rebuild": // backwards compatibility
@@ -346,29 +287,6 @@ namespace Bridge.Builder
             }
 
             return bridgeOptions;
-        }
-    }
-
-    class BridgeOptions
-    {
-        public string ProjectLocation { get; set; }
-        public string OutputLocation { get; set; }
-        public string BridgeLocation { get; set; }
-        public bool Rebuild { get; set; }
-        public bool ExtractCore { get; set; }
-        public string Cfg { get; set; }
-        public string Source { get; set; }
-        public string Folder { get; set; }
-        public bool Recursive { get; set; }
-        public string Lib { get; set; }
-        public string Def { get; set; }
-        public bool Help { get; set; }
-        public bool NoTimeStamp { get; set; }
-
-        public BridgeOptions()
-        {
-            ExtractCore = true;
-            Folder = Environment.CurrentDirectory;
         }
     }
 }
