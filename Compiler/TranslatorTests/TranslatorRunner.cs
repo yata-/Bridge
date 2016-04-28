@@ -80,7 +80,7 @@ namespace Bridge.Translator.Tests
 
             if (translator.BridgeLocation == null)
             {
-                Bridge.Translator.Exception.Throw("Unable to determine Bridge project output path by configuration " + configuration);
+                Bridge.Translator.TranslatorException.Throw("Unable to determine Bridge project output path by configuration " + configuration);
             }
 
             translator.BuildArguments = WrapBuildArguments(configuration);
@@ -121,7 +121,7 @@ namespace Bridge.Translator.Tests
 
             if (translator.BridgeLocation == null)
             {
-                Bridge.Translator.Exception.Throw("Unable to determine Bridge project output path by configuration " + configuration);
+                Bridge.Translator.TranslatorException.Throw("Unable to determine Bridge project output path by configuration " + configuration);
             }
 
             translator.BuildArguments = WrapBuildArguments(configuration);

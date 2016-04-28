@@ -129,13 +129,13 @@ namespace Bridge.Translator
                     this.RunEvent(config.BeforeBuild);
                     logger.Info("Running BeforeBuild event done");
                 }
-                catch (Exception exc)
+                catch (System.Exception exc)
                 {
                     var message = "Error: Unable to run beforeBuild event command: " + exc.Message + "\nStack trace:\n" + exc.StackTrace;
 
                     logger.Error("Exception occurred. Message: " + message);
 
-                    throw new Bridge.Translator.Exception(message);
+                    throw new Bridge.Translator.TranslatorException(message);
                 }
             }
 
@@ -345,12 +345,12 @@ namespace Bridge.Translator
                     logger.Trace("Run AfterBuild event");
                     this.RunEvent(this.AssemblyInfo.AfterBuild);
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                     var message = "Error: Unable to run afterBuild event command: " + ex.Message + "\nStack trace:\n" + ex.StackTrace;
 
                     logger.Error(message);
-                    throw new Bridge.Translator.Exception(message);
+                    throw new Bridge.Translator.TranslatorException(message);
                 }
             }
 
@@ -847,9 +847,9 @@ namespace Bridge.Translator
 
                 this.Log.Info("Cleaning output folder done");
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
-                this.Log.Error("Exception occurred: " + ex.Message);
+                this.Log.Error(ex.ToString());
             }
         }
 

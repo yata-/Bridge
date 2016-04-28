@@ -175,10 +175,9 @@ namespace Bridge.Translator
                                 logger.Trace("The assembly " + assembly.FullName + " added to the catalogs");
                             }
                         }
-                        catch (Exception ex)
+                        catch (System.Exception ex)
                         {
-                            logger.Error("Exception occurred:");
-                            logger.Error(ex.Message);
+                            logger.Error(ex.ToString());
                         }
 
                     }
@@ -202,10 +201,9 @@ namespace Bridge.Translator
             {
                 container.ComposeParts(plugins);
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
-                logger.Error("Exception occurred:");
-                logger.Error(ex.Message);
+                logger.Error(ex.ToString());
             }
 
             if (plugins.Parts != null)

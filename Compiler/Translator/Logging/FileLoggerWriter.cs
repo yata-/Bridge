@@ -85,7 +85,7 @@ namespace Bridge.Translator.Logging
 
                 IsInitializedSuccessfully = true;
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }
@@ -161,7 +161,7 @@ namespace Bridge.Translator.Logging
                     }
                 }
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }

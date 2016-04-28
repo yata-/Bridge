@@ -136,7 +136,7 @@ namespace Bridge.Translator.Tests
                     translator.Build();
                 }
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 Assert.Fail("Could not {0} the project {1}. Exception occurred: {2}.", isToTranslate ? "translate" : "build", folder, ex.Message);
             }
@@ -161,7 +161,7 @@ namespace Bridge.Translator.Tests
                     Assert.Fail(sb.ToString());
                 }
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 var message = string.Format("Could not compare the project {0} output. Exception occurred: {1}.", folder, ex.Message);
 
