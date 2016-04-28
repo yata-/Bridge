@@ -71,12 +71,18 @@ namespace Bridge.Translator
             var l = logger as Bridge.Translator.Logging.Logger;
             if (l != null)
             {
-                l.LoggerLevel = config.LoggerLevel ?? LoggerLevel.None;
+                l.LoggerLevel = config.Logging.LoggerLevel ?? LoggerLevel.None;
                 l.BufferedMode = false;
                 
-                if (config.NoLoggerTimeStamps.HasValue)
+                if (config.Logging.NoLoggerTimeStamps.HasValue)
                 {
-                    l.UseTimeStamp = !config.NoLoggerTimeStamps.Value;
+                    l.UseTimeStamp = !config.Logging.NoLoggerTimeStamps.Value;
+                }
+
+                var fileLoggerWriter = l.GetFileLogger();
+                if (fileLoggerWriter != null)
+                {
+                    fileLoggerWriter.SetParameters(config.Logging.Folder, config.Logging.FileName, config.Logging.MaxLogFileSize);
                 }
 
                 l.Flush();

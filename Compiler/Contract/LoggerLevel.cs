@@ -3,9 +3,9 @@ namespace Bridge.Contract
     public enum LoggerLevel
     {
         None = 0,
-        Trace = 1,
-        Info = 2,
-        Warning = 3,
-        Error = 4        
+        Error = 10,
+        Warning = 11,
+        Info = 12,
+        Trace = 13
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 using Bridge.Contract;
@@ -26,20 +27,47 @@ namespace Bridge.Translator.Logging
 
         public string BaseDirectory { get; private set; }
         public string FullName { get; private set; }
+        public string FileName { get; private set; }
+        public long MaxLogFileSize { get; private set; }
 
         public bool BufferedMode { get; set; }
         public LoggerLevel LoggerLevel { get; set; }
-
-        public FileLoggerWriter()
+        
+        public FileLoggerWriter(string baseDir, string fileName, long? maxSize)
         {
             Buffer = new Queue<BufferedMessage>();
+            SetParameters(baseDir, fileName, maxSize);
         }
 
-        public FileLoggerWriter(string baseDir) : this()
+        public FileLoggerWriter(): this(null, null, null)
         {
-            this.BaseDirectory = Path.GetDirectoryName(baseDir);
+            
         }
-        
+
+        public FileLoggerWriter(string baseDir) : this(baseDir, null, null)
+        {
+
+        }
+
+        public void SetParameters(string baseDir, string fileName, long? maxSize)
+        {
+            IsInitializedSuccessfully = false;
+            InitializationCount = 0;
+
+            this.BaseDirectory = string.IsNullOrEmpty(baseDir) ? null : Path.GetDirectoryName(baseDir);
+            this.FileName = string.IsNullOrEmpty(fileName) ? LoggerFileName : Path.GetFileName(fileName);
+            this.MaxLogFileSize = !maxSize.HasValue || maxSize.Value <= 0 ? LoggerFileMaxLength : maxSize.Value;
+
+            if (string.IsNullOrEmpty(this.BaseDirectory))
+            {
+                this.FullName = FileName;
+            }
+            else
+            {
+                this.FullName = Path.Combine(this.BaseDirectory, FileName);
+            }
+        }
+
         private bool CanBeInitialized
         {
             get { return InitializationCount < MaxInitializationCount; }
@@ -60,15 +88,6 @@ namespace Bridge.Translator.Logging
 
             InitializationCount++;
 
-            if (string.IsNullOrEmpty(this.BaseDirectory))
-            {
-                this.FullName = LoggerFileName;
-            }
-            else
-            {
-                this.FullName = Path.Combine(this.BaseDirectory, LoggerFileName);
-            }
-
             try
             {
                 var loggerFile = new FileInfo(this.FullName);
@@ -78,7 +97,7 @@ namespace Bridge.Translator.Logging
                     loggerFile.Directory.Create();
                 }
 
-                if (loggerFile.Exists && loggerFile.Length > LoggerFileMaxLength)
+                if (loggerFile.Exists && loggerFile.Length > MaxLogFileSize)
                 {
                     loggerFile.Delete();
                 }
@@ -117,7 +136,7 @@ namespace Bridge.Translator.Logging
 
         private bool CheckLoggerLevel(LoggerLevel level)
         {
-            return level >= LoggerLevel;
+            return level <= LoggerLevel;
         }
 
         public void Flush()
@@ -127,43 +146,51 @@ namespace Bridge.Translator.Logging
                 return;
             }
 
-            try
+            if (Buffer.Any(x => CheckLoggerLevel(x.LoggerLevel)))
             {
-                FileInfo file = new FileInfo(this.FullName);
-                using (Stream stream = file.Open(FileMode.Append, FileAccess.Write, FileShare.Write | FileShare.ReadWrite | FileShare.Delete))
+
+                try
                 {
-                    using (StreamWriter writer = new StreamWriter(stream, Encoding.UTF8))
+                    FileInfo file = new FileInfo(this.FullName);
+                    using (Stream stream = file.Open(FileMode.Append, FileAccess.Write, FileShare.Write | FileShare.ReadWrite | FileShare.Delete))
                     {
-                        stream.Position = stream.Length;
-
-                        BufferedMessage message;
-
-                        while (Buffer.Count > 0)
+                        using (StreamWriter writer = new StreamWriter(stream, Encoding.UTF8))
                         {
-                            message = Buffer.Dequeue();
+                            stream.Position = stream.Length;
 
-                            if (!CheckLoggerLevel(message.LoggerLevel))
-                            {
-                                continue;
-                            }
+                            BufferedMessage message;
 
-                            if (message.UseWriteLine)
+                            while (Buffer.Count > 0)
                             {
-                                writer.WriteLine(message.Message);
-                            }
-                            else
-                            {
-                                writer.Write(message.Message);
-                            }
+                                message = Buffer.Dequeue();
 
-                            writer.Flush();
+                                if (!CheckLoggerLevel(message.LoggerLevel))
+                                {
+                                    continue;
+                                }
+
+                                if (message.UseWriteLine)
+                                {
+                                    writer.WriteLine(message.Message);
+                                }
+                                else
+                                {
+                                    writer.Write(message.Message);
+                                }
+
+                                writer.Flush();
+                            }
                         }
                     }
                 }
+                catch (System.Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
-            catch (System.Exception ex)
+            else
             {
-                Console.WriteLine(ex.ToString());
+                Buffer.Clear();
             }
         }
 

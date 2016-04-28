@@ -52,7 +52,7 @@ namespace Bridge.Translator.Logging
 
         private bool CheckLoggerLevel(LoggerLevel level)
         {
-            return level >= LoggerLevel;
+            return level <= LoggerLevel;
         }
     }
 }

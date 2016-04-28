@@ -56,6 +56,12 @@ namespace Bridge.Translator.Logging
         {
         }
 
+
+        public FileLoggerWriter GetFileLogger()
+        {
+            return (FileLoggerWriter)LoggerWriters.Where(x => x is FileLoggerWriter).FirstOrDefault();
+        }
+
         public void Flush()
         {
             LoggerWriters.ForEach(x => x.Flush());
