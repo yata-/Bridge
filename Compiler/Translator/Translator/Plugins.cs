@@ -309,6 +309,11 @@ namespace Bridge.Translator
         {
             get
             {
+                if (this.plugins == null)
+                {
+                    this.plugins = new List<IPlugin>();
+                }
+
                 return this.plugins;
             }
         }
