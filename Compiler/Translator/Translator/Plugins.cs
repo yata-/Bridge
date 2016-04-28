@@ -175,6 +175,10 @@ namespace Bridge.Translator
                                 logger.Trace("The assembly " + assembly.FullName + " added to the catalogs");
                             }
                         }
+                        catch (ReflectionTypeLoadException ex)
+                        {
+                            LogAssemblyLoaderException(ex, logger);
+                        }
                         catch (System.Exception ex)
                         {
                             logger.Error(ex.ToString());
@@ -201,6 +205,10 @@ namespace Bridge.Translator
             {
                 container.ComposeParts(plugins);
             }
+            catch (ReflectionTypeLoadException ex)
+            {
+                LogAssemblyLoaderException(ex, logger);
+            }
             catch (System.Exception ex)
             {
                 logger.Error(ex.ToString());
@@ -208,7 +216,6 @@ namespace Bridge.Translator
 
             if (plugins.Parts != null)
             {
-
                 foreach (var plugin in plugins.Parts)
                 {
                     plugin.Logger = translator.Log;
@@ -263,6 +270,36 @@ namespace Bridge.Translator
                 logger.Trace("Assembly " + assembly.FullName + " is loaded into domain " + AppDomain.CurrentDomain.FriendlyName);
             }
             return assembly;
+        }
+
+        private static void LogAssemblyLoaderException(ReflectionTypeLoadException ex, ILogger logger)
+        {
+            var sb = new System.Text.StringBuilder();
+
+            sb.AppendLine(ex.ToString());
+
+            if (ex.LoaderExceptions != null)
+            {
+                sb.AppendFormat("LoaderExceptions ({0} items): ", ex.LoaderExceptions.Length);
+
+                foreach (var loaderException in ex.LoaderExceptions)
+                {
+                    sb.AppendLine(loaderException.Message);
+                }
+            }
+
+            var message = sb.ToString();
+
+            if (logger != null)
+            {
+                logger.Error(message);
+            }
+            else
+            {
+                Console.WriteLine(message);
+            }
+
+            sb.Clear();
         }
 
         [ImportMany]
