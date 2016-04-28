@@ -42,7 +42,7 @@ namespace Bridge.Translator.Logging
         
         private bool CanBeInitialized
         {
-            get { return InitializationCount >= MaxInitializationCount; }
+            get { return InitializationCount < MaxInitializationCount; }
         }
 
         private bool CheckDirectoryAndLoggerSize()
@@ -117,7 +117,7 @@ namespace Bridge.Translator.Logging
 
         private bool CheckLoggerLevel(LoggerLevel level)
         {
-            return LoggerLevel >= level;
+            return level >= LoggerLevel;
         }
 
         public void Flush()
@@ -149,11 +149,11 @@ namespace Bridge.Translator.Logging
 
                             if (message.UseWriteLine)
                             {
-                                writer.WriteLine(message);
+                                writer.WriteLine(message.Message);
                             }
                             else
                             {
-                                writer.Write(message);
+                                writer.Write(message.Message);
                             }
 
                             writer.Flush();

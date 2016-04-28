@@ -11,20 +11,7 @@ namespace Bridge.Translator.Logging
     {
         public bool BufferedMode { get; set; }
 
-        private LoggerLevel loggerLevel;
-        public LoggerLevel LoggerLevel
-        {
-            get { return loggerLevel; }
-            set
-            {
-                if (loggerLevel < LoggerLevel.Warning)
-                {
-                    value = LoggerLevel.Warning;
-                }
-
-                loggerLevel = value;
-            }
-        }
+        public LoggerLevel LoggerLevel { get; set; }
 
         public void Flush()
         {
@@ -65,7 +52,7 @@ namespace Bridge.Translator.Logging
 
         private bool CheckLoggerLevel(LoggerLevel level)
         {
-            return LoggerLevel >= level;
+            return level >= LoggerLevel;
         }
     }
 }
