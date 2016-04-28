@@ -54,7 +54,22 @@ namespace Bridge.Translator.Logging
             IsInitializedSuccessfully = false;
             InitializationCount = 0;
 
-            this.BaseDirectory = string.IsNullOrEmpty(baseDir) ? null : Path.GetDirectoryName(baseDir);
+            if (string.IsNullOrEmpty(baseDir))
+            {
+                this.BaseDirectory = null;
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(Path.GetExtension(baseDir)))
+                {
+                    this.BaseDirectory = baseDir;
+                }
+                else
+                {
+                    this.BaseDirectory = Path.GetDirectoryName(baseDir);
+                }
+            }
+
             this.FileName = string.IsNullOrEmpty(fileName) ? LoggerFileName : Path.GetFileName(fileName);
             this.MaxLogFileSize = !maxSize.HasValue || maxSize.Value <= 0 ? LoggerFileMaxLength : maxSize.Value;
 
