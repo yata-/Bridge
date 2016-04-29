@@ -1,6 +1,6 @@
 {
   "output": "Bridge\\output",
-  "cleanOutputFolderBeforeBuild": true,
+  "cleanOutputFolderBeforeBuildPattern": "*.*",
   "outputFormatting": "Formatted",
 
   "autoPropertyToField": true,

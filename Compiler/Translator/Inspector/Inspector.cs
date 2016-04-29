@@ -231,7 +231,7 @@ namespace Bridge.Translator
 
                 return true;
             }
-            catch (Exception)
+            catch (TranslatorException)
             {
                 return false;
             }
