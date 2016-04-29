@@ -56,19 +56,11 @@ namespace Bridge.Translator
         {
             var logger = this.Logger;
             var bridgeOptions = this.BridgeOptions;
-            var assemblyConfig = this.TranslatorConfiguration;
             var translator = this.Translator;
 
-            string basePath = bridgeOptions.IsFolderMode ? bridgeOptions.Folder : Path.GetDirectoryName(bridgeOptions.ProjectLocation);
-            string outputPath = string.IsNullOrWhiteSpace(translator.AssemblyInfo.Output)
-                ? outputPath = Path.Combine(basePath, Path.GetDirectoryName(bridgeOptions.OutputLocation))
-                : outputPath = Path.Combine(basePath, translator.AssemblyInfo.Output);
+            var outputPath = GetOutputFolder();
 
             logger.Info("outputPath is " + outputPath);
-
-            //        outputPath = !string.IsNullOrWhiteSpace(translator.AssemblyInfo.Output)
-            //? Path.Combine(Path.GetDirectoryName(this.ProjectPath), translator.AssemblyInfo.Output)
-            //: this.OutputPath;
 
             translator.CleanOutputFolderIfRequired(outputPath);
 
@@ -78,18 +70,60 @@ namespace Bridge.Translator
                 translator.ExtractCore(outputPath);
             }
 
-            //string fileName = Path.GetFileNameWithoutExtension(this.Assembly.ItemSpec);
+            var fileName = Path.GetFileName(bridgeOptions.OutputLocation);
 
+            logger.Info("Saving to " + outputPath);
+            translator.SaveTo(outputPath, fileName);
+            translator.Flush(outputPath, fileName);
+
+            translator.Plugins.AfterOutput(translator, outputPath, !bridgeOptions.ExtractCore);
+
+            logger.Info("Done translating Bridge files.");
+        }
+
+        private string GetOutputFolder(bool basePathOnly = false, bool strict = false)
+        {
+            var bridgeOptions = this.BridgeOptions;
+
+            string basePath = bridgeOptions.IsFolderMode ? bridgeOptions.Folder : Path.GetDirectoryName(bridgeOptions.ProjectLocation);
+
+            if (basePathOnly)
+            {
+                return basePath;
+            }
+
+            string assemblyOutput = string.Empty;
+
+            if (this.Translator != null)
+            {
+                assemblyOutput = this.Translator.AssemblyInfo.Output;
+            }
+            else if (this.TranslatorConfiguration != null)
+            {
+                assemblyOutput = this.TranslatorConfiguration.Output;
+            }
+            else if (strict)
+            {
+                throw new InvalidOperationException("Could not get output folder as assembly configuration is still null");
+            } else
+            {
+                this.Logger.Warn("Could not get assembly output folder");
+            }
+
+            string outputPath = string.IsNullOrWhiteSpace(assemblyOutput)
+                ? outputPath = Path.Combine(basePath, Path.GetDirectoryName(bridgeOptions.OutputLocation))
+                : outputPath = Path.Combine(basePath, assemblyOutput);
+
+            // This were for Task
+            //string fileName = Path.GetFileNameWithoutExtension(this.Assembly.ItemSpec);
+            //outputPath = !string.IsNullOrWhiteSpace(translator.AssemblyInfo.Output)
+            //  ? Path.Combine(Path.GetDirectoryName(this.ProjectPath), translator.AssemblyInfo.Output)
+            //  : this.OutputPath;
             //translator.SaveTo(outputPath, fileName);
             //translator.Flush(outputPath, fileName);
             //translator.Plugins.AfterOutput(translator, outputPath, this.NoCore);
 
-            logger.Info("Saving to " + outputPath);
-            translator.SaveTo(outputPath, Path.GetFileName(bridgeOptions.OutputLocation));
-            translator.Flush(outputPath, Path.GetFileName(bridgeOptions.OutputLocation));
-            translator.Plugins.AfterOutput(translator, outputPath, !bridgeOptions.ExtractCore);
-
-            logger.Info("Done translating Bridge files.");
+            return outputPath;
         }
 
         private IAssemblyInfo ReadConfiguration()
@@ -150,10 +184,14 @@ namespace Bridge.Translator
                 if (fileLoggerWriter != null)
                 {
                     var logFileFolder = assemblyConfig.Logging.Folder;
-                    //if (string.IsNullOrWhiteSpace(logFileFolder))
-                    //{
-                    //    logFileFolder = Path.Combine(Path.GetDirectoryName(location), assemblyConfig.Output);
-                    //}
+                    if (string.IsNullOrWhiteSpace(logFileFolder))
+                    {
+                        logFileFolder = this.GetOutputFolder(true, false);
+                    }
+                    else if (!Path.IsPathRooted(logFileFolder))
+                    {
+                        logFileFolder = Path.Combine(this.GetOutputFolder(true, false), logFileFolder);
+                    }
 
                     fileLoggerWriter.SetParameters(logFileFolder, assemblyConfig.Logging.FileName, assemblyConfig.Logging.MaxLogFileSize);
                 }
