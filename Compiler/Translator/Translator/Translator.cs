@@ -57,6 +57,7 @@ namespace Bridge.Translator
             this.Recursive = recursive;
             this.Source = source;
             this.AssemblyLocation = lib;
+            this.FolderMode = true;
         }
 
         public Dictionary<string, string> Translate()
@@ -67,20 +68,6 @@ namespace Bridge.Translator
             this.LogProductInfo();
 
             var config = this.AssemblyInfo;
-
-            if (!string.IsNullOrWhiteSpace(config.Configuration))
-            {
-                this.Configuration = config.Configuration;
-                logger.Trace("Set configuration: " + this.Configuration);
-            }
-
-            if (config.DefineConstants != null && config.DefineConstants.Count > 0)
-            {
-                this.DefineConstants.AddRange(config.DefineConstants);
-                this.DefineConstants = this.DefineConstants.Distinct().ToList();
-
-                logger.Trace("Set constants: " + string.Join(",", this.DefineConstants));
-            }
 
             if (this.FolderMode)
             {
@@ -261,7 +248,7 @@ namespace Bridge.Translator
 
                 if (fileName.Contains(Bridge.Translator.AssemblyInfo.DEFAULT_FILENAME))
                 {
-                    fileName = fileName.Replace(Bridge.Translator.AssemblyInfo.DEFAULT_FILENAME, defaultFileName);
+                    fileName = Path.GetFileNameWithoutExtension(fileName).Replace(Bridge.Translator.AssemblyInfo.DEFAULT_FILENAME, defaultFileName);
                 }
 
                 // Ensure filename contains no ":". It could be used like "c:/absolute/path"
