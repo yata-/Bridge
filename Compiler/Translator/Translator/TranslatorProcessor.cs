@@ -120,6 +120,11 @@ namespace Bridge.Translator
             var bridgeOptions = this.BridgeOptions;
             var assemblyConfig = this.TranslatorConfiguration;
 
+            if (bridgeOptions.NoLoggerSetUp)
+            {
+                return true;
+            }
+
             logger.Info("Setting logger configuration parameters...");
 
             logger.Name = bridgeOptions.Name;
