@@ -25,6 +25,8 @@ namespace Bridge.Translator
 
         public string PreProcess()
         {
+            //System.Diagnostics.Debugger.Launch();
+
             this.TranslatorConfiguration = this.ReadConfiguration();
 
             if (this.TranslatorConfiguration == null)
@@ -52,7 +54,7 @@ namespace Bridge.Translator
             this.Translator.Translate();
         }
 
-        public void PostProcess()
+        public string PostProcess()
         {
             var logger = this.Logger;
             var bridgeOptions = this.BridgeOptions;
@@ -79,6 +81,8 @@ namespace Bridge.Translator
             translator.Plugins.AfterOutput(translator, outputPath, !bridgeOptions.ExtractCore);
 
             logger.Info("Done translating Bridge files.");
+
+            return outputPath;
         }
 
         private string GetOutputFolder(bool basePathOnly = false, bool strict = false)
@@ -178,7 +182,11 @@ namespace Bridge.Translator
                 else if (assemblyConfig.Logging.NoLoggerTimeStamps.HasValue)
                 {
                     logger.UseTimeStamp = !assemblyConfig.Logging.NoLoggerTimeStamps.Value;
+                }else
+                {
+                    logger.UseTimeStamp = true;
                 }
+
 
                 var fileLoggerWriter = logger.GetFileLogger();
                 if (fileLoggerWriter != null)
@@ -186,7 +194,7 @@ namespace Bridge.Translator
                     var logFileFolder = assemblyConfig.Logging.Folder;
                     if (string.IsNullOrWhiteSpace(logFileFolder))
                     {
-                        logFileFolder = this.GetOutputFolder(true, false);
+                        logFileFolder = this.GetOutputFolder(false, false);
                     }
                     else if (!Path.IsPathRooted(logFileFolder))
                     {
