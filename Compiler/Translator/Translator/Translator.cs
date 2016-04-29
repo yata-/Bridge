@@ -248,7 +248,7 @@ namespace Bridge.Translator
 
                 if (fileName.Contains(Bridge.Translator.AssemblyInfo.DEFAULT_FILENAME))
                 {
-                    fileName = Path.GetFileNameWithoutExtension(fileName).Replace(Bridge.Translator.AssemblyInfo.DEFAULT_FILENAME, defaultFileName);
+                    fileName = fileName.Replace(Bridge.Translator.AssemblyInfo.DEFAULT_FILENAME, Path.GetFileNameWithoutExtension(defaultFileName));
                 }
 
                 // Ensure filename contains no ":". It could be used like "c:/absolute/path"
