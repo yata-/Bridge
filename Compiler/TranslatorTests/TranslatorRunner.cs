@@ -82,7 +82,7 @@ namespace Bridge.Translator.Tests
                 ProjectLocation = ProjectLocation,
                 OutputLocation = outputLocation,
                 BridgeLocation = bridgeLocation,
-                Rebuild = byBuilding,
+                Rebuild = true,
                 ExtractCore = true,
                 Configuration = configuration,
                 Source = null,
