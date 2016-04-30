@@ -122,13 +122,13 @@ if ($projectMSBuild)
     }
     else
     {
-        #$p = $(get-item $project.FullName)
-        #if ($p)
-        #{
-        #    Write-Host $p.lastwritetime
-        #    $p.lastwritetime=get-date
-        #    Write-Host ("Triggered project reloading as it is required to fix possible IntelliSense errors")
-        #}
+        $p = $(get-item $project.FullName)
+        if ($p)
+        {
+            Write-Host $p.lastwritetime
+            $p.lastwritetime=get-date
+            Write-Host ("Triggered project reloading as it is required to fix possible IntelliSense errors")
+        }
     }
 }
 
