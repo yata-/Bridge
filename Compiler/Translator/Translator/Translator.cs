@@ -163,7 +163,7 @@ namespace Bridge.Translator
                 {
                     var fixer = new PreconverterFixer(resolver);
                     var astNode = syntaxTree.AcceptVisitor(fixer);
-                    syntaxTree = (astNode != null ? (SyntaxTree)astNode : syntaxTree);
+                    syntaxTree = astNode != null ? (SyntaxTree)astNode : syntaxTree;
                     sourceFile.SyntaxTree = syntaxTree;
                     needRecompile = true;
                 }

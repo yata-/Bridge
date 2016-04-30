@@ -1087,6 +1087,8 @@
                 QUnit.test("#1146 - TestLongIssues", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1146.testLongIssues);
                 QUnit.test("#1149 - TestBitwiseOrAnd", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1149.testBitwiseOrAnd);
                 QUnit.test("#1160 - TestBitwiseOrAnd", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1160.testBitwiseOrAnd);
+                QUnit.test("#1170 - TestAsyncUsing", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1170.testAsyncUsing);
+                QUnit.test("#1170 - TestAsyncUsingWithException", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1170.testAsyncUsingWithException);
                 QUnit.test("#1171 - TestLinqEnumerableInList", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1171.testLinqEnumerableInList);
                 QUnit.test("#1175 - TestNullComparing", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1175.testNullComparing);
                 QUnit.test("#1176 - TestFunctionLifting", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1176.testFunctionLifting);
@@ -3077,6 +3079,20 @@
             testBitwiseOrAnd: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1160).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1160);
                 Bridge.ClientTest.BridgeIssues.Bridge1160.testBitwiseOrAnd();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1170', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1170)],
+        statics: {
+            testAsyncUsing: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1170).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1170);
+                Bridge.ClientTest.BridgeIssues.Bridge1170.testAsyncUsing();
+            },
+            testAsyncUsingWithException: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1170).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1170);
+                Bridge.ClientTest.BridgeIssues.Bridge1170.testAsyncUsingWithException();
             }
         }
     });
