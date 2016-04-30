@@ -81,9 +81,10 @@ if ($projectMSBuild)
     }
     else
     {
-        # Save the project to force reloading to fix possible IntelliSense errors
-        $projectMSBuild.Save();
-        Write-Host ("Saved the project to force reloading. Press Reload or Reload All")
+        # Save the project to keep the added project properties
+        $project.Save();
+        Write-Host ("Saved the project . Project reloading may be required to fix possible IntelliSense errors")
+
     }
 }
 
