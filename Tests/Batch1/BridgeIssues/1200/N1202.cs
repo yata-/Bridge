@@ -139,23 +139,11 @@ namespace Bridge.ClientTest.BridgeIssues
             int i;
             intField = 0;
 
-            if (int.TryParse(s, out i))
-            {
-                Assert.AreEqual(1, i);
-            }
-            else
-            {
-                Assert.Fail();
-            }
+            Assert.True(int.TryParse(s, out i));
+            Assert.AreEqual(1, i);
 
-            if (int.TryParse(s, out intField))
-            {
-                Assert.AreEqual(1, intField);
-            }
-            else
-            {
-                Assert.Fail();
-            }
+            Assert.True(int.TryParse(s, out intField));
+            Assert.AreEqual(1, intField);
         }
 
         [Test]
@@ -164,23 +152,11 @@ namespace Bridge.ClientTest.BridgeIssues
             string s = "1";
             array = new[] { 0, 0 };
 
-            if (int.TryParse(s, out array[0]))
-            {
-                Assert.AreEqual(1, array[0]);
-            }
-            else
-            {
-                Assert.Fail();
-            }
+            Assert.True(int.TryParse(s, out array[0]));
+            Assert.AreEqual(1, array[0]);
 
-            if (int.TryParse(s, out array[array[1]]))
-            {
-                Assert.AreEqual(1, array[array[1]]);
-            }
-            else
-            {
-                Assert.Fail();
-            }
+            Assert.True(int.TryParse(s, out array[array[1]]));
+            Assert.AreEqual(1, array[array[1]]);
         }
 
         [Test]
@@ -189,23 +165,11 @@ namespace Bridge.ClientTest.BridgeIssues
             string s = "1";
             int[,] array2D = new int[,] { { 0, 0 } };
 
-            if (int.TryParse(s, out array2D[0, 0]))
-            {
-                Assert.AreEqual(1, array2D[0, 0]);
-            }
-            else
-            {
-                Assert.Fail();
-            }
+            Assert.True(int.TryParse(s, out array2D[0, 0]));
+            Assert.AreEqual(1, array2D[0, 0]);
 
-            if (int.TryParse(s, out array2D[array2D[0, 1], array2D[0, 1]]))
-            {
-                Assert.AreEqual(1, array2D[array2D[0, 1], array2D[0, 1]]);
-            }
-            else
-            {
-                Assert.Fail();
-            }
+            Assert.True(int.TryParse(s, out array2D[array2D[0, 1], array2D[0, 1]]));
+            Assert.AreEqual(1, array2D[array2D[0, 1], array2D[0, 1]]);
         }
     }
 }

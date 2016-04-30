@@ -5352,55 +5352,31 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var i = { };
                 Bridge.ClientTest.BridgeIssues.Bridge1202.intField = 0;
     
-                if (Bridge.Int32.tryParse(s, i)) {
-                    Bridge.Test.Assert.areEqual(1, i.v);
-                }
-                else  {
-                    Bridge.Test.Assert.fail();
-                }
+                Bridge.Test.Assert.$true(Bridge.Int32.tryParse(s, i));
+                Bridge.Test.Assert.areEqual(1, i.v);
     
-                if (Bridge.Int32.tryParse(s, Bridge.ref(Bridge.ClientTest.BridgeIssues.Bridge1202, "intField"))) {
-                    Bridge.Test.Assert.areEqual(1, Bridge.ClientTest.BridgeIssues.Bridge1202.intField);
-                }
-                else  {
-                    Bridge.Test.Assert.fail();
-                }
+                Bridge.Test.Assert.$true(Bridge.Int32.tryParse(s, Bridge.ref(Bridge.ClientTest.BridgeIssues.Bridge1202, "intField")));
+                Bridge.Test.Assert.areEqual(1, Bridge.ClientTest.BridgeIssues.Bridge1202.intField);
             },
             testInlineOutStatic1DIntArray: function () {
                 var s = "1";
                 Bridge.ClientTest.BridgeIssues.Bridge1202.array = [0, 0];
     
-                if (Bridge.Int32.tryParse(s, Bridge.ref(Bridge.ClientTest.BridgeIssues.Bridge1202.array, 0))) {
-                    Bridge.Test.Assert.areEqual(1, Bridge.ClientTest.BridgeIssues.Bridge1202.array[0]);
-                }
-                else  {
-                    Bridge.Test.Assert.fail();
-                }
+                Bridge.Test.Assert.$true(Bridge.Int32.tryParse(s, Bridge.ref(Bridge.ClientTest.BridgeIssues.Bridge1202.array, 0)));
+                Bridge.Test.Assert.areEqual(1, Bridge.ClientTest.BridgeIssues.Bridge1202.array[0]);
     
-                if (Bridge.Int32.tryParse(s, Bridge.ref(Bridge.ClientTest.BridgeIssues.Bridge1202.array, Bridge.ClientTest.BridgeIssues.Bridge1202.array[1]))) {
-                    Bridge.Test.Assert.areEqual(1, Bridge.ClientTest.BridgeIssues.Bridge1202.array[Bridge.ClientTest.BridgeIssues.Bridge1202.array[1]]);
-                }
-                else  {
-                    Bridge.Test.Assert.fail();
-                }
+                Bridge.Test.Assert.$true(Bridge.Int32.tryParse(s, Bridge.ref(Bridge.ClientTest.BridgeIssues.Bridge1202.array, Bridge.ClientTest.BridgeIssues.Bridge1202.array[1])));
+                Bridge.Test.Assert.areEqual(1, Bridge.ClientTest.BridgeIssues.Bridge1202.array[Bridge.ClientTest.BridgeIssues.Bridge1202.array[1]]);
             },
             testInlineOutLocal2DIntArray: function () {
                 var s = "1";
                 var array2D = Bridge.Array.create(0, [[0, 0]], 1, 2);
     
-                if (Bridge.Int32.tryParse(s, Bridge.ref(array2D, [0, 0]))) {
-                    Bridge.Test.Assert.areEqual(1, array2D.get([0, 0]));
-                }
-                else  {
-                    Bridge.Test.Assert.fail();
-                }
+                Bridge.Test.Assert.$true(Bridge.Int32.tryParse(s, Bridge.ref(array2D, [0, 0])));
+                Bridge.Test.Assert.areEqual(1, array2D.get([0, 0]));
     
-                if (Bridge.Int32.tryParse(s, Bridge.ref(array2D, [array2D.get([0, 1]), array2D.get([0, 1])]))) {
-                    Bridge.Test.Assert.areEqual(1, array2D.get([array2D.get([0, 1]), array2D.get([0, 1])]));
-                }
-                else  {
-                    Bridge.Test.Assert.fail();
-                }
+                Bridge.Test.Assert.$true(Bridge.Int32.tryParse(s, Bridge.ref(array2D, [array2D.get([0, 1]), array2D.get([0, 1])])));
+                Bridge.Test.Assert.areEqual(1, array2D.get([array2D.get([0, 1]), array2D.get([0, 1])]));
             }
         }
     });
