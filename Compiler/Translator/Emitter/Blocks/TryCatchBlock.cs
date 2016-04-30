@@ -117,7 +117,7 @@ namespace Bridge.Translator
 
                 this.WriteNewLine();
                 this.EndBlock();
-                
+
                 this.WriteSpace();
                 this.WriteElse();
                 this.WriteIf();
@@ -126,7 +126,7 @@ namespace Bridge.Translator
                 this.WriteCloseParentheses();
                 this.WriteSpace();
                 this.BeginBlock();
-                
+
                 if (this.Emitter.AsyncBlock.IsTaskReturn)
                 {
                     this.Write("$tcs.setException($async_e);");
@@ -134,8 +134,8 @@ namespace Bridge.Translator
                 else
                 {
                     this.Write("throw $async_e;");
-                } 
-                
+                }
+
                 this.WriteNewLine();
                 this.WriteReturn(false);
                 this.WriteSemiColon();
@@ -295,11 +295,11 @@ namespace Bridge.Translator
         protected virtual void EmitMultipleCatchBlock()
         {
             TryCatchStatement tryCatchStatement = this.TryCatchStatement;
-            
+
             this.WriteCatch();
             this.WriteOpenParentheses();
             var varName = this.AddLocal(this.GetUniqueName("$e"), AstType.Null);
-            
+
             var oldVar = this.Emitter.CatchBlockVariable;
             this.Emitter.CatchBlockVariable = varName;
 

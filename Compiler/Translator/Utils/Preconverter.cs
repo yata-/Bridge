@@ -32,7 +32,7 @@ namespace Bridge.Translator
 
         public MemberResolver Resolver
         {
-            get; 
+            get;
             set;
         }
 
@@ -106,7 +106,7 @@ namespace Bridge.Translator
 
         public MemberResolver Resolver
         {
-            get; 
+            get;
             set;
         }
 
@@ -145,7 +145,7 @@ namespace Bridge.Translator
                 i++;
             }
 
-            return result;   
+            return result;
         }
 
         public override AstNode VisitUsingStatement(UsingStatement usingStatement)
@@ -232,9 +232,9 @@ namespace Bridge.Translator
             }
 
             var finallyBlock = new BlockStatement();
-            var dispose = new InvocationExpression(new MemberReferenceExpression(new MemberReferenceExpression(new IdentifierExpression("Bridge"), "Script"), "Write"), 
+            var dispose = new InvocationExpression(new MemberReferenceExpression(new MemberReferenceExpression(new IdentifierExpression("Bridge"), "Script"), "Write"),
                                                    new PrimitiveExpression(string.Format("if (Bridge.hasValue({0})) {0}.dispose();", name)));
-            
+
             finallyBlock.Statements.Add(dispose);
 
             tryCatchStatement.FinallyBlock = finallyBlock;
@@ -250,7 +250,7 @@ namespace Bridge.Translator
                 InvocationExpression clonInvocationExpression = (InvocationExpression)base.VisitInvocationExpression(invocationExpression);
                 if (clonInvocationExpression == null)
                 {
-                    clonInvocationExpression = (InvocationExpression) invocationExpression.Clone();
+                    clonInvocationExpression = (InvocationExpression)invocationExpression.Clone();
                 }
 
                 var map = rr.GetArgumentToParameterMap();
@@ -284,7 +284,7 @@ namespace Bridge.Translator
                 UnaryOperatorExpression clonUnaryOperatorExpression = (UnaryOperatorExpression)base.VisitUnaryOperatorExpression(unaryOperatorExpression);
                 if (clonUnaryOperatorExpression == null)
                 {
-                    clonUnaryOperatorExpression = (UnaryOperatorExpression) unaryOperatorExpression.Clone();
+                    clonUnaryOperatorExpression = (UnaryOperatorExpression)unaryOperatorExpression.Clone();
                 }
 
                 bool isPost = clonUnaryOperatorExpression.Operator == UnaryOperatorType.PostDecrement ||
@@ -307,7 +307,7 @@ namespace Bridge.Translator
                         return ae;
                     }
 
-                    return new ParenthesizedExpression(ae);    
+                    return new ParenthesizedExpression(ae);
                 }
             }
 
@@ -318,7 +318,7 @@ namespace Bridge.Translator
         {
             var rr = this.Resolver.ResolveNode(assignmentExpression, null);
 
-            if (assignmentExpression.Operator != AssignmentOperatorType.Any && 
+            if (assignmentExpression.Operator != AssignmentOperatorType.Any &&
                 assignmentExpression.Operator != AssignmentOperatorType.Assign &&
                 (Helpers.IsIntegerType(rr.Type, this.Resolver)))
             {
@@ -374,9 +374,9 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    clonAssignmentExpression.Right = new BinaryOperatorExpression(clonAssignmentExpression.Left.Clone(), opType, clonAssignmentExpression.Right.Clone());    
+                    clonAssignmentExpression.Right = new BinaryOperatorExpression(clonAssignmentExpression.Left.Clone(), opType, clonAssignmentExpression.Right.Clone());
                 }
-                
+
 
                 return clonAssignmentExpression;
             }
