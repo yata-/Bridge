@@ -230,7 +230,9 @@
         }
 
         if (tp) {
-            var str, r;
+            var str,
+                r;
+
             if (tp === Bridge.Long) {
                 str = v.value.trunc().toString();
                 r = new Bridge.Long(str);
@@ -246,6 +248,7 @@
                 if (v.value.isNegative()) {
                     throw new Bridge.OverflowException();
                 }
+
                 str = v.value.trunc().toString();
                 r = new Bridge.ULong(str);
 
@@ -421,10 +424,12 @@
 
         if (provider && !provider.getFormat) {
             var oldConfig = Bridge.merge({}, old || {});
+
             Bridge.$Decimal.format = Bridge.merge(oldConfig, provider);
             d = this.value.toFormat(dp, rm);
         } else {
             provider = provider || Bridge.CultureInfo.getCurrentCulture();
+
             var nfInfo = provider && provider.getFormat(Bridge.NumberFormatInfo);
 
             if (nfInfo) {

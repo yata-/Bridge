@@ -4520,6 +4520,333 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1170', {
+        statics: {
+            testAsyncUsing: function () {
+                var $step = 0,
+                    $task1, 
+                    $task2, 
+                    $task3, 
+                    $jumpFromFinally, 
+                    $returnValue, 
+                    done, 
+                    parent, 
+                    parent2, 
+                    _bridgeTmp_1, 
+                    $async_e, 
+                    c1, 
+                    $async_e1, 
+                    c11, 
+                    c2, 
+                    $async_e2, 
+                    $async_e3, 
+                    $async_e4, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        try {
+                            for (;;) {
+                                $step = Bridge.Array.min([0,1,2,3,4,5,6,7,8,9,10,11,12,14,15], $step);
+                                switch ($step) {
+                                    case 0: {
+                                        done = Bridge.Test.Assert.async();
+                                        parent = new Bridge.ClientTest.BridgeIssues.Bridge1170();
+                                        parent2 = new Bridge.ClientTest.BridgeIssues.Bridge1170();
+                                        
+                                        _bridgeTmp_1 = new Bridge.ClientTest.BridgeIssues.Bridge1170.Class1("constructor$1", parent);
+                                        $step = 1;
+                                        continue;
+                                    }
+                                    case 1: {
+                                        $task3 = Bridge.Task.delay(1);
+                                        $step = 2;
+                                        $task3.continueWith($asyncBody, true);
+                                        return;
+                                    }
+                                    case 2: {
+                                        $task3.getAwaitedResult();
+                                        Bridge.Test.Assert.$false(parent.isDisposed);
+                                        $step = 3;
+                                        continue;
+                                    }
+                                    case 3: {
+                                        if (Bridge.hasValue(_bridgeTmp_1)) _bridgeTmp_1.dispose();
+                                        
+                                        if ($jumpFromFinally > -1) {
+                                            $step = $jumpFromFinally;
+                                            $jumpFromFinally = null;
+                                        } else if ($async_e) {
+                                            throw $async_e;
+                                            return;
+                                        } else if (Bridge.isDefined($returnValue)) {
+                                            $tcs.setResult($returnValue);
+                                            return;
+                                        }
+                                        $step = 4;
+                                        continue;
+                                    }
+                                    case 4: {
+                                        
+                                        Bridge.Test.Assert.$true(parent.isDisposed);
+                                        
+                                        parent.isDisposed = false;
+                                        c1 = new Bridge.ClientTest.BridgeIssues.Bridge1170.Class1("constructor$1", parent);
+                                        $step = 5;
+                                        continue;
+                                    }
+                                    case 5: {
+                                        $task2 = Bridge.Task.delay(1);
+                                        $step = 6;
+                                        $task2.continueWith($asyncBody, true);
+                                        return;
+                                    }
+                                    case 6: {
+                                        $task2.getAwaitedResult();
+                                        Bridge.Test.Assert.$false(c1.isDisposed);
+                                        Bridge.Test.Assert.$false(parent.isDisposed);
+                                        $step = 7;
+                                        continue;
+                                    }
+                                    case 7: {
+                                        if (Bridge.hasValue(c1)) c1.dispose();
+                                        
+                                        if ($jumpFromFinally > -1) {
+                                            $step = $jumpFromFinally;
+                                            $jumpFromFinally = null;
+                                        } else if ($async_e) {
+                                            throw $async_e;
+                                            return;
+                                        } else if (Bridge.isDefined($returnValue)) {
+                                            $tcs.setResult($returnValue);
+                                            return;
+                                        }
+                                        $step = 8;
+                                        continue;
+                                    }
+                                    case 8: {
+                                        
+                                        Bridge.Test.Assert.$true(parent.isDisposed);
+                                        
+                                        parent.isDisposed = false;
+                                        c11 = new Bridge.ClientTest.BridgeIssues.Bridge1170.Class1("constructor$1", parent);
+                                        $step = 9;
+                                        continue;
+                                    }
+                                    case 9: {
+                                        c2 = new Bridge.ClientTest.BridgeIssues.Bridge1170.Class1("constructor$1", parent2);
+                                        $step = 10;
+                                        continue;
+                                    }
+                                    case 10: {
+                                        $task1 = Bridge.Task.delay(1);
+                                        $step = 11;
+                                        $task1.continueWith($asyncBody, true);
+                                        return;
+                                    }
+                                    case 11: {
+                                        $task1.getAwaitedResult();
+                                        Bridge.Test.Assert.$false(c11.isDisposed);
+                                        Bridge.Test.Assert.$false(c2.isDisposed);
+                                        $step = 12;
+                                        continue;
+                                    }
+                                    case 12: {
+                                        if (Bridge.hasValue(c2)) c2.dispose();
+                                        
+                                        if ($jumpFromFinally > -1) {
+                                            $step = 14;
+                                            continue;
+                                        } else if ($async_e) {
+                                            throw $async_e;
+                                            return;
+                                        } else if (Bridge.isDefined($returnValue)) {
+                                            $step = 14;
+                                            continue;
+                                        }
+                                        $step = 13;
+                                        continue;
+                                    }
+    
+                                    case 14: {
+                                        if (Bridge.hasValue(c1)) c1.dispose();
+                                        
+                                        if ($jumpFromFinally > -1) {
+                                            $step = $jumpFromFinally;
+                                            $jumpFromFinally = null;
+                                        } else if ($async_e) {
+                                            throw $async_e;
+                                            return;
+                                        } else if (Bridge.isDefined($returnValue)) {
+                                            $tcs.setResult($returnValue);
+                                            return;
+                                        }
+                                        $step = 15;
+                                        continue;
+                                    }
+                                    case 15: {
+                                        
+                                        Bridge.Test.Assert.$true(parent.isDisposed);
+                                        Bridge.Test.Assert.$true(parent2.isDisposed);
+                                        
+                                        
+                                        done();
+                                        return;
+                                    }
+                                    default: {
+                                        return;
+                                    }
+                                }
+                            }
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            if ($step >= 1 && $step <= 2){
+    
+                                $step = 3;
+                                $asyncBody();
+                                return;
+                            }
+                            if ($step >= 5 && $step <= 6){
+    
+                                $step = 7;
+                                $asyncBody();
+                                return;
+                            }
+                            if ($step >= 10 && $step <= 11){
+    
+                                $step = 12;
+                                $asyncBody();
+                                return;
+                            }
+                            if ($step >= 9 && $step <= 13){
+    
+                                $step = 14;
+                                $asyncBody();
+                                return;
+                            }
+                            throw $async_e;
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+            },
+            testAsyncUsingWithException: function () {
+                var $step = 0,
+                    $task1, 
+                    $jumpFromFinally, 
+                    $returnValue, 
+                    done, 
+                    parent, 
+                    _bridgeTmp_2, 
+                    $async_e, 
+                    e, 
+                    $async_e1, 
+                    $async_e2, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        try {
+                            for (;;) {
+                                $step = Bridge.Array.min([0,1,2,3,4,5,6,7], $step);
+                                switch ($step) {
+                                    case 0: {
+                                        done = Bridge.Test.Assert.async();
+                                        parent = new Bridge.ClientTest.BridgeIssues.Bridge1170();
+                                        $step = 1;
+                                        continue;
+                                    }
+                                    case 1: {
+                                        _bridgeTmp_2 = new Bridge.ClientTest.BridgeIssues.Bridge1170.Class1("constructor$1", parent);
+                                        $step = 2;
+                                        continue;
+                                    }
+                                    case 2: {
+                                        $task1 = Bridge.Task.delay(1);
+                                        $step = 3;
+                                        $task1.continueWith($asyncBody, true);
+                                        return;
+                                    }
+                                    case 3: {
+                                        $task1.getAwaitedResult();
+                                        throw new Bridge.InvalidOperationException("Bridge1170 test");
+                                        $step = 4;
+                                        continue;
+                                    }
+                                    case 4: {
+                                        if (Bridge.hasValue(_bridgeTmp_2)) _bridgeTmp_2.dispose();
+                                        
+                                        if ($jumpFromFinally > -1) {
+                                            $step = $jumpFromFinally;
+                                            $jumpFromFinally = null;
+                                        } else if ($async_e) {
+                                            throw $async_e;
+                                            return;
+                                        } else if (Bridge.isDefined($returnValue)) {
+                                            $tcs.setResult($returnValue);
+                                            return;
+                                        }
+                                        $step = 5;
+                                        continue;
+                                    }
+                                    case 5: {
+                                        $step = 7;
+                                        continue;
+                                    }
+                                    case 6: {
+                                        Bridge.Test.Assert.areEqual("Bridge1170 test", e.getMessage());
+                                        $step = 7;
+                                        continue;
+                                    }
+                                    case 7: {
+                                        
+                                        Bridge.Test.Assert.$true(parent.isDisposed);
+                                        
+                                        done();
+                                        return;
+                                    }
+                                    default: {
+                                        return;
+                                    }
+                                }
+                            }
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            if ($step >= 2 && $step <= 3){
+    
+                                $step = 4;
+                                $asyncBody();
+                                return;
+                            }
+                            if ( $step >= 1 && $step <= 5 ){
+                                if (Bridge.is($async_e, Bridge.InvalidOperationException)) {
+                                    e = $async_e;
+                                    $step = 6;
+                                    $asyncBody();
+                                    return;
+                                }
+                            }
+                            throw $async_e;
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+            }
+        },
+        isDisposed: false
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1170.Class1', {
+        inherits: [Bridge.IDisposable],
+        isDisposed: false,
+        parent: null,
+        constructor: function () {
+        },
+        constructor$1: function (parent) {
+            this.parent = parent;
+        },
+        dispose: function () {
+            if (this.parent != null) {
+                this.parent.isDisposed = true;
+            }
+            this.isDisposed = true;
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1171', {
         statics: {
             testLinqEnumerableInList: function () {
@@ -11099,7 +11426,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                             $step = $jumpFromFinally;
                                             $jumpFromFinally = null;
                                         } else if ($async_e) {
-                                            $tcs.setException($async_e);
+                                            throw $async_e;
                                             return;
                                         } else if (Bridge.isDefined($returnValue)) {
                                             $tcs.setResult($returnValue);
