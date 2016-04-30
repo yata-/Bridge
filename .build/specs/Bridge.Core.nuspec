@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata minClientVersion="2.5">
-    <id>Bridge.Dev</id>
+    <id>Bridge.Core</id>
     <version>0.0.0</version>
-    <title>Bridge.NET</title>
+    <title>Bridge.NET Core</title>
     <authors>Object.NET, Inc.</authors>
     <iconUrl>http://speed.bridge.net/identity/bridgedotnet-100x100.png</iconUrl>
     <owners />
@@ -20,9 +20,11 @@
     </frameworkAssemblies>
   </metadata>
   <files>
-    <!--content-->
-    <file src="..\..\LICENSE" target="content\App_Readme\Bridge.NET\LICENSE"/>
-    <file src="..\..\README.md" target="content\App_Readme\Bridge.NET\README.md"/>
+    <file src="..\..\README.md" target="README.md"/>
+    <file src="..\..\LICENSE" target="LICENSE"/>
+    
+    <!--tools-->
+    <file src="..\..\.build\files\install.ps1" target="tools\install.ps1" />
 
     <!--NET40-->
     <file src="..\..\Bridge\bin\Release\Bridge.dll" target="lib\net40\Bridge.dll"/>
