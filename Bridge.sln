@@ -51,8 +51,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "specs", "specs", "{E12E9F2A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "files", "files", "{B83954AB-3E5F-4778-8BC0-F1CEEDE6F187}"
 	ProjectSection(SolutionItems) = preProject
+		.build\files\Bridge.Builder.targets = .build\files\Bridge.Builder.targets
 		.build\files\bridge.json = .build\files\bridge.json
-		.build\files\Bridge.targets = .build\files\Bridge.targets
 		.build\files\demo.html.pp = .build\files\demo.html.pp
 		.build\files\install.ps1 = .build\files\install.ps1
 		.build\files\output_readme.txt = .build\files\output_readme.txt

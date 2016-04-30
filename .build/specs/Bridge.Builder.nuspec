@@ -25,7 +25,7 @@
     <file src="..\..\LICENSE" target="LICENSE"/>
     
     <!--build-->
-    <file src="..\..\.build\files\Bridge.targets" target="build\Bridge.targets"/>
+    <file src="..\..\.build\files\Bridge.Builder.targets" target="build\Bridge.Builder.targets"/>
 
     <!--tools-->
     <file src="..\..\Compiler\Build\bin\Release\Bridge.Build.dll" target="tools\Bridge.Builder.dll"/>
