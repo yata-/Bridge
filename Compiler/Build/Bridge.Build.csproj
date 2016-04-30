@@ -85,11 +85,6 @@
     <NuGetPackageOutputDir>$(SolutionDir)Compiler\Build\bin\Release</NuGetPackageOutputDir>
   </PropertyGroup>
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <NuGetPackageSourcePath Include="$(SolutionDir).build\specs\Bridge.nuspec">
-      <Path>$(SolutionDir).build\specs\Bridge.nuspec</Path>
-    </NuGetPackageSourcePath>
-  </ItemGroup>
-  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <NuGetPackageSourcePath Include="$(SolutionDir).build\specs\Bridge.Builder.nuspec">
       <Path>$(SolutionDir).build\specs\Bridge.Builder.nuspec</Path>
     </NuGetPackageSourcePath>
