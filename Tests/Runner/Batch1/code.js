@@ -5592,6 +5592,36 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1241', {
+        statics: {
+            testMarkElement: function () {
+                var root = document.getElementById("qunit-fixture");
+    
+                var markElement1 = document.createElement('mark');
+                Bridge.Test.Assert.notNull$1(markElement1, "MarkElement created");
+                Bridge.Test.Assert.areEqual(markElement1.tagName, "MARK");
+    
+                var p = document.createElement('p');
+                root.appendChild(p);
+    
+                markElement1.id = "markElement1";
+                p.appendChild(markElement1);
+                markElement1.innerHTML = "I'm highlighted";
+    
+                var m1 = document.getElementById("markElement1");
+                Bridge.Test.Assert.areEqual$1("I'm highlighted", m1.innerHTML, "m1.InnerHTML");
+    
+                var markElement2 = document.createElement('mark');
+                markElement2.id = "markElement2";
+                p.appendChild(markElement2);
+                markElement2.innerHTML = "Me too";
+    
+                var m2 = document.getElementById("markElement2");
+                Bridge.Test.Assert.areEqual$1("Me too", m2.innerHTML, "m2.InnerHTML");
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
