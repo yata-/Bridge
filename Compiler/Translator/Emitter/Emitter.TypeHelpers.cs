@@ -31,12 +31,12 @@ namespace Bridge.Translator
 
             if (!this.TypeDefinitions.ContainsKey(x.Key))
             {
-                throw new Exception("Class with name '" + x.Key + "' is not found in the assembly, probably rebuild is required");
+                throw new TranslatorException("Class with name '" + x.Key + "' is not found in the assembly, probably rebuild is required");
             }
 
             if (!this.TypeDefinitions.ContainsKey(y.Key))
             {
-                throw new Exception("Class with name '" + y.Key + "' is not found in the assembly, probably rebuild is required");
+                throw new TranslatorException("Class with name '" + y.Key + "' is not found in the assembly, probably rebuild is required");
             }
 
             var xTypeDefinition = this.TypeDefinitions[x.Key];

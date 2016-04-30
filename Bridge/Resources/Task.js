@@ -55,13 +55,13 @@
 
                 if (Bridge.is(tasks, Bridge.IEnumerable)) {
                     tasks = Bridge.toArray(tasks);
-                }
-                else if (!Bridge.isArray(tasks)) {
+                } else if (!Bridge.isArray(tasks)) {
                     tasks = Array.prototype.slice.call(arguments, 0);
                 }
 
                 if (tasks.length === 0) {
                     tcs.setResult([]);
+
                     return tcs.task;
                 }
 
@@ -104,8 +104,7 @@
             whenAny: function (tasks) {
                 if (Bridge.is(tasks, Bridge.IEnumerable)) {
                     tasks = Bridge.toArray(tasks);
-                }
-                else if (!Bridge.isArray(tasks)) {
+                } else if (!Bridge.isArray(tasks)) {
                     tasks = Array.prototype.slice.call(arguments, 0);
                 }
 
@@ -195,8 +194,7 @@
 
                 if (typeof (handler) === 'number') {
                     handler = (function (i) { return function () { return arguments[i >= 0 ? i : (arguments.length + i)]; }; })(handler);
-                }
-                else if (typeof (handler) !== 'function') {
+                } else if (typeof (handler) !== 'function') {
                     handler = function () { return Array.prototype.slice.call(arguments, 0); };
                 }
 
@@ -430,7 +428,8 @@
             sourceTrue: {
                 isCancellationRequested: true, 
                 register: function (f, s) {
-                    f(s); 
+                    f(s);
+
                     return new Bridge.CancellationTokenRegistration();
                 } 
             },
@@ -500,8 +499,7 @@
             for (var i = 0; i < h.length; i++) {
                 try {
                     h[i].f(h[i].s);
-                }
-                catch (ex) {
+                } catch (ex) {
                     if (throwFirst && throwFirst !== -1) {
                         throw ex;
                     }
@@ -509,6 +507,7 @@
                     x.push(ex);
                 }
             }
+
             if (x.length > 0 && throwFirst !== -1) {
                 throw new Bridge.AggregateException(null, x);
             }
@@ -530,17 +529,19 @@
         register: function (f, s) {
             if (this.isCancellationRequested) {
                 f(s);
+
                 return new Bridge.CancellationTokenRegistration();
-            }
-            else {
+            } else {
                 var o = {f: f, s: s };
                 this.handlers.push(o);
+
                 return new Bridge.CancellationTokenRegistration(this, o);
             }
         },
 
         deregister: function (o) {
             var ix = this.handlers.indexOf(o);
+
             if (ix >= 0) {
                 this.handlers.splice(ix, 1);
             }
@@ -570,11 +571,15 @@
         statics: {
             createLinked: function () {
                 var cts = new Bridge.CancellationTokenSource();
+
                 cts.links = [];
+
                 var d = Bridge.fn.bind(cts, cts.cancel);
+
                 for (var i = 0; i < arguments.length; i++) {
                     cts.links.push(arguments[i].register(d));
                 }
+
                 return cts;
             }
         }

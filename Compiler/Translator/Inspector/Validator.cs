@@ -343,7 +343,7 @@ namespace Bridge.Translator
                 {
                     if (field.IsStatic)
                     {
-                        Exception.Throw("ObjectLiteral type doesn't support static members: {0}", type);
+                        TranslatorException.Throw("ObjectLiteral type doesn't support static members: {0}", type);
                     }
                 }
             }
@@ -357,7 +357,7 @@ namespace Bridge.Translator
                 {
                     if ((prop.GetMethod != null && prop.GetMethod.IsStatic) || (prop.SetMethod != null && prop.SetMethod.IsStatic))
                     {
-                        Exception.Throw("ObjectLiteral type doesn't support static members: {0}", type);
+                        TranslatorException.Throw("ObjectLiteral type doesn't support static members: {0}", type);
                     }
                 }
             }
@@ -383,7 +383,7 @@ namespace Bridge.Translator
 
             if (this.IsObjectLiteral(type) && methodsCount > 0)
             {
-                Bridge.Translator.Exception.Throw("ObjectLiteral doesn't support methods: {0}", type);
+                Bridge.Translator.TranslatorException.Throw("ObjectLiteral doesn't support methods: {0}", type);
             }
         }
 
@@ -403,7 +403,7 @@ namespace Bridge.Translator
 
                     if (!allTypes.ContainsKey(parentName))
                     {
-                        Bridge.Translator.Exception.Throw("Unknown type {0}", parentName);
+                        Bridge.Translator.TranslatorException.Throw("Unknown type {0}", parentName);
                     }
 
                     if (!result.Contains(parentName))

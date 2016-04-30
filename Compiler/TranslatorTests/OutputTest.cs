@@ -104,7 +104,7 @@ namespace Bridge.Translator.Tests
 
             Directory.SetCurrentDirectory(logDir);
 
-            var logger = new Logger("Bridge.Test.Runner", true, new SimpleFileLoggerWriter(logDir), new ConsoleLoggerWriter());
+            var logger = new Logger("Bridge.Test.Runner", true, Contract.LoggerLevel.Info, false, new FileLoggerWriter(logDir), new ConsoleLoggerWriter());
 
             GetPaths(folder);
 
@@ -118,6 +118,55 @@ namespace Bridge.Translator.Tests
             logger.Info("\tOutputFolder " + OutputFolder);
             logger.Info("\tReferenceFolder " + ReferenceFolder);
 
+            try
+            {
+                TranslateTestProject(isToTranslate, logger);
+            }
+            catch (System.Exception ex)
+            {
+                Assert.Fail("Could not {0} the project {1}. Exception occurred: {2}.", isToTranslate ? "translate" : "build", folder, ex.ToString());
+            }
+
+            try
+            {
+                CheckDifferenceBetweenReferenceAndOutput(folder, useSpecialFileCompare, logger);
+            }
+            catch (NUnit.Framework.AssertionException)
+            {
+                throw;
+            }
+            catch (System.Exception ex)
+            {
+                var message = string.Format("Could not compare the project {0} output. Exception occurred: {1}.", folder, ex.ToString());
+
+                logger.Error(message);
+                Assert.Fail(message);
+            }
+        }
+
+        private void CheckDifferenceBetweenReferenceAndOutput(string folder, bool useSpecialFileCompare, Logger logger)
+        {
+            var folderComparer = new FolderComparer() { Logger = logger };
+
+            var comparence = folderComparer.CompareFolders(this.ReferenceFolder, this.OutputFolder, useSpecialFileCompare ? SpecialFiles : null);
+
+            if (comparence.Any())
+            {
+                var sb = new StringBuilder();
+
+                foreach (var diff in comparence)
+                {
+                    sb.AppendLine(diff.ToString());
+                }
+
+                folderComparer.LogDifferences("Project " + folder + " differences:", comparence);
+
+                Assert.Fail(sb.ToString());
+            }
+        }
+
+        private void TranslateTestProject(bool isToTranslate, Logger logger)
+        {
             var translator = new TranslatorRunner()
             {
                 Logger = logger,
@@ -125,48 +174,13 @@ namespace Bridge.Translator.Tests
                 BuildArguments = OutputTest.BuildArguments
             };
 
-            try
+            if (isToTranslate)
             {
-                if (isToTranslate)
-                {
-                    translator.Translate();
-                }
-                else
-                {
-                    translator.Build();
-                }
+                translator.Translate();
             }
-            catch (Exception ex)
+            else
             {
-                Assert.Fail("Could not {0} the project {1}. Exception occurred: {2}.", isToTranslate ? "translate" : "build", folder, ex.Message);
-            }
-
-            try
-            {
-                var folderComparer = new FolderComparer() { Logger = logger };
-
-                var comparence = folderComparer.CompareFolders(this.ReferenceFolder, this.OutputFolder, useSpecialFileCompare ? SpecialFiles : null);
-
-                if (comparence.Any())
-                {
-                    var sb = new StringBuilder();
-
-                    foreach (var diff in comparence)
-                    {
-                        sb.AppendLine(diff.ToString());
-                    }
-
-                    folderComparer.LogDifferences("Project " + folder + " differences:", comparence);
-
-                    Assert.Fail(sb.ToString());
-                }
-            }
-            catch (Exception ex)
-            {
-                var message = string.Format("Could not compare the project {0} output. Exception occurred: {1}.", folder, ex.Message);
-
-                logger.Error(message);
-                Assert.Fail(message);
+                translator.Translate(true);
             }
         }
     }

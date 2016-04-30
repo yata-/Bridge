@@ -12,6 +12,7 @@ namespace Bridge.Translator
         {
             this.Dependencies = new List<IPluginDependency>();
             this.InjectScriptToAssembly = true;
+            this.Logging = new LoggingOptions();
         }
 
         /// <summary>
@@ -273,7 +274,7 @@ namespace Bridge.Translator
             set;
         }
 
-        public LoggerLevel? LoggerLevel
+        public LoggingOptions Logging
         {
             get;
             set;
