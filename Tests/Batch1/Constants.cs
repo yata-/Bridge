@@ -40,6 +40,7 @@ namespace Bridge.ClientTest
         public const string MODULE_REGEX = "Regex";
         public const string MODULE_REGEX_JS = "RegexJS";
         public const string MODULE_ENUM = "Enum";
+        public const string MODULE_GUID = "Guid";
 
         public const string MODULE_MATH = "Math";
         public const string MODULE_DECIMAL_MATH = "Decimal Math";
