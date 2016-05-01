@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata minClientVersion="2.5">
-    <id>Bridge.Builder</id>
+    <id>Bridge.Min</id>
     <version>0.0.0</version>
-    <title>Bridge.NET Builder</title>
+    <title>Bridge.NET Min</title>
     <authors>Object.NET, Inc.</authors>
     <iconUrl>http://speed.bridge.net/identity/bridgedotnet-100x100.png</iconUrl>
     <owners />
@@ -25,7 +25,7 @@
     <file src="..\..\LICENSE" target="LICENSE"/>
     
     <!--build-->
-    <file src="..\..\.build\files\Bridge.Builder.targets" target="build\Bridge.Builder.targets"/>
+    <file src="..\..\.build\files\Bridge.Min.targets" target="build\Bridge.Min.targets"/>
 
     <!--tools-->
     <file src="..\..\Compiler\Build\bin\Release\Bridge.Build.dll" target="tools\Bridge.Builder.dll"/>
