@@ -33,24 +33,8 @@ $project.ConfigurationManager | ForEach-Object {
   }
 
 
-  # Check for <AddAdditionalExplicitAssemblyReferences>
-  #$addadditionalexplicitassemblyreferences_setting = $_.Properties.Item("AddAdditionalExplicitAssemblyReferences")
-
-  #if (-not $addadditionalexplicitassemblyreferences_setting.Value) 
-  #{
-  #  $addadditionalexplicitassemblyreferences_setting.Value = $false
-  #}
-
-
-  # Check for <AdditionalExplicitAssemblyReferences>
-  #$additionalexplicitassemblyreferences_setting = $_.Properties.Item("AdditionalExplicitAssemblyReferences")
-
-  #if (-not $additionalexplicitassemblyreferences_setting.Value) 
-  #{
-  #  Write-Host ("AdditionalExplicitAssemblyReferences")
-  #  # $additionalexplicitassemblyreferences_setting.Value = $true
-  #}
-
+  # Check for AddAdditionalExplicitAssemblyReferences?
+  # Check for AdditionalExplicitAssemblyReferences?
 }
 
 Write-Host ("Bridge.NET installation was successful")
