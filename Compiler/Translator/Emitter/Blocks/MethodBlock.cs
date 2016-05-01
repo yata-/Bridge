@@ -4,6 +4,7 @@ using Object.Net.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ICSharpCode.NRefactory.TypeSystem;
 
 namespace Bridge.Translator
 {
@@ -91,13 +92,7 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    var typeDef = this.Emitter.GetTypeDefinition();
-                    string structName = this.Emitter.Validator.GetCustomTypeName(typeDef, this.Emitter);
-
-                    if (structName.IsEmpty())
-                    {
-                        structName = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter);
-                    }
+                    string structName = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter);
 
                     this.EnsureComma();
                     this.Write("getDefaultValue: function () { return new " + structName + "(); }");
@@ -109,11 +104,16 @@ namespace Bridge.Translator
         protected virtual void EmitStructMethods()
         {
             var typeDef = this.Emitter.GetTypeDefinition();
-            string structName = this.Emitter.Validator.GetCustomTypeName(typeDef, this.Emitter);
+            string structName = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter);
 
-            if (structName.IsEmpty())
+            bool immutable = this.Emitter.Validator.IsImmutableType(typeDef);
+
+            if (!immutable)
             {
-                structName = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter);
+                var mutableFields = this.TypeInfo.Type.GetFields(f => !f.IsReadOnly && !f.IsConst, GetMemberOptions.IgnoreInheritedMembers);
+                var autoProps = typeDef.Properties.Where(Helpers.IsAutoProperty);
+                var autoEvents = this.TypeInfo.Type.GetEvents(null, GetMemberOptions.IgnoreInheritedMembers);
+                immutable = !mutableFields.Any() && !autoProps.Any() && !autoEvents.Any();
             }
 
             var fields = this.TypeInfo.InstanceConfig.Fields;
@@ -204,28 +204,37 @@ namespace Bridge.Translator
             }
 
             this.EnsureComma();
-            this.Write("$clone: function (to) ");
-            this.BeginBlock();
-            this.Write("var s = to || new ");
-            this.Write(structName);
-            this.Write("();");
 
-            foreach (var field in list)
+            if (immutable)
             {
-                this.WriteNewLine();
-                string fieldName = field.GetName(this.Emitter);
-
-                this.Write("s.");
-                this.Write(fieldName);
-                this.Write(" = this.");
-                this.Write(fieldName);
-                this.Write(";");
+                this.Write("$clone: function (to) { return this; }");
             }
+            else
+            {
+                this.Write("$clone: function (to) ");
+                this.BeginBlock();
+                this.Write("var s = to || new ");
+                this.Write(structName);
+                this.Write("();");
 
-            this.WriteNewLine();
-            this.Write("return s;");
-            this.WriteNewLine();
-            this.EndBlock();
+                foreach (var field in list)
+                {
+                    this.WriteNewLine();
+                    string fieldName = field.GetName(this.Emitter);
+
+                    this.Write("s.");
+                    this.Write(fieldName);
+                    this.Write(" = this.");
+                    this.Write(fieldName);
+                    this.Write(";");
+                }
+
+                this.WriteNewLine();
+                this.Write("return s;");
+                this.WriteNewLine();
+                this.EndBlock();
+            }
+           
             this.Emitter.Comma = true;
         }
 

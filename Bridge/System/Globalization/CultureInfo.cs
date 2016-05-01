@@ -3,13 +3,18 @@ using Bridge;
 namespace System.Globalization
 {
     [Namespace("Bridge")]
+    [External]
     public sealed class CultureInfo : IFormatProvider, ICloneable, IBridgeClass
     {
         public CultureInfo(string name)
         {
         }
 
+        [Name("getCultureInfo")]
         public static extern CultureInfo GetCultureInfo(string name);
+
+        [Name("getCultureInfo")]
+        public static extern CultureInfo CreateSpecificCulture(string name);
 
         public static extern CultureInfo[] GetCultures();
 

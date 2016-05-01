@@ -1,5 +1,11 @@
+﻿using Bridge.Contract;
+using Bridge.Translator.Constants;
+
 using System;
-using Bridge.Contract;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Semantics;
@@ -7,8 +13,7 @@ using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using Mono.Cecil;
 using Object.Net.Utilities;
-using System.Collections.Generic;
-using System.Linq;
+using ICustomAttributeProvider = Mono.Cecil.ICustomAttributeProvider;
 
 namespace Bridge.Translator
 {
@@ -87,6 +92,13 @@ namespace Bridge.Translator
             return typeDefinition.Attributes.Any(attr => attr.Constructor != null && ((attr.Constructor.DeclaringType.FullName == ignoreAttr) || (attr.Constructor.DeclaringType.FullName == externalAttr) || (!ignoreLiteral && attr.Constructor.DeclaringType.FullName == objectLiteralAttr)));
         }
 
+        public virtual bool IsImmutableType(ICustomAttributeProvider type)
+        {
+            string attrName = Translator.Bridge_ASSEMBLY + ".ImmutableAttribute";
+
+            return this.HasAttribute(type.CustomAttributes, attrName);
+        }
+
         public virtual int EnumEmitMode(DefaultResolvedTypeDefinition type)
         {
             string enumAttr = Translator.Bridge_ASSEMBLY + ".EnumAttribute";
@@ -130,7 +142,8 @@ namespace Bridge.Translator
 
         public virtual bool IsNameEnum(DefaultResolvedTypeDefinition type)
         {
-            return this.EnumEmitMode(type) == 1;
+            var enumEmitMode = this.EnumEmitMode(type);
+            return enumEmitMode == 1 || enumEmitMode > 6;
         }
 
         public virtual bool IsStringNameEnum(DefaultResolvedTypeDefinition type)
@@ -201,17 +214,66 @@ namespace Bridge.Translator
             return this.HasAttribute(type.Attributes, Translator.Bridge_ASSEMBLY + ".ObjectLiteralAttribute");
         }
 
+        private Stack<TypeDefinition> _stack = new Stack<TypeDefinition>(); 
         public virtual string GetCustomTypeName(TypeDefinition type, IEmitter emitter)
         {
-            var name = this.GetAttributeValue(type.CustomAttributes, Translator.Bridge_ASSEMBLY + ".NameAttribute");
+            if (this._stack.Contains(type))
+            {
+                return null;
+            }
+
+            var nsAtrr = this.GetAttribute(type.CustomAttributes, Translator.Bridge_ASSEMBLY + ".NamespaceAttribute");
+            bool hasNs = nsAtrr != null && nsAtrr.ConstructorArguments.Count > 0;
+            var nameAttr = this.GetAttribute(type.CustomAttributes, Translator.Bridge_ASSEMBLY + ".NameAttribute");
+
+            string name = null;
+            bool changeCase = false;
+            if (nameAttr != null && nameAttr.ConstructorArguments.Count > 0)
+            {
+                if (nameAttr.ConstructorArguments[0].Value is string)
+                {
+                    name = (string)nameAttr.ConstructorArguments[0].Value;
+                }
+                else if (nameAttr.ConstructorArguments[0].Value is bool)
+                {
+                    var boolValue = (bool)nameAttr.ConstructorArguments[0].Value;
+
+                    if (boolValue)
+                    {
+                        if (hasNs)
+                        {
+                            changeCase = true;
+                        }
+                        else
+                        {
+                            this._stack.Push(type);
+                            name = BridgeTypes.ToJsName(type, emitter);
+                            var i = name.LastIndexOf(".");
+
+                            if (i > -1)
+                            {
+                                char[] chars = name.ToCharArray();
+                                chars[i + 1] = Char.ToLowerInvariant(chars[i + 1]);
+                                name = new string(chars);
+                            }
+                            else
+                            {
+                                name = name.ToLowerCamelCase();
+                            }
+                            this._stack.Pop();
+
+                            return name;
+                        }
+                    }
+                }
+            }
 
             if (!string.IsNullOrEmpty(name))
             {
                 return name;
             }
-
-            var nsAtrr = this.GetAttribute(type.CustomAttributes, Translator.Bridge_ASSEMBLY + ".NamespaceAttribute");
-            if (nsAtrr != null && nsAtrr.ConstructorArguments.Count > 0)
+            
+            if (hasNs)
             {
                 var arg = nsAtrr.ConstructorArguments[0];
                 name = "";
@@ -230,7 +292,7 @@ namespace Bridge.Translator
                     name = (string.IsNullOrEmpty(name) ? "" : (name + ".")) + BridgeTypes.GetParentNames(type);
                 }
 
-                name = (string.IsNullOrEmpty(name) ? "" : (name + ".")) + BridgeTypes.ConvertName(type.Name);
+                name = (string.IsNullOrEmpty(name) ? "" : (name + ".")) + BridgeTypes.ConvertName(changeCase ? type.Name.ToLowerCamelCase() : type.Name);
 
                 return name;
             }
@@ -281,7 +343,7 @@ namespace Bridge.Translator
                 {
                     if (field.IsStatic)
                     {
-                        Exception.Throw("ObjectLiteral type doesn't support static members: {0}", type);
+                        TranslatorException.Throw("ObjectLiteral type doesn't support static members: {0}", type);
                     }
                 }
             }
@@ -295,7 +357,7 @@ namespace Bridge.Translator
                 {
                     if ((prop.GetMethod != null && prop.GetMethod.IsStatic) || (prop.SetMethod != null && prop.SetMethod.IsStatic))
                     {
-                        Exception.Throw("ObjectLiteral type doesn't support static members: {0}", type);
+                        TranslatorException.Throw("ObjectLiteral type doesn't support static members: {0}", type);
                     }
                 }
             }
@@ -321,7 +383,7 @@ namespace Bridge.Translator
 
             if (this.IsObjectLiteral(type) && methodsCount > 0)
             {
-                Bridge.Translator.Exception.Throw("ObjectLiteral doesn't support methods: {0}", type);
+                Bridge.Translator.TranslatorException.Throw("ObjectLiteral doesn't support methods: {0}", type);
             }
         }
 
@@ -341,7 +403,7 @@ namespace Bridge.Translator
 
                     if (!allTypes.ContainsKey(parentName))
                     {
-                        Bridge.Translator.Exception.Throw("Unknown type {0}", parentName);
+                        Bridge.Translator.TranslatorException.Throw("Unknown type {0}", parentName);
                     }
 
                     if (!result.Contains(parentName))
@@ -457,6 +519,21 @@ namespace Bridge.Translator
             {
                 throw new EmitterException(context, "Cannot use '" + name + "' as identifier");
             }
+        }
+
+        public virtual bool IsAccessorsIndexer(IEntity entity)
+        {
+            if (entity == null)
+            {
+                return false;
+            }
+
+            if (this.HasAttribute(entity.Attributes, AttributeConstants.ACCESSORSINDEXER_ATTRIBUTE_NAME))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

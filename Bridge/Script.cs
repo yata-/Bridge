@@ -17,6 +17,8 @@ namespace Bridge
 
         public static extern T[] ToArray<T>(IEnumerable<T> items);
 
+        public static extern T Identity<T>(T arg, params object[] args);
+
         [Template("delete {0}")]
         public static extern void Delete(object value);
 
@@ -122,10 +124,10 @@ namespace Bridge
         public static extern bool IsFinite(object testValue);
 
         /// <summary>
-        /// The parseFloat() function parses a string argument and returns a floating point number.
+        /// Parses a string argument and returns a floating point number corresponding to double .Net type.
         /// </summary>
         /// <param name="value">A string that represents the value you want to parse.</param>
-        /// <returns></returns>
+        /// <returns>Parsed floating point number with type corresponding to double .Net type</returns>
         [Template("parseFloat({0})")]
         public static extern double ParseFloat(string value);
 
@@ -227,5 +229,8 @@ namespace Bridge
 
         [GlobalTarget("Bridge.global")]
         public new static extern dynamic ToDynamic();
+
+        [Template("({a} === {b})")]
+        public static extern bool StrictEquals(object a, object b);
     }
 }

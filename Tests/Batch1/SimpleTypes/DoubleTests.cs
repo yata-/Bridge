@@ -13,7 +13,7 @@ namespace Bridge.ClientTest.SimpleTypes
         public void TypePropertiesAreCorrect()
         {
             Assert.True((object)(double)0.5 is double);
-            Assert.AreEqual("Number", typeof(double).GetClassName());
+            Assert.AreEqual("Bridge.Double", typeof(double).GetClassName());
             object d = (double)0;
             Assert.True((object)d is double);
             Assert.True((object)d is IFormattable);
@@ -30,11 +30,10 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.AreStrictEqual(0, GetDefaultValue<double>());
         }
 
-        [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void CreatingInstanceReturnsZero()
         {
-            Assert.AreStrictEqual(0, Activator.CreateInstance<double>());
+            Assert.AreEqual(0, Activator.CreateInstance<double>());
         }
 
         [Test]
@@ -191,7 +190,6 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.True(((double)1).CompareTo((double)1) == 0);
         }
 
-        [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void IComparableCompareToWorks()
         {

@@ -20,7 +20,7 @@ namespace Bridge.ClientTest.Diagnostics
         [Test]
         public void ConstantsWorks()
         {
-            Assert.True(Stopwatch.Frequency > 1000, "Frequency");
+            Assert.True(Stopwatch.Frequency >= 1000, "Frequency");
             Assert.AreEqual("boolean", Script.TypeOf(Stopwatch.IsHighResolution), "IsHighResolution");
         }
 
@@ -47,8 +47,8 @@ namespace Bridge.ClientTest.Diagnostics
         public void ElapsedWorks()
         {
             var watch = new Stopwatch();
-            Assert.AreEqual(0, watch.ElapsedTicks);
-            Assert.AreEqual(0, watch.ElapsedMilliseconds);
+            Assert.True(0 == watch.ElapsedTicks);
+            Assert.True(0 == watch.ElapsedMilliseconds);
             Assert.AreEqual(new TimeSpan(), watch.Elapsed);
             watch.Start();
             DateTime before = DateTime.Now;
@@ -62,10 +62,10 @@ namespace Bridge.ClientTest.Diagnostics
             }
             watch.Stop();
             Assert.True(hasIncreased, "Times should increase inside the loop");
-            Assert.True(watch.ElapsedMilliseconds > 150, "ElapsedMilliseconds");
+            Assert.True(watch.ElapsedMilliseconds > 150, "ElapsedMilliseconds > 150" + " Actual: " + watch.ElapsedMilliseconds);
             Assert.True(watch.Elapsed == new TimeSpan(0, 0, 0, 0, (int)watch.ElapsedMilliseconds), "Elapsed");
             var value = (double)watch.ElapsedTicks / Stopwatch.Frequency;
-            Assert.True(value > 0.15 && value < 0.25, "Ticks");
+            Assert.True(value > 0.15 && value < 0.25, string.Format("value > 0.15 && value < 0.25 Actual: {0}, Ticks: {1}", value, watch.ElapsedTicks));
         }
 
         [Test]

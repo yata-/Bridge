@@ -81,6 +81,14 @@ namespace Bridge.Translator
             {
                 s = "Bridge.Decimal(" + this.DecimalConstant((decimal)value) + ")";
             }
+            else if (value is long)
+            {
+                s = "Bridge.Long(" + this.LongConstant((long)value) + ")";
+            }
+            else if (value is ulong)
+            {
+                s = "Bridge.ULong(" + this.ULongConstant((ulong)value) + ")";
+            }
             else
             {
                 s = this.Emitter.ToJavaScript(value);
@@ -116,6 +124,32 @@ namespace Bridge.Translator
             }
 
             return s;
+        }
+
+        public string LongConstant(long value)
+        {
+            if (value > Int32.MaxValue || value < Int32.MinValue)
+            {
+                int l1 = (int)(value & uint.MaxValue);
+                int l2 = (int)(value >> 32);
+
+                return this.Emitter.ToJavaScript(new int[] { l1, l2 });    
+            }
+
+            return this.Emitter.ToJavaScript(value);
+        }
+
+        public string ULongConstant(ulong value)
+        {
+            if (value > UInt32.MaxValue)
+            {
+                int l1 = (int)(value & uint.MaxValue);
+                int l2 = (int)(value >> 32);
+
+                return this.Emitter.ToJavaScript(new int[] { l1, l2 });
+            }
+
+            return this.Emitter.ToJavaScript(value);
         }
 
         public virtual void WriteComma()
@@ -343,9 +377,9 @@ namespace Bridge.Translator
             this.Write("function ");
         }
 
-        public virtual void PushWriter(string format, Action callback = null)
+        public virtual void PushWriter(string format, Action callback = null, string thisArg = null)
         {
-            this.Emitter.Writers.Push(new Tuple<string, StringBuilder, bool, Action>(format, this.Emitter.Output, this.Emitter.IsNewLine, callback));
+            this.Emitter.Writers.Push(new Writer{InlineCode = format, Output = this.Emitter.Output, IsNewLine = this.Emitter.IsNewLine, Callback = callback, ThisArg = thisArg});
             this.Emitter.IsNewLine = false;
             this.Emitter.Output = new StringBuilder();
         }
@@ -353,19 +387,19 @@ namespace Bridge.Translator
         public virtual string PopWriter(bool preventWrite = false)
         {
             string result = this.Emitter.Output.ToString();
-            var tuple = this.Emitter.Writers.Pop();
-            this.Emitter.Output = tuple.Item2;
-            result = tuple.Item1 != null ? string.Format(tuple.Item1, result) : result;
-            this.Emitter.IsNewLine = tuple.Item3;
+            var writer = this.Emitter.Writers.Pop();
+            this.Emitter.Output = writer.Output;
+            result = writer.InlineCode != null ? string.Format(writer.InlineCode, result) : result;
+            this.Emitter.IsNewLine = writer.IsNewLine;
 
             if (!preventWrite)
             {
                 this.Write(result);
             }
 
-            if (tuple.Item4 != null)
+            if (writer.Callback != null)
             {
-                tuple.Item4.Invoke();
+                writer.Callback.Invoke();
             }
 
             return result;
@@ -388,6 +422,29 @@ namespace Bridge.Translator
             string indent = output.ToString();
 
             return value.Replace("\n", "\n" + indent);
+        }
+
+        public static string RemoveIndentFromString(string value, int offset)
+        {
+            StringBuilder output = new StringBuilder();
+            string indentWhiteSpaces = new string(' ', offset);
+
+            int level = offset/4;
+            for (var i = 0; i < level; i++)
+            {
+                output.Append("\t");
+            }
+
+            var needSpaces = offset%4;
+            if (needSpaces > 0)
+            {
+                output.Append(new string(' ', needSpaces));
+            }
+
+            string indentTabs = output.ToString();
+
+            value = value.Replace("\n" + indentWhiteSpaces, "\n");
+            return value.Replace("\n" + indentTabs, "\n");
         }
 
         public virtual void EnsureComma(bool newLine = true)
@@ -617,6 +674,39 @@ namespace Bridge.Translator
         }
 
         public bool Comma
+        {
+            get;
+            set;
+        }
+    }
+
+    public class Writer : IWriter
+    {
+        public StringBuilder Output
+        {
+            get;
+            set;
+        }
+
+        public bool IsNewLine
+        {
+            get;
+            set;
+        }
+
+        public string InlineCode
+        {
+            get;
+            set;
+        }
+
+        public Action Callback
+        {
+            get;
+            set;
+        }
+
+        public string ThisArg
         {
             get;
             set;

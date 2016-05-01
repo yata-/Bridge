@@ -53,6 +53,8 @@
     <AdditionalExplicitAssemblyReferences />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Attributes\ImmutableAttribute.cs" />
+    <Compile Include="Attributes\AccessorsIndexerAttribute.cs" />
     <Compile Include="Attributes\GlobalTargetAttribute.cs" />
     <Compile Include="Attributes\IgnoreCastAttribute.cs" />
     <Compile Include="Attributes\IgnoreGenericAttribute.cs" />
@@ -82,6 +84,9 @@
     <Compile Include="Script.cs" />
     <Compile Include="System\Action.cs" />
     <Compile Include="System\Activator.cs" />
+    <Compile Include="System\Guid.cs" />
+    <Compile Include="System\Random.cs" />
+    <Compile Include="System\IndexOutOfRangeException.cs" />
     <Compile Include="System\ArgumentNullException.cs" />
     <Compile Include="System\ArgumentException.cs" />
     <Compile Include="System\ArithmeticException.cs" />
@@ -94,6 +99,7 @@
     <Compile Include="System\Collections\Generic\ISet.cs" />
     <Compile Include="System\Collections\ObjectModel\ReadOnlyCollection.cs" />
     <Compile Include="System\Comparison.cs" />
+    <Compile Include="System\Converter.cs" />
     <Compile Include="System\Diagnostics\ConditionalAttribute.cs" />
     <Compile Include="System\Diagnostics\Contracts\Contract.cs" />
     <Compile Include="System\Diagnostics\Contracts\ContractAbbreviatorAttribute.cs" />
@@ -120,7 +126,7 @@
     <Compile Include="System\EventArgs.cs" />
     <Compile Include="System\EventHandler.cs" />
     <Compile Include="System\IDisposable.cs" />
-    <Compile Include="System\IAccessorsIndexer.cs" />
+    <Compile Include="System\IConvertible.cs" />
     <Compile Include="System\Predicate.cs" />
     <Compile Include="System\OutOfMemoryException.cs" />
     <Compile Include="System\RankException.cs" />
@@ -130,9 +136,22 @@
     <Compile Include="System\Linq\Lookup.cs" />
     <Compile Include="System\Linq\OrderedEnumerable.cs" />
     <Compile Include="System\MidpointRounding.cs" />
+    <Compile Include="System\RegexMatchTimeoutException.cs" />
     <Compile Include="System\StringComparison.cs" />
     <Compile Include="System\StringSplitOptions.cs" />
     <Compile Include="System\AggregateException.cs" />
+    <Compile Include="System\Text\RegularExpressions\Capture.cs" />
+    <Compile Include="System\Text\RegularExpressions\CaptureCollection.cs" />
+    <Compile Include="System\Text\RegularExpressions\Group.cs" />
+    <Compile Include="System\Text\RegularExpressions\GroupCollection.cs" />
+    <Compile Include="System\Text\RegularExpressions\Match.cs" />
+    <Compile Include="System\Text\RegularExpressions\MatchCollection.cs" />
+    <Compile Include="System\Text\RegularExpressions\Regex.cs" />
+    <Compile Include="System\Text\RegularExpressions\MatchEvaluator.cs" />
+    <Compile Include="System\Text\RegularExpressions\RegexOptions.cs" />
+    <Compile Include="System\Threading\Timeout.cs" />
+    <Compile Include="System\Threading\Timer.cs" />
+    <Compile Include="System\Threading\Thread.cs" />
     <Compile Include="System\Threading\CancellationToken.cs" />
     <Compile Include="System\Threading\CancellationTokenRegistration.cs" />
     <Compile Include="System\Threading\CancellationTokenSource.cs" />
@@ -145,6 +164,7 @@
     <Compile Include="System\Threading\Tasks\TaskCompletionSource.cs" />
     <Compile Include="System\Threading\Tasks\TaskStatus.cs" />
     <Compile Include="System\SystemException.cs" />
+    <Compile Include="System\TimeoutException.cs" />
     <Compile Include="System\TypeCode.cs" />
     <Compile Include="System\Version.cs" />
     <Compile Include="This.cs" />
@@ -218,8 +238,8 @@
     <Compile Include="System\Runtime.cs" />
     <Compile Include="System\String.cs" />
     <Compile Include="System\Stubs.cs" />
-    <Compile Include="System\Text\Regex.cs" />
-    <Compile Include="System\Text\RegexMatch.cs" />
+    <Compile Include="Bridge\Text\RegularExpressions\Regex.cs" />
+    <Compile Include="Bridge\Text\RegularExpressions\RegexMatch.cs" />
     <Compile Include="System\TimeSpan.cs" />
     <Compile Include="System\Any.cs" />
     <Compile Include="System\Tuple.cs" />
@@ -642,10 +662,29 @@
     <EmbeddedResource Include="Resources\Locales\zh.js" />
     <EmbeddedResource Include="Resources\Locales\zu-ZA.js" />
     <EmbeddedResource Include="Resources\Locales\zu.js" />
+    <Content Include="Resources\Bool.js" />
     <Content Include="Resources\Diagnostics.js" />
     <Content Include="Resources\Convert.js" />
     <Content Include="Resources\Enum.js" />
+    <Content Include="Resources\Guid.js" />
+    <Content Include="Resources\LongLib.js" />
+    <Content Include="Resources\Long.js" />
     <Content Include="Resources\Math.js" />
+    <Content Include="Resources\random.js" />
+    <Content Include="Resources\Text\RegularExpressions\Regex.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexCapture.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexCaptureCollection.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexGroup.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexGroupCollection.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexMatch.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexMatchCollection.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexNetEngine.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexNode.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexOptions.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexParser.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexReplacement.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexRunner.js" />
+    <Content Include="Resources\timer.js" />
     <Content Include="Resources\Version.js" />
     <None Include="AdditionalCompilerOptions.txt" />
     <Content Include="Resources\Array.js" />
@@ -671,7 +710,7 @@
     <EmbeddedResource Include="Resources\list" />
     <EmbeddedResource Include="Resources\Locales\ru-RU.js" />
     <Content Include="Resources\Char.js" />
-    <Content Include="Resources\Text\Regex.js" />
+    <Content Include="Resources\Text\BridgeRegex.js" />
     <Content Include="Resources\Text\StringBuilder.js" />
     <Content Include="Resources\TimeSpan.js" />
     <Content Include="Resources\Integer.js" />

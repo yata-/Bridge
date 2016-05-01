@@ -14,9 +14,9 @@ namespace Bridge.ClientTest.SimpleTypes
         {
             Assert.True((object)(byte)0 is sbyte);
             Assert.False((object)0.5 is sbyte);
-            Assert.True((object)-129 is sbyte);
-            Assert.True((object)128 is sbyte);
-            Assert.AreEqual("Bridge.Int", typeof(sbyte).GetClassName());
+            Assert.False((object)-129 is sbyte);
+            Assert.False((object)128 is sbyte);
+            Assert.AreEqual("Bridge.SByte", typeof(sbyte).GetClassName());
 
             object b = (sbyte)0;
             Assert.True(b is sbyte);
@@ -29,31 +29,35 @@ namespace Bridge.ClientTest.SimpleTypes
             int i1 = -129, i2 = -128, i3 = 80, i4 = 127, i5 = 128;
             int? ni1 = -129, ni2 = -128, ni3 = 80, ni4 = 127, ni5 = 128, ni6 = null;
 
-            // TODO unchecked
+            unchecked
             {
-                Assert.AreStrictEqual(-129, (sbyte)i1, "-129 unchecked");
+                Assert.AreStrictEqual(127, (sbyte)i1, "-129 unchecked");
                 Assert.AreStrictEqual(-128, (sbyte)i2, "-128 unchecked");
                 Assert.AreStrictEqual(80, (sbyte)i3, "80 unchecked");
                 Assert.AreStrictEqual(127, (sbyte)i4, "127 unchecked");
-                Assert.AreStrictEqual(128, (sbyte)i5, "128 unchecked");
+                Assert.AreStrictEqual(-128, (sbyte)i5, "128 unchecked");
 
-                Assert.AreStrictEqual(-129, (sbyte?)ni1, "nullable -129 unchecked");
+                Assert.AreStrictEqual(127, (sbyte?)ni1, "nullable -129 unchecked");
                 Assert.AreStrictEqual(-128, (sbyte?)ni2, "nullable -128 unchecked");
                 Assert.AreStrictEqual(80, (sbyte?)ni3, "nullable 80 unchecked");
                 Assert.AreStrictEqual(127, (sbyte?)ni4, "nullable 127 unchecked");
-                Assert.AreStrictEqual(128, (sbyte?)ni5, "nullable 128 unchecked");
+                Assert.AreStrictEqual(-128, (sbyte?)ni5, "nullable 128 unchecked");
                 Assert.AreStrictEqual(null, (sbyte?)ni6, "null unchecked");
             }
 
-            //checked
+            checked
             {
+                Assert.Throws(() => { var b = (sbyte)i1; }, err => err is OverflowException);
                 Assert.AreStrictEqual(-128, (sbyte)i2, "-128 checked");
                 Assert.AreStrictEqual(80, (sbyte)i3, "80 checked");
                 Assert.AreStrictEqual(127, (sbyte)i4, "127 checked");
+                Assert.Throws(() => { var b = (sbyte)i5; }, err => err is OverflowException);
 
+                Assert.Throws(() => { var b = (sbyte?)ni1; }, err => err is OverflowException);
                 Assert.AreStrictEqual(-128, (sbyte?)ni2, "nullable -128 checked");
                 Assert.AreStrictEqual(80, (sbyte?)ni3, "nullable 80 checked");
                 Assert.AreStrictEqual(127, (sbyte?)ni4, "nullable 127 checked");
+                Assert.Throws(() => { var b = (sbyte?)ni5; }, err => err is OverflowException);
                 Assert.AreStrictEqual(null, (sbyte?)ni6, "null checked");
             }
         }
@@ -75,7 +79,6 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.AreStrictEqual(0, new sbyte());
         }
 
-        [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void CreatingInstanceReturnsZero()
         {

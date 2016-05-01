@@ -67,6 +67,76 @@
         }
     });
 
+    Bridge.define("Bridge.IndexOutOfRangeException", {
+        inherits: [Bridge.SystemException],
+
+        constructor: function (message, innerException) {
+            if (!message) {
+                message = "Index was outside the bounds of the array.";
+            }
+
+            Bridge.SystemException.prototype.$constructor.call(this, message, innerException);
+        }
+    });
+
+    Bridge.define("Bridge.TimeoutException", {
+        inherits: [Bridge.SystemException],
+
+        constructor: function (message, innerException) {
+            if (!message) {
+                message = "The operation has timed out.";
+            }
+
+            Bridge.SystemException.prototype.$constructor.call(this, message, innerException);
+        }
+    });
+
+    Bridge.define("Bridge.RegexMatchTimeoutException", {
+        inherits: [Bridge.TimeoutException],
+
+        _regexInput: "",
+        _regexPattern: "",
+        _matchTimeout: null,
+        config: {
+            init: function () {
+                this._matchTimeout = Bridge.TimeSpan.fromTicks(-1);
+            }
+        },
+
+        constructor: function () {
+            Bridge.TimeoutException.prototype.$constructor.call(this);
+        },
+
+        constructor$1: function (message) {
+            Bridge.TimeoutException.prototype.$constructor.call(this, message);
+        },
+
+        constructor$2: function (message, innerException) {
+            Bridge.TimeoutException.prototype.$constructor.call(this, message, innerException);
+        },
+
+        constructor$3: function (regexInput, regexPattern, matchTimeout) {
+            this._regexInput = regexInput;
+            this._regexPattern = regexPattern;
+            this._matchTimeout = matchTimeout;
+
+            var message = "The RegEx engine has timed out while trying to match a pattern to an input string. This can occur for many reasons, including very large inputs or excessive backtracking caused by nested quantifiers, back-references and other factors.";
+            this.constructor$1(message);
+        },
+
+        getPattern: function () {
+            return this._regexPattern;
+        },
+
+        getInput: function () {
+            return this._regexInput;
+        },
+
+        getMatchTimeout: function () {
+            return this._matchTimeout;
+        }
+    });
+
     Bridge.define("Bridge.ErrorException", {
         inherits: [Bridge.Exception],
 
@@ -336,13 +406,24 @@
                     // simply add it to the list of flattened exceptions to be returned.
                     if (Bridge.hasValue(currentInnerAsAggregate)) {
                         exceptionsToFlatten.add(currentInnerAsAggregate);
-                    }
-                    else {
+                    } else {
                         flattenedExceptions.add(currentInnerException);
                     }
                 }
             }
 
             return new Bridge.AggregateException(this.getMessage(), flattenedExceptions);
+        }
+    });
+
+    Bridge.define("Bridge.IndexOutOfRangeException", {
+        inherits: [Bridge.SystemException],
+
+        constructor: function (message, innerException) {
+            if (!message) {
+                message = "Index was outside the bounds of the array.";
+            }
+
+            Bridge.SystemException.prototype.$constructor.call(this, message, innerException);
         }
     });

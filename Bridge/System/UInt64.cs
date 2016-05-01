@@ -3,41 +3,28 @@ using Bridge;
 namespace System
 {
     [External]
-    [Name("Bridge.Int")]
-    [Constructor("Number")]
+    [Name("Bridge.ULong")]
+    [Constructor("Bridge.ULong")]
     public struct UInt64 : IComparable, IComparable<UInt64>, IEquatable<UInt64>, IFormattable
     {
         private UInt64(int i)
         {
         }
 
-        [InlineConst]
+        [Name(false)]
         public const ulong MinValue = 0;
 
-        [InlineConst]
-        public const ulong MaxValue = 9007199254740991;
+        [Name(false)]
+        public const ulong MaxValue = 18446744073709551615;
 
-        [Template("Bridge.Int.parseInt({s}, 0, 9007199254740991)")]
+        [Template("Bridge.ULong.parse({s})")]
         public static ulong Parse(string s)
         {
             return 0;
         }
 
-        [Template("Bridge.Int.parseInt({s}, 0, 9007199254740991, {radix})")]
-        public static ulong Parse(string s, int radix)
-        {
-            return 0;
-        }
-
-        [Template("Bridge.Int.tryParseInt({s}, {result}, 0, 9007199254740991)")]
+        [Template("Bridge.ULong.tryParse({s}, {result})")]
         public static bool TryParse(string s, out ulong result)
-        {
-            result = 0;
-            return false;
-        }
-
-        [Template("Bridge.Int.tryParseInt({s}, {result}, 0, 9007199254740991, {radix})")]
-        public static bool TryParse(string s, out ulong result, int radix)
         {
             result = 0;
             return false;
@@ -48,46 +35,99 @@ namespace System
             return null;
         }
 
-        [Template("Bridge.Int.format({this}, {format})")]
         public string Format(string format)
         {
             return null;
         }
 
-        [Template("Bridge.Int.format({this}, {format}, {provider})")]
         public string Format(string format, IFormatProvider provider)
         {
             return null;
         }
 
-        [Template("Bridge.Int.format({this}, {format})")]
         public string ToString(string format)
         {
             return null;
         }
 
-        [Template("Bridge.Int.format({this}, {format}, {provider})")]
         public string ToString(string format, IFormatProvider provider)
         {
             return null;
         }
 
-        [Template("Bridge.compare({this}, {other})")]
         public int CompareTo(ulong other)
         {
             return 0;
         }
 
-        [Template("Bridge.compare({this}, {obj})")]
         public int CompareTo(object obj)
         {
             return 0;
         }
 
-        [Template("Bridge.equalsT({this}, {other})")]
         public bool Equals(ulong other)
         {
             return false;
         }
+
+        //[Template("Bridge.ULong.lift({value})")]
+        public static extern implicit operator ulong(byte value);
+
+        //[Template("Bridge.ULong.lift({value})")]
+        public static extern implicit operator ulong(sbyte value);
+
+        //[Template("Bridge.ULong.lift({value})")]
+        public static extern implicit operator ulong(short value);
+
+        //[Template("Bridge.ULong.lift({value})")]
+        public static extern implicit operator ulong(ushort value);
+
+        //[Template("Bridge.ULong.lift({value})")]
+        public static extern implicit operator ulong(char value);
+
+        //[Template("Bridge.ULong.lift({value})")]
+        public static extern implicit operator ulong(int value);
+
+        //[Template("Bridge.ULong.lift({value})")]
+        public static extern implicit operator ulong(uint value);
+
+        //[Template("Bridge.ULong.lift(Bridge.Int.clipu64({value}))")]
+        public static extern explicit operator ulong(float value);
+
+        //[Template("Bridge.ULong.lift(Bridge.Int.clipu64({value}))")]
+        public static extern explicit operator ulong(double value);
+
+        //[Template("Bridge.Long.lift({value})")]
+        //public static extern explicit operator ulong(long value);
+
+        //[Template("Bridge.Long.clip8({value})")]
+        public static extern explicit operator byte(ulong value);
+
+        //[Template("Bridge.Long.clipu8({value})")]
+        public static extern explicit operator sbyte(ulong value);
+
+        //[Template("Bridge.Long.clipu16({value})")]
+        public static extern explicit operator char(ulong value);
+
+        //[Template("Bridge.Long.clip16({value})")]
+        public static extern explicit operator short(ulong value);
+
+        //[Template("Bridge.Long.clipu16({value})")]
+        public static extern explicit operator ushort(ulong value);
+
+        //[Template("Bridge.Long.clip32({value})")]
+        public static extern explicit operator int(ulong value);
+
+        //[Template("Bridge.Long.clipu32({value})")]
+        public static extern explicit operator uint(ulong value);
+
+        //[Template("Bridge.ULong.lift({value})")]
+        //public static extern explicit operator long(ulong value);
+
+        //[Template("Bridge.ULong.toNumber({value})")]
+        public static extern explicit operator float(ulong value);
+
+        //[Template("Bridge.ULong.toNumber({value})")]
+        public static extern explicit operator double(ulong value);
     }
 }

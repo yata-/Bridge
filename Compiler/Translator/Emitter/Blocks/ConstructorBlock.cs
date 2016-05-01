@@ -276,8 +276,15 @@ namespace Bridge.Translator
 
                 this.WriteSpace();
                 this.BeginBlock();
-
+                var len = this.Emitter.Output.Length;
                 var requireNewLine = false;
+
+                this.ConvertParamsToReferences(ctor.Parameters);
+
+                if (len != this.Emitter.Output.Length)
+                {
+                    requireNewLine = true;
+                }
 
                 if (baseType != null && (!this.Emitter.Validator.IsIgnoreType(baseType) || this.Emitter.Validator.IsBridgeClass(baseType)) ||
                     (ctor.Initializer != null && ctor.Initializer.ConstructorInitializerType == ConstructorInitializerType.This))
@@ -301,8 +308,7 @@ namespace Bridge.Translator
                         {
                             this.WriteNewLine();
                         }
-
-                        this.ConvertParamsToReferences(ctor.Parameters);
+                        
                         ctor.Body.AcceptChildren(this.Emitter);
 
                         if (!this.Emitter.IsAsync)
@@ -413,14 +419,13 @@ namespace Bridge.Translator
                 }
             }
 
-            var args = new List<Expression>(initializer.Arguments);
-            for (int i = 0; i < args.Count; i++)
+            if (initializer.Arguments.Count > 0)
             {
-                args[i].AcceptVisitor(this.Emitter);
-                if (i != (args.Count - 1))
-                {
-                    this.WriteComma();
-                }
+                var argsInfo = new ArgumentsInfo(this.Emitter, ctor.Initializer);
+                var argsExpressions = argsInfo.ArgumentsExpressions;
+                var paramsArg = argsInfo.ParamsExpression;
+
+                new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, ctor.Initializer).Emit();    
             }
 
             this.WriteCloseParentheses();

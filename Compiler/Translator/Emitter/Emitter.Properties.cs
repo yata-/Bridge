@@ -149,7 +149,7 @@ namespace Bridge.Translator
             set;
         }
 
-        public Stack<Tuple<string, StringBuilder, bool, Action>> Writers
+        public Stack<IWriter> Writers
         {
             get;
             set;
@@ -413,6 +413,20 @@ namespace Bridge.Translator
         }
 
         public Dictionary<string, string> NamedFunctions
+        {
+            get;
+            set;
+        }
+
+        public bool IsJavaScriptOverflowMode
+        {
+            get
+            {
+                return this.AssemblyInfo.OverflowMode.HasValue && this.AssemblyInfo.OverflowMode == OverflowMode.Javascript;
+            }
+        }
+
+        public bool IsRefArg
         {
             get;
             set;

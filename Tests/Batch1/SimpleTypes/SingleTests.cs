@@ -13,7 +13,7 @@ namespace Bridge.ClientTest.SimpleTypes
         public void TypePropertiesAreCorrect()
         {
             Assert.True((object)(float)0.5 is float);
-            Assert.AreEqual("Number", typeof(float).GetClassName());
+            Assert.AreEqual("Bridge.Single", typeof(float).GetClassName());
 
             object f = (float)0;
             Assert.True(f is float);
@@ -31,11 +31,10 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.AreStrictEqual(0, GetDefaultValue<float>());
         }
 
-        [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void CreatingInstanceReturnsZero()
         {
-            Assert.AreStrictEqual(0, Activator.CreateInstance<float>());
+            Assert.AreEqual(0, Activator.CreateInstance<float>());
         }
 
         [Test]
@@ -177,7 +176,6 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.True(((float)1).Equals((object)(float)1));
         }
 
-        [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void IEquatableEqualsWorks()
         {
@@ -201,7 +199,6 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.True(((float)1).CompareTo((float)1) == 0);
         }
 
-        [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void IComparableCompareToWorks()
         {

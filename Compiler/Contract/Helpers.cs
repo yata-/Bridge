@@ -269,6 +269,26 @@ namespace Bridge.Contract
 
         public static bool IsDecimalType(IType type, IMemberResolver resolver, bool allowArray = false)
         {
+            return IsKnownType(KnownTypeCode.Decimal, type, resolver, allowArray);
+        }
+
+        public static bool IsLongType(IType type, IMemberResolver resolver, bool allowArray = false)
+        {
+            return IsKnownType(KnownTypeCode.Int64, type, resolver, allowArray);
+        }
+
+        public static bool IsULongType(IType type, IMemberResolver resolver, bool allowArray = false)
+        {
+            return IsKnownType(KnownTypeCode.UInt64, type, resolver, allowArray);
+        }
+
+        public static bool Is64Type(IType type, IMemberResolver resolver, bool allowArray = false)
+        {
+            return IsKnownType(KnownTypeCode.UInt64, type, resolver, allowArray) || IsKnownType(KnownTypeCode.Int64, type, resolver, allowArray);
+        }
+
+        public static bool IsKnownType(KnownTypeCode typeCode, IType type, IMemberResolver resolver, bool allowArray = false)
+        {
             if (allowArray && type.Kind == TypeKind.Array)
             {
                 var elements = (TypeWithElementType)type;
@@ -277,7 +297,7 @@ namespace Bridge.Contract
 
             type = type.IsKnownType(KnownTypeCode.NullableOfT) ? ((ParameterizedType)type).TypeArguments[0] : type;
 
-            return type.Equals(resolver.Compilation.FindType(KnownTypeCode.Decimal));
+            return type.Equals(resolver.Compilation.FindType(typeCode));
         }
 
         public static void CheckValueTypeClone(ResolveResult resolveResult, Expression expression, IAbstractEmitterBlock block, int insertPosition)
@@ -307,6 +327,10 @@ namespace Bridge.Contract
                 {
                     ret = false;
                 }
+                else if (expression.Parent is VariableInitializer)
+                {
+                    ret = false;
+                }
 
                 if (ret)
                 {
@@ -319,7 +343,7 @@ namespace Bridge.Contract
             if (type.Kind == TypeKind.Struct)
             {
                 var typeDef = block.Emitter.GetTypeDefinition(type);
-                if (block.Emitter.Validator.IsIgnoreType(typeDef))
+                if (block.Emitter.Validator.IsIgnoreType(typeDef) || block.Emitter.Validator.IsImmutableType(typeDef))
                 {
                     return;
                 }
@@ -386,8 +410,8 @@ namespace Bridge.Contract
         public static bool IsAutoProperty(IProperty propertyDeclaration)
         {
             // auto properties don't have bodies
-            return (propertyDeclaration.CanGet && !propertyDeclaration.Getter.HasBody) ||
-                   (propertyDeclaration.CanSet && !propertyDeclaration.Setter.HasBody);
+            return (propertyDeclaration.CanGet && (!propertyDeclaration.Getter.HasBody || propertyDeclaration.Getter.BodyRegion.IsEmpty)) ||
+                   (propertyDeclaration.CanSet && (!propertyDeclaration.Setter.HasBody || propertyDeclaration.Setter.BodyRegion.IsEmpty));
         }
 
         public static bool IsAutoProperty(PropertyDefinition propDef)
@@ -409,15 +433,15 @@ namespace Bridge.Contract
 
         public static bool IsFieldProperty(IMember propertyMember, IAssemblyInfo assemblyInfo)
         {
-            if (propertyMember.ImplementedInterfaceMembers.Count > 0 || propertyMember.DeclaringType.Kind == TypeKind.Interface)
-            {
-                return false;
-            }
-
             bool isAuto = propertyMember.Attributes.Any(a => a.AttributeType.FullName == "Bridge.FieldPropertyAttribute");
             if (!isAuto && assemblyInfo.AutoPropertyToField && propertyMember is IProperty)
             {
-                return Helpers.IsAutoProperty((IProperty)propertyMember);
+                var isIgnore = propertyMember.DeclaringTypeDefinition.Attributes.Any(a => a.AttributeType.FullName == "Bridge.ExternalAttribute");
+                if (isIgnore)
+                {
+                    return false;
+                }
+                return propertyMember.DeclaringType.Kind == TypeKind.Interface || Helpers.IsAutoProperty((IProperty)propertyMember);
             }
 
             return isAuto || assemblyInfo.AutoPropertyToField;
@@ -425,17 +449,16 @@ namespace Bridge.Contract
 
         public static bool IsFieldProperty(IMember propertyMember, IEmitter emitter)
         {
-            if (propertyMember.ImplementedInterfaceMembers.Count > 0)
-            {
-                return false;
-            }
-
             bool isAuto = propertyMember.Attributes.Any(a => a.AttributeType.FullName == "Bridge.FieldPropertyAttribute");
             if (!isAuto && emitter.AssemblyInfo.AutoPropertyToField)
             {
                 var typeDef = emitter.GetTypeDefinition(propertyMember.DeclaringType);
+                if (emitter.Validator.IsIgnoreType(typeDef))
+                {
+                    return false;
+                }
                 var propDef = typeDef.Properties.FirstOrDefault(p => p.Name == propertyMember.Name);
-                return Helpers.IsAutoProperty(propDef);
+                return typeDef.IsInterface || Helpers.IsAutoProperty(propDef);
             }
             return isAuto;
         }
@@ -445,6 +468,11 @@ namespace Bridge.Contract
             bool isAuto = property.CustomAttributes.Any(a => a.AttributeType.FullName == "Bridge.FieldPropertyAttribute");
             if (!isAuto && emitter.AssemblyInfo.AutoPropertyToField)
             {
+                var typeDef = property.DeclaringType;
+                if (emitter.Validator.IsIgnoreType(typeDef))
+                {
+                    return false;
+                }
                 return Helpers.IsAutoProperty((PropertyDefinition)property);
             }
             return isAuto;
@@ -488,6 +516,12 @@ namespace Bridge.Contract
 
         public static string GetEventRef(CustomEventDeclaration property, IEmitter emitter, bool remove = false, bool noOverload = false, bool ignoreInterface = false)
         {
+            ResolveResult resolveResult = emitter.Resolver.ResolveNode(property, emitter) as MemberResolveResult;
+            if (resolveResult != null && ((MemberResolveResult)resolveResult).Member != null)
+            {
+                return GetEventRef(((MemberResolveResult)resolveResult).Member, emitter, remove, noOverload, ignoreInterface);
+            }
+
             var name = emitter.GetEntityName(property, true, ignoreInterface);
 
             if (!noOverload)
@@ -502,6 +536,13 @@ namespace Bridge.Contract
 
         public static string GetEventRef(IMember property, IEmitter emitter, bool remove = false, bool noOverload = false, bool ignoreInterface = false)
         {
+            var attrName = emitter.GetEntityNameFromAttr(property, remove);
+
+            if (!string.IsNullOrEmpty(attrName))
+            {
+                return attrName;
+            }
+
             var name = emitter.GetEntityName(property, true, ignoreInterface);
 
             if (!noOverload)
@@ -515,6 +556,12 @@ namespace Bridge.Contract
 
         public static string GetPropertyRef(PropertyDeclaration property, IEmitter emitter, bool isSetter = false, bool noOverload = false, bool ignoreInterface = false)
         {
+            ResolveResult resolveResult = emitter.Resolver.ResolveNode(property, emitter) as MemberResolveResult;
+            if (resolveResult != null && ((MemberResolveResult)resolveResult).Member != null)
+            {
+                return GetPropertyRef(((MemberResolveResult)resolveResult).Member, emitter, isSetter, noOverload, ignoreInterface);
+            }
+
             var name = emitter.GetEntityName(property, true, ignoreInterface);
 
             if (!noOverload)
@@ -534,6 +581,12 @@ namespace Bridge.Contract
 
         public static string GetPropertyRef(IndexerDeclaration property, IEmitter emitter, bool isSetter = false, bool noOverload = false, bool ignoreInterface = false)
         {
+            ResolveResult resolveResult = emitter.Resolver.ResolveNode(property, emitter) as MemberResolveResult;
+            if (resolveResult != null && ((MemberResolveResult)resolveResult).Member != null)
+            {
+                return GetIndexerRef(((MemberResolveResult)resolveResult).Member, emitter, isSetter, noOverload, ignoreInterface);
+            }
+
             var name = emitter.GetEntityName(property, true, ignoreInterface);
 
             if (!noOverload)
@@ -548,6 +601,13 @@ namespace Bridge.Contract
 
         public static string GetIndexerRef(IMember property, IEmitter emitter, bool isSetter = false, bool noOverload = false, bool ignoreInterface = false)
         {
+            var attrName = emitter.GetEntityNameFromAttr(property, isSetter);
+
+            if (!string.IsNullOrEmpty(attrName))
+            {
+                return attrName;
+            }
+
             var name = emitter.GetEntityName(property, true, ignoreInterface);
 
             if (!noOverload)
@@ -562,15 +622,11 @@ namespace Bridge.Contract
 
         public static string GetPropertyRef(IMember property, IEmitter emitter, bool isSetter = false, bool noOverload = false, bool ignoreInterface = false)
         {
-            if (property.DeclaringTypeDefinition != null &&
-                emitter.Validator.IsIgnoreType(property.DeclaringTypeDefinition))
-            {
-                var attrName = emitter.GetEntityNameFromAttr(property, isSetter);
+            var attrName = emitter.GetEntityNameFromAttr(property, isSetter);
 
-                if (!string.IsNullOrEmpty(attrName))
-                {
-                    return attrName;
-                }
+            if (!string.IsNullOrEmpty(attrName))
+            {
+                return attrName;
             }
 
             var name = emitter.GetEntityName(property, true, ignoreInterface);
@@ -637,7 +693,7 @@ namespace Bridge.Contract
                 return constantValue;
             }
 
-            if (enumMode >= 3)
+            if (enumMode >= 3 && enumMode < 7)
             {
                 var member = type.GetFields().FirstOrDefault(f => f.ConstantValue == constantValue);
 

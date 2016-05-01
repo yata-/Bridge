@@ -1,24 +1,25 @@
 ﻿    // @source Integer.js
 
-    /*(function () {
+    (function () {
         var createIntType = function (name, min, max) {
             var type = Bridge.define(name, {
                 inherits: [Bridge.IComparable, Bridge.IFormattable],
+
                 statics: {
                     min: min,
                     max: max,
 
                     instanceOf: function (instance) {
-                        return typeof(instance) === 'number' && Math.round(instance, 0) == instance && instance >= min && instance <= max;
+                        return typeof(instance) === "number" && Math.floor(instance, 0) == instance && instance >= min && instance <= max;
                     },
                     getDefaultValue: function () {
                         return 0;
                     },
-                    parse: function (s) {
-                        return Bridge.Int.parseInt(s, min, max);
+                    parse: function (s, radix) {
+                        return Bridge.Int.parseInt(s, min, max, radix);
                     },
-                    tryParse: function (s, result) {
-                        return Bridge.Int.tryParseInt(s, result, min, max);
+                    tryParse: function (s, result, radix) {
+                        return Bridge.Int.tryParseInt(s, result, min, max, radix);
                     },
                     format: function (number, format, provider) {
                         return Bridge.Int.format(number, format, provider);
@@ -29,33 +30,13 @@
             Bridge.Class.addExtend(type, [Bridge.IComparable$1(type), Bridge.IEquatable$1(type)]);
         };
 
-        createIntType('Bridge.Byte', 0, 255);
-        createIntType('Bridge.SByte', -128, 127);
-        createIntType('Bridge.Int16', -32768, 32767);
-        createIntType('Bridge.UInt16', 0, 65535);
-        createIntType('Bridge.Int32', -2147483648, 2147483647);
-        createIntType('Bridge.UInt32', 0, 4294967295);
-        createIntType('Bridge.Int64', -9223372036854775808, 9223372036854775807);
-        createIntType('Bridge.UInt64', 0, 18446744073709551615);
-        createIntType('Bridge.Char', 0, 65535);
-
-        Bridge.Char.tryParse = function (s, result) {
-            var b = s && s.length === 1;
-            result.v = b ? s.charCodeAt(0) : 0;
-            return b;
-        };
-
-        Bridge.Char.parse = function (s) {
-            if (!Bridge.hasValue(s)) {
-                throw new Bridge.ArgumentNullException('s');
-            }
-
-            if (s.length !== 1) {
-                throw new Bridge.FormatException();
-            }
-            return s.charCodeAt(0);
-        };
-    })();*/
+        createIntType("Bridge.Byte", 0, 255);
+        createIntType("Bridge.SByte", -128, 127);
+        createIntType("Bridge.Int16", -32768, 32767);
+        createIntType("Bridge.UInt16", 0, 65535);
+        createIntType("Bridge.Int32", -2147483648, 2147483647);
+        createIntType("Bridge.UInt32", 0, 4294967295);
+    })();
 
     Bridge.define("Bridge.Int", {
         inherits: [Bridge.IComparable, Bridge.IFormattable],
@@ -73,13 +54,14 @@
                     decimalSeparator = nf.numberDecimalSeparator,
                     groupSeparator = nf.numberGroupSeparator,
                     isDecimal = number instanceof Bridge.Decimal,
-                    isNeg = isDecimal ? number.isNegative() : number < 0,
+                    isLong = number instanceof Bridge.Long || number instanceof Bridge.ULong,
+                    isNeg = isDecimal || isLong ? number.isNegative() : number < 0,
                     match,
                     precision,
                     groups,
                     fs;
 
-                if (isDecimal ? !number.isFinite() : !isFinite(number)) {
+                if (!isLong && (isDecimal ? !number.isFinite() : !isFinite(number))) {
                     return Number.NEGATIVE_INFINITY === number || (isDecimal && isNeg) ? nf.negativeInfinitySymbol : nf.positiveInfinitySymbol;
                 }
 
@@ -106,14 +88,14 @@
                         case "G":
                         case "E":
                             var exponent = 0,
-                                coefficient = isDecimal ? number.abs() : Math.abs(number),
+                                coefficient = isDecimal || isLong ? number.abs() : Math.abs(number),
                                 exponentPrefix = match[1],
                                 exponentPrecision = 3,
                                 minDecimals,
                                 maxDecimals;
 
-                            while (isDecimal ? coefficient.gte(10) : (coefficient >= 10)) {
-                                if (isDecimal) {
+                            while (isDecimal || isLong ? coefficient.gte(10) : (coefficient >= 10)) {
+                                if (isDecimal || isLong) {
                                     coefficient = coefficient.div(10);
                                 } else {
                                     coefficient /= 10;
@@ -122,8 +104,8 @@
                                 exponent++;
                             }
 
-                            while (isDecimal ? (coefficient.ne(0) && coefficient.lt(1)) : (coefficient !== 0 && coefficient < 1)) {
-                                if (isDecimal) {
+                            while (isDecimal || isLong ? (coefficient.ne(0) && coefficient.lt(1)) : (coefficient !== 0 && coefficient < 1)) {
+                                if (isDecimal || isLong) {
                                     coefficient = coefficient.mul(10);
                                 } else {
                                     coefficient *= 10;
@@ -132,7 +114,7 @@
                             }
 
                             if (fs === "G") {
-                                if (exponent > -5 && (!precision || exponent < precision)) {
+                                if (exponent > -5 && (exponent < (precision || 15))) {
                                     minDecimals = precision ? precision - (exponent > 0 ? exponent + 1 : 1) : 0;
                                     maxDecimals = precision ? precision - (exponent > 0 ? exponent + 1 : 1) : 15;
                                     return this.defaultFormat(number, 1, minDecimals, maxDecimals, nf, true);
@@ -141,7 +123,7 @@
                                 exponentPrefix = exponentPrefix === "G" ? "E" : "e";
                                 exponentPrecision = 2;
                                 minDecimals = (precision || 1) - 1;
-                                maxDecimals = (precision || 11) - 1;
+                                maxDecimals = (precision || 15) - 1;
                             } else {
                                 minDecimals = maxDecimals = isNaN(precision) ? 6 : precision;
                             }
@@ -154,7 +136,7 @@
                             }
 
                             if (isNeg) {
-                                if (isDecimal) {
+                                if (isDecimal || isLong) {
                                     coefficient = coefficient.mul(-1);
                                 } else {
                                     coefficient *= -1;
@@ -169,7 +151,7 @@
 
                             return this.defaultFormat(number * 100, 1, precision, precision, nf, false, "percent");
                         case "X":
-                            var result = isDecimal ? number.round().value.toString(16) : Math.round(number).toString(16);
+                            var result = isDecimal ? number.round().value.toHex().substr(2) : (isLong ? number.toString(16) : Math.round(number).toString(16));
 
                             if (match[1] === "X") {
                                 result = result.toUpperCase();
@@ -189,7 +171,12 @@
 
                             return this.defaultFormat(number, 1, precision, precision, nf, false, "currency");
                         case "R":
-                            return isDecimal ? (number.toString()) : ("" + number);
+                            var r_result = isDecimal || isLong ? (number.toString()) : ("" + number);
+                            if (decimalSeparator !== ".") {
+                                r_result = r_result.replace(".", decimalSeparator);
+                            }
+                            r_result = r_result.replace("e", "E");
+                            return r_result;
                     }
                 }
 
@@ -206,7 +193,7 @@
                         index--;
                     }
 
-                    if (isDecimal) {
+                    if (isDecimal || isLong) {
                         number = number.div(Math.pow(1000, count));
                     } else {
                         number /= Math.pow(1000, count);
@@ -214,17 +201,25 @@
                 }
 
                 if (format.indexOf("%") !== -1) {
-                    if (isDecimal) {
+                    if (isDecimal || isLong) {
                         number = number.mul(100);
                     } else {
                         number *= 100;
                     }
                 }
 
+                if (format.indexOf("‰") !== -1) {
+                    if (isDecimal || isLong) {
+                        number = number.mul(1000);
+                    } else {
+                        number *= 1000;
+                    }
+                }
+
                 groups = format.split(";");
 
-                if ((isDecimal ? number.lt(0) : (number < 0)) && groups.length > 1) {
-                    if (isDecimal) {
+                if ((isDecimal || isLong ? number.lt(0) : (number < 0)) && groups.length > 1) {
+                    if (isDecimal || isLong) {
                         number = number.mul(-1);
                     } else {
                         number *= -1;
@@ -232,7 +227,7 @@
                     
                     format = groups[1];
                 } else {
-                    format = groups[(isDecimal ? number.ne(0) : !number) && groups.length > 2 ? 2 : 0];
+                    format = groups[(isDecimal || isLong ? number.ne(0) : !number) && groups.length > 2 ? 2 : 0];
                 }
 
                 return this.customFormat(number, format, nf, !format.match(/^[^\.]*[0#],[0#]/));
@@ -258,14 +253,17 @@
                     sep,
                     buffer = "",
                     isDecimal = number instanceof Bridge.Decimal,
-                    isNeg = isDecimal ? number.isNegative() : number < 0;
+                    isLong = number instanceof Bridge.Long || number instanceof Bridge.ULong,
+                    isNeg = isDecimal || isLong ? number.isNegative() : number < 0;
 
                 roundingFactor = Math.pow(10, maxDecLen);
 
                 if (isDecimal) {
-                    str = number.abs().mul(roundingFactor).round().div(roundingFactor).toString();
+                    str = number.abs().toDecimalPlaces(maxDecLen).toString();
+                } else if (isLong) {
+                    str = number.eq(Bridge.Long.MinValue) ? number.value.toUnsigned().toString() : number.abs().toString();
                 } else {
-                    str = "" + (Math.round(Math.abs(number) * roundingFactor) / roundingFactor);
+                    str = "" + (+Math.abs(number).toFixed(maxDecLen));
                 }
 
                 decimalIndex = str.indexOf(".");
@@ -289,6 +287,8 @@
                     } else if ((decimalPart.length - 1) > maxDecLen) {
                         decimalPart = decimalPart.substr(0, maxDecLen + 1);
                     }
+                } else if (minDecLen > 0) {
+                    decimalPart = nf[name + "DecimalSeparator"] + Array(minDecLen + 1).join("0");
                 }
 
                 groupIndex = 0;
@@ -370,8 +370,12 @@
                     name,
                     groupCfg,
                     buffer = "",
+                    isZeroInt = false,
+                    wasSeparator = false,
+                    wasIntPart = false,
                     isDecimal = number instanceof Bridge.Decimal,
-                    isNeg = isDecimal ? number.isNegative() : number < 0;
+                    isLong = number instanceof Bridge.Long || number instanceof Bridge.ULong,
+                    isNeg = isDecimal || isLong ? number.isNegative() : number < 0;
 
                 name = "number";
 
@@ -420,6 +424,8 @@
 
                 if (isDecimal) {
                     number = number.abs().mul(roundingFactor).round().div(roundingFactor).toString();
+                } if (isLong) {
+                    number = number.abs().mul(roundingFactor).div(roundingFactor).toString();
                 } else {
                     number = "" + (Math.round(Math.abs(number) * roundingFactor) / roundingFactor);
                 }
@@ -432,6 +438,10 @@
                     groupIndex: Math.max(integralDigits, forcedDigits),
                     sep: noGroup ? "" : nf[name + "GroupSeparator"]
                 };
+
+                if (integralDigits === 1 && number.charAt(0) === "0") {
+                    isZeroInt = true;
+                }
 
                 for (f = 0; f < format.length; f++) {
                     c = format.charAt(f);
@@ -450,28 +460,38 @@
                         buffer += format.charAt(f + 1);
                         f++;
                     } else if (c === "#" || c === "0") {
-                        groupCfg.buffer = buffer;
+                        wasIntPart = true;
+                        if (!wasSeparator && isZeroInt && c === "#") {
+                            i++;
+                        } else {
+                            groupCfg.buffer = buffer;
 
-                        if (i < integralDigits) {
-                            if (i >= 0) {
-                                if (unused) {
-                                    this.addGroup(number.substr(0, i), groupCfg);
+                            if (i < integralDigits) {
+                                if (i >= 0) {
+                                    if (unused) {
+                                        this.addGroup(number.substr(0, i), groupCfg);
+                                    }
+
+                                    this.addGroup(number.charAt(i), groupCfg);
+                                } else if (i >= integralDigits - forcedDigits) {
+                                    this.addGroup("0", groupCfg);
                                 }
-
-                                this.addGroup(number.charAt(i), groupCfg);
-                            } else if (i >= integralDigits - forcedDigits) {
-                                this.addGroup("0", groupCfg);
+                                unused = 0;
+                            } else if (forcedDecimals-- > 0 || i < number.length) {
+                                this.addGroup(i >= number.length ? "0" : number.charAt(i), groupCfg);
                             }
-                            unused = 0;
-                        } else if (forcedDecimals-- > 0 || i < number.length) {
-                            this.addGroup(i >= number.length ? "0" : number.charAt(i), groupCfg);
+
+                            buffer = groupCfg.buffer;
+
+                            i++;
                         }
-
-                        buffer = groupCfg.buffer;
-
-                        i++;
                     } else if (c === ".") {
+                        if (!wasIntPart && !isZeroInt) {
+                            buffer += number.substr(0, integralDigits);
+                            wasIntPart = true;
+                        }
                         if (number.length > ++i || forcedDecimals > 0) {
+                            wasSeparator = true;
                             buffer += nf[name + "DecimalSeparator"];
                         }
                     } else if (c !== ",") {
@@ -479,7 +499,7 @@
                     }
                 }
 
-                if (isNegative < 0) {
+                if (isNegative) {
                     buffer = "-" + buffer;
                 }
 
@@ -592,9 +612,13 @@
                 return true;
             },
 
+            isInfinite: function (x) {
+                return x === Number.POSITIVE_INFINITY || x === Number.NEGATIVE_INFINITY;
+            },
+
             trunc: function (num) {
                 if (!Bridge.isNumber(num)) {
-                    return null;
+                    return Bridge.Int.isInfinite(num) ? num : null;
                 }
 
                 return num > 0 ? Math.floor(num) : Math.ceil(num);
@@ -620,55 +644,70 @@
                 if (y === 0) {
                     throw new Bridge.DivideByZeroException();
                 }
+
                 return x % y;
             },
 
             check: function (x, type) {
+                if (Bridge.Long.is64Bit(x)) {
+                    return Bridge.Long.check(x, type);
+                } else if (x instanceof Bridge.Decimal) {
+                    return Bridge.Decimal.toInt(x, type);
+                }
+
                 if (Bridge.isNumber(x) && !type.instanceOf(x)) {
                     throw new Bridge.OverflowException();
+                }
+
+                if (Bridge.Int.isInfinite(x)) {
+                    if (type === Bridge.Long || type === Bridge.ULong) {
+                        return type.MinValue;
+                    }
+
+                    return type.min;
                 }
                 
                 return x;
             },
 
             sxb: function (x) {
-                return x | (x & 0x80 ? 0xffffff00 : 0);
+                return Bridge.isNumber(x) ? (x | (x & 0x80 ? 0xffffff00 : 0)) : (Bridge.Int.isInfinite(x) ? Bridge.SByte.min : null);
             },
 
             sxs: function (x) {
-                return x | (x & 0x8000 ? 0xffff0000 : 0);
+                return Bridge.isNumber(x) ? (x | (x & 0x8000 ? 0xffff0000 : 0)) : (Bridge.Int.isInfinite(x) ? Bridge.Int16.min : null);
             },
 
             clip8: function (x) {
-                return Bridge.isNumber(x) ? Bridge.Int.sxb(x & 0xff) : null;
+                return Bridge.isNumber(x) ? Bridge.Int.sxb(x & 0xff) : (Bridge.Int.isInfinite(x) ? Bridge.SByte.min : null);
             },
 
             clipu8: function (x) {
-                return Bridge.isNumber(x) ? x & 0xff : null;
+                return Bridge.isNumber(x) ? x & 0xff : (Bridge.Int.isInfinite(x) ? Bridge.Byte.min : null);
             },
 
             clip16: function (x) {
-                return Bridge.isNumber(x) ? Bridge.Int.sxs(x & 0xffff) : null;
+                return Bridge.isNumber(x) ? Bridge.Int.sxs(x & 0xffff) : (Bridge.Int.isInfinite(x) ? Bridge.Int16.min : null);
             },
 
             clipu16: function (x) {
-                return Bridge.isNumber(x) ? x & 0xffff : null;
+                return Bridge.isNumber(x) ? x & 0xffff : (Bridge.Int.isInfinite(x) ? Bridge.UInt16.min : null);
             },
 
             clip32: function (x) {
-                return Bridge.isNumber(x) ? x | 0 : null;
+                return Bridge.isNumber(x) ? x | 0 : (Bridge.Int.isInfinite(x) ? Bridge.Int32.min : null);
             },
 
             clipu32: function (x) {
-                return Bridge.isNumber(x) ? x >>> 0 : null;
+                return Bridge.isNumber(x) ? x >>> 0 : (Bridge.Int.isInfinite(x) ? Bridge.UInt32.min : null);
             },
 
             clip64: function (x) {
-                return Bridge.isNumber(x) ? (Math.floor(x / 0x100000000) | 0) * 0x100000000 + (x >>> 0) : null;
+                return Bridge.isNumber(x) ? Bridge.Long(Bridge.Int.trunc(x)) : (Bridge.Int.isInfinite(x) ? Bridge.Long.MinValue : null);
             },
 
             clipu64: function (x) {
-                return Bridge.isNumber(x) ? (Math.floor(x / 0x100000000) >>> 0) * 0x100000000 + (x >>> 0) : null;
+                return Bridge.isNumber(x) ? Bridge.ULong(Bridge.Int.trunc(x)) : (Bridge.Int.isInfinite(x) ? Bridge.ULong.MinValue : null);
             },
 
             sign: function (x) {
@@ -678,3 +717,44 @@
     });
 
     Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEquatable$1(Bridge.Int)]);
+
+    Bridge.define("Bridge.Double", {
+        inherits: [Bridge.IComparable, Bridge.IFormattable],
+        statics: {
+            min: -Number.MAX_VALUE,
+            max: Number.MAX_VALUE,
+
+            instanceOf: function (instance) {
+                return typeof (instance) === "number";
+            },
+            getDefaultValue: function () {
+                return 0;
+            },
+            parse: function (s, provider) {
+                return Bridge.Int.parseFloat(s, provider);
+            },
+            tryParse: function (s, provider, result) {
+                return Bridge.Int.tryParseFloat(s, provider, result);
+            },
+            format: function (number, format, provider) {
+                return Bridge.Int.format(number, format, provider);
+            }
+        }
+    });
+    Bridge.Class.addExtend(Bridge.Double, [Bridge.IComparable$1(Bridge.Double), Bridge.IEquatable$1(Bridge.Double)]);
+
+    Bridge.define("Bridge.Single", {
+        inherits: [Bridge.IComparable, Bridge.IFormattable],
+        statics: {
+            min: -3.40282346638528859e+38,
+            max: 3.40282346638528859e+38,
+
+            instanceOf: Bridge.Double.instanceOf,
+            getDefaultValue: Bridge.Double.getDefaultValue,
+            parse: Bridge.Double.parse,
+            tryParse: Bridge.Double.tryParse,
+            format: Bridge.Double.format
+        }
+    });
+
+    Bridge.Class.addExtend(Bridge.Single, [Bridge.IComparable$1(Bridge.Single), Bridge.IEquatable$1(Bridge.Single)]);

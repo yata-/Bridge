@@ -318,7 +318,7 @@ namespace Bridge.Contract
             get;
         }
 
-        System.Collections.Generic.Stack<Tuple<string, System.Text.StringBuilder, bool, Action>> Writers
+        System.Collections.Generic.Stack<IWriter> Writers
         {
             get;
             set;
@@ -402,6 +402,17 @@ namespace Bridge.Contract
         }
 
         bool StaticBlock
+        {
+            get;
+            set;
+        }
+
+        bool IsJavaScriptOverflowMode
+        {
+            get;
+        }
+
+        bool IsRefArg
         {
             get;
             set;

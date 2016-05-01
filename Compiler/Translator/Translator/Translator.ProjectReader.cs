@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
+using Bridge.Contract;
 
 namespace Bridge.Translator
 {
@@ -24,6 +25,15 @@ namespace Bridge.Translator
             if (!this.FromTask)
             {
                 this.ReadDefineConstants(doc);
+            }
+
+            var projectType = (from n in doc.Descendants()
+                          where n.Name.LocalName == "OutputType"
+                          select n).ToArray();
+
+            if (projectType.Length > 0 && projectType[0] != null && projectType[0].Value != Translator.SupportedProjectType)
+            {
+                Bridge.Translator.TranslatorException.Throw("Project type ({0}) is not supported, please use Library instead of {0}", projectType[0].Value);
             }
 
             this.Log.Info("Reading project file done");
@@ -90,12 +100,25 @@ namespace Bridge.Translator
                         tag.Value + "</" + tag.Name.LocalName + ">\n";
                 }
 
-                throw new Bridge.Translator.Exception("'Bridge' name is reserved and may not " +
+                throw new Bridge.Translator.TranslatorException("'Bridge' name is reserved and may not " +
                     "be used as project names or root namespaces.\n" +
                     "Please verify your project settings and rename where it applies.\n" +
                     "Project file: " + this.Location + "\n" +
                     "Offending settings:\n" + offendingSettings
                 );
+            }
+
+            var nodes = from n in doc.Descendants()
+                        where n.Name.LocalName == "CheckForOverflowUnderflow"
+                        select n;
+            if (nodes.Any())
+            {
+                var value = nodes.Last().Value;
+                bool boolValue;
+                if (bool.TryParse(value, out boolValue))
+                {
+                    this.OverflowMode = boolValue ? Bridge.Contract.OverflowMode.Checked : Bridge.Contract.OverflowMode.Unchecked;
+                }
             }
         }
 
@@ -133,7 +156,7 @@ namespace Bridge.Translator
 
             if (nodes.Count() != 1)
             {
-                Bridge.Translator.Exception.Throw("Unable to determine output path");
+                Bridge.Translator.TranslatorException.Throw("Unable to determine output path");
             }
 
             var path = nodes.First().Value;
@@ -170,7 +193,7 @@ namespace Bridge.Translator
                 // This constructor below works on Windows and does NOT break #531
                 project = new Project(this.Location, null, null, new ProjectCollection());
             }
-
+            
             var sourceFiles = new List<string>();
 
             foreach (var projectItem in project.GetItems("Compile"))
@@ -193,7 +216,7 @@ namespace Bridge.Translator
 
             if (sourceFiles.Count() == 0)
             {
-                throw new Bridge.Translator.Exception("Unable to get source file list from project file '" +
+                throw new Bridge.Translator.TranslatorException("Unable to get source file list from project file '" +
                     this.Location + "'. In order to use bridge, you have to have at least one source code file " +
                     "with the 'compile' property set (usually .cs files have it by default in C# projects).");
             };
@@ -245,7 +268,7 @@ namespace Bridge.Translator
 
             if (nodes.Count() != 1)
             {
-                Bridge.Translator.Exception.Throw("Unable to determine assembly name");
+                Bridge.Translator.TranslatorException.Throw("Unable to determine assembly name");
             }
 
             return nodes.First().Value;

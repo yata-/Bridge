@@ -343,6 +343,11 @@ namespace Bridge.Translator
 
                 if (!autoPropertyToField)
                 {
+                    if (resolvedProperty != null && resolvedProperty.Member.ImplementedInterfaceMembers.Count > 0 && resolvedProperty.Member.ImplementedInterfaceMembers.Any(m => Helpers.IsFieldProperty(m, this.AssemblyInfo)))
+                    {
+                        throw new EmitterException(propertyDeclaration, string.Format("The property {0} is not marked as FieldProperty but implemented interface member has such attribute", resolvedProperty.Member.ToString()));
+                    }
+
                     info.Properties.Add(new TypeConfigItem
                     {
                         Name = key,
@@ -352,6 +357,11 @@ namespace Bridge.Translator
                 }
                 else
                 {
+                    if (resolvedProperty != null && resolvedProperty.Member.ImplementedInterfaceMembers.Count > 0 && !resolvedProperty.Member.ImplementedInterfaceMembers.All(m => Helpers.IsFieldProperty(m, this.AssemblyInfo)))
+                    {
+                        throw new EmitterException(propertyDeclaration, string.Format("The property {0} is marked as FieldProperty but implemented interface member has no such attribute", resolvedProperty.Member.ToString()));
+                    }
+
                     info.Fields.Add(new TypeConfigItem
                     {
                         Name = key,
@@ -373,7 +383,7 @@ namespace Bridge.Translator
             {
                 dynamic i = this.CurrentType.LastEnumValue;
 
-                if (this.CurrentType.Type.GetDefinition().Attributes.Any(attr => attr.AttributeType.FullName == "System.FlagsAttribute"))
+                /*if (this.CurrentType.Type.GetDefinition().Attributes.Any(attr => attr.AttributeType.FullName == "System.FlagsAttribute"))
                 {
                     if (i <= 0)
                     {
@@ -387,11 +397,11 @@ namespace Bridge.Translator
                     initializer = new PrimitiveExpression(this.CurrentType.LastEnumValue);
                 }
                 else
-                {
+                {*/
                     ++i;
                     this.CurrentType.LastEnumValue = i;
                     initializer = new PrimitiveExpression(this.CurrentType.LastEnumValue);
-                }
+                //}
             }
             else
             {

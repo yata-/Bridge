@@ -9,6 +9,7 @@
             if (!Bridge.Nullable.hasValue(obj)) {
                 throw new Bridge.InvalidOperationException("Nullable instance doesn't have a value.");
             }
+
             return obj;
         },
 
@@ -54,6 +55,18 @@
 
         eq: function (a, b) {
             return !Bridge.hasValue(a) ? !Bridge.hasValue(b) : (a === b);
+        },
+
+        equals: function (a, b, fn) {
+            return !Bridge.hasValue(a) ? !Bridge.hasValue(b) : (fn ? fn(a, b) : Bridge.equals(a, b));
+        },
+
+        toString: function (a, fn) {
+            return !Bridge.hasValue(a) ? "" : (fn ? fn(a) : a.toString());
+        },
+
+        getHashCode: function (a, fn) {
+            return !Bridge.hasValue(a) ? 0 : (fn ? fn(a) : Bridge.getHashCode(a));
         },
 
         xor: function (a, b) {
@@ -127,11 +140,13 @@
 	            }
 	        }
 
-	        if (arguments[0] == null)
+	        if (arguments[0] == null) {
 	            return null;
+	        }
 
-	        if (arguments[0].apply == undefined)
+	        if (arguments[0].apply == undefined) {
 	            return arguments[0];
+	        }
 
 	        return arguments[0].apply(null, Array.prototype.slice.call(arguments, 1));
         },
@@ -150,11 +165,13 @@
 
         lifteq: function (f, a, b) {
             var va = Bridge.hasValue(a), vb = Bridge.hasValue(b);
+
             return (!va && !vb) || (va && vb && (typeof f === "function" ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))));
         },
 
         liftne: function (f, a, b) {
             var va = Bridge.hasValue(a), vb = Bridge.hasValue(b);
+
             return (va !== vb) || (va && (typeof f === "function" ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))));
         }
     };

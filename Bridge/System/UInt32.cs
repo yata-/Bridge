@@ -3,7 +3,7 @@ using Bridge;
 namespace System
 {
     [External]
-    [Name("Bridge.Int")]
+    [Name("Bridge.UInt32")]
     [Constructor("Number")]
     public struct UInt32 : IComparable, IComparable<UInt32>, IEquatable<UInt32>, IFormattable
     {
@@ -17,26 +17,26 @@ namespace System
         [InlineConst]
         public const uint MaxValue = 4294967295;
 
-        [Template("Bridge.Int.parseInt({s}, 0, 4294967295)")]
+        [Template("Bridge.UInt32.parse({s})")]
         public static uint Parse(string s)
         {
             return 0;
         }
 
-        [Template("Bridge.Int.parseInt({s}, 0, 4294967295, {radix})")]
+        [Template("Bridge.UInt32.parse({s}, {radix})")]
         public static uint Parse(string s, int radix)
         {
             return 0;
         }
 
-        [Template("Bridge.Int.tryParseInt({s}, {result}, 0, 4294967295)")]
+        [Template("Bridge.UInt32.tryParse({s}, {result})")]
         public static bool TryParse(string s, out uint result)
         {
             result = 0;
             return false;
         }
 
-        [Template("Bridge.Int.tryParseInt({s}, {result}, 0, 4294967295, {radix})")]
+        [Template("Bridge.UInt32.tryParse({s}, {result}, {radix})")]
         public static bool TryParse(string s, out uint result, int radix)
         {
             result = 0;
@@ -48,25 +48,25 @@ namespace System
             return null;
         }
 
-        [Template("Bridge.Int.format({this}, {format})")]
+        [Template("Bridge.UInt32.format({this}, {format})")]
         public string Format(string format)
         {
             return null;
         }
 
-        [Template("Bridge.Int.format({this}, {format}, {provider})")]
+        [Template("Bridge.UInt32.format({this}, {format}, {provider})")]
         public string Format(string format, IFormatProvider provider)
         {
             return null;
         }
 
-        [Template("Bridge.Int.format({this}, {format})")]
+        [Template("Bridge.UInt32.format({this}, {format})")]
         public string ToString(string format)
         {
             return null;
         }
 
-        [Template("Bridge.Int.format({this}, {format}, {provider})")]
+        [Template("Bridge.UInt32.format({this}, {format}, {provider})")]
         public string ToString(string format, IFormatProvider provider)
         {
             return null;
@@ -84,7 +84,7 @@ namespace System
             return 0;
         }
 
-        [Template("Bridge.equalsT({this}, {other})")]
+        [Template("{this} === {other}")]
         public bool Equals(uint other)
         {
             return false;

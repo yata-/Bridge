@@ -1,25 +1,81 @@
 using Newtonsoft.Json;
 using System;
 using System.IO;
+using Newtonsoft.Json.Linq;
 
 namespace Bridge.Contract
 {
     public class ConfigHelper<T>
     {
-        public virtual T ReadConfig(string configFileName, bool folderMode, string location)
+        private ILogger Logger { get; set; }
+
+        public ConfigHelper(ILogger logger)
         {
-            var configPath = GetConfigPath(configFileName, folderMode, location);
+            this.Logger = logger;
+        }
+
+        public virtual T ReadConfig(string configFileName, bool folderMode, string location, string configuration)
+        {
+            string configPath = null;
+            string mergePath = null;
+
+            Logger.Info("Reading configuration file " + (configFileName ?? "") + " at " + (location ?? "") + " for configuration " + (configuration ?? "") + " ...");
+
+            if (!string.IsNullOrWhiteSpace(configuration))
+            {
+                configPath = GetConfigPath(configFileName.Insert(configFileName.LastIndexOf(".", StringComparison.Ordinal), "." + configuration), folderMode, location);
+                mergePath = GetConfigPath(configFileName, folderMode, location);
+
+                if (configPath == null)
+                {
+                    configPath = mergePath;
+                    mergePath = null;
+                }
+            }
+            else
+            {
+                configPath = GetConfigPath(configFileName, folderMode, location);
+
+                if (configPath == null)
+                {
+                    configPath = GetConfigPath(configFileName.Insert(configFileName.LastIndexOf(".", StringComparison.Ordinal), ".debug"), folderMode, location);
+                }
+
+                if (configPath == null)
+                {
+                    configPath = GetConfigPath(configFileName.Insert(configFileName.LastIndexOf(".", StringComparison.Ordinal), ".release"), folderMode, location);
+                }
+            }
 
             if (configPath == null)
             {
+                Logger.Info("Config path is not found. Returning default config");
                 return default(T);
             }
 
             try
             {
+                this.Logger.Info("Reading base configuration at " + (configPath ?? "") + " ...");
                 var json = File.ReadAllText(configPath);
-                var config = JsonConvert.DeserializeObject<T>(json);
 
+                T config;
+                if (mergePath != null)
+                {
+                    this.Logger.Info("Reading merge configuration at " + (mergePath ?? "") + " ...");
+                    var jsonMerge = File.ReadAllText(mergePath);
+
+                    var cfgMain = JObject.Parse(json);
+                    var cfgMerge = JObject.Parse(jsonMerge);
+
+                    cfgMerge.Merge(cfgMain);
+                    config = cfgMerge.ToObject<T>();
+                }
+                else
+                {
+                    config = JsonConvert.DeserializeObject<T>(json);    
+                }
+                
+                
                 if (config == null)
                 {
                     return default(T);
@@ -33,8 +89,10 @@ namespace Bridge.Contract
             }
         }
 
-        public static string GetConfigPath(string configFileName, bool folderMode, string location)
+        public string GetConfigPath(string configFileName, bool folderMode, string location)
         {
+            this.Logger.Info("Getting configuration file path " + (configFileName ?? "") + " at " + (location ?? "") + " ...");
+
             var folder = folderMode ? location : Path.GetDirectoryName(location);
             var path = folder + Path.DirectorySeparatorChar + "Bridge" + Path.DirectorySeparatorChar + configFileName;
 
@@ -50,8 +108,11 @@ namespace Bridge.Contract
 
             if (!File.Exists(path))
             {
+                this.Logger.Info("Path is not found. Returning null path.");
                 return null;
             }
+
+            this.Logger.Info("Getting configuration file path done - " + (path ?? ""));
 
             return path;
         }

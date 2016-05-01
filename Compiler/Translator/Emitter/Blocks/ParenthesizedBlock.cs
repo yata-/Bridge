@@ -1,9 +1,10 @@
 ﻿using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.Semantics;
 
 namespace Bridge.Translator
 {
-    public class ParenthesizedBlock : AbstractEmitterBlock
+    public class ParenthesizedBlock : ConversionBlock
     {
         public ParenthesizedBlock(IEmitter emitter, ParenthesizedExpression parenthesizedExpression)
             : base(emitter, parenthesizedExpression)
@@ -18,7 +19,12 @@ namespace Bridge.Translator
             set;
         }
 
-        protected override void DoEmit()
+        protected override Expression GetExpression()
+        {
+            return this.ParenthesizedExpression;
+        }
+
+        protected override void EmitConversionExpression()
         {
             var ignoreParentheses = this.IgnoreParentheses(this.ParenthesizedExpression.Expression);
 
@@ -34,17 +40,23 @@ namespace Bridge.Translator
                 this.WriteCloseParentheses();
             }
         }
-
+        
         protected bool IgnoreParentheses(Expression expression)
         {
             if (expression is CastExpression)
             {
-                var simpleType = ((CastExpression)expression).Type as SimpleType;
+                var rr = this.Emitter.Resolver.ResolveNode(expression, this.Emitter);
+                if (rr is ConstantResolveResult)
+                {
+                    return false;
+                }
+                /*var simpleType = ((CastExpression)expression).Type as SimpleType;
 
                 if (simpleType != null && simpleType.Identifier == "dynamic")
                 {
                     return true;
-                }
+                }*/
+                return true;
             }
             return false;
         }

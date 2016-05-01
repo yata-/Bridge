@@ -8,8 +8,37 @@ using System.Text.RegularExpressions;
 
 namespace Bridge.Translator
 {
-    public class IndexerBlock : AbstractEmitterBlock
+    public class IndexerAccessor
     {
+        public IAttribute InlineAttr
+        {
+            get; 
+            set;
+        }
+
+        public string InlineCode
+        {
+            get; 
+            set;
+        }
+
+        public IMethod Method
+        {
+            get;
+            set;
+        }
+
+        public bool IgnoreAccessor
+        {
+            get;
+            set;
+        }
+    }
+
+    public class IndexerBlock : ConversionBlock
+    {
+        private bool isRefArg;
+
         public IndexerBlock(IEmitter emitter, IndexerExpression indexerExpression)
             : base(emitter, indexerExpression)
         {
@@ -23,17 +52,23 @@ namespace Bridge.Translator
             set;
         }
 
-        protected override void DoEmit()
+        protected override Expression GetExpression()
+        {
+            return this.IndexerExpression;
+        }
+
+        protected override void EmitConversionExpression()
         {
             this.VisitIndexerExpression();
         }
 
         protected void VisitIndexerExpression()
         {
-            IndexerExpression indexerExpression = this.IndexerExpression;
+            this.isRefArg = this.Emitter.IsRefArg;
+            this.Emitter.IsRefArg = false;
 
-            IAttribute inlineAttr = null;
-            string inlineCode = null;
+            IndexerExpression indexerExpression = this.IndexerExpression;
+            int pos = this.Emitter.Output.Length;
             var resolveResult = this.Emitter.Resolver.ResolveNode(indexerExpression, this.Emitter);
             var memberResolveResult = resolveResult as MemberResolveResult;
 
@@ -41,42 +76,61 @@ namespace Bridge.Translator
 
             if (arrayAccess != null && arrayAccess.Indexes.Count > 1)
             {
-                this.EmitArrayAccess(indexerExpression);
+                this.EmitMultiDimArrayAccess(indexerExpression);
+                Helpers.CheckValueTypeClone(resolveResult, indexerExpression, this, pos);
                 return;
             }
 
             var isIgnore = true;
             var isAccessorsIndexer = false;
-            var ignoreAccessor = false;
+            
             IProperty member = null;
-            IMethod method = null;
-            var oldIsAssignment = this.Emitter.IsAssignment;
-            var oldUnary = this.Emitter.IsUnaryAccessor;
-            bool isName = false;
+
+            IndexerAccessor current = null;
 
             if (memberResolveResult != null)
             {
                 var resolvedMember = memberResolveResult.Member;
                 isIgnore = this.Emitter.Validator.IsIgnoreType(resolvedMember.DeclaringTypeDefinition);
-                isAccessorsIndexer =
-                    resolvedMember.DeclaringTypeDefinition.DirectBaseTypes.Any(
-                        t => t.FullName == "Bridge.IAccessorsIndexer");
+                isAccessorsIndexer = this.Emitter.Validator.IsAccessorsIndexer(resolvedMember);
 
-                if (resolvedMember is IProperty)
+                var property = resolvedMember as IProperty;
+                if (property != null)
                 {
-                    member = (IProperty)resolvedMember;
-                    method = this.Emitter.IsAssignment ? member.Setter : member.Getter;
-                    inlineAttr = this.Emitter.GetAttribute(method.Attributes, Translator.Bridge_ASSEMBLY + ".TemplateAttribute");
-
-                    if (inlineAttr == null)
-                    {
-                        inlineAttr = Helpers.GetInheritedAttribute(method, Translator.Bridge_ASSEMBLY + ".NameAttribute");
-                        isName = true;
-                    }
-
-                    ignoreAccessor = this.Emitter.Validator.IsIgnoreType(method);
+                    member = property;
+                    current = this.GetIndexerAccessor(member, this.Emitter.IsAssignment);
                 }
             }
+
+            if (current != null && current.InlineAttr != null)
+            {
+                this.EmitInlineIndexer(indexerExpression, current);
+            }
+            else if (!(isIgnore || (current != null && current.IgnoreAccessor)) || isAccessorsIndexer)
+            {
+                this.EmitAccessorIndexer(indexerExpression, memberResolveResult, member);
+            }
+            else
+            {
+                this.EmitSingleDimArrayIndexer(indexerExpression);
+            }
+
+            Helpers.CheckValueTypeClone(resolveResult, indexerExpression, this, pos);
+        }
+
+        protected virtual IndexerAccessor GetIndexerAccessor(IProperty member, bool setter)
+        {
+            string inlineCode = null;
+            var method = setter ? member.Setter : member.Getter;
+
+            if (method == null)
+            {
+                return null;
+            }
+
+            var inlineAttr = this.Emitter.GetAttribute(method.Attributes, Translator.Bridge_ASSEMBLY + ".TemplateAttribute");
+
+            var ignoreAccessor = this.Emitter.Validator.IsIgnoreType(method);
 
             if (inlineAttr != null)
             {
@@ -85,15 +139,41 @@ namespace Bridge.Translator
                 if (inlineArg.ConstantValue != null)
                 {
                     inlineCode = inlineArg.ConstantValue.ToString();
-
-                    if (inlineCode != null && isName)
-                    {
-                        inlineCode += "({0})";
-                    }
                 }
             }
 
-            if (inlineCode != null && inlineCode.Contains("{this}"))
+            return new IndexerAccessor
+            {
+                IgnoreAccessor = ignoreAccessor,
+                InlineAttr = inlineAttr,
+                InlineCode = inlineCode,
+                Method = method
+            };
+        }
+
+        protected virtual void EmitInlineIndexer(IndexerExpression indexerExpression, IndexerAccessor current)
+        {
+            var oldIsAssignment = this.Emitter.IsAssignment;
+            var oldUnary = this.Emitter.IsUnaryAccessor;
+            var inlineCode = current.InlineCode;
+            bool hasThis = inlineCode != null && inlineCode.Contains("{this}");
+
+            if (inlineCode != null && inlineCode.StartsWith("<self>"))
+            {
+                hasThis = true;
+                inlineCode = inlineCode.Substring(6);
+            }
+
+            if (!hasThis && current.InlineAttr != null)
+            {
+                this.Emitter.IsAssignment = false;
+                this.Emitter.IsUnaryAccessor = false;
+                indexerExpression.Target.AcceptVisitor(this.Emitter);
+                this.Emitter.IsAssignment = oldIsAssignment;
+                this.Emitter.IsUnaryAccessor = oldUnary;
+            }
+
+            if (hasThis)
             {
                 this.Write("");
                 var oldBuilder = this.Emitter.Output;
@@ -121,201 +201,169 @@ namespace Bridge.Translator
                 return;
             }
 
-            if (inlineAttr != null || (isIgnore && !isAccessorsIndexer))
+            if (inlineCode != null)
             {
+                this.WriteDot();
+                this.PushWriter(inlineCode);
                 this.Emitter.IsAssignment = false;
                 this.Emitter.IsUnaryAccessor = false;
-                indexerExpression.Target.AcceptVisitor(this.Emitter);
+                new ExpressionListBlock(this.Emitter, indexerExpression.Arguments, null).Emit();
                 this.Emitter.IsAssignment = oldIsAssignment;
                 this.Emitter.IsUnaryAccessor = oldUnary;
-            }
 
-            if (inlineAttr != null)
-            {
-                if (inlineCode != null)
+                if (!this.Emitter.IsAssignment)
                 {
-                    this.WriteDot();
-                    this.PushWriter(inlineCode);
-                    this.Emitter.IsAssignment = false;
-                    this.Emitter.IsUnaryAccessor = false;
-                    new ExpressionListBlock(this.Emitter, indexerExpression.Arguments, null).Emit();
-                    this.Emitter.IsAssignment = oldIsAssignment;
-                    this.Emitter.IsUnaryAccessor = oldUnary;
-
-                    if (!this.Emitter.IsAssignment)
-                    {
-                        this.PopWriter();
-                    }
-                    else
-                    {
-                        this.WriteComma();
-                    }
+                    this.PopWriter();
+                }
+                else
+                {
+                    this.WriteComma();
                 }
             }
-            else if (!(isIgnore || ignoreAccessor) || isAccessorsIndexer)
+        }
+
+        protected virtual void EmitAccessorIndexer(IndexerExpression indexerExpression, MemberResolveResult memberResolveResult, IProperty member)
+        {
+            string targetVar = null;
+            string valueVar = null;
+            bool writeTargetVar = false;
+            bool isStatement = false;
+            var oldIsAssignment = this.Emitter.IsAssignment;
+            var oldUnary = this.Emitter.IsUnaryAccessor;
+
+            if (this.Emitter.IsAssignment && this.Emitter.AssignmentType != AssignmentOperatorType.Assign)
             {
-                string targetVar = null;
-                string valueVar = null;
-                bool writeTargetVar = false;
-                bool isStatement = false;
+               // writeTargetVar = true;
+            }
+            else if (this.Emitter.IsUnaryAccessor)
+            {
+                writeTargetVar = true;
 
-                if (this.Emitter.IsAssignment && this.Emitter.AssignmentType != AssignmentOperatorType.Assign)
+                isStatement = indexerExpression.Parent is UnaryOperatorExpression &&
+                              indexerExpression.Parent.Parent is ExpressionStatement;
+
+                if (memberResolveResult != null && NullableType.IsNullable(memberResolveResult.Type))
                 {
-                    writeTargetVar = true;
-                }
-                else if (this.Emitter.IsUnaryAccessor)
-                {
-                    writeTargetVar = true;
-
-                    isStatement = indexerExpression.Parent is UnaryOperatorExpression && indexerExpression.Parent.Parent is ExpressionStatement;
-
-                    if (memberResolveResult != null && NullableType.IsNullable(memberResolveResult.Type))
-                    {
-                        isStatement = false;
-                    }
-
-                    if (!isStatement)
-                    {
-                        this.WriteOpenParentheses();
-                    }
+                    isStatement = false;
                 }
 
-                if (writeTargetVar)
+                if (!isStatement)
                 {
-                    var targetrr = this.Emitter.Resolver.ResolveNode(indexerExpression.Target, this.Emitter);
-                    var memberTargetrr = targetrr as MemberResolveResult;
-                    bool isField = memberTargetrr != null && memberTargetrr.Member is IField && (memberTargetrr.TargetResult is ThisResolveResult || memberTargetrr.TargetResult is LocalResolveResult);
-
-                    if (!(targetrr is ThisResolveResult || targetrr is LocalResolveResult || isField))
-                    {
-                        targetVar = this.GetTempVarName();
-                        this.Write(targetVar);
-                        this.Write(" = ");
-                    }
+                    this.WriteOpenParentheses();
                 }
+            }
 
-                if (this.Emitter.IsUnaryAccessor && !isStatement && targetVar == null)
+            if (writeTargetVar)
+            {
+                var targetrr = this.Emitter.Resolver.ResolveNode(indexerExpression.Target, this.Emitter);
+                var memberTargetrr = targetrr as MemberResolveResult;
+                bool isField = memberTargetrr != null && memberTargetrr.Member is IField &&
+                               (memberTargetrr.TargetResult is ThisResolveResult ||
+                                memberTargetrr.TargetResult is LocalResolveResult);
+
+                if (!(targetrr is ThisResolveResult || targetrr is LocalResolveResult || isField))
                 {
+                    targetVar = this.GetTempVarName();
+                    this.Write(targetVar);
+                    this.Write(" = ");
+                }
+            }
+
+            if (this.Emitter.IsUnaryAccessor && !isStatement && targetVar == null)
+            {
+                valueVar = this.GetTempVarName();
+
+                this.Write(valueVar);
+                this.Write(" = ");
+            }
+
+            this.Emitter.IsAssignment = false;
+            this.Emitter.IsUnaryAccessor = false;
+            indexerExpression.Target.AcceptVisitor(this.Emitter);
+            this.Emitter.IsAssignment = oldIsAssignment;
+            this.Emitter.IsUnaryAccessor = oldUnary;
+
+            if (targetVar != null)
+            {
+                if (this.Emitter.IsUnaryAccessor && !isStatement)
+                {
+                    this.WriteComma(false);
+
                     valueVar = this.GetTempVarName();
 
                     this.Write(valueVar);
                     this.Write(" = ");
+
+                    this.Write(targetVar);
                 }
-
-                this.Emitter.IsAssignment = false;
-                this.Emitter.IsUnaryAccessor = false;
-                indexerExpression.Target.AcceptVisitor(this.Emitter);
-                this.Emitter.IsAssignment = oldIsAssignment;
-                this.Emitter.IsUnaryAccessor = oldUnary;
-
-                if (targetVar != null)
+                else
                 {
-                    if (this.Emitter.IsUnaryAccessor && !isStatement)
+                    this.WriteSemiColon();
+                    this.WriteNewLine();
+                    this.Write(targetVar);
+                }
+            }
+
+            this.WriteDot();
+            var argsInfo = new ArgumentsInfo(this.Emitter, indexerExpression);
+            var argsExpressions = argsInfo.ArgumentsExpressions;
+            var paramsArg = argsInfo.ParamsExpression;
+            var name = Helpers.GetPropertyRef(member, this.Emitter, this.Emitter.IsAssignment);
+
+            if (!this.Emitter.IsAssignment)
+            {
+                if (this.Emitter.IsUnaryAccessor)
+                {
+                    var oldWriter = this.SaveWriter();
+                    this.NewWriter();
+                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
+                    var paramsStr = this.Emitter.Output.ToString();
+                    this.RestoreWriter(oldWriter);
+
+                    bool isDecimal = Helpers.IsDecimalType(member.ReturnType, this.Emitter.Resolver);
+					bool isLong = Helpers.Is64Type(member.ReturnType, this.Emitter.Resolver);
+                    bool isNullable = NullableType.IsNullable(member.ReturnType);
+                    if (isStatement)
                     {
+                        this.Write(Helpers.GetPropertyRef(member, this.Emitter, true));
+                        this.WriteOpenParentheses();
+                        this.Write(paramsStr);
                         this.WriteComma(false);
 
-                        valueVar = this.GetTempVarName();
-
-                        this.Write(valueVar);
-                        this.Write(" = ");
-
-                        this.Write(targetVar);
-                    }
-                    else
-                    {
-                        this.WriteSemiColon();
-                        this.WriteNewLine();
-                        this.Write(targetVar);
-                    }
-                }
-
-                this.WriteDot();
-                var argsInfo = new ArgumentsInfo(this.Emitter, indexerExpression);
-                var argsExpressions = argsInfo.ArgumentsExpressions;
-                var paramsArg = argsInfo.ParamsExpression;
-                var name = Helpers.GetPropertyRef(member, this.Emitter, this.Emitter.IsAssignment);
-
-                if (!this.Emitter.IsAssignment)
-                {
-                    if (this.Emitter.IsUnaryAccessor)
-                    {
-                        var oldWriter = this.SaveWriter();
-                        this.NewWriter();
-                        new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
-                        var paramsStr = this.Emitter.Output.ToString();
-                        this.RestoreWriter(oldWriter);
-
-                        bool isDecimal = Helpers.IsDecimalType(member.ReturnType, this.Emitter.Resolver);
-                        bool isNullable = NullableType.IsNullable(member.ReturnType);
-                        if (isStatement)
+                        if (isDecimal || isLong)
                         {
-                            this.Write(Helpers.GetPropertyRef(member, this.Emitter, true));
-                            this.WriteOpenParentheses();
-                            this.Write(paramsStr);
-                            this.WriteComma(false);
-
-                            if (isDecimal)
+                            if (isNullable)
                             {
-                                if (isNullable)
+                                this.Write("Bridge.Nullable.lift1");
+                                this.WriteOpenParentheses();
+                                if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment ||
+                                    this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
                                 {
-                                    this.Write("Bridge.Nullable.lift1");
-                                    this.WriteOpenParentheses();
-                                    if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
-                                    {
-                                        this.WriteScript("inc");
-                                    }
-                                    else
-                                    {
-                                        this.WriteScript("dec");
-                                    }
-                                    this.WriteComma();
-
-                                    if (targetVar != null)
-                                    {
-                                        this.Write(targetVar);
-                                    }
-                                    else
-                                    {
-                                        indexerExpression.Target.AcceptVisitor(this.Emitter);
-                                    }
-
-                                    this.WriteDot();
-
-                                    this.Write(Helpers.GetPropertyRef(member, this.Emitter, false));
-                                    this.WriteOpenParentheses();
-                                    this.Write(paramsStr);
-                                    this.WriteCloseParentheses();
-
-                                    this.WriteCloseParentheses();
+                                    this.WriteScript("inc");
                                 }
                                 else
                                 {
-                                    if (targetVar != null)
-                                    {
-                                        this.Write(targetVar);
-                                    }
-                                    else
-                                    {
-                                        indexerExpression.Target.AcceptVisitor(this.Emitter);
-                                    }
-
-                                    this.WriteDot();
-
-                                    this.Write(Helpers.GetPropertyRef(member, this.Emitter, false));
-                                    this.WriteOpenParentheses();
-                                    this.Write(paramsStr);
-                                    this.WriteCloseParentheses();
-                                    this.WriteDot();
-                                    if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
-                                    {
-                                        this.Write("inc");
-                                    }
-                                    else
-                                    {
-                                        this.Write("dec");
-                                    }
-                                    this.WriteOpenCloseParentheses();
+                                    this.WriteScript("dec");
                                 }
+                                this.WriteComma();
+
+                                if (targetVar != null)
+                                {
+                                    this.Write(targetVar);
+                                }
+                                else
+                                {
+                                    indexerExpression.Target.AcceptVisitor(this.Emitter);
+                                }
+
+                                this.WriteDot();
+
+                                this.Write(Helpers.GetPropertyRef(member, this.Emitter, false));
+                                this.WriteOpenParentheses();
+                                this.Write(paramsStr);
+                                this.WriteCloseParentheses();
+
+                                this.WriteCloseParentheses();
                             }
                             else
                             {
@@ -334,29 +382,134 @@ namespace Bridge.Translator
                                 this.WriteOpenParentheses();
                                 this.Write(paramsStr);
                                 this.WriteCloseParentheses();
-
-                                if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
+                                this.WriteDot();
+                                if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment ||
+                                    this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
                                 {
-                                    this.Write("+");
+                                    this.Write("inc");
                                 }
                                 else
                                 {
-                                    this.Write("-");
+                                    this.Write("dec");
                                 }
-
-                                this.Write("1");
+                                this.WriteOpenCloseParentheses();
                             }
-
-                            this.WriteCloseParentheses();
                         }
                         else
                         {
+                            if (targetVar != null)
+                            {
+                                this.Write(targetVar);
+                            }
+                            else
+                            {
+                                indexerExpression.Target.AcceptVisitor(this.Emitter);
+                            }
+
+                            this.WriteDot();
+
                             this.Write(Helpers.GetPropertyRef(member, this.Emitter, false));
                             this.WriteOpenParentheses();
                             this.Write(paramsStr);
                             this.WriteCloseParentheses();
-                            this.WriteComma();
 
+                            if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment ||
+                                this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
+                            {
+                                this.Write("+");
+                            }
+                            else
+                            {
+                                this.Write("-");
+                            }
+
+                            this.Write("1");
+                        }
+
+                        this.WriteCloseParentheses();
+                    }
+                    else
+                    {
+                        this.Write(Helpers.GetPropertyRef(member, this.Emitter, false));
+                        this.WriteOpenParentheses();
+                        this.Write(paramsStr);
+                        this.WriteCloseParentheses();
+                        this.WriteComma();
+
+                        if (targetVar != null)
+                        {
+                            this.Write(targetVar);
+                        }
+                        else
+                        {
+                            indexerExpression.Target.AcceptVisitor(this.Emitter);
+                        }
+                        this.WriteDot();
+                        this.Write(Helpers.GetPropertyRef(member, this.Emitter, true));
+                        this.WriteOpenParentheses();
+                        this.Write(paramsStr);
+                        this.WriteComma(false);
+
+                        if (isDecimal || isLong)
+                        {
+                            if (isNullable)
+                            {
+                                this.Write("Bridge.Nullable.lift1");
+                                this.WriteOpenParentheses();
+                                if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment ||
+                                    this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
+                                {
+                                    this.WriteScript("inc");
+                                }
+                                else
+                                {
+                                    this.WriteScript("dec");
+                                }
+                                this.WriteComma();
+                                this.Write(valueVar);
+                                this.WriteCloseParentheses();
+                            }
+                            else
+                            {
+                                this.Write(valueVar);
+                                this.WriteDot();
+                                if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment ||
+                                    this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
+                                {
+                                    this.Write("inc");
+                                }
+                                else
+                                {
+                                    this.Write("dec");
+                                }
+                                this.WriteOpenCloseParentheses();
+                            }
+                        }
+                        else
+                        {
+                            this.Write(valueVar);
+
+                            if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment ||
+                                this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
+                            {
+                                this.Write("+");
+                            }
+                            else
+                            {
+                                this.Write("-");
+                            }
+
+                            this.Write("1");
+                        }
+
+                        this.WriteCloseParentheses();
+                        this.WriteComma();
+
+                        bool isPreOp = this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment ||
+                                       this.Emitter.UnaryOperatorType == UnaryOperatorType.Decrement;
+
+                        if (isPreOp)
+                        {
                             if (targetVar != null)
                             {
                                 this.Write(targetVar);
@@ -366,204 +519,105 @@ namespace Bridge.Translator
                                 indexerExpression.Target.AcceptVisitor(this.Emitter);
                             }
                             this.WriteDot();
-                            this.Write(Helpers.GetPropertyRef(member, this.Emitter, true));
+                            this.Write(Helpers.GetPropertyRef(member, this.Emitter, false));
                             this.WriteOpenParentheses();
                             this.Write(paramsStr);
-                            this.WriteComma(false);
-
-                            if (isDecimal)
-                            {
-                                if (isNullable)
-                                {
-                                    this.Write("Bridge.Nullable.lift1");
-                                    this.WriteOpenParentheses();
-                                    if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
-                                    {
-                                        this.WriteScript("inc");
-                                    }
-                                    else
-                                    {
-                                        this.WriteScript("dec");
-                                    }
-                                    this.WriteComma();
-                                    this.Write(valueVar);
-                                    this.WriteCloseParentheses();
-                                }
-                                else
-                                {
-                                    this.Write(valueVar);
-                                    this.WriteDot();
-                                    if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
-                                    {
-                                        this.Write("inc");
-                                    }
-                                    else
-                                    {
-                                        this.Write("dec");
-                                    }
-                                    this.WriteOpenCloseParentheses();
-                                }
-                            }
-                            else
-                            {
-                                this.Write(valueVar);
-
-                                if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
-                                {
-                                    this.Write("+");
-                                }
-                                else
-                                {
-                                    this.Write("-");
-                                }
-
-                                this.Write("1");
-                            }
-
                             this.WriteCloseParentheses();
-                            this.WriteComma();
-
-                            bool isPreOp = this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment ||
-                                           this.Emitter.UnaryOperatorType == UnaryOperatorType.Decrement;
-
-                            if (isPreOp)
-                            {
-                                if (targetVar != null)
-                                {
-                                    this.Write(targetVar);
-                                }
-                                else
-                                {
-                                    indexerExpression.Target.AcceptVisitor(this.Emitter);
-                                }
-                                this.WriteDot();
-                                this.Write(Helpers.GetPropertyRef(member, this.Emitter, false));
-                                this.WriteOpenParentheses();
-                                this.Write(paramsStr);
-                                this.WriteCloseParentheses();
-                            }
-                            else
-                            {
-                                this.Write(valueVar);
-                            }
-
-                            this.WriteCloseParentheses();
-
-                            if (valueVar != null)
-                            {
-                                this.RemoveTempVar(valueVar);
-                            }
+                        }
+                        else
+                        {
+                            this.Write(valueVar);
                         }
 
-                        if (targetVar != null)
+                        this.WriteCloseParentheses();
+
+                        if (valueVar != null)
                         {
-                            this.RemoveTempVar(targetVar);
+                            this.RemoveTempVar(valueVar);
                         }
                     }
-                    else
+
+                    if (targetVar != null)
                     {
-                        this.Write(name);
-                        this.WriteOpenParentheses();
-                        new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
-                        this.WriteCloseParentheses();
+                        this.RemoveTempVar(targetVar);
                     }
                 }
                 else
                 {
-                    if (this.Emitter.AssignmentType != AssignmentOperatorType.Assign)
-                    {
-                        var oldWriter = this.SaveWriter();
-                        this.NewWriter();
-                        new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
-                        var paramsStr = this.Emitter.Output.ToString();
-                        this.RestoreWriter(oldWriter);
-
-                        if (targetVar != null)
-                        {
-                            this.PushWriter(string.Concat(
-                                name,
-                                "(",
-                                paramsStr,
-                                ", ",
-                                targetVar,
-                                ".",
-                                Helpers.GetPropertyRef(member, this.Emitter, false),
-                                "(",
-                                paramsStr,
-                                "){0})"));
-
-                            this.RemoveTempVar(targetVar);
-                        }
-                        else
-                        {
-                            oldWriter = this.SaveWriter();
-                            this.NewWriter();
-
-                            this.Emitter.IsAssignment = false;
-                            this.Emitter.IsUnaryAccessor = false;
-                            indexerExpression.Target.AcceptVisitor(this.Emitter);
-                            this.Emitter.IsAssignment = oldIsAssignment;
-                            this.Emitter.IsUnaryAccessor = oldUnary;
-
-                            var trg = this.Emitter.Output.ToString();
-
-                            this.RestoreWriter(oldWriter);
-                            this.PushWriter(string.Concat(
-                                name,
-                                "(",
-                                paramsStr,
-                                ", ",
-                                trg,
-                                ".",
-                                Helpers.GetPropertyRef(member, this.Emitter, false),
-                                "(",
-                                paramsStr,
-                                "){0})"));
-                        }
-                    }
-                    else
-                    {
-                        this.Write(name);
-                        this.WriteOpenParentheses();
-                        this.Emitter.IsAssignment = false;
-                        this.Emitter.IsUnaryAccessor = false;
-                        new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
-                        this.Emitter.IsAssignment = oldIsAssignment;
-                        this.Emitter.IsUnaryAccessor = oldUnary;
-                        this.PushWriter(", {0})");
-                    }
+                    this.Write(name);
+                    this.WriteOpenParentheses();
+                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
+                    this.WriteCloseParentheses();
                 }
             }
             else
             {
-                if (indexerExpression.Arguments.Count != 1)
+                if (this.Emitter.AssignmentType != AssignmentOperatorType.Assign)
                 {
-                    throw new EmitterException(indexerExpression, "Only one index is supported");
-                }
+                    var oldWriter = this.SaveWriter();
+                    this.NewWriter();
+                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
+                    var paramsStr = this.Emitter.Output.ToString();
+                    this.RestoreWriter(oldWriter);
 
-                var index = indexerExpression.Arguments.First();
+                    if (targetVar != null)
+                    {
+                        this.PushWriter(string.Concat(
+                            name,
+                            "(",
+                            paramsStr,
+                            ", ",
+                            targetVar,
+                            ".",
+                            Helpers.GetPropertyRef(member, this.Emitter, false),
+                            "(",
+                            paramsStr,
+                            "){0})"));
 
-                var primitive = index as PrimitiveExpression;
+                        this.RemoveTempVar(targetVar);
+                    }
+                    else
+                    {
+                        oldWriter = this.SaveWriter();
+                        this.NewWriter();
 
-                if (primitive != null && primitive.Value != null && Regex.Match(primitive.Value.ToString(), "^[_$a-z][_$a-z0-9]*$", RegexOptions.IgnoreCase).Success)
-                {
-                    this.WriteDot();
-                    this.Write(primitive.Value);
+                        this.Emitter.IsAssignment = false;
+                        this.Emitter.IsUnaryAccessor = false;
+                        indexerExpression.Target.AcceptVisitor(this.Emitter);
+                        this.Emitter.IsAssignment = oldIsAssignment;
+                        this.Emitter.IsUnaryAccessor = oldUnary;
+
+                        var trg = this.Emitter.Output.ToString();
+
+                        this.RestoreWriter(oldWriter);
+                        this.PushWriter(string.Concat(
+                            name,
+                            "(",
+                            paramsStr,
+                            ", ",
+                            trg,
+                            ".",
+                            Helpers.GetPropertyRef(member, this.Emitter, false),
+                            "(",
+                            paramsStr,
+                            "){0})"));
+                    }
                 }
                 else
                 {
+                    this.Write(name);
+                    this.WriteOpenParentheses();
                     this.Emitter.IsAssignment = false;
                     this.Emitter.IsUnaryAccessor = false;
-                    this.WriteOpenBracket();
-                    index.AcceptVisitor(this.Emitter);
-                    this.WriteCloseBracket();
+                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
                     this.Emitter.IsAssignment = oldIsAssignment;
                     this.Emitter.IsUnaryAccessor = oldUnary;
+                    this.PushWriter(", {0})");
                 }
             }
         }
 
-        protected virtual void EmitArrayAccess(IndexerExpression indexerExpression)
+        protected virtual void EmitMultiDimArrayAccess(IndexerExpression indexerExpression)
         {
             string targetVar = null;
             bool writeTargetVar = false;
@@ -645,7 +699,15 @@ namespace Bridge.Translator
                 }
             }
 
-            this.WriteDot();
+            if (this.isRefArg)
+            {
+                this.WriteComma();
+            }
+            else
+            {
+                this.WriteDot();    
+            }
+            
 
             var argsInfo = new ArgumentsInfo(this.Emitter, indexerExpression);
             var argsExpressions = argsInfo.ArgumentsExpressions;
@@ -656,6 +718,7 @@ namespace Bridge.Translator
                 if (this.Emitter.IsUnaryAccessor)
                 {
                     bool isDecimal = Helpers.IsDecimalType(resolveResult.Type, this.Emitter.Resolver);
+					bool isLong = Helpers.Is64Type(resolveResult.Type, this.Emitter.Resolver);
                     bool isNullable = NullableType.IsNullable(resolveResult.Type);
 
                     if (isStatement)
@@ -667,7 +730,7 @@ namespace Bridge.Translator
                         this.WriteCloseBracket();
                         this.WriteComma(false);
 
-                        if (isDecimal)
+                        if (isDecimal || isLong)
                         {
                             if (isNullable)
                             {
@@ -794,7 +857,7 @@ namespace Bridge.Translator
                         this.WriteCloseBracket();
                         this.WriteComma(false);
 
-                        if (isDecimal)
+                        if (isDecimal || isLong)
                         {
                             if (isNullable)
                             {
@@ -918,12 +981,19 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    this.Write("get");
-                    this.WriteOpenParentheses();
+                    if (!this.isRefArg)
+                    {
+                        this.Write("get");
+                        this.WriteOpenParentheses();    
+                    }
+                    
                     this.WriteOpenBracket();
                     new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
                     this.WriteCloseBracket();
-                    this.WriteCloseParentheses();
+                    if (!this.isRefArg)
+                    {
+                        this.WriteCloseParentheses();
+                    }
                 }
             }
             else
@@ -983,6 +1053,64 @@ namespace Bridge.Translator
                     this.WriteCloseBracket();
                     this.PushWriter(", {0})");
                 }
+            }
+        }
+
+        protected virtual void EmitSingleDimArrayIndexer(IndexerExpression indexerExpression)
+        {
+            var oldIsAssignment = this.Emitter.IsAssignment;
+            var oldUnary = this.Emitter.IsUnaryAccessor;
+            this.Emitter.IsAssignment = false;
+            this.Emitter.IsUnaryAccessor = false;
+            indexerExpression.Target.AcceptVisitor(this.Emitter);
+            this.Emitter.IsAssignment = oldIsAssignment;
+            this.Emitter.IsUnaryAccessor = oldUnary;
+
+            if (indexerExpression.Arguments.Count != 1)
+            {
+                throw new EmitterException(indexerExpression, "Only one index is supported");
+            }
+
+            var index = indexerExpression.Arguments.First();
+
+            var primitive = index as PrimitiveExpression;
+
+            if (primitive != null && primitive.Value != null &&
+                Regex.Match(primitive.Value.ToString(), "^[_$a-z][_$a-z0-9]*$", RegexOptions.IgnoreCase).Success)
+            {
+                if (this.isRefArg)
+                {
+                    this.WriteComma();
+                    this.WriteScript(primitive.Value);    
+                }
+                else
+                {
+                    this.WriteDot();
+                    this.Write(primitive.Value);    
+                }
+            }
+            else
+            {
+                this.Emitter.IsAssignment = false;
+                this.Emitter.IsUnaryAccessor = false;
+                if (this.isRefArg)
+                {
+                   this.WriteComma(); 
+                }
+                else
+                {
+                    this.WriteOpenBracket();    
+                }
+                
+                index.AcceptVisitor(this.Emitter);
+
+                if (!this.isRefArg)
+                {
+                    this.WriteCloseBracket();    
+                }
+                
+                this.Emitter.IsAssignment = oldIsAssignment;
+                this.Emitter.IsUnaryAccessor = oldUnary;
             }
         }
     }

@@ -17,9 +17,10 @@ namespace System.Collections.ObjectModel
             private set;
         }
 
+        [AccessorsIndexer]
         public T this[int index]
         {
-            [Template("get({0})")]
+            [Name("get")]
             get
             {
                 return default(T);
@@ -34,7 +35,7 @@ namespace System.Collections.ObjectModel
 
         T IList<T>.this[int index]
         {
-            [Template("get({0})")]
+            [Name("get")]
             get
             {
                 return default(T);

@@ -65,8 +65,8 @@ namespace Bridge.ClientTest.ConvertTests
         [Test]
         public void FromInt64()
         {
-            var longMinValue = -9007199254740990;   // Number.MIN_SAFE_INTEGER + 1 (15 significant digits)
-            var longMaxValue = 9007199254740990;    // Number.MAX_SAFE_INTEGER - 1 (15 significant digits)
+            var longMinValue = long.MinValue;
+            var longMaxValue = long.MaxValue;
 
             long[] testValues = { longMaxValue, longMinValue, 0 };
             decimal[] expectedValues = { longMaxValue, longMinValue, 0 };
@@ -106,7 +106,7 @@ namespace Bridge.ClientTest.ConvertTests
         [Test]
         public void FromString()
         {
-            var longMaxValue = (ulong)9007199254740990;    // Number.MAX_SAFE_INTEGER - 1 (15 significant digits)
+            var longMaxValue = long.MaxValue;
             var intMaxValue = int.MaxValue;
 
             var decimalMaxValueStr = decimal.MaxValue.ToFixed(0, MidpointRounding.AwayFromZero);
@@ -142,7 +142,7 @@ namespace Bridge.ClientTest.ConvertTests
         [Test]
         public void FromUInt64()
         {
-            var ulongMaxValue = (ulong)9007199254740990;    // Number.MAX_SAFE_INTEGER - 1 (15 significant digits)
+            var ulongMaxValue = ulong.MaxValue;
 
             ulong[] testValues = { ulongMaxValue, 0u };
             decimal[] expectedValues = { ulongMaxValue, 0u };

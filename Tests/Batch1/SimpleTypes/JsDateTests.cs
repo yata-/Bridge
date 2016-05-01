@@ -25,9 +25,10 @@ namespace Bridge.ClientTest.SimpleTypes
         }
 
         [Test]
-        public void CreatingInstanceReturnsTodaysDate()
+        public void CreatingInstanceReturnsDateZero()
         {
-            Assert.True(Activator.CreateInstance<DateTime>().GetFullYear() > 2011);
+            var fullYear = Activator.CreateInstance<DateTime>().GetFullYear();
+            Assert.AreEqual(1970, fullYear);
         }
 
         [Test]
@@ -240,7 +241,7 @@ namespace Bridge.ClientTest.SimpleTypes
         public void GetTimeWorks()
         {
             var dt = new DateTime(DateTime.Utc(1970, 1, 2));
-            Assert.AreEqual(1440 * 60 * 1000, dt.GetTime());
+            Assert.True(1440 * 60 * 1000 == dt.GetTime());
         }
 
         [Test]

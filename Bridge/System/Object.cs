@@ -33,10 +33,10 @@ namespace System
 
         public virtual extern bool PropertyIsEnumerable(object v);
 
-        [Template("Bridge.getType({this})")]
+        [Template("<self>{this:type}")]
         public extern Type GetType();
 
-        [Template("{a} === {b}")]
+        [Template("Bridge.referenceEquals({a}, {b})")]
         public static extern bool ReferenceEquals(object a, object b);
 
         [Template("Bridge.equals({this}, {o})")]

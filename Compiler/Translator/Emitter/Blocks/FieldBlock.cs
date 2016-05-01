@@ -8,6 +8,8 @@ namespace Bridge.Translator
 {
     public class FieldBlock : AbstractEmitterBlock
     {
+        public const string PropertiesName = "properties";
+
         public FieldBlock(IEmitter emitter, ITypeInfo typeInfo, bool staticBlock, bool fieldsOnly)
             : base(emitter, typeInfo.TypeDeclaration)
         {
@@ -81,7 +83,7 @@ namespace Bridge.Translator
 
             if (info.Properties.Count > 0)
             {
-                var hasProperties = this.WriteObject("properties", info.Properties, "Bridge.property(this, \"{0}\", {1});");
+                var hasProperties = this.WriteObject(FieldBlock.PropertiesName, info.Properties, "Bridge.property(this, \"{0}\", {1});");
                 if (hasProperties)
                 {
                     this.Emitter.Comma = true;
@@ -98,7 +100,7 @@ namespace Bridge.Translator
 
         protected virtual bool WriteObject(string objectName, List<TypeConfigItem> members, string format)
         {
-            bool hasProperties = this.HasProperties(members);
+            bool hasProperties = this.HasProperties(objectName, members);
 
             if (hasProperties && objectName != null)
             {
@@ -109,26 +111,32 @@ namespace Bridge.Translator
                 this.BeginBlock();
             }
 
+            bool isProperty = FieldBlock.PropertiesName == objectName;
             foreach (var member in members)
             {
                 object constValue = null;
                 bool isPrimitive = false;
                 var primitiveExpr = member.Initializer as PrimitiveExpression;
+                bool write = false;
+                bool writeScript = false;
+
                 if (primitiveExpr != null)
                 {
                     isPrimitive = true;
                     constValue = primitiveExpr.Value;
+                    writeScript = true;
                 }
 
                 var isNull = member.Initializer.IsNull || member.Initializer is NullReferenceExpression;
 
                 if (!isNull && !isPrimitive)
                 {
-                    var constrr = this.Emitter.Resolver.ResolveNode(member.Initializer, this.Emitter) as ConstantResolveResult;
-                    if (constrr != null)
+                    var constrr = this.Emitter.Resolver.ResolveNode(member.Initializer, this.Emitter);
+                    if (constrr != null && constrr.IsCompileTimeConstant)
                     {
                         isPrimitive = true;
                         constValue = constrr.ConstantValue;
+                        writeScript = true;
                     }
                 }
 
@@ -147,7 +155,8 @@ namespace Bridge.Translator
                 if (!isNull && (!isPrimitive || (constValue is AstType)))
                 {
                     string value = null;
-
+                    bool needContinue = false;
+                    string defValue = "";
                     if (!isPrimitive)
                     {
                         var oldWriter = this.SaveWriter();
@@ -155,21 +164,49 @@ namespace Bridge.Translator
                         member.Initializer.AcceptVisitor(this.Emitter);
                         value = this.Emitter.Output.ToString();
                         this.RestoreWriter(oldWriter);
-                    }
-                    else
-                    {
-                        if (isNullable)
+
+                        ResolveResult rr = null;
+                        if (member.VarInitializer != null)
                         {
-                            value = "null";
+                            rr = this.Emitter.Resolver.ResolveNode(member.VarInitializer, this.Emitter);
                         }
                         else
                         {
-                            value = Inspector.GetStructDefaultValue((AstType)constValue, this.Emitter);
+                            rr = this.Emitter.Resolver.ResolveNode(member.Entity, this.Emitter);
+                        }
+                
+                        constValue = Inspector.GetDefaultFieldValue(rr.Type);
+                        isNullable = NullableType.IsNullable(rr.Type);
+                        needContinue = constValue is IType;
+                        writeScript = true;
+
+                        if (needContinue && !(member.Initializer is ObjectCreateExpression))
+                        {
+                            defValue = " || " + Inspector.GetStructDefaultValue((IType)constValue, this.Emitter);
                         }
                     }
+                    else
+                    {
+                        value = isNullable ? "null" : Inspector.GetStructDefaultValue((AstType)constValue, this.Emitter);
+                        constValue = value;
+                        write = true;
+                        needContinue = !isProperty && !isNullable;
+                    }
 
-                    this.Injectors.Add(string.Format(format, member.GetName(this.Emitter), value));
-                    continue;
+                    if (isProperty && isPrimitive)
+                    {
+                        constValue = "null";
+                        this.Injectors.Add(string.Format("this.{0} = {1};", member.GetName(this.Emitter), value)); 
+                    }
+                    else
+                    {
+                        this.Injectors.Add(string.Format(format, member.GetName(this.Emitter), value + defValue));    
+                    }
+
+                    if (needContinue)
+                    {
+                        continue;    
+                    }
                 }
 
                 this.EnsureComma();
@@ -188,6 +225,25 @@ namespace Bridge.Translator
                         this.Write(Inspector.GetStructDefaultValue((AstType)constValue, this.Emitter));
                     }
                 }
+                else if (constValue is IType)
+                {
+                    if (isNullable)
+                    {
+                        this.Write("null");
+                    }
+                    else
+                    {
+                        this.Write(Inspector.GetStructDefaultValue((IType)constValue, this.Emitter));
+                    }
+                }
+                else if (write)
+                {
+                    this.Write(constValue);
+                }
+                else if (writeScript)
+                {
+                    this.WriteScript(constValue);
+                }
                 else
                 {
                     member.Initializer.AcceptVisitor(this.Emitter);
@@ -205,7 +261,7 @@ namespace Bridge.Translator
             return hasProperties;
         }
 
-        protected virtual bool HasProperties(List<TypeConfigItem> members)
+        protected virtual bool HasProperties(string objectName, List<TypeConfigItem> members)
         {
             foreach (var member in members)
             {
@@ -235,7 +291,7 @@ namespace Bridge.Translator
                     return true;
                 }
 
-                if (!isPrimitive || (constValue is AstType))
+                if (!isPrimitive || (constValue is AstType && objectName != FieldBlock.PropertiesName))
                 {
                     continue;
                 }

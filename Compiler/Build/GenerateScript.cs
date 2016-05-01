@@ -1,5 +1,7 @@
 using Bridge.Contract;
+using Bridge.Translator;
 using Bridge.Translator.Logging;
+
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using System;
@@ -80,48 +82,24 @@ namespace Bridge.Build
                 System.Diagnostics.Debugger.Launch();
             };
 #endif
+            var logger = new Translator.Logging.Logger(null, false, LoggerLevel.Info, true, new ConsoleLoggerWriter(), new FileLoggerWriter());
+            var bridgeOptions = this.GetBridgeOptions();
 
-            Bridge.Translator.Translator translator = null;
+            var processor = new TranslatorProcessor(bridgeOptions, logger);
+
+            var result = processor.PreProcess();
+
+            if (result != null)
+            {
+                processor = null;
+                return false;
+            }
+
             try
             {
-                translator = new Bridge.Translator.Translator(this.ProjectPath, true);
-                translator.Configuration = this.Configuration;
+                processor.Process();
 
-                if (this.DefineConstants != null)
-                {
-                    translator.DefineConstants.AddRange(this.DefineConstants.Split(';').Select(s => s.Trim()).Where(s => s != ""));
-                    translator.DefineConstants = translator.DefineConstants.Distinct().ToList();
-                }
-
-                translator.BridgeLocation = Path.Combine(this.AssembliesPath, "Bridge.dll");
-                translator.Rebuild = false;
-                translator.Log = new Translator.Logging.Logger("Bridge.Build.Task", true, new SimpleFileLoggerWriter());
-
-                translator.Log.Info("Translator properties:");
-                translator.Log.Info("\tBridgeLocation:" + translator.BridgeLocation ?? "");
-                translator.Log.Info("\tBuildArguments:" + translator.BuildArguments ?? "");
-                translator.Log.Info("\tConfiguration:" + translator.Configuration ?? "");
-                translator.Log.Info("\tDefineConstants:" + (translator.DefineConstants != null ? string.Join(" ", translator.DefineConstants) : ""));
-                translator.Log.Info("\tRebuild:" + translator.Rebuild);
-
-                translator.Translate();
-
-                string fileName = Path.GetFileNameWithoutExtension(this.Assembly.ItemSpec);
-
-                string outputPath = !string.IsNullOrWhiteSpace(translator.AssemblyInfo.Output)
-                    ? Path.Combine(Path.GetDirectoryName(this.ProjectPath), translator.AssemblyInfo.Output)
-                    : this.OutputPath;
-
-                translator.CleanOutputFolderIfRequired(outputPath);
-
-                if (!this.NoCore)
-                {
-                    translator.ExtractCore(outputPath);
-                }
-
-                translator.SaveTo(outputPath, fileName);
-                translator.Flush(outputPath, fileName);
-                translator.Plugins.AfterOutput(translator, outputPath, this.NoCore);
+                processor.PostProcess();
             }
             catch (EmitterException e)
             {
@@ -130,7 +108,7 @@ namespace Bridge.Build
             }
             catch (Exception e)
             {
-                var ee = translator != null ? translator.CreateExceptionFromLastNode() : null;
+                var ee = processor.Translator != null ? processor.Translator.CreateExceptionFromLastNode() : null;
 
                 if (ee != null)
                 {
@@ -144,9 +122,33 @@ namespace Bridge.Build
                 success = false;
             }
 
-            translator = null;
+            processor = null;
 
             return success;
+        }
+
+        private Bridge.Translator.BridgeOptions GetBridgeOptions()
+        {
+            var bridgeOptions = new Bridge.Translator.BridgeOptions()
+            {
+                ProjectLocation = this.ProjectPath,
+                OutputLocation = this.OutputPath,
+                BridgeLocation = Path.Combine(this.AssembliesPath, "Bridge.dll"),
+                Rebuild = false,
+                ExtractCore = !NoCore,
+                Configuration = this.Configuration,
+                Source = null,
+                Folder = null,
+                Recursive = false,
+                Lib = null,
+                DefinitionConstants = this.DefineConstants,
+                Help = false,
+                NoTimeStamp = null,
+                FromTask = true,
+                Name = "Bridge.Build.Task"
+            };
+
+            return bridgeOptions;
         }
     }
 }

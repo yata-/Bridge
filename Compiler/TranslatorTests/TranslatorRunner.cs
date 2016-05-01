@@ -34,9 +34,9 @@ namespace Bridge.Translator.Tests
                 outputPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(bridgeProjectPath), outputPath));
             }
 
-            var bridgeDllPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(outputPath), "Bridge.dll"));
+            outputPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(outputPath), "Bridge.dll"));
 
-            if (!File.Exists(bridgeDllPath))
+            if (!File.Exists(outputPath))
                 return null;
 
             return outputPath;
@@ -64,74 +64,71 @@ namespace Bridge.Translator.Tests
             return this.BuildArguments + @" /p:Platform=AnyCPU /p:OutDir=bin\" + configuration + "\\";
         }
 
-        public string Translate()
+        public void Translate(bool byBuilding = false)
         {
             var outputLocation = Path.ChangeExtension(ProjectLocation, "js");
-
-            var translator = new Bridge.Translator.Translator(ProjectLocation);
-
-            translator.Log = this.Logger;
-            translator.Rebuild = true;
-
             this.Logger.Info("\t\tProjectLocation: " + ProjectLocation);
 
             string configuration;
-            translator.BridgeLocation = FindBridgeDllPath(out configuration);
+            var bridgeLocation = FindBridgeDllPath(out configuration);
 
-            if (translator.BridgeLocation == null)
+            if (bridgeLocation == null)
             {
-                Bridge.Translator.Exception.Throw("Unable to determine Bridge project output path by configuration " + configuration);
+                Bridge.Translator.TranslatorException.Throw("Unable to determine Bridge project output path by configuration " + configuration);
             }
 
-            translator.BuildArguments = WrapBuildArguments(configuration);
-            translator.Configuration = configuration;
-
-            this.Logger.Info("\t\tBuildArguments: " + translator.BuildArguments);
-            this.Logger.Info("\t\tConfiguration: " + translator.Configuration);
-            this.Logger.Info("\t\tBridgeLocation: " + translator.BridgeLocation);
-
-            translator.Translate();
-
-            string path = Path.GetDirectoryName(outputLocation);
-
-            string outputDir = !string.IsNullOrWhiteSpace(translator.AssemblyInfo.Output) ?
-                                    Path.Combine(Path.GetDirectoryName(ProjectLocation), translator.AssemblyInfo.Output) :
-                                    path;
-
-            this.Logger.Info("\t\toutputDir: " + outputDir);
-            translator.SaveTo(outputDir, Path.GetFileNameWithoutExtension(outputLocation));
-
-            return outputDir;
-        }
-
-        public void Build()
-        {
-            var outputLocation = Path.ChangeExtension(ProjectLocation, "js");
-
-            var translator = new Bridge.Translator.Translator(ProjectLocation);
-
-            translator.Log = this.Logger;
-            //translator.Rebuild = true;
-
-            this.Logger.Info("\t\tProjectLocation: " + ProjectLocation);
-
-            string configuration;
-
-            translator.BridgeLocation = FindBridgeDllPath(out configuration);
-
-            if (translator.BridgeLocation == null)
+            var bridgeOptions = new Bridge.Translator.BridgeOptions()
             {
-                Bridge.Translator.Exception.Throw("Unable to determine Bridge project output path by configuration " + configuration);
+                ProjectLocation = ProjectLocation,
+                OutputLocation = outputLocation,
+                BridgeLocation = bridgeLocation,
+                Rebuild = true,
+                ExtractCore = true,
+                Configuration = configuration,
+                Source = null,
+                Folder = null,
+                Recursive = false,
+                Lib = null,
+                DefinitionConstants = null,
+                Help = false,
+                NoTimeStamp = null,
+                FromTask = false,
+                NoLoggerSetUp = true
+            };
+            
+            var processor = new TranslatorProcessor(bridgeOptions, this.Logger as Bridge.Translator.Logging.Logger);
+
+            var result = processor.PreProcess();
+
+            if (result != null)
+            {
+                Bridge.Translator.TranslatorException.Throw("Unable to preprocess");
             }
 
+            var translator = processor.Translator;
+            
             translator.BuildArguments = WrapBuildArguments(configuration);
-            translator.Configuration = configuration;
+            translator.Log.Info("\t Adjusted BuildArguments:" + translator.BuildArguments ?? "");
 
-            this.Logger.Info("\t\tBuildArguments: " + translator.BuildArguments);
-            this.Logger.Info("\t\tConfiguration: " + translator.Configuration);
-            this.Logger.Info("\t\tBridgeLocation: " + translator.BridgeLocation);
+            if (byBuilding)
+            {
+                translator.BuildAssembly();
+            }
+            else
+            {
+                processor.Process();
 
-            translator.BuildAssembly();
+                //string path = Path.GetDirectoryName(outputLocation);
+
+                //string outputDir = !string.IsNullOrWhiteSpace(translator.AssemblyInfo.Output) ?
+                //                        Path.Combine(Path.GetDirectoryName(ProjectLocation), translator.AssemblyInfo.Output) :
+                //                        path;
+
+                //this.Logger.Info("\t\toutputDir: " + outputDir);
+                //translator.SaveTo(outputDir, Path.GetFileNameWithoutExtension(outputLocation));
+
+                processor.PostProcess();
+            }
         }
     }
 }

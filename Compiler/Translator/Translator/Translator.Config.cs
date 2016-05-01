@@ -7,13 +7,6 @@ namespace Bridge.Translator
 {
     public partial class Translator
     {
-        protected virtual IAssemblyInfo ReadConfig()
-        {
-            var config = AssemblyConfigHelper.ReadConfig(this.FolderMode, this.Location);
-
-            return config;
-        }
-
         public virtual void RunEvent(string e)
         {
             var info = new ProcessStartInfo()
@@ -24,7 +17,7 @@ namespace Bridge.Translator
 
             if (!File.Exists(e))
             {
-                throw new Exception("The specified file '" + e + "' couldn't be found." +
+                throw new TranslatorException("The specified file '" + e + "' couldn't be found." +
                     "\nWarning: Bridge.NET translator working directory: " + Directory.GetCurrentDirectory());
             }
 
@@ -34,7 +27,7 @@ namespace Bridge.Translator
 
                 if (p.ExitCode != 0)
                 {
-                    throw new Exception("Error: The command '" + e + "' returned with exit code: " + p.ExitCode);
+                    throw new TranslatorException("Error: The command '" + e + "' returned with exit code: " + p.ExitCode);
                 }
             }
         }

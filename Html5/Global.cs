@@ -1221,10 +1221,10 @@ namespace Bridge.Html5
         public static extern bool IsFinite(object testValue);
 
         /// <summary>
-        /// The parseFloat() function parses a string argument and returns a floating point number.
+        /// Parses a string argument and returns a floating point number corresponding to double .Net type.
         /// </summary>
         /// <param name="value">A string that represents the value you want to parse.</param>
-        /// <returns></returns>
+        /// <returns>Parsed floating point number with type corresponding to double .Net type</returns>
         [Template("parseFloat({0})")]
         public static extern double ParseFloat(string value);
 

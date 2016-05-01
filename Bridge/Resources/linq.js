@@ -161,7 +161,9 @@
             }
         };
     };
-    IEnumerator.$$inheritors = [Bridge.IDisposable];
+    
+    Bridge.IDisposable.$$inheritors = Bridge.IDisposable.$$inheritors || [];
+    Bridge.IDisposable.$$inheritors.push(IEnumerator);
 
     // for tryGetNext
     var Yielder = function () {
@@ -180,7 +182,8 @@
     var Enumerable = function (getEnumerator) {
         this.getEnumerator = getEnumerator;
     };
-    Enumerable.$$inheritors = [Bridge.IEnumerable];
+    Bridge.IEnumerable.$$inheritors = Bridge.IEnumerable.$$inheritors || [];
+    Bridge.IEnumerable.$$inheritors.push(Enumerable);
 
     // Utility
 
@@ -300,7 +303,7 @@
                 return new IEnumerator(
                     Functions.Blank,
                     function () {
-                        return (index < obj.length) ? this.yieldReturn(obj.charAt(index++)) : false;
+                        return (index < obj.length) ? this.yieldReturn(obj.charCodeAt(index++)) : false;
                     },
                     Functions.Blank);
             });
@@ -1778,10 +1781,10 @@
         this.forEach(function (x) {
             x = selector(x);
 
-            if (x instanceof Bridge.Decimal) {
+            if (x instanceof Bridge.Decimal || Bridge.Long.is64Bit(x)) {
                 sum = x.add(sum);
             }
-            else if (sum instanceof Bridge.Decimal) {
+            else if (sum instanceof Bridge.Decimal || Bridge.Long.is64Bit(sum)) {
                 sum = sum.add(x);
             } else {
                 sum += x;
@@ -1790,7 +1793,7 @@
             ++count;
         });
 
-        return sum instanceof Bridge.Decimal ? sum.div(count) : (sum / count);
+        return (sum instanceof Bridge.Decimal || Bridge.Long.is64Bit(sum)) ? sum.div(count) : (sum / count);
     };
 
     Enumerable.prototype.nullableAverage = function (selector) {
@@ -1865,11 +1868,11 @@
     // Overload:function (selector)
     Enumerable.prototype.sum = function (selector) {
         if (selector == null) selector = Functions.Identity;
-        return this.select(selector).aggregate(0, function(a, b) {
-             if (a instanceof Bridge.Decimal) {
+        return this.select(selector).aggregate(0, function (a, b) {
+             if (a instanceof Bridge.Decimal || Bridge.Long.is64Bit(a)) {
                  return a.add(b);
              }
-             if (b instanceof Bridge.Decimal) {
+             if (b instanceof Bridge.Decimal || Bridge.Long.is64Bit(b)) {
                  return b.add(a);
              }
              return a + b;
@@ -2894,7 +2897,9 @@
             return this.toEnumerable().getEnumerator();
         };
     };
-    Lookup.$$inheritors = [Bridge.IEnumerable];
+    
+    Bridge.IEnumerable.$$inheritors = Bridge.IEnumerable.$$inheritors || [];
+    Bridge.IEnumerable.$$inheritors.push(Lookup);
 
     var Grouping = function (groupKey, elements) {
         this.key = function () {

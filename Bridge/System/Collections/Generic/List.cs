@@ -4,7 +4,7 @@ namespace System.Collections.Generic
 {
     [External]
     [Namespace("Bridge")]
-    public class List<T> : IList<T>, IBridgeClass, IAccessorsIndexer
+    public class List<T> : IList<T>, IBridgeClass
     {
         public List()
         {
@@ -19,6 +19,7 @@ namespace System.Collections.Generic
         {
         }
 
+        [AccessorsIndexer]
         public T this[int index]
         {
             get
@@ -51,6 +52,9 @@ namespace System.Collections.Generic
         public extern void Clear();
 
         public extern bool Contains(T item);
+
+        [Template("convertAll({TOutput}, {converter})")]
+        public extern List<TOutput> ConvertAll<TOutput>(Converter<T, TOutput> converter);
 
         extern IEnumerator IEnumerable.GetEnumerator();
 

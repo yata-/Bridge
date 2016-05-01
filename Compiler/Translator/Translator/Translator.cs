@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using ICSharpCode.NRefactory.CSharp;
 
 namespace Bridge.Translator
 {
@@ -14,6 +15,7 @@ namespace Bridge.Translator
     {
         public const string Bridge_ASSEMBLY = "Bridge";
         public const string BridgeResourcesList = "Bridge.Resources.list";
+        public const string SupportedProjectType = "Library";
         private static readonly Encoding OutputEncoding = System.Text.Encoding.UTF8;
         private static readonly string[] MinifierCodeSettingsInternalFileNames = new string[] { "bridge.js", "bridge.min.js", "bridge.collections.js", "bridge.collections.min.js" };
 
@@ -22,13 +24,13 @@ namespace Bridge.Translator
             EvalTreatment = Microsoft.Ajax.Utilities.EvalTreatment.MakeAllSafe,
             LocalRenaming = Microsoft.Ajax.Utilities.LocalRenaming.KeepAll,
             TermSemicolons = true,
-            StrictMode = true
+            StrictMode = false
         };
 
         private static readonly CodeSettings MinifierCodeSettingsInternal = new CodeSettings
         {
             TermSemicolons = true,
-            StrictMode = true
+            StrictMode = false
         };
 
         private static readonly CodeSettings MinifierCodeSettingsLocales = new CodeSettings
@@ -38,23 +40,24 @@ namespace Bridge.Translator
 
         public const string LocalesPrefix = "Bridge.Resources.Locales.";
 
-        public Translator(string location, bool fromTask = false)
+        protected Translator(string location)
         {
             this.Location = location;
             this.Validator = this.CreateValidator();
             this.DefineConstants = new List<string>() { "BRIDGE" };
+        }
+
+        public Translator(string location, bool fromTask = false): this(location)
+        {
             this.FromTask = fromTask;
         }
 
-        public Translator(string folder, string source, bool recursive, string lib)
+        public Translator(string location, string source, bool recursive, string lib) : this(location, true)
         {
             this.Recursive = recursive;
             this.Source = source;
-            this.FolderMode = true;
-            this.Location = folder;
             this.AssemblyLocation = lib;
-            this.Validator = this.CreateValidator();
-            this.DefineConstants = new List<string>() { "BRIDGE" };
+            this.FolderMode = true;
         }
 
         public Dictionary<string, string> Translate()
@@ -62,32 +65,9 @@ namespace Bridge.Translator
             var logger = this.Log;
             logger.Info("Translating...");
 
-            var config = this.ReadConfig();
+            this.LogProductInfo();
 
-            if (config.LoggerLevel.HasValue)
-            {
-                var l = logger as Bridge.Translator.Logging.Logger;
-                if (l != null)
-                {
-                    l.LoggerLevel = config.LoggerLevel.Value;
-                }
-            }
-
-            logger.Trace("Read config file: " + Utils.AssemblyConfigHelper.ConfigToString(config));
-
-            if (!string.IsNullOrWhiteSpace(config.Configuration))
-            {
-                this.Configuration = config.Configuration;
-                logger.Trace("Set configuration: " + this.Configuration);
-            }
-
-            if (config.DefineConstants != null && config.DefineConstants.Count > 0)
-            {
-                this.DefineConstants.AddRange(config.DefineConstants);
-                this.DefineConstants = this.DefineConstants.Distinct().ToList();
-
-                logger.Trace("Set constants: " + string.Join(",", this.DefineConstants));
-            }
+            var config = this.AssemblyInfo;
 
             if (this.FolderMode)
             {
@@ -120,24 +100,30 @@ namespace Bridge.Translator
                     this.RunEvent(config.BeforeBuild);
                     logger.Info("Running BeforeBuild event done");
                 }
-                catch (Exception exc)
+                catch (System.Exception exc)
                 {
                     var message = "Error: Unable to run beforeBuild event command: " + exc.Message + "\nStack trace:\n" + exc.StackTrace;
 
                     logger.Error("Exception occurred. Message: " + message);
 
-                    throw new Bridge.Translator.Exception(message);
+                    throw new Bridge.Translator.TranslatorException(message);
                 }
             }
 
             this.BuildSyntaxTree();
 
             var resolver = new MemberResolver(this.ParsedSourceFiles, Emitter.ToAssemblyReferences(references, logger));
+            resolver = this.Preconvert(resolver);
 
             this.InspectTypes(resolver, config);
 
             resolver.CanFreeze = true;
             var emitter = this.CreateEmitter(resolver);
+
+            if (!this.AssemblyInfo.OverflowMode.HasValue)
+            {
+                this.AssemblyInfo.OverflowMode = this.OverflowMode;
+            }
 
             emitter.Translator = this;
             emitter.AssemblyInfo = this.AssemblyInfo;
@@ -161,6 +147,34 @@ namespace Bridge.Translator
             logger.Info("Translating done");
 
             return this.Outputs;
+        }
+
+        protected virtual MemberResolver Preconvert(MemberResolver resolver)
+        {
+            bool needRecompile = false;
+            foreach (var sourceFile in this.ParsedSourceFiles)
+            {
+                var syntaxTree = sourceFile.SyntaxTree;
+
+                var detecter = new PreconverterDetecter(resolver);
+                syntaxTree.AcceptVisitor(detecter);
+
+                if (detecter.Found)
+                {
+                    var fixer = new PreconverterFixer(resolver);
+                    var astNode = syntaxTree.AcceptVisitor(fixer);
+                    syntaxTree = astNode != null ? (SyntaxTree)astNode : syntaxTree;
+                    sourceFile.SyntaxTree = syntaxTree;
+                    needRecompile = true;
+                }
+            }
+
+            if (needRecompile)
+            {
+                return new MemberResolver(this.ParsedSourceFiles, resolver.Assemblies);
+            }
+
+            return resolver;
         }
 
         protected virtual void SortReferences()
@@ -234,7 +248,7 @@ namespace Bridge.Translator
 
                 if (fileName.Contains(Bridge.Translator.AssemblyInfo.DEFAULT_FILENAME))
                 {
-                    fileName = fileName.Replace(Bridge.Translator.AssemblyInfo.DEFAULT_FILENAME, defaultFileName);
+                    fileName = fileName.Replace(Bridge.Translator.AssemblyInfo.DEFAULT_FILENAME, Path.GetFileNameWithoutExtension(defaultFileName));
                 }
 
                 // Ensure filename contains no ":". It could be used like "c:/absolute/path"
@@ -302,12 +316,12 @@ namespace Bridge.Translator
                     logger.Trace("Run AfterBuild event");
                     this.RunEvent(this.AssemblyInfo.AfterBuild);
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
-                    var message = "Error: Unable to run afterBuild event command: " + ex.Message + "\nStack trace:\n" + ex.StackTrace;
+                    var message = "Error: Unable to run afterBuild event command: " + ex.ToString();
 
                     logger.Error(message);
-                    throw new Bridge.Translator.Exception(message);
+                    throw new Bridge.Translator.TranslatorException(message);
                 }
             }
 
@@ -804,9 +818,55 @@ namespace Bridge.Translator
 
                 this.Log.Info("Cleaning output folder done");
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
-                this.Log.Error("Exception occurred: " + ex.Message);
+                this.Log.Error(ex.ToString());
+            }
+        }
+
+        private void LogProductInfo()
+        {
+            System.Diagnostics.FileVersionInfo compilerInfo = null;
+            try
+            {
+                var compilerAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+                compilerInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(compilerAssembly.Location);
+            }
+            catch (System.Exception ex)
+            {
+                this.Log.Error("Could not load executing assembly to get assembly info");
+                this.Log.Error(ex.ToString());
+            }
+
+            System.Diagnostics.FileVersionInfo bridgeInfo = null;
+            try
+            {
+                bridgeInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(this.BridgeLocation);
+            }
+            catch (System.Exception ex)
+            {
+                this.Log.Error("Could not load Bridge.dll to get assembly info");
+                this.Log.Error(ex.ToString());
+            }
+
+            this.Log.Info("Product info:");
+            if (compilerInfo != null)
+            {
+                this.Log.Info(string.Format("\t{0} version {1}", compilerInfo.ProductName, compilerInfo.ProductVersion));
+            }
+            else
+            {
+                this.Log.Info("Not found");
+            }
+
+            if (bridgeInfo != null)
+            {
+                this.Log.Info(string.Format("\t[{0} Framework, version {1}]", bridgeInfo.ProductName, bridgeInfo.ProductVersion));
+            }
+
+            if (compilerInfo != null)
+            {
+                this.Log.Info("\t" + compilerInfo.LegalCopyright);
             }
         }
     }

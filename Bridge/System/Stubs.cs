@@ -6,6 +6,11 @@ namespace System
     [Name("Function")]
     public class Type
     {
+        public extern string FullName
+        {
+            [Template("Bridge.getTypeName({this})")]
+            get;
+        }
         public static extern Type GetTypeFromHandle(RuntimeTypeHandle typeHandle);
     }
 

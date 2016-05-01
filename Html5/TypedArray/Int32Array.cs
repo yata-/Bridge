@@ -17,7 +17,7 @@ namespace Bridge.Html5
         /// Creates a new Int32Array of the specified length.
         /// </summary>
         /// <param name="length">Length of array to create</param>
-        public Int32Array(Any<int, long, uint, ulong> length)
+        public Int32Array(Any<int, uint> length)
         {
         }
 
@@ -52,7 +52,7 @@ namespace Bridge.Html5
         /// </summary>
         /// <param name="i">Index position in the array.</param>
         /// <returns>The element in the specified position.</returns>
-        public int this[Any<int, long, uint, ulong> i]
+        public int this[Any<int, uint> i]
         {
             get
             {

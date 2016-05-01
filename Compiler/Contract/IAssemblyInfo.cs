@@ -256,10 +256,30 @@ namespace Bridge.Contract
             set;
         }
 
-        LoggerLevel? LoggerLevel
+        LoggingOptions Logging
         {
             get;
             set;
         }
+
+        OverflowMode? OverflowMode
+        {
+            get; 
+            set;
+        }
+
+        bool StrictNullChecks
+        {
+            get; set;
+        }
+    }
+
+    public class LoggingOptions
+    {
+        public LoggerLevel? LoggerLevel { get; set; }
+        public bool? NoLoggerTimeStamps { get; set; }
+        public long?  MaxLogFileSize { get; set; }
+        public string Folder { get; set; }
+        public string FileName { get; set; }
     }
 }

@@ -1,6 +1,25 @@
 ﻿(function (globals) {
     "use strict";
 
+    Bridge.define('Test.BridgeIssues.N1092.App', {
+        statics: {
+            main: function () {
+                // Should contain instruction to check data type range as cspoj contains <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+                var maxInt32 = 2147483647;
+                var rInt32Max = Bridge.Int.check(maxInt32 + 1, Bridge.Int32);
+    
+                var maxUInt32 = 4294967295;
+                var rUInt32Max = Bridge.Int.check(maxUInt32 + 1, Bridge.UInt32);
+    
+                var maxLong = Bridge.Long.MaxValue;
+                var rLongMax = maxLong.add(Bridge.Long(1), 1);
+    
+                var maxULong = Bridge.ULong.MaxValue;
+                var rUlongMax = maxULong.add(Bridge.ULong(1), 1);
+            }
+        }
+    });
+    
     Bridge.define('Test.BridgeIssues.N772.App', {
         statics: {
             main: function () {
@@ -28,7 +47,7 @@
                 doubleArray[0] = 8;
     
                 stringArray[0] = "9";
-                decimalArray[0]  = Bridge.Decimal(10.0);
+                decimalArray[0] = Bridge.Decimal(10.0);
             }
         }
     });
