@@ -10,7 +10,7 @@
     <licenseUrl>https://github.com/bridgedotnet/Bridge/blob/master/LICENSE</licenseUrl>
     <projectUrl>http://bridge.net</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Works around the squiggle defect in Visual Studio. See Issue #419.</description>
+    <description>Cleans the .csproj file for a Bridge project.</description>
     <summary>Works around the squiggle defect in Visual Studio. See Issue #419.</summary>
     <copyright>Copyright (c) 2008-2016, Object.NET, Inc. (http://object.net/). All rights reserved.</copyright>
     <tags>bridge bridge.net bridge js javascript C# csharp mobile ios asp.net aspnet mvc aspnetmvc web transpiler compiler object.net</tags>
@@ -21,6 +21,6 @@
   </metadata>
   <files>
     <!--tools-->
-    <file src="..\..\.build\files\install_squiggle.ps1" target="tools\install.ps1" />
+    <file src="..\..\.build\files\install_clean.ps1" target="tools\install.ps1" />
   </files>
 </package>
