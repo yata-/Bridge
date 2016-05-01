@@ -88,6 +88,11 @@
       <Path>$(SolutionDir).build\specs\Bridge.Builder.nuspec</Path>
     </NuGetPackageSourcePath>
   </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <NuGetPackageSourcePath Include="$(SolutionDir).build\specs\Bridge.Squiggle.nuspec">
+      <Path>$(SolutionDir).build\specs\Bridge.Squiggle.nuspec</Path>
+    </NuGetPackageSourcePath>
+  </ItemGroup>
   <Import Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " Project="$(SolutionDir)\.build\common\NuGet.Build.Package.targets" />
   <Target Name="CleanProjectNuGetOutput" BeforeTargets="Clean">
     <ItemGroup>

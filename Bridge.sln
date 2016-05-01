@@ -1,15 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bridge", "Bridge", "{32B4E540-81E6-4E3F-8383-5813786DC899}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compiler", "Compiler", "{47D6D365-36CE-43C2-91D0-5A071928C62A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Build", "Compiler\Build\Bridge.Build.csproj", "{28703D12-116A-4968-BD85-F26D7F7E7DA4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{99DECD28-D3E3-4EA7-ACAE-AB5DFC9913BD} = {99DECD28-D3E3-4EA7-ACAE-AB5DFC9913BD}
+		{DE78B8B7-C0F5-415B-A70B-02194433F450} = {DE78B8B7-C0F5-415B-A70B-02194433F450}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge.Builder", "Compiler\Builder\Bridge.Builder.csproj", "{243BB709-3912-4C65-82D4-787A5E2201D7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{28703D12-116A-4968-BD85-F26D7F7E7DA4} = {28703D12-116A-4968-BD85-F26D7F7E7DA4}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge", "Bridge\Bridge.csproj", "{DE78B8B7-C0F5-415B-A70B-02194433F450}"
 EndProject
@@ -51,8 +58,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "specs", "specs", "{E12E9F2A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "files", "files", "{B83954AB-3E5F-4778-8BC0-F1CEEDE6F187}"
 	ProjectSection(SolutionItems) = preProject
-		.build\files\Bridge.Builder.targets = .build\files\Bridge.Builder.targets
 		.build\files\bridge.json = .build\files\bridge.json
+		.build\files\Bridge.targets = .build\files\Bridge.targets
 		.build\files\demo.html.pp = .build\files\demo.html.pp
 		.build\files\install.ps1 = .build\files\install.ps1
 		.build\files\output_readme.txt = .build\files\output_readme.txt
