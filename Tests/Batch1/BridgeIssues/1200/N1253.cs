@@ -1,4 +1,3 @@
-using Bridge.Html5;
 using Bridge.Test;
 
 namespace Bridge.ClientTest.BridgeIssues

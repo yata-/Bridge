@@ -3,7 +3,7 @@ using Bridge;
 namespace System.Diagnostics.Contracts
 {
     [Namespace("Bridge")]
-	[Enum(Emit.Name)] 
+    [Enum(Emit.Name)]
     [External]
     public enum ContractFailureKind
     {
