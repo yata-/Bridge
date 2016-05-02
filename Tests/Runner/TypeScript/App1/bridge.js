@@ -226,6 +226,13 @@
         },
 
         getHashCode: function (value, safe, store) {
+            //in CLR: mutable object should keep on returning same value
+            //bridge.net goals: make it deterministic (to make testing easier) without breaking CLR contracts
+            // thus:
+            //     for value types it returns deterministic values (f.e. for int 3 it returns 3) 
+            //     for reference types it returns value derived recursively from its properties
+            var store = (typeof store === 'undefined') ? true : store; 
+
             if (Bridge.isEmpty(value, true)) {
                 if (safe) {
                     return 0;
@@ -308,6 +315,10 @@
 
                 if (removeCache) {
                     delete Bridge.$$hashCodeCache;
+                }
+
+                if (store) {
+                    value.$$hashCode = result;
                 }
 
                 if (result !== 0) {
