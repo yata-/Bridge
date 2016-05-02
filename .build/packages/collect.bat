@@ -21,10 +21,16 @@ SET output="%root%Bridge\.build\packages\"
 ::---------------------------------------------------------------------------------------::
 
 :: Bridge
+echo f | xcopy /f /y "%root%Bridge\Compiler\Build\bin\%build%\*.nupkg"          %output%
+
+:: Bridge.Core
 echo f | xcopy /f /y "%root%Bridge\Bridge\bin\%build%\*.nupkg"                  %output%
 
 :: Bridge.Html5
 echo f | xcopy /f /y "%root%Bridge\Html5\bin\%build%\*.nupkg"                   %output%
+
+:: Bridge.Builder
+echo f | xcopy /f /y "%root%Bridge\Compiler\Builder\bin\%build%\*.nupkg"        %output%
 
 :: Bridge.Contract
 echo f | xcopy /f /y "%root%Bridge\Compiler\Contract\bin\%build%\*.nupkg"       %output%
@@ -46,6 +52,9 @@ echo f | xcopy /f /y "%root%Frameworks\Bootstrap3\bin\%build%\*.nupkg"          
 
 :: Bridge.Collections
 echo f | xcopy /f /y "%root%Frameworks\Collections\bin\%build%\*.nupkg"         %output%
+
+:: Bridge.Console
+echo f | xcopy /f /y "%root%Frameworks\Console\bin\%build%\*.nupkg"             %output%
 
 :: Bridge.jQuery2
 echo f | xcopy /f /y "%root%Frameworks\jQuery2\bin\%build%\*.nupkg"             %output%

@@ -416,11 +416,11 @@
         },
 
         trimEnd: function (s, chars) {
-            return s.replace(chars ? new RegExp('[' + String.fromCharCode.apply(null, chars) + ']+$') : /\s*$/, '');
+            return s.replace(chars ? new RegExp('[' + Bridge.String.escape(Bridge.String.escape(String.fromCharCode.apply(null, chars))) + ']+$') : /\s*$/, '');
         },
 
         trimStart: function (s, chars) {
-            return s.replace(chars ? new RegExp('^[' + String.fromCharCode.apply(null, chars) + ']+') : /^\s*/, '');
+            return s.replace(chars ? new RegExp('^[' + Bridge.String.escape(Bridge.String.escape(String.fromCharCode.apply(null, chars))) + ']+') : /^\s*/, '');
         },
 
         trim: function (s, chars) {
