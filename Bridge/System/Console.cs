@@ -87,7 +87,7 @@ namespace System
         /// Writes the text representation of the specified 64-bit signed integer value to the standard output stream.
         /// </summary>
         /// <param name="value">The value to write.</param>
-        [Template("console.log({value})")]
+        [Template("console.log({value}.toString())")]
         public static extern void Write(Int64 value);
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace System
         /// Writes the text representation of the specified 64-bit unsigned integer value to the standard output stream.
         /// </summary>
         /// <param name="value">The value to write.</param>
-        [Template("console.log({value})")]
+        [Template("console.log({value}.toString())")]
         public static extern void Write(UInt64 value);
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace System
         /// Writes the text representation of the specified 64-bit signed integer value, followed by the current line terminator, to the standard output stream.
         /// </summary>
         /// <param name="value">The value to write.</param>
-        [Template("console.log({value})")]
+        [Template("console.log({value}.toString())")]
         public static extern void WriteLine(Int64 value);
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace System
         /// Writes the text representation of the specified 64-bit unsigned integer value, followed by the current line terminator, to the standard output stream.
         /// </summary>
         /// <param name="value">The value to write.</param>
-        [Template("console.log({value})")]
+        [Template("console.log({value}.toString())")]
         public static extern void WriteLine(UInt64 value);
 
         /// <summary>
@@ -317,18 +317,32 @@ namespace System
         public static extern void WriteLine(Char[] buffer);
 
         /// <summary>
-        /// Writes the text representation of the specified 64-bit unsigned integer value, followed by the current line terminator, to the standard output stream.
+        /// Writes the text representation of the specified enum value, followed by the current line terminator, to the standard output stream.
         /// </summary>
         /// <param name="value">The value to write.</param>
         [Template("console.log(Bridge.Enum.toString({value:type}, {value}))")]
         public static extern void WriteLine(Enum value);
 
         /// <summary>
-        /// Writes the text representation of the specified 64-bit unsigned integer value, followed by the current line terminator, to the standard output stream.
+        /// Writes the text representation of the specified nullable decimal, followed by the current line terminator, to the standard output stream.
         /// </summary>
         /// <param name="value">The value to write.</param>
         [Template("console.log({value} && {value}.toString())")]
         public static extern void WriteLine(decimal? value);
+
+        /// <summary>
+        /// Writes the text representation of the specified nullable 64-bit signed integer, followed by the current line terminator, to the standard output stream.
+        /// </summary>
+        /// <param name="value">The value to write.</param>
+        [Template("console.log({value} && {value}.toString())")]
+        public static extern void WriteLine(long? value);
+
+        /// <summary>
+        /// Writes the text representation of the specified nullable 64-bit unsigned integer, followed by the current line terminator, to the standard output stream.
+        /// </summary>
+        /// <param name="value">The value to write.</param>
+        [Template("console.log({value} && {value}.toString())")]
+        public static extern void WriteLine(ulong? value);
 
         #endregion WriteLine
 
