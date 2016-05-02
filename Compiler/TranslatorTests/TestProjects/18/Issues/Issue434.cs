@@ -30,7 +30,7 @@ namespace TestIssue434
 
         private static void DoSomething(int i)
         {
-            Bridge.Html5.Console.Log(i);
+            System.Console.WriteLine(i);
         }
     }
 
@@ -62,7 +62,7 @@ namespace TestIssue434
 
         private static void DoSomething(int i)
         {
-            Bridge.Html5.Console.Log(i);
+            System.Console.WriteLine(i);
         }
     }
 	

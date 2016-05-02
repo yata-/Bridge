@@ -9,7 +9,7 @@ namespace TestIssue599
         [Ready]
         public static void Main()
         {
-            Console.WriteLine(new Issue599()._something);
+            System.Console.WriteLine(new Issue599()._something);
         }
     }
 }

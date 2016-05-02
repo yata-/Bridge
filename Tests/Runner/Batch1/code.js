@@ -5640,6 +5640,64 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $enum: true
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1260', {
+        statics: {
+            testStringTrim: function () {
+                var s1 = "[Click me]";
+                Bridge.Test.Assert.areEqual("Click me", Bridge.String.trim(s1, [91, 93]));
+    
+                var s2 = "^Click me^";
+                Bridge.Test.Assert.areEqual("Click me", Bridge.String.trim(s2, [94]));
+    
+                var s3 = "\\Click me\\";
+                Bridge.Test.Assert.areEqual("Click me", Bridge.String.trim(s3, [92]));
+            },
+            testStringTrimStart: function () {
+                var s1 = "[Click me]";
+                Bridge.Test.Assert.areEqual("Click me]", Bridge.String.trimStart(s1, [91, 93]));
+    
+                var s2 = "^Click me^";
+                Bridge.Test.Assert.areEqual("Click me^", Bridge.String.trimStart(s2, [94]));
+    
+                var s3 = "\\Click me\\";
+                Bridge.Test.Assert.areEqual("Click me\\", Bridge.String.trimStart(s3, [92]));
+            },
+            testStringTrimEnd: function () {
+                var s1 = "[Click me]";
+                Bridge.Test.Assert.areEqual("[Click me", Bridge.String.trimEnd(s1, [91, 93]));
+    
+                var s2 = "^Click me^";
+                Bridge.Test.Assert.areEqual("^Click me", Bridge.String.trimEnd(s2, [94]));
+    
+                var s3 = "\\Click me\\";
+                Bridge.Test.Assert.areEqual("\\Click me", Bridge.String.trimEnd(s3, [92]));
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1264', {
+        statics: {
+            testDefaultGetHashCodeIsRepeatable: function () {
+                var foo = new Bridge.ClientTest.BridgeIssues.Bridge1264.Foo();
+                var h1 = Bridge.getHashCode(foo);
+                var h2 = Bridge.getHashCode(foo);
+    
+                Bridge.Test.Assert.areEqual(h1, h2);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1264.Bar');
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1264.Foo', {
+        _bck: null,
+        config: {
+            init: function () {
+                this._bck = new Bridge.ClientTest.BridgeIssues.Bridge1264.Bar();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
