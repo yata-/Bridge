@@ -95,8 +95,8 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
         var patternInfo = this.parsePattern();
         var match;
 
-        if (patternInfo.isSparse) {
-            match = new Bridge.Text.RegularExpressions.MatchSparse(this._runregex, patternInfo.sparseMap, jsMatch.groups.length, this._runtext, 0, this._runtext.length, this._runtextstart);
+        if (patternInfo.sparseSettings.isSparse) {
+            match = new Bridge.Text.RegularExpressions.MatchSparse(this._runregex, patternInfo.sparseSettings.sparseSlotNumberMap, jsMatch.groups.length, this._runtext, 0, this._runtext.length, this._runtextstart);
         } else {
             match = new Bridge.Text.RegularExpressions.Match(this._runregex, jsMatch.groups.length, this._runtext, 0, this._runtext.length, this._runtextstart);
         }

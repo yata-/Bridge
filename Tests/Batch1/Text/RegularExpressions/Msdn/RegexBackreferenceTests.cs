@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using Bridge.Test;
 
 namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
@@ -122,7 +123,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
         [Test]
         public void NamedBackrefWithNumberAsNameTest()
         {
-            const string pattern = @"(?<2>\w)\2";
+            const string pattern = @"(?<2>\w)\k<2>";
             const string text = @"trellis llama webbing dresser swagger";
             var rgx = new Regex(pattern);
             var ms = rgx.Matches(text);
@@ -136,7 +137,8 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
             ValidateGroup(ms[0], 0, 3, 2, true, "ll", 1);
             ValidateCapture(ms[0], 0, 0, 3, 2, "ll");
 
-            ValidateGroup(ms[0], 1, 0, 0, false, "", 0);
+            ValidateGroup(ms[0], 2, 3, 1, true, "l", 1);
+            ValidateCapture(ms[0], 2, 0, 3, 1, "l");
 
             // Match #1:
             Assert.NotNull(ms[1], "Match[1] is not null.");
@@ -145,7 +147,8 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
             ValidateGroup(ms[1], 0, 8, 2, true, "ll", 1);
             ValidateCapture(ms[1], 0, 0, 8, 2, "ll");
 
-            ValidateGroup(ms[1], 1, 0, 0, false, "", 0);
+            ValidateGroup(ms[1], 2, 8, 1, true, "l", 1);
+            ValidateCapture(ms[1], 2, 0, 8, 1, "l");
 
             // Match #2:
             Assert.NotNull(ms[2], "Match[2] is not null.");
@@ -154,7 +157,8 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
             ValidateGroup(ms[2], 0, 16, 2, true, "bb", 1);
             ValidateCapture(ms[2], 0, 0, 16, 2, "bb");
 
-            ValidateGroup(ms[2], 1, 0, 0, false, "", 0);
+            ValidateGroup(ms[2], 2, 16, 1, true, "b", 1);
+            ValidateCapture(ms[2], 2, 0, 16, 1, "b");
 
             // Match #3:
             Assert.NotNull(ms[3], "Match[3] is not null.");
@@ -163,7 +167,8 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
             ValidateGroup(ms[3], 0, 25, 2, true, "ss", 1);
             ValidateCapture(ms[3], 0, 0, 25, 2, "ss");
 
-            ValidateGroup(ms[3], 1, 0, 0, false, "", 0);
+            ValidateGroup(ms[3], 2, 25, 1, true, "s", 1);
+            ValidateCapture(ms[3], 2, 0, 25, 1, "s");
 
             // Match #4:
             Assert.NotNull(ms[4], "Match[4] is not null.");
@@ -172,26 +177,35 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
             ValidateGroup(ms[4], 0, 33, 2, true, "gg", 1);
             ValidateCapture(ms[4], 0, 0, 33, 2, "gg");
 
-            ValidateGroup(ms[4], 1, 0, 0, false, "", 0);
+            ValidateGroup(ms[4], 2, 33, 1, true, "g", 1);
+            ValidateCapture(ms[4], 2, 0, 33, 1, "g");
         }
 
         [Test]
         public void NamedBackrefWithRedefinedGroupTest()
         {
+            //TODO: Uncomment when backreferences to redefined groups are supported.
+            // Currently such cases intentionally not supported (they require manual processing of each single referenced capture).
+
             const string pattern = @"(?<1>a)(?<1>\1b)*";
             const string text = @"aababb";
-            var rgx = new Regex(pattern);
-            var m = rgx.Match(text);
 
-            ValidateMatch(m, 0, 6, "aababb", 2, true);
+            Assert.Throws<NotSupportedException>(() =>
+            {
+                var rgx = new Regex(pattern);
+                rgx.Match(text);
+            });
 
-            ValidateGroup(m, 0, 0, 6, true, "aababb", 1);
-            ValidateCapture(m, 0, 0, 0, 6, "aababb");
+            //var m = rgx.Match(text);
+            //ValidateMatch(m, 0, 6, "aababb", 2, true);
 
-            ValidateGroup(m, 1, 3, 3, true, "abb", 3);
-            ValidateCapture(m, 1, 0, 0, 1, "a");
-            ValidateCapture(m, 1, 1, 1, 2, "ab");
-            ValidateCapture(m, 1, 2, 3, 3, "abb");
+            //ValidateGroup(m, 0, 0, 6, true, "aababb", 1);
+            //ValidateCapture(m, 0, 0, 0, 6, "aababb");
+
+            //ValidateGroup(m, 1, 3, 3, true, "abb", 3);
+            //ValidateCapture(m, 1, 0, 0, 1, "a");
+            //ValidateCapture(m, 1, 1, 1, 2, "ab");
+            //ValidateCapture(m, 1, 2, 3, 3, "abb");
         }
 
         [Test]

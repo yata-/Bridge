@@ -67,14 +67,14 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
             // Collect and fill group descriptors into Group tokens.
             // We need do it before any token modification.
             var groups = [];
-            var orderedGroups = [];
-            var sparseMap = {};
-            var sparseSettings = { isSparse: false };
-            scope._fillGroupDescriptors(tokens, groups, orderedGroups, sparseMap, sparseSettings);
+            scope._fillGroupDescriptors(tokens, groups);
+
+            // Fill Sparse Info:
+            var sparseSettings = scope._getGroupSparseInfo(groups);
 
             // Transform tokens for usage in JS RegExp:
-            scope._preTransformBackrefTokens(pattern, tokens, sparseMap);
-            scope._transformTokensForJsPattern(tokens, orderedGroups, sparseMap, 0);
+            scope._preTransformBackrefTokens(pattern, tokens, sparseSettings);
+            scope._transformTokensForJsPattern(tokens, sparseSettings, 0);
 
             // Update group descriptors as tokens have been transformed (at least indexes were changed):
             scope._updateGroupDescriptors(tokens);
@@ -86,22 +86,15 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                 originalPattern: pattern,
                 jsPattern: jsPattern,
                 groups: groups,
-                orderedGroups: orderedGroups,
-                isSparse: false
+                sparseSettings: sparseSettings
             };
-
-            if (sparseSettings.isSparse) {
-                result.isSparse = true;
-                result.sparseMap = sparseMap;
-            }
 
             return result;
         },
 
-        _fillGroupDescriptors: function (tokens, groups, orderedGroups, sparseIndexMap, sparseSettings) {
+        _fillGroupDescriptors: function (tokens, groups) {
             var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
             var group;
-            var groupNumber;
             var i;
 
             // Fill group structure:
@@ -120,75 +113,6 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                     group.name = groupId.toString();
                     ++groupId;
                 }
-            }
-
-            var sparseKeys = [];
-            var sparseMap = {};
-            for (i = 0; i < groups.length; i++) {
-                group = groups[i];
-                if (group.constructs.isNumberName1) {
-                    groupNumber = parseInt(group.constructs.name1);
-                    group.number = groupNumber;
-                    sparseMap[groupNumber] = group;
-                    sparseKeys.push(groupNumber);
-                }
-            }
-            var sortNum = function (a, b) {
-                return a - b;
-            };
-            sparseKeys.sort(sortNum);
-
-            // Add group without names first:
-            for (i = 0; i < groups.length; i++) {
-                group = groups[i];
-                groupNumber = orderedGroups.length + 1;
-
-                if (!group.hasName && !group.constructs.isNonCapturing && !group.constructs.isNumberName1) {
-
-                    if (sparseMap[groupNumber] != null) {
-                        sparseMap[groupNumber] = null;
-                    }
-
-                    group.number = groupNumber;
-                    orderedGroups.push(group);
-                }
-            }
-
-            // Then add named groups:
-            for (i = 0; i < groups.length; i++) {
-                group = groups[i];
-                groupNumber = orderedGroups.length + 1;
-                
-                if (sparseMap[groupNumber] != null) {
-                    orderedGroups.push(sparseMap[groupNumber]);
-                    sparseMap[groupNumber] = null;
-                    continue;
-                }
-
-                if (group.hasName && !group.constructs.isNumberName1) {
-                    group.number = groupNumber;
-                    orderedGroups.push(group);
-                }
-            }
-
-            // Then add sparse groups:
-            var sparseKey;
-            for (i = 0; i < sparseKeys.length; i++) {
-                sparseKey = sparseKeys[i];
-                group = sparseMap[sparseKey];
-                if (group != null) {
-                    orderedGroups.push(group);
-                }
-            }
-
-            if (sparseKeys.length > 0) {
-                sparseSettings.isSparse = true;
-            }
-
-            sparseIndexMap[0] = 0;
-            for (i = 0; i < orderedGroups.length; i++) {
-                group = orderedGroups[i];
-                sparseIndexMap[group.number] = i + 1;
             }
         },
 
@@ -209,7 +133,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                     group = {
                         rawIndex: groups.length + 1,
                         number: -1,
-    
+
                         parentGroup: null,
                         innerGroups: [],
 
@@ -241,6 +165,188 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                 // fill group descriptors for inner tokens:
                 if (hasChildren) {
                     scope._fillGroupStructure(groups, token.children, token.group);
+                }
+            }
+        },
+
+        _getGroupSparseInfo: function (groups) {
+            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+
+            var sparseSlotNames = ["0"];
+            var sparseSlotNumbers = [0];
+
+            var sparseSlotNameMap = {};
+            var sparseSlotNumberMap = {};
+            var sparseSlotGroupsMap = {};
+
+            var explNumberedGroups = {};
+            var explNumberedGroupKeys = [];
+            var explGroups;
+
+            var numberedGroups;
+            var slotNumber;
+            var group;
+            var i;
+
+            // Fill Explicit Numbers:
+            for (i = 0; i < groups.length; i++) {
+                group = groups[i];
+                if (group.constructs.isNonCapturing) {
+                    continue;
+                }
+
+                if (group.constructs.isNumberName1) {
+                    slotNumber = parseInt(group.constructs.name1);
+                    explNumberedGroupKeys.push(slotNumber);
+
+                    if (explNumberedGroups[slotNumber]) {
+                        explNumberedGroups[slotNumber].push(group);
+                    } else {
+                        explNumberedGroups[slotNumber] = [group];
+                    }
+                }
+            }
+
+            // Sort explicitly set Number names:
+            var sortNum = function (a, b) {
+                return a - b;
+            };
+            explNumberedGroupKeys.sort(sortNum);
+
+
+            // Add group without names first:
+            for (i = 0; i < groups.length; i++) {
+                group = groups[i];
+                if (group.constructs.isNonCapturing) {
+                    continue;
+                }
+
+                slotNumber = sparseSlotNumbers.length;
+                if (!group.hasName) {
+                    numberedGroups = [group];
+                    explGroups = explNumberedGroups[slotNumber];
+                    if (explGroups != null) {
+                        numberedGroups = numberedGroups.concat(explGroups);
+                        explNumberedGroups[slotNumber] = null;
+                    }
+
+                    scope._addSparseSlotForSameNamedGroups(numberedGroups, slotNumber, sparseSlotNames, sparseSlotNumbers);
+                }
+            }
+
+            // Then add named groups:
+            for (i = 0; i < groups.length; i++) {
+                group = groups[i];
+                if (group.constructs.isNonCapturing) {
+                    continue;
+                }
+
+                if (!group.hasName || group.constructs.isNumberName1) {
+                    continue;
+                }
+
+                // If the slot is already occupied by an explicitly numbered group,
+                // add this group to the slot:
+                slotNumber = sparseSlotNumbers.length;
+                explGroups = explNumberedGroups[slotNumber];
+                while (explGroups != null) {
+                    scope._addSparseSlotForSameNamedGroups(explGroups, slotNumber, sparseSlotNames, sparseSlotNumbers);
+
+                    explNumberedGroups[slotNumber] = null;    // Group is processed.
+                    slotNumber = sparseSlotNumbers.length;
+                    explGroups = explNumberedGroups[slotNumber];
+                }
+                
+                // Add the named group to the 1st free slot:
+                scope._addSparseSlot(group, slotNumber, sparseSlotNames, sparseSlotNumbers);
+            }
+
+            // Add the rest explicitly numbered groups:
+            for (i = 0; i < explNumberedGroupKeys.length; i++) {
+                slotNumber = explNumberedGroupKeys[i];
+                explGroups = explNumberedGroups[slotNumber];
+                if (explGroups != null) {
+                    scope._addSparseSlotForSameNamedGroups(explGroups, slotNumber, sparseSlotNames, sparseSlotNumbers);
+                }
+            }
+
+            // Fill Name/Number map:
+            for (i = 0; i < sparseSlotNumbers.length; i++) {
+                sparseSlotNameMap[sparseSlotNames[i]] = i;
+                sparseSlotNumberMap[sparseSlotNumbers[i]] = i;
+            }
+
+            // Fill Group map:
+            for (i = 0; i < groups.length; i++) {
+                group = groups[i];
+                if (group.constructs.isNonCapturing) {
+                    continue;
+                }
+
+                if (sparseSlotGroupsMap[group.sparseSlotId]) {
+                    sparseSlotGroupsMap[group.sparseSlotId].push(group);
+                } else {
+                    sparseSlotGroupsMap[group.sparseSlotId] = [group];
+                }
+            }
+
+            return  {
+                isSparse: sparseSlotNumbers.length !== (1 + sparseSlotNumbers[sparseSlotNumbers.length - 1]),
+                sparseSlotNames: sparseSlotNames,           // e.g. [1,2,test,5]
+                sparseSlotNumbers: sparseSlotNumbers,       // e.g. [1,2,3,5] 
+
+                sparseSlotNameMap: sparseSlotNameMap,       // <GroupName, SlotId>
+                sparseSlotNumberMap: sparseSlotNumberMap,   // <GroupNumber, SlotId>
+                sparseSlotGroupsMap: sparseSlotGroupsMap,   // <SlotId, Group>
+
+                getSingleGroupByNumber: function (groupNumber) {
+                    var slotId = this.sparseSlotNumberMap[groupNumber];
+                    if (slotId == null) {
+                        return null;
+                    }
+
+                    var requestedGroup = this.getSingleGroupBySlotId(slotId);
+                    return requestedGroup;
+                },
+
+                getSingleGroupByName: function (groupName) {
+                    var slotId = this.sparseSlotNameMap[groupName];
+                    if (slotId == null) {
+                        return null;
+                    }
+
+                    var requestedGroup = this.getSingleGroupBySlotId(slotId);
+                    return requestedGroup;
+                },
+
+                getSingleGroupBySlotId: function(slotId) {
+                    var slotGroups = this.sparseSlotGroupsMap[slotId];
+                    if (slotGroups.length !== 1) {
+                        throw new Bridge.NotSupportedException("Redefined groups are not supported."); //TODO: [Intentional Variation] Can be changed when backrefereces are resolved manually (they should use the closest group/capture)
+                    }
+                    return slotGroups[0];
+                }
+            };
+        },
+
+        _addSparseSlot: function (group, slotNumber, sparseSlotNames, sparseSlotNumbers) {
+            group.sparseSlotId = sparseSlotNames.length;    // 0-based index
+
+            sparseSlotNames.push(group.name);               // This a generated name, it shows Seq number.
+            sparseSlotNumbers.push(slotNumber);             // 1-based index
+        },
+
+        _addSparseSlotForSameNamedGroups: function (groups, slotNumber, sparseSlotNames, sparseSlotNumbers) {
+            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var i;
+
+            scope._addSparseSlot(groups[0], slotNumber, sparseSlotNames, sparseSlotNumbers);
+            var slotId = groups[0].sparseSlotId;
+
+            // Assign SlotID for all expl. named groups in this slot.
+            if (groups.length > 1) {
+                for (i = 1; i < groups.length; i++) {
+                    groups[i].sparseSlotId = slotId;
                 }
             }
         },
@@ -326,17 +432,12 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
 
                 constructs.name1 = groupNames[0];
                 var nameRes1 = scope._validateGroupName(groupNames[0]);
-                if (nameRes1.isNumberName) {
-                    constructs.isNumberName1 = true;
-                }
-                
+                constructs.isNumberName1 = nameRes1.isNumberName;
                 
                 if (groupNames.length === 2) {
                     constructs.name2 = groupNames[1];
                     var nameRes2 = scope._validateGroupName(groupNames[1]);
-                    if (nameRes2.isNumberName) {
-                        constructs.isNumberName2 = true;
-                    }
+                    constructs.isNumberName2 = nameRes2.isNumberName;
                 }
 
             } else if (childToken.type === tokenTypes.groupConstructImnsx) {
@@ -388,7 +489,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
             };
         },
 
-        _preTransformBackrefTokens: function (pattern, tokens, sparseMap) {
+        _preTransformBackrefTokens: function (pattern, tokens, sparseSettings) {
             var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
 
@@ -406,7 +507,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                     groupNumberStr = token.value.slice(1);
                     groupNumber = parseInt(groupNumberStr, 10);
 
-                    if (groupNumber >= 1 && sparseMap[groupNumber] != null) {
+                    if (groupNumber >= 1 && sparseSettings.getSingleGroupByNumber(groupNumber) != null) {
                         // Expressions from \10 and greater are considered backreferences 
                         // if there is a backreference corresponding to that number; 
                         // otherwise, they are interpreted as octal codes.
@@ -434,12 +535,12 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                 }
 
                 if (token.children && token.children.length) {
-                    scope._preTransformBackrefTokens(pattern, token.children, sparseMap);
+                    scope._preTransformBackrefTokens(pattern, token.children, sparseSettings);
                 }
             }
         },
 
-        _transformTokensForJsPattern: function (tokens, orderedGroups, sparseMap, parentIndex) {
+        _transformTokensForJsPattern: function (tokens, sparseSettings, parentIndex) {
             var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
             var childUpdated;
@@ -452,7 +553,6 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
             var childrenValue;
             var childrenIndex;
             var i;
-            var j;
 
             // Transform/adjust tokens collection to work with JS RegExp:
             var index = parentIndex || 0;
@@ -471,12 +571,12 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
 
                     value = token.value.slice(1);
                     groupNumber = parseInt(value, 10);
-                    if (sparseMap[groupNumber] == null) {
+                    group = sparseSettings.getSingleGroupByNumber(groupNumber);
+                    if (group == null) {
                         throw new Bridge.ArgumentException("Reference to undefined group number " + value + ".");
                     }
 
                     // Replace the group number with RawIndex as JavaScript does not change the ordering
-                    group = orderedGroups[sparseMap[groupNumber] - 1];
                     if (group.rawIndex !== groupNumber) {
                         value = "\\" + group.rawIndex.toString();
                         scope._updatePatternToken(token, token.type, token.index, value.length, value);
@@ -485,15 +585,8 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
 
                 } else if (token.type === tokenTypes.escBackrefName) {
 
-                    value = token.value.slice(3, token.length-1);
-                    group = null;
-                    for (j = 0; j < orderedGroups.length; j++) {
-                        if (orderedGroups[j].name === value) {
-                            group = orderedGroups[j];
-                            break;
-                        }
-                    }
-
+                    value = token.value.slice(3, token.length - 1);
+                    group = sparseSettings.getSingleGroupByName(value);
                     if (group == null) {
                         // If the name is number, treat the backreference as a numbered:
                         matchRes = scope._matchChars(value, 0, value.length, scope._decSymbols);
@@ -504,7 +597,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                             --i; // process the token again
                             continue;
                         }
-                        throw new Bridge.ArgumentException("Reference to undefined group name " + value + ".");
+                        throw new Bridge.ArgumentException("Reference to undefined group name '" + value + "'.");
                     }
 
                     // Replace the group number with RawIndex as JavaScript does not change the ordering
@@ -516,7 +609,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                 // Update children token and indexes:
                 if (token.children && token.children.length) {
                     childrenIndex = token.childrenPostfix.length;
-                    childUpdated = scope._transformTokensForJsPattern(token.children, orderedGroups, sparseMap, index + childrenIndex);
+                    childUpdated = scope._transformTokensForJsPattern(token.children, sparseSettings, index + childrenIndex);
 
                     // Update parent value if children have been changed:
                     if (childUpdated) {

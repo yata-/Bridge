@@ -136,15 +136,20 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
             };
 
             var nonCapturingCount = 0;
+            var groupMap = {}; // <Name, Group>
             var group;
+            var groupDesc;
+            var parentGroupDesc;
+            var existingGroup;
             var parentCapture;
+            var lastCapture;
             var i;
             var j;
 
             for (i = 1; i < total.length + nonCapturingCount; i++) {
                 this._checkTimeout();
 
-                var groupDesc = groupDescs[i - 1];
+                groupDesc = groupDescs[i - 1];
                 if (groupDesc.constructs.isNonCapturing) {
                     nonCapturingCount++;
                 }
@@ -154,14 +159,14 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                     capIndex: 0,
                     capLength: 0,
                     value: "",
-                    valueFull: "",
+                    valueFull: "",  //TODO: Remove?
                     success: false,
                     captures: [],
                     ctx: null
                 };
                 descToGroupMap[groupDesc.exprIndex] = group;
 
-                var parentGroupDesc = groupDesc.parentGroup;
+                parentGroupDesc = groupDesc.parentGroup;
                 if (parentGroupDesc == null) { 
                     // Match a root group using the global context:
                     this._matchGroup(globalCtx, group, 0);
@@ -191,14 +196,28 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                 }
 
                 if (group.captures.length > 0) {
-                    var lastCapture = group.captures[group.captures.length - 1];
+                    lastCapture = group.captures[group.captures.length - 1];
                     group.capIndex = lastCapture.capIndex;
                     group.capLength = lastCapture.capLength;
                     group.value = lastCapture.value;
                 }
 
                 if (!groupDesc.constructs.isNonCapturing) {
-                    match.groups.push(group);
+                    existingGroup = groupMap[groupDesc.name];
+
+                    if (existingGroup) {
+                        // Merge group results for the same named groups:
+                        existingGroup.capIndex = group.capIndex;
+                        existingGroup.capLength = group.capLength;
+                        existingGroup.value = group.value;
+                        existingGroup.success = group.success;
+                        existingGroup.captures = existingGroup.captures.concat(group.captures);
+
+                    } else {
+                        // Add a new group record for the uniquely named group:
+                        match.groups.push(group);
+                        groupMap[groupDesc.name] = group;
+                    }
                 }
             }
 

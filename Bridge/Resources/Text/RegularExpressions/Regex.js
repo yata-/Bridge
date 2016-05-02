@@ -186,24 +186,20 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
         //TODO: cache
         var patternInfo = this._runner.parsePattern();
-        var orderedGroups = patternInfo.orderedGroups;
+        var slotNames = patternInfo.sparseSettings.sparseSlotNames;
 
-        this._capsize = orderedGroups.length;
+        this._capsize = slotNames.length;
         this._capslist = [];
         this._capnames = {};
-
-        this._capsize ++;
-        this._capslist.push("0");
-        this._capnames["0"] = 0;
 
         var i;
         var groupName;
 
         // Add group without names first (their names are indexes)
-        for (i = 0; i < orderedGroups.length; i++) {
-            groupName = orderedGroups[i].name;
+        for (i = 0; i < slotNames.length; i++) {
+            groupName = slotNames[i];
             this._capslist.push(groupName);
-            this._capnames[groupName] = i + 1;
+            this._capnames[groupName] = i;
         }
     },
 
