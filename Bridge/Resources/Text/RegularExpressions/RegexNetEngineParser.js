@@ -74,7 +74,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
 
             // Transform tokens for usage in JS RegExp:
             scope._preTransformBackrefTokens(pattern, tokens, sparseSettings);
-            scope._transformTokensForJsPattern(tokens, sparseSettings, 0);
+            scope._transformTokensForJsPattern(tokens, sparseSettings, 0, [], []);
 
             // Update group descriptors as tokens have been transformed (at least indexes were changed):
             scope._updateGroupDescriptors(tokens);
@@ -540,7 +540,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
             }
         },
 
-        _transformTokensForJsPattern: function (tokens, sparseSettings, parentIndex) {
+        _transformTokensForJsPattern: function (tokens, sparseSettings, parentIndex, allowedBackrefRawIds, nestedGroupIds) {
             var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
             var childUpdated;
@@ -552,6 +552,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
             var matchRes;
             var childrenValue;
             var childrenIndex;
+            var localNestedGroupIds;
             var i;
 
             // Transform/adjust tokens collection to work with JS RegExp:
@@ -577,6 +578,12 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                     }
 
                     // Replace the group number with RawIndex as JavaScript does not change the ordering
+                    if (allowedBackrefRawIds.indexOf(group.rawIndex) < 0) {
+                        throw new Bridge.NotSupportedException("Reference to unreachable group number " + value + "."); //TODO: [Intentional Variation] .Net returns "Success=false". However, it has no sense.
+                    }
+                    if (nestedGroupIds.indexOf(group.rawIndex) >= 0) {
+                        throw new Bridge.NotSupportedException("References to self/parent group number " + value + " are not supported."); //TODO: [Intentional Variation] This require pattern change with every capture. Not supported.
+                    }
                     if (group.rawIndex !== groupNumber) {
                         value = "\\" + group.rawIndex.toString();
                         scope._updatePatternToken(token, token.type, token.index, value.length, value);
@@ -601,6 +608,12 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                     }
 
                     // Replace the group number with RawIndex as JavaScript does not change the ordering
+                    if (allowedBackrefRawIds.indexOf(group.rawIndex) < 0) {
+                        throw new Bridge.NotSupportedException("Reference to unreachable group name '" + value + "'."); //TODO: [Intentional Variation] .Net returns "Success=false". However, it has no sense.
+                    }
+                    if (nestedGroupIds.indexOf(group.rawIndex) >= 0) {
+                        throw new Bridge.NotSupportedException("References to self/parent group name '" + value + "' are not supported."); //TODO: [Intentional Variation] This require pattern change with every capture. Not supported.
+                    }
                     value = "\\" + group.rawIndex.toString();
                     scope._updatePatternToken(token, tokenTypes.escBackrefNumber, token.index, value.length, value);
                     updated = true;
@@ -608,8 +621,11 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
 
                 // Update children token and indexes:
                 if (token.children && token.children.length) {
+                    localNestedGroupIds = token.type === tokenTypes.group ? [token.group.rawIndex] : [];
+                    localNestedGroupIds = localNestedGroupIds.concat(nestedGroupIds);
+
                     childrenIndex = token.childrenPostfix.length;
-                    childUpdated = scope._transformTokensForJsPattern(token.children, sparseSettings, index + childrenIndex);
+                    childUpdated = scope._transformTokensForJsPattern(token.children, sparseSettings, index + childrenIndex, allowedBackrefRawIds, localNestedGroupIds);
 
                     // Update parent value if children have been changed:
                     if (childUpdated) {
@@ -618,6 +634,11 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                         token.length = token.value.length;
                         updated = true;
                     }
+                }
+
+                // Group is processed. Now it can be referenced with Backref:
+                if (token.type === tokenTypes.group) {
+                    allowedBackrefRawIds.push(token.group.rawIndex);
                 }
 
                 index += token.length;

@@ -8,6 +8,8 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
     [TestFixture(TestNameFormat = "Regex: Backreferences - {0}")]
     public class RegexBackreferenceTests : RegexTestBase
     {
+        #region MSDN
+
         [Test]
         public void NumberedBackrefTest()
         {
@@ -251,6 +253,96 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
 
             ValidateGroup(m, 3, 2, 2, true, "BB", 1);
             ValidateCapture(m, 3, 0, 2, 2, "BB");
+        }
+
+        #endregion
+
+        [Test]
+        public void NamedBackrefToUnreachableGroupTest()
+        {
+            //TODO: Uncomment if backreferences to unreachable groups are supported.
+            // Currently such cases intentionally not supported (there is no sense in such queries, they always return "Success=False").
+
+            const string pattern = @"(a)\2(b)";
+            const string text = @"abb";
+
+            Assert.Throws<NotSupportedException>(() =>
+            {
+                var rgx = new Regex(pattern);
+                rgx.Match(text);
+            });
+
+
+            //const string pattern = @"(a)\2(b)";
+            //const string text = @"abb";
+            //var rgx = new Regex(pattern);
+            //var m = rgx.Match(text);
+
+            //ValidateMatch(m, 0, 0, "", 1, false);
+
+            //ValidateGroup(m, 0, 0, 0, false, "", 0);
+
+            //ValidateGroup(m, 1, 0, 0, false, "", 0);
+
+            //ValidateGroup(m, 2, 0, 0, false, "", 0);
+        }
+
+        [Test]
+        public void NamedBackrefToSelfGroupTest()
+        {
+            //TODO: Uncomment if backreferences to self are supported.
+            // Currently such cases intentionally not supported (there is no sense in such queries, they always return "Success=False").
+
+            const string pattern = @"(?<gr1>a\k<gr1>)";
+            const string text = @"aaa";
+
+            Assert.Throws<NotSupportedException>(() =>
+            {
+                var rgx = new Regex(pattern);
+                rgx.Match(text);
+            });
+
+
+            //const string pattern = @"(?<gr1>a\k<gr1>)";
+            //const string text = @"aaa";
+            //var rgx = new Regex(pattern);
+            //var m = rgx.Match(text);
+
+            //ValidateMatch(m, 0, 0, "", 1, false);
+
+            //ValidateGroup(m, 0, 0, 0, false, "", 0);
+
+            //ValidateGroup(m, 1, 0, 0, false, "", 0);
+        }
+
+        [Test]
+        public void NamedBackrefToParentGroupTest()
+        {
+            //TODO: Uncomment if backreferences to parent groups are supported.
+            // Currently such cases intentionally not supported (there is no sense in such queries, they always return "Success=False").
+
+            const string pattern = @"(?<parent>a(?<child>b\k<parent>))";
+            const string text = @"aabb";
+
+            Assert.Throws<NotSupportedException>(() =>
+            {
+                var rgx = new Regex(pattern);
+                rgx.Match(text);
+            });
+
+
+            //const string pattern = @"(?<parent>a(?<child>b\k<parent>))";
+            //const string text = @"aabb";
+            //var rgx = new Regex(pattern);
+            //var m = rgx.Match(text);
+
+            //ValidateMatch(m, 0, 0, "", 1, false);
+
+            //ValidateGroup(m, 0, 0, 0, false, "", 0);
+
+            //ValidateGroup(m, 1, 0, 0, false, "", 0);
+
+            //ValidateGroup(m, 2, 0, 0, false, "", 0);
         }
     }
 }
