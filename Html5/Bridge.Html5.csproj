@@ -337,8 +337,8 @@
     <NuGetBuildPackage>true</NuGetBuildPackage>
   </PropertyGroup>
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <NuGetPackageSourcePath Include="$(SolutionDir).build\specs\Bridge.Html5.Dev.nuspec">
-      <Path>$(SolutionDir).build\specs\Bridge.Html5.Dev.nuspec</Path>
+    <NuGetPackageSourcePath Include="$(SolutionDir).build\specs\Bridge.Html5.nuspec">
+      <Path>$(SolutionDir).build\specs\Bridge.Html5.nuspec</Path>
     </NuGetPackageSourcePath>
   </ItemGroup>
   <Import Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " Project="$(SolutionDir)\.build\common\NuGet.Build.Package.targets" />
