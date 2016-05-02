@@ -42,13 +42,13 @@
             areNotStrictEqual$1: function (expected, actual, description) {
                 Bridge.Test.Assert.assert.notStrictEqual(actual, expected, description);
             },
-            $true: function (condition) {
+            true: function (condition) {
                 Bridge.Test.Assert.assert.ok(condition);
             },
             true$1: function (condition, message) {
                 Bridge.Test.Assert.assert.ok(condition, message);
             },
-            $false: function (condition) {
+            false: function (condition) {
                 Bridge.Test.Assert.assert.notOk(condition);
             },
             false$1: function (condition, message) {
@@ -60,7 +60,7 @@
             fail$1: function (message) {
                 Bridge.Test.Assert.assert.notOk(true, message);
             },
-            $throws: function (block) {
+            throws: function (block) {
                 Bridge.Test.Assert.assert.throws(block, "");
             },
             throws$5: function (block, message) {
@@ -100,7 +100,7 @@
             throws$2: function (block, expected, message) {
                 Bridge.Test.Assert.assert.throws(block, expected, message);
             },
-            $null: function (anObject) {
+            null: function (anObject) {
                 Bridge.Test.Assert.assert.ok(anObject == null);
             },
             null$1: function (anObject, message) {
@@ -1144,6 +1144,7 @@
                 QUnit.test("#1232 - TestParamsInThisCtorInit", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1232.testParamsInThisCtorInit);
                 QUnit.test("#1232 - TestExtendedParamsInThisCtorInit", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1232.testExtendedParamsInThisCtorInit);
                 QUnit.test("#1241 - TestMarkElement", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1241.testMarkElement);
+                QUnit.test("#1256 - TestReservedWords", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256.testReservedWords);
                 QUnit.test("#1260 - TestStringTrim", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1260.testStringTrim);
                 QUnit.test("#1260 - TestStringTrimStart", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1260.testStringTrimStart);
                 QUnit.test("#1260 - TestStringTrimEnd", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1260.testStringTrimEnd);
@@ -3344,6 +3345,16 @@
             testMarkElement: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1241).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1241, 4);
                 Bridge.ClientTest.BridgeIssues.Bridge1241.testMarkElement();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1256)],
+        statics: {
+            testReservedWords: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1256).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256);
+                Bridge.ClientTest.BridgeIssues.Bridge1256.testReservedWords();
             }
         }
     });
