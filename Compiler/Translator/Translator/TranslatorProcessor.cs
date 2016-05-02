@@ -169,7 +169,7 @@ namespace Bridge.Translator
 
             try
             {
-                logger.LoggerLevel = assemblyConfig.Logging.LoggerLevel ?? LoggerLevel.None;
+                logger.LoggerLevel = assemblyConfig.Logging.Level ?? LoggerLevel.None;
 
                 logger.Info("Read config file: " + AssemblyConfigHelper.ConfigToString(assemblyConfig));
 
@@ -179,9 +179,9 @@ namespace Bridge.Translator
                 {
                     logger.UseTimeStamp = !bridgeOptions.NoTimeStamp.Value;
                 }
-                else if (assemblyConfig.Logging.NoLoggerTimeStamps.HasValue)
+                else if (assemblyConfig.Logging.TimeStamps.HasValue)
                 {
-                    logger.UseTimeStamp = !assemblyConfig.Logging.NoLoggerTimeStamps.Value;
+                    logger.UseTimeStamp = assemblyConfig.Logging.TimeStamps.Value;
                 }else
                 {
                     logger.UseTimeStamp = true;
@@ -201,7 +201,7 @@ namespace Bridge.Translator
                         logFileFolder = Path.Combine(this.GetOutputFolder(true, false), logFileFolder);
                     }
 
-                    fileLoggerWriter.SetParameters(logFileFolder, assemblyConfig.Logging.FileName, assemblyConfig.Logging.MaxLogFileSize);
+                    fileLoggerWriter.SetParameters(logFileFolder, assemblyConfig.Logging.FileName, assemblyConfig.Logging.MaxSize);
                 }
 
                 logger.Flush();
