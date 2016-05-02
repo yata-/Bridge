@@ -53,6 +53,9 @@ echo f | xcopy /f /y "%root%Frameworks\Bootstrap3\bin\%build%\*.nupkg"          
 :: Bridge.Collections
 echo f | xcopy /f /y "%root%Frameworks\Collections\bin\%build%\*.nupkg"         %output%
 
+:: Bridge.Console
+echo f | xcopy /f /y "%root%Frameworks\Console\bin\%build%\*.nupkg"             %output%
+
 :: Bridge.jQuery2
 echo f | xcopy /f /y "%root%Frameworks\jQuery2\bin\%build%\*.nupkg"             %output%
 
