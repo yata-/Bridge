@@ -1,7 +1,7 @@
 ﻿{
   "logging": {
-    "loggerLevel": "Info",
-    "maxLogFileSize": 1048576,
+    "level": "Info",
+    "maxSize": 1048576,
     "folder": "bin/Release"
   }
 }

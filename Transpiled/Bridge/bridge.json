@@ -3,5 +3,7 @@
   "cleanOutputFolderBeforeBuild": true,
   "outputFormatting": "Formatted",
   "outputBy": "ClassPath",
-  "loggerLevel": "Info"
+  "logging": {
+    "level": "None"
+  }
 }
