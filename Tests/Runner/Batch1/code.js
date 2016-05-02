@@ -5622,6 +5622,41 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1260', {
+        statics: {
+            testStringTrim: function () {
+                var s1 = "[Click me]";
+                Bridge.Test.Assert.areEqual("Click me", Bridge.String.trim(s1, [91, 93]));
+    
+                var s2 = "^Click me^";
+                Bridge.Test.Assert.areEqual("Click me", Bridge.String.trim(s2, [94]));
+    
+                var s3 = "\\Click me\\";
+                Bridge.Test.Assert.areEqual("Click me", Bridge.String.trim(s3, [92]));
+            },
+            testStringTrimStart: function () {
+                var s1 = "[Click me]";
+                Bridge.Test.Assert.areEqual("Click me]", Bridge.String.trimStart(s1, [91, 93]));
+    
+                var s2 = "^Click me^";
+                Bridge.Test.Assert.areEqual("Click me^", Bridge.String.trimStart(s2, [94]));
+    
+                var s3 = "\\Click me\\";
+                Bridge.Test.Assert.areEqual("Click me\\", Bridge.String.trimStart(s3, [92]));
+            },
+            testStringTrimEnd: function () {
+                var s1 = "[Click me]";
+                Bridge.Test.Assert.areEqual("[Click me", Bridge.String.trimEnd(s1, [91, 93]));
+    
+                var s2 = "^Click me^";
+                Bridge.Test.Assert.areEqual("^Click me", Bridge.String.trimEnd(s2, [94]));
+    
+                var s3 = "\\Click me\\";
+                Bridge.Test.Assert.areEqual("\\Click me", Bridge.String.trimEnd(s3, [92]));
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
