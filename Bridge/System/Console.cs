@@ -33,13 +33,8 @@ namespace System
         public static extern string ReadLine(string text, string value);
 
         /// <summary>
-        /// ReadLine uses the native JavaScript prompt() to display a dialog with an optional message prompting the user to input some text.
-        /// </summary>
-
-        /// <summary>
         /// Read uses the native JavaScript prompt() to display a dialog with an optional message prompting the user to input some text.
         /// </summary>
-
         /// <returns>result is a string containing the text entered by the user, or the value null.</returns>
         [Template("prompt()")]
         public static extern string Read();
