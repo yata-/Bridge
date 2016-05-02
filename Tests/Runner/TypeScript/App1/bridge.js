@@ -1608,11 +1608,11 @@
         },
 
         trimEnd: function (s, chars) {
-            return s.replace(chars ? new RegExp('[' + String.fromCharCode.apply(null, chars) + ']+$') : /\s*$/, '');
+            return s.replace(chars ? new RegExp('[' + Bridge.String.escape(Bridge.String.escape(String.fromCharCode.apply(null, chars))) + ']+$') : /\s*$/, '');
         },
 
         trimStart: function (s, chars) {
-            return s.replace(chars ? new RegExp('^[' + String.fromCharCode.apply(null, chars) + ']+') : /^\s*/, '');
+            return s.replace(chars ? new RegExp('^[' + Bridge.String.escape(Bridge.String.escape(String.fromCharCode.apply(null, chars))) + ']+') : /^\s*/, '');
         },
 
         trim: function (s, chars) {
@@ -6925,7 +6925,6 @@ Bridge.define("Bridge.Text.StringBuilder", {
 
 		    conditionText = conditionText.substring(conditionText.indexOf("return") + 7);
 		    conditionText = conditionText.substr(0, conditionText.lastIndexOf(";"));
-<<<<<<< HEAD
 
 		    var failureMessage = (conditionText) ? "Contract '" + conditionText + "' failed" : "Contract failed";
 		    var displayMessage = (userMessage) ? failureMessage + ": " + userMessage : failureMessage;
@@ -7033,115 +7032,6 @@ Bridge.define("Bridge.Text.StringBuilder", {
     Bridge.define("Bridge.ContractException", {
         inherits: [Bridge.Exception],
 
-=======
-
-		    var failureMessage = (conditionText) ? "Contract '" + conditionText + "' failed" : "Contract failed";
-		    var displayMessage = (userMessage) ? failureMessage + ": " + userMessage : failureMessage;
-
-		    if (TException) {
-			    throw new TException(conditionText, userMessage);
-		    } else {
-			    throw new Bridge.ContractException(failureKind, displayMessage, userMessage, conditionText, innerException);
-		    }
-	    },
-	    assert: function (failureKind, condition, message) {
-		    if (!condition()) {
-			    Bridge.Contract.reportFailure(failureKind, message, condition, null);
-		    }
-	    },
-	    requires: function (TException, condition, message) {
-		    if (!condition()) {
-			    Bridge.Contract.reportFailure(0, message, condition, null, TException);
-		    }
-	    },
-	    forAll: function (fromInclusive, toExclusive, predicate) {
-		    if (!predicate) {
-			    throw new Bridge.ArgumentNullException("predicate");
-		    }
-
-		    for (; fromInclusive < toExclusive; fromInclusive++) {
-			    if (!predicate(fromInclusive)) {
-				    return false;
-			    }
-		    }
-
-		    return true;
-	    },
-	    forAll$1: function (collection, predicate) {
-		    if (!collection) {
-			    throw new Bridge.ArgumentNullException("collection");
-		    }
-
-		    if (!predicate) {
-			    throw new Bridge.ArgumentNullException("predicate");
-		    }
-
-		    var enumerator = Bridge.getEnumerator(collection);
-
-	        try {
-			    while (enumerator.moveNext()) {
-				    if (!predicate(enumerator.getCurrent())) {
-					    return false;
-				    }
-			    }
-			    return true;
-		    } finally {
-			    enumerator.dispose();
-		    }
-	    },
-	    exists: function (fromInclusive, toExclusive, predicate) {
-		    if (!predicate) {
-			    throw new Bridge.ArgumentNullException("predicate");
-		    }
-
-		    for (; fromInclusive < toExclusive; fromInclusive++) {
-			    if (predicate(fromInclusive)) {
-				    return true;
-			    }
-		    }
-
-		    return false;
-	    },
-	    exists$1: function (collection, predicate) {
-		    if (!collection) {
-			    throw new Bridge.ArgumentNullException("collection");
-		    }
-
-		    if (!predicate) {
-			    throw new Bridge.ArgumentNullException("predicate");
-		    }
-
-		    var enumerator = Bridge.getEnumerator(collection);
-
-	        try {
-			    while (enumerator.moveNext()) {
-				    if (predicate(enumerator.getCurrent())) {
-					    return true;
-				    }
-			    }
-			    return false;
-		    } finally {
-			    enumerator.dispose();
-		    }
-	    }
-    };
-
-    Bridge.define("Bridge.ContractFailureKind", {
-        $enum: true,
-        $statics: {
-            precondition: 0,
-            postcondition: 1,
-            postconditionOnException: 2,
-            invarian: 3,
-            assert: 4,
-            assume: 5
-        }
-    });
-
-    Bridge.define("Bridge.ContractException", {
-        inherits: [Bridge.Exception],
-
->>>>>>> refs/remotes/origin/staging
         constructor: function (failureKind, failureMessage, userMessage, condition, innerException) {
             Bridge.Exception.prototype.$constructor.call(this, failureMessage, innerException);
             this._kind = failureKind;
