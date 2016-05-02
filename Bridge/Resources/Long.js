@@ -147,6 +147,10 @@ Bridge.Long.prototype.toNumberDivided = function (divisor) {
     return integral.toNumber() + scaledRemainder;
 };
 
+Bridge.Long.prototype.toJSON = function () {
+    return this.toNumber();
+};
+
 Bridge.Long.prototype.toString = function (format, provider) {
     if (!format && !provider) {
         return this.value.toString();
@@ -648,6 +652,7 @@ Bridge.ULong.lift = function (l) {
     return Bridge.ULong.create(l);
 };
 
+Bridge.ULong.prototype.toJSON = Bridge.Long.prototype.toJSON;
 Bridge.ULong.prototype.toString = Bridge.Long.prototype.toString;
 Bridge.ULong.prototype.format = Bridge.Long.prototype.format;
 Bridge.ULong.prototype.isNegative = Bridge.Long.prototype.isNegative;
