@@ -54,7 +54,6 @@
     <Compile Include="ClientRect.cs" />
     <Compile Include="ClientRectList.cs" />
     <Compile Include="CompatMode.cs" />
-    <Compile Include="Console.cs" />
     <Compile Include="Elements\MarkElement.cs" />
     <Compile Include="Elements\TemplateElement.cs" />
     <Compile Include="Events\MessageEvent.cs" />
