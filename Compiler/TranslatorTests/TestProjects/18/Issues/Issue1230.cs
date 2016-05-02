@@ -1,4 +1,4 @@
-﻿using Bridge.Html5;
+﻿using System;
 
 namespace TestIssue1230
 {
@@ -11,11 +11,11 @@ namespace TestIssue1230
             long l = (long)v;
             l = v;
 
-            Console.Log((long)v);
-            Console.Log((long)(v));
-            Console.Log((long)(1 + 1));
-            Console.Log((long)(2));
-            Console.Log((long)7);
+            Console.WriteLine((long)v);
+            Console.WriteLine((long)(v));
+            Console.WriteLine((long)(1 + 1));
+            Console.WriteLine((long)(2));
+            Console.WriteLine((long)7);
             MethodLong(v);
             MethodLong((long)v);
         }
@@ -39,11 +39,11 @@ namespace TestIssue1230
             decimal l = (decimal)v;
             l = v;
 
-            Console.Log((decimal)v);
-            Console.Log((decimal)(v));
-            Console.Log((decimal)(1 + 1));
-            Console.Log((decimal)(2));
-            Console.Log((decimal)7);
+            Console.WriteLine((decimal)v);
+            Console.WriteLine((decimal)(v));
+            Console.WriteLine((decimal)(1 + 1));
+            Console.WriteLine((decimal)(2));
+            Console.WriteLine((decimal)7);
             MethodDecimal(v);
             MethodDecimal((decimal)v);
         }
@@ -54,11 +54,11 @@ namespace TestIssue1230
             int l = (int)v;
             l = v;
 
-            Console.Log((int)v);
-            Console.Log((int)(v));
-            Console.Log((int)(1 + 1));
-            Console.Log((int)(2));
-            Console.Log((int)7);
+            Console.WriteLine((int)v);
+            Console.WriteLine((int)(v));
+            Console.WriteLine((int)(1 + 1));
+            Console.WriteLine((int)(2));
+            Console.WriteLine((int)7);
             MethodInt(v);
             MethodInt((int)v);
         }
