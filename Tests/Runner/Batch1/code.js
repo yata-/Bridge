@@ -4520,6 +4520,333 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1170', {
+        statics: {
+            testAsyncUsing: function () {
+                var $step = 0,
+                    $task1, 
+                    $task2, 
+                    $task3, 
+                    $jumpFromFinally, 
+                    $returnValue, 
+                    done, 
+                    parent, 
+                    parent2, 
+                    _bridgeTmp_1, 
+                    $async_e, 
+                    c1, 
+                    $async_e1, 
+                    c11, 
+                    c2, 
+                    $async_e2, 
+                    $async_e3, 
+                    $async_e4, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        try {
+                            for (;;) {
+                                $step = Bridge.Array.min([0,1,2,3,4,5,6,7,8,9,10,11,12,14,15], $step);
+                                switch ($step) {
+                                    case 0: {
+                                        done = Bridge.Test.Assert.async();
+                                        parent = new Bridge.ClientTest.BridgeIssues.Bridge1170();
+                                        parent2 = new Bridge.ClientTest.BridgeIssues.Bridge1170();
+                                        
+                                        _bridgeTmp_1 = new Bridge.ClientTest.BridgeIssues.Bridge1170.Class1("constructor$1", parent);
+                                        $step = 1;
+                                        continue;
+                                    }
+                                    case 1: {
+                                        $task3 = Bridge.Task.delay(1);
+                                        $step = 2;
+                                        $task3.continueWith($asyncBody, true);
+                                        return;
+                                    }
+                                    case 2: {
+                                        $task3.getAwaitedResult();
+                                        Bridge.Test.Assert.$false(parent.isDisposed);
+                                        $step = 3;
+                                        continue;
+                                    }
+                                    case 3: {
+                                        if (Bridge.hasValue(_bridgeTmp_1)) _bridgeTmp_1.dispose();
+                                        
+                                        if ($jumpFromFinally > -1) {
+                                            $step = $jumpFromFinally;
+                                            $jumpFromFinally = null;
+                                        } else if ($async_e) {
+                                            throw $async_e;
+                                            return;
+                                        } else if (Bridge.isDefined($returnValue)) {
+                                            $tcs.setResult($returnValue);
+                                            return;
+                                        }
+                                        $step = 4;
+                                        continue;
+                                    }
+                                    case 4: {
+                                        
+                                        Bridge.Test.Assert.$true(parent.isDisposed);
+                                        
+                                        parent.isDisposed = false;
+                                        c1 = new Bridge.ClientTest.BridgeIssues.Bridge1170.Class1("constructor$1", parent);
+                                        $step = 5;
+                                        continue;
+                                    }
+                                    case 5: {
+                                        $task2 = Bridge.Task.delay(1);
+                                        $step = 6;
+                                        $task2.continueWith($asyncBody, true);
+                                        return;
+                                    }
+                                    case 6: {
+                                        $task2.getAwaitedResult();
+                                        Bridge.Test.Assert.$false(c1.isDisposed);
+                                        Bridge.Test.Assert.$false(parent.isDisposed);
+                                        $step = 7;
+                                        continue;
+                                    }
+                                    case 7: {
+                                        if (Bridge.hasValue(c1)) c1.dispose();
+                                        
+                                        if ($jumpFromFinally > -1) {
+                                            $step = $jumpFromFinally;
+                                            $jumpFromFinally = null;
+                                        } else if ($async_e) {
+                                            throw $async_e;
+                                            return;
+                                        } else if (Bridge.isDefined($returnValue)) {
+                                            $tcs.setResult($returnValue);
+                                            return;
+                                        }
+                                        $step = 8;
+                                        continue;
+                                    }
+                                    case 8: {
+                                        
+                                        Bridge.Test.Assert.$true(parent.isDisposed);
+                                        
+                                        parent.isDisposed = false;
+                                        c11 = new Bridge.ClientTest.BridgeIssues.Bridge1170.Class1("constructor$1", parent);
+                                        $step = 9;
+                                        continue;
+                                    }
+                                    case 9: {
+                                        c2 = new Bridge.ClientTest.BridgeIssues.Bridge1170.Class1("constructor$1", parent2);
+                                        $step = 10;
+                                        continue;
+                                    }
+                                    case 10: {
+                                        $task1 = Bridge.Task.delay(1);
+                                        $step = 11;
+                                        $task1.continueWith($asyncBody, true);
+                                        return;
+                                    }
+                                    case 11: {
+                                        $task1.getAwaitedResult();
+                                        Bridge.Test.Assert.$false(c11.isDisposed);
+                                        Bridge.Test.Assert.$false(c2.isDisposed);
+                                        $step = 12;
+                                        continue;
+                                    }
+                                    case 12: {
+                                        if (Bridge.hasValue(c2)) c2.dispose();
+                                        
+                                        if ($jumpFromFinally > -1) {
+                                            $step = 14;
+                                            continue;
+                                        } else if ($async_e) {
+                                            throw $async_e;
+                                            return;
+                                        } else if (Bridge.isDefined($returnValue)) {
+                                            $step = 14;
+                                            continue;
+                                        }
+                                        $step = 13;
+                                        continue;
+                                    }
+    
+                                    case 14: {
+                                        if (Bridge.hasValue(c1)) c1.dispose();
+                                        
+                                        if ($jumpFromFinally > -1) {
+                                            $step = $jumpFromFinally;
+                                            $jumpFromFinally = null;
+                                        } else if ($async_e) {
+                                            throw $async_e;
+                                            return;
+                                        } else if (Bridge.isDefined($returnValue)) {
+                                            $tcs.setResult($returnValue);
+                                            return;
+                                        }
+                                        $step = 15;
+                                        continue;
+                                    }
+                                    case 15: {
+                                        
+                                        Bridge.Test.Assert.$true(parent.isDisposed);
+                                        Bridge.Test.Assert.$true(parent2.isDisposed);
+                                        
+                                        
+                                        done();
+                                        return;
+                                    }
+                                    default: {
+                                        return;
+                                    }
+                                }
+                            }
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            if ($step >= 1 && $step <= 2){
+    
+                                $step = 3;
+                                $asyncBody();
+                                return;
+                            }
+                            if ($step >= 5 && $step <= 6){
+    
+                                $step = 7;
+                                $asyncBody();
+                                return;
+                            }
+                            if ($step >= 10 && $step <= 11){
+    
+                                $step = 12;
+                                $asyncBody();
+                                return;
+                            }
+                            if ($step >= 9 && $step <= 13){
+    
+                                $step = 14;
+                                $asyncBody();
+                                return;
+                            }
+                            throw $async_e;
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+            },
+            testAsyncUsingWithException: function () {
+                var $step = 0,
+                    $task1, 
+                    $jumpFromFinally, 
+                    $returnValue, 
+                    done, 
+                    parent, 
+                    _bridgeTmp_2, 
+                    $async_e, 
+                    e, 
+                    $async_e1, 
+                    $async_e2, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        try {
+                            for (;;) {
+                                $step = Bridge.Array.min([0,1,2,3,4,5,6,7], $step);
+                                switch ($step) {
+                                    case 0: {
+                                        done = Bridge.Test.Assert.async();
+                                        parent = new Bridge.ClientTest.BridgeIssues.Bridge1170();
+                                        $step = 1;
+                                        continue;
+                                    }
+                                    case 1: {
+                                        _bridgeTmp_2 = new Bridge.ClientTest.BridgeIssues.Bridge1170.Class1("constructor$1", parent);
+                                        $step = 2;
+                                        continue;
+                                    }
+                                    case 2: {
+                                        $task1 = Bridge.Task.delay(1);
+                                        $step = 3;
+                                        $task1.continueWith($asyncBody, true);
+                                        return;
+                                    }
+                                    case 3: {
+                                        $task1.getAwaitedResult();
+                                        throw new Bridge.InvalidOperationException("Bridge1170 test");
+                                        $step = 4;
+                                        continue;
+                                    }
+                                    case 4: {
+                                        if (Bridge.hasValue(_bridgeTmp_2)) _bridgeTmp_2.dispose();
+                                        
+                                        if ($jumpFromFinally > -1) {
+                                            $step = $jumpFromFinally;
+                                            $jumpFromFinally = null;
+                                        } else if ($async_e) {
+                                            throw $async_e;
+                                            return;
+                                        } else if (Bridge.isDefined($returnValue)) {
+                                            $tcs.setResult($returnValue);
+                                            return;
+                                        }
+                                        $step = 5;
+                                        continue;
+                                    }
+                                    case 5: {
+                                        $step = 7;
+                                        continue;
+                                    }
+                                    case 6: {
+                                        Bridge.Test.Assert.areEqual("Bridge1170 test", e.getMessage());
+                                        $step = 7;
+                                        continue;
+                                    }
+                                    case 7: {
+                                        
+                                        Bridge.Test.Assert.$true(parent.isDisposed);
+                                        
+                                        done();
+                                        return;
+                                    }
+                                    default: {
+                                        return;
+                                    }
+                                }
+                            }
+                        } catch($async_e1) {
+                            $async_e = Bridge.Exception.create($async_e1);
+                            if ($step >= 2 && $step <= 3){
+    
+                                $step = 4;
+                                $asyncBody();
+                                return;
+                            }
+                            if ( $step >= 1 && $step <= 5 ){
+                                if (Bridge.is($async_e, Bridge.InvalidOperationException)) {
+                                    e = $async_e;
+                                    $step = 6;
+                                    $asyncBody();
+                                    return;
+                                }
+                            }
+                            throw $async_e;
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+            }
+        },
+        isDisposed: false
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1170.Class1', {
+        inherits: [Bridge.IDisposable],
+        isDisposed: false,
+        parent: null,
+        constructor: function () {
+        },
+        constructor$1: function (parent) {
+            this.parent = parent;
+        },
+        dispose: function () {
+            if (this.parent != null) {
+                this.parent.isDisposed = true;
+            }
+            this.isDisposed = true;
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1171', {
         statics: {
             testLinqEnumerableInList: function () {
@@ -5025,55 +5352,31 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var i = { };
                 Bridge.ClientTest.BridgeIssues.Bridge1202.intField = 0;
     
-                if (Bridge.Int32.tryParse(s, i)) {
-                    Bridge.Test.Assert.areEqual(1, i.v);
-                }
-                else  {
-                    Bridge.Test.Assert.fail();
-                }
+                Bridge.Test.Assert.$true(Bridge.Int32.tryParse(s, i));
+                Bridge.Test.Assert.areEqual(1, i.v);
     
-                if (Bridge.Int32.tryParse(s, Bridge.ref(Bridge.ClientTest.BridgeIssues.Bridge1202, "intField"))) {
-                    Bridge.Test.Assert.areEqual(1, Bridge.ClientTest.BridgeIssues.Bridge1202.intField);
-                }
-                else  {
-                    Bridge.Test.Assert.fail();
-                }
+                Bridge.Test.Assert.$true(Bridge.Int32.tryParse(s, Bridge.ref(Bridge.ClientTest.BridgeIssues.Bridge1202, "intField")));
+                Bridge.Test.Assert.areEqual(1, Bridge.ClientTest.BridgeIssues.Bridge1202.intField);
             },
             testInlineOutStatic1DIntArray: function () {
                 var s = "1";
                 Bridge.ClientTest.BridgeIssues.Bridge1202.array = [0, 0];
     
-                if (Bridge.Int32.tryParse(s, Bridge.ref(Bridge.ClientTest.BridgeIssues.Bridge1202.array, 0))) {
-                    Bridge.Test.Assert.areEqual(1, Bridge.ClientTest.BridgeIssues.Bridge1202.array[0]);
-                }
-                else  {
-                    Bridge.Test.Assert.fail();
-                }
+                Bridge.Test.Assert.$true(Bridge.Int32.tryParse(s, Bridge.ref(Bridge.ClientTest.BridgeIssues.Bridge1202.array, 0)));
+                Bridge.Test.Assert.areEqual(1, Bridge.ClientTest.BridgeIssues.Bridge1202.array[0]);
     
-                if (Bridge.Int32.tryParse(s, Bridge.ref(Bridge.ClientTest.BridgeIssues.Bridge1202.array, Bridge.ClientTest.BridgeIssues.Bridge1202.array[1]))) {
-                    Bridge.Test.Assert.areEqual(1, Bridge.ClientTest.BridgeIssues.Bridge1202.array[Bridge.ClientTest.BridgeIssues.Bridge1202.array[1]]);
-                }
-                else  {
-                    Bridge.Test.Assert.fail();
-                }
+                Bridge.Test.Assert.$true(Bridge.Int32.tryParse(s, Bridge.ref(Bridge.ClientTest.BridgeIssues.Bridge1202.array, Bridge.ClientTest.BridgeIssues.Bridge1202.array[1])));
+                Bridge.Test.Assert.areEqual(1, Bridge.ClientTest.BridgeIssues.Bridge1202.array[Bridge.ClientTest.BridgeIssues.Bridge1202.array[1]]);
             },
             testInlineOutLocal2DIntArray: function () {
                 var s = "1";
                 var array2D = Bridge.Array.create(0, [[0, 0]], 1, 2);
     
-                if (Bridge.Int32.tryParse(s, Bridge.ref(array2D, [0, 0]))) {
-                    Bridge.Test.Assert.areEqual(1, array2D.get([0, 0]));
-                }
-                else  {
-                    Bridge.Test.Assert.fail();
-                }
+                Bridge.Test.Assert.$true(Bridge.Int32.tryParse(s, Bridge.ref(array2D, [0, 0])));
+                Bridge.Test.Assert.areEqual(1, array2D.get([0, 0]));
     
-                if (Bridge.Int32.tryParse(s, Bridge.ref(array2D, [array2D.get([0, 1]), array2D.get([0, 1])]))) {
-                    Bridge.Test.Assert.areEqual(1, array2D.get([array2D.get([0, 1]), array2D.get([0, 1])]));
-                }
-                else  {
-                    Bridge.Test.Assert.fail();
-                }
+                Bridge.Test.Assert.$true(Bridge.Int32.tryParse(s, Bridge.ref(array2D, [array2D.get([0, 1]), array2D.get([0, 1])])));
+                Bridge.Test.Assert.areEqual(1, array2D.get([array2D.get([0, 1]), array2D.get([0, 1])]));
             }
         }
     });
@@ -5286,6 +5589,36 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.ClientTest.BridgeIssues.Bridge1232.ClassB.prototype.constructor$2.call(this, str);
     
             this.setS(s);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1241', {
+        statics: {
+            testMarkElement: function () {
+                var root = document.getElementById("qunit-fixture");
+    
+                var markElement1 = document.createElement('mark');
+                Bridge.Test.Assert.notNull$1(markElement1, "MarkElement created");
+                Bridge.Test.Assert.areEqual(markElement1.tagName, "MARK");
+    
+                var p = document.createElement('p');
+                root.appendChild(p);
+    
+                markElement1.id = "markElement1";
+                p.appendChild(markElement1);
+                markElement1.innerHTML = "I'm highlighted";
+    
+                var m1 = document.getElementById("markElement1");
+                Bridge.Test.Assert.areEqual$1("I'm highlighted", m1.innerHTML, "m1.InnerHTML");
+    
+                var markElement2 = document.createElement('mark');
+                markElement2.id = "markElement2";
+                p.appendChild(markElement2);
+                markElement2.innerHTML = "Me too";
+    
+                var m2 = document.getElementById("markElement2");
+                Bridge.Test.Assert.areEqual$1("Me too", m2.innerHTML, "m2.InnerHTML");
+            }
         }
     });
     
@@ -11099,7 +11432,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                             $step = $jumpFromFinally;
                                             $jumpFromFinally = null;
                                         } else if ($async_e) {
-                                            $tcs.setException($async_e);
+                                            throw $async_e;
                                             return;
                                         } else if (Bridge.isDefined($returnValue)) {
                                             $tcs.setResult($returnValue);
@@ -15512,6 +15845,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             MODULE_REGEX: "Regex",
             MODULE_REGEX_JS: "RegexJS",
             MODULE_ENUM: "Enum",
+            MODULE_GUID: "Guid",
             MODULE_MATH: "Math",
             MODULE_DECIMAL_MATH: "Decimal Math",
             MODULE_CONVERT: "Convert",
@@ -18919,6 +19253,243 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.GuidTests', {
+        typePropertiesAreCorrect: function () {
+            Bridge.Test.Assert.areEqual(Bridge.getTypeName(Bridge.Guid), "Bridge.Guid");
+    
+            var o = Bridge.Guid.empty;
+            Bridge.Test.Assert.$true(Bridge.is(o, Bridge.Guid));
+            Bridge.Test.Assert.$true(Bridge.is(o, Bridge.IComparable$1(Bridge.Guid)));
+            Bridge.Test.Assert.$true(Bridge.is(o, Bridge.IEquatable$1(Bridge.Guid)));
+    
+            Bridge.Test.Assert.$false(Bridge.is(1, Bridge.Guid));
+            Bridge.Test.Assert.$false(Bridge.is("abcd", Bridge.Guid));
+            Bridge.Test.Assert.$false(Bridge.is("{00000000-0000-0000-0000-000000000000}", Bridge.Guid));
+        },
+        defaultValueWorks: function () {
+            var result = Bridge.getDefaultValue(Bridge.Guid);
+            Bridge.Test.Assert.$true(Bridge.is(result, Bridge.Guid));
+            Bridge.Test.Assert.areEqual(result.toString(), "00000000-0000-0000-0000-000000000000");
+        },
+        createInstanceWorks: function () {
+            var result = Bridge.createInstance(Bridge.Guid);
+            Bridge.Test.Assert.$true(Bridge.is(result, Bridge.Guid));
+            Bridge.Test.Assert.areEqual(result.toString(), "00000000-0000-0000-0000-000000000000");
+        },
+        defaultConstructorWorks: function () {
+            var result = Bridge.Guid.empty;
+            Bridge.Test.Assert.$true(Bridge.is(result, Bridge.Guid));
+            Bridge.Test.Assert.areEqual(result.toString(), "00000000-0000-0000-0000-000000000000");
+        },
+        emptyWorks: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Guid.empty.toString(), "00000000-0000-0000-0000-000000000000");
+        },
+        toStringWithoutArgumentsWorks: function () {
+            var guid = Bridge.Guid.parse("223310CC-1F48-4489-B87E-88C779C77CB3");
+            Bridge.Test.Assert.areEqual(guid.toString(), "223310cc-1f48-4489-b87e-88c779c77cb3");
+        },
+        byteArrayConstructorWorks: function () {
+            var g = Bridge.Guid.fromBytes([120, 149, 98, 168, 38, 122, 69, 97, 144, 50, 217, 26, 61, 84, 189, 104]);
+            Bridge.Test.Assert.true$1(Bridge.is(g, Bridge.Guid), "Should be Guid");
+            Bridge.Test.Assert.areEqual$1(g.toString(), "789562a8-267a-4561-9032-d91a3d54bd68", "value");
+            Bridge.Test.Assert.throws$4($_.Bridge.ClientTest.GuidTests.f1, Bridge.ArgumentException, "Invalid array should throw");
+        },
+        int32Int16Int16ByteArrayConstructorWorks: function () {
+            var g = Bridge.Guid.fromBytes([(2023056040 >> 24) & 0xff, (2023056040 >> 16) & 0xff, (2023056040 >> 8) & 0xff, 2023056040 & 0xff, (9850 >> 8) & 0xff, 9850 & 0xff, (17761 >> 8) & 0xff, 17761 & 0xff].concat([144, 50, 217, 26, 61, 84, 189, 104]));
+            Bridge.Test.Assert.true$1(Bridge.is(g, Bridge.Guid), "Should be Guid");
+            Bridge.Test.Assert.areEqual$1(g.toString(), "789562a8-267a-4561-9032-d91a3d54bd68", "value");
+        },
+        int32Int16Int16BytesConstructorWorks: function () {
+            var g = Bridge.Guid.fromBytes([(2023056040 >> 24) & 0xff, (2023056040 >> 16) & 0xff, (2023056040 >> 8) & 0xff, 2023056040 & 0xff, (9850 >> 8) & 0xff, 9850 & 0xff, (17761 >> 8) & 0xff, 17761 & 0xff, 144 & 0xff, 50 & 0xff, 217 & 0xff, 26 & 0xff, 61 & 0xff, 84 & 0xff, 189 & 0xff, 104 & 0xff]);
+            Bridge.Test.Assert.true$1(Bridge.is(g, Bridge.Guid), "Should be Guid");
+            Bridge.Test.Assert.areEqual$1(g.toString(), "789562a8-267a-4561-9032-d91a3d54bd68", "value");
+        },
+        uInt32UInt16UInt16BytesConstructorWorks: function () {
+            var g = Bridge.Guid.fromBytes([(2023056040 >> 24) & 0xff, (2023056040 >> 16) & 0xff, (2023056040 >> 8) & 0xff, 2023056040 & 0xff, (9850 >> 8) & 0xff, 9850 & 0xff, (17761 >> 8) & 0xff, 17761 & 0xff, 144 & 0xff, 50 & 0xff, 217 & 0xff, 26 & 0xff, 61 & 0xff, 84 & 0xff, 189 & 0xff, 104 & 0xff]);
+            Bridge.Test.Assert.true$1(Bridge.is(g, Bridge.Guid), "Should be Guid");
+            Bridge.Test.Assert.areEqual$1(g.toString(), "789562a8-267a-4561-9032-d91a3d54bd68", "value");
+        },
+        stringConstructorWorks: function () {
+            var g1 = Bridge.Guid.parse("A6993C0A-A8CB-45D9-994B-90E7203E4FC6");
+            var g2 = Bridge.Guid.parse("{A6993C0A-A8CB-45D9-994B-90E7203E4FC6}");
+            var g3 = Bridge.Guid.parse("(A6993C0A-A8CB-45D9-994B-90E7203E4FC6)");
+            var g4 = Bridge.Guid.parse("A6993C0AA8CB45D9994B90E7203E4FC6");
+            Bridge.Test.Assert.$true(Bridge.is(g1, Bridge.Guid));
+            Bridge.Test.Assert.$true(Bridge.is(g2, Bridge.Guid));
+            Bridge.Test.Assert.$true(Bridge.is(g3, Bridge.Guid));
+            Bridge.Test.Assert.$true(Bridge.is(g4, Bridge.Guid));
+            Bridge.Test.Assert.areEqual$1(g1.toString(), "a6993c0a-a8cb-45d9-994b-90e7203e4fc6", "g1");
+            Bridge.Test.Assert.areEqual$1(g2.toString(), "a6993c0a-a8cb-45d9-994b-90e7203e4fc6", "g2");
+            Bridge.Test.Assert.areEqual$1(g3.toString(), "a6993c0a-a8cb-45d9-994b-90e7203e4fc6", "g3");
+            Bridge.Test.Assert.areEqual$1(g4.toString(), "a6993c0a-a8cb-45d9-994b-90e7203e4fc6", "g4");
+            Bridge.Test.Assert.throws$4($_.Bridge.ClientTest.GuidTests.f2, Bridge.FormatException, "Invalid should throw");
+        },
+        parseWorks: function () {
+            var g1 = Bridge.Guid.parse("A6993C0A-A8CB-45D9-994B-90E7203E4FC6");
+            var g2 = Bridge.Guid.parse("{A6993C0A-A8CB-45D9-994B-90E7203E4FC6}");
+            var g3 = Bridge.Guid.parse("(A6993C0A-A8CB-45D9-994B-90E7203E4FC6)");
+            var g4 = Bridge.Guid.parse("A6993C0AA8CB45D9994B90E7203E4FC6");
+            Bridge.Test.Assert.$true(Bridge.is(g1, Bridge.Guid));
+            Bridge.Test.Assert.$true(Bridge.is(g2, Bridge.Guid));
+            Bridge.Test.Assert.$true(Bridge.is(g3, Bridge.Guid));
+            Bridge.Test.Assert.$true(Bridge.is(g4, Bridge.Guid));
+            Bridge.Test.Assert.areEqual$1(g1.toString(), "a6993c0a-a8cb-45d9-994b-90e7203e4fc6", "g1");
+            Bridge.Test.Assert.areEqual$1(g2.toString(), "a6993c0a-a8cb-45d9-994b-90e7203e4fc6", "g2");
+            Bridge.Test.Assert.areEqual$1(g3.toString(), "a6993c0a-a8cb-45d9-994b-90e7203e4fc6", "g3");
+            Bridge.Test.Assert.areEqual$1(g4.toString(), "a6993c0a-a8cb-45d9-994b-90e7203e4fc6", "g4");
+            Bridge.Test.Assert.throws$4($_.Bridge.ClientTest.GuidTests.f2, Bridge.FormatException, "Invalid should throw");
+        },
+        parseExactWorks: function () {
+            var g1 = Bridge.Guid.parse("A6993C0A-A8CB-45D9-994B-90E7203E4FC6", "D");
+            var g2 = Bridge.Guid.parse("{A6993C0A-A8CB-45D9-994B-90E7203E4FC6}", "B");
+            var g3 = Bridge.Guid.parse("(A6993C0A-A8CB-45D9-994B-90E7203E4FC6)", "P");
+            var g4 = Bridge.Guid.parse("A6993C0AA8CB45D9994B90E7203E4FC6", "N");
+            Bridge.Test.Assert.$true(Bridge.is(g1, Bridge.Guid));
+            Bridge.Test.Assert.$true(Bridge.is(g2, Bridge.Guid));
+            Bridge.Test.Assert.$true(Bridge.is(g3, Bridge.Guid));
+            Bridge.Test.Assert.$true(Bridge.is(g4, Bridge.Guid));
+            Bridge.Test.Assert.areEqual$1(g1.toString(), "a6993c0a-a8cb-45d9-994b-90e7203e4fc6", "g1");
+            Bridge.Test.Assert.areEqual$1(g2.toString(), "a6993c0a-a8cb-45d9-994b-90e7203e4fc6", "g2");
+            Bridge.Test.Assert.areEqual$1(g3.toString(), "a6993c0a-a8cb-45d9-994b-90e7203e4fc6", "g3");
+            Bridge.Test.Assert.areEqual$1(g4.toString(), "a6993c0a-a8cb-45d9-994b-90e7203e4fc6", "g4");
+            Bridge.Test.Assert.throws$4($_.Bridge.ClientTest.GuidTests.f3, Bridge.FormatException, "Invalid B should throw");
+            Bridge.Test.Assert.throws$4($_.Bridge.ClientTest.GuidTests.f4, Bridge.FormatException, "Invalid P should throw");
+            Bridge.Test.Assert.throws$4($_.Bridge.ClientTest.GuidTests.f5, Bridge.FormatException, "Invalid N should throw");
+            Bridge.Test.Assert.throws$4($_.Bridge.ClientTest.GuidTests.f6, Bridge.FormatException, "Invalid D should throw");
+        },
+        tryParseWorks: function () {
+            var g1 = { }, g2 = { }, g3 = { }, g4 = { }, g5 = { };
+            Bridge.Test.Assert.true$1(Bridge.Guid.tryParse("A6993C0A-A8CB-45D9-994B-90E7203E4FC6", null, g1), "g1 result");
+            Bridge.Test.Assert.true$1(Bridge.Guid.tryParse("{A6993C0A-A8CB-45D9-994B-90E7203E4FC6}", null, g2), "g2 result");
+            Bridge.Test.Assert.true$1(Bridge.Guid.tryParse("(A6993C0A-A8CB-45D9-994B-90E7203E4FC6)", null, g3), "g3 result");
+            Bridge.Test.Assert.true$1(Bridge.Guid.tryParse("A6993C0AA8CB45D9994B90E7203E4FC6", null, g4), "g4 result");
+            Bridge.Test.Assert.false$1(Bridge.Guid.tryParse("x", null, g5), "Invalid should throw");
+            Bridge.Test.Assert.true$1(Bridge.is(g1.v, Bridge.Guid), "g1 is Guid");
+            Bridge.Test.Assert.true$1(Bridge.is(g2.v, Bridge.Guid), "g2 is Guid");
+            Bridge.Test.Assert.true$1(Bridge.is(g3.v, Bridge.Guid), "g3 is Guid");
+            Bridge.Test.Assert.true$1(Bridge.is(g4.v, Bridge.Guid), "g4 is Guid");
+            Bridge.Test.Assert.true$1(Bridge.is(g5.v, Bridge.Guid), "g5 is Guid");
+            Bridge.Test.Assert.areEqual$1(g1.v.toString(), "a6993c0a-a8cb-45d9-994b-90e7203e4fc6", "g1");
+            Bridge.Test.Assert.areEqual$1(g2.v.toString(), "a6993c0a-a8cb-45d9-994b-90e7203e4fc6", "g2");
+            Bridge.Test.Assert.areEqual$1(g3.v.toString(), "a6993c0a-a8cb-45d9-994b-90e7203e4fc6", "g3");
+            Bridge.Test.Assert.areEqual$1(g4.v.toString(), "a6993c0a-a8cb-45d9-994b-90e7203e4fc6", "g4");
+            Bridge.Test.Assert.areEqual$1(g5.v.toString(), "00000000-0000-0000-0000-000000000000", "g5");
+        },
+        tryParseExactWorks: function () {
+            var g1 = { }, g2 = { }, g3 = { }, g4 = { }, g5 = { }, g6 = { }, g7 = { }, g8 = { };
+            Bridge.Test.Assert.true$1(Bridge.Guid.tryParse("A6993C0A-A8CB-45D9-994B-90E7203E4FC6", "D", g1), "g1 result");
+            Bridge.Test.Assert.true$1(Bridge.Guid.tryParse("{A6993C0A-A8CB-45D9-994B-90E7203E4FC6}", "B", g2), "g2 result");
+            Bridge.Test.Assert.true$1(Bridge.Guid.tryParse("(A6993C0A-A8CB-45D9-994B-90E7203E4FC6)", "P", g3), "g3 result");
+            Bridge.Test.Assert.true$1(Bridge.Guid.tryParse("A6993C0AA8CB45D9994B90E7203E4FC6", "N", g4), "g4 result");
+            Bridge.Test.Assert.false$1(Bridge.Guid.tryParse("A6993C0A-A8CB-45D9-994B-90E7203E4FC6", "B", g5), "g5 result");
+            Bridge.Test.Assert.false$1(Bridge.Guid.tryParse("A6993C0A-A8CB-45D9-994B-90E7203E4FC6", "P", g6), "g6 result");
+            Bridge.Test.Assert.false$1(Bridge.Guid.tryParse("A6993C0A-A8CB-45D9-994B-90E7203E4FC6", "N", g7), "g7 result");
+            Bridge.Test.Assert.false$1(Bridge.Guid.tryParse("A6993C0AA8CB45D9994B90E7203E4FC6", "D", g8), "g8 result");
+            Bridge.Test.Assert.$true(Bridge.is(g1.v, Bridge.Guid));
+            Bridge.Test.Assert.$true(Bridge.is(g2.v, Bridge.Guid));
+            Bridge.Test.Assert.$true(Bridge.is(g3.v, Bridge.Guid));
+            Bridge.Test.Assert.$true(Bridge.is(g4.v, Bridge.Guid));
+            Bridge.Test.Assert.$true(Bridge.is(g5.v, Bridge.Guid));
+            Bridge.Test.Assert.$true(Bridge.is(g6.v, Bridge.Guid));
+            Bridge.Test.Assert.$true(Bridge.is(g7.v, Bridge.Guid));
+            Bridge.Test.Assert.$true(Bridge.is(g8.v, Bridge.Guid));
+            Bridge.Test.Assert.areEqual$1(g1.v.toString(), "a6993c0a-a8cb-45d9-994b-90e7203e4fc6", "g1");
+            Bridge.Test.Assert.areEqual$1(g2.v.toString(), "a6993c0a-a8cb-45d9-994b-90e7203e4fc6", "g2");
+            Bridge.Test.Assert.areEqual$1(g3.v.toString(), "a6993c0a-a8cb-45d9-994b-90e7203e4fc6", "g3");
+            Bridge.Test.Assert.areEqual$1(g4.v.toString(), "a6993c0a-a8cb-45d9-994b-90e7203e4fc6", "g4");
+            Bridge.Test.Assert.areEqual$1(g5.v.toString(), "00000000-0000-0000-0000-000000000000", "g5");
+            Bridge.Test.Assert.areEqual$1(g6.v.toString(), "00000000-0000-0000-0000-000000000000", "g6");
+            Bridge.Test.Assert.areEqual$1(g7.v.toString(), "00000000-0000-0000-0000-000000000000", "g7");
+            Bridge.Test.Assert.areEqual$1(g8.v.toString(), "00000000-0000-0000-0000-000000000000", "g8");
+        },
+        compareToWorks: function () {
+            var g = Bridge.Guid.parse("F3D8B3C0-88F0-4148-844C-232ED03C153C");
+            Bridge.Test.Assert.areEqual$1(Bridge.compare(g, Bridge.Guid.parse("F3D8B3C0-88F0-4148-844C-232ED03C153C")), 0, "equal");
+            Bridge.Test.Assert.areNotEqual$1(Bridge.compare(g, Bridge.Guid.parse("E4C221BE-9B39-4398-B82A-48BA4648CAE0")), 0, "not equal");
+        },
+        iComparableCompareToWorks: function () {
+            var g = Bridge.cast(Bridge.Guid.parse("F3D8B3C0-88F0-4148-844C-232ED03C153C"), Bridge.IComparable$1(Bridge.Guid));
+            Bridge.Test.Assert.areEqual$1(Bridge.compare(g, Bridge.Guid.parse("F3D8B3C0-88F0-4148-844C-232ED03C153C")), 0, "Equal");
+            Bridge.Test.Assert.areNotEqual$1(Bridge.compare(g, Bridge.Guid.parse("E4C221BE-9B39-4398-B82A-48BA4648CAE0")), 0, "Not equal");
+        },
+        equalsObjectWorks: function () {
+            var g = Bridge.Guid.parse("F3D8B3C0-88F0-4148-844C-232ED03C153C");
+            Bridge.Test.Assert.true$1(Bridge.equals(g, Bridge.Guid.parse("F3D8B3C0-88F0-4148-844C-232ED03C153C")), "Equal");
+            Bridge.Test.Assert.false$1(Bridge.equals(g, Bridge.Guid.parse("E4C221BE-9B39-4398-B82A-48BA4648CAE0")), "Not equal");
+            Bridge.Test.Assert.false$1(Bridge.equals(g, "X"), "Not equal");
+        },
+        equalsGuidWorks: function () {
+            var g = Bridge.Guid.parse("F3D8B3C0-88F0-4148-844C-232ED03C153C");
+            Bridge.Test.Assert.true$1(Bridge.equalsT(g, Bridge.Guid.parse("F3D8B3C0-88F0-4148-844C-232ED03C153C")), "Equal");
+            Bridge.Test.Assert.false$1(Bridge.equalsT(g, Bridge.Guid.parse("E4C221BE-9B39-4398-B82A-48BA4648CAE0")), "Not equal");
+        },
+        iEquatableEqualsWorks: function () {
+            var g = Bridge.cast(Bridge.Guid.parse("F3D8B3C0-88F0-4148-844C-232ED03C153C"), Bridge.IEquatable$1(Bridge.Guid));
+            Bridge.Test.Assert.true$1(Bridge.equalsT(g, Bridge.Guid.parse("F3D8B3C0-88F0-4148-844C-232ED03C153C")), "Equal");
+            Bridge.Test.Assert.false$1(Bridge.equalsT(g, Bridge.Guid.parse("E4C221BE-9B39-4398-B82A-48BA4648CAE0")), "Not equal");
+        },
+        getHashCodeWorks: function () {
+            Bridge.Test.Assert.areEqual(Bridge.getHashCode(Bridge.Guid.parse("F3D8B3C0-88F0-4148-844C-232ED03C153C")), Bridge.getHashCode(Bridge.Guid.parse("f3d8b3c0-88f0-4148-844c-232ed03c153c")));
+            Bridge.Test.Assert.areNotEqual(Bridge.getHashCode(Bridge.Guid.parse("F3D8B3C0-88F0-4148-844C-232ED03C153C")), Bridge.getHashCode(Bridge.Guid.parse("F3D8B3C0-88F0-4148-844C-232ED03C153D")));
+        },
+        equalityOperatorWorks: function () {
+            Bridge.Test.Assert.true$1(Bridge.Guid.parse("D311FC20-D7B6-40B6-88DB-9CD92AED6628") === Bridge.Guid.parse("D311FC20-D7B6-40B6-88DB-9CD92AED6628"), "Equal");
+            Bridge.Test.Assert.false$1(Bridge.Guid.parse("D311FC20-D7B6-40B6-88DB-9CD92AED6628") === Bridge.Guid.parse("A317804C-A583-4857-804F-A0D276008C82"), "Not equal");
+        },
+        inequalityOperatorWorks: function () {
+            Bridge.Test.Assert.false$1(Bridge.Guid.parse("D311FC20-D7B6-40B6-88DB-9CD92AED6628") !== Bridge.Guid.parse("D311FC20-D7B6-40B6-88DB-9CD92AED6628"), "Equal");
+            Bridge.Test.Assert.true$1(Bridge.Guid.parse("D311FC20-D7B6-40B6-88DB-9CD92AED6628") !== Bridge.Guid.parse("A317804C-A583-4857-804F-A0D276008C82"), "Not equal");
+        },
+        toStringWithFormatWorks: function () {
+            var g = Bridge.Guid.parse("DE33AC65-09CB-465C-AD7E-53124B2104E8");
+            Bridge.Test.Assert.areEqual$1(Bridge.Guid.format(g, "N"), "de33ac6509cb465cad7e53124b2104e8", "N");
+            Bridge.Test.Assert.areEqual$1(Bridge.Guid.format(g, "D"), "de33ac65-09cb-465c-ad7e-53124b2104e8", "D");
+            Bridge.Test.Assert.areEqual$1(Bridge.Guid.format(g, "B"), "{de33ac65-09cb-465c-ad7e-53124b2104e8}", "B");
+            Bridge.Test.Assert.areEqual$1(Bridge.Guid.format(g, "P"), "(de33ac65-09cb-465c-ad7e-53124b2104e8)", "P");
+            Bridge.Test.Assert.areEqual$1(Bridge.Guid.format(g, ""), "de33ac65-09cb-465c-ad7e-53124b2104e8", "empty");
+            Bridge.Test.Assert.areEqual$1(Bridge.Guid.format(g, null), "de33ac65-09cb-465c-ad7e-53124b2104e8", "null");
+        },
+        newGuidWorks: function () {
+            var d = new Bridge.Dictionary$2(String,Object)();
+            for (var i = 0; i < 1000; i = (i + 1) | 0) {
+                var g = Bridge.Guid.newGuid();
+                Bridge.Test.Assert.true$1(Bridge.is(g, Bridge.Guid), "Generated Guid should be Guid");
+                var s = Bridge.Guid.format(g, "N");
+                Bridge.Test.Assert.true$1(s.charCodeAt(16) === 56 || s.charCodeAt(16) === 57 || s.charCodeAt(16) === 97 || s.charCodeAt(16) === 98, "Should be standard guid");
+                Bridge.Test.Assert.true$1(s.charCodeAt(12) === 52, "Should be type 4 guid");
+                d.set(s, null);
+            }
+            Bridge.Test.Assert.areEqual$1(d.getCount(), 1000, "No duplicates should have been generated");
+        },
+        toByteArrayWorks: function () {
+            var g = Bridge.Guid.parse("8440F854-0C0B-4355-9722-1608D62E8F87");
+            Bridge.Test.Assert.areEqual(Bridge.Guid.getBytes(g), [132, 64, 248, 84, 12, 11, 67, 85, 151, 34, 22, 8, 214, 46, 143, 135]);
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.GuidTests", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.GuidTests, {
+        f1: function () {
+            Bridge.Guid.fromBytes([120, 149, 98, 168, 38, 122]);
+        },
+        f2: function () {
+            Bridge.Guid.parse("x");
+        },
+        f3: function () {
+            Bridge.Guid.parse("A6993C0A-A8CB-45D9-994B-90E7203E4FC6", "B");
+        },
+        f4: function () {
+            Bridge.Guid.parse("A6993C0A-A8CB-45D9-994B-90E7203E4FC6", "P");
+        },
+        f5: function () {
+            Bridge.Guid.parse("A6993C0A-A8CB-45D9-994B-90E7203E4FC6", "N");
+        },
+        f6: function () {
+            Bridge.Guid.parse("A6993C0AA8CB45D9994B90E7203E4FC6", "D");
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.IComparableTests', {
         callingMethodThroughIComparableInterfaceInvokesImplementingMethod: function () {
             var a = new Bridge.ClientTest.IComparableTests.MyComparable(), b = new Bridge.ClientTest.IComparableTests.MyComparable();
@@ -22029,7 +22600,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             this.assertIsDecimalAndEqualTo(Bridge.Decimal.MinusOne, -1);
         },
         defaultConstructorReturnsZero: function () {
-            this.assertIsDecimalAndEqualTo(Bridge.Decimal(), 0);
+            this.assertIsDecimalAndEqualTo(Bridge.Decimal(0), 0);
         },
         convertingConstructorsWork: function () {
             this.assertIsDecimalAndEqualTo(Bridge.Decimal(0.5), 0.5);

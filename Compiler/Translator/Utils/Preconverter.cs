@@ -1,11 +1,19 @@
 using System;
 using ICSharpCode.NRefactory.CSharp;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Bridge.Contract;
+using ICSharpCode.NRefactory.CSharp.Refactoring;
 using ICSharpCode.NRefactory.CSharp.Resolver;
+using ICSharpCode.NRefactory.MonoCSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
+using ICSharpCode.NRefactory.TypeSystem.Implementation;
+using Expression = ICSharpCode.NRefactory.CSharp.Expression;
+using ExpressionStatement = ICSharpCode.NRefactory.CSharp.ExpressionStatement;
+using ParenthesizedExpression = ICSharpCode.NRefactory.CSharp.ParenthesizedExpression;
+using Statement = ICSharpCode.NRefactory.CSharp.Statement;
 
 namespace Bridge.Translator
 {
@@ -24,7 +32,7 @@ namespace Bridge.Translator
 
         public MemberResolver Resolver
         {
-            get; 
+            get;
             set;
         }
 
@@ -72,6 +80,21 @@ namespace Bridge.Translator
 
             base.VisitInvocationExpression(invocationExpression);
         }
+
+        public override void VisitUsingStatement(UsingStatement usingStatement)
+        {
+            var awaitSearch = new AwaitSearchVisitor();
+            usingStatement.AcceptVisitor(awaitSearch);
+
+            var awaiters = awaitSearch.GetAwaitExpressions().ToArray();
+
+            if (awaiters.Length > 0)
+            {
+                this.Found = true;
+            }
+
+            base.VisitUsingStatement(usingStatement);
+        }
     }
 
     public class PreconverterFixer : DepthFirstAstVisitor<AstNode>
@@ -83,7 +106,7 @@ namespace Bridge.Translator
 
         public MemberResolver Resolver
         {
-            get; 
+            get;
             set;
         }
 
@@ -108,7 +131,9 @@ namespace Bridge.Translator
             }
 
             if (newChildren == null)
+            {
                 return null;
+            }
 
             var result = node.Clone();
 
@@ -123,14 +148,106 @@ namespace Bridge.Translator
             return result;
         }
 
+        public override AstNode VisitUsingStatement(UsingStatement usingStatement)
+        {
+            var awaitSearch = new AwaitSearchVisitor();
+            usingStatement.AcceptVisitor(awaitSearch);
+
+            var awaiters = awaitSearch.GetAwaitExpressions().ToArray();
+
+            if (awaiters.Length > 0)
+            {
+                IEnumerable<AstNode> inner = null;
+
+                var res = usingStatement.ResourceAcquisition;
+                var varStat = res as VariableDeclarationStatement;
+                if (varStat != null)
+                {
+                    inner = varStat.Variables.Skip(1);
+                    res = varStat.Variables.First();
+                }
+
+                return this.EmitUsing(usingStatement, res, inner, varStat);
+            }
+
+            return base.VisitUsingStatement(usingStatement);
+        }
+
+        private static int counter = 0;
+        protected virtual string GetTempVarName()
+        {
+            return "_bridgeTmp_" + ++counter;
+        }
+
+        protected virtual Statement EmitUsing(UsingStatement usingStatement, AstNode expression, IEnumerable<AstNode> inner, VariableDeclarationStatement varStat)
+        {
+            string name = null;
+            BlockStatement wrapper = null;
+
+            var varInit = expression as VariableInitializer;
+            if (varInit != null)
+            {
+                name = varInit.Name;
+                wrapper = new BlockStatement();
+                wrapper.Statements.Add(new VariableDeclarationStatement(varStat != null ? varStat.Type.Clone() : AstType.Null, varInit.Name, varInit.Initializer.Clone()));
+            }
+            else if (expression is IdentifierExpression)
+            {
+                name = ((IdentifierExpression)expression).Identifier;
+            }
+            else
+            {
+                name = this.GetTempVarName();
+                wrapper = new BlockStatement();
+                wrapper.Statements.Add(new VariableDeclarationStatement(varStat != null ? varStat.Type.Clone() : AstType.Null, name, expression.Clone() as Expression));
+            }
+
+            var tryCatchStatement = new TryCatchStatement();
+            if (wrapper != null)
+            {
+                wrapper.Statements.Add(tryCatchStatement);
+            }
+
+            if (inner != null && inner.Any())
+            {
+                var block = new BlockStatement();
+                block.Statements.Add(this.EmitUsing(usingStatement, inner.First(), inner.Skip(1), varStat));
+                tryCatchStatement.TryBlock = block;
+            }
+            else
+            {
+                var block = usingStatement.EmbeddedStatement as BlockStatement;
+
+                if (block == null)
+                {
+                    block = new BlockStatement();
+                    block.Add(usingStatement.EmbeddedStatement.Clone());
+                }
+                else
+                {
+                    block = (BlockStatement)block.Clone();
+                }
+
+                tryCatchStatement.TryBlock = block;
+            }
+
+            var finallyBlock = new BlockStatement();
+            var dispose = new InvocationExpression(new MemberReferenceExpression(new MemberReferenceExpression(new IdentifierExpression("Bridge"), "Script"), "Write"),
+                                                   new PrimitiveExpression(string.Format("if (Bridge.hasValue({0})) {0}.dispose();", name)));
+
+            finallyBlock.Statements.Add(dispose);
+
+            tryCatchStatement.FinallyBlock = finallyBlock;
+            return wrapper ?? (Statement)tryCatchStatement;
+        }
+
         public override AstNode VisitInvocationExpression(InvocationExpression invocationExpression)
         {
             var rr = this.Resolver.ResolveNode(invocationExpression, null) as CSharpInvocationResolveResult;
 
             if (rr != null && rr.IsError)
             {
-                var clonInvocationExpression = (InvocationExpression)base.VisitInvocationExpression(invocationExpression);
-
+                InvocationExpression clonInvocationExpression = (InvocationExpression)base.VisitInvocationExpression(invocationExpression);
                 if (clonInvocationExpression == null)
                 {
                     clonInvocationExpression = (InvocationExpression)invocationExpression.Clone();
@@ -164,8 +281,7 @@ namespace Bridge.Translator
                     return base.VisitUnaryOperatorExpression(unaryOperatorExpression);
                 }
 
-                var clonUnaryOperatorExpression = (UnaryOperatorExpression)base.VisitUnaryOperatorExpression(unaryOperatorExpression);
-
+                UnaryOperatorExpression clonUnaryOperatorExpression = (UnaryOperatorExpression)base.VisitUnaryOperatorExpression(unaryOperatorExpression);
                 if (clonUnaryOperatorExpression == null)
                 {
                     clonUnaryOperatorExpression = (UnaryOperatorExpression)unaryOperatorExpression.Clone();
@@ -191,7 +307,7 @@ namespace Bridge.Translator
                         return ae;
                     }
 
-                    return new ParenthesizedExpression(ae);    
+                    return new ParenthesizedExpression(ae);
                 }
             }
 
@@ -202,12 +318,11 @@ namespace Bridge.Translator
         {
             var rr = this.Resolver.ResolveNode(assignmentExpression, null);
 
-            if (assignmentExpression.Operator != AssignmentOperatorType.Any && 
+            if (assignmentExpression.Operator != AssignmentOperatorType.Any &&
                 assignmentExpression.Operator != AssignmentOperatorType.Assign &&
                 (Helpers.IsIntegerType(rr.Type, this.Resolver)))
             {
-                var clonAssignmentExpression = (AssignmentExpression)base.VisitAssignmentExpression(assignmentExpression);
-
+                AssignmentExpression clonAssignmentExpression = (AssignmentExpression)base.VisitAssignmentExpression(assignmentExpression);
                 if (clonAssignmentExpression == null)
                 {
                     clonAssignmentExpression = (AssignmentExpression)assignmentExpression.Clone();
@@ -259,9 +374,9 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    clonAssignmentExpression.Right = new BinaryOperatorExpression(clonAssignmentExpression.Left.Clone(), opType, clonAssignmentExpression.Right.Clone());    
+                    clonAssignmentExpression.Right = new BinaryOperatorExpression(clonAssignmentExpression.Left.Clone(), opType, clonAssignmentExpression.Right.Clone());
                 }
-                
+
 
                 return clonAssignmentExpression;
             }

@@ -78,7 +78,21 @@ namespace Bridge.Translator
 
             if (invocationResolveResult != null)
             {
-                inlineCode = this.Emitter.GetInline(invocationResolveResult.Member);
+                if (invocationResolveResult.Member.DeclaringType.Kind == TypeKind.Struct && objectCreateExpression.Arguments.Count == 0)
+                {
+                    var ctors = invocationResolveResult.Member.DeclaringType.GetConstructors(c => c.Parameters.Count == 1);
+                    var defCtor = ctors.FirstOrDefault(c => c.Parameters.First().Type.FullName == "System.Runtime.CompilerServices.DummyTypeUsedToAddAttributeToDefaultValueTypeConstructor");
+
+                    if (defCtor != null)
+                    {
+                        inlineCode = this.Emitter.GetInline(defCtor);
+                    }
+                }
+
+                if (inlineCode == null)
+                {
+                    inlineCode = this.Emitter.GetInline(invocationResolveResult.Member);    
+                }
             }
 
             var customCtor = isTypeParam ? "" : (this.Emitter.Validator.GetCustomConstructor(type) ?? "");

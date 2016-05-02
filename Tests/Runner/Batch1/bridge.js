@@ -6925,6 +6925,7 @@ Bridge.define("Bridge.Text.StringBuilder", {
 
 		    conditionText = conditionText.substring(conditionText.indexOf("return") + 7);
 		    conditionText = conditionText.substr(0, conditionText.lastIndexOf(";"));
+<<<<<<< HEAD
 
 		    var failureMessage = (conditionText) ? "Contract '" + conditionText + "' failed" : "Contract failed";
 		    var displayMessage = (userMessage) ? failureMessage + ": " + userMessage : failureMessage;
@@ -7032,6 +7033,115 @@ Bridge.define("Bridge.Text.StringBuilder", {
     Bridge.define("Bridge.ContractException", {
         inherits: [Bridge.Exception],
 
+=======
+
+		    var failureMessage = (conditionText) ? "Contract '" + conditionText + "' failed" : "Contract failed";
+		    var displayMessage = (userMessage) ? failureMessage + ": " + userMessage : failureMessage;
+
+		    if (TException) {
+			    throw new TException(conditionText, userMessage);
+		    } else {
+			    throw new Bridge.ContractException(failureKind, displayMessage, userMessage, conditionText, innerException);
+		    }
+	    },
+	    assert: function (failureKind, condition, message) {
+		    if (!condition()) {
+			    Bridge.Contract.reportFailure(failureKind, message, condition, null);
+		    }
+	    },
+	    requires: function (TException, condition, message) {
+		    if (!condition()) {
+			    Bridge.Contract.reportFailure(0, message, condition, null, TException);
+		    }
+	    },
+	    forAll: function (fromInclusive, toExclusive, predicate) {
+		    if (!predicate) {
+			    throw new Bridge.ArgumentNullException("predicate");
+		    }
+
+		    for (; fromInclusive < toExclusive; fromInclusive++) {
+			    if (!predicate(fromInclusive)) {
+				    return false;
+			    }
+		    }
+
+		    return true;
+	    },
+	    forAll$1: function (collection, predicate) {
+		    if (!collection) {
+			    throw new Bridge.ArgumentNullException("collection");
+		    }
+
+		    if (!predicate) {
+			    throw new Bridge.ArgumentNullException("predicate");
+		    }
+
+		    var enumerator = Bridge.getEnumerator(collection);
+
+	        try {
+			    while (enumerator.moveNext()) {
+				    if (!predicate(enumerator.getCurrent())) {
+					    return false;
+				    }
+			    }
+			    return true;
+		    } finally {
+			    enumerator.dispose();
+		    }
+	    },
+	    exists: function (fromInclusive, toExclusive, predicate) {
+		    if (!predicate) {
+			    throw new Bridge.ArgumentNullException("predicate");
+		    }
+
+		    for (; fromInclusive < toExclusive; fromInclusive++) {
+			    if (predicate(fromInclusive)) {
+				    return true;
+			    }
+		    }
+
+		    return false;
+	    },
+	    exists$1: function (collection, predicate) {
+		    if (!collection) {
+			    throw new Bridge.ArgumentNullException("collection");
+		    }
+
+		    if (!predicate) {
+			    throw new Bridge.ArgumentNullException("predicate");
+		    }
+
+		    var enumerator = Bridge.getEnumerator(collection);
+
+	        try {
+			    while (enumerator.moveNext()) {
+				    if (predicate(enumerator.getCurrent())) {
+					    return true;
+				    }
+			    }
+			    return false;
+		    } finally {
+			    enumerator.dispose();
+		    }
+	    }
+    };
+
+    Bridge.define("Bridge.ContractFailureKind", {
+        $enum: true,
+        $statics: {
+            precondition: 0,
+            postcondition: 1,
+            postconditionOnException: 2,
+            invarian: 3,
+            assert: 4,
+            assume: 5
+        }
+    });
+
+    Bridge.define("Bridge.ContractException", {
+        inherits: [Bridge.Exception],
+
+>>>>>>> refs/remotes/origin/staging
         constructor: function (failureKind, failureMessage, userMessage, condition, innerException) {
             Bridge.Exception.prototype.$constructor.call(this, failureMessage, innerException);
             this._kind = failureKind;
@@ -14426,6 +14536,115 @@ Bridge.define('Bridge.ReadOnlyCollection$1', function (T) {
 
     Bridge.init();
 })(this);
+
+Bridge.define("Bridge.Guid", {
+    inherits: function () {
+        return [Bridge.IComparable$1(Bridge.Guid), Bridge.IEquatable$1(Bridge.Guid), Bridge.IFormattable];
+    },
+
+    statics: {
+        $valid: /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/ig,
+		$split: /^(.{8})(.{4})(.{4})(.{4})(.{12})$/,
+		empty: '00000000-0000-0000-0000-000000000000',
+
+		config: {
+		    init: function () {
+		        this.$rng = new Bridge.Random();
+		    }
+		},
+
+		instanceOf: function (instance) {
+			return typeof(instance) === 'string' && instance.match(Bridge.Guid.$valid);
+		},
+		getDefaultValue: function() {
+			return Bridge.Guid.empty;
+		},
+		parse: function(uuid, format) {
+			var r = {};
+			if (Bridge.Guid.tryParse(uuid, format, r)) {
+			    return r.v;
+			}
+			throw new Bridge.FormatException('Unable to parse UUID');
+		},
+		tryParse: function (uuid, format, r) {
+		    var m;
+		    r.v = Bridge.Guid.empty;
+			if (!Bridge.hasValue(uuid)) {
+			    throw new Bridge.ArgumentNullException('uuid');
+			} 
+			    
+			if (!format) {
+				m = /^[{(]?([0-9a-f]{8})-?([0-9a-f]{4})-?([0-9a-f]{4})-?([0-9a-f]{4})-?([0-9a-f]{12})[)}]?$/ig.exec(uuid);
+				if (m) {
+					r.v = m.slice(1).join('-').toLowerCase();
+					return true;
+				}
+			}
+			else {
+                format = format.toUpperCase();
+				if (format === 'N') {
+					m = Bridge.Guid.$split.exec(uuid);
+					if (!m) {
+					    return false;
+					}
+					uuid = m.slice(1).join('-');
+				}
+				else if (format === 'B' || format === 'P') {
+					var b = format === 'B';
+					if (uuid[0] !== (b ? '{' : '(') || uuid[uuid.length - 1] !== (b ? '}' : ')')) {
+					    return false;
+					}
+						
+					uuid = uuid.substr(1, uuid.length - 2);
+				}
+				if (uuid.match(Bridge.Guid.$valid)) {
+					r.v = uuid.toLowerCase();
+					return true;
+				}
+			}
+			return false;
+		},
+		format: function(uuid, format) {
+		    switch (format) {
+		        case 'n': 
+			    case 'N': 
+			        return uuid.replace(/-/g, '');
+		        case 'b': 
+		        case 'B': 
+		            return '{' + uuid + '}';
+		        case 'p': 
+		        case 'P': 
+		            return '(' + uuid + ')';
+		        default : 
+		            return uuid;
+			}
+		},
+		fromBytes: function(b) {
+			if (!b || b.length !== 16) {
+			    throw new Bridge.ArgumentException('b', 'Must be 16 bytes');
+			}
+				
+			var s = b.map(function(x) { return Bridge.Int.format(x & 0xff, 'x2'); }).join('');
+			return Bridge.Guid.$split.exec(s).slice(1).join('-');
+		},
+		newGuid: function () {
+			var a = Array(16);
+			Bridge.Guid.$rng.nextBytes(a);
+			a[6] = a[6] & 0x0f | 0x40;
+			a[8] = a[8] & 0xbf | 0x80;
+			return Bridge.Guid.fromBytes(a);
+		},
+		getBytes: function(uuid) {
+			var a = Array(16);
+			var s = uuid.replace(/-/g, '');
+			for (var i = 0; i < 16; i++) {
+				a[i] = parseInt(s.substr(i * 2, 2), 16);
+			}
+			return a;
+		}
+    }
+});
+
 // @source Text/RegularExpressions/Regex.js
 
 Bridge.define("Bridge.Text.RegularExpressions.Regex", {
