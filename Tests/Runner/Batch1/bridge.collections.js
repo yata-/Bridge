@@ -1729,7 +1729,7 @@
             return new Bridge.Collections.Stack$1.Enumerator(T)("constructor$1", this);
         },
         trimExcess: function () {
-            var threshold = Bridge.Int.clip32(this._array.length * 0.9);
+            var threshold = Bridge.Int.clip32((this._array.length) * 0.9);
             if (this._size < threshold) {
                 var localArray = { v : this._array };
                 Bridge.Array.resize(localArray, this._size, null);

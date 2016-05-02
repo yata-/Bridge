@@ -5446,6 +5446,48 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1217.Navigator');
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1219', {
+        statics: {
+            testLongJSON: function () {
+                var x1 = new Bridge.ClientTest.BridgeIssues.Bridge1219.TestClass1();
+                x1.setLongProperty(Bridge.Long(100));
+                Bridge.Test.Assert.areEqual("{\"LongProperty\":100}", Bridge.String.replaceAll(JSON.stringify(x1), " ", ""));
+    
+                var x2 = new Bridge.ClientTest.BridgeIssues.Bridge1219.TestClass2();
+                x2.setULongProperty(Bridge.ULong(100));
+                Bridge.Test.Assert.areEqual("{\"ULongProperty\":100}", Bridge.String.replaceAll(JSON.stringify(x2), " ", ""));
+    
+                var x3 = new Bridge.ClientTest.BridgeIssues.Bridge1219.TestClass3();
+                x3.setDecimalProperty(Bridge.Decimal(100));
+                Bridge.Test.Assert.areEqual("{\"DecimalProperty\":100}", Bridge.String.replaceAll(JSON.stringify(x3), " ", ""));
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1219.TestClass1', {
+        config: {
+            properties: {
+                LongProperty: Bridge.Long(0)
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1219.TestClass2', {
+        config: {
+            properties: {
+                ULongProperty: Bridge.ULong(0)
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1219.TestClass3', {
+        config: {
+            properties: {
+                DecimalProperty: Bridge.Decimal(0.0)
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1220', {
         statics: {
             testConstInGenericClass: function () {
