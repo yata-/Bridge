@@ -26,12 +26,12 @@ namespace Bridge.ClientTest.BridgeIssues
     [TestFixture(TestNameFormat = "#625 - {0}")]
     public class Bridge625
     {
-        [Test(ExpectedCount = 4)]
+        [Test(ExpectedCount = 5)]
         public static void TestUseCase()
         {
             var list = new int[] { 1, 2, 3 };
 
-            var d1 = list.ToDictionary(x => x);
+            Dictionary<int, int> d1 = list.ToDictionary(x => x);
             Assert.True(d1 is Dictionary<int, int>,"Bridge625 d1");
 
             var d2 = list.ToDictionary(x => x, new Bridge625A());
@@ -43,6 +43,9 @@ namespace Bridge.ClientTest.BridgeIssues
             var d4 = list.ToDictionary(x => x, y => y, new Bridge625A());
             Assert.True(d4 is Dictionary<int, int>, "Bridge625 d4");
 
+            Dictionary<DateTime, double[]> content = new Dictionary<DateTime, double[]>();
+            Dictionary<DateTime, double[]> dict1 = content.Where(x => true).ToDictionary(element => element.Key, element => element.Value);
+            Assert.AreEqual(0, dict1.Count);
         }
     }
 }

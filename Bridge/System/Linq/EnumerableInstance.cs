@@ -524,18 +524,18 @@ namespace System.Linq
         public extern TElement[] ToArray();
 
         [Template("{this}.toDictionary({keySelector}, null, {TKey}, {TElement})")]
-        public extern IDictionary<TKey, TElement> ToDictionary<TKey>(Func<TElement, TKey> keySelector);
+        public extern Dictionary<TKey, TElement> ToDictionary<TKey>(Func<TElement, TKey> keySelector);
 
         [Template("{this}.toDictionary({keySelector}, null, {TKey}, {TElement}, {comparer})")]
-        public extern IDictionary<TKey, TElement> ToDictionary<TKey>(Func<TElement, TKey> keySelector,
+        public extern Dictionary<TKey, TElement> ToDictionary<TKey>(Func<TElement, TKey> keySelector,
             IEqualityComparer<TKey> comparer);
 
         [Template("{this}.toDictionary({keySelector}, {elementSelector}, {TKey}, {TValue})")]
-        public extern IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(Func<TElement, TKey> keySelector,
+        public extern Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(Func<TElement, TKey> keySelector,
             Func<TElement, TValue> elementSelector);
 
         [Template("{this}.toDictionary({keySelector}, {elementSelector}, {TKey}, {TValue}, {comparer})")]
-        public extern IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(Func<TElement, TKey> keySelector,
+        public extern Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(Func<TElement, TKey> keySelector,
             Func<TElement, TValue> elementSelector, IEqualityComparer<TKey> comparer);
 
         public extern string ToJoinedString();

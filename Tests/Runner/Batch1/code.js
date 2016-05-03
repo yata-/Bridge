@@ -8715,6 +8715,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var d4 = Bridge.Linq.Enumerable.from(list).toDictionary($_.Bridge.ClientTest.BridgeIssues.Bridge625.f1, $_.Bridge.ClientTest.BridgeIssues.Bridge625.f2, Bridge.Int32, Bridge.Int32, new Bridge.ClientTest.BridgeIssues.Bridge625A());
                 Bridge.Test.Assert.true$1(true, "Bridge625 d4");
     
+                var content = new Bridge.Dictionary$2(Date,Array)();
+                var dict1 = Bridge.Linq.Enumerable.from(content).where($_.Bridge.ClientTest.BridgeIssues.Bridge625.f3).toDictionary($_.Bridge.ClientTest.BridgeIssues.Bridge625.f4, $_.Bridge.ClientTest.BridgeIssues.Bridge625.f5, Date, Array);
+                Bridge.Test.Assert.areEqual(0, dict1.getCount());
             }
         }
     });
@@ -8727,6 +8730,15 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         f2: function (y) {
             return y;
+        },
+        f3: function (x) {
+            return true;
+        },
+        f4: function (element) {
+            return element.key;
+        },
+        f5: function (element) {
+            return element.value;
         }
     });
     
