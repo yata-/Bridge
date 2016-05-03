@@ -19,7 +19,7 @@
             init: function () {
                 this.integerArray = [1, 2, 3];
                 this.stringArray = ["1", "2", "3"];
-                this.colorArray = [BasicTypes.Color.blue, BasicTypes.Color.green, BasicTypes.Color.red];
+                this.colorArray = [BasicTypes.Color.Blue, BasicTypes.Color.Green, BasicTypes.Color.Red];
                 this.twoDimensionalArray = [[1, 2, 3], [5, 8]];
                 this.undefinedValue = undefined;
             }
@@ -30,9 +30,9 @@
     
     Bridge.define('BasicTypes.Color', {
         statics: {
-            red: 0,
-            green: 1,
-            blue: 2
+            Red: 0,
+            Green: 1,
+            Blue: 2
         },
         $enum: true
     });
