@@ -1145,7 +1145,9 @@
                 QUnit.test("#1232 - TestExtendedParamsInThisCtorInit", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1232.testExtendedParamsInThisCtorInit);
                 QUnit.test("#1241 - TestMarkElement", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1241.testMarkElement);
                 QUnit.test("#1253 - TestDefaultEnumMode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1253.testDefaultEnumMode);
-                QUnit.test("#1256 - TestReservedWords", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256.testReservedWords);
+                QUnit.test("#1256 - TestCaseBooleanIsLet", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256.testCaseBooleanIsLet);
+                QUnit.test("#1256 - TestReservedFields", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256.testReservedFields);
+                QUnit.test("#1256 - TestReservedMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256.testReservedMethods);
                 QUnit.test("#1260 - TestStringTrim", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1260.testStringTrim);
                 QUnit.test("#1260 - TestStringTrimStart", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1260.testStringTrimStart);
                 QUnit.test("#1260 - TestStringTrimEnd", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1260.testStringTrimEnd);
@@ -3364,9 +3366,17 @@
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256', {
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1256)],
         statics: {
-            testReservedWords: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1256).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256);
-                Bridge.ClientTest.BridgeIssues.Bridge1256.testReservedWords();
+            testCaseBooleanIsLet: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1256).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256, 7);
+                Bridge.ClientTest.BridgeIssues.Bridge1256.testCaseBooleanIsLet();
+            },
+            testReservedFields: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1256).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256, 66);
+                Bridge.ClientTest.BridgeIssues.Bridge1256.testReservedFields();
+            },
+            testReservedMethods: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1256).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256, 66);
+                Bridge.ClientTest.BridgeIssues.Bridge1256.testReservedMethods();
             }
         }
     });

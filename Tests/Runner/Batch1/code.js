@@ -5642,9 +5642,52 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1256', {
         statics: {
+            reservedWords: null,
             boolean: true,
             is: true,
-            testReservedWords: function () {
+            config: {
+                init: function () {
+                    this.reservedWords = ["abstract", "arguments", "as", "boolean", "break", "byte", "case", "catch", "char", "class", "continue", "const", "debugger", "default", "delete", "do", "double", "else", "enum", "eval", "export", "extends", "false", "final", "finally", "float", "for", "function", "goto", "if", "implements", "import", "in", "instanceof", "int", "interface", "let", "long", "namespace", "native", "new", "null", "package", "private", "protected", "public", "return", "short", "static", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "typeof", "use", "var", "void", "volatile", "while", "with", "yield"];
+                }
+            },
+            isReservedWord: function (word) {
+                {
+                    return Bridge.Linq.Enumerable.from(Bridge.ClientTest.BridgeIssues.Bridge1256.reservedWords).contains(word);
+                }
+            },
+            testFields: function (o) {
+                var $t;
+                if (o == null) {
+                    Bridge.Test.Assert.fail$1("Object cannot be null");
+                    return;
+                }
+    
+                $t = Bridge.getEnumerator(Bridge.ClientTest.BridgeIssues.Bridge1256.reservedWords);
+                while ($t.moveNext()) {
+                    var name = $t.getCurrent();
+                    Bridge.Test.Assert.areEqual$1(true, o[name], "Expected true for property " + name);
+                }
+            },
+            testMethods: function (o) {
+                var $t;
+                if (o == null) {
+                    Bridge.Test.Assert.fail$1("Object cannot be null");
+                    return;
+                }
+    
+                var i = 1;
+                $t = Bridge.getEnumerator(Bridge.ClientTest.BridgeIssues.Bridge1256.reservedWords);
+                while ($t.moveNext()) {
+                    var name = $t.getCurrent();
+                    //Assert.NotNull(o[name], "Expected " + i + " for property " + name);
+                    Bridge.Test.Assert.notNull$1(o[name], "Member " + name + " exists");
+                    i = (i + 1) | 0;
+                }
+            },
+            let: function () {
+                return 5;
+            },
+            testCaseBooleanIsLet: function () {
                 var $let = 1;
                 $let = 2;
                 var scope = Bridge.ClientTest.BridgeIssues.Bridge1256;
@@ -5657,9 +5700,289 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual(2, $let);
                 Bridge.Test.Assert.areEqual(5, Bridge.ClientTest.BridgeIssues.Bridge1256.let());
             },
-            let: function () {
-                return 5;
+            testReservedFields: function () {
+                var a = new Bridge.ClientTest.BridgeIssues.Bridge1256.ReservedFields();
+    
+                Bridge.ClientTest.BridgeIssues.Bridge1256.testFields(a);
+            },
+            testReservedMethods: function () {
+                var a = new Bridge.ClientTest.BridgeIssues.Bridge1256.ReservedMethods();
+    
+                Bridge.ClientTest.BridgeIssues.Bridge1256.testMethods(a);
             }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1256.ReservedFields', {
+        abstract: true,
+        arguments: true,
+        as: true,
+        boolean: true,
+        break: true,
+        byte: true,
+        case: true,
+        catch: true,
+        char: true,
+        class: true,
+        continue: true,
+        const: true,
+        debugger: true,
+        default: true,
+        delete: true,
+        do: true,
+        double: true,
+        else: true,
+        enum: true,
+        eval: true,
+        export: true,
+        extends: true,
+        false: true,
+        final: true,
+        finally: true,
+        float: true,
+        for: true,
+        function: true,
+        goto: true,
+        if: true,
+        implements: true,
+        import: true,
+        in: true,
+        instanceof: true,
+        int: true,
+        interface: true,
+        let: true,
+        long: true,
+        namespace: true,
+        native: true,
+        new: true,
+        null: true,
+        package: true,
+        private: true,
+        protected: true,
+        public: true,
+        return: true,
+        short: true,
+        static: true,
+        super: true,
+        switch: true,
+        synchronized: true,
+        this: true,
+        throw: true,
+        throws: true,
+        transient: true,
+        true: true,
+        try: true,
+        typeof: true,
+        use: true,
+        var: true,
+        void: true,
+        volatile: true,
+        while: true,
+        with: true,
+        yield: true
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1256.ReservedMethods', {
+        abstract: function () {
+            return 1;
+        },
+        arguments: function () {
+            return 2;
+        },
+        as: function () {
+            return 3;
+        },
+        boolean: function () {
+            return 4;
+        },
+        break: function () {
+            return 5;
+        },
+        byte: function () {
+            return 6;
+        },
+        case: function () {
+            return 7;
+        },
+        catch: function () {
+            return 8;
+        },
+        char: function () {
+            return 9;
+        },
+        class: function () {
+            return 10;
+        },
+        continue: function () {
+            return 11;
+        },
+        const: function () {
+            return 12;
+        },
+        constructor$1: function () {
+            return 13;
+        },
+        debugger: function () {
+            return 14;
+        },
+        default: function () {
+            return 15;
+        },
+        delete: function () {
+            return 16;
+        },
+        do: function () {
+            return 17;
+        },
+        double: function () {
+            return 18;
+        },
+        else: function () {
+            return 19;
+        },
+        enum: function () {
+            return 20;
+        },
+        eval: function () {
+            return 21;
+        },
+        export: function () {
+            return 22;
+        },
+        extends: function () {
+            return 23;
+        },
+        false: function () {
+            return 24;
+        },
+        final: function () {
+            return 25;
+        },
+        finally: function () {
+            return 26;
+        },
+        float: function () {
+            return 27;
+        },
+        for: function () {
+            return 28;
+        },
+        function: function () {
+            return 29;
+        },
+        goto: function () {
+            return 30;
+        },
+        if: function () {
+            return 31;
+        },
+        implements: function () {
+            return 32;
+        },
+        import: function () {
+            return 33;
+        },
+        in: function () {
+            return 34;
+        },
+        instanceof: function () {
+            return 35;
+        },
+        int: function () {
+            return 36;
+        },
+        interface: function () {
+            return 37;
+        },
+        let: function () {
+            return 38;
+        },
+        long: function () {
+            return 39;
+        },
+        namespace: function () {
+            return 40;
+        },
+        native: function () {
+            return 41;
+        },
+        new: function () {
+            return 42;
+        },
+        null: function () {
+            return 43;
+        },
+        package: function () {
+            return 44;
+        },
+        private: function () {
+            return 45;
+        },
+        protected: function () {
+            return 46;
+        },
+        public: function () {
+            return 47;
+        },
+        return: function () {
+            return 48;
+        },
+        short: function () {
+            return 49;
+        },
+        static: function () {
+            return 50;
+        },
+        super: function () {
+            return 51;
+        },
+        switch: function () {
+            return 52;
+        },
+        synchronized: function () {
+            return 53;
+        },
+        this: function () {
+            return 54;
+        },
+        throw: function () {
+            return 55;
+        },
+        throws: function () {
+            return 56;
+        },
+        transient: function () {
+            return 57;
+        },
+        true: function () {
+            return 58;
+        },
+        try: function () {
+            return 59;
+        },
+        typeof: function () {
+            return 60;
+        },
+        use: function () {
+            return 61;
+        },
+        var: function () {
+            return 62;
+        },
+        void: function () {
+            return 63;
+        },
+        volatile: function () {
+            return 64;
+        },
+        while: function () {
+            return 65;
+        },
+        with: function () {
+            return 66;
+        },
+        yield: function () {
+            return 67;
         }
     });
     
