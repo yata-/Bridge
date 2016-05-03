@@ -72,7 +72,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         this._timeoutMs = timeoutMs;
     },
 
-    match: function (text, textStart) {
+    match: function (text, textStart, prevLength) {
         if (text == null) {
             throw new Bridge.ArgumentNullException("text");
         }
@@ -95,6 +95,10 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
         // Get group descriptors (+ remove group name before any processing);
         var patternInfo = this.parsePattern();
+        if (patternInfo.shouldFail) {
+            return match;
+        }
+
         var groupDescs = patternInfo.groups;
 
         this._checkTimeout();
@@ -103,6 +107,10 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         var total = Bridge.Text.RegularExpressions.RegexNetEngine.jsRegex(this._text, this._textStart, this._pattern, this._isMultiLine, this._isCaseInsensitive, false, this);
         if (total == null) {
             return match;
+        }
+
+        if (prevLength >= 0 && patternInfo.isContiguous && total.index !== this._textStart) {
+            return match; // Contiguous requirement was not met
         }
 
         match.capIndex = total.index;

@@ -69,7 +69,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
         }
 
         // Execute Regex:
-        var jsMatch = this._netEngine.match(this._runtext, this._runtextstart);
+        var jsMatch = this._netEngine.match(this._runtext, this._runtextstart, this._prevlen);
 
         // Convert the results:
         var result = this._convertNetEngineResults(jsMatch);
