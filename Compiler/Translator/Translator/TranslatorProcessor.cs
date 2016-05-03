@@ -72,7 +72,7 @@ namespace Bridge.Translator
                 translator.ExtractCore(outputPath);
             }
 
-            var fileName = Path.GetFileName(bridgeOptions.OutputLocation);
+            var fileName = bridgeOptions.DefaultFileName;
 
             logger.Info("Saving to " + outputPath);
             translator.SaveTo(outputPath, fileName);
