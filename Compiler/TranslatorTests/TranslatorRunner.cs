@@ -82,6 +82,7 @@ namespace Bridge.Translator.Tests
                 ProjectLocation = ProjectLocation,
                 OutputLocation = outputLocation,
                 BridgeLocation = bridgeLocation,
+                DefaultFileName = Path.GetFileName(outputLocation),
                 Rebuild = true,
                 ExtractCore = true,
                 Configuration = configuration,

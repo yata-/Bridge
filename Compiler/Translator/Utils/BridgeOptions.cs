@@ -8,6 +8,7 @@ namespace Bridge.Translator
 
         public string ProjectLocation { get; set; }
         public string OutputLocation { get; set; }
+        public string DefaultFileName { get; set; }
         public string BridgeLocation { get; set; }
         public bool Rebuild { get; set; }
         public bool ExtractCore { get; set; }

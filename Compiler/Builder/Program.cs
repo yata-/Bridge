@@ -286,6 +286,8 @@ namespace Bridge.Builder
                     ? Path.GetFileNameWithoutExtension(bridgeOptions.ProjectLocation) : bridgeOptions.Folder;
             }
 
+            bridgeOptions.DefaultFileName = Path.GetFileName(bridgeOptions.OutputLocation);
+
             return bridgeOptions;
         }
     }
