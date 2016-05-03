@@ -189,19 +189,19 @@ namespace System
         [Template("(Bridge.Array.getLength({this}, {dimension}) - 1)")]
         public extern int GetUpperBound(int dimension);
 
-        [Template("(Bridge.Array.toEnumerable({this})")]
+        [Template("Bridge.Array.toEnumerable({this})")]
         public extern IEnumerable ToEnumerable();
 
-        [Template("(Bridge.Array.toEnumerable({this})")]
+        [Template("Bridge.Array.toEnumerable({this})")]
         public extern IEnumerable<T> ToEnumerable<T>();
 
-        [Template("(Bridge.Array.toEnumerator({this})")]
+        [Template("Bridge.Array.toEnumerator({this})")]
         public extern IEnumerator ToEnumerator();
 
-        [Template("(Bridge.Array.toEnumerator({this})")]
+        [Template("Bridge.Array.toEnumerator({this})")]
         public extern IEnumerator<T> ToEnumerator<T>();
 
-        [Template("(Bridge.Array.clone({this}))")]
+        [Template("Bridge.Array.clone({this})")]
         public extern object Clone();
 
         [Template("Bridge.Array.init({count}, {value})")]

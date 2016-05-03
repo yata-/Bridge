@@ -1,6 +1,5 @@
 ﻿using Bridge.Contract;
 using Bridge.Translator.Constants;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -102,7 +101,7 @@ namespace Bridge.Translator
         public virtual int EnumEmitMode(DefaultResolvedTypeDefinition type)
         {
             string enumAttr = Translator.Bridge_ASSEMBLY + ".EnumAttribute";
-            int result = -1;
+            int result = 7;
             type.Attributes.Any(attr =>
             {
                 if (attr.Constructor != null && attr.Constructor.DeclaringType.FullName == enumAttr && attr.PositionalArguments.Count > 0)
@@ -120,7 +119,7 @@ namespace Bridge.Translator
         public virtual int EnumEmitMode(IType type)
         {
             string enumAttr = Translator.Bridge_ASSEMBLY + ".EnumAttribute";
-            int result = -1;
+            int result = 7;
             type.GetDefinition().Attributes.Any(attr =>
             {
                 if (attr.Constructor != null && attr.Constructor.DeclaringType.FullName == enumAttr && attr.PositionalArguments.Count > 0)
