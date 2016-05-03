@@ -354,8 +354,8 @@ namespace Bridge.Translator
                 {
                     name = value.ToString();
                     if (!isIgnore &&
-                        ((isStatic && Emitter.IsReservedStaticName(name)) ||
-                        Helpers.IsReservedWord(name)))
+                        ((isStatic && Emitter.IsReservedStaticName(name)) /*||
+                        Helpers.IsReservedWord(name)*/))
                     {
                         name = Helpers.ChangeReservedWord(name);
                     }
@@ -364,15 +364,15 @@ namespace Bridge.Translator
 
                 preserveMemberCase = !(bool)value;
             }
-
+            
             if (name.Contains("."))
             {
                 name = Object.Net.Utilities.StringUtils.RightOfRightmostOf(name, '.');
             }
             name = preserveMemberCase ? name : Object.Net.Utilities.StringUtils.ToLowerCamelCase(name);
             if (!isIgnore &&
-                ((isStatic && Emitter.IsReservedStaticName(name)) ||
-                Helpers.IsReservedWord(name)))
+                ((isStatic && Emitter.IsReservedStaticName(name)) /*||
+                Helpers.IsReservedWord(name)*/))
             {
                 name = Helpers.ChangeReservedWord(name);
             }
@@ -411,7 +411,7 @@ namespace Bridge.Translator
                 if (value is string)
                 {
                     name = value.ToString();
-                    if (!isIgnore && ((member.IsStatic && Emitter.IsReservedStaticName(name)) || Helpers.IsReservedWord(name)))
+                    if (!isIgnore && ((member.IsStatic && Emitter.IsReservedStaticName(name)) /*|| Helpers.IsReservedWord(name)*/))
                     {
                         name = Helpers.ChangeReservedWord(name);
                     }
@@ -451,7 +451,7 @@ namespace Bridge.Translator
                 if (value is string)
                 {
                     name = value.ToString();
-                    if (!isIgnore && ((member.IsStatic && Emitter.IsReservedStaticName(name)) || Helpers.IsReservedWord(name)))
+                    if (!isIgnore && ((member.IsStatic && Emitter.IsReservedStaticName(name)) /*|| Helpers.IsReservedWord(name)*/))
                     {
                         name = Helpers.ChangeReservedWord(name);
                     }
@@ -484,7 +484,7 @@ namespace Bridge.Translator
             }
             
 
-            if (!isIgnore && ((member.IsStatic && Emitter.IsReservedStaticName(name)) || Helpers.IsReservedWord(name)))
+            if (!isIgnore && ((member.IsStatic && Emitter.IsReservedStaticName(name))/* || Helpers.IsReservedWord(name)*/))
             {
                 name = Helpers.ChangeReservedWord(name);
             }

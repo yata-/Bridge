@@ -68,10 +68,10 @@ namespace Bridge.Contract
                 {
                     fieldName = emitter.AssemblyInfo.PreserveMemberCase ? fieldName : TypeConfigItem.ToLowerCamelCase(fieldName);
 
-                    if (Helpers.IsReservedWord(fieldName))
+                    /*if (Helpers.IsReservedWord(fieldName))
                     {
                         fieldName = Helpers.ChangeReservedWord(fieldName);
-                    }
+                    }*/
                 }
             }
             return fieldName;
