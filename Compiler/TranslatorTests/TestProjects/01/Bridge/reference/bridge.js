@@ -226,6 +226,13 @@
         },
 
         getHashCode: function (value, safe, store) {
+            //in CLR: mutable object should keep on returning same value
+            //bridge.net goals: make it deterministic (to make testing easier) without breaking CLR contracts
+            // thus:
+            //     for value types it returns deterministic values (f.e. for int 3 it returns 3) 
+            //     for reference types it returns value derived recursively from its properties
+            var store = (typeof store === 'undefined') ? true : store; 
+
             if (Bridge.isEmpty(value, true)) {
                 if (safe) {
                     return 0;
@@ -308,6 +315,10 @@
 
                 if (removeCache) {
                     delete Bridge.$$hashCodeCache;
+                }
+
+                if (store) {
+                    value.$$hashCode = result;
                 }
 
                 if (result !== 0) {
@@ -1608,11 +1619,11 @@
         },
 
         trimEnd: function (s, chars) {
-            return s.replace(chars ? new RegExp('[' + Bridge.String.escape(Bridge.String.escape(String.fromCharCode.apply(null, chars))) + ']+$') : /\s*$/, '');
+            return s.replace(chars ? new RegExp('[' + Bridge.String.escape(String.fromCharCode.apply(null, chars)) + ']+$') : /\s*$/, '');
         },
 
         trimStart: function (s, chars) {
-            return s.replace(chars ? new RegExp('^[' + Bridge.String.escape(Bridge.String.escape(String.fromCharCode.apply(null, chars))) + ']+') : /^\s*/, '');
+            return s.replace(chars ? new RegExp('^[' + Bridge.String.escape(String.fromCharCode.apply(null, chars)) + ']+') : /^\s*/, '');
         },
 
         trim: function (s, chars) {
@@ -4411,6 +4422,10 @@ Bridge.Long.prototype.toNumberDivided = function (divisor) {
     return integral.toNumber() + scaledRemainder;
 };
 
+Bridge.Long.prototype.toJSON = function () {
+    return this.toNumber();
+};
+
 Bridge.Long.prototype.toString = function (format, provider) {
     if (!format && !provider) {
         return this.value.toString();
@@ -4912,6 +4927,7 @@ Bridge.ULong.lift = function (l) {
     return Bridge.ULong.create(l);
 };
 
+Bridge.ULong.prototype.toJSON = Bridge.Long.prototype.toJSON;
 Bridge.ULong.prototype.toString = Bridge.Long.prototype.toString;
 Bridge.ULong.prototype.format = Bridge.Long.prototype.format;
 Bridge.ULong.prototype.isNegative = Bridge.Long.prototype.isNegative;
@@ -5132,6 +5148,10 @@ Bridge.ULong.MaxValue = Bridge.ULong(Bridge.$Long.MAX_UNSIGNED_VALUE);
     };
 
     Bridge.Decimal.prototype.toFloat = function () {
+        return this.value.toNumber();
+    };
+
+    Bridge.Decimal.prototype.toJSON = function () {
         return this.value.toNumber();
     };
 
