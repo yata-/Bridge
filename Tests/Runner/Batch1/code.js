@@ -90,7 +90,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         cloneWorks: function () {
             var arr = ["x", "y"];
-            var arr2 = (Bridge.Array.clone(arr));
+            var arr2 = Bridge.Array.clone(arr);
             Bridge.Test.Assert.false(Bridge.referenceEquals(arr, arr2));
             Bridge.Test.Assert.areDeepEqual(arr2, arr);
         },
@@ -1285,13 +1285,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var control = Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.simpleSort(T, array, index, length, comparer);
     
                 {
-                    var spawn2 = Bridge.cast(((Bridge.Array.clone(array))), Array);
+                    var spawn2 = Bridge.cast((Bridge.Array.clone(array)), Array);
                     Bridge.Array.sort(spawn2, index, length, comparer);
                     Bridge.Test.Assert.true(Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.arraysAreEqual(T, spawn2, control, comparer));
                 }
             },
             simpleSort: function (T, a, index, length, comparer) {
-                var result = Bridge.cast(((Bridge.Array.clone(a))), Array);
+                var result = Bridge.cast((Bridge.Array.clone(a)), Array);
                 if (length < 2) {
                     return result;
                 }
@@ -6082,6 +6082,22 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         config: {
             init: function () {
                 this._bck = new Bridge.ClientTest.BridgeIssues.Bridge1264.Bar();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1266', {
+        statics: {
+            testArrayToEnumerable: function () {
+                var $t;
+                var arr = [1, 2, 3];
+                var x = Bridge.Array.toEnumerable(Bridge.Linq.Enumerable.from(arr).toArray());
+                var index = 0;
+                $t = Bridge.getEnumerator(x);
+                while ($t.moveNext()) {
+                    var i = $t.getCurrent();
+                    Bridge.Test.Assert.areEqual(arr[Bridge.identity(index, (index = (index + 1) | 0))], i);
+                }
             }
         }
     });
