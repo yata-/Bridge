@@ -436,6 +436,11 @@ namespace Bridge.Contract
             bool isAuto = propertyMember.Attributes.Any(a => a.AttributeType.FullName == "Bridge.FieldPropertyAttribute");
             if (!isAuto && assemblyInfo.AutoPropertyToField && propertyMember is IProperty)
             {
+                var isIgnore = propertyMember.DeclaringTypeDefinition.Attributes.Any(a => a.AttributeType.FullName == "Bridge.ExternalAttribute");
+                if (isIgnore)
+                {
+                    return false;
+                }
                 return propertyMember.DeclaringType.Kind == TypeKind.Interface || Helpers.IsAutoProperty((IProperty)propertyMember);
             }
 
@@ -448,6 +453,10 @@ namespace Bridge.Contract
             if (!isAuto && emitter.AssemblyInfo.AutoPropertyToField)
             {
                 var typeDef = emitter.GetTypeDefinition(propertyMember.DeclaringType);
+                if (emitter.Validator.IsIgnoreType(typeDef))
+                {
+                    return false;
+                }
                 var propDef = typeDef.Properties.FirstOrDefault(p => p.Name == propertyMember.Name);
                 return typeDef.IsInterface || Helpers.IsAutoProperty(propDef);
             }
@@ -459,6 +468,11 @@ namespace Bridge.Contract
             bool isAuto = property.CustomAttributes.Any(a => a.AttributeType.FullName == "Bridge.FieldPropertyAttribute");
             if (!isAuto && emitter.AssemblyInfo.AutoPropertyToField)
             {
+                var typeDef = property.DeclaringType;
+                if (emitter.Validator.IsIgnoreType(typeDef))
+                {
+                    return false;
+                }
                 return Helpers.IsAutoProperty((PropertyDefinition)property);
             }
             return isAuto;
@@ -653,7 +667,7 @@ namespace Bridge.Contract
             return list;
         }
 
-        private static readonly string[] reservedWords = new string[] { "abstract", "arguments", "as", "boolean", "break", "byte", "case", "catch", "char", "class", "continue", "const", "constructor", "debugger", "default", "delete", "do", "double", "else", "enum", "eval", "export", "extends", "false", "final", "finally", "float", "for", "function", "goto", "if", "implements", "import", "in", "instanceof", "int", "interface", "is", "let", "long", "namespace", "native", "new", "null", "package", "private", "protected", "public", "return", "short", "static", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "typeof", "use", "var", "void", "volatile", "while", "with", "yield" };
+        private static readonly string[] reservedWords = new string[] { "abstract", "arguments", "as", "boolean", "break", "byte", "case", "catch", "char", "class", "continue", "const", "constructor", "debugger", "default", "delete", "do", "double", "else", "enum", "eval", "export", "extends", "false", "final", "finally", "float", "for", "function", "goto", "if", "implements", "import", "in", "instanceof", "int", "interface", "let", "long", "namespace", "native", "new", "null", "package", "private", "protected", "public", "return", "short", "static", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "typeof", "use", "var", "void", "volatile", "while", "with", "yield" };
 
         public static bool IsReservedWord(string word)
         {

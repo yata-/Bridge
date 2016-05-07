@@ -2,12 +2,13 @@
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using System.Collections.Generic;
+using ICSharpCode.NRefactory.Semantics;
 
 namespace Bridge.Translator
 {
     public class ExpressionListBlock : AbstractEmitterBlock
     {
-        public ExpressionListBlock(IEmitter emitter, IEnumerable<Expression> expressions, Expression paramArg, InvocationExpression invocation = null)
+        public ExpressionListBlock(IEmitter emitter, IEnumerable<Expression> expressions, Expression paramArg, AstNode invocation = null)
             : base(emitter, null)
         {
             this.Emitter = emitter;
@@ -28,7 +29,7 @@ namespace Bridge.Translator
             set;
         }
 
-        public InvocationExpression InvocationExpression
+        public AstNode InvocationExpression
         {
             get;
             set;
@@ -66,18 +67,47 @@ namespace Bridge.Translator
                 {
                     continue;
                 }
+                
                 this.Emitter.Translator.EmitNode = expr;
+
                 if (needComma)
                 {
                     this.WriteComma();
                 }
 
+                needComma = true;
+                
+                var directExpr = expr as DirectionExpression;
+                if (directExpr != null)
+                {
+                    var rr = this.Emitter.Resolver.ResolveNode(expr, this.Emitter) as ByReferenceResolveResult;
+
+                    if (rr != null && !(rr.ElementResult is LocalResolveResult))
+                    {
+                        this.Write("Bridge.ref(");
+
+                        this.Emitter.IsRefArg = true;
+                        expr.AcceptVisitor(this.Emitter);
+                        this.Emitter.IsRefArg = false;
+
+                        if (this.Emitter.Writers.Count != count)
+                        {
+                            this.PopWriter();
+                            count = this.Emitter.Writers.Count;
+                        }
+
+                        this.Write(")");
+
+                        continue;
+                    }
+                }
+                            
+
                 if (expanded && expr == paramArg)
                 {
                     this.WriteOpenBracket();
                 }
-
-                needComma = true;
+                
                 int pos = this.Emitter.Output.Length;
                 expr.AcceptVisitor(this.Emitter);
 

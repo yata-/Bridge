@@ -109,6 +109,23 @@ namespace Bridge.Translator
             _usedVariables.Clear();
             _variables.Clear();
 
+            var methodDeclaration = node.GetParent<MethodDeclaration>();
+            if (methodDeclaration != null)
+            {
+                foreach (var attrSection in methodDeclaration.Attributes)
+                {
+                    foreach (var attr in attrSection.Attributes)
+                    {
+                        var rr = this.resolver.Resolve(attr.Type);
+                        if (rr.Type.FullName == "Bridge.InitAttribute")
+                        {
+                            this._usedVariables.Add(null);
+                            return;
+                        }
+                    }
+                }
+            }
+
             if (parameters != null)
             {
                 foreach (var parameter in parameters)

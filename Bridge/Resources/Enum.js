@@ -34,8 +34,7 @@
                         return values[f];
                     }
                 }
-            }
-            else {
+            } else {
                 var parts = s.split(',');
                 var value = 0;
                 var parsed = true;
@@ -51,6 +50,7 @@
                             break;
                         }
                     }
+
                     if (!found) {
                         parsed = false;
                         break;
@@ -73,38 +73,46 @@
             Bridge.Enum.checkEnumType(enumType);
 
             var values = enumType;
+
             if (((!enumType.prototype || !enumType.prototype.$flags) && forceFlags !== true) || (value === 0)) {
                 for (var i in values) {
                     if (values[i] === value) {
                         return enumMethods.toName(i);
                     }
                 }
+
                 //throw new Bridge.ArgumentException('Invalid Enumeration Value');
                 return value.toString();
-            }
-            else {
+            } else {
                 var parts = [];
+
                 for (var i in values) {
                     if (values[i] & value) {
                         parts.push(enumMethods.toName(i));
                     }
                 }
+
                 if (!parts.length) {
                     //throw new Bridge.ArgumentException('Invalid Enumeration Value');
                     return value.toString();
                 }
+
                 return parts.join(', ');
             }
         },
 
         getValues: function (enumType) {
             Bridge.Enum.checkEnumType(enumType);
+
             var parts = [];
             var values = enumType;
+
             for (var i in values) {
-                if (values.hasOwnProperty(i) && i.indexOf("$") < 0)
+                if (values.hasOwnProperty(i) && i.indexOf("$") < 0) {
                     parts.push(values[i]);
+                }
             }
+
             return parts;
         },
 
@@ -112,6 +120,7 @@
             Bridge.Enum.checkEnumType(enumType);
 
             var name;
+
             if (!Bridge.hasValue(value) && (name = "value") || !Bridge.hasValue(format) && (name = "format")) {
                 throw new Bridge.ArgumentNullException(name);
             }
@@ -136,18 +145,24 @@
 
         getNames: function (enumType) {
             Bridge.Enum.checkEnumType(enumType);
+
             var parts = [];
             var values = enumType;
+
             for (var i in values) {
-                if (values.hasOwnProperty(i) && i.indexOf("$") < 0)
+                if (values.hasOwnProperty(i) && i.indexOf("$") < 0) {
                     parts.push(enumMethods.toName(i));
+                }
             }
+
             return parts;
         },
 
         getName: function (enumType, value) {
             Bridge.Enum.checkEnumType(enumType);
+
             var values = enumType;
+
             for (var i in values) {
                 if (values[i] === value) {
                     return i.charAt(0).toUpperCase() + i.slice(1);
@@ -163,8 +178,10 @@
 
         isDefined: function (enumType, value) {
             Bridge.Enum.checkEnumType(enumType);
+
             var values = enumType;
             var isString = Bridge.isString(value);
+
             for (var i in values) {
                 if (isString ? enumMethods.nameEquals(i, value, false) : values[i] === value) {
                     return true;

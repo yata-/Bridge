@@ -68,6 +68,8 @@ namespace Bridge.Translator
         {
             MemberReferenceExpression memberReferenceExpression = this.MemberReferenceExpression;
             int pos = this.Emitter.Output.Length;
+            bool isRefArg = this.Emitter.IsRefArg;
+            this.Emitter.IsRefArg = false;
 
             ResolveResult resolveResult = null;
             ResolveResult expressionResolveResult = null;
@@ -536,7 +538,14 @@ namespace Bridge.Translator
 
                 if (targetResolveResult == null || this.Emitter.IsGlobalTarget(targetResolveResult.Member) == null)
                 {
-                    this.WriteDot();
+                    if (isRefArg)
+                    {
+                        this.WriteComma();
+                    }
+                    else
+                    {
+                        this.WriteDot();    
+                    }
                 }
 
                 if (member == null)
@@ -972,7 +981,15 @@ namespace Bridge.Translator
                     }
                     else
                     {
-                        this.Write(OverloadsCollection.Create(this.Emitter, member.Member).GetOverloadName());
+                        var fieldName = OverloadsCollection.Create(this.Emitter, member.Member).GetOverloadName();
+                        if (isRefArg)
+                        {
+                            this.WriteScript(fieldName);
+                        }
+                        else
+                        {
+                            this.Write(fieldName);    
+                        }
                     }
                 }
                 else if (resolveResult is InvocationResolveResult)

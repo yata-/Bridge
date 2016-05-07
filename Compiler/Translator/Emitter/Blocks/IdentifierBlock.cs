@@ -9,6 +9,8 @@ namespace Bridge.Translator
 {
     public class IdentifierBlock : ConversionBlock
     {
+        private bool isRefArg;
+
         public IdentifierBlock(IEmitter emitter, IdentifierExpression identifierExpression)
             : base(emitter, identifierExpression)
         {
@@ -37,6 +39,8 @@ namespace Bridge.Translator
             IdentifierExpression identifierExpression = this.IdentifierExpression;
             int pos = this.Emitter.Output.Length;
             ResolveResult resolveResult = null;
+            this.isRefArg = this.Emitter.IsRefArg;
+            this.Emitter.IsRefArg = false;
 
             resolveResult = this.Emitter.Resolver.ResolveNode(identifierExpression, this.Emitter);
 
@@ -45,7 +49,7 @@ namespace Bridge.Translator
             var isResolved = resolveResult != null && !(resolveResult is ErrorResolveResult);
             var memberResult = resolveResult as MemberResolveResult;
 
-            if (this.Emitter.Locals != null && this.Emitter.Locals.ContainsKey(id))
+            if (this.Emitter.Locals != null && this.Emitter.Locals.ContainsKey(id) && resolveResult is LocalResolveResult)
             {
                 if (this.Emitter.LocalsMap != null && this.Emitter.LocalsMap.ContainsKey(id) && !(identifierExpression.Parent is DirectionExpression))
                 {
@@ -494,7 +498,15 @@ namespace Bridge.Translator
                     else if (memberResult != null)
                     {
                         this.WriteTarget(memberResult);
-                        this.Write(OverloadsCollection.Create(this.Emitter, memberResult.Member).GetOverloadName());
+                        string name = OverloadsCollection.Create(this.Emitter, memberResult.Member).GetOverloadName();
+                        if (isRefArg)
+                        {
+                            this.WriteScript(name);
+                        }
+                        else
+                        {
+                            this.Write(name);
+                        }
                     }
                     else
                     {
@@ -534,7 +546,15 @@ namespace Bridge.Translator
                 this.WriteThis();
             }
 
-            this.WriteDot();
+            if (this.isRefArg)
+            {
+                this.WriteComma();
+            }
+            else
+            {
+                this.WriteDot();    
+            }
+            
         }
     }
 }

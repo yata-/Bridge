@@ -100,7 +100,7 @@ namespace Bridge.Translator
                 isDecimalExpected = true;
             }
 
-            if (isDecimal && isDecimalExpected)
+            if (isDecimal && isDecimalExpected && unaryOperatorExpression.Operator != UnaryOperatorType.Await)
             {
                 this.HandleDecimal(resolveOperator);
                 return;
@@ -117,7 +117,7 @@ namespace Bridge.Translator
                 isLongExpected = true;
             }
 
-            if (isLong && isLongExpected)
+            if (isLong && isLongExpected && unaryOperatorExpression.Operator != UnaryOperatorType.Await)
             {
                 this.HandleDecimal(resolveOperator, true);
                 return;
@@ -533,8 +533,21 @@ namespace Bridge.Translator
             else if (method == null)
             {
                 string op_name = null;
+                var isStatement = this.UnaryOperatorExpression.Parent is ExpressionStatement;
 
-                switch (this.UnaryOperatorExpression.Operator)
+                if (isStatement)
+                {
+                    if (op == UnaryOperatorType.PostIncrement)
+                    {
+                        op = UnaryOperatorType.Increment;
+                    }
+                    else if (op == UnaryOperatorType.PostDecrement)
+                    {
+                        op = UnaryOperatorType.Decrement;
+                    }
+                }
+
+                switch (op)
                 {
                     case UnaryOperatorType.Minus:
                         op_name = "neg";
@@ -550,15 +563,22 @@ namespace Bridge.Translator
 
                     case UnaryOperatorType.Increment:
                     case UnaryOperatorType.Decrement:
-                        this.WriteOpenParentheses();
+                        if (!isStatement)
+                        {
+                            this.WriteOpenParentheses();    
+                        }
+                        
                         this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                         this.Write(" = ");
                         this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                         this.Write("." + (op == UnaryOperatorType.Decrement ? "dec" : "inc") + "(");
                         this.AddOveflowFlag(typeCode, "dec", false);
-                        this.Write("), ");
-                        this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
-                        this.WriteCloseParentheses();
+                        this.Write(")");
+                        
+                        if (!isStatement)
+                        {
+                            this.WriteCloseParentheses();
+                        }
                         break;
 
                     case UnaryOperatorType.PostIncrement:
@@ -606,13 +626,20 @@ namespace Bridge.Translator
                         if (isStatement || this.UnaryOperatorExpression.Operator == UnaryOperatorType.Increment ||
                             this.UnaryOperatorExpression.Operator == UnaryOperatorType.Decrement)
                         {
-                            this.WriteOpenParentheses();
+                            if (!isStatement)
+                            {
+                                this.WriteOpenParentheses();    
+                            }
+                            
                             this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                             this.Write(" = ");
                             new InlineArgumentsBlock(this.Emitter,
                                 new ArgumentsInfo(this.Emitter, this.UnaryOperatorExpression, orr, method), inline).Emit
                                 ();
-                            this.WriteCloseParentheses();
+                            if (!isStatement)
+                            {
+                                this.WriteCloseParentheses();    
+                            }
                         }
                         else
                         {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project path="" name="Bridge.NET" author="Object.NET, Inc." version="1.12.1" copyright="@version   : 1.12.1 - Bridge.NET&#xD;&#xA;@author    : Object.NET, Inc. http://bridge.net/&#xD;&#xA;@date      : 2016-04-14&#xD;&#xA;@copyright : Copyright (c) 2008-2016, Object.NET, Inc. (http://object.net/). All rights reserved.&#xD;&#xA;@license   : See license.txt and https://github.com/bridgedotnet/Bridge.NET/blob/master/LICENSE." output="$project" source="False" minify="False" doc="False" master="true" zip="true">
+<project path="" name="Bridge.NET" author="Object.NET, Inc." version="1.13.0" copyright="@version   : 1.13.0 - Bridge.NET&#xD;&#xA;@author    : Object.NET, Inc. http://bridge.net/&#xD;&#xA;@date      : 2016-05-03&#xD;&#xA;@copyright : Copyright (c) 2008-2016, Object.NET, Inc. (http://object.net/). All rights reserved.&#xD;&#xA;@license   : See license.txt and https://github.com/bridgedotnet/Bridge.NET/blob/master/LICENSE." output="$project" source="False" minify="False" doc="False" master="true" zip="true">
   <file name="Init.js" />
   <file name="End.js" />
   <file name="Core.js" />
@@ -38,6 +38,7 @@
   <file name="Array.js" />
   <file name="linq.js" />
   <file name="random.js" />
+  <file name="Guid.js" />
   <file name="Text/RegularExpressions/Regex.js" />
   <file name="Text/RegularExpressions/RegexCapture.js" />
   <file name="Text/RegularExpressions/RegexCaptureCollection.js" />
@@ -90,6 +91,7 @@
     <include name="Convert.js" />
     <include name="linq.js" />
     <include name="random.js" />
+    <include name="Guid.js" />
     <include name="Text/RegularExpressions/Regex.js" />
     <include name="Text/RegularExpressions/RegexCapture.js" />
     <include name="Text/RegularExpressions/RegexCaptureCollection.js" />

@@ -20,7 +20,7 @@ namespace Bridge.Translator
                     return "xbuild";
 
                 default:
-                    throw (Exception)Bridge.Translator.Exception.Create("Unsupported platform - {0}", Environment.OSVersion.Platform);
+                    throw (TranslatorException)Bridge.Translator.TranslatorException.Create("Unsupported platform - {0}", Environment.OSVersion.Platform);
             }
         }
 
@@ -34,7 +34,7 @@ namespace Bridge.Translator
                     return String.Format(" \"{0}\" /t:Rebuild /p:Configuration={1} {2}", Location, this.Configuration, this.BuildArguments);
 
                 default:
-                    throw (Exception)Bridge.Translator.Exception.Create("Unsupported platform - {0}", Environment.OSVersion.Platform);
+                    throw (TranslatorException)Bridge.Translator.TranslatorException.Create("Unsupported platform - {0}", Environment.OSVersion.Platform);
             }
         }
 
@@ -59,7 +59,7 @@ namespace Bridge.Translator
 
                 if (p.ExitCode != 0)
                 {
-                    Bridge.Translator.Exception.Throw("Compilation was not successful, exit code - {0}; FileName - {1}; Arguments - {2}.", p.ExitCode, info.FileName, info.Arguments);
+                    Bridge.Translator.TranslatorException.Throw("Compilation was not successful, exit code - {0}; FileName - {1}; Arguments - {2}.", p.ExitCode, info.FileName, info.Arguments);
                 }
             }
 

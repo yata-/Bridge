@@ -50,8 +50,7 @@ var date = {
                 }
             }
 
-            for (i = index + tokenLen; i < format.length && format[i] !== patternToMatch; i++) {
-            }
+            for (i = index + tokenLen; i < format.length && format[i] !== patternToMatch; i++) { }
 
             if (i < format.length) {
                 repeat = 0;

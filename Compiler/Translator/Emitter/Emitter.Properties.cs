@@ -425,5 +425,11 @@ namespace Bridge.Translator
                 return this.AssemblyInfo.OverflowMode.HasValue && this.AssemblyInfo.OverflowMode == OverflowMode.Javascript;
             }
         }
+
+        public bool IsRefArg
+        {
+            get;
+            set;
+        }
     }
 }

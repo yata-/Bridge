@@ -115,10 +115,10 @@ namespace Bridge.Translator
                     return level;
                 }
 
-                if (expression is ParenthesizedExpression && expression.Parent is CastExpression)
+                /*if (expression is ParenthesizedExpression && expression.Parent is CastExpression)
                 {
                     return level;
-                }
+                }*/
 
                 if (conversion.IsUserDefined && expression.Parent is CastExpression && ((CastExpression)expression.Parent).Expression == expression)
                 {
@@ -324,6 +324,17 @@ namespace Bridge.Translator
                 }
             }
 
+            if (expression is CastExpression)
+            {
+                var nestedExpr = ((CastExpression) expression).Expression;
+                var nested_rr = block.Emitter.Resolver.ResolveNode(nestedExpr, block.Emitter);
+
+                if (!(nested_rr is ConversionResolveResult))
+                {
+                    return false;    
+                }
+            }
+
             var invocationExpression = expression.Parent as InvocationExpression;
             if (invocationExpression != null && invocationExpression.Arguments.Any(a => a == expression))
             {
@@ -454,13 +465,14 @@ namespace Bridge.Translator
 
                 if (binaryOpRr != null && isType(binaryOpRr.Operands[idx].Type, block.Emitter.Resolver) && !isType(rr.Type, block.Emitter.Resolver))
                 {
+                    var isNullable = NullableType.IsNullable(binaryOpRr.Operands[idx].Type);
                     if (expression.IsNull)
                     {
                         return false;
                     }
 
                     block.Write(typeName);
-                    if (NullableType.IsNullable(binaryOpRr.Operands[idx].Type) && ConversionBlock.ShouldBeLifted(expression))
+                    if (isNullable && ConversionBlock.ShouldBeLifted(expression))
                     {
                         block.Write(".lift");
                     }

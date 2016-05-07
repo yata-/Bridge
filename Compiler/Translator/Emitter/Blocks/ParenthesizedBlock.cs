@@ -1,5 +1,6 @@
 ﻿using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.Semantics;
 
 namespace Bridge.Translator
 {
@@ -44,12 +45,18 @@ namespace Bridge.Translator
         {
             if (expression is CastExpression)
             {
-                var simpleType = ((CastExpression)expression).Type as SimpleType;
+                var rr = this.Emitter.Resolver.ResolveNode(expression, this.Emitter);
+                if (rr is ConstantResolveResult)
+                {
+                    return false;
+                }
+                /*var simpleType = ((CastExpression)expression).Type as SimpleType;
 
                 if (simpleType != null && simpleType.Identifier == "dynamic")
                 {
                     return true;
-                }
+                }*/
+                return true;
             }
             return false;
         }

@@ -62,10 +62,10 @@ namespace Bridge.ClientTest.Diagnostics
             }
             watch.Stop();
             Assert.True(hasIncreased, "Times should increase inside the loop");
-            Assert.True(watch.ElapsedMilliseconds > 150, "ElapsedMilliseconds");
+            Assert.True(watch.ElapsedMilliseconds > 150, "ElapsedMilliseconds > 150" + " Actual: " + watch.ElapsedMilliseconds);
             Assert.True(watch.Elapsed == new TimeSpan(0, 0, 0, 0, (int)watch.ElapsedMilliseconds), "Elapsed");
             var value = (double)watch.ElapsedTicks / Stopwatch.Frequency;
-            Assert.True(value > 0.15 && value < 0.25, "Ticks");
+            Assert.True(value > 0.15 && value < 0.25, string.Format("value > 0.15 && value < 0.25 Actual: {0}, Ticks: {1}", value, watch.ElapsedTicks));
         }
 
         [Test]

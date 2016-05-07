@@ -193,6 +193,7 @@ namespace Bridge.Translator
             }
 
             var targetResolve = this.Emitter.Resolver.ResolveNode(invocationExpression, this.Emitter);
+
             var csharpInvocation = targetResolve as CSharpInvocationResolveResult;
             MemberReferenceExpression targetMember = invocationExpression.Target as MemberReferenceExpression;
 

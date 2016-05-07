@@ -1,5 +1,7 @@
 # ![Bridge.NET - C# to JavaScript Compiler](https://cloud.githubusercontent.com/assets/62210/13193769/bce9470e-d73b-11e5-8fc6-1ab4c8f9218f.png)
 
+[![Join the chat at https://gitter.im/bridgedotnet/Bridge](https://badges.gitter.im/bridgedotnet/Bridge.svg)](https://gitter.im/bridgedotnet/Bridge?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [Bridge.NET](http://bridge.net/) is an open source C#-to-JavaScript Compiler.
 
 Compile your C#...

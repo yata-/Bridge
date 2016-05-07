@@ -11,7 +11,7 @@ namespace TestIssue960
         {
             var x = new Named("Test");
             // Should not contain generic type parameter
-            Console.WriteLine(new Example().GetName(x));
+            System.Console.WriteLine(new Example().GetName(x));
         }
     }
 
