@@ -171,5 +171,11 @@ namespace System
 
         [Template("Bridge.Long.divRem({a}, {b}, {result})")]
         public static extern long DivRem(long a, long b, out long result);
+        
+        public static extern double Sinh(double value);
+
+        public static extern double Cosh(double value);
+
+        public static extern double Tanh(double value);
     }
 }
