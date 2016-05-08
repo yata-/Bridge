@@ -289,7 +289,7 @@ namespace System
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">An array of objects to write using format.</param>
         [Template("console.log(Bridge.String.format({format}, {arg}))")]
-        public static extern void WriteLine(String format, Object[] arg);
+        public static extern void WriteLine(String format, params Object[] arg);
 
         /// <summary>
         /// Writes the text representation of the specified 32-bit unsigned integer value, followed by the current line terminator, to the standard output stream.
