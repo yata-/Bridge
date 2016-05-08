@@ -111,7 +111,7 @@ namespace System
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg0">The first object to write using format.</param>
-        [Template("console.log({value}, {arg0})")]
+        [Template("console.log(Bridge.String.format({format}, {arg0}))")]
         public static extern void Write(String format, Object arg0);
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace System
         /// <param name="format">A composite format string.</param>
         /// <param name="arg0">The first object to write using format.</param>
         /// <param name="arg1">The second object to write using format.</param>
-        [Template("console.log({value}, {arg0}, {arg1})")]
+        [Template("console.log(Bridge.String.format({format}, {arg0}, {arg1}))")]
         public static extern void Write(String format, Object arg0, Object arg1);
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace System
         /// <param name="arg0">The first object to write using format.</param>
         /// <param name="arg1">The second object to write using format.</param>
         /// <param name="arg2">The third object to write using format.</param>
-        [Template("console.log({value}, {arg0}, {arg1}, {arg2})")]
+        [Template("console.log(Bridge.String.format({format}, {arg0}, {arg1}, {arg2}))")]
         public static extern void Write(String format, Object arg0, Object arg1, Object arg2);
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace System
         /// <param name="arg1">The second object to write using format.</param>
         /// <param name="arg2">The third object to write using format.</param>
         /// <param name="arg3">The fourth object to write using format.</param>
-        [Template("console.log({value}, {arg0}, {arg1}, {arg2}, {arg3})")]
+        [Template("console.log(Bridge.String.format({format}, {arg0}, {arg1}, {arg2}, {arg3}))")]
         public static extern void Write(String format, Object arg0, Object arg1, Object arg2, Object arg3);
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace System
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="arg0">The first object to write using format.</param>
-        [Template("console.log({value}, {arg0})")]
+        [Template("console.log(Bridge.String.format({format}, {arg0}))")]
         public static extern void WriteLine(String format, object arg0);
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace System
         /// <param name="format">A composite format string.</param>
         /// <param name="arg0">The first object to write using format.</param>
         /// <param name="arg1">The second object to write using format.</param>
-        [Template("console.log({value}, {arg0}, {arg1})")]
+        [Template("console.log(Bridge.String.format({format}, {arg0}, {arg1}))")]
         public static extern void WriteLine(String format, Object arg0, Object arg1);
 
         /// <summary>
@@ -269,7 +269,7 @@ namespace System
         /// <param name="arg0">The first object to write using format.</param>
         /// <param name="arg1">The second object to write using format.</param>
         /// <param name="arg2">The third object to write using format.</param>
-        [Template("console.log({value}, {arg0}, {arg1}, {arg2})")]
+        [Template("console.log(Bridge.String.format({format}, {arg0}, {arg1}, {arg2}))")]
         public static extern void WriteLine(String format, Object arg0, Object arg1, Object arg2);
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace System
         /// <param name="arg1">The second object to write using format.</param>
         /// <param name="arg2">The third object to write using format.</param>
         /// <param name="arg3">The fourth object to write using format.</param>
-        [Template("console.log({value}, {arg0}, {arg1}, {arg2}, {arg3})")]
+        [Template("console.log(Bridge.String.format({format}, {arg0}, {arg1}, {arg2}, {arg3}))")]
         public static extern void WriteLine(String format, Object arg0, Object arg1, Object arg2, Object arg3);
 
         /// <summary>
