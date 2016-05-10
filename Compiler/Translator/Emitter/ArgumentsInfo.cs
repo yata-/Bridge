@@ -420,7 +420,14 @@ namespace Bridge.Translator
                         }
                         if (named && !p.IsParams)
                         {
-                            result[i] = new PrimitiveExpression(t);
+                            if (t == null)
+                            {
+                                result[i] = new PrimitiveExpression(new RawValue("void 0"));
+                            }
+                            else
+                            {
+                                result[i] = new PrimitiveExpression(t);    
+                            }
                         }
 
                         names[i] = parameters[i + shift].Name;

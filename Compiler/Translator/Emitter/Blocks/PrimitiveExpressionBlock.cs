@@ -30,7 +30,14 @@ namespace Bridge.Translator
                 return;
             }
 
-            this.WriteScript(this.PrimitiveExpression.Value);
+            if (this.PrimitiveExpression.Value is RawValue)
+            {
+                this.Write(this.PrimitiveExpression.Value.ToString());
+            }
+            else
+            {
+                this.WriteScript(this.PrimitiveExpression.Value);    
+            }
         }
     }
 }
