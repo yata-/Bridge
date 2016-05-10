@@ -6102,6 +6102,47 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1328', {
+        statics: {
+            testOptionalParams: function () {
+                var l1 = new Bridge.ClientTest.BridgeIssues.Bridge1328.Link("url", "test", "xxx");
+                var l2 = new Bridge.ClientTest.BridgeIssues.Bridge1328.Link2("url", "test", void 0);
+    
+                Bridge.Test.Assert.areEqual("xxx", l1.name);
+                Bridge.Test.Assert.notNull(l2.name);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1328.Link', {
+        name: null,
+        constructor: function (url, text, name) {
+            if (name === void 0) { name = "xxx"; }
+    
+            this.name = name;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1328.Link2', {
+        config: {
+            init: function () {
+                this.name = new Bridge.ClientTest.BridgeIssues.Bridge1328.Optional$1(String)();
+            }
+        },
+        constructor: function (url, text, name) {
+            if (name === void 0) { name = new Bridge.ClientTest.BridgeIssues.Bridge1328.Optional$1(String)(); }
+    
+            this.name = name;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1328.Optional$1', function (T) { return {
+        statics: {
+            getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge1328.Optional$1(T)(); }
+        },
+        $clone: function (to) { return this; }
+    }; });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
