@@ -283,7 +283,9 @@
     <Compile Include="SimpleTypes\TestVersion.cs" />
     <Compile Include="Text\RegularExpressions\Msdn\RegexAnchorsTests.cs" />
     <Compile Include="Text\RegularExpressions\Msdn\RegexBackreferenceTests.cs" />
+    <Compile Include="Text\RegularExpressions\RegexInlineOptionsTests.cs" />
     <Compile Include="Text\RegularExpressions\RegexMatchSparseTests.cs" />
+    <Compile Include="Text\RegularExpressions\RegexOptionsTests.cs" />
     <Compile Include="Text\RegularExpressions\RegexTimeoutTests.cs" />
     <Compile Include="Text\RegularExpressions\Msdn\RegexEscapeTests.cs" />
     <Compile Include="Text\RegularExpressions\Msdn\RegexIsMatchTests.cs" />

@@ -25,11 +25,15 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
 
         var options = regex.getOptions();
         var optionsEnum = Bridge.Text.RegularExpressions.RegexOptions;
-        var isMultiline = (options & optionsEnum.Multiline) === optionsEnum.Multiline;
+
         var isCaseInsensitive = (options & optionsEnum.IgnoreCase) === optionsEnum.IgnoreCase;
+        var isMultiline = (options & optionsEnum.Multiline) === optionsEnum.Multiline;
+        var isSingleline = (options & optionsEnum.Singleline) === optionsEnum.Singleline;
+        var isIgnoreWhitespace = (options & optionsEnum.IgnorePatternWhitespace) === optionsEnum.IgnorePatternWhitespace;
+
         var timeoutMs = regex._matchTimeout.getTotalMilliseconds();
 
-        this._netEngine = new Bridge.Text.RegularExpressions.RegexNetEngine(regex._pattern, isMultiline, isCaseInsensitive, timeoutMs);
+        this._netEngine = new Bridge.Text.RegularExpressions.RegexNetEngine(regex._pattern, isCaseInsensitive, isMultiline, isSingleline, isIgnoreWhitespace, timeoutMs);
 
     },
 

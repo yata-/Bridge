@@ -28,6 +28,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
             escCharClass: 120,
             escCharClassCategory: 121,
             escCharClassBlock: 122,
+            escCharClassDot: 123,
 
             escAnchor: 130,
 
@@ -55,9 +56,12 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
             commentXMode: 701
         },
 
-        parsePattern: function (pattern, isIgnoreWhitespaceMode) {
+        parsePattern: function (pattern, isIgnoreCaseMode, isMultilineMode, isSinglelineMode, isIgnoreWhitespaceMode) {
             var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
             var settings = {
+                ignoreCase: isIgnoreCaseMode,
+                multiline: isMultilineMode,
+                singleline: isSinglelineMode,
                 ignoreWhitespace: isIgnoreWhitespaceMode
             };
 
@@ -88,6 +92,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                 groups: groups,
                 sparseSettings: sparseSettings,
                 isContiguous: settings.isContiguous || false,
+                mustCaptureFirstCh: settings.mustCaptureFirstCh || false,
                 shouldFail: settings.shouldFail || false
             };
 
@@ -615,27 +620,36 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                 } else if (token.type === tokenTypes.anchor || token.type === tokenTypes.escAnchor) {
 
                     if (token.value === "$") {
-                        extraTokenStr = "(?!\\r)";
-                        extraToken = scope._parseGroupToken(extraTokenStr, settings, 0, extraTokenStr.length); // JavaScript RegExp does not distinguish \r and \n
+                        //if (settings.multiline) {
+                        //    extraTokenStr = "(?=\\n|(?![\\d\\D]))"; // Multiline mode implies that "\n" will be used as an anchor as well as EOF.
+                        //    extraToken = scope._parseGroupToken(extraTokenStr, settings, 0, extraTokenStr.length);
+                        //    tokens.splice(i, 1, extraToken);
+                        //}
+
+                        extraTokenStr = "(?!\\r)"; // JavaScript RegExp does not distinguish \r and \n
+                        extraToken = scope._parseGroupToken(extraTokenStr, settings, 0, extraTokenStr.length);
                         tokens.splice(i, 0, extraToken);
                         ++ i;
                     } else if (token.value === "\\A") {
-                        extraTokenStr = "(?-m:^)";
-                        extraToken = scope._parseGroupToken(extraTokenStr, settings, 0, extraTokenStr.length); // Replace "\A" with the construction having the same meaning: "(?-m:^)"
+                        extraTokenStr = "^"; // (?-m:^)
+                        extraToken = scope._parseAnchorToken(extraTokenStr, 0); // Replace "\A" with the construction having almost the same meaning + check the 1st captured index
                         tokens.splice(i, 1, extraToken);
+
+                        if (nestingLevel === 0 && i === 0) {
+                            settings.mustCaptureFirstCh = true;
+                        } else {
+                            settings.shouldFail = true;
+                        }
+
                     } else if (token.value === "\\Z") {
-                        extraTokenStr = "(?-m:(?!\\r)$)";
-                        extraToken = scope._parseGroupToken(extraTokenStr, settings, 0, extraTokenStr.length); // Replace "\Z" with the construction having the same meaning: "(?-m:$)"
+                        extraTokenStr = "(?=\\n?(?![\\d\\D]))"; // i.e. \nEOF or EOF (without capture)
+                        extraToken = scope._parseGroupToken(extraTokenStr, settings, 0, extraTokenStr.length); // Replace "\Z" with the construction having the same meaning: "(?=\n?(?![\d\D]))"
                         tokens.splice(i, 1, extraToken);
                     } else if (token.value === "\\z") {
                         // "\z" is similar to "\Z" with the only difference: "\z" doesn't match "\n" symbol.
-                        // Replace "\z" with the construction having the same meaning: "(?!\n)\Z"
-                        extraTokenStr = "(?!\\n)";
-                        extraToken = scope._parseGroupToken(extraTokenStr, settings, 0, extraTokenStr.length);
-                        tokens.splice(i, 0, extraToken);
-
-                        extraToken = scope._createPatternToken("\\Z", tokenTypes.escAnchor, 0, 2);
-                        tokens.splice(i + 1, 1, extraToken);
+                        extraTokenStr = "(?![\\d\\D])"; // i.e. EOF (without capture)
+                        extraToken = scope._parseGroupToken(extraTokenStr, settings, 0, extraTokenStr.length); // Replace "\z" with the construction having the same meaning: "(?![\d\D])"
+                        tokens.splice(i, 1, extraToken);
                         // Do not change "i", let "\\Z" to be processed as usual token
                     } else if (token.value === "\\G") {
                         if (nestingLevel === 0 && i === 0) {
@@ -648,6 +662,13 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                         --i;
                         continue;
                     }
+                }
+                else if (token.type === tokenTypes.escCharClassDot) {
+                    extraTokenStr = settings.singleline // JavaScript RegExp does not distinguish \r and \n
+                        ? "(?:.|\\r|\\n)"   // Singleline mode defines that "." will capture any symbol INCLUDING "\n"
+                        : "(?:.|\\r)";      
+                    extraToken = scope._parseGroupToken(extraTokenStr, settings, 0, extraTokenStr.length); // JavaScript RegExp does not distinguish \r and \n
+                    tokens.splice(i, 1, extraToken);
                 }
 
                 // Update children tokens:
@@ -760,7 +781,9 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                     continue; 
                 }
 
-                if (ch === "\\") {
+                if (ch === ".") {
+                    token = scope._parseDotToken(pattern, i, endIndex);
+                } else if (ch === "\\") {
                     token = scope._parseEscapeToken(pattern, i, endIndex);
                 } else if (ch === "[") {
                     token = scope._parseCharRangeToken(pattern, i, endIndex);
@@ -994,6 +1017,18 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
 
             var groupToken = scope._createPatternToken(pattern, tokenTypes.charGroup, i, 1 + closeBracketIndex - i, tokens, "[", "]");
             return groupToken;
+        },
+
+        _parseDotToken: function (pattern, i) {
+            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var tokenTypes = scope.tokenTypes;
+
+            var ch = pattern[i];
+            if (ch !== ".") {
+                return null;
+            }
+
+            return scope._createPatternToken(pattern, tokenTypes.escCharClassDot, i, 1);
         },
 
         _parseAnchorToken: function (pattern, i) {

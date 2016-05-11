@@ -53,22 +53,26 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
     _originalPattern: "",
     _patternInfo: null,
 
-    _isMultiLine: false,
     _isCaseInsensitive: false,
+    _isMultiLine: false,
+    _isSingleline: false,
+    _isIgnoreWhitespace: false,
     _text: "",
     _textStart: 0,
     _timeoutMs: -1,
     _timeoutTime: -1,
 
-    constructor: function (pattern, isMultiLine, isCaseInsensitive, timeoutMs) {
+    constructor: function (pattern, isCaseInsensitive, isMultiLine, isSingleline, isIgnoreWhitespace, timeoutMs) {
         if (pattern == null) {
             throw new Bridge.ArgumentNullException("pattern");
         }
 
         this._pattern = pattern;
         this._originalPattern = pattern;
-        this._isMultiLine = isMultiLine;
         this._isCaseInsensitive = isCaseInsensitive;
+        this._isMultiLine = isMultiLine;
+        this._isSingleline = isSingleline;
+        this._isIgnoreWhitespace = isIgnoreWhitespace;
         this._timeoutMs = timeoutMs;
     },
 
@@ -111,6 +115,10 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
         if (prevLength >= 0 && patternInfo.isContiguous && total.index !== this._textStart) {
             return match; // Contiguous requirement was not met
+        }
+
+        if (total.index !== 0 && patternInfo.mustCaptureFirstCh) {
+            return match; // "\A" token requires that capture starts from the very beginning
         }
 
         match.capIndex = total.index;
@@ -249,7 +257,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
     parsePattern: function() {
         if (this._patternInfo == null) {
             var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
-            var patternInfo = scope.parsePattern(this._pattern);
+            var patternInfo = scope.parsePattern(this._pattern, this._isCaseInsensitive, this._isMultiLine, this._isSingleline, this._isIgnoreWhitespace);
 
             this._patternInfo = patternInfo;
             this._pattern = patternInfo.jsPattern;

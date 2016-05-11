@@ -172,7 +172,12 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
 
         // Check if the specified options are supported.
-        var supportedOptions = Bridge.Text.RegularExpressions.RegexOptions.IgnoreCase | Bridge.Text.RegularExpressions.RegexOptions.Multiline;
+        var supportedOptions =
+            Bridge.Text.RegularExpressions.RegexOptions.IgnoreCase |
+            Bridge.Text.RegularExpressions.RegexOptions.Multiline |
+            Bridge.Text.RegularExpressions.RegexOptions.Singleline |
+            Bridge.Text.RegularExpressions.RegexOptions.IgnorePatternWhitespace;
+
         if ((options | supportedOptions) !== supportedOptions) {
             throw new Bridge.NotSupportedException("Specified Regex options are not supported.");
         }

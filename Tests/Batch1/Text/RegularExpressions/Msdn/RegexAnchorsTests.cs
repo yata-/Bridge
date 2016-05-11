@@ -280,101 +280,98 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
             ValidateCollection(expecteds, actuals.ToArray(), "Result");
         }
 
-        //TODO: Enable the test below when ISMNX options are supported 
-        //[Test]
-        //public void StartOfStringOnlyTest()
-        //{
-        //    int startPos = 0, endPos = 70;
-        //    string input = "Brooklyn Dodgers, National League, 1911, 1912, 1932-1957\n" +
-        //                   "Chicago Cubs, National League, 1903-present\n" +
-        //                   "Detroit Tigers, American League, 1901-present\n" +
-        //                   "New York Giants, National League, 1885-1957\n" +
-        //                   "Washington Senators, American League, 1901-1960\n";
+        [Test]
+        public void StartOfStringOnlyTest()
+        {
+            int startPos = 0, endPos = 70;
+            string input = "Brooklyn Dodgers, National League, 1911, 1912, 1932-1957\n" +
+                           "Chicago Cubs, National League, 1903-present\n" +
+                           "Detroit Tigers, American League, 1901-present\n" +
+                           "New York Giants, National League, 1885-1957\n" +
+                           "Washington Senators, American League, 1901-1960\n";
 
-        //    string pattern = @"\A((\w+(\s?)){2,}),\s(\w+\s\w+),(\s\d{4}(-(\d{4}|present))?,?)+";
+            string pattern = @"\A((\w+(\s?)){2,}),\s(\w+\s\w+),(\s\d{4}(-(\d{4}|present))?,?)+";
 
-        //    var actuals = new List<string>();
-        //    var expecteds = new[]
-        //    {
-        //        "The Brooklyn Dodgers played in the National League in 1911, 1912, 1932-1957."
-        //    };
+            var actuals = new List<string>();
+            var expecteds = new[]
+            {
+                "The Brooklyn Dodgers played in the National League in 1911, 1912, 1932-1957."
+            };
 
-        //    if (input.Substring(startPos, endPos).Contains(","))
-        //    {
-        //        var match = Regex.Match(input, pattern, RegexOptions.Multiline);
-        //        while (match.Success)
-        //        {
-        //            var actual = string.Format("The {0} played in the {1} in", match.Groups[1].Value, match.Groups[4].Value);
-        //            foreach (Capture capture in match.Groups[5].Captures)
-        //            {
-        //                actual += capture.Value;
-        //            }
-        //            actual += ".";
-        //            actuals.Add(actual);
+            if (input.Substring(startPos, endPos).Contains(","))
+            {
+                var match = Regex.Match(input, pattern, RegexOptions.Multiline);
+                while (match.Success)
+                {
+                    var actual = string.Format("The {0} played in the {1} in", match.Groups[1].Value, match.Groups[4].Value);
+                    foreach (Capture capture in match.Groups[5].Captures)
+                    {
+                        actual += capture.Value;
+                    }
+                    actual += ".";
+                    actuals.Add(actual);
 
-        //            startPos = match.Index + match.Length;
-        //            endPos = startPos + 70 <= input.Length ? 70 : input.Length - startPos;
-        //            if (!input.Substring(startPos, endPos).Contains(",")) break;
-        //            match = match.NextMatch();
-        //        }
-        //    }
+                    startPos = match.Index + match.Length;
+                    endPos = startPos + 70 <= input.Length ? 70 : input.Length - startPos;
+                    if (!input.Substring(startPos, endPos).Contains(",")) break;
+                    match = match.NextMatch();
+                }
+            }
 
-        //    ValidateCollection(expecteds, actuals.ToArray(), "Result");
-        //}
+            ValidateCollection(expecteds, actuals.ToArray(), "Result");
+        }
 
-        //TODO: Enable the test below when ISMNX options are supported 
-        //[Test]
-        //public void EndOfStringOrNewlineTest()
-        //{
-        //    string[] inputs =
-        //    {
-        //        "Brooklyn Dodgers, National League, 1911, 1912, 1932-1957",
-        //        "Chicago Cubs, National League, 1903-present" + Environment.NewLine,
-        //        "Detroit Tigers, American League, 1901-present" + Regex.Unescape(@"\n"),
-        //        "New York Giants, National League, 1885-1957",
-        //        "Washington Senators, American League, 1901-1960" + Environment.NewLine
-        //    };
-        //    string pattern = @"^((\w+(\s?)){2,}),\s(\w+\s\w+),(\s\d{4}(-(\d{4}|present))?,?)+\r?\Z";
+        [Test]
+        public void EndOfStringOrNewlineTest()
+        {
+            string[] inputs =
+            {
+                "Brooklyn Dodgers, National League, 1911, 1912, 1932-1957",
+                "Chicago Cubs, National League, 1903-present" + Environment.NewLine,
+                "Detroit Tigers, American League, 1901-present" + Regex.Unescape(@"\n"),
+                "New York Giants, National League, 1885-1957",
+                "Washington Senators, American League, 1901-1960" + Environment.NewLine
+            };
+            string pattern = @"^((\w+(\s?)){2,}),\s(\w+\s\w+),(\s\d{4}(-(\d{4}|present))?,?)+\r?\Z";
 
-        //    var actuals = new List<bool>();
-        //    var expecteds = new[] {true, true, true, true, true};
+            var actuals = new List<bool>();
+            var expecteds = new[] { true, true, true, true, true };
 
-        //    foreach (string input in inputs)
-        //    {
-        //        if (input.Length > 70 || !input.Contains(",")) continue;
-        //        var match = Regex.Match(input, pattern);
-        //        actuals.Add(match.Success);
-        //    }
+            foreach (string input in inputs)
+            {
+                if (input.Length > 70 || !input.Contains(",")) continue;
+                var match = Regex.Match(input, pattern);
+                actuals.Add(match.Success);
+            }
 
-        //    ValidateCollection(expecteds, actuals.ToArray(), "Result");
-        //}
+            ValidateCollection(expecteds, actuals.ToArray(), "Result");
+        }
 
-        //TODO: Enable the test below when ISMNX options are supported 
-        //[Test]
-        //public void EndOfStringOnlyTest()
-        //{
-        //    string[] inputs =
-        //    {
-        //        "Brooklyn Dodgers, National League, 1911, 1912, 1932-1957",
-        //        "Chicago Cubs, National League, 1903-present" + "\r\n",
-        //        "Detroit Tigers, American League, 1901-present" + Regex.Unescape(@"\n"),
-        //        "New York Giants, National League, 1885-1957",
-        //        "Washington Senators, American League, 1901-1960" + "\r\n"
-        //    };
-        //    string pattern = @"^((\w+(\s?)){2,}),\s(\w+\s\w+),(\s\d{4}(-(\d{4}|present))?,?)+\r?\z";
+        [Test]
+        public void EndOfStringOnlyTest()
+        {
+            string[] inputs =
+            {
+                "Brooklyn Dodgers, National League, 1911, 1912, 1932-1957",
+                "Chicago Cubs, National League, 1903-present" + "\r\n",
+                "Detroit Tigers, American League, 1901-present" + Regex.Unescape(@"\n"),
+                "New York Giants, National League, 1885-1957",
+                "Washington Senators, American League, 1901-1960" + "\r\n"
+            };
+            string pattern = @"^((\w+(\s?)){2,}),\s(\w+\s\w+),(\s\d{4}(-(\d{4}|present))?,?)+\r?\z";
 
-        //    var actuals = new List<bool>();
-        //    var expecteds = new[] { true, false, false, true, false };
+            var actuals = new List<bool>();
+            var expecteds = new[] { true, false, false, true, false };
 
-        //    foreach (string input in inputs)
-        //    {
-        //        if (input.Length > 70 || !input.Contains(",")) continue;
-        //        var match = Regex.Match(input, pattern);
-        //        actuals.Add(match.Success);
-        //    }
+            foreach (string input in inputs)
+            {
+                if (input.Length > 70 || !input.Contains(",")) continue;
+                var match = Regex.Match(input, pattern);
+                actuals.Add(match.Success);
+            }
 
-        //    ValidateCollection(expecteds, actuals.ToArray(), "Result");
-        //}
+            ValidateCollection(expecteds, actuals.ToArray(), "Result");
+        }
 
         [Test]
         public void ContiguousMatchesTest()
@@ -459,111 +456,169 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
 
         #endregion
 
-        //TODO: Enable the test below when ISMNX options are supported 
-        //[Test]
-        //public void EndOfStringOrNewlineCustomTest1()
-        //{
-        //    var actuals = new List<bool>();
-        //    var expecteds = new[] {false, false, true};
+        [Test]
+        public void StartAndEndOfStringCustomTest1()
+        {
+            const string pattern = @"^.*$";
+            const string text = "abc\ndef";
+            var rgx = new Regex(pattern, RegexOptions.Multiline);
+            var ms = rgx.Matches(text);
 
-        //    var text = "line1\n" + "line2\n" + "line3\n";
+            Assert.AreEqual(2, ms.Count, "Matches count is correct.");
 
-        //    var match = Regex.Match(text, @"line1\Z");
-        //    actuals.Add(match.Success);
+            // Match #0:
+            Assert.NotNull(ms[0], "Match[0] is not null.");
+            ValidateMatch(ms[0], 0, 3, "abc", 1, true);
 
-        //    match = Regex.Match(text, @"line2\Z");
-        //    actuals.Add(match.Success);
+            ValidateGroup(ms[0], 0, 0, 3, true, "abc", 1);
+            ValidateCapture(ms[0], 0, 0, 0, 3, "abc");
 
-        //    match = Regex.Match(text, @"line3\Z");
-        //    actuals.Add(match.Success);
+            // Match #1:
+            Assert.NotNull(ms[1], "Match[1] is not null.");
+            ValidateMatch(ms[1], 4, 3, "def", 1, true);
 
-        //    ValidateCollection(expecteds, actuals.ToArray(), "Result");
-        //}
+            ValidateGroup(ms[1], 0, 4, 3, true, "def", 1);
+            ValidateCapture(ms[1], 0, 0, 4, 3, "def");
+        }
 
-        //TODO: Enable the test below when ISMNX options are supported 
-        //[Test]
-        //public void EndOfStringOrNewlineCustomTest2()
-        //{
-        //    var actuals = new List<bool>();
-        //    var expecteds = new[] { false, false, true };
+        [Test]
+        public void StartAndEndOfStringCustomTest2()
+        {
+            const string pattern = @".*$";
+            const string text = "abc\ndef";
+            var rgx = new Regex(pattern, RegexOptions.Multiline);
+            var ms = rgx.Matches(text);
 
-        //    var text = "line1\n" + "line2\n" + "line3\n";
+            Assert.AreEqual(4, ms.Count, "Matches count is correct.");
 
-        //    var match = Regex.Match(text, @"line1\Z", RegexOptions.Multiline);
-        //    actuals.Add(match.Success);
+            // Match #0:
+            Assert.NotNull(ms[0], "Match[0] is not null.");
+            ValidateMatch(ms[0], 0, 3, "abc", 1, true);
 
-        //    match = Regex.Match(text, @"line2\Z", RegexOptions.Multiline);
-        //    actuals.Add(match.Success);
+            ValidateGroup(ms[0], 0, 0, 3, true, "abc", 1);
+            ValidateCapture(ms[0], 0, 0, 0, 3, "abc");
 
-        //    match = Regex.Match(text, @"line3\Z", RegexOptions.Multiline);
-        //    actuals.Add(match.Success);
+            // Match #1:
+            Assert.NotNull(ms[1], "Match[1] is not null.");
+            ValidateMatch(ms[1], 3, 0, "", 1, true);
 
-        //    ValidateCollection(expecteds, actuals.ToArray(), "Result");
-        //}
+            ValidateGroup(ms[1], 0, 3, 0, true, "", 1);
+            ValidateCapture(ms[1], 0, 0, 3, 0, "");
 
+            // Match #2:
+            Assert.NotNull(ms[2], "Match[2] is not null.");
+            ValidateMatch(ms[2], 4, 3, "def", 1, true);
 
-        //TODO: Enable the test below when ISMNX options are supported
-        //[Test]
-        //public void EndOfStringOnlyCustomTest1()
-        //{
-        //    var actuals = new List<bool>();
-        //    var expecteds = new[] { false, false, false };
+            ValidateGroup(ms[2], 0, 4, 3, true, "def", 1);
+            ValidateCapture(ms[2], 0, 0, 4, 3, "def");
 
-        //    var text = "line1\n" + "line2\n" + "line3\n";
+            // Match #3:
+            Assert.NotNull(ms[3], "Match[3] is not null.");
+            ValidateMatch(ms[3], 7, 0, "", 1, true);
 
-        //    var match = Regex.Match(text, @"line1\z");
-        //    actuals.Add(match.Success);
+            ValidateGroup(ms[3], 0, 7, 0, true, "", 1);
+            ValidateCapture(ms[3], 0, 0, 7, 0, "");
+        }
 
-        //    match = Regex.Match(text, @"line2\z");
-        //    actuals.Add(match.Success);
+        [Test]
+        public void EndOfStringOrNewlineCustomTest1()
+        {
+            var actuals = new List<bool>();
+            var expecteds = new[] { false, false, true };
 
-        //    match = Regex.Match(text, @"line3\z");
-        //    actuals.Add(match.Success);
+            var text = "line1\n" + "line2\n" + "line3\n";
 
-        //    ValidateCollection(expecteds, actuals.ToArray(), "Result");
-        //}
+            var match = Regex.Match(text, @"line1\Z");
+            actuals.Add(match.Success);
 
-        //TODO: Enable the test below when ISMNX options are supported
-        //[Test]
-        //public void EndOfStringOnlyCustomTest2()
-        //{
-        //    var actuals = new List<bool>();
-        //    var expecteds = new[] { false, false, false };
+            match = Regex.Match(text, @"line2\Z");
+            actuals.Add(match.Success);
 
-        //    var text = "line1\n" + "line2\n" + "line3\n";
+            match = Regex.Match(text, @"line3\Z");
+            actuals.Add(match.Success);
 
-        //    var match = Regex.Match(text, @"line1\z", RegexOptions.Multiline);
-        //    actuals.Add(match.Success);
+            ValidateCollection(expecteds, actuals.ToArray(), "Result");
+        }
 
-        //    match = Regex.Match(text, @"line2\z", RegexOptions.Multiline);
-        //    actuals.Add(match.Success);
+        [Test]
+        public void EndOfStringOrNewlineCustomTest2()
+        {
+            var actuals = new List<bool>();
+            var expecteds = new[] { false, false, true };
 
-        //    match = Regex.Match(text, @"line3\z", RegexOptions.Multiline);
-        //    actuals.Add(match.Success);
+            var text = "line1\n" + "line2\n" + "line3\n";
 
-        //    ValidateCollection(expecteds, actuals.ToArray(), "Result");
-        //}
+            var match = Regex.Match(text, @"line1\Z", RegexOptions.Multiline);
+            actuals.Add(match.Success);
 
-        //TODO: Enable the test below when ISMNX options are supported
-        //[Test]
-        //public void EndOfStringOnlyCustomTest3()
-        //{
-        //    var actuals = new List<bool>();
-        //    var expecteds = new[] { false, false, true };
+            match = Regex.Match(text, @"line2\Z", RegexOptions.Multiline);
+            actuals.Add(match.Success);
 
-        //    var text = "line1\n" + "line2\n" + "line3";
+            match = Regex.Match(text, @"line3\Z", RegexOptions.Multiline);
+            actuals.Add(match.Success);
 
-        //    var match = Regex.Match(text, @"line1\z", RegexOptions.Multiline);
-        //    actuals.Add(match.Success);
+            ValidateCollection(expecteds, actuals.ToArray(), "Result");
+        }
 
-        //    match = Regex.Match(text, @"line2\z", RegexOptions.Multiline);
-        //    actuals.Add(match.Success);
+        [Test]
+        public void EndOfStringOnlyCustomTest1()
+        {
+            var actuals = new List<bool>();
+            var expecteds = new[] { false, false, false };
 
-        //    match = Regex.Match(text, @"line3\z", RegexOptions.Multiline);
-        //    actuals.Add(match.Success);
+            var text = "line1\n" + "line2\n" + "line3\n";
 
-        //    ValidateCollection(expecteds, actuals.ToArray(), "Result");
-        //}
+            var match = Regex.Match(text, @"line1\z");
+            actuals.Add(match.Success);
+
+            match = Regex.Match(text, @"line2\z");
+            actuals.Add(match.Success);
+
+            match = Regex.Match(text, @"line3\z");
+            actuals.Add(match.Success);
+
+            ValidateCollection(expecteds, actuals.ToArray(), "Result");
+        }
+
+        [Test]
+        public void EndOfStringOnlyCustomTest2()
+        {
+            var actuals = new List<bool>();
+            var expecteds = new[] { false, false, false };
+
+            var text = "line1\n" + "line2\n" + "line3\n";
+
+            var match = Regex.Match(text, @"line1\z", RegexOptions.Multiline);
+            actuals.Add(match.Success);
+
+            match = Regex.Match(text, @"line2\z", RegexOptions.Multiline);
+            actuals.Add(match.Success);
+
+            match = Regex.Match(text, @"line3\z", RegexOptions.Multiline);
+            actuals.Add(match.Success);
+
+            ValidateCollection(expecteds, actuals.ToArray(), "Result");
+        }
+
+        [Test]
+        public void EndOfStringOnlyCustomTest3()
+        {
+            var actuals = new List<bool>();
+            var expecteds = new[] { false, false, true };
+
+            var text = "line1\n" + "line2\n" + "line3";
+
+            var match = Regex.Match(text, @"line1\z", RegexOptions.Multiline);
+            actuals.Add(match.Success);
+
+            match = Regex.Match(text, @"line2\z", RegexOptions.Multiline);
+            actuals.Add(match.Success);
+
+            match = Regex.Match(text, @"line3\z", RegexOptions.Multiline);
+            actuals.Add(match.Success);
+
+            ValidateCollection(expecteds, actuals.ToArray(), "Result");
+        }
 
         [Test]
         public void ContiguousMatchesCustomTest1()
