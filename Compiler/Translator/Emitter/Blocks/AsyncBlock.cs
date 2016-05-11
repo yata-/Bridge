@@ -126,6 +126,12 @@ namespace Bridge.Translator
             set;
         }
 
+        public List<AstNode> WrittenAwaitExpressions
+        {
+            get;
+            set;
+        }
+
         public IType ReturnType
         {
             get;
@@ -188,6 +194,7 @@ namespace Bridge.Translator
             this.Steps = new List<IAsyncStep>();
             this.TryInfos = new List<IAsyncTryInfo>();
             this.JumpLabels = new List<IAsyncJumpLabel>();
+            this.WrittenAwaitExpressions = new List<AstNode>();
         }
 
         protected void DetectReturnType()
