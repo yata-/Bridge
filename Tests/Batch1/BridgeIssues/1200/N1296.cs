@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using Bridge.Test;
 
 namespace Bridge.ClientTest.BridgeIssues
@@ -98,6 +97,7 @@ namespace Bridge.ClientTest.BridgeIssues
         {
             var id = (MessageId)12;
             Assert.AreEqual(12, id.Value);
+
             var returnedId = Test((int)id);
             Assert.AreEqual(12, returnedId);
         }

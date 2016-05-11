@@ -9,11 +9,11 @@
                 var l = Bridge.Long(v);
                 l = Bridge.Long(v);
     
-                console.log(Bridge.Long(v).toString());
-                console.log(Bridge.Long((v)).toString());
-                console.log(Bridge.Long(2).toString());
-                console.log(Bridge.Long(2).toString());
-                console.log(Bridge.Long(7).toString());
+                Bridge.Console.log(Bridge.Long(v).toString());
+                Bridge.Console.log(Bridge.Long((v)).toString());
+                Bridge.Console.log(Bridge.Long(2).toString());
+                Bridge.Console.log(Bridge.Long(2).toString());
+                Bridge.Console.log(Bridge.Long(7).toString());
                 TestIssue1230.Issue1230.methodLong(Bridge.Long(v));
                 TestIssue1230.Issue1230.methodLong(Bridge.Long(v));
             },
@@ -29,11 +29,11 @@
                 var l = Bridge.Decimal(v);
                 l = Bridge.Decimal(v);
     
-                console.log(Bridge.Decimal(v).toString());
-                console.log(Bridge.Decimal((v)).toString());
-                console.log(Bridge.Decimal(2.0).toString());
-                console.log(Bridge.Decimal(2.0).toString());
-                console.log(Bridge.Decimal(7.0).toString());
+                Bridge.Console.log(Bridge.Decimal(v).toString());
+                Bridge.Console.log(Bridge.Decimal((v)).toString());
+                Bridge.Console.log(Bridge.Decimal(2.0).toString());
+                Bridge.Console.log(Bridge.Decimal(2.0).toString());
+                Bridge.Console.log(Bridge.Decimal(7.0).toString());
                 TestIssue1230.Issue1230.methodDecimal(Bridge.Decimal(v));
                 TestIssue1230.Issue1230.methodDecimal(Bridge.Decimal(v));
             },
@@ -42,11 +42,11 @@
                 var l = v;
                 l = v;
     
-                console.log(v);
-                console.log((v));
-                console.log(2);
-                console.log(2);
-                console.log(7);
+                Bridge.Console.log(v);
+                Bridge.Console.log((v));
+                Bridge.Console.log(2);
+                Bridge.Console.log(2);
+                Bridge.Console.log(7);
                 TestIssue1230.Issue1230.methodInt(v);
                 TestIssue1230.Issue1230.methodInt(v);
             }
