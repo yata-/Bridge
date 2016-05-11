@@ -17914,7 +17914,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             sb.appendLine();
             sb.append("};");
     
-            console.log(sb.toString());
+            Bridge.Console.log(sb.toString());
         }
     });
     

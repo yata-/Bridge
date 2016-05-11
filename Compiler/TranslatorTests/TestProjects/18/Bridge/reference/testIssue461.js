@@ -31,14 +31,14 @@
     Bridge.apply($_.TestIssue461.Issue461, {
         f1: function (ev) {
             // Tests if ev.CurrentTarget.Value compiles
-            console.log("ev.CurrentTarget.Value: " + ev.currentTarget.value);
+            Bridge.Console.log("ev.CurrentTarget.Value: " + ev.currentTarget.value);
     
             // Tests if ev.IsMouseEvent() compiles
-            console.log("IsMouseEvent: " + Bridge.is(ev, MouseEvent));
+            Bridge.Console.log("IsMouseEvent: " + Bridge.is(ev, MouseEvent));
         },
         f2: function (ev) {
             // Tests if ev.CurrentTarget.Href compiles
-            console.log("ev.CurrentTarget.Href: " + ev.currentTarget.href);
+            Bridge.Console.log("ev.CurrentTarget.Href: " + ev.currentTarget.href);
         }
     });
     
