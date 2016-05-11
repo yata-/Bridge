@@ -6102,6 +6102,58 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1304', {
+        statics: {
+            output: null,
+            clearOutput: function () {
+                Bridge.Console.output = "";
+            },
+            resetOutput: function () {
+                Bridge.Console.output = null;
+            },
+            testWriteFormatString: function () {
+                Bridge.Console.log(Bridge.String.format("{0}", 1));
+                Bridge.Test.Assert.areEqual("1", Bridge.Console.output);
+                Bridge.ClientTest.BridgeIssues.Bridge1304.clearOutput();
+    
+                Bridge.Console.log(Bridge.String.format("{0} {1}", 1, 2));
+                Bridge.Test.Assert.areEqual("1 2", Bridge.Console.output);
+                Bridge.ClientTest.BridgeIssues.Bridge1304.clearOutput();
+    
+                Bridge.Console.log(Bridge.String.format("{0} {1} {2}", 1, 2, 3));
+                Bridge.Test.Assert.areEqual("1 2 3", Bridge.Console.output);
+                Bridge.ClientTest.BridgeIssues.Bridge1304.clearOutput();
+    
+                Bridge.Console.log(Bridge.String.format("{0} {1} {2} {3}", 1, 2, 3, 4));
+                Bridge.Test.Assert.areEqual("1 2 3 4", Bridge.Console.output);
+                Bridge.ClientTest.BridgeIssues.Bridge1304.clearOutput();
+    
+                Bridge.Console.log(Bridge.String.format("{0} {1} {2} {3} {4}", 1, 2, 3, 4, "5"));
+                Bridge.Test.Assert.areEqual("1 2 3 4 5", Bridge.Console.output);
+            },
+            testWriteLineFormatString: function () {
+                Bridge.Console.log(Bridge.String.format("{0}", 1));
+                Bridge.Test.Assert.areEqual("1", Bridge.Console.output);
+                Bridge.ClientTest.BridgeIssues.Bridge1304.clearOutput();
+    
+                Bridge.Console.log(Bridge.String.format("{0} {1}", 1, 2));
+                Bridge.Test.Assert.areEqual("1 2", Bridge.Console.output);
+                Bridge.ClientTest.BridgeIssues.Bridge1304.clearOutput();
+    
+                Bridge.Console.log(Bridge.String.format("{0} {1} {2}", 1, 2, 3));
+                Bridge.Test.Assert.areEqual("1 2 3", Bridge.Console.output);
+                Bridge.ClientTest.BridgeIssues.Bridge1304.clearOutput();
+    
+                Bridge.Console.log(Bridge.String.format("{0} {1} {2} {3}", 1, 2, 3, 4));
+                Bridge.Test.Assert.areEqual("1 2 3 4", Bridge.Console.output);
+                Bridge.ClientTest.BridgeIssues.Bridge1304.clearOutput();
+    
+                Bridge.Console.log(Bridge.String.format("{0} {1} {2} {3} {4}", 1, 2, 3, 4, "5"));
+                Bridge.Test.Assert.areEqual("1 2 3 4 5", Bridge.Console.output);
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
@@ -17914,7 +17966,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             sb.appendLine();
             sb.append("};");
     
-            console.log(sb.toString());
+            Bridge.Console.log(sb.toString());
         }
     });
     

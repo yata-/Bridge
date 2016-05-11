@@ -28,6 +28,7 @@
   <file name="Collections/Comparer.js" path="Collections" />
   <file name="Collections/Dictionary.js" path="Collections" />
   <file name="Collections/List.js" path="Collections" />
+  <file name="Console.js" />
   <file name="Browser.js" />
   <file name="Task.js" />
   <file name="Validation.js" />
@@ -105,6 +106,7 @@
     <include name="Text/RegularExpressions/RegexNode.js" />
     <include name="Text/RegularExpressions/RegexReplacement.js" />
     <include name="Text/RegularExpressions/RegexNetEngine.js" />
+    <include name="Console.js" />
     <include name="timer.js" />
     <include name="End.js" />
     <include name="Finally.js" />

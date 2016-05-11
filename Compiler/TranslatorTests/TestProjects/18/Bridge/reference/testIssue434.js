@@ -19,7 +19,7 @@
                 TestIssue434.Issue434A.doSomething(4);
             },
             doSomething: function (i) {
-                console.log(i);
+                Bridge.Console.log(i);
             }
         }
     });
@@ -44,7 +44,7 @@
                 TestIssue434.Issue434B.doSomething(4);
             },
             doSomething: function (i) {
-                console.log(i);
+                Bridge.Console.log(i);
             }
         }
     });
