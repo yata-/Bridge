@@ -243,6 +243,26 @@ namespace Bridge.Contract
             return emitter.Validator.HasAttribute(typeDef.Attributes, "Bridge.IgnoreCastAttribute");
         }
 
+        public static bool IsIgnoreCast(ITypeDefinition typeDef, IEmitter emitter)
+        {
+            if (emitter.AssemblyInfo.IgnoreCast)
+            {
+                return true;
+            }
+
+            if (typeDef == null)
+            {
+                return false;
+            }
+
+            if (typeDef.Kind == TypeKind.Delegate)
+            {
+                return true;
+            }
+
+            return emitter.Validator.HasAttribute(typeDef.Attributes, "Bridge.IgnoreCastAttribute");
+        }
+
         public static bool IsIntegerType(IType type, IMemberResolver resolver)
         {
             type = type.IsKnownType(KnownTypeCode.NullableOfT) ? ((ParameterizedType)type).TypeArguments[0] : type;

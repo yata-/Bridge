@@ -17888,7 +17888,13 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
     }
 });
 
-    // @source Console.js    Bridge.Console = {        output: null,        log: function (obj) {            if (Bridge.Console.output != null) {                Bridge.Console.output += obj;                return;            }            console.log(obj);        }    };
+    // @source Console.js    Bridge.Console = {
+        output: null,        log: function (obj) {
+            if (Bridge.Console.output != null) {
+                Bridge.Console.output += obj;                return;
+            }            console.log(obj);
+        }
+    };
 // @source timer.js
 
 (function (globals) {
