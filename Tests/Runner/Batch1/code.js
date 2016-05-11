@@ -6102,6 +6102,168 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1296', {
+        statics: {
+            test: function (value) {
+                return value;
+            },
+            testAnyNonExternal: function (value) {
+                return value;
+            },
+            testImplicitOperator: function () {
+                var id = Bridge.ClientTest.BridgeIssues.Bridge1296.MessageId.op_Explicit(12);
+                Bridge.Test.Assert.areEqual(12, id.getValue());
+    
+                var returnedId = Bridge.ClientTest.BridgeIssues.Bridge1296.test(Bridge.ClientTest.BridgeIssues.Bridge1296.MessageId.op_Implicit(id));
+                Bridge.Test.Assert.areEqual(12, returnedId);
+            },
+            testIgnoreCast: function () {
+                var id = Bridge.ClientTest.BridgeIssues.Bridge1296.MessageId.op_Explicit(12);
+                var returnedId = Bridge.ClientTest.BridgeIssues.Bridge1296.testAnyNonExternal(Bridge.ClientTest.BridgeIssues.Bridge1296.MessageId.op_Implicit(id));
+                Bridge.Test.Assert.areEqual(12, returnedId);
+            },
+            testExternalImplicit: function () {
+                var idAsBlah = Bridge.ClientTest.BridgeIssues.Bridge1296.BlahId.op_Implicit(Bridge.ClientTest.BridgeIssues.Bridge1296.MessageStructId.op_Implicit((new Bridge.ClientTest.BridgeIssues.Bridge1296.MessageStructId())));
+                Bridge.Test.Assert.areEqual(123, idAsBlah.getValue());
+    
+                var idAsIgnoreCastBlah = Bridge.ClientTest.BridgeIssues.Bridge1296.MessageStructId.op_Implicit((new Bridge.ClientTest.BridgeIssues.Bridge1296.MessageStructId()));
+                Bridge.Test.Assert.areEqual(123, idAsIgnoreCastBlah);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1296.AnyNonExternal$2', {
+        statics: {
+            op_Implicit: function (t) {
+                throw new Bridge.InvalidCastException();
+            },
+            op_Implicit$1: function (t) {
+                throw new Bridge.InvalidCastException();
+            },
+            op_Explicit: function (value) {
+                throw new Bridge.InvalidCastException();
+            },
+            op_Explicit$1: function (value) {
+                throw new Bridge.InvalidCastException();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1296.BlahId', {
+        statics: {
+            op_Implicit: function (value) {
+                return new Bridge.ClientTest.BridgeIssues.Bridge1296.BlahId(value);
+            }
+        },
+        config: {
+            properties: {
+                Value: 0
+            }
+        },
+        constructor: function (value) {
+            this.setValue(value);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1296.MessageId', {
+        statics: {
+            op_Explicit: function (value) {
+                return Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1296.MessageId(), {
+                    setValue: value
+                } );
+            },
+            op_Implicit: function (id) {
+                return id.getValue();
+            },
+            getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge1296.MessageId(); }
+        },
+        config: {
+            properties: {
+                Value: 0
+            }
+        },
+        constructor: function () {
+        },
+        getHashCode: function () {
+            var hash = 17;
+            hash = hash * 23 + (this.Value == null ? 0 : Bridge.getHashCode(this.Value));
+            return hash;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1296.MessageId)) {
+                return false;
+            }
+            return Bridge.equals(this.Value, o.Value);
+        },
+        $clone: function (to) {
+            var s = to || new Bridge.ClientTest.BridgeIssues.Bridge1296.MessageId();
+            s.Value = this.Value;
+            return s;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1296.MessageStructId', {
+        statics: {
+            op_Implicit: function (id) {
+                return 123;
+            },
+            getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge1296.MessageStructId(); }
+        },
+        $clone: function (to) { return this; }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1304', {
+        statics: {
+            output: null,
+            clearOutput: function () {
+                Bridge.Console.output = "";
+            },
+            resetOutput: function () {
+                Bridge.Console.output = null;
+            },
+            testWriteFormatString: function () {
+                Bridge.Console.log(Bridge.String.format("{0}", 1));
+                Bridge.Test.Assert.areEqual("1", Bridge.Console.output);
+                Bridge.ClientTest.BridgeIssues.Bridge1304.clearOutput();
+    
+                Bridge.Console.log(Bridge.String.format("{0} {1}", 1, 2));
+                Bridge.Test.Assert.areEqual("1 2", Bridge.Console.output);
+                Bridge.ClientTest.BridgeIssues.Bridge1304.clearOutput();
+    
+                Bridge.Console.log(Bridge.String.format("{0} {1} {2}", 1, 2, 3));
+                Bridge.Test.Assert.areEqual("1 2 3", Bridge.Console.output);
+                Bridge.ClientTest.BridgeIssues.Bridge1304.clearOutput();
+    
+                Bridge.Console.log(Bridge.String.format("{0} {1} {2} {3}", 1, 2, 3, 4));
+                Bridge.Test.Assert.areEqual("1 2 3 4", Bridge.Console.output);
+                Bridge.ClientTest.BridgeIssues.Bridge1304.clearOutput();
+    
+                Bridge.Console.log(Bridge.String.format("{0} {1} {2} {3} {4}", 1, 2, 3, 4, "5"));
+                Bridge.Test.Assert.areEqual("1 2 3 4 5", Bridge.Console.output);
+            },
+            testWriteLineFormatString: function () {
+                Bridge.Console.log(Bridge.String.format("{0}", 1));
+                Bridge.Test.Assert.areEqual("1", Bridge.Console.output);
+                Bridge.ClientTest.BridgeIssues.Bridge1304.clearOutput();
+    
+                Bridge.Console.log(Bridge.String.format("{0} {1}", 1, 2));
+                Bridge.Test.Assert.areEqual("1 2", Bridge.Console.output);
+                Bridge.ClientTest.BridgeIssues.Bridge1304.clearOutput();
+    
+                Bridge.Console.log(Bridge.String.format("{0} {1} {2}", 1, 2, 3));
+                Bridge.Test.Assert.areEqual("1 2 3", Bridge.Console.output);
+                Bridge.ClientTest.BridgeIssues.Bridge1304.clearOutput();
+    
+                Bridge.Console.log(Bridge.String.format("{0} {1} {2} {3}", 1, 2, 3, 4));
+                Bridge.Test.Assert.areEqual("1 2 3 4", Bridge.Console.output);
+                Bridge.ClientTest.BridgeIssues.Bridge1304.clearOutput();
+    
+                Bridge.Console.log(Bridge.String.format("{0} {1} {2} {3} {4}", 1, 2, 3, 4, "5"));
+                Bridge.Test.Assert.areEqual("1 2 3 4 5", Bridge.Console.output);
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1305', {
         statics: {
             currentInt: 0,
@@ -17996,7 +18158,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             sb.appendLine();
             sb.append("};");
     
-            console.log(sb.toString());
+            Bridge.Console.log(sb.toString());
         }
     });
     
