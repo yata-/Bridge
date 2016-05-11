@@ -1159,7 +1159,8 @@
                 QUnit.test("#1296 - TestExternalImplicit", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1296.testExternalImplicit);
                 QUnit.test("#1304 - TestWriteFormatString", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1304.testWriteFormatString);
                 QUnit.test("#1304 - TestWriteLineFormatString", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1304.testWriteLineFormatString);
-                QUnit.test("#1328 - TestOptionalParams", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1328.testOptionalParams);
+                QUnit.test("#1328 - TestOptionalParamsForClasses", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1328.testOptionalParamsForClasses);
+                QUnit.test("#1328 - TestOptionalParamsForStructs", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1328.testOptionalParamsForStructs);
                 QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge381.testUseCase);
                 QUnit.test("#447 - CheckInlineExpression", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineExpression);
                 QUnit.test("#447 - CheckInlineCalls", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineCalls);
@@ -3488,9 +3489,13 @@
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1328', {
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1328)],
         statics: {
-            testOptionalParams: function (assert) {
+            testOptionalParamsForClasses: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1328).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1328);
-                Bridge.ClientTest.BridgeIssues.Bridge1328.testOptionalParams();
+                Bridge.ClientTest.BridgeIssues.Bridge1328.testOptionalParamsForClasses();
+            },
+            testOptionalParamsForStructs: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1328).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1328);
+                Bridge.ClientTest.BridgeIssues.Bridge1328.testOptionalParamsForStructs();
             }
         }
     });
