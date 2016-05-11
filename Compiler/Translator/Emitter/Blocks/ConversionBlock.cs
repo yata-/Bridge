@@ -122,7 +122,12 @@ namespace Bridge.Translator
 
                 if (conversion.IsUserDefined && expression.Parent is CastExpression && ((CastExpression)expression.Parent).Expression == expression)
                 {
-                    return level;
+                    var parentConversion = block.Emitter.Resolver.Resolver.GetConversion((CastExpression)expression.Parent);
+
+                    if (!parentConversion.IsUserDefined || parentConversion.Method.Equals(conversion.Method))
+                    {
+                        return level;    
+                    }
                 }
 
                 if (rr is ConstantResolveResult && expression is CastExpression && !conversion.IsUserDefined)
@@ -242,7 +247,7 @@ namespace Bridge.Translator
                     }
                     else
                     {
-                        if (method.DeclaringTypeDefinition != null && block.Emitter.Validator.IsIgnoreType(method.DeclaringTypeDefinition))
+                        if (method.DeclaringTypeDefinition != null && (block.Emitter.Validator.IsIgnoreType(method.DeclaringTypeDefinition) || Helpers.IsIgnoreCast(method.DeclaringTypeDefinition, block.Emitter)))
                         {
                             // Still returns true if Nullable.lift( was written.
                             return level;

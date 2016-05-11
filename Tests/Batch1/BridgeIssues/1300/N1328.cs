@@ -1,4 +1,3 @@
-using System.Linq;
 using Bridge.Test;
 
 namespace Bridge.ClientTest.BridgeIssues
@@ -13,14 +12,14 @@ namespace Bridge.ClientTest.BridgeIssues
             var l1 = new Link(url: "url", text: "test");
             var l2 = new Link2(url: "url", text: "test");
 
-            Assert.AreEqual("xxx", l1.name);
+            Assert.AreEqual("some", l1.name);
             Assert.NotNull(l2.name);
         }
 
         public class Link
         {
             public string name;
-            public Link(string url, string text, string name = "xxx")
+            public Link(string url, string text, string name = "some")
             {
                 this.name = name;
             }
