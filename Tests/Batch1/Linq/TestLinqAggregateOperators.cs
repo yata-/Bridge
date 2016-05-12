@@ -195,18 +195,18 @@ namespace Bridge.ClientTest.Linq
             // TEST
             var groupedAverage = (from p in Person.GetPersons()
                                   group p by p.Group into g
-                                  select new
+                                  select Script.PlainObject(new
                                   {
                                       Group = g.Key,
                                       Average = g.Average(x => x.Count)
-                                  })
+                                  }))
                          .ToArray();
 
             var groupedAverageExpected = new object[] {
-                        new { Group = "A", Average = 300 },
-                        new { Group = "C", Average = 300 },
-                        new { Group = "B", Average = 500 },
-                        new { Group = (string)null, Average = 3000 }
+                        Script.PlainObject(new { Group = "A", Average = 300 }),
+                        Script.PlainObject(new { Group = "C", Average = 300 }),
+                        Script.PlainObject(new { Group = "B", Average = 500 }),
+                        Script.PlainObject(new { Group = (string)null, Average = 3000 })
                  };
 
             Assert.AreDeepEqual(groupedAverageExpected, groupedAverage, "Average() within group");

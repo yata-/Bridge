@@ -1340,7 +1340,7 @@
         var enumerator = this.getEnumerator();
         try {
             while (enumerator.moveNext()) {
-                if (comparer.equals(enumerator.getCurrent(), value)) return true;
+                if (comparer.equals2(enumerator.getCurrent(), value)) return true;
             }
             return false;
         }
@@ -1488,7 +1488,7 @@
             try {
                 while (firstEnumerator.moveNext()) {
                     if (!secondEnumerator.moveNext()
-                    || !comparer.equals(firstEnumerator.getCurrent(), secondEnumerator.getCurrent())) {
+                    || !comparer.equals2(firstEnumerator.getCurrent(), secondEnumerator.getCurrent())) {
                         return false;
                     }
                 }
@@ -1714,7 +1714,7 @@
                 function () {
                     var hasNext;
                     while ((hasNext = enumerator.moveNext()) == true) {
-                        if (comparer.equals(key, keySelector(enumerator.getCurrent()))) {
+                        if (comparer.equals2(key, keySelector(enumerator.getCurrent()))) {
                             group.push(elementSelector(enumerator.getCurrent()));
                         }
                         else break;
@@ -2185,7 +2185,7 @@
         else {
             comparer = comparer || Bridge.EqualityComparer$1.$default;
             this.forEach(function (x, i) {
-                if (comparer.equals(x, item)) {
+                if (comparer.equals2(x, item)) {
                     found = i;
                     return false;
                 }
@@ -2209,7 +2209,7 @@
         else {
             comparer = comparer || Bridge.EqualityComparer$1.$default;
             this.forEach(function (x, i) {
-                if (comparer.equals(x, item)) result = i;
+                if (comparer.equals2(x, item)) result = i;
             });
         }
 

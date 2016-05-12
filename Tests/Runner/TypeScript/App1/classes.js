@@ -48,6 +48,7 @@
         },
         constructor: function () {
         },
+        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + (this.x == null ? 0 : Bridge.getHashCode(this.x));

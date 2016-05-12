@@ -267,54 +267,6 @@
                 return value.$$hashCode;
             }
 
-            if (typeof value === "object") {
-                var result = 0,
-                    removeCache = false,
-                    len,
-                    i,
-                    item,
-                    cacheItem,
-                    temp;
-
-                if (!Bridge.$$hashCodeCache) {
-                    Bridge.$$hashCodeCache = [];
-                    Bridge.$$hashCodeCalculated = [];
-                    removeCache = true;
-                }
-
-                for (i = 0, len = Bridge.$$hashCodeCache.length; i < len; i += 1) {
-                    item = Bridge.$$hashCodeCache[i];
-
-                    if (item.obj === value) {
-                        return item.hash;
-                    }
-                }
-
-                cacheItem = { obj: value, hash: 0 };
-                Bridge.$$hashCodeCache.push(cacheItem);
-
-                for (var property in value) {
-                    if (value.hasOwnProperty(property) && property !== "__insideHashCode") {
-                        temp = Bridge.isEmpty(value[property], true) ? 0 : Bridge.getHashCode(value[property], safe, false);
-                        result = 29 * result + temp;
-                    }
-                }
-
-                cacheItem.hash = result;
-
-                if (removeCache) {
-                    delete Bridge.$$hashCodeCache;
-                }
-
-                if (store) {
-                    value.$$hashCode = result;
-                }
-
-                if (result !== 0) {
-                    return result;
-                }
-            }
-
             if (store === false) {
                 return value.$$hashCode || ((Math.random() * 0x100000000) | 0);
             }
@@ -648,7 +600,7 @@
                 return a.equals(b);
             }
             if (b && Bridge.isFunction(b.equals) && b.equals.length === 1) {
-                return a.equals(b);
+                return b.equals(a);
             } else if (Bridge.isDate(a) && Bridge.isDate(b)) {
                 return a.valueOf() === b.valueOf();
             } else if (Bridge.isNull(a) && Bridge.isNull(b)) {
@@ -658,9 +610,8 @@
             }
 
             var eq = a === b;
-
-            if (!eq && typeof a === "object" && typeof b === "object") {
-                return (Bridge.getHashCode(a) === Bridge.getHashCode(b)) && Bridge.objectEquals(a, b);
+            if (!eq && typeof a === "object" && typeof b === "object" && a !== null && b !== null && a.$struct && b.$struct && a.$$name === b.$$name) {
+                return Bridge.getHashCode(a) === Bridge.getHashCode(b) && Bridge.objectEquals(a, b);
             }
 
             return eq;
@@ -680,6 +631,10 @@
 
         deepEquals: function (a, b) {
             if (typeof a === "object" && typeof b === "object") {
+                if (a === b) {
+                    return true;
+                }
+
                 if (Bridge.$$leftChain.indexOf(a) > -1 || Bridge.$$rightChain.indexOf(b) > -1) {
                     return false;
                 }
@@ -701,7 +656,10 @@
                         return false;
                     }
 
-                    if (typeof (a[p]) === "object") {
+                    if (a[p] === b[p]) {
+                        continue;
+                    }
+                    else if (typeof (a[p]) === "object") {
                         Bridge.$$leftChain.push(a);
                         Bridge.$$rightChain.push(b);
 

@@ -127,6 +127,10 @@ namespace Bridge.Translator
             var list = fields.ToList();
             list.AddRange(props);
 
+            this.EnsureComma();
+            this.Write("$struct: true");
+            this.Emitter.Comma = true;
+
             if (list.Count == 0)
             {
                 this.EnsureComma();

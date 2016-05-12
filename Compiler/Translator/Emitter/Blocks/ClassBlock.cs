@@ -240,6 +240,8 @@ namespace Bridge.Translator
             this.WriteCloseParentheses();
             this.WriteSemiColon();
 
+
+            this.EmitAnonymousTypes();
             this.EmitNamedFunctions();
 
             var afterDefineMethods = this.GetAfterDefineMethods();
@@ -269,6 +271,22 @@ namespace Bridge.Translator
 
             this.WriteNewLine();
             this.WriteNewLine();
+        }
+
+        protected virtual void EmitAnonymousTypes()
+        {
+            var types = this.Emitter.AnonymousTypes.Values.Where(t => !t.Emitted).ToArray();
+            if (types.Any())
+            {
+                foreach (IAnonymousTypeConfig type in types)
+                {
+                    this.WriteNewLine();
+                    this.WriteNewLine();
+
+                    type.Emitted = true;
+                    this.Write(type.Code);
+                }
+            }
         }
 
         protected virtual void EmitNamedFunctions()

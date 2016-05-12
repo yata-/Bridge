@@ -278,54 +278,6 @@
                 return value.$$hashCode;
             }
 
-            if (typeof value === "object") {
-                var result = 0,
-                    removeCache = false,
-                    len,
-                    i,
-                    item,
-                    cacheItem,
-                    temp;
-
-                if (!Bridge.$$hashCodeCache) {
-                    Bridge.$$hashCodeCache = [];
-                    Bridge.$$hashCodeCalculated = [];
-                    removeCache = true;
-                }
-
-                for (i = 0, len = Bridge.$$hashCodeCache.length; i < len; i += 1) {
-                    item = Bridge.$$hashCodeCache[i];
-
-                    if (item.obj === value) {
-                        return item.hash;
-                    }
-                }
-
-                cacheItem = { obj: value, hash: 0 };
-                Bridge.$$hashCodeCache.push(cacheItem);
-
-                for (var property in value) {
-                    if (value.hasOwnProperty(property) && property !== "__insideHashCode") {
-                        temp = Bridge.isEmpty(value[property], true) ? 0 : Bridge.getHashCode(value[property], safe, false);
-                        result = 29 * result + temp;
-                    }
-                }
-
-                cacheItem.hash = result;
-
-                if (removeCache) {
-                    delete Bridge.$$hashCodeCache;
-                }
-
-                if (store) {
-                    value.$$hashCode = result;
-                }
-
-                if (result !== 0) {
-                    return result;
-                }
-            }
-
             if (store === false) {
                 return value.$$hashCode || ((Math.random() * 0x100000000) | 0);
             }
@@ -659,7 +611,7 @@
                 return a.equals(b);
             }
             if (b && Bridge.isFunction(b.equals) && b.equals.length === 1) {
-                return a.equals(b);
+                return b.equals(a);
             } else if (Bridge.isDate(a) && Bridge.isDate(b)) {
                 return a.valueOf() === b.valueOf();
             } else if (Bridge.isNull(a) && Bridge.isNull(b)) {
@@ -669,9 +621,8 @@
             }
 
             var eq = a === b;
-
-            if (!eq && typeof a === "object" && typeof b === "object") {
-                return (Bridge.getHashCode(a) === Bridge.getHashCode(b)) && Bridge.objectEquals(a, b);
+            if (!eq && typeof a === "object" && typeof b === "object" && a !== null && b !== null && a.$struct && b.$struct && a.$$name === b.$$name) {
+                return Bridge.getHashCode(a) === Bridge.getHashCode(b) && Bridge.objectEquals(a, b);
             }
 
             return eq;
@@ -691,6 +642,10 @@
 
         deepEquals: function (a, b) {
             if (typeof a === "object" && typeof b === "object") {
+                if (a === b) {
+                    return true;
+                }
+
                 if (Bridge.$$leftChain.indexOf(a) > -1 || Bridge.$$rightChain.indexOf(b) > -1) {
                     return false;
                 }
@@ -712,7 +667,10 @@
                         return false;
                     }
 
-                    if (typeof (a[p]) === "object") {
+                    if (a[p] === b[p]) {
+                        continue;
+                    }
+                    else if (typeof (a[p]) === "object") {
                         Bridge.$$leftChain.push(a);
                         Bridge.$$rightChain.push(b);
 
@@ -6338,6 +6296,7 @@ var date = {
 
     Bridge.define("Bridge.TimeSpan", {
         inherits: [Bridge.IComparable],
+        $struct: true,
         statics: {
             fromDays: function (value) {
                 return new Bridge.TimeSpan(value * 864e9);
@@ -6506,6 +6465,10 @@ var date = {
 
         format: function (formatStr, provider) {
             return this.toString(formatStr, provider);
+        },
+
+        getHashCode: function () {
+            return this.ticks.getHashCode();
         },
 
         toString: function (formatStr, provider) {
@@ -7331,7 +7294,7 @@ var array = {
             for (i = startIndex; i < endIndex; i++) {
                 el = arr[i];
 
-                if (el === item || Bridge.EqualityComparer$1.$default.equals(el, item)) {
+                if (el === item || Bridge.EqualityComparer$1.$default.equals2(el, item)) {
                     return i;
                 }
             }
@@ -7812,7 +7775,7 @@ var array = {
         for (var i = startIndex; i >= endIndex; i--) {
             var el = array[i];
 
-            if (el === value || Bridge.EqualityComparer$1.$default.equals(el, value)) {
+            if (el === value || Bridge.EqualityComparer$1.$default.equals2(el, value)) {
                 return i;
             }
         }
@@ -7984,7 +7947,7 @@ Bridge.define('Bridge.EqualityComparer$1', function (T) {
     return {
         inherits: [Bridge.IEqualityComparer$1(T)],
 
-        equals: function (x, y) {
+        equals2: function (x, y) {
             if (!Bridge.isDefined(x, true)) {
                 return !Bridge.isDefined(y, true);
             } else if (Bridge.isDefined(y, true)) {
@@ -8006,7 +7969,7 @@ Bridge.define('Bridge.EqualityComparer$1', function (T) {
             return false;
         },
 
-        getHashCode: function (obj) {
+        getHashCode2: function (obj) {
             return Bridge.isDefined(obj, true) ? Bridge.getHashCode(obj) : 0;
         }
     };
@@ -8104,7 +8067,7 @@ Bridge.define('Bridge.Dictionary$2', function (TKey, TValue) {
         },
 
         findEntry: function (key) {
-            var hash = this.comparer.getHashCode(key),
+            var hash = this.comparer.getHashCode2(key),
                 entries,
                 i;
 
@@ -8112,7 +8075,7 @@ Bridge.define('Bridge.Dictionary$2', function (TKey, TValue) {
                 entries = this.entries[hash];
 
                 for (i = 0; i < entries.length; i++) {
-                    if (this.comparer.equals(entries[i].key, key)) {
+                    if (this.comparer.equals2(entries[i].key, key)) {
                         return entries[i];
                     }
                 }
@@ -8131,7 +8094,7 @@ Bridge.define('Bridge.Dictionary$2', function (TKey, TValue) {
                     var entries = this.entries[e];
 
                     for (i = 0; i < entries.length; i++) {
-                        if (this.comparer.equals(entries[i].value, value)) {
+                        if (this.comparer.equals2(entries[i].value, value)) {
                             return true;
                         }
                     }
@@ -8168,7 +8131,7 @@ Bridge.define('Bridge.Dictionary$2', function (TKey, TValue) {
                 return;
             }
 
-            hash = this.comparer.getHashCode(key);
+            hash = this.comparer.getHashCode2(key);
             entry = new Bridge.KeyValuePair$2(TKey, TValue)(key, value);
 
             if (this.entries[hash]) {
@@ -8189,7 +8152,7 @@ Bridge.define('Bridge.Dictionary$2', function (TKey, TValue) {
         },
 
         remove: function (key) {
-            var hash = this.comparer.getHashCode(key),
+            var hash = this.comparer.getHashCode2(key),
                 entries,
                 i;
 
@@ -8200,7 +8163,7 @@ Bridge.define('Bridge.Dictionary$2', function (TKey, TValue) {
             entries = this.entries[hash];
 
             for (i = 0; i < entries.length; i++) {
-                if (this.comparer.equals(entries[i].key, key)) {
+                if (this.comparer.equals2(entries[i].key, key)) {
                     entries.splice(i, 1);
 
                     if (entries.length == 0) {
@@ -8385,7 +8348,7 @@ Bridge.define('Bridge.List$1', function (T) {
             for (i = startIndex; i < this.items.length; i++) {
                 el = this.items[i];
 
-                if (el === item || Bridge.EqualityComparer$1.$default.equals(el, item)) {
+                if (el === item || Bridge.EqualityComparer$1.$default.equals2(el, item)) {
                     return i;
                 }
             }
@@ -8998,6 +8961,8 @@ Bridge.define('Bridge.ReadOnlyCollection$1', function (T) {
     });
 
     Bridge.define("Bridge.CancellationToken", {
+         $struct: true,
+
          constructor: function (source) {
             if (!Bridge.is(source, Bridge.CancellationTokenSource)) {
                 source = source ? Bridge.CancellationToken.sourceTrue : Bridge.CancellationToken.sourceFalse;
@@ -9022,6 +8987,18 @@ Bridge.define('Bridge.ReadOnlyCollection$1', function (T) {
 
         register: function (cb, s) {
             return this.source.register(cb, s);
+        },
+
+        getHashCode: function () {
+            return Bridge.getHashCode(this.source);
+        },
+
+        equals: function (other) {
+            return other.source === this.source;
+        },
+
+        equalsT: function (other) {
+            return other.source === this.source;
         },
 
         statics: {
@@ -9065,6 +9042,10 @@ Bridge.define('Bridge.ReadOnlyCollection$1', function (T) {
         },
 
         equalsT: function (o) {
+            return this === o;
+        },
+
+        equals: function (o) {
             return this === o;
         },
 
@@ -12721,7 +12702,7 @@ Bridge.define('Bridge.ReadOnlyCollection$1', function (T) {
         var enumerator = this.getEnumerator();
         try {
             while (enumerator.moveNext()) {
-                if (comparer.equals(enumerator.getCurrent(), value)) return true;
+                if (comparer.equals2(enumerator.getCurrent(), value)) return true;
             }
             return false;
         }
@@ -12869,7 +12850,7 @@ Bridge.define('Bridge.ReadOnlyCollection$1', function (T) {
             try {
                 while (firstEnumerator.moveNext()) {
                     if (!secondEnumerator.moveNext()
-                    || !comparer.equals(firstEnumerator.getCurrent(), secondEnumerator.getCurrent())) {
+                    || !comparer.equals2(firstEnumerator.getCurrent(), secondEnumerator.getCurrent())) {
                         return false;
                     }
                 }
@@ -13095,7 +13076,7 @@ Bridge.define('Bridge.ReadOnlyCollection$1', function (T) {
                 function () {
                     var hasNext;
                     while ((hasNext = enumerator.moveNext()) == true) {
-                        if (comparer.equals(key, keySelector(enumerator.getCurrent()))) {
+                        if (comparer.equals2(key, keySelector(enumerator.getCurrent()))) {
                             group.push(elementSelector(enumerator.getCurrent()));
                         }
                         else break;
@@ -13566,7 +13547,7 @@ Bridge.define('Bridge.ReadOnlyCollection$1', function (T) {
         else {
             comparer = comparer || Bridge.EqualityComparer$1.$default;
             this.forEach(function (x, i) {
-                if (comparer.equals(x, item)) {
+                if (comparer.equals2(x, item)) {
                     found = i;
                     return false;
                 }
@@ -13590,7 +13571,7 @@ Bridge.define('Bridge.ReadOnlyCollection$1', function (T) {
         else {
             comparer = comparer || Bridge.EqualityComparer$1.$default;
             this.forEach(function (x, i) {
-                if (comparer.equals(x, item)) result = i;
+                if (comparer.equals2(x, item)) result = i;
             });
         }
 

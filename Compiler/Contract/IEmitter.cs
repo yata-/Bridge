@@ -417,5 +417,10 @@ namespace Bridge.Contract
             get;
             set;
         }
+
+        Dictionary<AnonymousType, IAnonymousTypeConfig> AnonymousTypes
+        {
+            get; set;
+        } 
     }
 }
