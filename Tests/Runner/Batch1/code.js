@@ -5502,6 +5502,69 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     }; });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1226', {
+        statics: {
+            DELTA: 1E-15,
+            assertValue: function (expected, actual, delta, message) {
+                var $t;
+                if (delta === void 0) { delta = 1E-15; }
+                if (message === void 0) { message = null; }
+                var e = Bridge.Double.format(expected, 'G');
+                var a = Bridge.Double.format(actual, 'G');
+    
+                if (!isFinite(expected) || !isFinite(actual)) {
+                    Bridge.Test.Assert.areEqual$1(e, a, message);
+                    return;
+                }
+    
+                var diff = expected - actual;
+                if (diff > delta || diff < -delta) {
+                    Bridge.Test.Assert.areEqual$1(e, a, message);
+                }
+                else  {
+                    var m = ($t = message, $t != null ? $t : " " + (diff !== 0 ? "Diff: " + diff + "; Expected: " + e + "; Actual: " + a : ""));
+                    Bridge.Test.Assert.true$1(true, m);
+                }
+            },
+            testSinh: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(-3.626860407847019, Bridge.Math.sinh(-2));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(-1.1752011936438014, Bridge.Math.sinh(-1));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(-0.52109530549374738, Bridge.Math.sinh(-0.5));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(0, Bridge.Math.sinh(0));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(0.52109530549374738, Bridge.Math.sinh(0.5));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(1.1752011936438014, Bridge.Math.sinh(1));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(3.626860407847019, Bridge.Math.sinh(2));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(Number.NaN, Bridge.Math.sinh(Number.NaN));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(Number.NEGATIVE_INFINITY, Bridge.Math.sinh(Number.NEGATIVE_INFINITY));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(Number.POSITIVE_INFINITY, Bridge.Math.sinh(Number.POSITIVE_INFINITY));
+            },
+            testCosh: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(3.7621956910836309, Bridge.Math.cosh(-2));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(1.5430806348152439, Bridge.Math.cosh(-1));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(1.12762596520638, Bridge.Math.cosh(-0.5));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(1, Bridge.Math.cosh(0));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(1.12762596520638, Bridge.Math.cosh(0.5));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(1.5430806348152439, Bridge.Math.cosh(1));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(3.7621956910836309, Bridge.Math.cosh(2));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(Number.NaN, Bridge.Math.cosh(Number.NaN));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(Number.POSITIVE_INFINITY, Bridge.Math.cosh(Number.NEGATIVE_INFINITY));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(Number.POSITIVE_INFINITY, Bridge.Math.cosh(Number.POSITIVE_INFINITY));
+            },
+            testTanh: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(-0.964027580075817, Bridge.Math.tanh(-2));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(-0.761594155955765, Bridge.Math.tanh(-1));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(-0.46211715726001, Bridge.Math.tanh(-0.5));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(0, Bridge.Math.tanh(0));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(0.46211715726001, Bridge.Math.tanh(0.5));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(0.761594155955765, Bridge.Math.tanh(1));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(0.964027580075817, Bridge.Math.tanh(2));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(Number.NaN, Bridge.Math.tanh(Number.NaN));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(-1, Bridge.Math.tanh(Number.NEGATIVE_INFINITY));
+                Bridge.ClientTest.BridgeIssues.Bridge1226.assertValue(1, Bridge.Math.tanh(Number.POSITIVE_INFINITY));
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1231', {
         statics: {
             testAutoGeneratedStructMethodName: function () {
