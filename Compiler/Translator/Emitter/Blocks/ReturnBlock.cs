@@ -56,15 +56,7 @@ namespace Bridge.Translator
                         this.Write("null");
                     }
 
-                    if (finallyNode != null)
-                    {
-                        this.Write(";");
-                    }
-                    else
-                    {
-                        this.Write(");");
-                    }
-
+                    this.Write(finallyNode != null ? ";" : ");");
                     this.WriteNewLine();
                 }
 

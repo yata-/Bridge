@@ -245,6 +245,7 @@
     <Compile Include="BridgeIssues\1200\N1202.cs" />
     <Compile Include="BridgeIssues\1200\N1217.cs" />
     <Compile Include="BridgeIssues\1100\N1199.cs" />
+    <Compile Include="BridgeIssues\1200\N1226.cs" />
     <Compile Include="BridgeIssues\1200\N1231.cs" />
     <Compile Include="BridgeIssues\1200\N1232.cs" />
     <Compile Include="BridgeIssues\1200\N1220.cs" />
@@ -258,6 +259,7 @@
     <Compile Include="BridgeIssues\1200\N1264.cs" />
     <Compile Include="BridgeIssues\1200\N1260.cs" />
     <Compile Include="BridgeIssues\1200\N1241.cs" />
+    <Compile Include="BridgeIssues\1300\N1305.cs" />
     <Compile Include="BridgeIssues\1300\N1304.cs" />
     <Compile Include="BridgeIssues\TestBridgeIssues.cs" />
     <Compile Include="Collections\Generic\StackTests.cs" />
