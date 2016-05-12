@@ -12,6 +12,7 @@
         },
         constructor: function () {
         },
+        $struct: true,
         $clone: function (to) { return this; }
     });
     
