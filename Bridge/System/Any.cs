@@ -6,7 +6,7 @@ namespace Bridge
     [Name("Object")]
     public class Any<T1, T2>
     {
-        private Any() { }
+        protected Any() { }
 
         public static implicit operator Any<T1, T2>(T1 t)
         {
@@ -35,7 +35,7 @@ namespace Bridge
     [Name("Object")]
     public class Any<T1, T2, T3>
     {
-        private Any() { }
+        protected Any() { }
 
         public static implicit operator Any<T1, T2, T3>(T1 t)
         {
@@ -74,7 +74,7 @@ namespace Bridge
     [Name("Object")]
     public class Any<T1, T2, T3, T4>
     {
-        private Any() { }
+        protected Any() { }
 
         public static implicit operator Any<T1, T2, T3, T4>(T1 t)
         {
@@ -123,7 +123,7 @@ namespace Bridge
     [Name("Object")]
     public class Any<T1, T2, T3, T4, T5>
     {
-        private Any() { }
+        protected Any() { }
 
         public static implicit operator Any<T1, T2, T3, T4, T5>(T1 t)
         {
@@ -182,7 +182,7 @@ namespace Bridge
     [Name("Object")]
     public class Any<T1, T2, T3, T4, T5, T6>
     {
-        private Any() { }
+        protected Any() { }
 
         public static implicit operator Any<T1, T2, T3, T4, T5, T6>(T1 t)
         {
@@ -251,7 +251,7 @@ namespace Bridge
     [Name("Object")]
     public class Any<T1, T2, T3, T4, T5, T6, T7>
     {
-        private Any() { }
+        protected Any() { }
 
         public static implicit operator Any<T1, T2, T3, T4, T5, T6, T7>(T1 t)
         {
@@ -330,7 +330,7 @@ namespace Bridge
     [Name("Object")]
     public class Any<T1, T2, T3, T4, T5, T6, T7, T8>
     {
-        private Any() { }
+        protected Any() { }
 
         public static implicit operator Any<T1, T2, T3, T4, T5, T6, T7, T8>(T1 t)
         {
