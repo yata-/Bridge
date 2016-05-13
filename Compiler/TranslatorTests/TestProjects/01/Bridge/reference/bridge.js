@@ -246,6 +246,11 @@
                 var r = value.getHashCode();
                 delete value.__insideHashCode;
 
+                if (!value.__hasHashCodeOverride && value.$$name) {
+                    var rs = Bridge.getHashCodeForString(value.$$name);
+                    r = r ^ rs;
+                }
+
                 return r;
             }
 
@@ -264,14 +269,7 @@
             }
 
             if (Bridge.isString(value)) {
-                var hash = 0,
-                    i;
-
-                for (i = 0; i < value.length; i++) {
-                    hash = (((hash << 5) - hash) + value.charCodeAt(i)) & 0xFFFFFFFF;
-                }
-
-                return hash;
+                return Bridge.getHashCodeForString(value);
             }
 
             if (value.$$hashCode) {
@@ -283,6 +281,17 @@
             }
 
             return value.$$hashCode || (value.$$hashCode = (Math.random() * 0x100000000) | 0);
+        },
+
+        getHashCodeForString: function(value) {
+            var hash = 0,
+                i;
+
+            for (i = 0; i < value.length; i++) {
+                hash = (((hash << 5) - hash) + value.charCodeAt(i)) & 0xFFFFFFFF;
+            }
+
+            return hash;
         },
 
         getDefaultValue: function (type) {

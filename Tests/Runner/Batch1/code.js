@@ -323,6 +323,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function (i) {
             this.i = i;
         },
+        __hasHashCodeOverride: true,
         equals: function (o) {
             return Bridge.is(o, Bridge.ClientTest.ArrayTests1.ArrayTestsSet1.C) && this.i === Bridge.cast(o, Bridge.ClientTest.ArrayTests1.ArrayTestsSet1.C).i;
         },
@@ -1668,6 +1669,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.IntegerComparer', {
         inherits: [Bridge.IComparer$1(Bridge.Int32),Bridge.IEqualityComparer],
+        __hasHashCodeOverride: true,
         compare: function (x, y) {
             return ((x - y) | 0);
         },
@@ -7315,6 +7317,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Str: null
             }
         },
+        __hasHashCodeOverride: true,
         equalsT: function (other) {
             if (other == null) {
                 return false;
@@ -7549,6 +7552,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 MyProperty: 0
             }
         },
+        __hasHashCodeOverride: true,
         equals: function (obj) {
             var other = Bridge.as(obj, Bridge.ClientTest.BridgeIssues.Bridge467);
             if (other == null) {
@@ -7578,6 +7582,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Data: 0
             }
         },
+        __hasHashCodeOverride: true,
         equals2: function (x, y) {
             return x.getData() === y.getData();
         },
@@ -9729,6 +9734,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         constructor: function () {
         },
+        __hasHashCodeOverride: true,
         equals: function (obj) {
             return this.equals$1(obj.toString());
         },
@@ -9870,6 +9876,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge625A', {
         inherits: [Bridge.IEqualityComparer$1(Bridge.Int32)],
+        __hasHashCodeOverride: true,
         equals2: function (x, y) {
             return x === y;
         },
@@ -11781,6 +11788,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         constructor: function () {
         },
+        __hasHashCodeOverride: true,
         equals: function (o) {
             if (!(Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge795A))) {
                 return false;
@@ -11832,6 +11840,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         constructor: function () {
         },
+        __hasHashCodeOverride: true,
         equals: function (o) {
             if (!(Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge795B))) {
                 return false;
@@ -15730,6 +15739,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         hashCode: 0,
         other: null,
         shouldEqual: false,
+        __hasHashCodeOverride: true,
         getHashCode: function () {
             return this.hashCode;
         },
@@ -15983,6 +15993,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.Collections.Generic.GenericDictionaryTests.TestEqualityComparer', {
         inherits: [Bridge.EqualityComparer$1(String)],
+        __hasHashCodeOverride: true,
         equals2: function (x, y) {
             return x.charCodeAt(0) === y.charCodeAt(0);
         },
@@ -16065,6 +16076,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function (i) {
             this._i = i;
         },
+        __hasHashCodeOverride: true,
         equals: function (o) {
             return Bridge.is(o, Bridge.ClientTest.Collections.Generic.ICollectionTests.C) && this._i === Bridge.cast(o, Bridge.ClientTest.Collections.Generic.ICollectionTests.C)._i;
         },
@@ -16504,6 +16516,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function (i) {
             this._i = i;
         },
+        __hasHashCodeOverride: true,
         equals: function (o) {
             return Bridge.is(o, Bridge.ClientTest.Collections.Generic.IListTests.C) && this._i === Bridge.cast(o, Bridge.ClientTest.Collections.Generic.IListTests.C)._i;
         },
@@ -17355,6 +17368,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function (i) {
             this.i = i;
         },
+        __hasHashCodeOverride: true,
         equals: function (o) {
             return Bridge.is(o, Bridge.ClientTest.Collections.Generic.ListTests.C) && this.i === Bridge.cast(o, Bridge.ClientTest.Collections.Generic.ListTests.C).i;
         },
@@ -17490,6 +17504,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function (i) {
             this.i = i;
         },
+        __hasHashCodeOverride: true,
         equals: function (o) {
             return Bridge.is(o, Bridge.ClientTest.Collections.Generic.StackTests.C) && this.i === Bridge.cast(o, Bridge.ClientTest.Collections.Generic.StackTests.C).i;
         },
@@ -21246,6 +21261,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.Linq.AnagramEqualityComparer', {
         inherits: [Bridge.EqualityComparer$1(String)],
+        __hasHashCodeOverride: true,
         equals2: function (x, y) {
             return Bridge.referenceEquals(this.getCanonicalString(x), this.getCanonicalString(y));
         },
@@ -21785,6 +21801,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.Linq.TestLinqConversionOperatorsIEqualityComparer', {
         inherits: [Bridge.EqualityComparer$1(String)],
+        __hasHashCodeOverride: true,
         equals2: function (x, y) {
             return Bridge.String.equals(x, y);
         },

@@ -417,6 +417,7 @@
         constructor: function (i) {
             this.i = i;
         },
+        __hasHashCodeOverride: true,
         equals: function (o) {
             return Bridge.is(o, Bridge.ClientTest.Batch2.BridgeIssues.N772.C) && this.i === Bridge.cast(o, Bridge.ClientTest.Batch2.BridgeIssues.N772.C).i;
         },
