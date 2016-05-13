@@ -210,6 +210,9 @@ namespace Bridge.Translator
             this.BeginBlock();
             this.Write("var hash = 17;");
 
+            this.WriteNewLine();
+            this.Write("hash = hash * 23 + " + config.Name.GetHashCode() + ";");
+
             foreach (var property in config.Type.Properties)
             {
                 var name = Object.Net.Utilities.StringUtils.ToLowerCamelCase(property.Name);

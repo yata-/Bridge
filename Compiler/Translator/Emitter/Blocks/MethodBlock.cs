@@ -67,13 +67,6 @@ namespace Bridge.Translator
                 }
             }
 
-            if (!this.StaticBlock && this.TypeInfo.InstanceMethods.ContainsKey("GetHashCode"))
-            {
-                this.EnsureComma();
-                this.Write("__hasHashCodeOverride: true");
-                this.Emitter.Comma = true;
-            }
-
             names = new List<string>(methods.Keys);
 
             foreach (var name in names)
@@ -152,6 +145,9 @@ namespace Bridge.Translator
                 this.Write("getHashCode: function () ");
                 this.BeginBlock();
                 this.Write("var hash = 17;");
+
+                this.WriteNewLine();
+                this.Write("hash = hash * 23 + " + this.TypeInfo.Name.GetHashCode() + ";");
 
                 foreach (var field in list)
                 {
