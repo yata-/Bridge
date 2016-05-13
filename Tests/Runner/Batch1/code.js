@@ -6714,6 +6714,28 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.notNull$1(o5.getB, "o5 has getB");
                 Bridge.Test.Assert.notNull$1(o5.b.getValue1, "o5.B has getValue1");
             },
+            testDiffStructHashCode: function () {
+                var s = Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1341.SomeStructA(), {
+                    setValue1: 10
+                } );
+                var s1 = Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1341.SomeStructA1(), {
+                    setValue1: 10
+                } );
+    
+                Bridge.Test.Assert.areNotEqual$1(Bridge.getHashCode(s), Bridge.getHashCode(s1), "Structs of diff types with same fields and values should give diff hash codes");
+    
+                var s2 = Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1341.SomeStructA2(), {
+                    setValue2: 10
+                } );
+    
+                Bridge.Test.Assert.areNotEqual$1(Bridge.getHashCode(s), Bridge.getHashCode(s2), "Structs of diff types with same values should give diff hash codes");
+            },
+            testDiffAnonymousTypesHashCode: function () {
+                var s = new Bridge.$AnonymousType$5(10);
+                var s1 = new Bridge.$AnonymousType$6(10);
+    
+                Bridge.Test.Assert.areNotEqual$1(Bridge.getHashCode(s), Bridge.getHashCode(s1), "Same field values should give diff hash codes");
+            },
             test: function (values) {
                 var o1 = values[0];
                 var o2 = values[1];
@@ -6744,7 +6766,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var o1 = new Bridge.$AnonymousType$1(1);
                 var o2 = new Bridge.$AnonymousType$1(1);
                 var o3 = new Bridge.$AnonymousType$1(2);
-                var o4 = new Bridge.$AnonymousType$5(1);
+                var o4 = new Bridge.$AnonymousType$7(1);
                 var o5 = o1;
                 var o6 = o3;
     
@@ -6756,7 +6778,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var o1 = new Bridge.$AnonymousType$2(1, "2");
                 var o2 = new Bridge.$AnonymousType$2(1, "2");
                 var o3 = new Bridge.$AnonymousType$2(1, "3");
-                var o4 = new Bridge.$AnonymousType$6(1, "2");
+                var o4 = new Bridge.$AnonymousType$8(1, "2");
                 var o5 = o1;
                 var o6 = o3;
     
@@ -6765,14 +6787,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.BridgeIssues.Bridge1341.test(values);
             },
             test3AnonymousType: function () {
-                var o1 = new Bridge.$AnonymousType$7(1, Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1341.SomeClassA(), {
+                var o1 = new Bridge.$AnonymousType$9(1, Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1341.SomeClassA(), {
                     setValue1: 1
                 } ));
                 var o2 = o1;
-                var o3 = new Bridge.$AnonymousType$7(1, Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1341.SomeClassA(), {
+                var o3 = new Bridge.$AnonymousType$9(1, Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1341.SomeClassA(), {
                     setValue1: 1
                 } ));
-                var o4 = new Bridge.$AnonymousType$8(1, Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1341.SomeClassA(), {
+                var o4 = new Bridge.$AnonymousType$10(1, Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1341.SomeClassA(), {
                     setValue1: 1
                 } ));
                 var o5 = o1;
@@ -6792,7 +6814,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var o3 = new Bridge.$AnonymousType$3(1, Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1341.SomeStructA(), {
                     setValue1: 2
                 } ));
-                var o4 = new Bridge.$AnonymousType$9(1, Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1341.SomeStructA(), {
+                var o4 = new Bridge.$AnonymousType$11(1, Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1341.SomeStructA(), {
                     setValue1: 1
                 } ));
                 var o5 = o1;
@@ -6816,7 +6838,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                         setValue1: 1
                     } )
                 } ));
-                var o4 = new Bridge.$AnonymousType$10(1, Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1341.SomeClassB(), {
+                var o4 = new Bridge.$AnonymousType$12(1, Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1341.SomeClassB(), {
                     setValue1: 1,
                     setValue2: Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1341.SomeStructA(), {
                         setValue1: 1
@@ -6955,70 +6977,60 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define("Bridge.$AnonymousType$5", {
-        constructor: function (b) {
-            this.b = b;
+        constructor: function (value1) {
+            this.value1 = value1;
         },
-        getB : function () {
-            return this.b;
+        getValue1 : function () {
+            return this.value1;
         },
         equals: function (o) {
             if (!Bridge.is(o,Bridge.$AnonymousType$5)) {
                 return false;
             }
-            return Bridge.equals(this.b, o.b);
+            return Bridge.equals(this.value1, o.value1);
         },
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + -654368553;
-            hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
+            hash = hash * 23 + (this.value1 == null ? 0 : Bridge.getHashCode(this.value1));
             return hash;
         },
         toJSON: function () {
             return {
-                b : this.b
+                value1 : this.value1
             };
         }
     });
     
     Bridge.define("Bridge.$AnonymousType$6", {
-        constructor: function (b, c) {
-            this.b = b;
-            this.c = c;
+        constructor: function (value2) {
+            this.value2 = value2;
         },
-        getB : function () {
-            return this.b;
-        },
-        getC : function () {
-            return this.c;
+        getValue2 : function () {
+            return this.value2;
         },
         equals: function (o) {
             if (!Bridge.is(o,Bridge.$AnonymousType$6)) {
                 return false;
             }
-            return Bridge.equals(this.b, o.b) && Bridge.equals(this.c, o.c);
+            return Bridge.equals(this.value2, o.value2);
         },
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + -654368552;
-            hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
-            hash = hash * 23 + (this.c == null ? 0 : Bridge.getHashCode(this.c));
+            hash = hash * 23 + (this.value2 == null ? 0 : Bridge.getHashCode(this.value2));
             return hash;
         },
         toJSON: function () {
             return {
-                b : this.b,
-                c : this.c
+                value2 : this.value2
             };
         }
     });
     
     Bridge.define("Bridge.$AnonymousType$7", {
-        constructor: function (a, b) {
-            this.a = a;
+        constructor: function (b) {
             this.b = b;
-        },
-        getA : function () {
-            return this.a;
         },
         getB : function () {
             return this.b;
@@ -7027,18 +7039,16 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             if (!Bridge.is(o,Bridge.$AnonymousType$7)) {
                 return false;
             }
-            return Bridge.equals(this.a, o.a) && Bridge.equals(this.b, o.b);
+            return Bridge.equals(this.b, o.b);
         },
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + -654368551;
-            hash = hash * 23 + (this.a == null ? 0 : Bridge.getHashCode(this.a));
             hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
             return hash;
         },
         toJSON: function () {
             return {
-                a : this.a,
                 b : this.b
             };
         }
@@ -7077,33 +7087,33 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define("Bridge.$AnonymousType$9", {
-        constructor: function (b, a) {
-            this.b = b;
+        constructor: function (a, b) {
             this.a = a;
-        },
-        getB : function () {
-            return this.b;
+            this.b = b;
         },
         getA : function () {
             return this.a;
+        },
+        getB : function () {
+            return this.b;
         },
         equals: function (o) {
             if (!Bridge.is(o,Bridge.$AnonymousType$9)) {
                 return false;
             }
-            return Bridge.equals(this.b, o.b) && Bridge.equals(this.a, o.a);
+            return Bridge.equals(this.a, o.a) && Bridge.equals(this.b, o.b);
         },
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + -654368549;
-            hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
             hash = hash * 23 + (this.a == null ? 0 : Bridge.getHashCode(this.a));
+            hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
             return hash;
         },
         toJSON: function () {
             return {
-                b : this.b,
-                a : this.a
+                a : this.a,
+                b : this.b
             };
         }
     });
@@ -7128,6 +7138,70 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + -1686507005;
+            hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
+            hash = hash * 23 + (this.c == null ? 0 : Bridge.getHashCode(this.c));
+            return hash;
+        },
+        toJSON: function () {
+            return {
+                b : this.b,
+                c : this.c
+            };
+        }
+    });
+    
+    Bridge.define("Bridge.$AnonymousType$11", {
+        constructor: function (b, a) {
+            this.b = b;
+            this.a = a;
+        },
+        getB : function () {
+            return this.b;
+        },
+        getA : function () {
+            return this.a;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$11)) {
+                return false;
+            }
+            return Bridge.equals(this.b, o.b) && Bridge.equals(this.a, o.a);
+        },
+        getHashCode: function () {
+            var hash = 17;
+            hash = hash * 23 + -120423064;
+            hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
+            hash = hash * 23 + (this.a == null ? 0 : Bridge.getHashCode(this.a));
+            return hash;
+        },
+        toJSON: function () {
+            return {
+                b : this.b,
+                a : this.a
+            };
+        }
+    });
+    
+    Bridge.define("Bridge.$AnonymousType$12", {
+        constructor: function (b, c) {
+            this.b = b;
+            this.c = c;
+        },
+        getB : function () {
+            return this.b;
+        },
+        getC : function () {
+            return this.c;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$12)) {
+                return false;
+            }
+            return Bridge.equals(this.b, o.b) && Bridge.equals(this.c, o.c);
+        },
+        getHashCode: function () {
+            var hash = 17;
+            hash = hash * 23 + -523707591;
             hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
             hash = hash * 23 + (this.c == null ? 0 : Bridge.getHashCode(this.c));
             return hash;
@@ -7187,6 +7261,68 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $clone: function (to) {
             var s = to || new Bridge.ClientTest.BridgeIssues.Bridge1341.SomeStructA();
             s.Value1 = this.Value1;
+            return s;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1341.SomeStructA1', {
+        statics: {
+            getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge1341.SomeStructA1(); }
+        },
+        config: {
+            properties: {
+                Value1: 0
+            }
+        },
+        constructor: function () {
+        },
+        $struct: true,
+        getHashCode: function () {
+            var hash = 17;
+            hash = hash * 23 + -776575217;
+            hash = hash * 23 + (this.Value1 == null ? 0 : Bridge.getHashCode(this.Value1));
+            return hash;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1341.SomeStructA1)) {
+                return false;
+            }
+            return Bridge.equals(this.Value1, o.Value1);
+        },
+        $clone: function (to) {
+            var s = to || new Bridge.ClientTest.BridgeIssues.Bridge1341.SomeStructA1();
+            s.Value1 = this.Value1;
+            return s;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1341.SomeStructA2', {
+        statics: {
+            getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge1341.SomeStructA2(); }
+        },
+        config: {
+            properties: {
+                Value2: 0
+            }
+        },
+        constructor: function () {
+        },
+        $struct: true,
+        getHashCode: function () {
+            var hash = 17;
+            hash = hash * 23 + -1179859744;
+            hash = hash * 23 + (this.Value2 == null ? 0 : Bridge.getHashCode(this.Value2));
+            return hash;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1341.SomeStructA2)) {
+                return false;
+            }
+            return Bridge.equals(this.Value2, o.Value2);
+        },
+        $clone: function (to) {
+            var s = to || new Bridge.ClientTest.BridgeIssues.Bridge1341.SomeStructA2();
+            s.Value2 = this.Value2;
             return s;
         }
     });
@@ -7672,11 +7808,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge485', {
         statics: {
             testUseCase: function () {
-                var list = Bridge.Linq.Enumerable.from([new Bridge.$AnonymousType$11("", "")]).skip(1).toList(Object);
-                list.add(new Bridge.$AnonymousType$11("Ruth", "Babe"));
-                list.add(new Bridge.$AnonymousType$11("Johnson", "Walter"));
-                list.add(new Bridge.$AnonymousType$11("Cobb", "Ty"));
-                list.add(new Bridge.$AnonymousType$11("Schmidt", "Mike"));
+                var list = Bridge.Linq.Enumerable.from([new Bridge.$AnonymousType$13("", "")]).skip(1).toList(Object);
+                list.add(new Bridge.$AnonymousType$13("Ruth", "Babe"));
+                list.add(new Bridge.$AnonymousType$13("Johnson", "Walter"));
+                list.add(new Bridge.$AnonymousType$13("Cobb", "Ty"));
+                list.add(new Bridge.$AnonymousType$13("Schmidt", "Mike"));
     
                 var query = Bridge.Linq.Enumerable.from(list).where($_.Bridge.ClientTest.BridgeIssues.Bridge485.f1).select($_.Bridge.ClientTest.BridgeIssues.Bridge485.f2);
     
@@ -7687,7 +7823,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$11", {
+    Bridge.define("Bridge.$AnonymousType$13", {
         constructor: function (lastName, firstName) {
             this.lastName = lastName;
             this.firstName = firstName;
@@ -7699,14 +7835,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.firstName;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$11)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$13)) {
                 return false;
             }
             return Bridge.equals(this.lastName, o.lastName) && Bridge.equals(this.firstName, o.firstName);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + -120423064;
+            hash = hash * 23 + 1042376350;
             hash = hash * 23 + (this.lastName == null ? 0 : Bridge.getHashCode(this.lastName));
             hash = hash * 23 + (this.firstName == null ? 0 : Bridge.getHashCode(this.firstName));
             return hash;
@@ -7726,7 +7862,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return p.lastName.length === 4;
         },
         f2: function (p) {
-            return new Bridge.$AnonymousType$11(p.lastName, p.firstName);
+            return new Bridge.$AnonymousType$13(p.lastName, p.firstName);
         }
     });
     
@@ -8039,7 +8175,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                     case 1: {
                                         $task1.getAwaitedResult();
                                         Bridge.ClientTest.BridgeIssues.Bridge508.count = (Bridge.ClientTest.BridgeIssues.Bridge508.count + 1) | 0;
-                                        $tcs.setResult(Bridge.ClientTest.BridgeIssues.Bridge508.count < 2 ? new Bridge.$AnonymousType$12() : null);
+                                        $tcs.setResult(Bridge.ClientTest.BridgeIssues.Bridge508.count < 2 ? new Bridge.$AnonymousType$14() : null);
                                         return;
                                     }
                                     default: {
@@ -8078,7 +8214,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                     case 1: {
                                         $task1.getAwaitedResult();
                                         Bridge.ClientTest.BridgeIssues.Bridge508.count = (Bridge.ClientTest.BridgeIssues.Bridge508.count + 1) | 0;
-                                        $tcs.setResult(Bridge.ClientTest.BridgeIssues.Bridge508.count < 3 ? new Bridge.$AnonymousType$12() : null);
+                                        $tcs.setResult(Bridge.ClientTest.BridgeIssues.Bridge508.count < 3 ? new Bridge.$AnonymousType$14() : null);
                                         return;
                                     }
                                     default: {
@@ -8098,23 +8234,23 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             },
             nextPage1: function () {
                 Bridge.ClientTest.BridgeIssues.Bridge508.count = (Bridge.ClientTest.BridgeIssues.Bridge508.count + 1) | 0;
-                return Bridge.ClientTest.BridgeIssues.Bridge508.count < 4 ? new Bridge.$AnonymousType$12() : null;
+                return Bridge.ClientTest.BridgeIssues.Bridge508.count < 4 ? new Bridge.$AnonymousType$14() : null;
             }
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$12", {
+    Bridge.define("Bridge.$AnonymousType$14", {
         constructor: function () {
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$12)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$14)) {
                 return false;
             }
             return ;
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + -523707591;
+            hash = hash * 23 + 282861463;
             return hash;
         },
         toJSON: function () {
@@ -11215,7 +11351,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(3, Bridge.ClientTest.BridgeIssues.Bridge722.m1((c1.setItem("path", 3), c1.getItem("path"))), "Bridge722 M1 3");
                 Bridge.Test.Assert.areEqual$1(4, Bridge.ClientTest.BridgeIssues.Bridge722.m1((asset1 = (c1.setItem("path", 4), c1.getItem("path")))), "Bridge722 M1 4");
     
-                var c2 = new Bridge.$AnonymousType$12();
+                var c2 = new Bridge.$AnonymousType$14();
                 var asset2 = (c2.path = 5, c2.path);
                 Bridge.Test.Assert.areEqual$1(5, asset2, "Bridge722 asset2");
                 Bridge.Test.Assert.areEqual$1(5, c2.path, "Bridge722 c2");
@@ -11539,7 +11675,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 return null;
             },
             testUseCase: function () {
-                var o = new Bridge.$AnonymousType$12();
+                var o = new Bridge.$AnonymousType$14();
                 o;
                 {
                     var i = 555;
@@ -11563,7 +11699,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge782', {
         statics: {
             testUseCase: function () {
-                var o = new Bridge.$AnonymousType$12();
+                var o = new Bridge.$AnonymousType$14();
                 Bridge.Test.Assert.true$1(o.__foo == null, "Bridge782");
             }
         }
@@ -12747,7 +12883,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                 case 0: {
                                     asyncComplete = Bridge.Test.Assert.async();
                                     
-                                    myvar = [new Bridge.$AnonymousType$13(1), new Bridge.$AnonymousType$13(2)];
+                                    myvar = [new Bridge.$AnonymousType$15(1), new Bridge.$AnonymousType$15(2)];
                                     sum = 0;
                                     $task2 = Bridge.ClientTest.BridgeIssues.Bridge906.myfunc();
                                     $step = 1;
@@ -12804,7 +12940,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                 case 0: {
                                     asyncComplete = Bridge.Test.Assert.async();
                                     
-                                    myvar = [new Bridge.$AnonymousType$13(-3), new Bridge.$AnonymousType$13(2)];
+                                    myvar = [new Bridge.$AnonymousType$15(-3), new Bridge.$AnonymousType$15(2)];
                                     sum = 0;
                                     $task2 = Bridge.ClientTest.BridgeIssues.Bridge906.myfunc();
                                     $step = 1;
@@ -12850,7 +12986,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$13", {
+    Bridge.define("Bridge.$AnonymousType$15", {
         constructor: function (value) {
             this.value = value;
         },
@@ -12858,14 +12994,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.value;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$13)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$15)) {
                 return false;
             }
             return Bridge.equals(this.value, o.value);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 1042376350;
+            hash = hash * 23 + 1848945404;
             hash = hash * 23 + (this.value == null ? 0 : Bridge.getHashCode(this.value));
             return hash;
         },
@@ -14070,8 +14206,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var b1 = new Bridge.EqualityComparer$1(Object)().equals2(o11, o12);
                 Bridge.Test.Assert.false$1(b1, "EqualityComparer<object>.Default.Equals(o11, o12) works");
     
-                var o21 = new Bridge.$AnonymousType$14(7);
-                var o22 = new Bridge.$AnonymousType$14(7);
+                var o21 = new Bridge.$AnonymousType$16(7);
+                var o22 = new Bridge.$AnonymousType$16(7);
                 var b2 = new Bridge.EqualityComparer$1(Object)().equals2(o21, o22);
                 Bridge.Test.Assert.true$1(b2, "EqualityComparer<object>.Default.Equals(o21, o22) works");
     
@@ -14551,7 +14687,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$14", {
+    Bridge.define("Bridge.$AnonymousType$16", {
         constructor: function (i) {
             this.i = i;
         },
@@ -14559,14 +14695,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.i;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$14)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$16)) {
                 return false;
             }
             return Bridge.equals(this.i, o.i);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 282861463;
+            hash = hash * 23 + 1445660877;
             hash = hash * 23 + (this.i == null ? 0 : Bridge.getHashCode(this.i));
             return hash;
         },
@@ -21320,14 +21456,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 // TEST
                 var groupJoin = (Bridge.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Group.getGroups()).groupJoin(Bridge.ClientTest.Utilities.Person.getPersons(), $_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f2, $_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f3, $_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f4)).toArray();
     
-                var groupJoinExpected = [new Bridge.$AnonymousType$15("A", 1), new Bridge.$AnonymousType$15("B", 4), new Bridge.$AnonymousType$15("C", 2), new Bridge.$AnonymousType$15("D", 0)];
+                var groupJoinExpected = [new Bridge.$AnonymousType$17("A", 1), new Bridge.$AnonymousType$17("B", 4), new Bridge.$AnonymousType$17("C", 2), new Bridge.$AnonymousType$17("D", 0)];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupJoinExpected, groupJoin, "Count() within joint collections");
     
                 // TEST
                 var grouped = (Bridge.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f3).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f5)).toArray();
     
-                var groupedExpected = [new Bridge.$AnonymousType$15("A", 1), new Bridge.$AnonymousType$15("C", 2), new Bridge.$AnonymousType$15("B", 4), new Bridge.$AnonymousType$15(Bridge.cast(null, String), 1)];
+                var groupedExpected = [new Bridge.$AnonymousType$17("A", 1), new Bridge.$AnonymousType$17("C", 2), new Bridge.$AnonymousType$17("B", 4), new Bridge.$AnonymousType$17(Bridge.cast(null, String), 1)];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupedExpected, grouped, "Count() within group");
     
@@ -21342,7 +21478,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 // TEST
                 var groupedSum = (Bridge.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f3).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f8)).toArray();
     
-                var groupedSumExpected = [new Bridge.$AnonymousType$16("A", 300), new Bridge.$AnonymousType$16("C", 600), new Bridge.$AnonymousType$16("B", 2000), new Bridge.$AnonymousType$16(Bridge.cast(null, String), 3000)];
+                var groupedSumExpected = [new Bridge.$AnonymousType$18("A", 300), new Bridge.$AnonymousType$18("C", 600), new Bridge.$AnonymousType$18("B", 2000), new Bridge.$AnonymousType$18(Bridge.cast(null, String), 3000)];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupedSumExpected, groupedSum, "Sum() within group");
     
@@ -21357,14 +21493,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 // TEST
                 var groupedMin = (Bridge.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f3).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f9)).toArray();
     
-                var groupedMinExpected = [new Bridge.$AnonymousType$17("A", 300), new Bridge.$AnonymousType$17("C", 100), new Bridge.$AnonymousType$17("B", 50), new Bridge.$AnonymousType$17(Bridge.cast(null, String), 3000)];
+                var groupedMinExpected = [new Bridge.$AnonymousType$19("A", 300), new Bridge.$AnonymousType$19("C", 100), new Bridge.$AnonymousType$19("B", 50), new Bridge.$AnonymousType$19(Bridge.cast(null, String), 3000)];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupedMinExpected, groupedMin, "Min() within group");
     
                 // TEST
                 var groupedMinWithLet = (Bridge.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f3).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f10).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f12)).toArray();
     
-                var groupedMinWithLetExpected = [new Bridge.$AnonymousType$19("A", ["Frank"]), new Bridge.$AnonymousType$19("C", ["Zeppa"]), new Bridge.$AnonymousType$19("B", ["Dora"]), new Bridge.$AnonymousType$19(Bridge.cast(null, String), ["Nemo"])];
+                var groupedMinWithLetExpected = [new Bridge.$AnonymousType$21("A", ["Frank"]), new Bridge.$AnonymousType$21("C", ["Zeppa"]), new Bridge.$AnonymousType$21("B", ["Dora"]), new Bridge.$AnonymousType$21(Bridge.cast(null, String), ["Nemo"])];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupedMinWithLetExpected, groupedMinWithLet, "Min() within group with let");
     
@@ -21379,14 +21515,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 // TEST
                 var groupedMax = (Bridge.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f3).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f13)).toArray();
     
-                var groupedMaxExpected = [new Bridge.$AnonymousType$20("A", 300), new Bridge.$AnonymousType$20("C", 500), new Bridge.$AnonymousType$20("B", 700), new Bridge.$AnonymousType$20(Bridge.cast(null, String), 3000)];
+                var groupedMaxExpected = [new Bridge.$AnonymousType$22("A", 300), new Bridge.$AnonymousType$22("C", 500), new Bridge.$AnonymousType$22("B", 700), new Bridge.$AnonymousType$22(Bridge.cast(null, String), 3000)];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupedMaxExpected, groupedMax, "Max() within group");
     
                 // TEST
                 var groupedMaxWithLet = (Bridge.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f3).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f14).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f15)).toArray();
     
-                var groupedMaxWithLetExpected = [new Bridge.$AnonymousType$19("A", ["Frank"]), new Bridge.$AnonymousType$19("C", ["Billy"]), new Bridge.$AnonymousType$19("B", ["John", "Mary"]), new Bridge.$AnonymousType$19(Bridge.cast(null, String), ["Nemo"])];
+                var groupedMaxWithLetExpected = [new Bridge.$AnonymousType$21("A", ["Frank"]), new Bridge.$AnonymousType$21("C", ["Billy"]), new Bridge.$AnonymousType$21("B", ["John", "Mary"]), new Bridge.$AnonymousType$21(Bridge.cast(null, String), ["Nemo"])];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupedMaxWithLetExpected, groupedMaxWithLet, "Max() within group with let");
     
@@ -21427,7 +21563,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$15", {
+    Bridge.define("Bridge.$AnonymousType$17", {
         constructor: function (group, personCount) {
             this.group = group;
             this.personCount = personCount;
@@ -21439,14 +21575,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.personCount;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$15)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$17)) {
                 return false;
             }
             return Bridge.equals(this.group, o.group) && Bridge.equals(this.personCount, o.personCount);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 1848945404;
+            hash = hash * 23 + -1283222478;
             hash = hash * 23 + (this.group == null ? 0 : Bridge.getHashCode(this.group));
             hash = hash * 23 + (this.personCount == null ? 0 : Bridge.getHashCode(this.personCount));
             return hash;
@@ -21459,7 +21595,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$16", {
+    Bridge.define("Bridge.$AnonymousType$18", {
         constructor: function (group, sum) {
             this.group = group;
             this.sum = sum;
@@ -21471,14 +21607,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.sum;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$16)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$18)) {
                 return false;
             }
             return Bridge.equals(this.group, o.group) && Bridge.equals(this.sum, o.sum);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 1445660877;
+            hash = hash * 23 + -1330276645;
             hash = hash * 23 + (this.group == null ? 0 : Bridge.getHashCode(this.group));
             hash = hash * 23 + (this.sum == null ? 0 : Bridge.getHashCode(this.sum));
             return hash;
@@ -21491,7 +21627,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$17", {
+    Bridge.define("Bridge.$AnonymousType$19", {
         constructor: function (group, min) {
             this.group = group;
             this.min = min;
@@ -21503,14 +21639,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.min;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$17)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$19)) {
                 return false;
             }
             return Bridge.equals(this.group, o.group) && Bridge.equals(this.min, o.min);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + -1283222478;
+            hash = hash * 23 + 235807296;
             hash = hash * 23 + (this.group == null ? 0 : Bridge.getHashCode(this.group));
             hash = hash * 23 + (this.min == null ? 0 : Bridge.getHashCode(this.min));
             return hash;
@@ -21523,7 +21659,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$18", {
+    Bridge.define("Bridge.$AnonymousType$20", {
         constructor: function (g, minCount) {
             this.g = g;
             this.minCount = minCount;
@@ -21535,14 +21671,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.minCount;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$18)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$20)) {
                 return false;
             }
             return Bridge.equals(this.g, o.g) && Bridge.equals(this.minCount, o.minCount);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + -1330276645;
+            hash = hash * 23 + -1686507004;
             hash = hash * 23 + (this.g == null ? 0 : Bridge.getHashCode(this.g));
             hash = hash * 23 + (this.minCount == null ? 0 : Bridge.getHashCode(this.minCount));
             return hash;
@@ -21555,7 +21691,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$19", {
+    Bridge.define("Bridge.$AnonymousType$21", {
         constructor: function (group, name) {
             this.group = group;
             this.name = name;
@@ -21567,14 +21703,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.name;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$19)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$21)) {
                 return false;
             }
             return Bridge.equals(this.group, o.group) && Bridge.equals(this.name, o.name);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 235807296;
+            hash = hash * 23 + -120423063;
             hash = hash * 23 + (this.group == null ? 0 : Bridge.getHashCode(this.group));
             hash = hash * 23 + (this.name == null ? 0 : Bridge.getHashCode(this.name));
             return hash;
@@ -21587,7 +21723,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$20", {
+    Bridge.define("Bridge.$AnonymousType$22", {
         constructor: function (group, max) {
             this.group = group;
             this.max = max;
@@ -21599,14 +21735,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.max;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$20)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$22)) {
                 return false;
             }
             return Bridge.equals(this.group, o.group) && Bridge.equals(this.max, o.max);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + -1686507004;
+            hash = hash * 23 + -523707590;
             hash = hash * 23 + (this.group == null ? 0 : Bridge.getHashCode(this.group));
             hash = hash * 23 + (this.max == null ? 0 : Bridge.getHashCode(this.max));
             return hash;
@@ -21619,7 +21755,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$21", {
+    Bridge.define("Bridge.$AnonymousType$23", {
         constructor: function (g, maxCount) {
             this.g = g;
             this.maxCount = maxCount;
@@ -21631,14 +21767,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.maxCount;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$21)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$23)) {
                 return false;
             }
             return Bridge.equals(this.g, o.g) && Bridge.equals(this.maxCount, o.maxCount);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + -120423063;
+            hash = hash * 23 + 1042376351;
             hash = hash * 23 + (this.g == null ? 0 : Bridge.getHashCode(this.g));
             hash = hash * 23 + (this.maxCount == null ? 0 : Bridge.getHashCode(this.maxCount));
             return hash;
@@ -21664,10 +21800,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return p.getGroup();
         },
         f4: function (g, pg) {
-            return new Bridge.$AnonymousType$15(g.getName(), Bridge.Linq.Enumerable.from(pg).count());
+            return new Bridge.$AnonymousType$17(g.getName(), Bridge.Linq.Enumerable.from(pg).count());
         },
         f5: function (g) {
-            return new Bridge.$AnonymousType$15(g.key(), g.count());
+            return new Bridge.$AnonymousType$17(g.key(), g.count());
         },
         f6: function (w) {
             return w.length;
@@ -21676,30 +21812,30 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return x.getCount();
         },
         f8: function (g) {
-            return new Bridge.$AnonymousType$16(g.key(), g.sum($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f7));
+            return new Bridge.$AnonymousType$18(g.key(), g.sum($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f7));
         },
         f9: function (g) {
-            return new Bridge.$AnonymousType$17(g.key(), g.min($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f7));
+            return new Bridge.$AnonymousType$19(g.key(), g.min($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f7));
         },
         f10: function (g) {
-            return new Bridge.$AnonymousType$18(g, g.min($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f7));
+            return new Bridge.$AnonymousType$20(g, g.min($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f7));
         },
         f11: function (x) {
             return x.getName();
         },
         f12: function (x0) {
-            return new Bridge.$AnonymousType$19(x0.g.key(), x0.g.where(function (x) {
+            return new Bridge.$AnonymousType$21(x0.g.key(), x0.g.where(function (x) {
                 return x.getCount() === x0.minCount;
             }).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f11).toArray());
         },
         f13: function (g) {
-            return new Bridge.$AnonymousType$20(g.key(), g.max($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f7));
+            return new Bridge.$AnonymousType$22(g.key(), g.max($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f7));
         },
         f14: function (g) {
-            return new Bridge.$AnonymousType$21(g, g.max($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f7));
+            return new Bridge.$AnonymousType$23(g, g.max($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f7));
         },
         f15: function (x1) {
-            return new Bridge.$AnonymousType$19(x1.g.key(), x1.g.where(function (x) {
+            return new Bridge.$AnonymousType$21(x1.g.key(), x1.g.where(function (x) {
                 return x.getCount() === x1.maxCount;
             }).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f11).toArray());
         },
@@ -21971,7 +22107,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             test: function () {
                 // TEST
                 var numbers = (Bridge.Linq.Enumerable.range(0, 6).select($_.Bridge.ClientTest.Linq.TestLinqGenerationOperators.f1)).toArray();
-                var numbersExpected = [new Bridge.$AnonymousType$22(0, false), new Bridge.$AnonymousType$22(1, true), new Bridge.$AnonymousType$22(2, false), new Bridge.$AnonymousType$22(3, true), new Bridge.$AnonymousType$22(4, false), new Bridge.$AnonymousType$22(5, true)];
+                var numbersExpected = [new Bridge.$AnonymousType$24(0, false), new Bridge.$AnonymousType$24(1, true), new Bridge.$AnonymousType$24(2, false), new Bridge.$AnonymousType$24(3, true), new Bridge.$AnonymousType$24(4, false), new Bridge.$AnonymousType$24(5, true)];
     
                 Bridge.Test.Assert.areDeepEqual$1(numbersExpected, numbers, "Range() 6 items from 0");
     
@@ -21984,7 +22120,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$22", {
+    Bridge.define("Bridge.$AnonymousType$24", {
         constructor: function (number, isOdd) {
             this.number = number;
             this.isOdd = isOdd;
@@ -21996,14 +22132,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.isOdd;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$22)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$24)) {
                 return false;
             }
             return Bridge.equals(this.number, o.number) && Bridge.equals(this.isOdd, o.isOdd);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + -523707590;
+            hash = hash * 23 + 282861464;
             hash = hash * 23 + (this.number == null ? 0 : Bridge.getHashCode(this.number));
             hash = hash * 23 + (this.isOdd == null ? 0 : Bridge.getHashCode(this.isOdd));
             return hash;
@@ -22020,7 +22156,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.apply($_.Bridge.ClientTest.Linq.TestLinqGenerationOperators, {
         f1: function (n) {
-            return new Bridge.$AnonymousType$22(n, n % 2 === 1);
+            return new Bridge.$AnonymousType$24(n, n % 2 === 1);
         }
     });
     
@@ -22033,21 +22169,21 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 var numberGroups = (Bridge.Linq.Enumerable.from(numbers).groupBy($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f1).select($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f2)).toArray();
     
-                var numberGroupsExpected = [new Bridge.$AnonymousType$23(2, [2]), new Bridge.$AnonymousType$23(0, [10, 5, 30, -15]), new Bridge.$AnonymousType$23(3, [3]), new Bridge.$AnonymousType$23(1, [1])];
+                var numberGroupsExpected = [new Bridge.$AnonymousType$25(2, [2]), new Bridge.$AnonymousType$25(0, [10, 5, 30, -15]), new Bridge.$AnonymousType$25(3, [3]), new Bridge.$AnonymousType$25(1, [1])];
     
                 Bridge.Test.Assert.areDeepEqual$1(numberGroupsExpected, numberGroups, "Group numbers by remainders");
     
                 // TEST
                 var wordGroups = (Bridge.Linq.Enumerable.from(words).groupBy($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f3).select($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f4)).toArray();
     
-                var wordGroupsExpected = [new Bridge.$AnonymousType$24(49, ["1.one", "11.eleven"]), new Bridge.$AnonymousType$24(51, ["3.three", "30.thirty"]), new Bridge.$AnonymousType$24(50, ["2.two", "22.twentytwo"])];
+                var wordGroupsExpected = [new Bridge.$AnonymousType$26(49, ["1.one", "11.eleven"]), new Bridge.$AnonymousType$26(51, ["3.three", "30.thirty"]), new Bridge.$AnonymousType$26(50, ["2.two", "22.twentytwo"])];
     
                 Bridge.Test.Assert.areDeepEqual$1(wordGroupsExpected, wordGroups, "Group words by first letters");
     
                 // TEST
                 var personGroups = (Bridge.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f5).select($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f7)).toArray();
     
-                var personGroupsExpected = [new Bridge.$AnonymousType$25("A", ["Frank"]), new Bridge.$AnonymousType$25("C", ["Zeppa", "Billy"]), new Bridge.$AnonymousType$25("B", ["John", "Dora", "Ian", "Mary"]), new Bridge.$AnonymousType$25(Bridge.cast(null, String), ["Nemo"])];
+                var personGroupsExpected = [new Bridge.$AnonymousType$27("A", ["Frank"]), new Bridge.$AnonymousType$27("C", ["Zeppa", "Billy"]), new Bridge.$AnonymousType$27("B", ["John", "Dora", "Ian", "Mary"]), new Bridge.$AnonymousType$27(Bridge.cast(null, String), ["Nemo"])];
     
                 Bridge.Test.Assert.areDeepEqual$1(personGroupsExpected, personGroups, "Person group by Group field");
             },
@@ -22071,13 +22207,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 var anagramsGroups = Bridge.Linq.Enumerable.from(anagrams).groupBy($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f11, null, null, new Bridge.ClientTest.Linq.AnagramEqualityComparer()).select($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f12).toArray();
     
-                var anagramsGroupsExpected = [new Bridge.$AnonymousType$26("from", [" from ", " form "]), new Bridge.$AnonymousType$26("salt", [" salt ", " last "]), new Bridge.$AnonymousType$26("earn", [" earn ", " near "])];
+                var anagramsGroupsExpected = [new Bridge.$AnonymousType$28("from", [" from ", " form "]), new Bridge.$AnonymousType$28("salt", [" salt ", " last "]), new Bridge.$AnonymousType$28("earn", [" earn ", " near "])];
     
                 Bridge.Test.Assert.areDeepEqual$1(anagramsGroupsExpected, anagramsGroups, "Anagram grouping with equality comparer");
     
                 // TEST
                 var anagramsGroups1 = Bridge.Linq.Enumerable.from(anagrams).groupBy($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f11, $_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f13, null, new Bridge.ClientTest.Linq.AnagramEqualityComparer()).select($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f12).toArray();
-                var anagramsGroupsExpected1 = [new Bridge.$AnonymousType$26("from", [" FROM ", " FORM "]), new Bridge.$AnonymousType$26("salt", [" SALT ", " LAST "]), new Bridge.$AnonymousType$26("earn", [" EARN ", " NEAR "])];
+                var anagramsGroupsExpected1 = [new Bridge.$AnonymousType$28("from", [" FROM ", " FORM "]), new Bridge.$AnonymousType$28("salt", [" SALT ", " LAST "]), new Bridge.$AnonymousType$28("earn", [" EARN ", " NEAR "])];
     
                 Bridge.Test.Assert.areDeepEqual$1(anagramsGroupsExpected1, anagramsGroups1, "Anagram grouping with equality compare and upper case");
             },
@@ -22089,7 +22225,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$23", {
+    Bridge.define("Bridge.$AnonymousType$25", {
         constructor: function (remainder, numbers) {
             this.remainder = remainder;
             this.numbers = numbers;
@@ -22101,14 +22237,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.numbers;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$23)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$25)) {
                 return false;
             }
             return Bridge.equals(this.remainder, o.remainder) && Bridge.equals(this.numbers, o.numbers);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 1042376351;
+            hash = hash * 23 + 1848945405;
             hash = hash * 23 + (this.remainder == null ? 0 : Bridge.getHashCode(this.remainder));
             hash = hash * 23 + (this.numbers == null ? 0 : Bridge.getHashCode(this.numbers));
             return hash;
@@ -22121,7 +22257,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$24", {
+    Bridge.define("Bridge.$AnonymousType$26", {
         constructor: function (firstLetter, words) {
             this.firstLetter = firstLetter;
             this.words = words;
@@ -22133,14 +22269,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.words;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$24)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$26)) {
                 return false;
             }
             return Bridge.equals(this.firstLetter, o.firstLetter) && Bridge.equals(this.words, o.words);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 282861464;
+            hash = hash * 23 + 1445660878;
             hash = hash * 23 + (this.firstLetter == null ? 0 : Bridge.getHashCode(this.firstLetter));
             hash = hash * 23 + (this.words == null ? 0 : Bridge.getHashCode(this.words));
             return hash;
@@ -22153,7 +22289,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$25", {
+    Bridge.define("Bridge.$AnonymousType$27", {
         constructor: function (group, persons) {
             this.group = group;
             this.persons = persons;
@@ -22165,14 +22301,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.persons;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$25)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$27)) {
                 return false;
             }
             return Bridge.equals(this.group, o.group) && Bridge.equals(this.persons, o.persons);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 1848945405;
+            hash = hash * 23 + -1283222477;
             hash = hash * 23 + (this.group == null ? 0 : Bridge.getHashCode(this.group));
             hash = hash * 23 + (this.persons == null ? 0 : Bridge.getHashCode(this.persons));
             return hash;
@@ -22185,7 +22321,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$26", {
+    Bridge.define("Bridge.$AnonymousType$28", {
         constructor: function (key, words) {
             this.key = key;
             this.words = words;
@@ -22197,14 +22333,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.words;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$26)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$28)) {
                 return false;
             }
             return Bridge.equals(this.key, o.key) && Bridge.equals(this.words, o.words);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 1445660878;
+            hash = hash * 23 + -1330276644;
             hash = hash * 23 + (this.key == null ? 0 : Bridge.getHashCode(this.key));
             hash = hash * 23 + (this.words == null ? 0 : Bridge.getHashCode(this.words));
             return hash;
@@ -22224,13 +22360,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return n % 5;
         },
         f2: function (g) {
-            return new Bridge.$AnonymousType$23(g.key(), g.toArray());
+            return new Bridge.$AnonymousType$25(g.key(), g.toArray());
         },
         f3: function (w) {
             return w.charCodeAt(0);
         },
         f4: function (g) {
-            return new Bridge.$AnonymousType$24(g.key(), g.toArray());
+            return new Bridge.$AnonymousType$26(g.key(), g.toArray());
         },
         f5: function (p) {
             return p.getGroup();
@@ -22239,7 +22375,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return x.getName();
         },
         f7: function (g) {
-            return new Bridge.$AnonymousType$25(g.key(), g.select($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f6).toArray());
+            return new Bridge.$AnonymousType$27(g.key(), g.select($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f6).toArray());
         },
         f8: function (l) {
             return l;
@@ -22254,7 +22390,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return w.trim();
         },
         f12: function (x) {
-            return new Bridge.$AnonymousType$26(x.key(), x.toArray());
+            return new Bridge.$AnonymousType$28(x.key(), x.toArray());
         },
         f13: function (a) {
             return a.toUpperCase();
@@ -22267,42 +22403,42 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 // TEST
                 var persons = (Bridge.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).join(Bridge.ClientTest.Utilities.Group.getGroups(), $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f1, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f2, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f3)).toArray();
     
-                var personsExpected = [new Bridge.$AnonymousType$27("Frank", 1000), new Bridge.$AnonymousType$27("Zeppa", 800), new Bridge.$AnonymousType$27("John", 400), new Bridge.$AnonymousType$27("Billy", 800), new Bridge.$AnonymousType$27("Dora", 400), new Bridge.$AnonymousType$27("Ian", 400), new Bridge.$AnonymousType$27("Mary", 400)];
+                var personsExpected = [new Bridge.$AnonymousType$29("Frank", 1000), new Bridge.$AnonymousType$29("Zeppa", 800), new Bridge.$AnonymousType$29("John", 400), new Bridge.$AnonymousType$29("Billy", 800), new Bridge.$AnonymousType$29("Dora", 400), new Bridge.$AnonymousType$29("Ian", 400), new Bridge.$AnonymousType$29("Mary", 400)];
     
                 Bridge.Test.Assert.areDeepEqual$1(personsExpected, persons, "Join Persons and Groups");
     
                 // TEST
                 var personsByLambda = Bridge.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).join(Bridge.ClientTest.Utilities.Group.getGroups(), $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f1, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f2, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f3).toArray();
     
-                var personsByLambdaExpected = [new Bridge.$AnonymousType$27("Frank", 1000), new Bridge.$AnonymousType$27("Zeppa", 800), new Bridge.$AnonymousType$27("John", 400), new Bridge.$AnonymousType$27("Billy", 800), new Bridge.$AnonymousType$27("Dora", 400), new Bridge.$AnonymousType$27("Ian", 400), new Bridge.$AnonymousType$27("Mary", 400)];
+                var personsByLambdaExpected = [new Bridge.$AnonymousType$29("Frank", 1000), new Bridge.$AnonymousType$29("Zeppa", 800), new Bridge.$AnonymousType$29("John", 400), new Bridge.$AnonymousType$29("Billy", 800), new Bridge.$AnonymousType$29("Dora", 400), new Bridge.$AnonymousType$29("Ian", 400), new Bridge.$AnonymousType$29("Mary", 400)];
     
                 Bridge.Test.Assert.areDeepEqual$1(personsByLambdaExpected, personsByLambda, "Join Persons and Groups by lambda");
     
                 // TEST
                 var groupJoin = (Bridge.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Group.getGroups()).groupJoin(Bridge.ClientTest.Utilities.Person.getPersons(), $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f2, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f1, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f5)).toArray();
     
-                var groupJoinExpected = [new Bridge.$AnonymousType$25("A", ["Frank"]), new Bridge.$AnonymousType$25("B", ["John", "Dora", "Ian", "Mary"]), new Bridge.$AnonymousType$25("C", ["Zeppa", "Billy"]), new Bridge.$AnonymousType$25("D", [])];
+                var groupJoinExpected = [new Bridge.$AnonymousType$27("A", ["Frank"]), new Bridge.$AnonymousType$27("B", ["John", "Dora", "Ian", "Mary"]), new Bridge.$AnonymousType$27("C", ["Zeppa", "Billy"]), new Bridge.$AnonymousType$27("D", [])];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupJoinExpected, groupJoin, "Grouped join Persons and Groups");
     
                 // TEST
                 var groupJoinWithDefault = (Bridge.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Group.getGroups()).groupJoin(Bridge.ClientTest.Utilities.Person.getPersons(), $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f2, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f1, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f6).selectMany($_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f7, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f8)).toArray();
     
-                var groupJoinWithDefaultExpected = [new Bridge.$AnonymousType$29("A", "Frank"), new Bridge.$AnonymousType$29("B", "John"), new Bridge.$AnonymousType$29("B", "Dora"), new Bridge.$AnonymousType$29("B", "Ian"), new Bridge.$AnonymousType$29("B", "Mary"), new Bridge.$AnonymousType$29("C", "Zeppa"), new Bridge.$AnonymousType$29("C", "Billy"), new Bridge.$AnonymousType$29("D", "")];
+                var groupJoinWithDefaultExpected = [new Bridge.$AnonymousType$31("A", "Frank"), new Bridge.$AnonymousType$31("B", "John"), new Bridge.$AnonymousType$31("B", "Dora"), new Bridge.$AnonymousType$31("B", "Ian"), new Bridge.$AnonymousType$31("B", "Mary"), new Bridge.$AnonymousType$31("C", "Zeppa"), new Bridge.$AnonymousType$31("C", "Billy"), new Bridge.$AnonymousType$31("D", "")];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupJoinWithDefaultExpected, groupJoinWithDefault, "Grouped join Persons and Groups with DefaultIfEmpty");
     
                 // TEST
                 var groupJoinWithDefaultAndComplexEquals = (Bridge.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Group.getGroups()).groupJoin(Bridge.ClientTest.Utilities.Person.getPersons(), $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f9, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f10, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f6).selectMany($_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f11, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f12).orderByDescending($_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f13).select($_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f14)).toArray();
     
-                var groupJoinWithDefaultAndComplexEqualsExpected = [new Bridge.$AnonymousType$29("C", "Zeppa"), new Bridge.$AnonymousType$29("B", "Mary"), new Bridge.$AnonymousType$29("B", "John"), new Bridge.$AnonymousType$29("B", "Ian"), new Bridge.$AnonymousType$29("A", "Frank"), new Bridge.$AnonymousType$29("B", "Dora"), new Bridge.$AnonymousType$29("C", "Billy"), new Bridge.$AnonymousType$29("D", Bridge.cast(null, String))];
+                var groupJoinWithDefaultAndComplexEqualsExpected = [new Bridge.$AnonymousType$31("C", "Zeppa"), new Bridge.$AnonymousType$31("B", "Mary"), new Bridge.$AnonymousType$31("B", "John"), new Bridge.$AnonymousType$31("B", "Ian"), new Bridge.$AnonymousType$31("A", "Frank"), new Bridge.$AnonymousType$31("B", "Dora"), new Bridge.$AnonymousType$31("C", "Billy"), new Bridge.$AnonymousType$31("D", Bridge.cast(null, String))];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupJoinWithDefaultAndComplexEqualsExpected, groupJoinWithDefaultAndComplexEquals, "Issue #209. Grouped join Persons and Groups with DefaultIfEmpty, complex equals and ordering");
             }
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$27", {
+    Bridge.define("Bridge.$AnonymousType$29", {
         constructor: function (name, limit) {
             this.name = name;
             this.limit = limit;
@@ -22314,14 +22450,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.limit;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$27)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$29)) {
                 return false;
             }
             return Bridge.equals(this.name, o.name) && Bridge.equals(this.limit, o.limit);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + -1283222477;
+            hash = hash * 23 + 235807297;
             hash = hash * 23 + (this.name == null ? 0 : Bridge.getHashCode(this.name));
             hash = hash * 23 + (this.limit == null ? 0 : Bridge.getHashCode(this.limit));
             return hash;
@@ -22334,7 +22470,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$28", {
+    Bridge.define("Bridge.$AnonymousType$30", {
         constructor: function (g, pg) {
             this.g = g;
             this.pg = pg;
@@ -22346,14 +22482,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.pg;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$28)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$30)) {
                 return false;
             }
             return Bridge.equals(this.g, o.g) && Bridge.equals(this.pg, o.pg);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + -1330276644;
+            hash = hash * 23 + -1686507003;
             hash = hash * 23 + (this.g == null ? 0 : Bridge.getHashCode(this.g));
             hash = hash * 23 + (this.pg == null ? 0 : Bridge.getHashCode(this.pg));
             return hash;
@@ -22366,7 +22502,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$29", {
+    Bridge.define("Bridge.$AnonymousType$31", {
         constructor: function (groupName, personName) {
             this.groupName = groupName;
             this.personName = personName;
@@ -22378,14 +22514,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.personName;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$29)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$31)) {
                 return false;
             }
             return Bridge.equals(this.groupName, o.groupName) && Bridge.equals(this.personName, o.personName);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 235807297;
+            hash = hash * 23 + -120423062;
             hash = hash * 23 + (this.groupName == null ? 0 : Bridge.getHashCode(this.groupName));
             hash = hash * 23 + (this.personName == null ? 0 : Bridge.getHashCode(this.personName));
             return hash;
@@ -22398,7 +22534,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$30", {
+    Bridge.define("Bridge.$AnonymousType$32", {
         constructor: function (name, digit) {
             this.name = name;
             this.digit = digit;
@@ -22410,14 +22546,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.digit;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$30)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$32)) {
                 return false;
             }
             return Bridge.equals(this.name, o.name) && Bridge.equals(this.digit, o.digit);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + -1686507003;
+            hash = hash * 23 + -523707589;
             hash = hash * 23 + (this.name == null ? 0 : Bridge.getHashCode(this.name));
             hash = hash * 23 + (this.digit == null ? 0 : Bridge.getHashCode(this.digit));
             return hash;
@@ -22430,7 +22566,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$31", {
+    Bridge.define("Bridge.$AnonymousType$33", {
         constructor: function (x3, ep) {
             this.x3 = x3;
             this.ep = ep;
@@ -22442,14 +22578,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.ep;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$31)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$33)) {
                 return false;
             }
             return Bridge.equals(this.x3, o.x3) && Bridge.equals(this.ep, o.ep);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + -120423062;
+            hash = hash * 23 + 1042376352;
             hash = hash * 23 + (this.x3 == null ? 0 : Bridge.getHashCode(this.x3));
             hash = hash * 23 + (this.ep == null ? 0 : Bridge.getHashCode(this.ep));
             return hash;
@@ -22472,40 +22608,40 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return g.getName();
         },
         f3: function (p, g) {
-            return new Bridge.$AnonymousType$27(p.getName(), g.getLimit());
+            return new Bridge.$AnonymousType$29(p.getName(), g.getLimit());
         },
         f4: function (x) {
             return x.getName();
         },
         f5: function (g, pg) {
-            return new Bridge.$AnonymousType$25(g.getName(), Bridge.Linq.Enumerable.from(pg).select($_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f4).toArray());
+            return new Bridge.$AnonymousType$27(g.getName(), Bridge.Linq.Enumerable.from(pg).select($_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f4).toArray());
         },
         f6: function (g, pg) {
-            return new Bridge.$AnonymousType$28(g, pg);
+            return new Bridge.$AnonymousType$30(g, pg);
         },
         f7: function (x0) {
             return Bridge.Linq.Enumerable.from(x0.pg).defaultIfEmpty(null);
         },
         f8: function (x1, ep) {
-            return new Bridge.$AnonymousType$29(x1.g.getName(), ep != null ? ep.getName() : "");
+            return new Bridge.$AnonymousType$31(x1.g.getName(), ep != null ? ep.getName() : "");
         },
         f9: function (g) {
-            return new Bridge.$AnonymousType$30(g.getName(), 1);
+            return new Bridge.$AnonymousType$32(g.getName(), 1);
         },
         f10: function (p) {
-            return new Bridge.$AnonymousType$30(p.getGroup(), 1);
+            return new Bridge.$AnonymousType$32(p.getGroup(), 1);
         },
         f11: function (x2) {
             return Bridge.Linq.Enumerable.from(x2.pg).defaultIfEmpty(null);
         },
         f12: function (x3, ep) {
-            return new Bridge.$AnonymousType$31(x3, ep);
+            return new Bridge.$AnonymousType$33(x3, ep);
         },
         f13: function (x4) {
             return x4.ep != null ? x4.ep.getName() : null;
         },
         f14: function (x5) {
-            return new Bridge.$AnonymousType$29(x5.x3.g != null ? x5.x3.g.getName() : null, x5.ep != null ? x5.ep.getName() : null);
+            return new Bridge.$AnonymousType$31(x5.x3.g != null ? x5.x3.g.getName() : null, x5.ep != null ? x5.ep.getName() : null);
         }
     });
     
@@ -22702,7 +22838,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 // TEST
                 var anonimNames = (Bridge.Linq.Enumerable.from(persons).select($_.Bridge.ClientTest.Linq.TestLinqProjectionOperators.f3)).toArray();
     
-                var anonimNamesToCompare = [new Bridge.$AnonymousType$32("Frank"), new Bridge.$AnonymousType$32("Zeppa"), new Bridge.$AnonymousType$32("John"), new Bridge.$AnonymousType$32("Billy"), new Bridge.$AnonymousType$32("Dora"), new Bridge.$AnonymousType$32("Ian"), new Bridge.$AnonymousType$32("Mary"), new Bridge.$AnonymousType$32("Nemo")];
+                var anonimNamesToCompare = [new Bridge.$AnonymousType$34("Frank"), new Bridge.$AnonymousType$34("Zeppa"), new Bridge.$AnonymousType$34("John"), new Bridge.$AnonymousType$34("Billy"), new Bridge.$AnonymousType$34("Dora"), new Bridge.$AnonymousType$34("Ian"), new Bridge.$AnonymousType$34("Mary"), new Bridge.$AnonymousType$34("Nemo")];
     
                 Bridge.Test.Assert.areDeepEqual$1(anonimNamesToCompare, anonimNames, "Selects names as an anonymous type");
     
@@ -22711,7 +22847,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 var numberssInPlace = Bridge.Linq.Enumerable.from(numbers).select($_.Bridge.ClientTest.Linq.TestLinqProjectionOperators.f4).toArray();
     
-                var anonimNumbersToCompare = [new Bridge.$AnonymousType$33(0, true), new Bridge.$AnonymousType$33(1, true), new Bridge.$AnonymousType$33(3, false), new Bridge.$AnonymousType$33(3, true)];
+                var anonimNumbersToCompare = [new Bridge.$AnonymousType$35(0, true), new Bridge.$AnonymousType$35(1, true), new Bridge.$AnonymousType$35(3, false), new Bridge.$AnonymousType$35(3, true)];
     
                 Bridge.Test.Assert.areDeepEqual$1(anonimNumbersToCompare, numberssInPlace, "Selects numbers as an anonymous type");
     
@@ -22722,7 +22858,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     return numbersB;
                 }, $_.Bridge.ClientTest.Linq.TestLinqProjectionOperators.f5).where($_.Bridge.ClientTest.Linq.TestLinqProjectionOperators.f6).select($_.Bridge.ClientTest.Linq.TestLinqProjectionOperators.f7)).toArray();
     
-                var expectedSimplePairs = [new Bridge.$AnonymousType$35(1, 3), new Bridge.$AnonymousType$35(1, 4), new Bridge.$AnonymousType$35(1, 2), new Bridge.$AnonymousType$35(2, 3), new Bridge.$AnonymousType$35(2, 4)];
+                var expectedSimplePairs = [new Bridge.$AnonymousType$37(1, 3), new Bridge.$AnonymousType$37(1, 4), new Bridge.$AnonymousType$37(1, 2), new Bridge.$AnonymousType$37(2, 3), new Bridge.$AnonymousType$37(2, 4)];
     
                 Bridge.Test.Assert.areDeepEqual$1(expectedSimplePairs, simplePairs, "Join two numeric arrays with one where clause");
     
@@ -22734,7 +22870,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     return numbersB;
                 }, $_.Bridge.ClientTest.Linq.TestLinqProjectionOperators.f5).where($_.Bridge.ClientTest.Linq.TestLinqProjectionOperators.f9).select($_.Bridge.ClientTest.Linq.TestLinqProjectionOperators.f10)).toArray();
     
-                var expectedPairs = [new Bridge.$AnonymousType$36(8), new Bridge.$AnonymousType$36(7), new Bridge.$AnonymousType$36(6), new Bridge.$AnonymousType$36(3), new Bridge.$AnonymousType$36(7), new Bridge.$AnonymousType$36(6), new Bridge.$AnonymousType$36(5), new Bridge.$AnonymousType$36(5), new Bridge.$AnonymousType$36(4)];
+                var expectedPairs = [new Bridge.$AnonymousType$38(8), new Bridge.$AnonymousType$38(7), new Bridge.$AnonymousType$38(6), new Bridge.$AnonymousType$38(3), new Bridge.$AnonymousType$38(7), new Bridge.$AnonymousType$38(6), new Bridge.$AnonymousType$38(5), new Bridge.$AnonymousType$38(5), new Bridge.$AnonymousType$38(4)];
     
                 Bridge.Test.Assert.areDeepEqual$1(expectedPairs, pairs, "Join two numeric arrays with two where clauses");
     
@@ -22746,18 +22882,18 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     return Bridge.Linq.Enumerable.from(numbersB).where(function (b) {
                         return a === b && b > aIndex;
                     }).select(function (b) {
-                        return new Bridge.$AnonymousType$37(a, b, aIndex);
+                        return new Bridge.$AnonymousType$39(a, b, aIndex);
                     });
                 }).toArray();
     
-                var expectedManyNumbers = [new Bridge.$AnonymousType$37(1, 1, 0), new Bridge.$AnonymousType$37(5, 5, 1), new Bridge.$AnonymousType$37(4, 4, 3)];
+                var expectedManyNumbers = [new Bridge.$AnonymousType$39(1, 1, 0), new Bridge.$AnonymousType$39(5, 5, 1), new Bridge.$AnonymousType$39(4, 4, 3)];
     
                 Bridge.Test.Assert.areDeepEqual$1(expectedManyNumbers, manyNumbers, "SelectMany() two number arrays");
             }
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$32", {
+    Bridge.define("Bridge.$AnonymousType$34", {
         constructor: function (name) {
             this.name = name;
         },
@@ -22765,14 +22901,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.name;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$32)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$34)) {
                 return false;
             }
             return Bridge.equals(this.name, o.name);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + -523707589;
+            hash = hash * 23 + 282861465;
             hash = hash * 23 + (this.name == null ? 0 : Bridge.getHashCode(this.name));
             return hash;
         },
@@ -22783,7 +22919,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$33", {
+    Bridge.define("Bridge.$AnonymousType$35", {
         constructor: function (number, isIndex) {
             this.number = number;
             this.isIndex = isIndex;
@@ -22795,14 +22931,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.isIndex;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$33)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$35)) {
                 return false;
             }
             return Bridge.equals(this.number, o.number) && Bridge.equals(this.isIndex, o.isIndex);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 1042376352;
+            hash = hash * 23 + 1848945406;
             hash = hash * 23 + (this.number == null ? 0 : Bridge.getHashCode(this.number));
             hash = hash * 23 + (this.isIndex == null ? 0 : Bridge.getHashCode(this.isIndex));
             return hash;
@@ -22815,7 +22951,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$34", {
+    Bridge.define("Bridge.$AnonymousType$36", {
         constructor: function (a, b) {
             this.a = a;
             this.b = b;
@@ -22827,14 +22963,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.b;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$34)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$36)) {
                 return false;
             }
             return Bridge.equals(this.a, o.a) && Bridge.equals(this.b, o.b);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 282861465;
+            hash = hash * 23 + 1445660879;
             hash = hash * 23 + (this.a == null ? 0 : Bridge.getHashCode(this.a));
             hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
             return hash;
@@ -22847,7 +22983,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$35", {
+    Bridge.define("Bridge.$AnonymousType$37", {
         constructor: function (a, b) {
             this.a = a;
             this.b = b;
@@ -22859,14 +22995,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.b;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$35)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$37)) {
                 return false;
             }
             return Bridge.equals(this.a, o.a) && Bridge.equals(this.b, o.b);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 1848945406;
+            hash = hash * 23 + -1283222476;
             hash = hash * 23 + (this.a == null ? 0 : Bridge.getHashCode(this.a));
             hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
             return hash;
@@ -22879,7 +23015,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$36", {
+    Bridge.define("Bridge.$AnonymousType$38", {
         constructor: function (sum) {
             this.sum = sum;
         },
@@ -22887,14 +23023,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.sum;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$36)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$38)) {
                 return false;
             }
             return Bridge.equals(this.sum, o.sum);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 1445660879;
+            hash = hash * 23 + -1330276643;
             hash = hash * 23 + (this.sum == null ? 0 : Bridge.getHashCode(this.sum));
             return hash;
         },
@@ -22905,7 +23041,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$37", {
+    Bridge.define("Bridge.$AnonymousType$39", {
         constructor: function (a, b, i) {
             this.a = a;
             this.b = b;
@@ -22921,14 +23057,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.i;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$37)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$39)) {
                 return false;
             }
             return Bridge.equals(this.a, o.a) && Bridge.equals(this.b, o.b) && Bridge.equals(this.i, o.i);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + -1283222476;
+            hash = hash * 23 + 235807298;
             hash = hash * 23 + (this.a == null ? 0 : Bridge.getHashCode(this.a));
             hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
             hash = hash * 23 + (this.i == null ? 0 : Bridge.getHashCode(this.i));
@@ -22953,19 +23089,19 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return p.getName();
         },
         f3: function (p) {
-            return new Bridge.$AnonymousType$32(p.getName());
+            return new Bridge.$AnonymousType$34(p.getName());
         },
         f4: function (n, index) {
-            return new Bridge.$AnonymousType$33(n, n === index);
+            return new Bridge.$AnonymousType$35(n, n === index);
         },
         f5: function (a, b) {
-            return new Bridge.$AnonymousType$34(a, b);
+            return new Bridge.$AnonymousType$36(a, b);
         },
         f6: function (x0) {
             return x0.a < x0.b;
         },
         f7: function (x1) {
-            return new Bridge.$AnonymousType$35(x1.a, x1.b);
+            return new Bridge.$AnonymousType$37(x1.a, x1.b);
         },
         f8: function (a) {
             return a > 1;
@@ -22974,7 +23110,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return x2.b < 4 && x2.a > x2.b;
         },
         f10: function (x3) {
-            return new Bridge.$AnonymousType$36(((x3.a + x3.b) | 0));
+            return new Bridge.$AnonymousType$38(((x3.a + x3.b) | 0));
         }
     });
     
@@ -22999,14 +23135,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 // TEST
                 var productGroups = (Bridge.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqQuantifiers.f3).where($_.Bridge.ClientTest.Linq.TestLinqQuantifiers.f5).select($_.Bridge.ClientTest.Linq.TestLinqQuantifiers.f7)).toArray();
     
-                var productGroupsExpected = [new Bridge.$AnonymousType$38("C", ["Zeppa", "Billy"]), new Bridge.$AnonymousType$38("B", ["John", "Dora", "Ian", "Mary"]), new Bridge.$AnonymousType$38(Bridge.cast(null, String), ["Nemo"])];
+                var productGroupsExpected = [new Bridge.$AnonymousType$40("C", ["Zeppa", "Billy"]), new Bridge.$AnonymousType$40("B", ["John", "Dora", "Ian", "Mary"]), new Bridge.$AnonymousType$40(Bridge.cast(null, String), ["Nemo"])];
     
                 Bridge.Test.Assert.areDeepEqual$1(productGroupsExpected, productGroups, "Any() to return a grouped array of names only for groups having any item with Count > 500");
             }
         }
     });
     
-    Bridge.define("Bridge.$AnonymousType$38", {
+    Bridge.define("Bridge.$AnonymousType$40", {
         constructor: function (group, names) {
             this.group = group;
             this.names = names;
@@ -23018,14 +23154,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.names;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$38)) {
+            if (!Bridge.is(o,Bridge.$AnonymousType$40)) {
                 return false;
             }
             return Bridge.equals(this.group, o.group) && Bridge.equals(this.names, o.names);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + -1330276643;
+            hash = hash * 23 + -1686507002;
             hash = hash * 23 + (this.group == null ? 0 : Bridge.getHashCode(this.group));
             hash = hash * 23 + (this.names == null ? 0 : Bridge.getHashCode(this.names));
             return hash;
@@ -23060,7 +23196,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return x.getName();
         },
         f7: function (pGroup) {
-            return new Bridge.$AnonymousType$38(pGroup.key(), pGroup.select($_.Bridge.ClientTest.Linq.TestLinqQuantifiers.f6).toArray());
+            return new Bridge.$AnonymousType$40(pGroup.key(), pGroup.select($_.Bridge.ClientTest.Linq.TestLinqQuantifiers.f6).toArray());
         }
     });
     

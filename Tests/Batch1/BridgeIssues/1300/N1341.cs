@@ -100,6 +100,28 @@ namespace Bridge.ClientTest.BridgeIssues
             Assert.NotNull(o5.B["getValue1"], "o5.B has getValue1");
         }
 
+        [Test]
+        public static void TestDiffStructHashCode()
+        {
+            var s = new SomeStructA() { Value1 = 10 };
+            var s1 = new SomeStructA1() { Value1 = 10 };
+
+            Assert.AreNotEqual(s.GetHashCode(), s1.GetHashCode(), "Structs of diff types with same fields and values should give diff hash codes");
+
+            var s2 = new SomeStructA2() { Value2 = 10 };
+
+            Assert.AreNotEqual(s.GetHashCode(), s2.GetHashCode(), "Structs of diff types with same values should give diff hash codes");
+        }
+
+        [Test]
+        public static void TestDiffAnonymousTypesHashCode()
+        {
+            var s = new { Value1 = 10 };
+            var s1 = new { Value2 = 10 };
+
+            Assert.AreNotEqual(s.GetHashCode(), s1.GetHashCode(), "Same field values should give diff hash codes");
+        }
+
         private static void Test(object[] values)
         {
             var o1 = values[0];
@@ -211,6 +233,16 @@ namespace Bridge.ClientTest.BridgeIssues
         struct SomeStructA
         {
             public int Value1 { get; set; }
+        }
+
+        struct SomeStructA1
+        {
+            public int Value1 { get; set; }
+        }
+
+        struct SomeStructA2
+        {
+            public int Value2 { get; set; }
         }
 
         class SomeClassB
