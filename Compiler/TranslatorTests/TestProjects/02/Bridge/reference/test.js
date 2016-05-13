@@ -225,13 +225,11 @@
             }
         },
 
-        getHashCode: function (value, safe, store) {
-            //in CLR: mutable object should keep on returning same value
-            //bridge.net goals: make it deterministic (to make testing easier) without breaking CLR contracts
-            // thus:
+        getHashCode: function (value, safe) {
+            // In CLR: mutable object should keep on returning same value
+            // Bridge.NET goals: make it deterministic (to make testing easier) without breaking CLR contracts
             //     for value types it returns deterministic values (f.e. for int 3 it returns 3) 
-            //     for reference types it returns value derived recursively from its properties
-            var store = (typeof store === 'undefined') ? true : store; 
+            //     for reference types it returns random value
 
             if (Bridge.isEmpty(value, true)) {
                 if (safe) {
@@ -245,11 +243,6 @@
                 value.__insideHashCode = true;
                 var r = value.getHashCode();
                 delete value.__insideHashCode;
-
-                if (!value.__hasHashCodeOverride && value.$$name) {
-                    var rs = Bridge.getHashCodeForString(value.$$name);
-                    r = r ^ rs;
-                }
 
                 return r;
             }
@@ -269,34 +262,27 @@
             }
 
             if (Bridge.isString(value)) {
-                return Bridge.getHashCodeForString(value);
+                var hash = 0,
+                i;
+
+                for (i = 0; i < value.length; i++) {
+                    hash = (((hash << 5) - hash) + value.charCodeAt(i)) & 0xFFFFFFFF;
+                }
+
+                return hash;
             }
 
             if (value.$$hashCode) {
                 return value.$$hashCode;
             }
 
-            if (store === false) {
-                return value.$$hashCode || ((Math.random() * 0x100000000) | 0);
-            }
+            value.$$hashCode = (Math.random() * 0x100000000) | 0;
 
-            return value.$$hashCode || (value.$$hashCode = (Math.random() * 0x100000000) | 0);
-        },
-
-        getHashCodeForString: function(value) {
-            var hash = 0,
-                i;
-
-            for (i = 0; i < value.length; i++) {
-                hash = (((hash << 5) - hash) + value.charCodeAt(i)) & 0xFFFFFFFF;
-            }
-
-            return hash;
+            return value.$$hashCode;
         },
 
         getDefaultValue: function (type) {
-            if (
-                (type.getDefaultValue) && type.getDefaultValue.length === 0) {
+            if ((type.getDefaultValue) && type.getDefaultValue.length === 0) {
                 return type.getDefaultValue();
             } else if (type === Boolean) {
                 return false;

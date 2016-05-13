@@ -323,7 +323,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function (i) {
             this.i = i;
         },
-        __hasHashCodeOverride: true,
         equals: function (o) {
             return Bridge.is(o, Bridge.ClientTest.ArrayTests1.ArrayTestsSet1.C) && this.i === Bridge.cast(o, Bridge.ClientTest.ArrayTests1.ArrayTestsSet1.C).i;
         },
@@ -1643,6 +1642,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 372029403;
             hash = hash * 23 + (this.x == null ? 0 : Bridge.getHashCode(this.x));
             hash = hash * 23 + (this.s == null ? 0 : Bridge.getHashCode(this.s));
             hash = hash * 23 + (this.z == null ? 0 : Bridge.getHashCode(this.z));
@@ -1669,7 +1669,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.IntegerComparer', {
         inherits: [Bridge.IComparer$1(Bridge.Int32),Bridge.IEqualityComparer],
-        __hasHashCodeOverride: true,
         compare: function (x, y) {
             return ((x - y) | 0);
         },
@@ -1698,6 +1697,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 372029423;
             hash = hash * 23 + (this.x == null ? 0 : Bridge.getHashCode(this.x));
             return hash;
         },
@@ -1933,6 +1933,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 1554797180;
             hash = hash * 23 + (this.x == null ? 0 : Bridge.getHashCode(this.x));
             hash = hash * 23 + (this.y == null ? 0 : Bridge.getHashCode(this.y));
             return hash;
@@ -1979,6 +1980,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 2001675717;
             hash = hash * 23 + (this.l == null ? 0 : Bridge.getHashCode(this.l));
             hash = hash * 23 + (this.t == null ? 0 : Bridge.getHashCode(this.t));
             return hash;
@@ -3182,6 +3184,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 1643959563;
             hash = hash * 23 + (this.x == null ? 0 : Bridge.getHashCode(this.x));
             hash = hash * 23 + (this.y == null ? 0 : Bridge.getHashCode(this.y));
             return hash;
@@ -4318,6 +4321,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -1126420587;
             hash = hash * 23 + (this.value == null ? 0 : Bridge.getHashCode(this.value));
             return hash;
         },
@@ -4365,6 +4369,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -1126420587;
             hash = hash * 23 + (this.value == null ? 0 : Bridge.getHashCode(this.value));
             return hash;
         },
@@ -4996,6 +5001,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 1335531435;
             hash = hash * 23 + (this.x == null ? 0 : Bridge.getHashCode(this.x));
             hash = hash * 23 + (this.y == null ? 0 : Bridge.getHashCode(this.y));
             return hash;
@@ -6260,6 +6266,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -1223576436;
             hash = hash * 23 + (this.Value == null ? 0 : Bridge.getHashCode(this.Value));
             return hash;
         },
@@ -6840,6 +6847,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -654368557;
             hash = hash * 23 + (this.a == null ? 0 : Bridge.getHashCode(this.a));
             return hash;
         },
@@ -6869,6 +6877,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -654368556;
             hash = hash * 23 + (this.a == null ? 0 : Bridge.getHashCode(this.a));
             hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
             return hash;
@@ -6900,6 +6909,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -654368555;
             hash = hash * 23 + (this.a == null ? 0 : Bridge.getHashCode(this.a));
             hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
             return hash;
@@ -6931,6 +6941,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -654368554;
             hash = hash * 23 + (this.a == null ? 0 : Bridge.getHashCode(this.a));
             hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
             return hash;
@@ -6958,6 +6969,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -654368553;
             hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
             return hash;
         },
@@ -6987,6 +6999,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -654368552;
             hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
             hash = hash * 23 + (this.c == null ? 0 : Bridge.getHashCode(this.c));
             return hash;
@@ -7018,6 +7031,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -654368551;
             hash = hash * 23 + (this.a == null ? 0 : Bridge.getHashCode(this.a));
             hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
             return hash;
@@ -7049,6 +7063,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -654368550;
             hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
             hash = hash * 23 + (this.c == null ? 0 : Bridge.getHashCode(this.c));
             return hash;
@@ -7080,6 +7095,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -654368549;
             hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
             hash = hash * 23 + (this.a == null ? 0 : Bridge.getHashCode(this.a));
             return hash;
@@ -7111,6 +7127,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -1686507005;
             hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
             hash = hash * 23 + (this.c == null ? 0 : Bridge.getHashCode(this.c));
             return hash;
@@ -7157,6 +7174,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 593585434;
             hash = hash * 23 + (this.Value1 == null ? 0 : Bridge.getHashCode(this.Value1));
             return hash;
         },
@@ -7317,7 +7335,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Str: null
             }
         },
-        __hasHashCodeOverride: true,
         equalsT: function (other) {
             if (other == null) {
                 return false;
@@ -7463,6 +7480,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 1091152776;
             hash = hash * 23 + (this.A == null ? 0 : Bridge.getHashCode(this.A));
             return hash;
         },
@@ -7552,7 +7570,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 MyProperty: 0
             }
         },
-        __hasHashCodeOverride: true,
         equals: function (obj) {
             var other = Bridge.as(obj, Bridge.ClientTest.BridgeIssues.Bridge467);
             if (other == null) {
@@ -7582,7 +7599,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Data: 0
             }
         },
-        __hasHashCodeOverride: true,
         equals2: function (x, y) {
             return x.getData() === y.getData();
         },
@@ -7690,6 +7706,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -120423064;
             hash = hash * 23 + (this.lastName == null ? 0 : Bridge.getHashCode(this.lastName));
             hash = hash * 23 + (this.firstName == null ? 0 : Bridge.getHashCode(this.firstName));
             return hash;
@@ -8097,6 +8114,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -523707591;
             return hash;
         },
         toJSON: function () {
@@ -9036,6 +9054,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 1430308972;
             hash = hash * 23 + (this.Number == null ? 0 : Bridge.getHashCode(this.Number));
             return hash;
         },
@@ -9543,6 +9562,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -701022801;
             hash = hash * 23 + (this.value == null ? 0 : Bridge.getHashCode(this.value));
             return hash;
         },
@@ -9597,6 +9617,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -1104307328;
             hash = hash * 23 + (this.value == null ? 0 : Bridge.getHashCode(this.value));
             hash = hash * 23 + (this.intValue == null ? 0 : Bridge.getHashCode(this.intValue));
             return hash;
@@ -9734,7 +9755,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         constructor: function () {
         },
-        __hasHashCodeOverride: true,
         equals: function (obj) {
             return this.equals$1(obj.toString());
         },
@@ -9876,7 +9896,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge625A', {
         inherits: [Bridge.IEqualityComparer$1(Bridge.Int32)],
-        __hasHashCodeOverride: true,
         equals2: function (x, y) {
             return x === y;
         },
@@ -10297,6 +10316,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 390689245;
             hash = hash * 23 + (this.value == null ? 0 : Bridge.getHashCode(this.value));
             hash = hash * 23 + (this.isDefined == null ? 0 : Bridge.getHashCode(this.isDefined));
             return hash;
@@ -10849,6 +10869,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -1467239093;
             hash = hash * 23 + (this.field1 == null ? 0 : Bridge.getHashCode(this.field1));
             return hash;
         },
@@ -10877,6 +10898,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -1063954566;
             hash = hash * 23 + (this.field1 == null ? 0 : Bridge.getHashCode(this.field1));
             return hash;
         },
@@ -10918,6 +10940,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -1467239094;
             hash = hash * 23 + (this.field1 == null ? 0 : Bridge.getHashCode(this.field1));
             return hash;
         },
@@ -10953,6 +10976,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -1063954567;
             hash = hash * 23 + (this.field1 == null ? 0 : Bridge.getHashCode(this.field1));
             return hash;
         },
@@ -10983,6 +11007,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 1664928788;
             hash = hash * 23 + (this.Prop1 == null ? 0 : Bridge.getHashCode(this.Prop1));
             return hash;
         },
@@ -11440,6 +11465,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -1386632298;
             hash = hash * 23 + (this.Data == null ? 0 : Bridge.getHashCode(this.Data));
             return hash;
         },
@@ -11627,6 +11653,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -847529689;
             hash = hash * 23 + (this.Value == null ? 0 : Bridge.getHashCode(this.Value));
             return hash;
         },
@@ -11692,6 +11719,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 428277234;
             hash = hash * 23 + (this.field1 == null ? 0 : Bridge.getHashCode(this.field1));
             return hash;
         },
@@ -11788,7 +11816,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         constructor: function () {
         },
-        __hasHashCodeOverride: true,
         equals: function (o) {
             if (!(Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge795A))) {
                 return false;
@@ -11840,7 +11867,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         constructor: function () {
         },
-        __hasHashCodeOverride: true,
         equals: function (o) {
             if (!(Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge795B))) {
                 return false;
@@ -11938,6 +11964,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 372029408;
             hash = hash * 23 + (this.field == null ? 0 : Bridge.getHashCode(this.field));
             return hash;
         },
@@ -12838,6 +12865,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 1042376350;
             hash = hash * 23 + (this.value == null ? 0 : Bridge.getHashCode(this.value));
             return hash;
         },
@@ -14538,6 +14566,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 282861463;
             hash = hash * 23 + (this.i == null ? 0 : Bridge.getHashCode(this.i));
             return hash;
         },
@@ -15739,7 +15768,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         hashCode: 0,
         other: null,
         shouldEqual: false,
-        __hasHashCodeOverride: true,
         getHashCode: function () {
             return this.hashCode;
         },
@@ -15993,7 +16021,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.Collections.Generic.GenericDictionaryTests.TestEqualityComparer', {
         inherits: [Bridge.EqualityComparer$1(String)],
-        __hasHashCodeOverride: true,
         equals2: function (x, y) {
             return x.charCodeAt(0) === y.charCodeAt(0);
         },
@@ -16076,7 +16103,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function (i) {
             this._i = i;
         },
-        __hasHashCodeOverride: true,
         equals: function (o) {
             return Bridge.is(o, Bridge.ClientTest.Collections.Generic.ICollectionTests.C) && this._i === Bridge.cast(o, Bridge.ClientTest.Collections.Generic.ICollectionTests.C)._i;
         },
@@ -16516,7 +16542,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function (i) {
             this._i = i;
         },
-        __hasHashCodeOverride: true,
         equals: function (o) {
             return Bridge.is(o, Bridge.ClientTest.Collections.Generic.IListTests.C) && this._i === Bridge.cast(o, Bridge.ClientTest.Collections.Generic.IListTests.C)._i;
         },
@@ -17368,7 +17393,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function (i) {
             this.i = i;
         },
-        __hasHashCodeOverride: true,
         equals: function (o) {
             return Bridge.is(o, Bridge.ClientTest.Collections.Generic.ListTests.C) && this.i === Bridge.cast(o, Bridge.ClientTest.Collections.Generic.ListTests.C).i;
         },
@@ -17504,7 +17528,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function (i) {
             this.i = i;
         },
-        __hasHashCodeOverride: true,
         equals: function (o) {
             return Bridge.is(o, Bridge.ClientTest.Collections.Generic.StackTests.C) && this.i === Bridge.cast(o, Bridge.ClientTest.Collections.Generic.StackTests.C).i;
         },
@@ -21261,7 +21284,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.Linq.AnagramEqualityComparer', {
         inherits: [Bridge.EqualityComparer$1(String)],
-        __hasHashCodeOverride: true,
         equals2: function (x, y) {
             return Bridge.referenceEquals(this.getCanonicalString(x), this.getCanonicalString(y));
         },
@@ -21424,6 +21446,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 1848945404;
             hash = hash * 23 + (this.group == null ? 0 : Bridge.getHashCode(this.group));
             hash = hash * 23 + (this.personCount == null ? 0 : Bridge.getHashCode(this.personCount));
             return hash;
@@ -21455,6 +21478,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 1445660877;
             hash = hash * 23 + (this.group == null ? 0 : Bridge.getHashCode(this.group));
             hash = hash * 23 + (this.sum == null ? 0 : Bridge.getHashCode(this.sum));
             return hash;
@@ -21486,6 +21510,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -1283222478;
             hash = hash * 23 + (this.group == null ? 0 : Bridge.getHashCode(this.group));
             hash = hash * 23 + (this.min == null ? 0 : Bridge.getHashCode(this.min));
             return hash;
@@ -21517,6 +21542,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -1330276645;
             hash = hash * 23 + (this.g == null ? 0 : Bridge.getHashCode(this.g));
             hash = hash * 23 + (this.minCount == null ? 0 : Bridge.getHashCode(this.minCount));
             return hash;
@@ -21548,6 +21574,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 235807296;
             hash = hash * 23 + (this.group == null ? 0 : Bridge.getHashCode(this.group));
             hash = hash * 23 + (this.name == null ? 0 : Bridge.getHashCode(this.name));
             return hash;
@@ -21579,6 +21606,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -1686507004;
             hash = hash * 23 + (this.group == null ? 0 : Bridge.getHashCode(this.group));
             hash = hash * 23 + (this.max == null ? 0 : Bridge.getHashCode(this.max));
             return hash;
@@ -21610,6 +21638,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -120423063;
             hash = hash * 23 + (this.g == null ? 0 : Bridge.getHashCode(this.g));
             hash = hash * 23 + (this.maxCount == null ? 0 : Bridge.getHashCode(this.maxCount));
             return hash;
@@ -21801,7 +21830,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.Linq.TestLinqConversionOperatorsIEqualityComparer', {
         inherits: [Bridge.EqualityComparer$1(String)],
-        __hasHashCodeOverride: true,
         equals2: function (x, y) {
             return Bridge.String.equals(x, y);
         },
@@ -21975,6 +22003,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -523707590;
             hash = hash * 23 + (this.number == null ? 0 : Bridge.getHashCode(this.number));
             hash = hash * 23 + (this.isOdd == null ? 0 : Bridge.getHashCode(this.isOdd));
             return hash;
@@ -22079,6 +22108,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 1042376351;
             hash = hash * 23 + (this.remainder == null ? 0 : Bridge.getHashCode(this.remainder));
             hash = hash * 23 + (this.numbers == null ? 0 : Bridge.getHashCode(this.numbers));
             return hash;
@@ -22110,6 +22140,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 282861464;
             hash = hash * 23 + (this.firstLetter == null ? 0 : Bridge.getHashCode(this.firstLetter));
             hash = hash * 23 + (this.words == null ? 0 : Bridge.getHashCode(this.words));
             return hash;
@@ -22141,6 +22172,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 1848945405;
             hash = hash * 23 + (this.group == null ? 0 : Bridge.getHashCode(this.group));
             hash = hash * 23 + (this.persons == null ? 0 : Bridge.getHashCode(this.persons));
             return hash;
@@ -22172,6 +22204,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 1445660878;
             hash = hash * 23 + (this.key == null ? 0 : Bridge.getHashCode(this.key));
             hash = hash * 23 + (this.words == null ? 0 : Bridge.getHashCode(this.words));
             return hash;
@@ -22288,6 +22321,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -1283222477;
             hash = hash * 23 + (this.name == null ? 0 : Bridge.getHashCode(this.name));
             hash = hash * 23 + (this.limit == null ? 0 : Bridge.getHashCode(this.limit));
             return hash;
@@ -22319,6 +22353,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -1330276644;
             hash = hash * 23 + (this.g == null ? 0 : Bridge.getHashCode(this.g));
             hash = hash * 23 + (this.pg == null ? 0 : Bridge.getHashCode(this.pg));
             return hash;
@@ -22350,6 +22385,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 235807297;
             hash = hash * 23 + (this.groupName == null ? 0 : Bridge.getHashCode(this.groupName));
             hash = hash * 23 + (this.personName == null ? 0 : Bridge.getHashCode(this.personName));
             return hash;
@@ -22381,6 +22417,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -1686507003;
             hash = hash * 23 + (this.name == null ? 0 : Bridge.getHashCode(this.name));
             hash = hash * 23 + (this.digit == null ? 0 : Bridge.getHashCode(this.digit));
             return hash;
@@ -22412,6 +22449,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -120423062;
             hash = hash * 23 + (this.x3 == null ? 0 : Bridge.getHashCode(this.x3));
             hash = hash * 23 + (this.ep == null ? 0 : Bridge.getHashCode(this.ep));
             return hash;
@@ -22734,6 +22772,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -523707589;
             hash = hash * 23 + (this.name == null ? 0 : Bridge.getHashCode(this.name));
             return hash;
         },
@@ -22763,6 +22802,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 1042376352;
             hash = hash * 23 + (this.number == null ? 0 : Bridge.getHashCode(this.number));
             hash = hash * 23 + (this.isIndex == null ? 0 : Bridge.getHashCode(this.isIndex));
             return hash;
@@ -22794,6 +22834,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 282861465;
             hash = hash * 23 + (this.a == null ? 0 : Bridge.getHashCode(this.a));
             hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
             return hash;
@@ -22825,6 +22866,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 1848945406;
             hash = hash * 23 + (this.a == null ? 0 : Bridge.getHashCode(this.a));
             hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
             return hash;
@@ -22852,6 +22894,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 1445660879;
             hash = hash * 23 + (this.sum == null ? 0 : Bridge.getHashCode(this.sum));
             return hash;
         },
@@ -22885,6 +22928,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -1283222476;
             hash = hash * 23 + (this.a == null ? 0 : Bridge.getHashCode(this.a));
             hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
             hash = hash * 23 + (this.i == null ? 0 : Bridge.getHashCode(this.i));
@@ -22981,6 +23025,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -1330276643;
             hash = hash * 23 + (this.group == null ? 0 : Bridge.getHashCode(this.group));
             hash = hash * 23 + (this.names == null ? 0 : Bridge.getHashCode(this.names));
             return hash;
@@ -32825,6 +32870,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 1473705463;
             hash = hash * 23 + (this.field == null ? 0 : Bridge.getHashCode(this.field));
             return hash;
         },
