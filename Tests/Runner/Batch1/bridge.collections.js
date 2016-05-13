@@ -536,7 +536,7 @@
                         $t2 = Bridge.getEnumerator(set1);
                         while ($t2.moveNext()) {
                             var set1Item = $t2.getCurrent();
-                            if (comparer.equals(set2Item, set1Item)) {
+                            if (comparer.equals2(set2Item, set1Item)) {
                                 found = true;
                                 break;
                             }
@@ -628,7 +628,7 @@
             if (this._buckets != null) {
                 var hashCode = this.internalGetHashCode(item);
                 for (var i = (this._buckets[hashCode % this._buckets.length] - 1) | 0; i >= 0; i = this._slots[i].next) {
-                    if (this._slots[i].hashCode === hashCode && this._comparer.equals(this._slots[i].value, item)) {
+                    if (this._slots[i].hashCode === hashCode && this._comparer.equals2(this._slots[i].value, item)) {
                         return true;
                     }
                 }
@@ -668,7 +668,7 @@
                 var bucket = hashCode % this._buckets.length;
                 var last = -1;
                 for (var i = (this._buckets[bucket] - 1) | 0; i >= 0; last = i, i = this._slots[i].next) {
-                    if (this._slots[i].hashCode === hashCode && this._comparer.equals(this._slots[i].value, item)) {
+                    if (this._slots[i].hashCode === hashCode && this._comparer.equals2(this._slots[i].value, item)) {
                         if (last < 0) {
                             this._buckets[bucket] = (this._slots[i].next + 1) | 0;
                         }
@@ -982,7 +982,7 @@
             var hashCode = this.internalGetHashCode(value);
             var bucket = hashCode % this._buckets.length;
             for (var i = (this._buckets[bucket] - 1) | 0; i >= 0; i = this._slots[i].next) {
-                if (this._slots[i].hashCode === hashCode && this._comparer.equals(this._slots[i].value, value)) {
+                if (this._slots[i].hashCode === hashCode && this._comparer.equals2(this._slots[i].value, value)) {
                     return false;
                 }
             }
@@ -1063,7 +1063,7 @@
         internalIndexOf: function (item) {
             var hashCode = this.internalGetHashCode(item);
             for (var i = (this._buckets[hashCode % this._buckets.length] - 1) | 0; i >= 0; i = this._slots[i].next) {
-                if ((this._slots[i].hashCode) === hashCode && this._comparer.equals(this._slots[i].value, item)) {
+                if ((this._slots[i].hashCode) === hashCode && this._comparer.equals2(this._slots[i].value, item)) {
                     return i;
                 }
             }
@@ -1113,7 +1113,7 @@
             var hashCode = this.internalGetHashCode(value);
             var bucket = hashCode % this._buckets.length;
             for (var i = (this._buckets[bucket] - 1) | 0; i >= 0; i = this._slots[i].next) {
-                if (this._slots[i].hashCode === hashCode && this._comparer.equals(this._slots[i].value, value)) {
+                if (this._slots[i].hashCode === hashCode && this._comparer.equals2(this._slots[i].value, value)) {
                     location.v = i;
                     return false;
                 }
@@ -1192,7 +1192,7 @@
             if (item == null) {
                 return 0;
             }
-            return this._comparer.getHashCode(item, true) & Bridge.Collections.HashSet$1(T).Lower31BitMask;
+            return this._comparer.getHashCode2(item) & Bridge.Collections.HashSet$1(T).Lower31BitMask;
         }
     }; });
     
@@ -1204,6 +1204,7 @@
         unfoundCount: 0,
         constructor: function () {
         },
+        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + (this.uniqueCount == null ? 0 : Bridge.getHashCode(this.uniqueCount));
@@ -1275,6 +1276,7 @@
             this._index = 0;
             this._current = Bridge.getDefaultValue(T);
         },
+        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + (this._set == null ? 0 : Bridge.getHashCode(this._set));
@@ -1308,6 +1310,7 @@
         next: 0,
         constructor: function () {
         },
+        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + (this.hashCode == null ? 0 : Bridge.getHashCode(this.hashCode));
@@ -1467,7 +1470,7 @@
                     }
                 }
                 else  {
-                    if (this._array[index] != null && c.equals(this._array[index], item)) {
+                    if (this._array[index] != null && c.equals2(this._array[index], item)) {
                         return true;
                     }
                 }
@@ -1588,6 +1591,7 @@
             this._index = -1;
             this._currentElement = Bridge.getDefaultValue(T);
         },
+        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + (this._q == null ? 0 : Bridge.getHashCode(this._q));
@@ -1656,7 +1660,7 @@
                     }
                 }
                 else  {
-                    if (this._array[count] != null && c.equals(this._array[count], item)) {
+                    if (this._array[count] != null && c.equals2(this._array[count], item)) {
                         return true;
                     }
                 }
@@ -1843,6 +1847,7 @@
             this._index = -2;
             this._currentElement = Bridge.getDefaultValue(T);
         },
+        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + (this._stack == null ? 0 : Bridge.getHashCode(this._stack));

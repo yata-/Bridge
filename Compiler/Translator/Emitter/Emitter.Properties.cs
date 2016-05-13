@@ -431,5 +431,11 @@ namespace Bridge.Translator
             get;
             set;
         }
+
+        public Dictionary<AnonymousType, IAnonymousTypeConfig> AnonymousTypes
+        {
+            get;
+            set;
+        } 
     }
 }

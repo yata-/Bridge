@@ -255,7 +255,7 @@ var array = {
             for (i = startIndex; i < endIndex; i++) {
                 el = arr[i];
 
-                if (el === item || Bridge.EqualityComparer$1.$default.equals(el, item)) {
+                if (el === item || Bridge.EqualityComparer$1.$default.equals2(el, item)) {
                     return i;
                 }
             }
@@ -736,7 +736,7 @@ var array = {
         for (var i = startIndex; i >= endIndex; i--) {
             var el = array[i];
 
-            if (el === value || Bridge.EqualityComparer$1.$default.equals(el, value)) {
+            if (el === value || Bridge.EqualityComparer$1.$default.equals2(el, value)) {
                 return i;
             }
         }

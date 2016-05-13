@@ -1,6 +1,7 @@
 using Bridge.Contract;
 using Mono.Cecil;
 using System.Collections.Generic;
+using ICSharpCode.NRefactory.TypeSystem;
 
 namespace Bridge.Translator
 {
@@ -35,6 +36,7 @@ namespace Bridge.Translator
             this.AssignmentType = ICSharpCode.NRefactory.CSharp.AssignmentOperatorType.Any;
             this.UnaryOperatorType = ICSharpCode.NRefactory.CSharp.UnaryOperatorType.Any;
             this.JsDoc = new JsDoc();
+            this.AnonymousTypes = new Dictionary<AnonymousType, IAnonymousTypeConfig>();
         }
 
         public virtual Dictionary<string, string> Emit()

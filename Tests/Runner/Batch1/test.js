@@ -1165,6 +1165,15 @@
                 QUnit.test("#1305 - TestAsyncIntReturnWithAssigmentFromResult", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1305.testAsyncIntReturnWithAssigmentFromResult);
                 QUnit.test("#1305 - TestAsyncDataClassReturnWithAssigmentFromResult", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1305.testAsyncDataClassReturnWithAssigmentFromResult);
                 QUnit.test("#1305 - TestAsyncDataStructReturnWithAssigmentFromResult", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1305.testAsyncDataStructReturnWithAssigmentFromResult);
+                QUnit.test("#1341 - TestPlainObject", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.testPlainObject);
+                QUnit.test("#1341 - TestAnonymousTypeCreation", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.testAnonymousTypeCreation);
+                QUnit.test("#1341 - TestDiffStructHashCode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.testDiffStructHashCode);
+                QUnit.test("#1341 - TestDiffAnonymousTypesHashCode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.testDiffAnonymousTypesHashCode);
+                QUnit.test("#1341 - Test1AnonymousType", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.test1AnonymousType);
+                QUnit.test("#1341 - Test2AnonymousType", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.test2AnonymousType);
+                QUnit.test("#1341 - Test3AnonymousType", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.test3AnonymousType);
+                QUnit.test("#1341 - Test4AnonymousType", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.test4AnonymousType);
+                QUnit.test("#1341 - Test5AnonymousType", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.test5AnonymousType);
                 QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge381.testUseCase);
                 QUnit.test("#447 - CheckInlineExpression", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineExpression);
                 QUnit.test("#447 - CheckInlineCalls", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineCalls);
@@ -3522,6 +3531,48 @@
             testAsyncDataStructReturnWithAssigmentFromResult: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1305).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1305);
                 Bridge.ClientTest.BridgeIssues.Bridge1305.testAsyncDataStructReturnWithAssigmentFromResult();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1341)],
+        statics: {
+            testPlainObject: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1341).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341);
+                Bridge.ClientTest.BridgeIssues.Bridge1341.testPlainObject();
+            },
+            testAnonymousTypeCreation: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1341).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341);
+                Bridge.ClientTest.BridgeIssues.Bridge1341.testAnonymousTypeCreation();
+            },
+            testDiffStructHashCode: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1341).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341);
+                Bridge.ClientTest.BridgeIssues.Bridge1341.testDiffStructHashCode();
+            },
+            testDiffAnonymousTypesHashCode: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1341).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341);
+                Bridge.ClientTest.BridgeIssues.Bridge1341.testDiffAnonymousTypesHashCode();
+            },
+            test1AnonymousType: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1341).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341);
+                Bridge.ClientTest.BridgeIssues.Bridge1341.test1AnonymousType();
+            },
+            test2AnonymousType: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1341).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341);
+                Bridge.ClientTest.BridgeIssues.Bridge1341.test2AnonymousType();
+            },
+            test3AnonymousType: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1341).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341);
+                Bridge.ClientTest.BridgeIssues.Bridge1341.test3AnonymousType();
+            },
+            test4AnonymousType: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1341).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341);
+                Bridge.ClientTest.BridgeIssues.Bridge1341.test4AnonymousType();
+            },
+            test5AnonymousType: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1341).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341);
+                Bridge.ClientTest.BridgeIssues.Bridge1341.test5AnonymousType();
             }
         }
     });

@@ -4,7 +4,7 @@ Bridge.define('Bridge.EqualityComparer$1', function (T) {
     return {
         inherits: [Bridge.IEqualityComparer$1(T)],
 
-        equals: function (x, y) {
+        equals2: function (x, y) {
             if (!Bridge.isDefined(x, true)) {
                 return !Bridge.isDefined(y, true);
             } else if (Bridge.isDefined(y, true)) {
@@ -26,7 +26,7 @@ Bridge.define('Bridge.EqualityComparer$1', function (T) {
             return false;
         },
 
-        getHashCode: function (obj) {
+        getHashCode2: function (obj) {
             return Bridge.isDefined(obj, true) ? Bridge.getHashCode(obj) : 0;
         }
     };

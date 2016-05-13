@@ -2,6 +2,7 @@
 
     Bridge.define("Bridge.TimeSpan", {
         inherits: [Bridge.IComparable],
+        $struct: true,
         statics: {
             fromDays: function (value) {
                 return new Bridge.TimeSpan(value * 864e9);
@@ -170,6 +171,10 @@
 
         format: function (formatStr, provider) {
             return this.toString(formatStr, provider);
+        },
+
+        getHashCode: function () {
+            return this.ticks.getHashCode();
         },
 
         toString: function (formatStr, provider) {
