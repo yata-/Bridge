@@ -1207,7 +1207,6 @@
         $struct: true,
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 304990520;
             hash = hash * 23 + (this.uniqueCount == null ? 0 : Bridge.getHashCode(this.uniqueCount));
             hash = hash * 23 + (this.unfoundCount == null ? 0 : Bridge.getHashCode(this.unfoundCount));
             return hash;
@@ -1280,7 +1279,6 @@
         $struct: true,
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 2005474994;
             hash = hash * 23 + (this._set == null ? 0 : Bridge.getHashCode(this._set));
             hash = hash * 23 + (this._index == null ? 0 : Bridge.getHashCode(this._index));
             hash = hash * 23 + (this._version == null ? 0 : Bridge.getHashCode(this._version));
@@ -1315,7 +1313,6 @@
         $struct: true,
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + -1966733860;
             hash = hash * 23 + (this.hashCode == null ? 0 : Bridge.getHashCode(this.hashCode));
             hash = hash * 23 + (this.value == null ? 0 : Bridge.getHashCode(this.value));
             hash = hash * 23 + (this.next == null ? 0 : Bridge.getHashCode(this.next));
@@ -1597,7 +1594,6 @@
         $struct: true,
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 2005474994;
             hash = hash * 23 + (this._q == null ? 0 : Bridge.getHashCode(this._q));
             hash = hash * 23 + (this._index == null ? 0 : Bridge.getHashCode(this._index));
             hash = hash * 23 + (this._version == null ? 0 : Bridge.getHashCode(this._version));
@@ -1854,7 +1850,6 @@
         $struct: true,
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 2005474994;
             hash = hash * 23 + (this._stack == null ? 0 : Bridge.getHashCode(this._stack));
             hash = hash * 23 + (this._index == null ? 0 : Bridge.getHashCode(this._index));
             hash = hash * 23 + (this._version == null ? 0 : Bridge.getHashCode(this._version));

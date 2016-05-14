@@ -7327,6 +7327,17 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1343', {
+        statics: {
+            testDoubleTemplate: function () {
+                var s1 = Bridge.String.format("{0} {1}", 1, 2);
+                var s2 = Bridge.getHashCode(Bridge.String.format("{0} {1}", 1, 2));
+    
+                Bridge.Test.Assert.areEqual(Bridge.getHashCode(s1), s2);
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
