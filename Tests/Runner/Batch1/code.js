@@ -7334,7 +7334,19 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var s2 = Bridge.getHashCode(Bridge.String.format("{0} {1}", 1, 2));
     
                 Bridge.Test.Assert.areEqual(Bridge.getHashCode(s1), s2);
+            },
+            testInlineInGetHashCode: function () {
+                var s1 = new Bridge.ClientTest.BridgeIssues.Bridge1343.M().getHashCode();
+                var s2 = new Bridge.ClientTest.BridgeIssues.Bridge1343.M().getHashCode();
+    
+                Bridge.Test.Assert.areEqual(s1, s2);
             }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1343.M', {
+        getHashCode: function () {
+            return Bridge.getHashCode(Bridge.String.format("{0} {1}", 1, 2));
         }
     });
     

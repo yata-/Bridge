@@ -14,5 +14,22 @@ namespace Bridge.ClientTest.BridgeIssues
 
             Assert.AreEqual(s1.GetHashCode(), s2);
         }
+
+        [Test]
+        public static void TestInlineInGetHashCode()
+        {
+            var s1 = new M().GetHashCode();
+            var s2 = new M().GetHashCode();
+
+            Assert.AreEqual(s1, s2);
+        }
+
+        class M
+        {
+            public override int GetHashCode()
+            {
+                return string.Format("{0} {1}", 1, 2).GetHashCode();
+            }
+        }
     }
 }
