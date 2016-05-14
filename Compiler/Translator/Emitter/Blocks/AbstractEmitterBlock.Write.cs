@@ -377,9 +377,9 @@ namespace Bridge.Translator
             this.Write("function ");
         }
 
-        public virtual void PushWriter(string format, Action callback = null, string thisArg = null)
+        public virtual void PushWriter(string format, Action callback = null, string thisArg = null, int[] ignoreRange = null)
         {
-            this.Emitter.Writers.Push(new Writer{InlineCode = format, Output = this.Emitter.Output, IsNewLine = this.Emitter.IsNewLine, Callback = callback, ThisArg = thisArg});
+            this.Emitter.Writers.Push(new Writer{InlineCode = format, Output = this.Emitter.Output, IsNewLine = this.Emitter.IsNewLine, Callback = callback, ThisArg = thisArg, IgnoreRange = ignoreRange});
             this.Emitter.IsNewLine = false;
             this.Emitter.Output = new StringBuilder();
         }
@@ -710,6 +710,11 @@ namespace Bridge.Translator
         {
             get;
             set;
+        }
+
+        public int[] IgnoreRange
+        {
+            get; set;
         }
     }
 }
