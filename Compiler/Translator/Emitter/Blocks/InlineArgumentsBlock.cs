@@ -26,6 +26,11 @@ namespace Bridge.Translator
             this.TargetResolveResult = targetResolveResult;
         }
 
+        public int[] IgnoreRange
+        {
+            get; set;
+        }
+
         public IMethod Method
         {
             get; set;
@@ -63,6 +68,7 @@ namespace Bridge.Translator
             if (Regex.IsMatch(key, "^\\d+$"))
             {
                 var list = new List<Expression>();
+
                 list.Add(expressions.Skip(int.Parse(key)).First().Expression);
 
                 return list;
@@ -255,6 +261,11 @@ namespace Bridge.Translator
 
             inline = _formatArg.Replace(inline, delegate(Match m)
             {
+                if (this.IgnoreRange != null && m.Index >= this.IgnoreRange[0] && m.Index <= this.IgnoreRange[1])
+                {
+                    return m.Value;
+                }
+
                 int count = this.Emitter.Writers.Count;
                 string key = m.Groups[2].Value;
                 bool isRaw = m.Groups[1].Success && m.Groups[1].Value == "*";

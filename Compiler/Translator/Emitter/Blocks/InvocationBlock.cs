@@ -537,7 +537,7 @@ namespace Bridge.Translator
                         argsInfo.ThisArgument = writer.ThisArg;    
                     }
                     
-                    new InlineArgumentsBlock(this.Emitter, argsInfo, writer.InlineCode).Emit();
+                    new InlineArgumentsBlock(this.Emitter, argsInfo, writer.InlineCode){IgnoreRange = writer.IgnoreRange}.Emit();
                     var result = this.Emitter.Output.ToString();
                     this.Emitter.Output = writer.Output;
                     this.Emitter.IsNewLine = writer.IsNewLine;
