@@ -1165,6 +1165,10 @@
                 QUnit.test("#1305 - TestAsyncIntReturnWithAssigmentFromResult", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1305.testAsyncIntReturnWithAssigmentFromResult);
                 QUnit.test("#1305 - TestAsyncDataClassReturnWithAssigmentFromResult", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1305.testAsyncDataClassReturnWithAssigmentFromResult);
                 QUnit.test("#1305 - TestAsyncDataStructReturnWithAssigmentFromResult", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1305.testAsyncDataStructReturnWithAssigmentFromResult);
+                QUnit.test("#1316 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316.testUseCase);
+                QUnit.test("#1316 - TestStringConcatObject", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316.testStringConcatObject);
+                QUnit.test("#1316 - TestStringConcatEnumerableString", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316.testStringConcatEnumerableString);
+                QUnit.test("#1316 - TestStringConcatEnumerableGeneric", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316.testStringConcatEnumerableGeneric);
                 QUnit.test("#1341 - TestPlainObject", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.testPlainObject);
                 QUnit.test("#1341 - TestAnonymousTypeCreation", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.testAnonymousTypeCreation);
                 QUnit.test("#1341 - TestDiffStructHashCode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.testDiffStructHashCode);
@@ -3533,6 +3537,28 @@
             testAsyncDataStructReturnWithAssigmentFromResult: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1305).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1305);
                 Bridge.ClientTest.BridgeIssues.Bridge1305.testAsyncDataStructReturnWithAssigmentFromResult();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1316)],
+        statics: {
+            testUseCase: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1316).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316);
+                Bridge.ClientTest.BridgeIssues.Bridge1316.testUseCase();
+            },
+            testStringConcatObject: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1316).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316);
+                Bridge.ClientTest.BridgeIssues.Bridge1316.testStringConcatObject();
+            },
+            testStringConcatEnumerableString: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1316).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316);
+                Bridge.ClientTest.BridgeIssues.Bridge1316.testStringConcatEnumerableString();
+            },
+            testStringConcatEnumerableGeneric: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1316).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316);
+                Bridge.ClientTest.BridgeIssues.Bridge1316.testStringConcatEnumerableGeneric();
             }
         }
     });

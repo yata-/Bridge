@@ -6606,6 +6606,60 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1316', {
+        statics: {
+            testUseCase: function () {
+                var v = 0;
+                var s = v + "";
+    
+                Bridge.Test.Assert.areEqual("0", s);
+            },
+            testStringConcatObject: function () {
+                var o1 = 3;
+                var s1 = [o1].join('');
+    
+                Bridge.Test.Assert.areEqual("3", s1);
+    
+                var o2 = null;
+                var s2 = [o2].join('');
+    
+                Bridge.Test.Assert.areEqual("", s2);
+            },
+            testStringConcatEnumerableString: function () {
+                var e1 = ["1", "2"];
+                var s1 = Bridge.toArray(e1).join('');
+    
+                Bridge.Test.Assert.areEqual$1("12", s1, "All not null");
+    
+                var e2 = ["3", null, "4"];
+                var s2 = Bridge.toArray(e2).join('');
+    
+                Bridge.Test.Assert.areEqual$1("34", s2, "One is null");
+    
+                var e3 = [];
+                var s3 = Bridge.toArray(e3).join('');
+    
+                Bridge.Test.Assert.areEqual$1("", s3, "Empty");
+            },
+            testStringConcatEnumerableGeneric: function () {
+                var e1 = [1, "2"];
+                var s1 = Bridge.toArray(e1).join('');
+    
+                Bridge.Test.Assert.areEqual$1("12", s1, "All not null");
+    
+                var e2 = ["3", null, 4];
+                var s2 = Bridge.toArray(e2).join('');
+    
+                Bridge.Test.Assert.areEqual$1("34", s2, "One is null");
+    
+                var e3 = [];
+                var s3 = Bridge.toArray(e3).join('');
+    
+                Bridge.Test.Assert.areEqual$1("", s3, "Empty");
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1341', {
         statics: {
             testPlainObject: function () {
@@ -27279,7 +27333,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areEqual("abcdefghi", ["a", "b", "c", "d", "e", "f", "g", "h", "i"].toString().split(',').join(''));
         },
         concatWithObjectsWorks: function () {
-            Bridge.Test.Assert.areEqual("1", [1].toString().split(',').join(''));
+            Bridge.Test.Assert.areEqual("1", [1].join(''));
             Bridge.Test.Assert.areEqual("12", [1, 2].join(''));
             Bridge.Test.Assert.areEqual("123", [1, 2, 3].join(''));
             Bridge.Test.Assert.areEqual("1234", [1, 2, 3, 4].join(''));
