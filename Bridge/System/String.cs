@@ -140,6 +140,14 @@ namespace System
         public extern bool Equals(string value);
 
         /// <summary>
+        /// Concatenates the members of a constructed IEnumerable collection of type String.
+        /// </summary>
+        /// <param name="values">A collection object that implements IEnumerable and whose generic type argument is String.</param>
+        /// <returns>The concatenated strings in values, or String.Empty if values is an empty IEnumerable(Of String).</returns>
+        [Template("Bridge.toArray({values}).join('')")]
+        public static extern string Concat(IEnumerable<string> values);
+
+        /// <summary>
         /// The concat() method combines the text of two or more strings and returns a new string.
         /// </summary>
         /// <param name="string1">Strings to concatenate to this string.</param>
@@ -178,6 +186,14 @@ namespace System
         public static extern string Concat(params string[] strings);
 
         /// <summary>
+        /// Creates the string representation of a specified object.
+        /// </summary>
+        /// <param name="arg0">The object to represent, or null.</param>
+        /// <returns>The string representation of the value of arg0, or String.Empty if arg0 is null.</returns>
+        [Template("[{arg0}].join('')")]
+        public static extern string Concat(object arg0);
+
+        /// <summary>
         /// The concat() method combines the text of two or more strings and returns a new string.
         /// </summary>
         /// <param name="object1">Strings to concatenate to this string.</param>
@@ -214,6 +230,14 @@ namespace System
         /// <returns></returns>
         [Template("{objects:array}.toString().split(',').join('')")]
         public static extern string Concat(params object[] objects);
+
+        /// <summary>
+        /// Concatenates the members of a constructed generic IEnumerable collection.
+        /// </summary>
+        /// <param name="values">A collection object that implements generic IEnumerable.</param>
+        /// <returns>The concatenated members in values.</returns>
+        [Template("Bridge.toArray({values}).join('')")]
+        public static extern string Concat<T>(IEnumerable<T> values);
 
         /// <summary>
         /// The compare() method compares two specified String objects and returns an integer that indicates their relative position in the sort order.
