@@ -1169,6 +1169,8 @@
                 QUnit.test("#1316 - TestStringConcatObject", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316.testStringConcatObject);
                 QUnit.test("#1316 - TestStringConcatEnumerableString", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316.testStringConcatEnumerableString);
                 QUnit.test("#1316 - TestStringConcatEnumerableGeneric", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316.testStringConcatEnumerableGeneric);
+                QUnit.test("#1328 - TestOptionalParamsForClasses", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1328.testOptionalParamsForClasses);
+                QUnit.test("#1328 - TestOptionalParamsForStructs", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1328.testOptionalParamsForStructs);
                 QUnit.test("#1340 - TestStructGenericMembersDefaultValue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340.testStructGenericMembersDefaultValue);
                 QUnit.test("#1340 - TestStructTwoGenericMembersDefaultValue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340.testStructTwoGenericMembersDefaultValue);
                 QUnit.test("#1340 - TestClassGenericMembersDefaultValue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340.testClassGenericMembersDefaultValue);
@@ -3567,6 +3569,20 @@
             testStringConcatEnumerableGeneric: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1316).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316);
                 Bridge.ClientTest.BridgeIssues.Bridge1316.testStringConcatEnumerableGeneric();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1328', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1328)],
+        statics: {
+            testOptionalParamsForClasses: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1328).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1328);
+                Bridge.ClientTest.BridgeIssues.Bridge1328.testOptionalParamsForClasses();
+            },
+            testOptionalParamsForStructs: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1328).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1328);
+                Bridge.ClientTest.BridgeIssues.Bridge1328.testOptionalParamsForStructs();
             }
         }
     });
