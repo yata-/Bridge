@@ -118,7 +118,7 @@
     Bridge.define('Bridge.Test.QUnit.TestFixture$1', function (T) { return {
         statics: {
             instanceFabric: null,
-            fixtureFabric: null,
+            fixtureFabric: Bridge.getDefaultValue(T),
             getFixtureFabric: function () {
                 if (Bridge.Test.QUnit.TestFixture$1(T).fixtureFabric == null) {
                     Bridge.Test.QUnit.TestFixture$1(T).fixtureFabric = new T();
@@ -162,7 +162,7 @@
         },
         config: {
             properties: {
-                Fixture: null
+                Fixture: Bridge.getDefaultValue(T)
             }
         },
         setUp: function () {

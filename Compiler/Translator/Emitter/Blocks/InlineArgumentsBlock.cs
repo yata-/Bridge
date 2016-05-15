@@ -82,9 +82,9 @@ namespace Bridge.Translator
             return types.Where(e => e.Name == key && e.AstType != null).Select(e => e.AstType).FirstOrDefault();
         }
 
-        protected virtual IType GetITypeByKey(IEnumerable<TypeParamExpression> types, string key)
+        protected virtual TypeParamExpression GetTypeByKey(IEnumerable<TypeParamExpression> types, string key)
         {
-            return types.Where(e => e.Name == key && e.IType != null).Select(e => e.IType).FirstOrDefault();
+            return types.Where(e => e.Name == key && e.IType != null).FirstOrDefault();
         }
 
         public static string ReplaceInlineArgs(AbstractEmitterBlock block, string inline, Expression[] args)
@@ -505,18 +505,18 @@ namespace Bridge.Translator
                         }
                         else
                         {
-                            var iType = this.GetITypeByKey(typeParams, key);
+                            var iType = this.GetTypeByKey(typeParams, key);
 
                             if (iType != null)
                             {
                                 if (modifier == "default" || modifier == "defaultFn")
                                 {
-                                    var def = Inspector.GetDefaultFieldValue(iType);
+                                    var def = Inspector.GetDefaultFieldValue(iType.IType, iType.AstType);
                                     this.GetDefaultValue(def, modifier);
                                 }
                                 else
                                 {
-                                    new CastBlock(this.Emitter, iType).Emit();
+                                    new CastBlock(this.Emitter, iType.IType).Emit();
                                 }
                             }
                         }

@@ -2,7 +2,7 @@
     "use strict";
 
     Bridge.define('Generics.GenericClass$1', function (T) { return {
-        instance: null,
+        instance: Bridge.getDefaultValue(T),
         constructor: function (instance) {
             this.instance = instance;
         },
@@ -20,7 +20,7 @@
     });
     
     Bridge.define('Generics.GenericNew$1', function (T) { return {
-        instance: null,
+        instance: Bridge.getDefaultValue(T),
         constructor: function (instance) {
             this.instance = instance;
         },
@@ -30,7 +30,7 @@
     }; });
     
     Bridge.define('Generics.GenericNewAndClass$1', function (T) { return {
-        instance: null,
+        instance: Bridge.getDefaultValue(T),
         constructor: function (instance) {
             this.instance = instance;
         },
@@ -40,7 +40,7 @@
     }; });
     
     Bridge.define('Generics.GenericStruct$1', function (T) { return {
-        instance: null,
+        instance: Bridge.getDefaultValue(T),
         constructor: function (instance) {
             this.instance = instance;
         },
@@ -82,8 +82,8 @@
     });
     
     Bridge.define('Generics.SimpleDoubleGeneric$2', function (T, K) { return {
-        instanceT: null,
-        instanceK: null,
+        instanceT: Bridge.getDefaultValue(T),
+        instanceK: Bridge.getDefaultValue(K),
         constructor: function () {
         },
         constructor$1: function (instanceT, instanceK) {
@@ -99,7 +99,7 @@
     }; });
     
     Bridge.define('Generics.SimpleGeneric$1', function (T) { return {
-        instance: null,
+        instance: Bridge.getDefaultValue(T),
         constructor: function (instance) {
             this.instance = instance;
         },
@@ -109,7 +109,7 @@
     }; });
     
     Bridge.define('Generics.GenericINamedEntity$1', function (T) { return {
-        instance: null,
+        instance: Bridge.getDefaultValue(T),
         constructor: function (instance) {
             this.instance = instance;
         },
@@ -128,7 +128,7 @@
     });
     
     Bridge.define('Generics.GenericNamedEntity$1', function (T) { return {
-        instance: null,
+        instance: Bridge.getDefaultValue(T),
         constructor: function (instance) {
             this.instance = instance;
         },
