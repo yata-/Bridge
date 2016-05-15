@@ -8,7 +8,7 @@ namespace Bridge.Html5
     /// A Navigator object can be retrieved using the read-only Window.navigator property.
     /// </summary>
     [External]
-    [Name("Navigator")]
+    [Name(false)]
     public class Navigator
     {
         private Navigator()
@@ -59,5 +59,13 @@ namespace Bridge.Html5
         /// Returns the user agent string for the current browser.
         /// </summary>
         public readonly string UserAgent;
+
+        /// <summary>
+        /// Gets all of the gamepads from the navigator. It is the equivalent of getGamepads.
+        /// </summary>
+        public static extern Gamepad[] Gamepads
+        {
+            get;
+        }
     }
 }

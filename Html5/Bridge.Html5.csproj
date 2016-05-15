@@ -56,9 +56,13 @@
     <Compile Include="CompatMode.cs" />
     <Compile Include="Elements\MarkElement.cs" />
     <Compile Include="Elements\TemplateElement.cs" />
+    <Compile Include="Events\GamepadEvent.cs" />
     <Compile Include="Events\MessageEvent.cs" />
     <Compile Include="Events\CloseEvent.cs" />
     <Compile Include="Events\TouchEvent.cs" />
+    <Compile Include="Gamepad.cs" />
+    <Compile Include="GamepadButton.cs" />
+    <Compile Include="GamepadMappingType.cs" />
     <Compile Include="Interfaces\Touch.cs" />
     <Compile Include="Interfaces\TouchList.cs" />
     <Compile Include="String.cs" />
@@ -339,6 +343,9 @@
     <NuGetPackageSourcePath Include="$(SolutionDir).build\specs\Bridge.Html5.nuspec">
       <Path>$(SolutionDir).build\specs\Bridge.Html5.nuspec</Path>
     </NuGetPackageSourcePath>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
   </ItemGroup>
   <Import Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " Project="$(SolutionDir)\.build\common\NuGet.Build.Package.targets" />
   <Target Name="CleanProjectNuGetOutput" BeforeTargets="Clean">
