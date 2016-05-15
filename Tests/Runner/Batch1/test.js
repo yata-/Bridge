@@ -1176,6 +1176,7 @@
                 QUnit.test("#1340 - TestClass1TwoGenericInheritedMembersDefaultValue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340.testClass1TwoGenericInheritedMembersDefaultValue);
                 QUnit.test("#1340 - TestClass2TwoGenericInheritedMembersDefaultValue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340.testClass2TwoGenericInheritedMembersDefaultValue);
                 QUnit.test("#1340 - TestClass3TwoGenericInheritedMembersDefaultValue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340.testClass3TwoGenericInheritedMembersDefaultValue);
+                QUnit.test("#1340 - TestArray", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340.testArray);
                 QUnit.test("#1341 - TestPlainObject", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.testPlainObject);
                 QUnit.test("#1341 - TestAnonymousTypeCreation", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.testAnonymousTypeCreation);
                 QUnit.test("#1341 - TestDiffStructHashCode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.testDiffStructHashCode);
@@ -3600,6 +3601,10 @@
             testClass3TwoGenericInheritedMembersDefaultValue: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1340).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340);
                 Bridge.ClientTest.BridgeIssues.Bridge1340.testClass3TwoGenericInheritedMembersDefaultValue();
+            },
+            testArray: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1340).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340);
+                Bridge.ClientTest.BridgeIssues.Bridge1340.testArray();
             }
         }
     });

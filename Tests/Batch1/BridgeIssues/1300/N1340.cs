@@ -169,16 +169,44 @@ namespace Bridge.ClientTest.BridgeIssues
             Assert.AreEqual(0m, o.Value4, "decimal 4");
         }
 
+        [Test]
+        public static void TestArray()
+        {
+            Assert.AreEqual(0, Data<int>.array[0]);
+            Assert.AreEqual(0, Data<int>.array[1]);
+            Assert.AreEqual(0, Data<int>.array[2]);
+
+            Assert.NotNull(Data<Data<int>>.array[0]);
+            Assert.NotNull(Data<Data<int>>.array[1]);
+            Assert.NotNull(Data<Data<int>>.array[2]);
+
+            var o = new Data<int>();
+            Assert.AreEqual(0, o.ReturnArray()[0]);
+            Assert.AreEqual(0, o.ReturnArray()[1]);
+            Assert.AreEqual(0, o.ReturnArray()[2]);
+
+            var o1 = new Data<Data<int>>();
+            Assert.NotNull(o1.ReturnArray()[0]);
+            Assert.NotNull(o1.ReturnArray()[1]);
+            Assert.NotNull(o1.ReturnArray()[2]);
+        }
+
         public struct Data<T>
         {
             public T Value1 { get; set; }
             public T Value2;
+            public static T[] array = new T[3];
 
             public Data(T v1, T v2)
                 : this()
             {
                 Value1 = v1;
                 Value2 = v2;
+            }
+
+            public T[] ReturnArray()
+            {
+                return new T[3];
             }
         }
 

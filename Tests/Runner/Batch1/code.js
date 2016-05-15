@@ -6803,12 +6803,39 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.null$1(o.value2, "string 2");
                 Bridge.Test.Assert.areEqual$1(Bridge.Long(0), o.getValue3(), "long 1");
                 Bridge.Test.Assert.areEqual$1(Bridge.Decimal(0.0), o.value4, "decimal 4");
+            },
+            testArray: function () {
+                Bridge.Test.Assert.areEqual(0, Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Int32).array[0]);
+                Bridge.Test.Assert.areEqual(0, Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Int32).array[1]);
+                Bridge.Test.Assert.areEqual(0, Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Int32).array[2]);
+    
+                Bridge.Test.Assert.notNull(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Int32)).array[0].$clone());
+                Bridge.Test.Assert.notNull(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Int32)).array[1].$clone());
+                Bridge.Test.Assert.notNull(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Int32)).array[2].$clone());
+    
+                var o = new Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Int32)("constructor");
+                Bridge.Test.Assert.areEqual(0, o.returnArray()[0]);
+                Bridge.Test.Assert.areEqual(0, o.returnArray()[1]);
+                Bridge.Test.Assert.areEqual(0, o.returnArray()[2]);
+    
+                var o1 = new Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Int32))("constructor");
+                Bridge.Test.Assert.notNull(o1.returnArray()[0].$clone());
+                Bridge.Test.Assert.notNull(o1.returnArray()[1].$clone());
+                Bridge.Test.Assert.notNull(o1.returnArray()[2].$clone());
             }
         }
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1', function (T) { return {
         statics: {
+            array: null,
+            config: {
+                init: function () {
+                    this.array = Bridge.Array.init(3, function (){
+        return Bridge.getDefaultValue(T);
+    });
+                }
+            },
             getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(T)(); }
         },
         value2: Bridge.getDefaultValue(T),
@@ -6824,6 +6851,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             this.value2 = v2;
         },
         constructor: function () {
+        },
+        returnArray: function () {
+            return Bridge.Array.init(3, function (){
+                return Bridge.getDefaultValue(T);
+            });
         },
         $struct: true,
         getHashCode: function () {

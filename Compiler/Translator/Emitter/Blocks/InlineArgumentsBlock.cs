@@ -615,6 +615,10 @@ namespace Bridge.Translator
                     this.Write(Inspector.GetStructDefaultValue((IType) def, this.Emitter));
                 }
             }
+            else if (def is RawValue)
+            {
+                this.Write(def.ToString());
+            }
             else
             {
                 this.WriteScript(def);

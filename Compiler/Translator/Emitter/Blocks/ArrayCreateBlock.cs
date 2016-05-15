@@ -49,13 +49,21 @@ namespace Bridge.Translator
                     this.WriteComma();
 
                     var def = Inspector.GetDefaultFieldValue(at.ElementType, arrayCreateExpression.Type);
-                    if (def == at.ElementType)
+                    if (def == at.ElementType || def is RawValue)
                     {
                         this.WriteFunction();
                         this.WriteOpenCloseParentheses();
                         this.BeginBlock();
                         this.WriteReturn(true);
-                        this.Write(Inspector.GetStructDefaultValue(at.ElementType, this.Emitter));
+                        if (def is RawValue)
+                        {
+                            this.Write(def.ToString());
+                        }
+                        else
+                        {
+                            this.Write(Inspector.GetStructDefaultValue(at.ElementType, this.Emitter));    
+                        }
+                        
                         this.WriteSemiColon();
                         this.WriteNewLine();
                         this.EndBlock();
@@ -78,6 +86,10 @@ namespace Bridge.Translator
                 if (defaultInitializer.Value is IType)
                 {
                     this.Write(Inspector.GetStructDefaultValue((IType)defaultInitializer.Value, this.Emitter));
+                }
+                else if (defaultInitializer.Value is RawValue)
+                {
+                    this.Write(defaultInitializer.Value.ToString());
                 }
                 else
                 {
