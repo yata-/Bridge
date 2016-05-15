@@ -11,7 +11,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
         #region MSDN
 
         [Test]
-        public void NumberedBackrefTest()
+        public void MsdnNumberedBackrefTest()
         {
             const string pattern = @"(\w)\1";
             const string text = @"trellis llama webbing dresser swagger";
@@ -67,7 +67,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
         }
 
         [Test]
-        public void NamedBackrefTest()
+        public void MsdnNamedBackrefTest()
         {
             const string pattern = @"(?<char>\w)\k<char>";
             const string text = @"trellis llama webbing dresser swagger";
@@ -123,7 +123,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
         }
 
         [Test]
-        public void NamedBackrefWithNumberAsNameTest()
+        public void MsdnNamedBackrefWithNumberAsNameTest()
         {
             const string pattern = @"(?<2>\w)\k<2>";
             const string text = @"trellis llama webbing dresser swagger";
@@ -184,7 +184,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
         }
 
         [Test]
-        public void NamedBackrefWithRedefinedGroupTest()
+        public void MsdnNamedBackrefWithRedefinedGroupTest()
         {
             //TODO: Uncomment when backreferences to redefined groups are supported.
             // Currently such cases intentionally not supported (they require manual processing of each single referenced capture).
@@ -211,7 +211,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
         }
 
         [Test]
-        public void NamedBackrefWithEmptyCaptureTest1()
+        public void MsdnNamedBackrefWithEmptyCaptureTest1()
         {
             const string pattern = @"\b([A-Z]{2})(\d{2})?([A-Z]{2})\b";
             const string text = @"AA22ZZ";
@@ -234,7 +234,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
         }
 
         [Test]
-        public void NamedBackrefWithEmptyCaptureTest2()
+        public void MsdnNamedBackrefWithEmptyCaptureTest2()
         {
             const string pattern = @"\b([A-Z]{2})(\d{2})?([A-Z]{2})\b";
             const string text = @"AABB";
@@ -343,6 +343,54 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
             //ValidateGroup(m, 1, 0, 0, false, "", 0);
 
             //ValidateGroup(m, 2, 0, 0, false, "", 0);
+        }
+
+        [Test]
+        public void NumberedBackrefTest()
+        {
+            const string pattern = @"((abc)def)\2";
+            const string text = "abcdefabc";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 0, 9, "abcdefabc", 3, true);
+
+            ValidateGroup(m, 0, 0, 9, true, "abcdefabc", 1);
+            ValidateCapture(m, 0, 0, 0, 9, "abcdefabc");
+
+            ValidateGroup(m, 1, 0, 6, true, "abcdef", 1);
+            ValidateCapture(m, 1, 0, 0, 6, "abcdef");
+
+            ValidateGroup(m, 2, 0, 3, true, "abc", 1);
+            ValidateCapture(m, 2, 0, 0, 3, "abc");
+        }
+
+        //TODO: Remove this test when backrefs inside groups are supported
+        [Test]
+        public void NumberedBackrefInGroupFailsTest()
+        {
+            Assert.Throws<NotSupportedException>(() =>
+            {
+                const string pattern = @"((abc)def)(\2)";
+                const string text = "abcdefabc";
+                var rgx = new Regex(pattern);
+                rgx.Match(text);
+
+            });
+        }
+
+        //TODO: Remove this test when backrefs inside groups are supported
+        [Test]
+        public void NamedBackrefInGroupFailsTest()
+        {
+            Assert.Throws<NotSupportedException>(() =>
+            {
+                const string pattern = @"((?<name>abc)def)(\k<name>)";
+                const string text = "abcdefabc";
+                var rgx = new Regex(pattern);
+                rgx.Match(text);
+
+            });
         }
     }
 }

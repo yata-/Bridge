@@ -593,6 +593,10 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
 
                 } else if (token.type === tokenTypes.escBackrefNumber) {
 
+                    if (nestingLevel > 0) {
+                        throw new Bridge.NotSupportedException("Backreferences inside groups are not supported."); //TODO: support references inside groups
+                    }
+
                     value = token.value.slice(1);
                     groupNumber = parseInt(value, 10);
                     group = sparseSettings.getSingleGroupByNumber(groupNumber);
@@ -613,6 +617,10 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                     }
 
                 } else if (token.type === tokenTypes.escBackrefName) {
+
+                    if (nestingLevel > 0) {
+                        throw new Bridge.NotSupportedException("Backreferences inside groups are not supported."); //TODO: support references inside groups
+                    }
 
                     value = token.value.slice(3, token.length - 1);
                     group = sparseSettings.getSingleGroupByName(value);
