@@ -14,9 +14,10 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
             }
 
             var modifiers = "g"; // use "global" modifier by default to allow TextStart configuration
-            if (isMultiLine) {
-                modifiers += "m";
-            }
+
+            // use "multiline" modifier by default (corresponding anchors must be modified correspondingly)
+            modifiers += "m";
+
             if (isCaseInsensitive) {
                 modifiers += "i";
             }
@@ -106,6 +107,12 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         var groupDescs = patternInfo.groups;
 
         this._checkTimeout();
+
+        // Javascript does not skip "\n" symbol in multiline mode if the previous symbol is "\r"
+        // It treats "\r\n" similar to .NET pattern containing "\n\n".
+        if (prevLength >= 0 && this._textStart > 0 && this._text[this._textStart - 1] === "\r" && this._text[this._textStart] === "\n" && patternInfo.hasEndOfMultiline) {
+            this._textStart++;
+        }
 
         // The 1st run (to know the total capture):
         var total = Bridge.Text.RegularExpressions.RegexNetEngine.jsRegex(this._text, this._textStart, this._pattern, this._isMultiLine, this._isCaseInsensitive, false, this);
