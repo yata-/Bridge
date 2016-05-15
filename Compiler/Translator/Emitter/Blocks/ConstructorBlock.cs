@@ -425,7 +425,7 @@ namespace Bridge.Translator
                 var argsExpressions = argsInfo.ArgumentsExpressions;
                 var paramsArg = argsInfo.ParamsExpression;
 
-                new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();    
+                new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, ctor.Initializer).Emit();    
             }
 
             this.WriteCloseParentheses();

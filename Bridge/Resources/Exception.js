@@ -124,15 +124,15 @@
             this.constructor$1(message);
         },
 
-        getPattern: function() {
+        getPattern: function () {
             return this._regexPattern;
         },
 
-        getInput: function() {
+        getInput: function () {
             return this._regexInput;
         },
 
-        getMatchTimeout: function() {
+        getMatchTimeout: function () {
             return this._matchTimeout;
         }
     });
@@ -406,8 +406,7 @@
                     // simply add it to the list of flattened exceptions to be returned.
                     if (Bridge.hasValue(currentInnerAsAggregate)) {
                         exceptionsToFlatten.add(currentInnerAsAggregate);
-                    }
-                    else {
+                    } else {
                         flattenedExceptions.add(currentInnerException);
                     }
                 }

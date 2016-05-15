@@ -9,6 +9,8 @@ namespace Bridge.Translator
 {
     public class IdentifierBlock : ConversionBlock
     {
+        private bool isRefArg;
+
         public IdentifierBlock(IEmitter emitter, IdentifierExpression identifierExpression)
             : base(emitter, identifierExpression)
         {
@@ -37,6 +39,8 @@ namespace Bridge.Translator
             IdentifierExpression identifierExpression = this.IdentifierExpression;
             int pos = this.Emitter.Output.Length;
             ResolveResult resolveResult = null;
+            this.isRefArg = this.Emitter.IsRefArg;
+            this.Emitter.IsRefArg = false;
 
             resolveResult = this.Emitter.Resolver.ResolveNode(identifierExpression, this.Emitter);
 
@@ -45,7 +49,7 @@ namespace Bridge.Translator
             var isResolved = resolveResult != null && !(resolveResult is ErrorResolveResult);
             var memberResult = resolveResult as MemberResolveResult;
 
-            if (this.Emitter.Locals != null && this.Emitter.Locals.ContainsKey(id))
+            if (this.Emitter.Locals != null && this.Emitter.Locals.ContainsKey(id) && resolveResult is LocalResolveResult)
             {
                 if (this.Emitter.LocalsMap != null && this.Emitter.LocalsMap.ContainsKey(id) && !(identifierExpression.Parent is DirectionExpression))
                 {
@@ -84,6 +88,12 @@ namespace Bridge.Translator
             bool hasInline = !string.IsNullOrEmpty(inlineCode);
             bool hasThis = hasInline && inlineCode.Contains("{this}");
 
+            if (hasInline && inlineCode.StartsWith("<self>"))
+            {
+                hasThis = true;
+                inlineCode = inlineCode.Substring(6);
+            }
+
             if (hasThis)
             {
                 this.Write("");
@@ -107,12 +117,21 @@ namespace Bridge.Translator
                     this.WriteThis();
                 }
 
-                inlineCode = inlineCode.Replace("{this}", this.Emitter.Output.ToString());
+                var thisArg = this.Emitter.Output.ToString();
+                int thisIndex = inlineCode.IndexOf("{this}");
+                inlineCode = inlineCode.Replace("{this}", thisArg);
                 this.Emitter.Output = oldBuilder;
+
+                int[] range = null;
+
+                if (thisIndex > -1)
+                {
+                    range = new[] { thisIndex, thisIndex + thisArg.Length };
+                }
 
                 if (resolveResult is InvocationResolveResult)
                 {
-                    this.PushWriter(inlineCode);
+                    this.PushWriter(inlineCode, null, thisArg, range);
                 }
                 else
                 {
@@ -487,7 +506,15 @@ namespace Bridge.Translator
                     else if (memberResult != null)
                     {
                         this.WriteTarget(memberResult);
-                        this.Write(OverloadsCollection.Create(this.Emitter, memberResult.Member).GetOverloadName());
+                        string name = OverloadsCollection.Create(this.Emitter, memberResult.Member).GetOverloadName();
+                        if (isRefArg)
+                        {
+                            this.WriteScript(name);
+                        }
+                        else
+                        {
+                            this.Write(name);
+                        }
                     }
                     else
                     {
@@ -527,7 +554,15 @@ namespace Bridge.Translator
                 this.WriteThis();
             }
 
-            this.WriteDot();
+            if (this.isRefArg)
+            {
+                this.WriteComma();
+            }
+            else
+            {
+                this.WriteDot();    
+            }
+            
         }
     }
 }

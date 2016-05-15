@@ -161,7 +161,9 @@
             }
         };
     };
-    IEnumerator.$$inheritors = [Bridge.IDisposable];
+    
+    Bridge.IDisposable.$$inheritors = Bridge.IDisposable.$$inheritors || [];
+    Bridge.IDisposable.$$inheritors.push(IEnumerator);
 
     // for tryGetNext
     var Yielder = function () {
@@ -180,7 +182,8 @@
     var Enumerable = function (getEnumerator) {
         this.getEnumerator = getEnumerator;
     };
-    Enumerable.$$inheritors = [Bridge.IEnumerable];
+    Bridge.IEnumerable.$$inheritors = Bridge.IEnumerable.$$inheritors || [];
+    Bridge.IEnumerable.$$inheritors.push(Enumerable);
 
     // Utility
 
@@ -1337,7 +1340,7 @@
         var enumerator = this.getEnumerator();
         try {
             while (enumerator.moveNext()) {
-                if (comparer.equals(enumerator.getCurrent(), value)) return true;
+                if (comparer.equals2(enumerator.getCurrent(), value)) return true;
             }
             return false;
         }
@@ -1485,7 +1488,7 @@
             try {
                 while (firstEnumerator.moveNext()) {
                     if (!secondEnumerator.moveNext()
-                    || !comparer.equals(firstEnumerator.getCurrent(), secondEnumerator.getCurrent())) {
+                    || !comparer.equals2(firstEnumerator.getCurrent(), secondEnumerator.getCurrent())) {
                         return false;
                     }
                 }
@@ -1711,7 +1714,7 @@
                 function () {
                     var hasNext;
                     while ((hasNext = enumerator.moveNext()) == true) {
-                        if (comparer.equals(key, keySelector(enumerator.getCurrent()))) {
+                        if (comparer.equals2(key, keySelector(enumerator.getCurrent()))) {
                             group.push(elementSelector(enumerator.getCurrent()));
                         }
                         else break;
@@ -1865,7 +1868,7 @@
     // Overload:function (selector)
     Enumerable.prototype.sum = function (selector) {
         if (selector == null) selector = Functions.Identity;
-        return this.select(selector).aggregate(0, function(a, b) {
+        return this.select(selector).aggregate(0, function (a, b) {
              if (a instanceof Bridge.Decimal || Bridge.Long.is64Bit(a)) {
                  return a.add(b);
              }
@@ -2182,7 +2185,7 @@
         else {
             comparer = comparer || Bridge.EqualityComparer$1.$default;
             this.forEach(function (x, i) {
-                if (comparer.equals(x, item)) {
+                if (comparer.equals2(x, item)) {
                     found = i;
                     return false;
                 }
@@ -2206,7 +2209,7 @@
         else {
             comparer = comparer || Bridge.EqualityComparer$1.$default;
             this.forEach(function (x, i) {
-                if (comparer.equals(x, item)) result = i;
+                if (comparer.equals2(x, item)) result = i;
             });
         }
 
@@ -2894,7 +2897,9 @@
             return this.toEnumerable().getEnumerator();
         };
     };
-    Lookup.$$inheritors = [Bridge.IEnumerable];
+    
+    Bridge.IEnumerable.$$inheritors = Bridge.IEnumerable.$$inheritors || [];
+    Bridge.IEnumerable.$$inheritors.push(Lookup);
 
     var Grouping = function (groupKey, elements) {
         this.key = function () {

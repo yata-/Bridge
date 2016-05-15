@@ -50,7 +50,7 @@ namespace Bridge.Contract
 
         void PushLocals();
 
-        void PushWriter(string format, Action callback = null);
+        void PushWriter(string format, Action callback = null, string thisArg = null, int[] ignoreRange = null);
 
         bool RemovePenultimateEmptyLines(bool withLast = false);
 

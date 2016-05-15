@@ -11,7 +11,7 @@
             },
             processMessage: function (message) {
                 // The call should have generic type as function parameter
-                TestIssue958.MessageExtensions.$if(TestIssue958.SetValue, TestIssue958.MessageExtensions.$if(TestIssue958.SetName, message, $_.TestIssue958.Issue958.f1), $_.TestIssue958.Issue958.f2);
+                TestIssue958.MessageExtensions.if(TestIssue958.SetValue, TestIssue958.MessageExtensions.if(TestIssue958.SetName, message, $_.TestIssue958.Issue958.f1), $_.TestIssue958.Issue958.f2);
             }
         }
     });
@@ -22,16 +22,16 @@
     
     Bridge.apply($_.TestIssue958.Issue958, {
         f1: function (action) {
-            console.log("Name: " + action.getName());
+            Bridge.Console.log("Name: " + action.getName());
         },
         f2: function (action) {
-            console.log("Value: " + action.getValue());
+            Bridge.Console.log("Value: " + action.getValue());
         }
     });
     
     Bridge.define('TestIssue958.MessageExtensions', {
         statics: {
-            $if: function (T, source, work) {
+            if: function (T, source, work) {
                 if (Bridge.is(source, T)) {
                     work(Bridge.cast(source, T));
                 }

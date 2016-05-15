@@ -256,7 +256,7 @@ namespace Bridge.Contract
             set;
         }
 
-        LoggerLevel? LoggerLevel
+        LoggingOptions Logging
         {
             get;
             set;
@@ -268,10 +268,18 @@ namespace Bridge.Contract
             set;
         }
 
-        bool? NoLoggerTimeStamps
+        bool StrictNullChecks
         {
-            get;
-            set;
+            get; set;
         }
+    }
+
+    public class LoggingOptions
+    {
+        public LoggerLevel? Level { get; set; }
+        public bool? TimeStamps { get; set; }
+        public long?  MaxSize { get; set; }
+        public string Folder { get; set; }
+        public string FileName { get; set; }
     }
 }

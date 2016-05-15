@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using Bridge.Contract;
 
@@ -13,56 +12,66 @@ namespace Bridge.Translator.Logging
         public List<ILogger> LoggerWriters { get; private set; }
         public bool UseTimeStamp { get; set; }
 
+        private bool bufferedMode;
+        public bool BufferedMode
+        {
+            get { return bufferedMode; }
+            set
+            {
+                LoggerWriters.ForEach(x => x.BufferedMode = value);
+                bufferedMode = value;
+            }
+        }
+
         private LoggerLevel loggerLevel;
         public LoggerLevel LoggerLevel
         {
-            get { return this.loggerLevel; }
+            get { return loggerLevel; }
             set
             {
-                if (value <= 0)
+                if (value < LoggerLevel.None)
                 {
-                    this.loggerLevel = 0;
+                    value = LoggerLevel.None;
                 }
-                else
-                {
-                    var maxValue = LoggerLevel.Trace;
-                    if (value > maxValue)
-                    {
-                        this.loggerLevel = maxValue;
-                    }
-                    else
-                    {
-                        this.loggerLevel = value;
-                    }
-                }
+
+                loggerLevel = value;
+
+                LoggerWriters.ForEach(x => x.LoggerLevel = value);
             }
         }
 
-        public Logger(string name, bool useTimeStamp, LoggerLevel loggerLevel, params ILogger[] loggerWriters)
+        public Logger(string name, bool useTimeStamp, LoggerLevel loggerLevel, bool bufferedMode, params ILogger[] loggerWriters)
         {
             this.Name = name ?? string.Empty;
 
-            if (loggerLevel == 0)
-            {
-                loggerLevel = LoggerLevel.Info;
-            }
-
             this.LoggerWriters = loggerWriters.Where(x => x != null).ToList();
+
             this.UseTimeStamp = useTimeStamp;
             this.LoggerLevel = loggerLevel;
+            this.BufferedMode = bufferedMode;
         }
 
         public Logger(string name, bool useTimeStamp, params ILogger[] loggers)
-            : this(name, useTimeStamp, 0, loggers)
+            : this(name, useTimeStamp, LoggerLevel.None, false, loggers)
         {
+        }
+
+
+        public FileLoggerWriter GetFileLogger()
+        {
+            return (FileLoggerWriter)LoggerWriters.Where(x => x is FileLoggerWriter).FirstOrDefault();
+        }
+
+        public void Flush()
+        {
+            LoggerWriters.ForEach(x => x.Flush());
         }
 
         public void Error(string message)
         {
             string wrappedMessage;
 
-            var level = LoggerLevel.Error;
-            if (this.LoggerLevel >= level && (wrappedMessage = this.WrapMessage(message, level)) != null)
+            if ((wrappedMessage = CheckIfCanLog(message, LoggerLevel.Error)) != null)
             {
                 foreach (var logger in this.LoggerWriters)
                 {
@@ -75,8 +84,7 @@ namespace Bridge.Translator.Logging
         {
             string wrappedMessage;
 
-            var level = LoggerLevel.Warning;
-            if (this.LoggerLevel >= level && (wrappedMessage = this.WrapMessage(message, level)) != null)
+            if ((wrappedMessage = CheckIfCanLog(message, LoggerLevel.Warning)) != null)
             {
                 foreach (var logger in this.LoggerWriters)
                 {
@@ -89,8 +97,7 @@ namespace Bridge.Translator.Logging
         {
             string wrappedMessage;
 
-            var level = LoggerLevel.Info;
-            if (this.LoggerLevel >= level && (wrappedMessage = this.WrapMessage(message, level)) != null)
+            if ((wrappedMessage = CheckIfCanLog(message, LoggerLevel.Info)) != null)
             {
                 foreach (var logger in this.LoggerWriters)
                 {
@@ -103,14 +110,23 @@ namespace Bridge.Translator.Logging
         {
             string wrappedMessage;
 
-            var level = LoggerLevel.Trace;
-            if (this.LoggerLevel >= level && (wrappedMessage = this.WrapMessage(message, level)) != null)
+            if ((wrappedMessage = CheckIfCanLog(message, LoggerLevel.Trace)) != null)
             {
                 foreach (var logger in this.LoggerWriters)
                 {
                     logger.Trace(wrappedMessage);
                 }
             }
+        }
+
+        private string CheckIfCanLog(string message, LoggerLevel level)
+        {
+            //if (this.LoggerLevel >= level)
+            //{
+            //    return null;
+            //}
+
+            return this.WrapMessage(message, level);
         }
 
         private string WrapMessage(string message, LoggerLevel logLevel)

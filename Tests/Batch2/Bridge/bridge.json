@@ -4,8 +4,11 @@
   "outputFormatting": "Formatted",
   "fileName": "code.js",
   "outputBy": "Project",
-  "loggerLevel": "Info",
+  "logging": {
+    "level": "None"
+  },
 
   "useTypedArrays": true,
-  "overflowMode":  "Javascript"
+  "overflowMode": "Javascript",
+  "strictNullChecks": true
 }

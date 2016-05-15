@@ -68,6 +68,8 @@ namespace Bridge.Translator
         {
             MemberReferenceExpression memberReferenceExpression = this.MemberReferenceExpression;
             int pos = this.Emitter.Output.Length;
+            bool isRefArg = this.Emitter.IsRefArg;
+            this.Emitter.IsRefArg = false;
 
             ResolveResult resolveResult = null;
             ResolveResult expressionResolveResult = null;
@@ -223,6 +225,12 @@ namespace Bridge.Translator
             bool hasInline = !string.IsNullOrEmpty(inline);
             bool hasThis = hasInline && inline.Contains("{this}");
 
+            if (hasInline && inline.StartsWith("<self>"))
+            {
+                hasThis = true;
+                inline = inline.Substring(6);
+            }
+
             if (hasThis)
             {
                 this.Write("");
@@ -242,12 +250,21 @@ namespace Bridge.Translator
                 this.Emitter.IsAssignment = oldIsAssignment;
                 this.Emitter.IsUnaryAccessor = oldUnary;
                 var oldInline = inline;
-                inline = inline.Replace("{this}", this.Emitter.Output.ToString());
+                var thisArg = this.Emitter.Output.ToString();
+                int thisIndex = inline.IndexOf("{this}");
+                inline = inline.Replace("{this}", thisArg);
                 this.Emitter.Output = oldBuilder;
+
+                int[] range = null;
+
+                if (thisIndex > -1)
+                {
+                    range = new[] { thisIndex, thisIndex + thisArg.Length };
+                }
 
                 if (resolveResult is InvocationResolveResult)
                 {
-                    this.PushWriter(inline);
+                    this.PushWriter(inline, null, thisArg, range);
                 }
                 else
                 {
@@ -529,7 +546,14 @@ namespace Bridge.Translator
 
                 if (targetResolveResult == null || this.Emitter.IsGlobalTarget(targetResolveResult.Member) == null)
                 {
-                    this.WriteDot();
+                    if (isRefArg)
+                    {
+                        this.WriteComma();
+                    }
+                    else
+                    {
+                        this.WriteDot();    
+                    }
                 }
 
                 if (member == null)
@@ -965,7 +989,15 @@ namespace Bridge.Translator
                     }
                     else
                     {
-                        this.Write(OverloadsCollection.Create(this.Emitter, member.Member).GetOverloadName());
+                        var fieldName = OverloadsCollection.Create(this.Emitter, member.Member).GetOverloadName();
+                        if (isRefArg)
+                        {
+                            this.WriteScript(fieldName);
+                        }
+                        else
+                        {
+                            this.Write(fieldName);    
+                        }
                     }
                 }
                 else if (resolveResult is InvocationResolveResult)

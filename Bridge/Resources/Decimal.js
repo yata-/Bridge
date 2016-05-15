@@ -34,7 +34,7 @@
     Bridge.Decimal.$$inherits = [];
     Bridge.Class.addExtend(Bridge.Decimal, [Bridge.IComparable, Bridge.IFormattable, Bridge.IComparable$1(Bridge.Decimal), Bridge.IEquatable$1(Bridge.Decimal)]);
 
-    Bridge.Decimal.instanceOf = function(instance) {
+    Bridge.Decimal.instanceOf = function (instance) {
         return instance instanceof Bridge.Decimal;
     };
 
@@ -86,6 +86,10 @@
         return this.value.toNumber();
     };
 
+    Bridge.Decimal.prototype.toJSON = function () {
+        return this.value.toNumber();
+    };
+
     Bridge.Decimal.prototype.format = function (format, provider) {
         return Bridge.Int.format(this.toFloat(), format, provider);
     };
@@ -132,7 +136,7 @@
         return d;
     };
 
-    Bridge.Decimal.toDecimalPlaces = function(obj, decimals, mode) {
+    Bridge.Decimal.toDecimalPlaces = function (obj, decimals, mode) {
         obj = Bridge.Decimal.create(obj);
         var d = new Bridge.Decimal(obj.value.toDecimalPlaces(decimals, mode));
         return d;
@@ -230,7 +234,9 @@
         }
 
         if (tp) {
-            var str, r;
+            var str,
+                r;
+
             if (tp === Bridge.Long) {
                 str = v.value.trunc().toString();
                 r = new Bridge.Long(str);
@@ -246,6 +252,7 @@
                 if (v.value.isNegative()) {
                     throw new Bridge.OverflowException();
                 }
+
                 str = v.value.trunc().toString();
                 r = new Bridge.ULong(str);
 
@@ -421,10 +428,12 @@
 
         if (provider && !provider.getFormat) {
             var oldConfig = Bridge.merge({}, old || {});
+
             Bridge.$Decimal.format = Bridge.merge(oldConfig, provider);
             d = this.value.toFormat(dp, rm);
         } else {
             provider = provider || Bridge.CultureInfo.getCurrentCulture();
+
             var nfInfo = provider && provider.getFormat(Bridge.NumberFormatInfo);
 
             if (nfInfo) {

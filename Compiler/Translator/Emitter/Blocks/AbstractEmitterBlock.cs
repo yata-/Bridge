@@ -111,6 +111,13 @@ namespace Bridge.Translator
 
         protected IAsyncStep WriteAwaiter(AstNode node)
         {
+            if (this.Emitter.AsyncBlock.WrittenAwaitExpressions.Contains(node))
+            {
+                return null;
+            }
+
+            this.Emitter.AsyncBlock.WrittenAwaitExpressions.Add(node);
+
             var index = System.Array.IndexOf(this.Emitter.AsyncBlock.AwaitExpressions, node) + 1;
             this.Write("$task" + index + " = ");
             bool customAwaiter = false;

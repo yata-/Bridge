@@ -40,6 +40,7 @@ Bridge.define("Bridge.Text.RegularExpressions.CaptureCollection", {
         }
 
         this._ensureCapturesInited();
+
         return this._captures[i];
     },
 
@@ -76,8 +77,10 @@ Bridge.define("Bridge.Text.RegularExpressions.CaptureCollection", {
             for (j = 0; j < this._capcount - 1; j++) {
                 var index = this._group._caps[j * 2];
                 var length = this._group._caps[j * 2 + 1];
+
                 captures[j] = new Bridge.Text.RegularExpressions.Capture(this._group._text, index, length);
             }
+
             if (this._capcount > 0) {
                 captures[this._capcount - 1] = this._group;
             }

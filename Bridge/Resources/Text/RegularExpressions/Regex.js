@@ -134,7 +134,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
     _capslist: null,
 
     config: {
-        init: function() {
+        init: function () {
             this._options = Bridge.Text.RegularExpressions.RegexOptions.None;
         }
     },
@@ -226,6 +226,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
+
         return this.isMatch$1(input, startat);
     },
 
@@ -236,6 +237,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
 
         var match = this._runner.run(true, -1, input, 0, input.length, startat);
+
         return match == null;
     },
 
@@ -245,6 +247,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
+
         return this.match$1(input, startat);
     },
 
@@ -262,6 +265,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
 
         var startat = this.getRightToLeft() ? beginning + length : beginning;
+
         return this._runner.run(false, -1, input, beginning, length, startat);
     },
 
@@ -271,6 +275,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
+
         return this.matches$1(input, startat);
     },
 
@@ -295,8 +300,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
             }
 
             return result;
-        }
-        else {
+        } else {
             return this._capslist.slice();
         }
     },
@@ -307,18 +311,17 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         var key;
         var max;
         var i;
-
+ 
         if (caps == null) {
             result = [];
             max = this._capsize;
             for (i = 0; i < max; i++) {
                 result.push(i);
             }
-        }
-        else {
+        } else {
             result = [];
             for (key in caps) {
-                if(caps.hasOwnProperty(key)) {
+                if (caps.hasOwnProperty(key)) {
                     result[caps[key]] = key;
                 }
             }
@@ -328,9 +331,11 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
     },
 
     groupNameFromNumber: function (i) {
+
         if (this._capslist == null) {
             if (i >= 0 && i < this._capsize) {
                 var invariantCulture = Bridge.CultureInfo.invariantCulture;
+
                 return Bridge.Convert.toString(i, invariantCulture, Bridge.Convert.typeCodes.Int32);
             }
 
@@ -338,9 +343,11 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         } else {
             if (this._caps != null) {
                 var obj = this._caps[i];
+
                 if (obj == null) {
                     return "";
                 }
+
                 return parseInt(obj);
             }
 
@@ -352,7 +359,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
     },
 
-    groupNumberFromName: function(name) {
+    groupNumberFromName: function (name) {
         if (name == null) {
             throw new Bridge.ArgumentNullException("name");
         }
@@ -360,9 +367,11 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         // look up name if we have a hashtable of names
         if (this._capnames != null) {
             var ret = this._capnames[name];
+
             if (ret == null) {
                 return -1;
             }
+
             return parseInt(ret);
         }
 
@@ -396,6 +405,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
+
         return this.replace$2(input, replacement, -1, startat);
     },
 
@@ -405,6 +415,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
+
         return this.replace$2(input, replacement, count, startat);
     },
 
@@ -412,6 +423,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         if (input == null) {
             throw new Bridge.ArgumentNullException("input");
         }
+
         if (replacement == null) {
             throw new Bridge.ArgumentNullException("replacement");
         }
@@ -437,6 +449,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
+
         return this.replace$5(input, evaluator, count, startat);
     },
 
@@ -454,6 +467,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
+
         return this.split$2(input, 0, startat);
     },
 
@@ -463,6 +477,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
+
         return this.split$2(input, count, startat);
     },
 
@@ -474,7 +489,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         return Bridge.Text.RegularExpressions.RegexReplacement.split(this, input, count, startat);
     },
 
-    _validateMatchTimeout: function(matchTimeout) {
+    _validateMatchTimeout: function (matchTimeout) {
         var ms = matchTimeout.getTotalMilliseconds();
 
         if (-1 === ms) {

@@ -239,7 +239,7 @@ namespace Bridge.Translator
 
         protected override void DoEmit()
         {
-            this.Emitter.Writers = new Stack<Tuple<string, StringBuilder, bool, Action>>();
+            this.Emitter.Writers = new Stack<IWriter>();
             this.Emitter.Outputs = new EmitterOutputs();
 
             this.Emitter.Translator.Plugins.BeforeTypesEmit(this.Emitter, this.Emitter.Types);

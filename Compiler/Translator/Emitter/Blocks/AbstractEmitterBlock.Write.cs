@@ -377,9 +377,9 @@ namespace Bridge.Translator
             this.Write("function ");
         }
 
-        public virtual void PushWriter(string format, Action callback = null)
+        public virtual void PushWriter(string format, Action callback = null, string thisArg = null, int[] ignoreRange = null)
         {
-            this.Emitter.Writers.Push(new Tuple<string, StringBuilder, bool, Action>(format, this.Emitter.Output, this.Emitter.IsNewLine, callback));
+            this.Emitter.Writers.Push(new Writer{InlineCode = format, Output = this.Emitter.Output, IsNewLine = this.Emitter.IsNewLine, Callback = callback, ThisArg = thisArg, IgnoreRange = ignoreRange});
             this.Emitter.IsNewLine = false;
             this.Emitter.Output = new StringBuilder();
         }
@@ -387,19 +387,19 @@ namespace Bridge.Translator
         public virtual string PopWriter(bool preventWrite = false)
         {
             string result = this.Emitter.Output.ToString();
-            var tuple = this.Emitter.Writers.Pop();
-            this.Emitter.Output = tuple.Item2;
-            result = tuple.Item1 != null ? string.Format(tuple.Item1, result) : result;
-            this.Emitter.IsNewLine = tuple.Item3;
+            var writer = this.Emitter.Writers.Pop();
+            this.Emitter.Output = writer.Output;
+            result = writer.InlineCode != null ? string.Format(writer.InlineCode, result) : result;
+            this.Emitter.IsNewLine = writer.IsNewLine;
 
             if (!preventWrite)
             {
                 this.Write(result);
             }
 
-            if (tuple.Item4 != null)
+            if (writer.Callback != null)
             {
-                tuple.Item4.Invoke();
+                writer.Callback.Invoke();
             }
 
             return result;
@@ -677,6 +677,44 @@ namespace Bridge.Translator
         {
             get;
             set;
+        }
+    }
+
+    public class Writer : IWriter
+    {
+        public StringBuilder Output
+        {
+            get;
+            set;
+        }
+
+        public bool IsNewLine
+        {
+            get;
+            set;
+        }
+
+        public string InlineCode
+        {
+            get;
+            set;
+        }
+
+        public Action Callback
+        {
+            get;
+            set;
+        }
+
+        public string ThisArg
+        {
+            get;
+            set;
+        }
+
+        public int[] IgnoreRange
+        {
+            get; set;
         }
     }
 }

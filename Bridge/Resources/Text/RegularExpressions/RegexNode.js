@@ -42,7 +42,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
         reducedChild._next = this;
     },
 
-    childCount: function() {
+    childCount: function () {
         return this._children == null ? 0 : this._children.length;
     },
 
@@ -50,10 +50,11 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
         return this._children[i];
     },
 
-    _reduce: function() {
+    _reduce: function () {
         // Warning: current implementation is just partial (for Replacement servicing)
 
         var n;
+
         switch (this._type) {
             case Bridge.Text.RegularExpressions.RegexNode.Concatenate:
                 n = this._reduceConcatenation();
@@ -63,10 +64,11 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
                 n = this;
                 break;
         }
+
         return n;
     },
 
-    _reduceConcatenation: function() {
+    _reduceConcatenation: function () {
         var wasLastString = false;
         var optionsLast = 0;
         var optionsAt;
@@ -120,7 +122,6 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
                 } else {
                     prev._str = at._str + prev._str;
                 }
-
             } else if (at._type === Bridge.Text.RegularExpressions.RegexNode.Empty) {
                 j--;
             } else {
@@ -135,7 +136,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
         return this._stripEnation(Bridge.Text.RegularExpressions.RegexNode.Empty);
     },
 
-    _stripEnation: function(emptyType) {
+    _stripEnation: function (emptyType) {
         switch (this.childCount()) {
             case 0:
                 return new scope.RegexNode(emptyType, this._options);
@@ -150,6 +151,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
         if ((this._options & Bridge.Text.RegularExpressions.RegexOptions.RightToLeft) > 0) {
             return true;
         }
+
         return false;
     },
 });

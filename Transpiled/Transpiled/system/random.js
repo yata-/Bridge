@@ -93,7 +93,7 @@
                 throw new Bridge.ArgumentOutOfRangeException("minValue", "'minValue' cannot be greater than maxValue.");
             }
     
-            var range = Bridge.Long(Bridge.Long(maxValue)).sub(Bridge.Long(minValue));
+            var range = Bridge.Long(maxValue).sub(Bridge.Long(minValue));
             if (range.lte(Bridge.Long(2147483647))) {
                 return (((Bridge.Int.clip32(this.sample() * Bridge.Long.toNumber(range)) + minValue) | 0));
             }
@@ -128,7 +128,7 @@
             return this.sample();
         },
         nextBytes: function (buffer) {
-            if (!Bridge.hasValue(buffer)) {
+            if (buffer == null) {
                 throw new Bridge.ArgumentNullException("buffer");
             }
             for (var i = 0; i < buffer.length; i = (i + 1) | 0) {

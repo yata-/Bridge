@@ -168,7 +168,7 @@ namespace Bridge.Translator.Tests
                     sb.AppendLine();
                     sb.AppendLine("|" + diffText + "|");
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                     sb.AppendLine(string.Format("DIFF Could not get detailed diff for {0}. Exception: {1}", diff.ToString(), ex.Message));
                 }

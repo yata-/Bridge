@@ -115,9 +115,19 @@ namespace Bridge.Translator
                     return level;
                 }
 
-                if (expression is ParenthesizedExpression && expression.Parent is CastExpression)
+                /*if (expression is ParenthesizedExpression && expression.Parent is CastExpression)
                 {
                     return level;
+                }*/
+
+                if (conversion.IsUserDefined && expression.Parent is CastExpression && ((CastExpression)expression.Parent).Expression == expression)
+                {
+                    var parentConversion = block.Emitter.Resolver.Resolver.GetConversion((CastExpression)expression.Parent);
+
+                    if (!parentConversion.IsUserDefined || parentConversion.Method.Equals(conversion.Method))
+                    {
+                        return level;    
+                    }
                 }
 
                 if (rr is ConstantResolveResult && expression is CastExpression && !conversion.IsUserDefined)
@@ -237,7 +247,7 @@ namespace Bridge.Translator
                     }
                     else
                     {
-                        if (method.DeclaringTypeDefinition != null && block.Emitter.Validator.IsIgnoreType(method.DeclaringTypeDefinition))
+                        if (method.DeclaringTypeDefinition != null && (block.Emitter.Validator.IsIgnoreType(method.DeclaringTypeDefinition) || Helpers.IsIgnoreCast(method.DeclaringTypeDefinition, block.Emitter)))
                         {
                             // Still returns true if Nullable.lift( was written.
                             return level;
@@ -316,6 +326,17 @@ namespace Bridge.Translator
                 if (isType(m.ReturnType, block.Emitter.Resolver))
                 {
                     return false;
+                }
+            }
+
+            if (expression is CastExpression)
+            {
+                var nestedExpr = ((CastExpression) expression).Expression;
+                var nested_rr = block.Emitter.Resolver.ResolveNode(nestedExpr, block.Emitter);
+
+                if (!(nested_rr is ConversionResolveResult))
+                {
+                    return false;    
                 }
             }
 
@@ -449,13 +470,14 @@ namespace Bridge.Translator
 
                 if (binaryOpRr != null && isType(binaryOpRr.Operands[idx].Type, block.Emitter.Resolver) && !isType(rr.Type, block.Emitter.Resolver))
                 {
+                    var isNullable = NullableType.IsNullable(binaryOpRr.Operands[idx].Type);
                     if (expression.IsNull)
                     {
                         return false;
                     }
 
                     block.Write(typeName);
-                    if (NullableType.IsNullable(binaryOpRr.Operands[idx].Type) && ConversionBlock.ShouldBeLifted(expression))
+                    if (isNullable && ConversionBlock.ShouldBeLifted(expression))
                     {
                         block.Write(".lift");
                     }

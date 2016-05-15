@@ -1,5 +1,6 @@
-﻿using Bridge;
-using Bridge.Html5;
+﻿using Bridge.Html5;
+
+using System;
 
 namespace TestIssue461
 {
@@ -12,10 +13,10 @@ namespace TestIssue461
             input.OnChange += (ev) =>
             {
                 // Tests if ev.CurrentTarget.Value compiles
-                Console.Log("ev.CurrentTarget.Value: " + ev.CurrentTarget.Value);
+                Console.WriteLine("ev.CurrentTarget.Value: " + ev.CurrentTarget.Value);
 
                 // Tests if ev.IsMouseEvent() compiles
-                Console.Log("IsMouseEvent: " + ev.IsMouseEvent());
+                Console.WriteLine("IsMouseEvent: " + ev.IsMouseEvent());
             };
 
             AnchorElement anchor = new AnchorElement();
@@ -23,7 +24,7 @@ namespace TestIssue461
             anchor.OnClick += (ev) =>
             {
                 // Tests if ev.CurrentTarget.Href compiles
-                Console.Log("ev.CurrentTarget.Href: " + ev.CurrentTarget.Href);
+                Console.WriteLine("ev.CurrentTarget.Href: " + ev.CurrentTarget.Href);
             };
 
             // Test if Document.GetElementById<>() compiles

@@ -175,10 +175,13 @@ namespace Bridge.Translator
                                 logger.Trace("The assembly " + assembly.FullName + " added to the catalogs");
                             }
                         }
-                        catch (Exception ex)
+                        catch (ReflectionTypeLoadException ex)
                         {
-                            logger.Error("Exception occurred:");
-                            logger.Error(ex.Message);
+                            LogAssemblyLoaderException("Could not load assembly from resources", ex, logger);
+                        }
+                        catch (System.Exception ex)
+                        {
+                            logger.Error("Could not load assembly from resources: " + ex.ToString());
                         }
 
                     }
@@ -202,15 +205,17 @@ namespace Bridge.Translator
             {
                 container.ComposeParts(plugins);
             }
-            catch (Exception ex)
+            catch (ReflectionTypeLoadException ex)
             {
-                logger.Error("Exception occurred:");
-                logger.Error(ex.Message);
+                LogAssemblyLoaderException("Could not compose Plugin parts", ex, logger);
+            }
+            catch (System.Exception ex)
+            {
+                logger.Error("Could not compose Plugin parts: " +  ex.ToString());
             }
 
             if (plugins.Parts != null)
             {
-
                 foreach (var plugin in plugins.Parts)
                 {
                     plugin.Logger = translator.Log;
@@ -267,6 +272,36 @@ namespace Bridge.Translator
             return assembly;
         }
 
+        private static void LogAssemblyLoaderException(string reason, ReflectionTypeLoadException ex, ILogger logger)
+        {
+            var sb = new System.Text.StringBuilder(reason + ": ");
+
+            sb.AppendLine(ex.ToString());
+
+            if (ex.LoaderExceptions != null)
+            {
+                sb.AppendFormat("LoaderExceptions ({0} items): ", ex.LoaderExceptions.Length);
+
+                foreach (var loaderException in ex.LoaderExceptions)
+                {
+                    sb.AppendLine(loaderException.Message);
+                }
+            }
+
+            var message = sb.ToString();
+
+            if (logger != null)
+            {
+                logger.Error(message);
+            }
+            else
+            {
+                Console.WriteLine(message);
+            }
+
+            sb.Clear();
+        }
+
         [ImportMany]
         private IEnumerable<IPlugin> plugins;
 
@@ -274,6 +309,11 @@ namespace Bridge.Translator
         {
             get
             {
+                if (this.plugins == null)
+                {
+                    this.plugins = new List<IPlugin>();
+                }
+
                 return this.plugins;
             }
         }

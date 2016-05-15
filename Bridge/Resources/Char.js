@@ -24,7 +24,9 @@ Bridge.define("Bridge.Char", {
         },
         tryParse: function (s, result) {
             var b = s && s.length === 1;
+
             result.v = b ? s.charCodeAt(0) : 0;
+
             return b;
         },
         format: function (number, format, provider) {

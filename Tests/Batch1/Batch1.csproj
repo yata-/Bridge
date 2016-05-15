@@ -66,6 +66,7 @@
     <Compile Include="BridgeIssues\0500\N550.cs" />
     <Compile Include="BridgeIssues\0500\N578.cs" />
     <Compile Include="BridgeIssues\0500\N577.cs" />
+    <Compile Include="BridgeIssues\0600\N637.cs" />
     <Compile Include="BridgeIssues\0700\N772.cs" />
     <Compile Include="BridgeIssues\0700\N777.cs" />
     <Compile Include="BridgeIssues\0800\N861.cs" />
@@ -215,6 +216,8 @@
     <Compile Include="BridgeIssues\0800\N881.cs" />
     <Compile Include="BridgeIssues\0800\N863.cs" />
     <Compile Include="BridgeIssues\0900\N999.cs" />
+    <Compile Include="BridgeIssues\1100\N1170.cs" />
+    <Compile Include="BridgeIssues\1100\N1172.cs" />
     <Compile Include="BridgeIssues\1100\N1109.cs" />
     <Compile Include="BridgeIssues\1100\N1105.cs" />
     <Compile Include="BridgeIssues\1100\N1122.cs" />
@@ -222,6 +225,15 @@
     <Compile Include="BridgeIssues\1100\N1134.cs" />
     <Compile Include="BridgeIssues\1100\N1140.cs" />
     <Compile Include="BridgeIssues\1100\N1141.cs" />
+    <Compile Include="BridgeIssues\1100\N1197.cs" />
+    <Compile Include="BridgeIssues\1100\N1189.cs" />
+    <Compile Include="BridgeIssues\1100\N1186.cs" />
+    <Compile Include="BridgeIssues\1100\N1175.cs" />
+    <Compile Include="BridgeIssues\1100\N1184.cs" />
+    <Compile Include="BridgeIssues\1100\N1180.cs" />
+    <Compile Include="BridgeIssues\1100\N1176.cs" />
+    <Compile Include="BridgeIssues\1100\N1177.cs" />
+    <Compile Include="BridgeIssues\1100\N1171.cs" />
     <Compile Include="BridgeIssues\1100\N1160.cs" />
     <Compile Include="BridgeIssues\1100\N1149.cs" />
     <Compile Include="BridgeIssues\1100\N1146.cs" />
@@ -230,7 +242,31 @@
     <Compile Include="BridgeIssues\1100\N1120.cs" />
     <Compile Include="BridgeIssues\1100\N1110.cs" />
     <Compile Include="BridgeIssues\1100\N1103.cs" />
+    <Compile Include="BridgeIssues\1200\N1202.cs" />
+    <Compile Include="BridgeIssues\1200\N1217.cs" />
+    <Compile Include="BridgeIssues\1100\N1199.cs" />
+    <Compile Include="BridgeIssues\1200\N1226.cs" />
+    <Compile Include="BridgeIssues\1200\N1231.cs" />
+    <Compile Include="BridgeIssues\1200\N1232.cs" />
+    <Compile Include="BridgeIssues\1200\N1220.cs" />
+    <Compile Include="BridgeIssues\1200\N1203.cs" />
+    <Compile Include="BridgeIssues\1200\N1206.cs" />
+    <Compile Include="BridgeIssues\1200\N1296.cs" />
+    <Compile Include="BridgeIssues\1200\N1266.cs" />
+    <Compile Include="BridgeIssues\1200\N1219.cs" />
+    <Compile Include="BridgeIssues\1200\N1256.cs" />
+    <Compile Include="BridgeIssues\1200\N1253.cs" />
+    <Compile Include="BridgeIssues\1200\N1264.cs" />
+    <Compile Include="BridgeIssues\1200\N1260.cs" />
+    <Compile Include="BridgeIssues\1200\N1241.cs" />
+    <Compile Include="BridgeIssues\1300\N1316.cs" />
+    <Compile Include="BridgeIssues\1300\N1340.cs" />
+    <Compile Include="BridgeIssues\1300\N1343.cs" />
+    <Compile Include="BridgeIssues\1300\N1341.cs" />
+    <Compile Include="BridgeIssues\1300\N1305.cs" />
+    <Compile Include="BridgeIssues\1300\N1304.cs" />
     <Compile Include="BridgeIssues\TestBridgeIssues.cs" />
+    <Compile Include="Collections\Generic\StackTests.cs" />
     <Compile Include="Convert\ConvertFromBase64Tests.cs" />
     <Compile Include="Convert\ConvertTestBase.cs" />
     <Compile Include="Convert\ConvertToBase64CharArrayTests.cs" />
@@ -263,6 +299,7 @@
     <Compile Include="Exceptions\OperationCanceledExceptionTests.cs" />
     <Compile Include="Exceptions\CultureNotFoundExceptionTests.cs" />
     <Compile Include="Exceptions\TimeoutExceptionTests.cs" />
+    <Compile Include="GuidTests.cs" />
     <Compile Include="Linq\TestLinqGroupingOperators.cs" />
     <Compile Include="Linq\TestLinqConversionOperators.cs" />
     <Compile Include="Linq\TestLinqAggregateOperators.cs" />
@@ -375,6 +412,8 @@
     <Compile Include="..\..\.build\common\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <None Include="Bridge\bridge.Release.json" />
+    <None Include="Bridge\bridge.Debug.json" />
     <None Include="Bridge\bridge.json" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -389,9 +428,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Bridge.Collections, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Bridge.Collections.Dev.1.2.0\lib\net40\Bridge.Collections.dll</HintPath>
+    <Reference Include="Bridge.Collections, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Bridge.Collections.Dev.1.3.0\lib\net40\Bridge.Collections.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Bridge.Test, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Bridge.Testing.1.0.0\lib\net40\Bridge.Test.dll</HintPath>
@@ -400,6 +439,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Readme\Bridge.NET\README.Bridge.Test.txt" />
+    <Content Include="App_Readme\Bridge.NET\README.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BridgeIssues\0200\" />

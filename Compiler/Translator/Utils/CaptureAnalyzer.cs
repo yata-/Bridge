@@ -109,6 +109,23 @@ namespace Bridge.Translator
             _usedVariables.Clear();
             _variables.Clear();
 
+            var methodDeclaration = node.GetParent<MethodDeclaration>();
+            if (methodDeclaration != null)
+            {
+                foreach (var attrSection in methodDeclaration.Attributes)
+                {
+                    foreach (var attr in attrSection.Attributes)
+                    {
+                        var rr = this.resolver.Resolve(attr.Type);
+                        if (rr.Type.FullName == "Bridge.InitAttribute")
+                        {
+                            this._usedVariables.Add(null);
+                            return;
+                        }
+                    }
+                }
+            }
+
             if (parameters != null)
             {
                 foreach (var parameter in parameters)
@@ -234,6 +251,88 @@ namespace Bridge.Translator
             }
 
             //base.VisitAnonymousMethodExpression(anonymousMethodExpression);
+        }
+
+        public override void VisitCastExpression(CastExpression castExpression)
+        {
+            var conversion = this.resolver.GetConversion(castExpression.Expression);
+            if (conversion.IsUserDefined && conversion.Method.DeclaringType.TypeArguments.Count > 0)
+            {
+                foreach (var typeArgument in conversion.Method.DeclaringType.TypeArguments)
+                {
+                    if (typeArgument.Kind == TypeKind.TypeParameter)
+                    {
+                        var ivar = new TypeVariable(typeArgument);
+                        if (!_usedVariables.Contains(ivar))
+                        {
+                            _usedVariables.Add(ivar);
+                        }
+                    }
+                }
+            }
+            base.VisitCastExpression(castExpression);
+        }
+
+        public override void VisitBinaryOperatorExpression(BinaryOperatorExpression binaryOperatorExpression)
+        {
+            var rr = resolver.Resolve(binaryOperatorExpression) as OperatorResolveResult;
+            if (rr != null && rr.UserDefinedOperatorMethod != null)
+            {
+                foreach (var typeArgument in rr.UserDefinedOperatorMethod.DeclaringType.TypeArguments)
+                {
+                    if (typeArgument.Kind == TypeKind.TypeParameter)
+                    {
+                        var ivar = new TypeVariable(typeArgument);
+                        if (!_usedVariables.Contains(ivar))
+                        {
+                            _usedVariables.Add(ivar);
+                        }
+                    }
+                }
+            }
+            base.VisitBinaryOperatorExpression(binaryOperatorExpression);
+        }
+
+        public override void VisitUnaryOperatorExpression(UnaryOperatorExpression unaryOperatorExpression)
+        {
+            var rr = resolver.Resolve(unaryOperatorExpression) as OperatorResolveResult;
+            if (rr != null && rr.UserDefinedOperatorMethod != null)
+            {
+                foreach (var typeArgument in rr.UserDefinedOperatorMethod.DeclaringType.TypeArguments)
+                {
+                    if (typeArgument.Kind == TypeKind.TypeParameter)
+                    {
+                        var ivar = new TypeVariable(typeArgument);
+                        if (!_usedVariables.Contains(ivar))
+                        {
+                            _usedVariables.Add(ivar);
+                        }
+                    }
+                }
+            }
+
+            base.VisitUnaryOperatorExpression(unaryOperatorExpression);
+        }
+
+        public override void VisitAssignmentExpression(AssignmentExpression assignmentExpression)
+        {
+            var rr = resolver.Resolve(assignmentExpression) as OperatorResolveResult;
+            if (rr != null && rr.UserDefinedOperatorMethod != null)
+            {
+                foreach (var typeArgument in rr.UserDefinedOperatorMethod.DeclaringType.TypeArguments)
+                {
+                    if (typeArgument.Kind == TypeKind.TypeParameter)
+                    {
+                        var ivar = new TypeVariable(typeArgument);
+                        if (!_usedVariables.Contains(ivar))
+                        {
+                            _usedVariables.Add(ivar);
+                        }
+                    }
+                }
+            }
+
+            base.VisitAssignmentExpression(assignmentExpression);
         }
     }
 

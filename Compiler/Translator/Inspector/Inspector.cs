@@ -117,7 +117,7 @@ namespace Bridge.Translator
 
             var resolveResult = resolver.ResolveNode(type, null);
 
-            var o = GetDefaultFieldValue(resolveResult.Type, false);
+            var o = GetDefaultFieldValue(resolveResult.Type, type, false);
 
             if (o != null)
             {
@@ -142,8 +142,13 @@ namespace Bridge.Translator
             return null;
         }
 
-        public static object GetDefaultFieldValue(IType type, bool wrapType = true)
+        public static object GetDefaultFieldValue(IType type, AstType astType, bool wrapType = true)
         {
+            if (type.Kind == TypeKind.TypeParameter && astType != null)
+            {
+                return new RawValue("Bridge.getDefaultValue(" + astType.ToString() + ")");
+            }
+
             if (type.IsKnownType(KnownTypeCode.Decimal))
             {
                 return 0m;
@@ -231,7 +236,7 @@ namespace Bridge.Translator
 
                 return true;
             }
-            catch (Exception)
+            catch (TranslatorException)
             {
                 return false;
             }

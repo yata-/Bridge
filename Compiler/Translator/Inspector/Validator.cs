@@ -1,6 +1,5 @@
 ﻿using Bridge.Contract;
 using Bridge.Translator.Constants;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -102,7 +101,7 @@ namespace Bridge.Translator
         public virtual int EnumEmitMode(DefaultResolvedTypeDefinition type)
         {
             string enumAttr = Translator.Bridge_ASSEMBLY + ".EnumAttribute";
-            int result = -1;
+            int result = 7;
             type.Attributes.Any(attr =>
             {
                 if (attr.Constructor != null && attr.Constructor.DeclaringType.FullName == enumAttr && attr.PositionalArguments.Count > 0)
@@ -120,7 +119,7 @@ namespace Bridge.Translator
         public virtual int EnumEmitMode(IType type)
         {
             string enumAttr = Translator.Bridge_ASSEMBLY + ".EnumAttribute";
-            int result = -1;
+            int result = 7;
             type.GetDefinition().Attributes.Any(attr =>
             {
                 if (attr.Constructor != null && attr.Constructor.DeclaringType.FullName == enumAttr && attr.PositionalArguments.Count > 0)
@@ -343,7 +342,7 @@ namespace Bridge.Translator
                 {
                     if (field.IsStatic)
                     {
-                        Exception.Throw("ObjectLiteral type doesn't support static members: {0}", type);
+                        TranslatorException.Throw("ObjectLiteral type doesn't support static members: {0}", type);
                     }
                 }
             }
@@ -357,7 +356,7 @@ namespace Bridge.Translator
                 {
                     if ((prop.GetMethod != null && prop.GetMethod.IsStatic) || (prop.SetMethod != null && prop.SetMethod.IsStatic))
                     {
-                        Exception.Throw("ObjectLiteral type doesn't support static members: {0}", type);
+                        TranslatorException.Throw("ObjectLiteral type doesn't support static members: {0}", type);
                     }
                 }
             }
@@ -383,7 +382,7 @@ namespace Bridge.Translator
 
             if (this.IsObjectLiteral(type) && methodsCount > 0)
             {
-                Bridge.Translator.Exception.Throw("ObjectLiteral doesn't support methods: {0}", type);
+                Bridge.Translator.TranslatorException.Throw("ObjectLiteral doesn't support methods: {0}", type);
             }
         }
 
@@ -403,7 +402,7 @@ namespace Bridge.Translator
 
                     if (!allTypes.ContainsKey(parentName))
                     {
-                        Bridge.Translator.Exception.Throw("Unknown type {0}", parentName);
+                        Bridge.Translator.TranslatorException.Throw("Unknown type {0}", parentName);
                     }
 
                     if (!result.Contains(parentName))

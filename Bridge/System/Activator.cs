@@ -12,10 +12,10 @@ namespace System
         [Template("new {T}({*arguments})")]
         public static extern T CreateInstance<T>(params object[] arguments);
 
-        [Template("new {type}()")]
+        [Template("Bridge.createInstance({type})")]
         public static extern object CreateInstance(Type type);
 
-        [Template("new {T}()")]
+        [Template("Bridge.createInstance({T})")]
         public static extern T CreateInstance<T>();
     }
 }

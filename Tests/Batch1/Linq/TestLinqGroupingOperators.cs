@@ -114,7 +114,7 @@ namespace Bridge.ClientTest.Linq
             (
                from n in numbers
                select
-                   new
+                   Script.PlainObject(new
                    {
                        Number = n,
                        Words =
@@ -123,22 +123,22 @@ namespace Bridge.ClientTest.Linq
                            where w[0].ToString() == n.ToString()
                            group w by w[0] into g
                            select
-                               new
+                               Script.PlainObject(new
                                {
                                    Letter = g.Key,
                                    LetterGroups =
                                        (
                                        from l in g
                                        group l by l into mg
-                                       select new
+                                       select Script.PlainObject(new
                                        {
                                            Letter = mg.Key,
                                            Letters = mg.ToArray()
-                                       }
+                                       })
                                        ).ToArray()
-                               }
+                               })
                            ).ToArray()
-                   }
+                   })
            ).ToArray();
 
             var complexGroupingExpected = GetComplexGroupingExpectedResult();
@@ -197,69 +197,69 @@ namespace Bridge.ClientTest.Linq
         {
             var complexGroupingExpected = new object[]
             {
-                new
+                Script.PlainObject(new
                 {
                     Number = 2,
                     Words = new []
-                    { new
+                    { Script.PlainObject(new
                         {
                             Letter = '2',
                             LetterGroups = new[]
                             {
-                                new { Letter = "2.two", Letters = new []{"2.two"} },
-                                new { Letter = "22.twentytwo", Letters = new []{"22.twentytwo"} }
+                                Script.PlainObject(new { Letter = "2.two", Letters = new []{"2.two"} }),
+                                Script.PlainObject(new { Letter = "22.twentytwo", Letters = new []{"22.twentytwo"} })
                             }
-                        }
+                        })
                     }
-                },
-                new
+                }),
+                Script.PlainObject(new
                 {
                     Number = 10, Words = new object[] { }
-                },
-                new
+                }),
+                Script.PlainObject(new
                 {
                     Number = 3,
                     Words = new []
                     {
-                        new
+                        Script.PlainObject(new
                         {
                             Letter = '3',
                             LetterGroups = new[]
                             {
-                                new { Letter = "3.three", Letters = new []{"3.three"} },
-                                new { Letter = "30.thirty", Letters = new []{"30.thirty"} }
+                                Script.PlainObject(new { Letter = "3.three", Letters = new []{"3.three"} }),
+                                Script.PlainObject(new { Letter = "30.thirty", Letters = new []{"30.thirty"} })
                             }
-                        }
+                        })
                     }
-                },
-                new
+                }),
+                Script.PlainObject(new
                 {
                     Number = 5, Words = new object[] { }
-                },
-                new
+                }),
+                Script.PlainObject(new
                 {
                     Number = 30, Words = new object[] { }
-                },
-                new
+                }),
+                Script.PlainObject(new
                 {
                     Number = 1,
                     Words = new []
                     {
-                        new
+                        Script.PlainObject(new
                         {
                             Letter = '1',
                             LetterGroups = new[]
                             {
-                                new { Letter = "1.one", Letters = new []{"1.one"} },
-                                new { Letter = "11.eleven", Letters = new []{"11.eleven"} }
+                                Script.PlainObject(new { Letter = "1.one", Letters = new []{"1.one"} }),
+                                Script.PlainObject(new { Letter = "11.eleven", Letters = new []{"11.eleven"} })
                             }
-                        }
+                        })
                     }
-                },
-                new
+                }),
+                Script.PlainObject(new
                 {
                     Number = -15, Words = new object[] { }
-                },
+                }),
             };
 
             return complexGroupingExpected;

@@ -82,11 +82,15 @@
   <!-- NuGet packaging starts -->
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <NuGetBuildPackage>true</NuGetBuildPackage>
-    <NuGetPackageOutputDir>$(SolutionDir)Bridge\bin\Release</NuGetPackageOutputDir>
   </PropertyGroup>
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <NuGetPackageSourcePath Include="$(SolutionDir).build\specs\Bridge.nuspec">
-      <Path>$(SolutionDir).build\specs\Bridge.nuspec</Path>
+    <NuGetPackageSourcePath Include="$(SolutionDir).build\specs\Bridge.Min.nuspec">
+      <Path>$(SolutionDir).build\specs\Bridge.Min.nuspec</Path>
+    </NuGetPackageSourcePath>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <NuGetPackageSourcePath Include="$(SolutionDir).build\specs\Bridge.Clean.nuspec">
+      <Path>$(SolutionDir).build\specs\Bridge.Clean.nuspec</Path>
     </NuGetPackageSourcePath>
   </ItemGroup>
   <Import Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " Project="$(SolutionDir)\.build\common\NuGet.Build.Package.targets" />

@@ -40,23 +40,24 @@ namespace Bridge.Translator
 
         public const string LocalesPrefix = "Bridge.Resources.Locales.";
 
-        public Translator(string location, bool fromTask = false)
+        protected Translator(string location)
         {
             this.Location = location;
             this.Validator = this.CreateValidator();
             this.DefineConstants = new List<string>() { "BRIDGE" };
+        }
+
+        public Translator(string location, bool fromTask = false): this(location)
+        {
             this.FromTask = fromTask;
         }
 
-        public Translator(string folder, string source, bool recursive, string lib)
+        public Translator(string location, string source, bool recursive, string lib) : this(location, true)
         {
             this.Recursive = recursive;
             this.Source = source;
-            this.FolderMode = true;
-            this.Location = folder;
             this.AssemblyLocation = lib;
-            this.Validator = this.CreateValidator();
-            this.DefineConstants = new List<string>() { "BRIDGE" };
+            this.FolderMode = true;
         }
 
         public Dictionary<string, string> Translate()
@@ -66,34 +67,7 @@ namespace Bridge.Translator
 
             this.LogProductInfo();
 
-            var config = this.ReadConfig();
-
-            var l = logger as Bridge.Translator.Logging.Logger;
-            if (l != null)
-            {
-                l.LoggerLevel = config.LoggerLevel ?? LoggerLevel.Info;
-
-                if (config.NoLoggerTimeStamps.HasValue)
-                {
-                    l.UseTimeStamp = !config.NoLoggerTimeStamps.Value;
-                }
-            }
-
-            logger.Trace("Read config file: " + Utils.AssemblyConfigHelper.ConfigToString(config));
-
-            if (!string.IsNullOrWhiteSpace(config.Configuration))
-            {
-                this.Configuration = config.Configuration;
-                logger.Trace("Set configuration: " + this.Configuration);
-            }
-
-            if (config.DefineConstants != null && config.DefineConstants.Count > 0)
-            {
-                this.DefineConstants.AddRange(config.DefineConstants);
-                this.DefineConstants = this.DefineConstants.Distinct().ToList();
-
-                logger.Trace("Set constants: " + string.Join(",", this.DefineConstants));
-            }
+            var config = this.AssemblyInfo;
 
             if (this.FolderMode)
             {
@@ -126,13 +100,13 @@ namespace Bridge.Translator
                     this.RunEvent(config.BeforeBuild);
                     logger.Info("Running BeforeBuild event done");
                 }
-                catch (Exception exc)
+                catch (System.Exception exc)
                 {
                     var message = "Error: Unable to run beforeBuild event command: " + exc.Message + "\nStack trace:\n" + exc.StackTrace;
 
                     logger.Error("Exception occurred. Message: " + message);
 
-                    throw new Bridge.Translator.Exception(message);
+                    throw new Bridge.Translator.TranslatorException(message);
                 }
             }
 
@@ -189,7 +163,7 @@ namespace Bridge.Translator
                 {
                     var fixer = new PreconverterFixer(resolver);
                     var astNode = syntaxTree.AcceptVisitor(fixer);
-                    syntaxTree = (astNode != null ? (SyntaxTree)astNode : syntaxTree);
+                    syntaxTree = astNode != null ? (SyntaxTree)astNode : syntaxTree;
                     sourceFile.SyntaxTree = syntaxTree;
                     needRecompile = true;
                 }
@@ -274,7 +248,7 @@ namespace Bridge.Translator
 
                 if (fileName.Contains(Bridge.Translator.AssemblyInfo.DEFAULT_FILENAME))
                 {
-                    fileName = fileName.Replace(Bridge.Translator.AssemblyInfo.DEFAULT_FILENAME, defaultFileName);
+                    fileName = fileName.Replace(Bridge.Translator.AssemblyInfo.DEFAULT_FILENAME, Path.GetFileNameWithoutExtension(defaultFileName));
                 }
 
                 // Ensure filename contains no ":". It could be used like "c:/absolute/path"
@@ -342,12 +316,12 @@ namespace Bridge.Translator
                     logger.Trace("Run AfterBuild event");
                     this.RunEvent(this.AssemblyInfo.AfterBuild);
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
-                    var message = "Error: Unable to run afterBuild event command: " + ex.Message + "\nStack trace:\n" + ex.StackTrace;
+                    var message = "Error: Unable to run afterBuild event command: " + ex.ToString();
 
                     logger.Error(message);
-                    throw new Bridge.Translator.Exception(message);
+                    throw new Bridge.Translator.TranslatorException(message);
                 }
             }
 
@@ -844,9 +818,9 @@ namespace Bridge.Translator
 
                 this.Log.Info("Cleaning output folder done");
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
-                this.Log.Error("Exception occurred: " + ex.Message);
+                this.Log.Error(ex.ToString());
             }
         }
 
@@ -858,7 +832,7 @@ namespace Bridge.Translator
                 var compilerAssembly = System.Reflection.Assembly.GetExecutingAssembly();
                 compilerInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(compilerAssembly.Location);
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 this.Log.Error("Could not load executing assembly to get assembly info");
                 this.Log.Error(ex.ToString());
@@ -869,7 +843,7 @@ namespace Bridge.Translator
             {
                 bridgeInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(this.BridgeLocation);
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
                 this.Log.Error("Could not load Bridge.dll to get assembly info");
                 this.Log.Error(ex.ToString());

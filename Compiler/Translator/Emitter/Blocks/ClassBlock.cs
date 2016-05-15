@@ -240,6 +240,10 @@ namespace Bridge.Translator
             this.WriteCloseParentheses();
             this.WriteSemiColon();
 
+
+            this.EmitAnonymousTypes();
+            this.EmitNamedFunctions();
+
             var afterDefineMethods = this.GetAfterDefineMethods();
 
             if (afterDefineMethods.Any())
@@ -265,10 +269,24 @@ namespace Bridge.Translator
                 }
             }
 
-            this.EmitNamedFunctions();
+            this.WriteNewLine();
+            this.WriteNewLine();
+        }
 
-            this.WriteNewLine();
-            this.WriteNewLine();
+        protected virtual void EmitAnonymousTypes()
+        {
+            var types = this.Emitter.AnonymousTypes.Values.Where(t => !t.Emitted).ToArray();
+            if (types.Any())
+            {
+                foreach (IAnonymousTypeConfig type in types)
+                {
+                    this.WriteNewLine();
+                    this.WriteNewLine();
+
+                    type.Emitted = true;
+                    this.Write(type.Code);
+                }
+            }
         }
 
         protected virtual void EmitNamedFunctions()
@@ -435,7 +453,7 @@ namespace Bridge.Translator
             return this.GetDefineMethods("Before",
                 (method, rrMethod) =>
                 {
-                    this.PushWriter("Bridge.init(function(){0});");
+                    this.PushWriter("(function(){0})();");
                     this.ResetLocals();
                     var prevMap = this.BuildLocalsMap();
                     var prevNamesMap = this.BuildLocalsNamesMap();
@@ -488,8 +506,8 @@ namespace Bridge.Translator
         {
             return this.GetDefineMethods("After",
                 (method, rrMethod) =>
-                    "Bridge.init(" + BridgeTypes.ToJsName(rrMethod.DeclaringTypeDefinition, this.Emitter) + "." +
-                    this.Emitter.GetEntityName(method) + ");");
+                    BridgeTypes.ToJsName(rrMethod.DeclaringTypeDefinition, this.Emitter) + "." +
+                    this.Emitter.GetEntityName(method) + "();");
         }
     }
 }

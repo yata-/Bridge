@@ -80,7 +80,6 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.AreStrictEqual(0, new uint());
         }
 
-        [IgnoreTest(Until = Constants.IGNORE_DATE)]
         [Test]
         public void CreatingInstanceReturnsZero()
         {

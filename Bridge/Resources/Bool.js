@@ -18,20 +18,21 @@
             return typeof (instance) === "boolean";
         },
 
-        getDefaultValue: function() {
+        getDefaultValue: function () {
             return false;
         },
 
-        toString: function(v) {
+        toString: function (v) {
             return v ? Bridge.Boolean.trueString : Bridge.Boolean.falseString;
         },
 
-        parse: function(value) {
+        parse: function (value) {
             if (!Bridge.hasValue(value)) {
                 throw new Bridge.ArgumentNullException("value");
             }
 
             var result = { v: false };
+
             if (!Bridge.Boolean.tryParse(value, result)) {
                 throw new Bridge.FormatException("Bad format for Boolean value");
             }
@@ -39,8 +40,9 @@
             return result.v;
         },
 
-        tryParse: function(value, result) {
+        tryParse: function (value, result) {
             result.v = false;
+
             if (!Bridge.hasValue(value)) {
                 return false;
             }
@@ -49,6 +51,7 @@
                 result.v = true;
                 return true;
             }
+
             if (Bridge.String.equals(Bridge.Boolean.falseString, value, 5)) {
                 result.v = false;
                 return true;
@@ -61,6 +64,7 @@
                 if (!Bridge.Char.isWhiteSpace(value[start]) && !Bridge.Char.isNull(value.charCodeAt(start))) {
                     break;
                 }
+
                 start++;
             }
  
@@ -68,6 +72,7 @@
                 if (!Bridge.Char.isWhiteSpace(value[end]) && !Bridge.Char.isNull(value.charCodeAt(end))) {
                     break;
                 }
+
                 end--;            
             }
  
@@ -77,6 +82,7 @@
                 result.v = true;
                 return true;
             }
+
             if (Bridge.String.equals(Bridge.Boolean.falseString, value, 5)) {
                 result.v = false;
                 return true;

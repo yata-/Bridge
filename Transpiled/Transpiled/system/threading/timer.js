@@ -43,7 +43,7 @@
                 throw new Bridge.InvalidOperationException(Bridge.Threading.Timer.EXC_DISPOSED);
             }
     
-            if (!Bridge.hasValue(callback)) {
+            if (callback == null) {
                 throw new Bridge.ArgumentNullException("TimerCallback");
             }
     
@@ -73,7 +73,7 @@
                 return;
             }
     
-            if (Bridge.hasValue(this.timerCallback)) {
+            if (this.timerCallback != null) {
                 var myId = this.id;
                 this.timerCallback(this.state);
     

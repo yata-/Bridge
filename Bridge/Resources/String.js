@@ -27,6 +27,7 @@
 
         lastIndexOfAny: function (s, chars, startIndex, count) {
             var length = s.length;
+
             if (!length) {
                 return -1;
             }
@@ -36,6 +37,7 @@
             count = count || length;
 
             var endIndex = startIndex - count + 1;
+
             if (endIndex < 0) {
                 endIndex = 0;
             }
@@ -45,6 +47,7 @@
                     return i;
                 }
             }
+
             return -1;
         },
 
@@ -111,6 +114,7 @@
 
             if (alignment) {
                 alignment = parseInt(alignment, 10);
+
                 if (!Bridge.isNumber(alignment)) {
                     alignment = null;
                 }
@@ -381,6 +385,7 @@
             if (!count || ((index + count) > this.length)) {
                 return s.substr(0, index);
             }
+
             return s.substr(0, index) + s.substr(index + count);
         },
 
@@ -389,34 +394,36 @@
                 res = [],
                 m,
                 i;
+
             for (i = 0;; i = re.lastIndex) {
                 if (m = re.exec(s)) {
                     if (options !== 1 || m.index > i) {
                         if (res.length === limit - 1) {
                             res.push(s.substr(i));
                             return res;
-                        }
-                        else
+                        } else {
                             res.push(s.substring(i, m.index));
+                        }
                     }
-                }
-                else {
-                    if (options !== 1 || i !== s.length)
+                } else {
+                    if (options !== 1 || i !== s.length) {
                         res.push(s.substr(i));
+                    }
+
                     return res;
                 }
             }
         },
 
         trimEnd: function (s, chars) {
-            return s.replace(chars ? new RegExp('[' + String.fromCharCode.apply(null, chars) + ']+$') : /\s*$/, '');
+            return s.replace(chars ? new RegExp('[' + Bridge.String.escape(String.fromCharCode.apply(null, chars)) + ']+$') : /\s*$/, '');
         },
 
-        trimStart: function(s, chars) {
-            return s.replace(chars ? new RegExp('^[' + String.fromCharCode.apply(null, chars) + ']+') : /^\s*/, '');
+        trimStart: function (s, chars) {
+            return s.replace(chars ? new RegExp('^[' + Bridge.String.escape(String.fromCharCode.apply(null, chars)) + ']+') : /^\s*/, '');
         },
 
-        trim: function(s, chars) {
+        trim: function (s, chars) {
             return Bridge.String.trimStart(Bridge.String.trimEnd(s, chars), chars);
         }
     };

@@ -42,13 +42,13 @@
             areNotStrictEqual$1: function (expected, actual, description) {
                 Bridge.Test.Assert.assert.notStrictEqual(actual, expected, description);
             },
-            $true: function (condition) {
+            true: function (condition) {
                 Bridge.Test.Assert.assert.ok(condition);
             },
             true$1: function (condition, message) {
                 Bridge.Test.Assert.assert.ok(condition, message);
             },
-            $false: function (condition) {
+            false: function (condition) {
                 Bridge.Test.Assert.assert.notOk(condition);
             },
             false$1: function (condition, message) {
@@ -60,7 +60,7 @@
             fail$1: function (message) {
                 Bridge.Test.Assert.assert.notOk(true, message);
             },
-            $throws: function (block) {
+            throws: function (block) {
                 Bridge.Test.Assert.assert.throws(block, "");
             },
             throws$5: function (block, message) {
@@ -81,7 +81,7 @@
                     actual = Bridge.getTypeName(ex);
                 }
     
-                if (actual !== expected) {
+                if (!Bridge.referenceEquals(actual, expected)) {
                     Bridge.Test.Assert.assert.equal(actual, expected, message);
                 }
                 else  {
@@ -100,17 +100,17 @@
             throws$2: function (block, expected, message) {
                 Bridge.Test.Assert.assert.throws(block, expected, message);
             },
-            $null: function (anObject) {
-                Bridge.Test.Assert.assert.ok(!Bridge.hasValue(anObject));
+            null: function (anObject) {
+                Bridge.Test.Assert.assert.ok(anObject == null);
             },
             null$1: function (anObject, message) {
-                Bridge.Test.Assert.assert.ok(!Bridge.hasValue(anObject), message);
+                Bridge.Test.Assert.assert.ok(anObject == null, message);
             },
             notNull: function (anObject) {
-                Bridge.Test.Assert.assert.notOk(!Bridge.hasValue(anObject));
+                Bridge.Test.Assert.assert.notOk(anObject == null);
             },
             notNull$1: function (anObject, message) {
-                Bridge.Test.Assert.assert.notOk(!Bridge.hasValue(anObject), message);
+                Bridge.Test.Assert.assert.notOk(anObject == null, message);
             }
         }
     });
@@ -118,9 +118,9 @@
     Bridge.define('Bridge.Test.QUnit.TestFixture$1', function (T) { return {
         statics: {
             instanceFabric: null,
-            fixtureFabric: null,
+            fixtureFabric: Bridge.getDefaultValue(T),
             getFixtureFabric: function () {
-                if (!Bridge.hasValue(Bridge.Test.QUnit.TestFixture$1(T).fixtureFabric)) {
+                if (Bridge.Test.QUnit.TestFixture$1(T).fixtureFabric == null) {
                     Bridge.Test.QUnit.TestFixture$1(T).fixtureFabric = new T();
                 }
     
@@ -130,8 +130,8 @@
                 Bridge.Test.QUnit.TestFixture$1(T).fixtureFabric = value;
             },
             instanceFabric$1: function (type) {
-                if (!Bridge.hasValue(Bridge.Test.QUnit.TestFixture$1(T).instanceFabric)) {
-                    Bridge.Test.QUnit.TestFixture$1(T).instanceFabric = Bridge.cast(new type(), Bridge.Test.QUnit.TestFixture$1(T));
+                if (Bridge.Test.QUnit.TestFixture$1(T).instanceFabric == null) {
+                    Bridge.Test.QUnit.TestFixture$1(T).instanceFabric = Bridge.cast(Bridge.createInstance(type), Bridge.Test.QUnit.TestFixture$1(T));
                 }
     
                 return Bridge.Test.QUnit.TestFixture$1(T).instanceFabric;
@@ -162,7 +162,7 @@
         },
         config: {
             properties: {
-                Fixture: null
+                Fixture: Bridge.getDefaultValue(T)
             }
         },
         setUp: function () {
@@ -443,6 +443,23 @@
                 QUnit.test("List - IListInsertWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_ListTests.iListInsertWorks);
                 QUnit.test("List - IListRemoveAtWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_ListTests.iListRemoveAtWorks);
                 QUnit.test("List - ToArrayWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_ListTests.toArrayWorks);
+                QUnit.test("Stack - TypePropertiesAreCorrect", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests.typePropertiesAreCorrect);
+                QUnit.test("Stack - DefaultConstructorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests.defaultConstructorWorks);
+                QUnit.test("Stack - ConstructorWithCapacityWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests.constructorWithCapacityWorks);
+                QUnit.test("Stack - ConstructingFromArrayWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests.constructingFromArrayWorks);
+                QUnit.test("Stack - ConstructingFromListWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests.constructingFromListWorks);
+                QUnit.test("Stack - ConstructingFromIEnumerableWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests.constructingFromIEnumerableWorks);
+                QUnit.test("Stack - CountWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests.countWorks);
+                QUnit.test("Stack - ForeachWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests.foreachWorks);
+                QUnit.test("Stack - PushWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests.pushWorks);
+                QUnit.test("Stack - ClearWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests.clearWorks);
+                QUnit.test("Stack - ContainsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests.containsWorks);
+                QUnit.test("Stack - ContainsUsesEqualsMethod", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests.containsUsesEqualsMethod);
+                QUnit.test("Stack - ForeachWithListItemCallbackWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests.foreachWithListItemCallbackWorks);
+                QUnit.test("Stack - ForeachWithListCallbackWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests.foreachWithListCallbackWorks);
+                QUnit.test("Stack - PopWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests.popWorks);
+                QUnit.test("Stack - PeekWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests.peekWorks);
+                QUnit.test("Stack - ToArrayWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests.toArrayWorks);
                 QUnit.test("MultidimArray - TypePropertiesAreCorrect", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MultidimArrayTests.typePropertiesAreCorrect);
                 QUnit.test("MultidimArray - LengthWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MultidimArrayTests.lengthWorks);
                 QUnit.test("MultidimArray - GetValueWorksForUninitializedElement", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MultidimArrayTests.getValueWorksForUninitializedElement);
@@ -760,7 +777,7 @@
                 QUnit.test("DateTimeFormatInfo - InvariantWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Format_DateTimeFormatInfoTests.invariantWorks);
                 QUnit.test("DateTime - TypePropertiesAreCorrect", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_JsDateTimeTests.typePropertiesAreCorrect);
                 QUnit.test("DateTime - DefaultConstructorReturnsTodaysDate", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_JsDateTimeTests.defaultConstructorReturnsTodaysDate);
-                QUnit.test("DateTime - CreatingInstanceReturnsTodaysDate", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_JsDateTimeTests.creatingInstanceReturnsTodaysDate);
+                QUnit.test("DateTime - CreatingInstanceReturnsDateZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_JsDateTimeTests.creatingInstanceReturnsDateZero);
                 QUnit.test("DateTime - MillisecondSinceEpochConstructorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_JsDateTimeTests.millisecondSinceEpochConstructorWorks);
                 QUnit.test("DateTime - StringConstructorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_JsDateTimeTests.stringConstructorWorks);
                 QUnit.test("DateTime - YMDConstructorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_JsDateTimeTests.yMDConstructorWorks);
@@ -1012,6 +1029,33 @@
                 QUnit.test("TimeoutException - DefaultConstructorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_TimeoutExceptionTests.defaultConstructorWorks);
                 QUnit.test("TimeoutException - ConstructorWithMessageWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_TimeoutExceptionTests.constructorWithMessageWorks);
                 QUnit.test("TimeoutException - ConstructorWithMessageAndInnerExceptionWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Exceptions_TimeoutExceptionTests.constructorWithMessageAndInnerExceptionWorks);
+                QUnit.module("Guid");
+                QUnit.test("Guid - TypePropertiesAreCorrect", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.typePropertiesAreCorrect);
+                QUnit.test("Guid - DefaultValueWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.defaultValueWorks);
+                QUnit.test("Guid - CreateInstanceWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.createInstanceWorks);
+                QUnit.test("Guid - DefaultConstructorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.defaultConstructorWorks);
+                QUnit.test("Guid - EmptyWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.emptyWorks);
+                QUnit.test("Guid - ToStringWithoutArgumentsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.toStringWithoutArgumentsWorks);
+                QUnit.test("Guid - ByteArrayConstructorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.byteArrayConstructorWorks);
+                QUnit.test("Guid - Int32Int16Int16ByteArrayConstructorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.int32Int16Int16ByteArrayConstructorWorks);
+                QUnit.test("Guid - Int32Int16Int16BytesConstructorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.int32Int16Int16BytesConstructorWorks);
+                QUnit.test("Guid - UInt32UInt16UInt16BytesConstructorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.uInt32UInt16UInt16BytesConstructorWorks);
+                QUnit.test("Guid - StringConstructorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.stringConstructorWorks);
+                QUnit.test("Guid - ParseWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.parseWorks);
+                QUnit.test("Guid - ParseExactWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.parseExactWorks);
+                QUnit.test("Guid - TryParseWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.tryParseWorks);
+                QUnit.test("Guid - TryParseExactWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.tryParseExactWorks);
+                QUnit.test("Guid - CompareToWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.compareToWorks);
+                QUnit.test("Guid - IComparableCompareToWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.iComparableCompareToWorks);
+                QUnit.test("Guid - EqualsObjectWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.equalsObjectWorks);
+                QUnit.test("Guid - EqualsGuidWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.equalsGuidWorks);
+                QUnit.test("Guid - IEquatableEqualsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.iEquatableEqualsWorks);
+                QUnit.test("Guid - GetHashCodeWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.getHashCodeWorks);
+                QUnit.test("Guid - EqualityOperatorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.equalityOperatorWorks);
+                QUnit.test("Guid - InequalityOperatorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.inequalityOperatorWorks);
+                QUnit.test("Guid - ToStringWithFormatWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.toStringWithFormatWorks);
+                QUnit.test("Guid - NewGuidWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.newGuidWorks);
+                QUnit.test("Guid - ToByteArrayWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests.toByteArrayWorks);
                 QUnit.module("Issues");
                 QUnit.test("#69 - ThisKeywordInStructConstructorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge069.thisKeywordInStructConstructorWorks);
                 QUnit.test("#1000 - TestStaticViaChild", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1000.testStaticViaChild);
@@ -1046,6 +1090,7 @@
                 QUnit.test("#1066 - TestInlinePopertyWithValue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1066.testInlinePopertyWithValue);
                 QUnit.test("#1067 - TestInlinePopertyWithValue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1067.testInlinePopertyWithValue);
                 QUnit.test("#1071 - TestParamsForCtor", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1071.testParamsForCtor);
+                QUnit.test("#1172 - TestNameForProperty", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1072.testNameForProperty);
                 QUnit.test("#1076 - TestInlineConstantAsMemberReference", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1076.testInlineConstantAsMemberReference);
                 QUnit.test("#1076 - TestInlineBridgeNumericConstantsAsMemberReference", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1076.testInlineBridgeNumericConstantsAsMemberReference);
                 QUnit.test("#1083 - TestExternalEnum", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1083.testExternalEnum);
@@ -1069,6 +1114,79 @@
                 QUnit.test("#1146 - TestLongIssues", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1146.testLongIssues);
                 QUnit.test("#1149 - TestBitwiseOrAnd", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1149.testBitwiseOrAnd);
                 QUnit.test("#1160 - TestBitwiseOrAnd", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1160.testBitwiseOrAnd);
+                QUnit.test("#1170 - TestAsyncUsing", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1170.testAsyncUsing);
+                QUnit.test("#1170 - TestAsyncUsingWithException", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1170.testAsyncUsingWithException);
+                QUnit.test("#1171 - TestLinqEnumerableInList", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1171.testLinqEnumerableInList);
+                QUnit.test("#1175 - TestNullComparing", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1175.testNullComparing);
+                QUnit.test("#1176 - TestFunctionLifting", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1176.testFunctionLifting);
+                QUnit.test("#1177 - TestImplicitCast", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1177.testImplicitCast);
+                QUnit.test("#1180 - TestStructClone", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1180.testStructClone);
+                QUnit.test("#1184 - TestGetTypeForNumberTypes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1184.testGetTypeForNumberTypes);
+                QUnit.test("#1186 - TestLambdasInField", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1186.testLambdasInField);
+                QUnit.test("#1189 - TestTaskNumber", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1189.testTaskNumber);
+                QUnit.test("#1197 - TestGetHashCodeOnDictionary", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1197.testGetHashCodeOnDictionary);
+                QUnit.test("#1199 - TestEventNameCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1199.testEventNameCase);
+                QUnit.test("#1202 - TestRefOutStaticIntField", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202.testRefOutStaticIntField);
+                QUnit.test("#1202 - TestRefOutLocal1DIntArray", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202.testRefOutLocal1DIntArray);
+                QUnit.test("#1202 - TestRefOutStatic1DIntArray", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202.testRefOutStatic1DIntArray);
+                QUnit.test("#1202 - TestRefOutLocal2DIntArray", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202.testRefOutLocal2DIntArray);
+                QUnit.test("#1202 - TestRefOutStaticDecimalField", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202.testRefOutStaticDecimalField);
+                QUnit.test("#1202 - TestRefOutLocal1DDecimalArray", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202.testRefOutLocal1DDecimalArray);
+                QUnit.test("#1202 - TestRefOutLocal2DDecimalArray", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202.testRefOutLocal2DDecimalArray);
+                QUnit.test("#1202 - TestInlineOutStaticIntField", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202.testInlineOutStaticIntField);
+                QUnit.test("#1202 - TestInlineOutStatic1DIntArray", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202.testInlineOutStatic1DIntArray);
+                QUnit.test("#1202 - TestInlineOutLocal2DIntArray", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202.testInlineOutLocal2DIntArray);
+                QUnit.test("#1203 - TestLiftedFunctionsInsideInitMethod", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1203.testLiftedFunctionsInsideInitMethod);
+                QUnit.test("#1206 - TestDocumentURLProperty", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1206.testDocumentURLProperty);
+                QUnit.test("#1217 - TestTypeInferenceWithNamedArguments", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1217.testTypeInferenceWithNamedArguments);
+                QUnit.test("#1219 - TestLongJSON", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1219.testLongJSON);
+                QUnit.test("#1220 - TestConstInGenericClass", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1220.testConstInGenericClass);
+                QUnit.test("#1226 - TestSinh", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1226.testSinh);
+                QUnit.test("#1226 - TestCosh", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1226.testCosh);
+                QUnit.test("#1226 - TestTanh", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1226.testTanh);
+                QUnit.test("#1231 - TestAutoGeneratedStructMethodName", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1231.testAutoGeneratedStructMethodName);
+                QUnit.test("#1232 - TestParamsInThisCtorInit", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1232.testParamsInThisCtorInit);
+                QUnit.test("#1232 - TestExtendedParamsInThisCtorInit", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1232.testExtendedParamsInThisCtorInit);
+                QUnit.test("#1241 - TestMarkElement", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1241.testMarkElement);
+                QUnit.test("#1253 - TestDefaultEnumMode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1253.testDefaultEnumMode);
+                QUnit.test("#1256 - TestCaseBooleanIsLet", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256.testCaseBooleanIsLet);
+                QUnit.test("#1256 - TestReservedFields", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256.testReservedFields);
+                QUnit.test("#1256 - TestReservedMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256.testReservedMethods);
+                QUnit.test("#1260 - TestStringTrim", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1260.testStringTrim);
+                QUnit.test("#1260 - TestStringTrimStart", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1260.testStringTrimStart);
+                QUnit.test("#1260 - TestStringTrimEnd", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1260.testStringTrimEnd);
+                QUnit.test("#1264 - TestDefaultGetHashCodeIsRepeatable", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1264.testDefaultGetHashCodeIsRepeatable);
+                QUnit.test("#1266 - TestArrayToEnumerable", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1266.testArrayToEnumerable);
+                QUnit.test("#1296 - TestImplicitOperator", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1296.testImplicitOperator);
+                QUnit.test("#1296 - TestIgnoreCast", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1296.testIgnoreCast);
+                QUnit.test("#1296 - TestExternalImplicit", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1296.testExternalImplicit);
+                QUnit.test("#1304 - TestWriteFormatString", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1304.testWriteFormatString);
+                QUnit.test("#1304 - TestWriteLineFormatString", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1304.testWriteLineFormatString);
+                QUnit.test("#1305 - TestAsyncIntReturnWithAssigmentFromResult", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1305.testAsyncIntReturnWithAssigmentFromResult);
+                QUnit.test("#1305 - TestAsyncDataClassReturnWithAssigmentFromResult", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1305.testAsyncDataClassReturnWithAssigmentFromResult);
+                QUnit.test("#1305 - TestAsyncDataStructReturnWithAssigmentFromResult", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1305.testAsyncDataStructReturnWithAssigmentFromResult);
+                QUnit.test("#1316 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316.testUseCase);
+                QUnit.test("#1316 - TestStringConcatObject", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316.testStringConcatObject);
+                QUnit.test("#1316 - TestStringConcatEnumerableString", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316.testStringConcatEnumerableString);
+                QUnit.test("#1316 - TestStringConcatEnumerableGeneric", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316.testStringConcatEnumerableGeneric);
+                QUnit.test("#1340 - TestStructGenericMembersDefaultValue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340.testStructGenericMembersDefaultValue);
+                QUnit.test("#1340 - TestStructTwoGenericMembersDefaultValue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340.testStructTwoGenericMembersDefaultValue);
+                QUnit.test("#1340 - TestClassGenericMembersDefaultValue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340.testClassGenericMembersDefaultValue);
+                QUnit.test("#1340 - TestClassTwoGenericMembersDefaultValue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340.testClassTwoGenericMembersDefaultValue);
+                QUnit.test("#1340 - TestClass1TwoGenericInheritedMembersDefaultValue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340.testClass1TwoGenericInheritedMembersDefaultValue);
+                QUnit.test("#1340 - TestClass2TwoGenericInheritedMembersDefaultValue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340.testClass2TwoGenericInheritedMembersDefaultValue);
+                QUnit.test("#1340 - TestClass3TwoGenericInheritedMembersDefaultValue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340.testClass3TwoGenericInheritedMembersDefaultValue);
+                QUnit.test("#1341 - TestPlainObject", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.testPlainObject);
+                QUnit.test("#1341 - TestAnonymousTypeCreation", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.testAnonymousTypeCreation);
+                QUnit.test("#1341 - TestDiffStructHashCode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.testDiffStructHashCode);
+                QUnit.test("#1341 - TestDiffAnonymousTypesHashCode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.testDiffAnonymousTypesHashCode);
+                QUnit.test("#1341 - Test1AnonymousType", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.test1AnonymousType);
+                QUnit.test("#1341 - Test2AnonymousType", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.test2AnonymousType);
+                QUnit.test("#1341 - Test3AnonymousType", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.test3AnonymousType);
+                QUnit.test("#1341 - Test4AnonymousType", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.test4AnonymousType);
+                QUnit.test("#1341 - Test5AnonymousType", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.test5AnonymousType);
+                QUnit.test("#1343 - TestDoubleTemplate", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1343.testDoubleTemplate);
+                QUnit.test("#1343 - TestInlineInGetHashCode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1343.testInlineInGetHashCode);
                 QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge381.testUseCase);
                 QUnit.test("#447 - CheckInlineExpression", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineExpression);
                 QUnit.test("#447 - CheckInlineCalls", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineCalls);
@@ -1133,6 +1251,7 @@
                 QUnit.test("#634 - TestUseCase2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge634.testUseCase2);
                 QUnit.test("#634 - TestUseCaseFor658", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge634.testUseCaseFor658);
                 QUnit.test("#635 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge635.testUseCase);
+                QUnit.test("#637 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge637.testUseCase);
                 QUnit.test("#647 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge647.testUseCase);
                 QUnit.test("#648 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge648.testUseCase);
                 QUnit.test("#652 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge652.testUseCase);
@@ -1447,14 +1566,43 @@
                 QUnit.test("Regex.Split - SplitStaticTest5", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests.splitStaticTest5);
                 QUnit.test("Regex.Split - SplitStaticWithOptionsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests.splitStaticWithOptionsTest);
                 QUnit.test("Regex.Split - SplitStaticWithOptionsAndTimeout", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests.splitStaticWithOptionsAndTimeout);
+                QUnit.test("Regex: Anchors - StartOfStringOrLineTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.startOfStringOrLineTest);
+                QUnit.test("Regex: Anchors - StartOfStringOrLineMultilineModeTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.startOfStringOrLineMultilineModeTest);
+                QUnit.test("Regex: Anchors - EndOfStringOrLineTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.endOfStringOrLineTest1);
+                QUnit.test("Regex: Anchors - EndOfStringOrLineTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.endOfStringOrLineTest2);
+                QUnit.test("Regex: Anchors - EndOfStringOrLineTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.endOfStringOrLineTest3);
+                QUnit.test("Regex: Anchors - EndOfStringOrLineTest4", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.endOfStringOrLineTest4);
+                QUnit.test("Regex: Anchors - StartOfStringOnlyTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.startOfStringOnlyTest);
+                QUnit.test("Regex: Anchors - EndOfStringOrNewlineTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.endOfStringOrNewlineTest);
+                QUnit.test("Regex: Anchors - EndOfStringOnlyTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.endOfStringOnlyTest);
+                QUnit.test("Regex: Anchors - ContiguousMatchesTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.contiguousMatchesTest);
+                QUnit.test("Regex: Anchors - WordBoundaryTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.wordBoundaryTest);
+                QUnit.test("Regex: Anchors - NonWordBoundaryTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.nonWordBoundaryTest);
+                QUnit.test("Regex: Anchors - StartAndEndOfStringCustomTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.startAndEndOfStringCustomTest1);
+                QUnit.test("Regex: Anchors - StartAndEndOfStringCustomTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.startAndEndOfStringCustomTest2);
+                QUnit.test("Regex: Anchors - EndOfStringOrNewlineCustomTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.endOfStringOrNewlineCustomTest1);
+                QUnit.test("Regex: Anchors - EndOfStringOrNewlineCustomTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.endOfStringOrNewlineCustomTest2);
+                QUnit.test("Regex: Anchors - EndOfStringOnlyCustomTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.endOfStringOnlyCustomTest1);
+                QUnit.test("Regex: Anchors - EndOfStringOnlyCustomTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.endOfStringOnlyCustomTest2);
+                QUnit.test("Regex: Anchors - EndOfStringOnlyCustomTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.endOfStringOnlyCustomTest3);
+                QUnit.test("Regex: Anchors - ContiguousMatchesCustomTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.contiguousMatchesCustomTest1);
+                QUnit.test("Regex: Anchors - ContiguousMatchesCustomTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.contiguousMatchesCustomTest2);
+                QUnit.test("Regex: Backreferences - MsdnNumberedBackrefTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.msdnNumberedBackrefTest);
+                QUnit.test("Regex: Backreferences - MsdnNamedBackrefTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.msdnNamedBackrefTest);
+                QUnit.test("Regex: Backreferences - MsdnNamedBackrefWithNumberAsNameTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.msdnNamedBackrefWithNumberAsNameTest);
+                QUnit.test("Regex: Backreferences - MsdnNamedBackrefWithRedefinedGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.msdnNamedBackrefWithRedefinedGroupTest);
+                QUnit.test("Regex: Backreferences - MsdnNamedBackrefWithEmptyCaptureTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.msdnNamedBackrefWithEmptyCaptureTest1);
+                QUnit.test("Regex: Backreferences - MsdnNamedBackrefWithEmptyCaptureTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.msdnNamedBackrefWithEmptyCaptureTest2);
+                QUnit.test("Regex: Backreferences - NamedBackrefToUnreachableGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.namedBackrefToUnreachableGroupTest);
+                QUnit.test("Regex: Backreferences - NamedBackrefToSelfGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.namedBackrefToSelfGroupTest);
+                QUnit.test("Regex: Backreferences - NamedBackrefToParentGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.namedBackrefToParentGroupTest);
                 QUnit.test("Regex: Backreferences - NumberedBackrefTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.numberedBackrefTest);
-                QUnit.test("Regex: Backreferences - NamedBackrefTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.namedBackrefTest);
-                QUnit.test("Regex: Backreferences - NamedBackrefWithNumberAsNameTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.namedBackrefWithNumberAsNameTest);
-                QUnit.test("Regex: Backreferences - NamedBackrefWithRedefinedGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.namedBackrefWithRedefinedGroupTest);
-                QUnit.test("Regex: Backreferences - NamedBackrefWithEmptyCaptureTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.namedBackrefWithEmptyCaptureTest1);
-                QUnit.test("Regex: Backreferences - NamedBackrefWithEmptyCaptureTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.namedBackrefWithEmptyCaptureTest2);
+                QUnit.test("Regex: Backreferences - NumberedBackrefInGroupFailsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.numberedBackrefInGroupFailsTest);
+                QUnit.test("Regex: Backreferences - NamedBackrefInGroupFailsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.namedBackrefInGroupFailsTest);
                 QUnit.test("Regex.Escape - EscapeTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests.escapeTest);
                 QUnit.test("Regex.Escape - UnescapeTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests.unescapeTest);
+                QUnit.test("Regex.Escape - EscapeCharSetTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests.escapeCharSetTest);
+                QUnit.test("Regex.Escape - NonEscapeCharSetTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests.nonEscapeCharSetTest);
                 QUnit.test("Regex.Matches - MatchesTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchesTests.matchesTest);
                 QUnit.test("Regex.Matches - MatchesAtPositionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchesTests.matchesAtPositionTest);
                 QUnit.test("Regex.Matches - MatchesStaticTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchesTests.matchesStaticTest);
@@ -1489,6 +1637,30 @@
                 QUnit.test("RegexGroupCollection - GroupCollectionForeachTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexGroupCollectionTests.groupCollectionForeachTest);
                 QUnit.test("RegexGroupCollection - GroupCollectionEnumeratorTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexGroupCollectionTests.groupCollectionEnumeratorTest);
                 QUnit.test("RegexGroupCollection - GroupCollectionCopyToTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexGroupCollectionTests.groupCollectionCopyToTest);
+                QUnit.test("Regex IMNSX - MsdnMultilineInlineOptionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.msdnMultilineInlineOptionTest);
+                QUnit.test("Regex IMNSX - MsdnSinglelineInlineOptionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.msdnSinglelineInlineOptionTest);
+                QUnit.test("Regex IMNSX - MsdnIngoreWhitespaceInlineOptionTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.msdnIngoreWhitespaceInlineOptionTest1);
+                QUnit.test("Regex IMNSX - MsdnIngoreWhitespaceInlineOptionTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.msdnIngoreWhitespaceInlineOptionTest2);
+                QUnit.test("Regex IMNSX - MsdnIngoreWhitespaceInlineOptionTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.msdnIngoreWhitespaceInlineOptionTest3);
+                QUnit.test("Regex IMNSX - MultilineInlineOptionTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.multilineInlineOptionTest1);
+                QUnit.test("Regex IMNSX - MultilineInlineOptionTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.multilineInlineOptionTest2);
+                QUnit.test("Regex IMNSX - MultilineInlineOptionTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.multilineInlineOptionTest3);
+                QUnit.test("Regex IMNSX - MultilineInlineOptionTest4", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.multilineInlineOptionTest4);
+                QUnit.test("Regex IMNSX - MultilineInlineOptionTest5", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.multilineInlineOptionTest5);
+                QUnit.test("Regex IMNSX - MultilineInlineOptionTest6", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.multilineInlineOptionTest6);
+                QUnit.test("Regex IMNSX - MultilineInlineOptionTest7", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.multilineInlineOptionTest7);
+                QUnit.test("Regex IMNSX - SinglelineInlineOptionTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.singlelineInlineOptionTest1);
+                QUnit.test("Regex IMNSX - SinglelineInlineOptionTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.singlelineInlineOptionTest2);
+                QUnit.test("Regex IMNSX - SinglelineInlineOptionTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.singlelineInlineOptionTest3);
+                QUnit.test("Regex IMNSX - IngoreWhitespaceInlineOptionTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.ingoreWhitespaceInlineOptionTest1);
+                QUnit.test("Regex IMNSX - IngoreWhitespaceInlineOptionTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.ingoreWhitespaceInlineOptionTest2);
+                QUnit.test("Regex IMNSX - IngoreWhitespaceInlineOptionTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.ingoreWhitespaceInlineOptionTest3);
+                QUnit.test("Regex IMNSX - IngoreWhitespaceInlineOptionTest4", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.ingoreWhitespaceInlineOptionTest4);
+                QUnit.test("Regex IMNSX - IngoreWhitespaceInlineOptionTest5", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.ingoreWhitespaceInlineOptionTest5);
+                QUnit.test("Regex IMNSX - IngoreWhitespaceInlineOptionTest6", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.ingoreWhitespaceInlineOptionTest6);
+                QUnit.test("Regex IMNSX - IngoreWhitespaceInlineOptionTest7", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.ingoreWhitespaceInlineOptionTest7);
+                QUnit.test("Regex IMNSX - IngoreWhitespaceInlineOptionTest8", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.ingoreWhitespaceInlineOptionTest8);
+                QUnit.test("Regex IMNSX - IngoreWhitespaceInlineOptionTest9", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.ingoreWhitespaceInlineOptionTest9);
                 QUnit.test("RegexMatchCollection - CaseDataTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchCollectionTests.caseDataTest);
                 QUnit.test("RegexMatchCollection - MatchCollectionFieldsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchCollectionTests.matchCollectionFieldsTest);
                 QUnit.test("RegexMatchCollection - MatchCollectionItemsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchCollectionTests.matchCollectionItemsTest);
@@ -1503,6 +1675,26 @@
                 QUnit.test("Match Entity - MatchNextMatchWithEmptyPatternTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchEntityTests.matchNextMatchWithEmptyPatternTest);
                 QUnit.test("Match Entity - MatchResultTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchEntityTests.matchResultTest);
                 QUnit.test("Match Entity - MatchSearchGroupByNameTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchEntityTests.matchSearchGroupByNameTest);
+                QUnit.test("MatchSparse Entity - GroupOrderingTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchSparseTests.groupOrderingTest1);
+                QUnit.test("MatchSparse Entity - GroupOrderingTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchSparseTests.groupOrderingTest2);
+                QUnit.test("MatchSparse Entity - GroupOrderingTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchSparseTests.groupOrderingTest3);
+                QUnit.test("MatchSparse Entity - SparseOrderingTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchSparseTests.sparseOrderingTest);
+                QUnit.test("MatchSparse Entity - GroupCapturesMergeTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchSparseTests.groupCapturesMergeTest);
+                QUnit.test("RegexOptions - MsdnIgnoreCaseOptionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.msdnIgnoreCaseOptionTest);
+                QUnit.test("RegexOptions - MsdnMultilineOptionTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.msdnMultilineOptionTest1);
+                QUnit.test("RegexOptions - MsdnMultilineOptionTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.msdnMultilineOptionTest2);
+                QUnit.test("RegexOptions - MsdnSinglelineOptionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.msdnSinglelineOptionTest);
+                QUnit.test("RegexOptions - MsdnIgnoreWhitespaceOptionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.msdnIgnoreWhitespaceOptionTest);
+                QUnit.test("RegexOptions - IgnoreCaseOptionTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.ignoreCaseOptionTest1);
+                QUnit.test("RegexOptions - IgnoreCaseOptionTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.ignoreCaseOptionTest2);
+                QUnit.test("RegexOptions - IgnoreCaseOptionTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.ignoreCaseOptionTest3);
+                QUnit.test("RegexOptions - DefaultLineOptionsTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.defaultLineOptionsTest1);
+                QUnit.test("RegexOptions - DefaultLineOptionsTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.defaultLineOptionsTest2);
+                QUnit.test("RegexOptions - MultilineOptionTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.multilineOptionTest1);
+                QUnit.test("RegexOptions - MultilineOptionTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.multilineOptionTest2);
+                QUnit.test("RegexOptions - SinglelineOptionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.singlelineOptionTest);
+                QUnit.test("RegexOptions - SinglelineDotCharTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.singlelineDotCharTest);
+                QUnit.test("RegexOptions - MultilineAndSinglelineOptionsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.multilineAndSinglelineOptionsTest);
                 QUnit.test("Regex Timeouts - RegexTimeoutValidationWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexTimeoutTests.regexTimeoutValidationWorks);
                 QUnit.test("Regex Timeouts - RegexIsMatchWorksWithShortTimeout", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexTimeoutTests.regexIsMatchWorksWithShortTimeout);
                 QUnit.test("Regex Timeouts - RegexIsMatchWorksWithLongTimeout", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexTimeoutTests.regexIsMatchWorksWithLongTimeout);
@@ -1553,6 +1745,7 @@
                 QUnit.test("Byte - CastsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_ByteTests.castsWork);
                 QUnit.test("Byte - DefaultValueIs0", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_ByteTests.defaultValueIs0);
                 QUnit.test("Byte - DefaultConstructorReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_ByteTests.defaultConstructorReturnsZero);
+                QUnit.test("Byte - CreatingInstanceReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_ByteTests.creatingInstanceReturnsZero);
                 QUnit.test("Byte - ConstantsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_ByteTests.constantsWork);
                 QUnit.test("Byte - FormatWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_ByteTests.formatWorks);
                 QUnit.test("Byte - IFormattableToStringWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_ByteTests.iFormattableToStringWorks);
@@ -1569,6 +1762,7 @@
                 QUnit.test("Char - CastsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_CharTests.castsWork);
                 QUnit.test("Char - DefaultValueWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_CharTests.defaultValueWorks);
                 QUnit.test("Char - DefaultConstructorReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_CharTests.defaultConstructorReturnsZero);
+                QUnit.test("Char - CreatingInstanceReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_CharTests.creatingInstanceReturnsZero);
                 QUnit.test("Char - ConstantsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_CharTests.constantsWork);
                 QUnit.test("Char - CharComparisonWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_CharTests.charComparisonWorks);
                 QUnit.test("Char - ParseWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_CharTests.parseWorks);
@@ -1645,6 +1839,7 @@
                 QUnit.test("Int16 - CastsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int16Tests.castsWork);
                 QUnit.test("Int16 - DefaultValueIs0", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int16Tests.defaultValueIs0);
                 QUnit.test("Int16 - DefaultConstructorReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int16Tests.defaultConstructorReturnsZero);
+                QUnit.test("Int16 - CreatingInstanceReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int16Tests.creatingInstanceReturnsZero);
                 QUnit.test("Int16 - ConstantsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int16Tests.constantsWork);
                 QUnit.test("Int16 - FormatWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int16Tests.formatWorks);
                 QUnit.test("Int16 - IFormattableToStringWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int16Tests.iFormattableToStringWorks);
@@ -1664,6 +1859,7 @@
                 QUnit.test("Int32 - UnboxingWorksForInt32", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int32Tests.unboxingWorksForInt32);
                 QUnit.test("Int32 - DefaultValueIs0", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int32Tests.defaultValueIs0);
                 QUnit.test("Int32 - DefaultConstructorReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int32Tests.defaultConstructorReturnsZero);
+                QUnit.test("Int32 - CreatingInstanceReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int32Tests.creatingInstanceReturnsZero);
                 QUnit.test("Int32 - ConstantsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int32Tests.constantsWork);
                 QUnit.test("Int32 - FormatWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int32Tests.formatWorks);
                 QUnit.test("Int32 - IFormattableToStringWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int32Tests.iFormattableToStringWorks);
@@ -1714,6 +1910,7 @@
                 QUnit.test("SByte - CastsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_SByteTests.castsWork);
                 QUnit.test("SByte - DefaultValueIs0", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_SByteTests.defaultValueIs0);
                 QUnit.test("SByte - DefaultConstructorReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_SByteTests.defaultConstructorReturnsZero);
+                QUnit.test("SByte - CreatingInstanceReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_SByteTests.creatingInstanceReturnsZero);
                 QUnit.test("SByte - ConstantsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_SByteTests.constantsWork);
                 QUnit.test("SByte - FormatWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_SByteTests.formatWorks);
                 QUnit.test("SByte - IFormattableToStringWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_SByteTests.iFormattableToStringWorks);
@@ -1768,6 +1965,7 @@
                 QUnit.test("UInt16 - CastsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt16Tests.castsWork);
                 QUnit.test("UInt16 - DefaultValueIs0", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt16Tests.defaultValueIs0);
                 QUnit.test("UInt16 - DefaultConstructorReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt16Tests.defaultConstructorReturnsZero);
+                QUnit.test("UInt16 - CreatingInstanceReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt16Tests.creatingInstanceReturnsZero);
                 QUnit.test("UInt16 - ConstantsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt16Tests.constantsWork);
                 QUnit.test("UInt16 - FormatWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt16Tests.formatWorks);
                 QUnit.test("UInt16 - IFormattableToStringWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt16Tests.iFormattableToStringWorks);
@@ -1784,6 +1982,7 @@
                 QUnit.test("UInt32 - CastsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt32Tests.castsWork);
                 QUnit.test("UInt32 - DefaultValueIs0", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt32Tests.defaultValueIs0);
                 QUnit.test("UInt32 - DefaultConstructorReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt32Tests.defaultConstructorReturnsZero);
+                QUnit.test("UInt32 - CreatingInstanceReturnsZero", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt32Tests.creatingInstanceReturnsZero);
                 QUnit.test("UInt32 - ConstantsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt32Tests.constantsWork);
                 QUnit.test("UInt32 - FormatWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt32Tests.formatWorks);
                 QUnit.test("UInt32 - IFormattableToStringWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt32Tests.iFormattableToStringWorks);
@@ -2818,6 +3017,16 @@
         }
     });
     
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1072', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1072)],
+        statics: {
+            testNameForProperty: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1072).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1072);
+                Bridge.ClientTest.BridgeIssues.Bridge1072.testNameForProperty();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1076', {
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1076)],
         statics: {
@@ -3020,6 +3229,512 @@
             testBitwiseOrAnd: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1160).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1160);
                 Bridge.ClientTest.BridgeIssues.Bridge1160.testBitwiseOrAnd();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1170', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1170)],
+        statics: {
+            testAsyncUsing: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1170).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1170);
+                Bridge.ClientTest.BridgeIssues.Bridge1170.testAsyncUsing();
+            },
+            testAsyncUsingWithException: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1170).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1170);
+                Bridge.ClientTest.BridgeIssues.Bridge1170.testAsyncUsingWithException();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1171', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1171)],
+        statics: {
+            testLinqEnumerableInList: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1171).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1171);
+                Bridge.ClientTest.BridgeIssues.Bridge1171.testLinqEnumerableInList();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1175', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1175)],
+        statics: {
+            testNullComparing: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1175).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1175);
+                Bridge.ClientTest.BridgeIssues.Bridge1175.testNullComparing();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1176', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1176)],
+        statics: {
+            testFunctionLifting: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1176).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1176);
+                Bridge.ClientTest.BridgeIssues.Bridge1176.testFunctionLifting();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1177', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1177)],
+        statics: {
+            testImplicitCast: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1177).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1177);
+                Bridge.ClientTest.BridgeIssues.Bridge1177.testImplicitCast();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1180', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1180)],
+        statics: {
+            testStructClone: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1180).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1180);
+                Bridge.ClientTest.BridgeIssues.Bridge1180.testStructClone();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1184', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1184)],
+        statics: {
+            testGetTypeForNumberTypes: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1184).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1184);
+                Bridge.ClientTest.BridgeIssues.Bridge1184.testGetTypeForNumberTypes();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1186', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1186)],
+        statics: {
+            testLambdasInField: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1186).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1186);
+                Bridge.ClientTest.BridgeIssues.Bridge1186.testLambdasInField();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1189', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1189)],
+        statics: {
+            testTaskNumber: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1189).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1189);
+                Bridge.ClientTest.BridgeIssues.Bridge1189.testTaskNumber();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1197', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1197)],
+        statics: {
+            testGetHashCodeOnDictionary: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1197).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1197);
+                Bridge.ClientTest.BridgeIssues.Bridge1197.testGetHashCodeOnDictionary();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1199', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1199)],
+        statics: {
+            testEventNameCase: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1199).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1199);
+                Bridge.ClientTest.BridgeIssues.Bridge1199.testEventNameCase();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202)],
+        statics: {
+            testRefOutStaticIntField: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202);
+                Bridge.ClientTest.BridgeIssues.Bridge1202.testRefOutStaticIntField();
+            },
+            testRefOutLocal1DIntArray: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202);
+                Bridge.ClientTest.BridgeIssues.Bridge1202.testRefOutLocal1DIntArray();
+            },
+            testRefOutStatic1DIntArray: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202);
+                Bridge.ClientTest.BridgeIssues.Bridge1202.testRefOutStatic1DIntArray();
+            },
+            testRefOutLocal2DIntArray: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202);
+                Bridge.ClientTest.BridgeIssues.Bridge1202.testRefOutLocal2DIntArray();
+            },
+            testRefOutStaticDecimalField: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202);
+                Bridge.ClientTest.BridgeIssues.Bridge1202.testRefOutStaticDecimalField();
+            },
+            testRefOutLocal1DDecimalArray: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202);
+                Bridge.ClientTest.BridgeIssues.Bridge1202.testRefOutLocal1DDecimalArray();
+            },
+            testRefOutLocal2DDecimalArray: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202);
+                Bridge.ClientTest.BridgeIssues.Bridge1202.testRefOutLocal2DDecimalArray();
+            },
+            testInlineOutStaticIntField: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202);
+                Bridge.ClientTest.BridgeIssues.Bridge1202.testInlineOutStaticIntField();
+            },
+            testInlineOutStatic1DIntArray: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202);
+                Bridge.ClientTest.BridgeIssues.Bridge1202.testInlineOutStatic1DIntArray();
+            },
+            testInlineOutLocal2DIntArray: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1202).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1202);
+                Bridge.ClientTest.BridgeIssues.Bridge1202.testInlineOutLocal2DIntArray();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1203', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1203)],
+        statics: {
+            testLiftedFunctionsInsideInitMethod: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1203).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1203);
+                Bridge.ClientTest.BridgeIssues.Bridge1203.testLiftedFunctionsInsideInitMethod();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1206', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1206)],
+        statics: {
+            testDocumentURLProperty: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1206).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1206);
+                Bridge.ClientTest.BridgeIssues.Bridge1206.testDocumentURLProperty();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1217', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1217)],
+        statics: {
+            testTypeInferenceWithNamedArguments: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1217).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1217);
+                Bridge.ClientTest.BridgeIssues.Bridge1217.testTypeInferenceWithNamedArguments();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1219', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1219)],
+        statics: {
+            testLongJSON: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1219).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1219);
+                Bridge.ClientTest.BridgeIssues.Bridge1219.testLongJSON();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1220', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1220)],
+        statics: {
+            testConstInGenericClass: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1220).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1220);
+                Bridge.ClientTest.BridgeIssues.Bridge1220.testConstInGenericClass();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1226', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1226)],
+        statics: {
+            testSinh: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1226).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1226);
+                Bridge.ClientTest.BridgeIssues.Bridge1226.testSinh();
+            },
+            testCosh: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1226).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1226);
+                Bridge.ClientTest.BridgeIssues.Bridge1226.testCosh();
+            },
+            testTanh: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1226).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1226);
+                Bridge.ClientTest.BridgeIssues.Bridge1226.testTanh();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1231', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1231)],
+        statics: {
+            testAutoGeneratedStructMethodName: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1231).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1231);
+                Bridge.ClientTest.BridgeIssues.Bridge1231.testAutoGeneratedStructMethodName();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1232', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1232)],
+        statics: {
+            testParamsInThisCtorInit: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1232).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1232);
+                Bridge.ClientTest.BridgeIssues.Bridge1232.testParamsInThisCtorInit();
+            },
+            testExtendedParamsInThisCtorInit: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1232).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1232);
+                Bridge.ClientTest.BridgeIssues.Bridge1232.testExtendedParamsInThisCtorInit();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1241', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1241)],
+        statics: {
+            testMarkElement: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1241).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1241, 4);
+                Bridge.ClientTest.BridgeIssues.Bridge1241.testMarkElement();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1253', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1253)],
+        statics: {
+            testDefaultEnumMode: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1253).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1253);
+                Bridge.ClientTest.BridgeIssues.Bridge1253.testDefaultEnumMode();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1256)],
+        statics: {
+            testCaseBooleanIsLet: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1256).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256, 7);
+                Bridge.ClientTest.BridgeIssues.Bridge1256.testCaseBooleanIsLet();
+            },
+            testReservedFields: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1256).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256, 66);
+                Bridge.ClientTest.BridgeIssues.Bridge1256.testReservedFields();
+            },
+            testReservedMethods: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1256).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256, 66);
+                Bridge.ClientTest.BridgeIssues.Bridge1256.testReservedMethods();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1260', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1260)],
+        statics: {
+            testStringTrim: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1260).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1260, 3);
+                Bridge.ClientTest.BridgeIssues.Bridge1260.testStringTrim();
+            },
+            testStringTrimStart: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1260).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1260, 3);
+                Bridge.ClientTest.BridgeIssues.Bridge1260.testStringTrimStart();
+            },
+            testStringTrimEnd: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1260).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1260, 3);
+                Bridge.ClientTest.BridgeIssues.Bridge1260.testStringTrimEnd();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1264', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1264)],
+        statics: {
+            testDefaultGetHashCodeIsRepeatable: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1264).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1264, 1);
+                Bridge.ClientTest.BridgeIssues.Bridge1264.testDefaultGetHashCodeIsRepeatable();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1266', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1266)],
+        statics: {
+            testArrayToEnumerable: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1266).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1266);
+                Bridge.ClientTest.BridgeIssues.Bridge1266.testArrayToEnumerable();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1296', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1296)],
+        statics: {
+            testImplicitOperator: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1296).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1296);
+                Bridge.ClientTest.BridgeIssues.Bridge1296.testImplicitOperator();
+            },
+            testIgnoreCast: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1296).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1296);
+                Bridge.ClientTest.BridgeIssues.Bridge1296.testIgnoreCast();
+            },
+            testExternalImplicit: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1296).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1296);
+                Bridge.ClientTest.BridgeIssues.Bridge1296.testExternalImplicit();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1304', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1304)],
+        statics: {
+            testWriteFormatString: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1304).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1304);
+                try {
+                    Bridge.ClientTest.BridgeIssues.Bridge1304.testWriteFormatString();
+                }
+                finally {
+                    t.tearDown();
+                }
+            },
+            testWriteLineFormatString: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1304).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1304);
+                try {
+                    Bridge.ClientTest.BridgeIssues.Bridge1304.testWriteLineFormatString();
+                }
+                finally {
+                    t.tearDown();
+                }
+            }
+        },
+        setUp: function () {
+            Bridge.ClientTest.BridgeIssues.Bridge1304.clearOutput();
+        },
+        tearDown: function () {
+            Bridge.ClientTest.BridgeIssues.Bridge1304.resetOutput();
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1305', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1305)],
+        statics: {
+            testAsyncIntReturnWithAssigmentFromResult: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1305).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1305);
+                Bridge.ClientTest.BridgeIssues.Bridge1305.testAsyncIntReturnWithAssigmentFromResult();
+            },
+            testAsyncDataClassReturnWithAssigmentFromResult: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1305).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1305);
+                Bridge.ClientTest.BridgeIssues.Bridge1305.testAsyncDataClassReturnWithAssigmentFromResult();
+            },
+            testAsyncDataStructReturnWithAssigmentFromResult: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1305).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1305);
+                Bridge.ClientTest.BridgeIssues.Bridge1305.testAsyncDataStructReturnWithAssigmentFromResult();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1316)],
+        statics: {
+            testUseCase: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1316).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316);
+                Bridge.ClientTest.BridgeIssues.Bridge1316.testUseCase();
+            },
+            testStringConcatObject: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1316).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316);
+                Bridge.ClientTest.BridgeIssues.Bridge1316.testStringConcatObject();
+            },
+            testStringConcatEnumerableString: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1316).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316);
+                Bridge.ClientTest.BridgeIssues.Bridge1316.testStringConcatEnumerableString();
+            },
+            testStringConcatEnumerableGeneric: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1316).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316);
+                Bridge.ClientTest.BridgeIssues.Bridge1316.testStringConcatEnumerableGeneric();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1340)],
+        statics: {
+            testStructGenericMembersDefaultValue: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1340).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340);
+                Bridge.ClientTest.BridgeIssues.Bridge1340.testStructGenericMembersDefaultValue();
+            },
+            testStructTwoGenericMembersDefaultValue: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1340).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340);
+                Bridge.ClientTest.BridgeIssues.Bridge1340.testStructTwoGenericMembersDefaultValue();
+            },
+            testClassGenericMembersDefaultValue: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1340).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340);
+                Bridge.ClientTest.BridgeIssues.Bridge1340.testClassGenericMembersDefaultValue();
+            },
+            testClassTwoGenericMembersDefaultValue: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1340).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340);
+                Bridge.ClientTest.BridgeIssues.Bridge1340.testClassTwoGenericMembersDefaultValue();
+            },
+            testClass1TwoGenericInheritedMembersDefaultValue: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1340).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340);
+                Bridge.ClientTest.BridgeIssues.Bridge1340.testClass1TwoGenericInheritedMembersDefaultValue();
+            },
+            testClass2TwoGenericInheritedMembersDefaultValue: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1340).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340);
+                Bridge.ClientTest.BridgeIssues.Bridge1340.testClass2TwoGenericInheritedMembersDefaultValue();
+            },
+            testClass3TwoGenericInheritedMembersDefaultValue: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1340).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340);
+                Bridge.ClientTest.BridgeIssues.Bridge1340.testClass3TwoGenericInheritedMembersDefaultValue();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1341)],
+        statics: {
+            testPlainObject: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1341).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341);
+                Bridge.ClientTest.BridgeIssues.Bridge1341.testPlainObject();
+            },
+            testAnonymousTypeCreation: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1341).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341);
+                Bridge.ClientTest.BridgeIssues.Bridge1341.testAnonymousTypeCreation();
+            },
+            testDiffStructHashCode: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1341).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341);
+                Bridge.ClientTest.BridgeIssues.Bridge1341.testDiffStructHashCode();
+            },
+            testDiffAnonymousTypesHashCode: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1341).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341);
+                Bridge.ClientTest.BridgeIssues.Bridge1341.testDiffAnonymousTypesHashCode();
+            },
+            test1AnonymousType: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1341).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341);
+                Bridge.ClientTest.BridgeIssues.Bridge1341.test1AnonymousType();
+            },
+            test2AnonymousType: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1341).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341);
+                Bridge.ClientTest.BridgeIssues.Bridge1341.test2AnonymousType();
+            },
+            test3AnonymousType: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1341).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341);
+                Bridge.ClientTest.BridgeIssues.Bridge1341.test3AnonymousType();
+            },
+            test4AnonymousType: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1341).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341);
+                Bridge.ClientTest.BridgeIssues.Bridge1341.test4AnonymousType();
+            },
+            test5AnonymousType: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1341).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341);
+                Bridge.ClientTest.BridgeIssues.Bridge1341.test5AnonymousType();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1343', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1343)],
+        statics: {
+            testDoubleTemplate: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1343).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1343);
+                Bridge.ClientTest.BridgeIssues.Bridge1343.testDoubleTemplate();
+            },
+            testInlineInGetHashCode: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1343).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1343);
+                Bridge.ClientTest.BridgeIssues.Bridge1343.testInlineInGetHashCode();
             }
         }
     });
@@ -3540,7 +4255,7 @@
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge625)],
         statics: {
             testUseCase: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge625).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge625, 4);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge625).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge625, 5);
                 Bridge.ClientTest.BridgeIssues.Bridge625.testUseCase();
             }
         }
@@ -3570,6 +4285,16 @@
             testUseCase: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge635).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge635, 4);
                 Bridge.ClientTest.BridgeIssues.Bridge635.testUseCase();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge637', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge637)],
+        statics: {
+            testUseCase: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge637).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge637);
+                Bridge.ClientTest.BridgeIssues.Bridge637.testUseCase();
             }
         }
     });
@@ -5313,6 +6038,80 @@
             },
             toArrayWorks: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Collections.Generic.ListTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_ListTests);
+                t.getFixture().toArrayWorks();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Collections.Generic.StackTests)],
+        statics: {
+            typePropertiesAreCorrect: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Collections.Generic.StackTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests);
+                t.getFixture().typePropertiesAreCorrect();
+            },
+            defaultConstructorWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Collections.Generic.StackTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests);
+                t.getFixture().defaultConstructorWorks();
+            },
+            constructorWithCapacityWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Collections.Generic.StackTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests);
+                t.getFixture().constructorWithCapacityWorks();
+            },
+            constructingFromArrayWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Collections.Generic.StackTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests);
+                t.getFixture().constructingFromArrayWorks();
+            },
+            constructingFromListWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Collections.Generic.StackTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests);
+                t.getFixture().constructingFromListWorks();
+            },
+            constructingFromIEnumerableWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Collections.Generic.StackTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests);
+                t.getFixture().constructingFromIEnumerableWorks();
+            },
+            countWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Collections.Generic.StackTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests);
+                t.getFixture().countWorks();
+            },
+            foreachWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Collections.Generic.StackTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests);
+                t.getFixture().foreachWorks();
+            },
+            pushWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Collections.Generic.StackTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests);
+                t.getFixture().pushWorks();
+            },
+            clearWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Collections.Generic.StackTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests);
+                t.getFixture().clearWorks();
+            },
+            containsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Collections.Generic.StackTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests);
+                t.getFixture().containsWorks();
+            },
+            containsUsesEqualsMethod: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Collections.Generic.StackTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests);
+                t.getFixture().containsUsesEqualsMethod();
+            },
+            foreachWithListItemCallbackWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Collections.Generic.StackTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests);
+                t.getFixture().foreachWithListItemCallbackWorks();
+            },
+            foreachWithListCallbackWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Collections.Generic.StackTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests);
+                t.getFixture().foreachWithListCallbackWorks();
+            },
+            popWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Collections.Generic.StackTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests);
+                t.getFixture().popWorks();
+            },
+            peekWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Collections.Generic.StackTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests);
+                t.getFixture().peekWorks();
+            },
+            toArrayWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Collections.Generic.StackTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Collections_Generic_StackTests);
                 t.getFixture().toArrayWorks();
             }
         }
@@ -7560,6 +8359,116 @@
         }
     });
     
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests)],
+        statics: {
+            typePropertiesAreCorrect: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().typePropertiesAreCorrect();
+            },
+            defaultValueWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().defaultValueWorks();
+            },
+            createInstanceWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().createInstanceWorks();
+            },
+            defaultConstructorWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().defaultConstructorWorks();
+            },
+            emptyWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().emptyWorks();
+            },
+            toStringWithoutArgumentsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().toStringWithoutArgumentsWorks();
+            },
+            byteArrayConstructorWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().byteArrayConstructorWorks();
+            },
+            int32Int16Int16ByteArrayConstructorWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().int32Int16Int16ByteArrayConstructorWorks();
+            },
+            int32Int16Int16BytesConstructorWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().int32Int16Int16BytesConstructorWorks();
+            },
+            uInt32UInt16UInt16BytesConstructorWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().uInt32UInt16UInt16BytesConstructorWorks();
+            },
+            stringConstructorWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().stringConstructorWorks();
+            },
+            parseWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().parseWorks();
+            },
+            parseExactWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().parseExactWorks();
+            },
+            tryParseWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().tryParseWorks();
+            },
+            tryParseExactWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().tryParseExactWorks();
+            },
+            compareToWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().compareToWorks();
+            },
+            iComparableCompareToWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().iComparableCompareToWorks();
+            },
+            equalsObjectWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().equalsObjectWorks();
+            },
+            equalsGuidWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().equalsGuidWorks();
+            },
+            iEquatableEqualsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().iEquatableEqualsWorks();
+            },
+            getHashCodeWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().getHashCodeWorks();
+            },
+            equalityOperatorWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().equalityOperatorWorks();
+            },
+            inequalityOperatorWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().inequalityOperatorWorks();
+            },
+            toStringWithFormatWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().toStringWithFormatWorks();
+            },
+            newGuidWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().newGuidWorks();
+            },
+            toByteArrayWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.GuidTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_GuidTests);
+                t.getFixture().toByteArrayWorks();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_IComparableTests', {
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.IComparableTests)],
         statics: {
@@ -8299,6 +9208,10 @@
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.ByteTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_ByteTests);
                 t.getFixture().defaultConstructorReturnsZero();
             },
+            creatingInstanceReturnsZero: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.ByteTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_ByteTests);
+                t.getFixture().creatingInstanceReturnsZero();
+            },
             constantsWork: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.ByteTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_ByteTests);
                 t.getFixture().constantsWork();
@@ -8368,6 +9281,10 @@
             defaultConstructorReturnsZero: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.CharTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_CharTests);
                 t.getFixture().defaultConstructorReturnsZero();
+            },
+            creatingInstanceReturnsZero: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.CharTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_CharTests);
+                t.getFixture().creatingInstanceReturnsZero();
             },
             constantsWork: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.CharTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_CharTests);
@@ -8713,6 +9630,10 @@
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.Int16Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int16Tests);
                 t.getFixture().defaultConstructorReturnsZero();
             },
+            creatingInstanceReturnsZero: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.Int16Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int16Tests);
+                t.getFixture().creatingInstanceReturnsZero();
+            },
             constantsWork: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.Int16Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int16Tests);
                 t.getFixture().constantsWork();
@@ -8794,6 +9715,10 @@
             defaultConstructorReturnsZero: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.Int32Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int32Tests);
                 t.getFixture().defaultConstructorReturnsZero();
+            },
+            creatingInstanceReturnsZero: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.Int32Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int32Tests);
+                t.getFixture().creatingInstanceReturnsZero();
             },
             constantsWork: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.Int32Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_Int32Tests);
@@ -8967,9 +9892,9 @@
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.JsDateTimeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_JsDateTimeTests);
                 t.getFixture().defaultConstructorReturnsTodaysDate();
             },
-            creatingInstanceReturnsTodaysDate: function (assert) {
+            creatingInstanceReturnsDateZero: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.JsDateTimeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_JsDateTimeTests);
-                t.getFixture().creatingInstanceReturnsTodaysDate();
+                t.getFixture().creatingInstanceReturnsDateZero();
             },
             millisecondSinceEpochConstructorWorks: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.JsDateTimeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_JsDateTimeTests);
@@ -9254,6 +10179,10 @@
             defaultConstructorReturnsZero: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.SByteTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_SByteTests);
                 t.getFixture().defaultConstructorReturnsZero();
+            },
+            creatingInstanceReturnsZero: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.SByteTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_SByteTests);
+                t.getFixture().creatingInstanceReturnsZero();
             },
             constantsWork: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.SByteTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_SByteTests);
@@ -9983,6 +10912,10 @@
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.UInt16Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt16Tests);
                 t.getFixture().defaultConstructorReturnsZero();
             },
+            creatingInstanceReturnsZero: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.UInt16Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt16Tests);
+                t.getFixture().creatingInstanceReturnsZero();
+            },
             constantsWork: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.UInt16Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt16Tests);
                 t.getFixture().constantsWork();
@@ -10052,6 +10985,10 @@
             defaultConstructorReturnsZero: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.UInt32Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt32Tests);
                 t.getFixture().defaultConstructorReturnsZero();
+            },
+            creatingInstanceReturnsZero: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.UInt32Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt32Tests);
+                t.getFixture().creatingInstanceReturnsZero();
             },
             constantsWork: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.UInt32Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_UInt32Tests);
@@ -10252,32 +11189,146 @@
         }
     });
     
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests)],
+        statics: {
+            startOfStringOrLineTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
+                t.getFixture().startOfStringOrLineTest();
+            },
+            startOfStringOrLineMultilineModeTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
+                t.getFixture().startOfStringOrLineMultilineModeTest();
+            },
+            endOfStringOrLineTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
+                t.getFixture().endOfStringOrLineTest1();
+            },
+            endOfStringOrLineTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
+                t.getFixture().endOfStringOrLineTest2();
+            },
+            endOfStringOrLineTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
+                t.getFixture().endOfStringOrLineTest3();
+            },
+            endOfStringOrLineTest4: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
+                t.getFixture().endOfStringOrLineTest4();
+            },
+            startOfStringOnlyTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
+                t.getFixture().startOfStringOnlyTest();
+            },
+            endOfStringOrNewlineTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
+                t.getFixture().endOfStringOrNewlineTest();
+            },
+            endOfStringOnlyTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
+                t.getFixture().endOfStringOnlyTest();
+            },
+            contiguousMatchesTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
+                t.getFixture().contiguousMatchesTest();
+            },
+            wordBoundaryTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
+                t.getFixture().wordBoundaryTest();
+            },
+            nonWordBoundaryTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
+                t.getFixture().nonWordBoundaryTest();
+            },
+            startAndEndOfStringCustomTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
+                t.getFixture().startAndEndOfStringCustomTest1();
+            },
+            startAndEndOfStringCustomTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
+                t.getFixture().startAndEndOfStringCustomTest2();
+            },
+            endOfStringOrNewlineCustomTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
+                t.getFixture().endOfStringOrNewlineCustomTest1();
+            },
+            endOfStringOrNewlineCustomTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
+                t.getFixture().endOfStringOrNewlineCustomTest2();
+            },
+            endOfStringOnlyCustomTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
+                t.getFixture().endOfStringOnlyCustomTest1();
+            },
+            endOfStringOnlyCustomTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
+                t.getFixture().endOfStringOnlyCustomTest2();
+            },
+            endOfStringOnlyCustomTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
+                t.getFixture().endOfStringOnlyCustomTest3();
+            },
+            contiguousMatchesCustomTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
+                t.getFixture().contiguousMatchesCustomTest1();
+            },
+            contiguousMatchesCustomTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
+                t.getFixture().contiguousMatchesCustomTest2();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests', {
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests)],
         statics: {
+            msdnNumberedBackrefTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
+                t.getFixture().msdnNumberedBackrefTest();
+            },
+            msdnNamedBackrefTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
+                t.getFixture().msdnNamedBackrefTest();
+            },
+            msdnNamedBackrefWithNumberAsNameTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
+                t.getFixture().msdnNamedBackrefWithNumberAsNameTest();
+            },
+            msdnNamedBackrefWithRedefinedGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
+                t.getFixture().msdnNamedBackrefWithRedefinedGroupTest();
+            },
+            msdnNamedBackrefWithEmptyCaptureTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
+                t.getFixture().msdnNamedBackrefWithEmptyCaptureTest1();
+            },
+            msdnNamedBackrefWithEmptyCaptureTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
+                t.getFixture().msdnNamedBackrefWithEmptyCaptureTest2();
+            },
+            namedBackrefToUnreachableGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
+                t.getFixture().namedBackrefToUnreachableGroupTest();
+            },
+            namedBackrefToSelfGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
+                t.getFixture().namedBackrefToSelfGroupTest();
+            },
+            namedBackrefToParentGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
+                t.getFixture().namedBackrefToParentGroupTest();
+            },
             numberedBackrefTest: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
                 t.getFixture().numberedBackrefTest();
             },
-            namedBackrefTest: function (assert) {
+            numberedBackrefInGroupFailsTest: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
-                t.getFixture().namedBackrefTest();
+                t.getFixture().numberedBackrefInGroupFailsTest();
             },
-            namedBackrefWithNumberAsNameTest: function (assert) {
+            namedBackrefInGroupFailsTest: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
-                t.getFixture().namedBackrefWithNumberAsNameTest();
-            },
-            namedBackrefWithRedefinedGroupTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
-                t.getFixture().namedBackrefWithRedefinedGroupTest();
-            },
-            namedBackrefWithEmptyCaptureTest1: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
-                t.getFixture().namedBackrefWithEmptyCaptureTest1();
-            },
-            namedBackrefWithEmptyCaptureTest2: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
-                t.getFixture().namedBackrefWithEmptyCaptureTest2();
+                t.getFixture().namedBackrefInGroupFailsTest();
             }
         }
     });
@@ -10292,6 +11343,14 @@
             unescapeTest: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexEscapeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests);
                 t.getFixture().unescapeTest();
+            },
+            escapeCharSetTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexEscapeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests, 0);
+                t.getFixture().escapeCharSetTest();
+            },
+            nonEscapeCharSetTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexEscapeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests);
+                t.getFixture().nonEscapeCharSetTest();
             }
         }
     });
@@ -10632,6 +11691,108 @@
         }
     });
     
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests)],
+        statics: {
+            msdnMultilineInlineOptionTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().msdnMultilineInlineOptionTest();
+            },
+            msdnSinglelineInlineOptionTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().msdnSinglelineInlineOptionTest();
+            },
+            msdnIngoreWhitespaceInlineOptionTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().msdnIngoreWhitespaceInlineOptionTest1();
+            },
+            msdnIngoreWhitespaceInlineOptionTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().msdnIngoreWhitespaceInlineOptionTest2();
+            },
+            msdnIngoreWhitespaceInlineOptionTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().msdnIngoreWhitespaceInlineOptionTest3();
+            },
+            multilineInlineOptionTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().multilineInlineOptionTest1();
+            },
+            multilineInlineOptionTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().multilineInlineOptionTest2();
+            },
+            multilineInlineOptionTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().multilineInlineOptionTest3();
+            },
+            multilineInlineOptionTest4: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().multilineInlineOptionTest4();
+            },
+            multilineInlineOptionTest5: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().multilineInlineOptionTest5();
+            },
+            multilineInlineOptionTest6: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().multilineInlineOptionTest6();
+            },
+            multilineInlineOptionTest7: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().multilineInlineOptionTest7();
+            },
+            singlelineInlineOptionTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().singlelineInlineOptionTest1();
+            },
+            singlelineInlineOptionTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().singlelineInlineOptionTest2();
+            },
+            singlelineInlineOptionTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().singlelineInlineOptionTest3();
+            },
+            ingoreWhitespaceInlineOptionTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().ingoreWhitespaceInlineOptionTest1();
+            },
+            ingoreWhitespaceInlineOptionTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().ingoreWhitespaceInlineOptionTest2();
+            },
+            ingoreWhitespaceInlineOptionTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().ingoreWhitespaceInlineOptionTest3();
+            },
+            ingoreWhitespaceInlineOptionTest4: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().ingoreWhitespaceInlineOptionTest4();
+            },
+            ingoreWhitespaceInlineOptionTest5: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().ingoreWhitespaceInlineOptionTest5();
+            },
+            ingoreWhitespaceInlineOptionTest6: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().ingoreWhitespaceInlineOptionTest6();
+            },
+            ingoreWhitespaceInlineOptionTest7: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().ingoreWhitespaceInlineOptionTest7();
+            },
+            ingoreWhitespaceInlineOptionTest8: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().ingoreWhitespaceInlineOptionTest8();
+            },
+            ingoreWhitespaceInlineOptionTest9: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().ingoreWhitespaceInlineOptionTest9();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchCollectionTests', {
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests)],
         statics: {
@@ -10696,6 +11857,98 @@
             matchSearchGroupByNameTest: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchEntityTests);
                 t.getFixture().matchSearchGroupByNameTest();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchSparseTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchSparseTests)],
+        statics: {
+            groupOrderingTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchSparseTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchSparseTests);
+                t.getFixture().groupOrderingTest1();
+            },
+            groupOrderingTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchSparseTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchSparseTests);
+                t.getFixture().groupOrderingTest2();
+            },
+            groupOrderingTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchSparseTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchSparseTests);
+                t.getFixture().groupOrderingTest3();
+            },
+            sparseOrderingTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchSparseTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchSparseTests);
+                t.getFixture().sparseOrderingTest();
+            },
+            groupCapturesMergeTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchSparseTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchSparseTests);
+                t.getFixture().groupCapturesMergeTest();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexOptionsTests)],
+        statics: {
+            msdnIgnoreCaseOptionTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests);
+                t.getFixture().msdnIgnoreCaseOptionTest();
+            },
+            msdnMultilineOptionTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests);
+                t.getFixture().msdnMultilineOptionTest1();
+            },
+            msdnMultilineOptionTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests);
+                t.getFixture().msdnMultilineOptionTest2();
+            },
+            msdnSinglelineOptionTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests);
+                t.getFixture().msdnSinglelineOptionTest();
+            },
+            msdnIgnoreWhitespaceOptionTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests);
+                t.getFixture().msdnIgnoreWhitespaceOptionTest();
+            },
+            ignoreCaseOptionTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests);
+                t.getFixture().ignoreCaseOptionTest1();
+            },
+            ignoreCaseOptionTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests);
+                t.getFixture().ignoreCaseOptionTest2();
+            },
+            ignoreCaseOptionTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests);
+                t.getFixture().ignoreCaseOptionTest3();
+            },
+            defaultLineOptionsTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests);
+                t.getFixture().defaultLineOptionsTest1();
+            },
+            defaultLineOptionsTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests);
+                t.getFixture().defaultLineOptionsTest2();
+            },
+            multilineOptionTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests);
+                t.getFixture().multilineOptionTest1();
+            },
+            multilineOptionTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests);
+                t.getFixture().multilineOptionTest2();
+            },
+            singlelineOptionTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests);
+                t.getFixture().singlelineOptionTest();
+            },
+            singlelineDotCharTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests);
+                t.getFixture().singlelineDotCharTest();
+            },
+            multilineAndSinglelineOptionsTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests);
+                t.getFixture().multilineAndSinglelineOptionsTest();
             }
         }
     });

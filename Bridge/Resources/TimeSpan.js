@@ -2,6 +2,7 @@
 
     Bridge.define("Bridge.TimeSpan", {
         inherits: [Bridge.IComparable],
+        $struct: true,
         statics: {
             fromDays: function (value) {
                 return new Bridge.TimeSpan(value * 864e9);
@@ -45,7 +46,7 @@
                 return Bridge.hasValue(t1) && Bridge.hasValue(t2) ? (new Bridge.TimeSpan(t1.ticks.sub(t2.ticks))) : null;
             },
 
-            eq: function(t1, t2) {
+            eq: function (t1, t2) {
                 return Bridge.hasValue(t1) && Bridge.hasValue(t2) ? (t1.ticks.eq(t2.ticks)) : null;
             },
 
@@ -170,6 +171,10 @@
 
         format: function (formatStr, provider) {
             return this.toString(formatStr, provider);
+        },
+
+        getHashCode: function () {
+            return this.ticks.getHashCode();
         },
 
         toString: function (formatStr, provider) {

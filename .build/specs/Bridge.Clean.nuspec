@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata minClientVersion="2.5">
-    <id>Bridge.Dev</id>
+    <id>Bridge.Clean</id>
     <version>0.0.0</version>
-    <title>Bridge.NET</title>
+    <title>Bridge.NET Clean</title>
     <authors>Object.NET, Inc.</authors>
     <iconUrl>http://speed.bridge.net/identity/bridgedotnet-100x100.png</iconUrl>
     <owners />
     <licenseUrl>https://github.com/bridgedotnet/Bridge/blob/master/LICENSE</licenseUrl>
     <projectUrl>http://bridge.net</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A C# to JavaScript compiler. Write modern mobile and web apps in C#. Run them anywhere with JavaScript.</description>
-    <summary>A C# to JavaScript compiler. Write modern mobile and web apps in C#. Run them anywhere in JavaScript with Bridge.NET.</summary>
+    <description>Cleans the .csproj file for a Bridge project.</description>
+    <summary>Works around the squiggle defect in Visual Studio. See Issue #419.</summary>
     <copyright>Copyright (c) 2008-2016, Object.NET, Inc. (http://object.net/). All rights reserved.</copyright>
     <tags>bridge bridge.net bridge js javascript C# csharp mobile ios asp.net aspnet mvc aspnetmvc web transpiler compiler object.net</tags>
     <dependencies>
@@ -20,13 +20,7 @@
     </frameworkAssemblies>
   </metadata>
   <files>
-    <!--content-->
-    <file src="..\..\LICENSE" target="content\App_Readme\Bridge.NET\LICENSE"/>
-    <file src="..\..\README.md" target="content\App_Readme\Bridge.NET\README.md"/>
-
-    <!--NET40-->
-    <file src="..\..\Bridge\bin\Release\Bridge.dll" target="lib\net40\Bridge.dll"/>
-    <file src="..\..\Bridge\bin\Release\Bridge.xml" target="lib\net40\Bridge.xml"/>
-    <file src="..\..\Bridge\bin\Release\Bridge.pdb" target="lib\net40\pdb\Bridge.pdb"/>
+    <!--tools-->
+    <file src="..\..\.build\files\install_clean.ps1" target="tools\install.ps1" />
   </files>
 </package>

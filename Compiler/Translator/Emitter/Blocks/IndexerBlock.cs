@@ -37,6 +37,8 @@ namespace Bridge.Translator
 
     public class IndexerBlock : ConversionBlock
     {
+        private bool isRefArg;
+
         public IndexerBlock(IEmitter emitter, IndexerExpression indexerExpression)
             : base(emitter, indexerExpression)
         {
@@ -62,8 +64,11 @@ namespace Bridge.Translator
 
         protected void VisitIndexerExpression()
         {
-            IndexerExpression indexerExpression = this.IndexerExpression;
+            this.isRefArg = this.Emitter.IsRefArg;
+            this.Emitter.IsRefArg = false;
 
+            IndexerExpression indexerExpression = this.IndexerExpression;
+            int pos = this.Emitter.Output.Length;
             var resolveResult = this.Emitter.Resolver.ResolveNode(indexerExpression, this.Emitter);
             var memberResolveResult = resolveResult as MemberResolveResult;
 
@@ -72,6 +77,7 @@ namespace Bridge.Translator
             if (arrayAccess != null && arrayAccess.Indexes.Count > 1)
             {
                 this.EmitMultiDimArrayAccess(indexerExpression);
+                Helpers.CheckValueTypeClone(resolveResult, indexerExpression, this, pos);
                 return;
             }
 
@@ -108,6 +114,8 @@ namespace Bridge.Translator
             {
                 this.EmitSingleDimArrayIndexer(indexerExpression);
             }
+
+            Helpers.CheckValueTypeClone(resolveResult, indexerExpression, this, pos);
         }
 
         protected virtual IndexerAccessor GetIndexerAccessor(IProperty member, bool setter)
@@ -148,8 +156,15 @@ namespace Bridge.Translator
             var oldIsAssignment = this.Emitter.IsAssignment;
             var oldUnary = this.Emitter.IsUnaryAccessor;
             var inlineCode = current.InlineCode;
+            bool hasThis = inlineCode != null && inlineCode.Contains("{this}");
 
-            if (!(current.InlineCode != null && current.InlineCode.Contains("{this}")) && current.InlineAttr != null)
+            if (inlineCode != null && inlineCode.StartsWith("<self>"))
+            {
+                hasThis = true;
+                inlineCode = inlineCode.Substring(6);
+            }
+
+            if (!hasThis && current.InlineAttr != null)
             {
                 this.Emitter.IsAssignment = false;
                 this.Emitter.IsUnaryAccessor = false;
@@ -158,7 +173,7 @@ namespace Bridge.Translator
                 this.Emitter.IsUnaryAccessor = oldUnary;
             }
 
-            if (inlineCode != null && inlineCode.Contains("{this}"))
+            if (hasThis)
             {
                 this.Write("");
                 var oldBuilder = this.Emitter.Output;
@@ -168,10 +183,19 @@ namespace Bridge.Translator
                 indexerExpression.Target.AcceptVisitor(this.Emitter);
                 this.Emitter.IsAssignment = oldIsAssignment;
                 this.Emitter.IsUnaryAccessor = oldUnary;
-                inlineCode = inlineCode.Replace("{this}", this.Emitter.Output.ToString());
+                int thisIndex = inlineCode.IndexOf("{this}");
+                var thisArg = this.Emitter.Output.ToString();
+                inlineCode = inlineCode.Replace("{this}", thisArg);
                 this.Emitter.Output = oldBuilder;
 
-                this.PushWriter(inlineCode);
+                int[] range = null;
+
+                if (thisIndex > -1)
+                {
+                    range = new[] { thisIndex, thisIndex + thisArg.Length };
+                }
+
+                this.PushWriter(inlineCode, null, thisArg, range);
                 new ExpressionListBlock(this.Emitter, indexerExpression.Arguments, null).Emit();
 
                 if (!this.Emitter.IsAssignment)
@@ -684,7 +708,15 @@ namespace Bridge.Translator
                 }
             }
 
-            this.WriteDot();
+            if (this.isRefArg)
+            {
+                this.WriteComma();
+            }
+            else
+            {
+                this.WriteDot();    
+            }
+            
 
             var argsInfo = new ArgumentsInfo(this.Emitter, indexerExpression);
             var argsExpressions = argsInfo.ArgumentsExpressions;
@@ -958,12 +990,19 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    this.Write("get");
-                    this.WriteOpenParentheses();
+                    if (!this.isRefArg)
+                    {
+                        this.Write("get");
+                        this.WriteOpenParentheses();    
+                    }
+                    
                     this.WriteOpenBracket();
                     new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
                     this.WriteCloseBracket();
-                    this.WriteCloseParentheses();
+                    if (!this.isRefArg)
+                    {
+                        this.WriteCloseParentheses();
+                    }
                 }
             }
             else
@@ -1048,16 +1087,37 @@ namespace Bridge.Translator
             if (primitive != null && primitive.Value != null &&
                 Regex.Match(primitive.Value.ToString(), "^[_$a-z][_$a-z0-9]*$", RegexOptions.IgnoreCase).Success)
             {
-                this.WriteDot();
-                this.Write(primitive.Value);
+                if (this.isRefArg)
+                {
+                    this.WriteComma();
+                    this.WriteScript(primitive.Value);    
+                }
+                else
+                {
+                    this.WriteDot();
+                    this.Write(primitive.Value);    
+                }
             }
             else
             {
                 this.Emitter.IsAssignment = false;
                 this.Emitter.IsUnaryAccessor = false;
-                this.WriteOpenBracket();
+                if (this.isRefArg)
+                {
+                   this.WriteComma(); 
+                }
+                else
+                {
+                    this.WriteOpenBracket();    
+                }
+                
                 index.AcceptVisitor(this.Emitter);
-                this.WriteCloseBracket();
+
+                if (!this.isRefArg)
+                {
+                    this.WriteCloseBracket();    
+                }
+                
                 this.Emitter.IsAssignment = oldIsAssignment;
                 this.Emitter.IsUnaryAccessor = oldUnary;
             }

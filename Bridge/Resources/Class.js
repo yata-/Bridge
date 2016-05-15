@@ -50,6 +50,7 @@
                             Bridge.event(this, name, config.events[name]);
                         }
                     }
+
                     if (config.alias) {
                         for (name in config.alias) {
                             if (this[name]) {
@@ -85,16 +86,18 @@
         // Create a new Class that inherits from this class
         define: function (className, gscope, prop) {
             var preventClear = false;
+
             if (prop === true) {
                 preventClear = true;
                 prop = gscope;
                 gscope = Bridge.global;
-            }
-            else if (!prop) {
+            } else if (!prop) {
                 prop = gscope;
                 gscope = Bridge.global;
             }
+
             var fn;
+
             if (Bridge.isFunction(prop)) {
                 fn = function () {
                     var args = Array.prototype.slice.call(arguments),
@@ -113,6 +116,7 @@
                     obj = prop.apply(null, args.slice(1));
                     obj.$cacheName = name;
                     c = Bridge.define(name, obj, true);
+
                     return Bridge.get(c);
                 };
 
@@ -330,6 +334,7 @@
 
             Bridge.Class.$queue.push(Class);
             Class.$staticInit = fn;
+
             return Class;
         },
 
@@ -372,16 +377,19 @@
             if (exists) {
                 for (key in exists) {
                     var o = exists[key];
+
                     if (typeof o === "function" && o.$$name) {
-                        (function(cls, key, o) {
+                        (function (cls, key, o) {
 							Object.defineProperty(cls, key, {
 								get: function () {
 									if (Bridge.Class.staticInitAllow) {
 										if (o.$staticInit) {
 											o.$staticInit();
 										}
+
 										Bridge.Class.defineProperty(cls, key, o);
 									}
+
 									return o;
 								},
 								set: function (newValue) {
@@ -447,6 +455,7 @@
                 fn = scope;
                 scope = Bridge.global;
             }
+
             fn.$$name = className;
             Bridge.Class.set(scope, className, fn, true);
 
@@ -455,6 +464,7 @@
 
         init: function (fn) {
             Bridge.Class.staticInitAllow = true;
+
             for (var i = 0; i < Bridge.Class.$queue.length; i++) {
                 var t = Bridge.Class.$queue[i];
 

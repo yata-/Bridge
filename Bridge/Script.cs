@@ -229,5 +229,11 @@ namespace Bridge
 
         [GlobalTarget("Bridge.global")]
         public new static extern dynamic ToDynamic();
+
+        [Template("({a} === {b})")]
+        public static extern bool StrictEquals(object a, object b);
+
+        [Template("{o:plain}")]
+        public static extern T PlainObject<T>(T o);
     }
 }

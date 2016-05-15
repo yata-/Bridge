@@ -4,6 +4,7 @@
         var createIntType = function (name, min, max) {
             var type = Bridge.define(name, {
                 inherits: [Bridge.IComparable, Bridge.IFormattable],
+
                 statics: {
                     min: min,
                     max: max,
@@ -14,11 +15,11 @@
                     getDefaultValue: function () {
                         return 0;
                     },
-                    parse: function (s) {
-                        return Bridge.Int.parseInt(s, min, max);
+                    parse: function (s, radix) {
+                        return Bridge.Int.parseInt(s, min, max, radix);
                     },
-                    tryParse: function (s, result) {
-                        return Bridge.Int.tryParseInt(s, result, min, max);
+                    tryParse: function (s, result, radix) {
+                        return Bridge.Int.tryParseInt(s, result, min, max, radix);
                     },
                     format: function (number, format, provider) {
                         return Bridge.Int.format(number, format, provider);
@@ -286,8 +287,7 @@
                     } else if ((decimalPart.length - 1) > maxDecLen) {
                         decimalPart = decimalPart.substr(0, maxDecLen + 1);
                     }
-                }
-                else if (minDecLen > 0) {
+                } else if (minDecLen > 0) {
                     decimalPart = nf[name + "DecimalSeparator"] + Array(minDecLen + 1).join("0");
                 }
 
@@ -612,7 +612,7 @@
                 return true;
             },
 
-            isInfinite: function(x) {
+            isInfinite: function (x) {
                 return x === Number.POSITIVE_INFINITY || x === Number.NEGATIVE_INFINITY;
             },
 
@@ -644,14 +644,14 @@
                 if (y === 0) {
                     throw new Bridge.DivideByZeroException();
                 }
+
                 return x % y;
             },
 
             check: function (x, type) {
                 if (Bridge.Long.is64Bit(x)) {
                     return Bridge.Long.check(x, type);
-                }
-                else if (x instanceof Bridge.Decimal) {
+                } else if (x instanceof Bridge.Decimal) {
                     return Bridge.Decimal.toInt(x, type);
                 }
 
@@ -663,6 +663,7 @@
                     if (type === Bridge.Long || type === Bridge.ULong) {
                         return type.MinValue;
                     }
+
                     return type.min;
                 }
                 
@@ -716,3 +717,44 @@
     });
 
     Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEquatable$1(Bridge.Int)]);
+
+    Bridge.define("Bridge.Double", {
+        inherits: [Bridge.IComparable, Bridge.IFormattable],
+        statics: {
+            min: -Number.MAX_VALUE,
+            max: Number.MAX_VALUE,
+
+            instanceOf: function (instance) {
+                return typeof (instance) === "number";
+            },
+            getDefaultValue: function () {
+                return 0;
+            },
+            parse: function (s, provider) {
+                return Bridge.Int.parseFloat(s, provider);
+            },
+            tryParse: function (s, provider, result) {
+                return Bridge.Int.tryParseFloat(s, provider, result);
+            },
+            format: function (number, format, provider) {
+                return Bridge.Int.format(number, format, provider);
+            }
+        }
+    });
+    Bridge.Class.addExtend(Bridge.Double, [Bridge.IComparable$1(Bridge.Double), Bridge.IEquatable$1(Bridge.Double)]);
+
+    Bridge.define("Bridge.Single", {
+        inherits: [Bridge.IComparable, Bridge.IFormattable],
+        statics: {
+            min: -3.40282346638528859e+38,
+            max: 3.40282346638528859e+38,
+
+            instanceOf: Bridge.Double.instanceOf,
+            getDefaultValue: Bridge.Double.getDefaultValue,
+            parse: Bridge.Double.parse,
+            tryParse: Bridge.Double.tryParse,
+            format: Bridge.Double.format
+        }
+    });
+
+    Bridge.Class.addExtend(Bridge.Single, [Bridge.IComparable$1(Bridge.Single), Bridge.IEquatable$1(Bridge.Single)]);

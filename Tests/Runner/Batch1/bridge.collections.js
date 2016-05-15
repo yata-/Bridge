@@ -54,7 +54,7 @@
             this._version = 0;
         },
         constructor$1: function (bytes) {
-            if (!Bridge.hasValue(bytes)) {
+            if (bytes == null) {
                 throw new Bridge.ArgumentNullException("bytes");
             }
             // this value is chosen to prevent overflow when computing m_length.
@@ -92,7 +92,7 @@
             this._version = 0;
         },
         constructor: function (values) {
-            if (!Bridge.hasValue(values)) {
+            if (values == null) {
                 throw new Bridge.ArgumentNullException("values");
             }
     
@@ -108,7 +108,7 @@
             this._version = 0;
         },
         constructor$5: function (values) {
-            if (!Bridge.hasValue(values)) {
+            if (values == null) {
                 throw new Bridge.ArgumentNullException("values");
             }
             // this value is chosen to prevent overflow when computing m_length
@@ -124,7 +124,7 @@
             this._version = 0;
         },
         constructor$2: function (bits) {
-            if (!Bridge.hasValue(bits)) {
+            if (bits == null) {
                 throw new Bridge.ArgumentNullException("bits");
             }
     
@@ -213,7 +213,7 @@
             this._version = (this._version + 1) | 0;
         },
         and: function (value) {
-            if (!Bridge.hasValue(value)) {
+            if (value == null) {
                 throw new Bridge.ArgumentNullException("value");
             }
             if (this.getLength() !== value.getLength()) {
@@ -229,7 +229,7 @@
             return this;
         },
         or: function (value) {
-            if (!Bridge.hasValue(value)) {
+            if (value == null) {
                 throw new Bridge.ArgumentNullException("value");
             }
             if (this.getLength() !== value.getLength()) {
@@ -245,7 +245,7 @@
             return this;
         },
         xor: function (value) {
-            if (!Bridge.hasValue(value)) {
+            if (value == null) {
                 throw new Bridge.ArgumentNullException("value");
             }
             if (this.getLength() !== value.getLength()) {
@@ -398,7 +398,7 @@
                 try {
                     if (en.moveNext()) {
                         var DefaultCapacity = 4;
-                        var arr = { v : Bridge.Array.init(DefaultCapacity, null) };
+                        var arr = { v : Bridge.Array.init(DefaultCapacity, {"Value":"Bridge.getDefaultValue(T)"}) };
                         arr.v[0] = en.getCurrent$1();
                         var count = 1;
     
@@ -443,7 +443,7 @@
                 }
     
                 length.v = 0;
-                return Bridge.Array.init(0, null);
+                return Bridge.Array.init(0, {"Value":"Bridge.getDefaultValue(T)"});
             }
         }
     });
@@ -507,11 +507,11 @@
             ShrinkThreshold: 3,
             hashSetEquals: function (set1, set2, comparer) {
                 var $t, $t1, $t2;
-                if (!Bridge.hasValue(set1)) {
-                    return (!Bridge.hasValue(set2));
+                if (set1 == null) {
+                    return (set2 == null);
                 }
                 else  {
-                    if (!Bridge.hasValue(set2)) {
+                    if (set2 == null) {
                         return false;
                     }
                 }
@@ -536,7 +536,7 @@
                         $t2 = Bridge.getEnumerator(set1);
                         while ($t2.moveNext()) {
                             var set1Item = $t2.getCurrent();
-                            if (comparer.equals(set2Item, set1Item)) {
+                            if (comparer.equals2(set2Item, set1Item)) {
                                 found = true;
                                 break;
                             }
@@ -564,7 +564,7 @@
     
         },
         constructor$3: function (comparer) {
-            if (!Bridge.hasValue(comparer)) {
+            if (comparer == null) {
                 comparer = new Bridge.EqualityComparer$1(T)();
             }
             this._comparer = comparer;
@@ -580,17 +580,17 @@
         constructor$2: function (collection, comparer) {
             Bridge.Collections.HashSet$1(T).prototype.constructor$3.call(this, comparer);
     
-            if (!Bridge.hasValue(collection)) {
+            if (collection == null) {
                 throw new Bridge.ArgumentNullException("collection");
             }
             var suggestedCapacity = 0;
             var coll = Bridge.as(collection, Bridge.ICollection$1(T));
-            if (Bridge.hasValue(coll)) {
+            if (coll != null) {
                 suggestedCapacity = Bridge.Array.getCount(coll);
             }
             this.initialize(suggestedCapacity);
             this.unionWith(collection);
-            if ((this._count === 0 && this._slots.length > Bridge.Collections.HashHelpers.getMinPrime()) || (this._count > 0 && ((Bridge.Int.div(this._slots.length, this._count)) | 0) > Bridge.Collections.HashSet$1(T).shrinkThreshold)) {
+            if ((this._count === 0 && this._slots.length > Bridge.Collections.HashHelpers.getMinPrime()) || (this._count > 0 && ((Bridge.Int.div(this._slots.length, this._count)) | 0) > Bridge.Collections.HashSet$1(T).ShrinkThreshold)) {
                 this.trimExcess();
             }
         },
@@ -625,10 +625,10 @@
         arrayClear: function (array, index, length) {
         },
         contains: function (item) {
-            if (Bridge.hasValue(this._buckets)) {
+            if (this._buckets != null) {
                 var hashCode = this.internalGetHashCode(item);
                 for (var i = (this._buckets[hashCode % this._buckets.length] - 1) | 0; i >= 0; i = this._slots[i].next) {
-                    if (this._slots[i].hashCode === hashCode && this._comparer.equals(this._slots[i].value, item)) {
+                    if (this._slots[i].hashCode === hashCode && this._comparer.equals2(this._slots[i].value, item)) {
                         return true;
                     }
                 }
@@ -642,7 +642,7 @@
             this.copyTo$2(array, 0, this._count);
         },
         copyTo$2: function (array, arrayIndex, count) {
-            if (!Bridge.hasValue(array)) {
+            if (array == null) {
                 throw new Bridge.ArgumentNullException("array");
             }
             if (arrayIndex < 0) {
@@ -663,12 +663,12 @@
             }
         },
         remove: function (item) {
-            if (Bridge.hasValue(this._buckets)) {
+            if (this._buckets != null) {
                 var hashCode = this.internalGetHashCode(item);
                 var bucket = hashCode % this._buckets.length;
                 var last = -1;
                 for (var i = (this._buckets[bucket] - 1) | 0; i >= 0; last = i, i = this._slots[i].next) {
-                    if (this._slots[i].hashCode === hashCode && this._comparer.equals(this._slots[i].value, item)) {
+                    if (this._slots[i].hashCode === hashCode && this._comparer.equals2(this._slots[i].value, item)) {
                         if (last < 0) {
                             this._buckets[bucket] = (this._slots[i].next + 1) | 0;
                         }
@@ -704,7 +704,7 @@
         },
         unionWith: function (other) {
             var $t;
-            if (!Bridge.hasValue(other)) {
+            if (other == null) {
                 throw new Bridge.ArgumentNullException("other");
             }
             $t = Bridge.getEnumerator(other);
@@ -714,20 +714,20 @@
             }
         },
         intersectWith: function (other) {
-            if (!Bridge.hasValue(other)) {
+            if (other == null) {
                 throw new Bridge.ArgumentNullException("other");
             }
             if (this._count === 0) {
                 return;
             }
             var otherAsCollection = Bridge.as(other, Bridge.ICollection$1(T));
-            if (Bridge.hasValue(otherAsCollection)) {
+            if (otherAsCollection != null) {
                 if (Bridge.Array.getCount(otherAsCollection) === 0) {
                     this.clear();
                     return;
                 }
                 var otherAsSet = Bridge.as(other, Bridge.Collections.HashSet$1(T));
-                if (Bridge.hasValue(otherAsSet) && Bridge.Collections.HashSet$1(T).areEqualityComparersEqual(this, otherAsSet)) {
+                if (otherAsSet != null && Bridge.Collections.HashSet$1(T).areEqualityComparersEqual(this, otherAsSet)) {
                     this.intersectWithHashSetWithSameEC(otherAsSet);
                     return;
                 }
@@ -736,13 +736,13 @@
         },
         exceptWith: function (other) {
             var $t;
-            if (!Bridge.hasValue(other)) {
+            if (other == null) {
                 throw new Bridge.ArgumentNullException("other");
             }
             if (this._count === 0) {
                 return;
             }
-            if (other === this) {
+            if (Bridge.referenceEquals(other, this)) {
                 this.clear();
                 return;
             }
@@ -753,19 +753,19 @@
             }
         },
         symmetricExceptWith: function (other) {
-            if (!Bridge.hasValue(other)) {
+            if (other == null) {
                 throw new Bridge.ArgumentNullException("other");
             }
             if (this._count === 0) {
                 this.unionWith(other);
                 return;
             }
-            if (other === this) {
+            if (Bridge.referenceEquals(other, this)) {
                 this.clear();
                 return;
             }
             var otherAsSet = Bridge.as(other, Bridge.Collections.HashSet$1(T));
-            if (Bridge.hasValue(otherAsSet) && Bridge.Collections.HashSet$1(T).areEqualityComparersEqual(this, otherAsSet)) {
+            if (otherAsSet != null && Bridge.Collections.HashSet$1(T).areEqualityComparersEqual(this, otherAsSet)) {
                 this.symmetricExceptWithUniqueHashSet(otherAsSet);
             }
             else  {
@@ -773,55 +773,55 @@
             }
         },
         isSubsetOf: function (other) {
-            if (!Bridge.hasValue(other)) {
+            if (other == null) {
                 throw new Bridge.ArgumentNullException("other");
             }
             if (this._count === 0) {
                 return true;
             }
             var otherAsSet = Bridge.as(other, Bridge.Collections.HashSet$1(T));
-            if (Bridge.hasValue(otherAsSet) && Bridge.Collections.HashSet$1(T).areEqualityComparersEqual(this, otherAsSet)) {
+            if (otherAsSet != null && Bridge.Collections.HashSet$1(T).areEqualityComparersEqual(this, otherAsSet)) {
                 if (this._count > otherAsSet.getCount()) {
                     return false;
                 }
                 return this.isSubsetOfHashSetWithSameEC(otherAsSet);
             }
             else  {
-                var result = this.checkUniqueAndUnfoundElements(other, false);
+                var result = this.checkUniqueAndUnfoundElements(other, false).$clone();
                 return (result.uniqueCount === this._count && result.unfoundCount >= 0);
             }
         },
         isProperSubsetOf: function (other) {
-            if (!Bridge.hasValue(other)) {
+            if (other == null) {
                 throw new Bridge.ArgumentNullException("other");
             }
             var otherAsCollection = Bridge.as(other, Bridge.ICollection$1(T));
-            if (Bridge.hasValue(otherAsCollection)) {
+            if (otherAsCollection != null) {
                 if (this._count === 0) {
                     return Bridge.Array.getCount(otherAsCollection) > 0;
                 }
                 var otherAsSet = Bridge.as(other, Bridge.Collections.HashSet$1(T));
-                if (Bridge.hasValue(otherAsSet) && Bridge.Collections.HashSet$1(T).areEqualityComparersEqual(this, otherAsSet)) {
+                if (otherAsSet != null && Bridge.Collections.HashSet$1(T).areEqualityComparersEqual(this, otherAsSet)) {
                     if (this._count >= otherAsSet.getCount()) {
                         return false;
                     }
                     return this.isSubsetOfHashSetWithSameEC(otherAsSet);
                 }
             }
-            var result = this.checkUniqueAndUnfoundElements(other, false);
+            var result = this.checkUniqueAndUnfoundElements(other, false).$clone();
             return (result.uniqueCount === this._count && result.unfoundCount > 0);
         },
         isSupersetOf: function (other) {
-            if (!Bridge.hasValue(other)) {
+            if (other == null) {
                 throw new Bridge.ArgumentNullException("other");
             }
             var otherAsCollection = Bridge.as(other, Bridge.ICollection$1(T));
-            if (Bridge.hasValue(otherAsCollection)) {
+            if (otherAsCollection != null) {
                 if (Bridge.Array.getCount(otherAsCollection) === 0) {
                     return true;
                 }
                 var otherAsSet = Bridge.as(other, Bridge.Collections.HashSet$1(T));
-                if (Bridge.hasValue(otherAsSet) && Bridge.Collections.HashSet$1(T).areEqualityComparersEqual(this, otherAsSet)) {
+                if (otherAsSet != null && Bridge.Collections.HashSet$1(T).areEqualityComparersEqual(this, otherAsSet)) {
                     if (otherAsSet.getCount() > this._count) {
                         return false;
                     }
@@ -830,31 +830,31 @@
             return this.containsAllElements(other);
         },
         isProperSupersetOf: function (other) {
-            if (!Bridge.hasValue(other)) {
+            if (other == null) {
                 throw new Bridge.ArgumentNullException("other");
             }
             if (this._count === 0) {
                 return false;
             }
             var otherAsCollection = Bridge.as(other, Bridge.ICollection$1(T));
-            if (Bridge.hasValue(otherAsCollection)) {
+            if (otherAsCollection != null) {
                 if (Bridge.Array.getCount(otherAsCollection) === 0) {
                     return true;
                 }
                 var otherAsSet = Bridge.as(other, Bridge.Collections.HashSet$1(T));
-                if (Bridge.hasValue(otherAsSet) && Bridge.Collections.HashSet$1(T).areEqualityComparersEqual(this, otherAsSet)) {
+                if (otherAsSet != null && Bridge.Collections.HashSet$1(T).areEqualityComparersEqual(this, otherAsSet)) {
                     if (otherAsSet.getCount() >= this._count) {
                         return false;
                     }
                     return this.containsAllElements(otherAsSet);
                 }
             }
-            var result = this.checkUniqueAndUnfoundElements(other, true);
+            var result = this.checkUniqueAndUnfoundElements(other, true).$clone();
             return (result.uniqueCount < this._count && result.unfoundCount === 0);
         },
         overlaps: function (other) {
             var $t;
-            if (!Bridge.hasValue(other)) {
+            if (other == null) {
                 throw new Bridge.ArgumentNullException("other");
             }
             if (this._count === 0) {
@@ -870,11 +870,11 @@
             return false;
         },
         setEquals: function (other) {
-            if (!Bridge.hasValue(other)) {
+            if (other == null) {
                 throw new Bridge.ArgumentNullException("other");
             }
             var otherAsSet = Bridge.as(other, Bridge.Collections.HashSet$1(T));
-            if (Bridge.hasValue(otherAsSet) && Bridge.Collections.HashSet$1(T).areEqualityComparersEqual(this, otherAsSet)) {
+            if (otherAsSet != null && Bridge.Collections.HashSet$1(T).areEqualityComparersEqual(this, otherAsSet)) {
                 if (this._count !== otherAsSet.getCount()) {
                     return false;
                 }
@@ -882,17 +882,17 @@
             }
             else  {
                 var otherAsCollection = Bridge.as(other, Bridge.ICollection$1(T));
-                if (Bridge.hasValue(otherAsCollection)) {
+                if (otherAsCollection != null) {
                     if (this._count === 0 && Bridge.Array.getCount(otherAsCollection) > 0) {
                         return false;
                     }
                 }
-                var result = this.checkUniqueAndUnfoundElements(other, true);
+                var result = this.checkUniqueAndUnfoundElements(other, true).$clone();
                 return (result.uniqueCount === this._count && result.unfoundCount === 0);
             }
         },
         removeWhere: function (match) {
-            if (!Bridge.hasValue(match)) {
+            if (match == null) {
                 throw new Bridge.ArgumentNullException("match");
             }
             var numRemoved = 0;
@@ -923,7 +923,7 @@
                 var newIndex = 0;
                 for (var i = 0; i < this._lastIndex; i = (i + 1) | 0) {
                     if (this._slots[i].hashCode >= 0) {
-                        newSlots[newIndex] = this._slots[i];
+                        newSlots[newIndex] = this._slots[i].$clone();
                         var bucket = newSlots[newIndex].hashCode % newSize;
                         newSlots[newIndex].next = (newBuckets[bucket] - 1) | 0;
                         newBuckets[bucket] = (newIndex + 1) | 0;
@@ -954,9 +954,9 @@
             var newSlots = Bridge.Array.init(newSize, function (){
                 return new Bridge.Collections.HashSet$1.Slot(T)();
             });
-            if (Bridge.hasValue(this._slots)) {
+            if (this._slots != null) {
                 for (var i = 0; i < this._lastIndex; i = (i + 1) | 0) {
-                    newSlots[i] = this._slots[i];
+                    newSlots[i] = this._slots[i].$clone();
                 }
             }
             if (forceNewHashCodes) {
@@ -976,13 +976,13 @@
             this._buckets = newBuckets;
         },
         addIfNotPresent: function (value) {
-            if (!Bridge.hasValue(this._buckets)) {
+            if (this._buckets == null) {
                 this.initialize(0);
             }
             var hashCode = this.internalGetHashCode(value);
             var bucket = hashCode % this._buckets.length;
             for (var i = (this._buckets[bucket] - 1) | 0; i >= 0; i = this._slots[i].next) {
-                if (this._slots[i].hashCode === hashCode && this._comparer.equals(this._slots[i].value, value)) {
+                if (this._slots[i].hashCode === hashCode && this._comparer.equals2(this._slots[i].value, value)) {
                     return false;
                 }
             }
@@ -1063,7 +1063,7 @@
         internalIndexOf: function (item) {
             var hashCode = this.internalGetHashCode(item);
             for (var i = (this._buckets[hashCode % this._buckets.length] - 1) | 0; i >= 0; i = this._slots[i].next) {
-                if ((this._slots[i].hashCode) === hashCode && this._comparer.equals(this._slots[i].value, item)) {
+                if ((this._slots[i].hashCode) === hashCode && this._comparer.equals2(this._slots[i].value, item)) {
                     return i;
                 }
             }
@@ -1113,7 +1113,7 @@
             var hashCode = this.internalGetHashCode(value);
             var bucket = hashCode % this._buckets.length;
             for (var i = (this._buckets[bucket] - 1) | 0; i >= 0; i = this._slots[i].next) {
-                if (this._slots[i].hashCode === hashCode && this._comparer.equals(this._slots[i].value, value)) {
+                if (this._slots[i].hashCode === hashCode && this._comparer.equals2(this._slots[i].value, value)) {
                     location.v = i;
                     return false;
                 }
@@ -1184,40 +1184,42 @@
             return result.$clone();
         },
         toArray: function () {
-            var newArray = Bridge.Array.init(this.getCount(), null);
+            var newArray = Bridge.Array.init(this.getCount(), {"Value":"Bridge.getDefaultValue(T)"});
             this.copyTo(newArray);
             return newArray;
         },
         internalGetHashCode: function (item) {
-            if (!Bridge.hasValue(item)) {
+            if (item == null) {
                 return 0;
             }
-            return this._comparer.getHashCode(item, true) & Bridge.Collections.HashSet$1(T).lower31BitMask;
+            return this._comparer.getHashCode2(item) & Bridge.Collections.HashSet$1(T).Lower31BitMask;
         }
     }; });
     
     Bridge.define('Bridge.Collections.HashSet$1.ElementCount', function (T) { return {
         statics: {
-            getDefaultValue: function () { return new Bridge.Collections.HashSet$1.ElementCount(); }
+            getDefaultValue: function () { return new Bridge.Collections.HashSet$1.ElementCount(T)(); }
         },
         uniqueCount: 0,
         unfoundCount: 0,
         constructor: function () {
         },
+        $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 304990520;
             hash = hash * 23 + (this.uniqueCount == null ? 0 : Bridge.getHashCode(this.uniqueCount));
             hash = hash * 23 + (this.unfoundCount == null ? 0 : Bridge.getHashCode(this.unfoundCount));
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.Collections.HashSet$1.ElementCount)) {
+            if (!Bridge.is(o,Bridge.Collections.HashSet$1.ElementCount(T))) {
                 return false;
             }
             return Bridge.equals(this.uniqueCount, o.uniqueCount) && Bridge.equals(this.unfoundCount, o.unfoundCount);
         },
         $clone: function (to) {
-            var s = to || new Bridge.Collections.HashSet$1.ElementCount();
+            var s = to || new Bridge.Collections.HashSet$1.ElementCount(T)();
             s.uniqueCount = this.uniqueCount;
             s.unfoundCount = this.unfoundCount;
             return s;
@@ -1227,12 +1229,12 @@
     Bridge.define('Bridge.Collections.HashSet$1.Enumerator', function (T) { return {
         inherits: [Bridge.IEnumerator$1(T)],
         statics: {
-            getDefaultValue: function () { return new Bridge.Collections.HashSet$1.Enumerator(); }
+            getDefaultValue: function () { return new Bridge.Collections.HashSet$1.Enumerator(T)(); }
         },
         _set: null,
         _index: 0,
         _version: 0,
-        _current: null,
+        _current: Bridge.getDefaultValue(T),
         constructor$1: function (set) {
             this._set = set;
             this._index = 0;
@@ -1275,8 +1277,10 @@
             this._index = 0;
             this._current = Bridge.getDefaultValue(T);
         },
+        $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 2005474994;
             hash = hash * 23 + (this._set == null ? 0 : Bridge.getHashCode(this._set));
             hash = hash * 23 + (this._index == null ? 0 : Bridge.getHashCode(this._index));
             hash = hash * 23 + (this._version == null ? 0 : Bridge.getHashCode(this._version));
@@ -1284,13 +1288,13 @@
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.Collections.HashSet$1.Enumerator)) {
+            if (!Bridge.is(o,Bridge.Collections.HashSet$1.Enumerator(T))) {
                 return false;
             }
             return Bridge.equals(this._set, o._set) && Bridge.equals(this._index, o._index) && Bridge.equals(this._version, o._version) && Bridge.equals(this._current, o._current);
         },
         $clone: function (to) {
-            var s = to || new Bridge.Collections.HashSet$1.Enumerator();
+            var s = to || new Bridge.Collections.HashSet$1.Enumerator(T)();
             s._set = this._set;
             s._index = this._index;
             s._version = this._version;
@@ -1301,28 +1305,30 @@
     
     Bridge.define('Bridge.Collections.HashSet$1.Slot', function (T) { return {
         statics: {
-            getDefaultValue: function () { return new Bridge.Collections.HashSet$1.Slot(); }
+            getDefaultValue: function () { return new Bridge.Collections.HashSet$1.Slot(T)(); }
         },
         hashCode: 0,
-        value: null,
+        value: Bridge.getDefaultValue(T),
         next: 0,
         constructor: function () {
         },
+        $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -1966733860;
             hash = hash * 23 + (this.hashCode == null ? 0 : Bridge.getHashCode(this.hashCode));
             hash = hash * 23 + (this.value == null ? 0 : Bridge.getHashCode(this.value));
             hash = hash * 23 + (this.next == null ? 0 : Bridge.getHashCode(this.next));
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.Collections.HashSet$1.Slot)) {
+            if (!Bridge.is(o,Bridge.Collections.HashSet$1.Slot(T))) {
                 return false;
             }
             return Bridge.equals(this.hashCode, o.hashCode) && Bridge.equals(this.value, o.value) && Bridge.equals(this.next, o.next);
         },
         $clone: function (to) {
-            var s = to || new Bridge.Collections.HashSet$1.Slot();
+            var s = to || new Bridge.Collections.HashSet$1.Slot(T)();
             s.hashCode = this.hashCode;
             s.value = this.value;
             s.next = this.next;
@@ -1343,20 +1349,20 @@
         _size: 0,
         _version: 0,
         constructor: function () {
-            this._array = Bridge.Array.init(0, null);
+            this._array = Bridge.Array.init(0, {"Value":"Bridge.getDefaultValue(T)"});
         },
         constructor$2: function (capacity) {
             if (capacity < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("capacity", "Non-negative number required.");
             }
-            this._array = Bridge.Array.init(capacity, null);
+            this._array = Bridge.Array.init(capacity, {"Value":"Bridge.getDefaultValue(T)"});
         },
         constructor$1: function (collection) {
-            if (!Bridge.hasValue(collection)) {
+            if (collection == null) {
                 throw new Bridge.ArgumentNullException("collection");
             }
     
-            this._array = Bridge.Array.init(Bridge.Collections.Queue$1(T).defaultCapacity, null);
+            this._array = Bridge.Array.init(Bridge.Collections.Queue$1(T).DefaultCapacity, {"Value":"Bridge.getDefaultValue(T)"});
     
             var en = Bridge.getEnumerator(collection, "$1");
             try {
@@ -1388,7 +1394,7 @@
             this._version = (this._version + 1) | 0;
         },
         copyTo: function (array, arrayIndex) {
-            if (!Bridge.hasValue(array)) {
+            if (array == null) {
                 throw new Bridge.ArgumentNullException("array");
             }
     
@@ -1415,9 +1421,9 @@
         },
         enqueue: function (item) {
             if (this._size === this._array.length) {
-                var newcapacity = (Bridge.Int.div(((this._array.length * Bridge.Collections.Queue$1(T).growFactor) | 0), 100)) | 0;
-                if (newcapacity < ((this._array.length + Bridge.Collections.Queue$1(T).minimumGrow) | 0)) {
-                    newcapacity = (this._array.length + Bridge.Collections.Queue$1(T).minimumGrow) | 0;
+                var newcapacity = (Bridge.Int.div(((this._array.length * Bridge.Collections.Queue$1(T).GrowFactor) | 0), 100)) | 0;
+                if (newcapacity < ((this._array.length + Bridge.Collections.Queue$1(T).MinimumGrow) | 0)) {
+                    newcapacity = (this._array.length + Bridge.Collections.Queue$1(T).MinimumGrow) | 0;
                 }
                 this.setCapacity(newcapacity);
             }
@@ -1461,13 +1467,13 @@
     
             var c = new Bridge.EqualityComparer$1(T)();
             while (Bridge.identity(count, (count = (count - 1) | 0)) > 0) {
-                if (!Bridge.hasValue(item)) {
-                    if (!Bridge.hasValue(this._array[index])) {
+                if (item == null) {
+                    if (this._array[index] == null) {
                         return true;
                     }
                 }
                 else  {
-                    if (Bridge.hasValue(this._array[index]) && c.equals(this._array[index], item)) {
+                    if (this._array[index] != null && c.equals2(this._array[index], item)) {
                         return true;
                     }
                 }
@@ -1480,7 +1486,7 @@
             return this._array[(((this._head + i) | 0)) % this._array.length];
         },
         toArray: function () {
-            var arr = Bridge.Array.init(this._size, null);
+            var arr = Bridge.Array.init(this._size, {"Value":"Bridge.getDefaultValue(T)"});
             if (this._size === 0) {
                 return arr;
             } // consider replacing with Array.Empty<T>() to be consistent with non-generic Queue
@@ -1496,7 +1502,7 @@
             return arr;
         },
         setCapacity: function (capacity) {
-            var newarray = Bridge.Array.init(capacity, null);
+            var newarray = Bridge.Array.init(capacity, {"Value":"Bridge.getDefaultValue(T)"});
             if (this._size > 0) {
                 if (this._head < this._tail) {
                     Bridge.Array.copy(this._array, this._head, newarray, 0, this._size);
@@ -1529,12 +1535,12 @@
     Bridge.define('Bridge.Collections.Queue$1.Enumerator', function (T) { return {
         inherits: [Bridge.IEnumerator$1(T),Bridge.IEnumerator],
         statics: {
-            getDefaultValue: function () { return new Bridge.Collections.Queue$1.Enumerator(); }
+            getDefaultValue: function () { return new Bridge.Collections.Queue$1.Enumerator(T)(); }
         },
         _q: null,
         _index: 0,
         _version: 0,
-        _currentElement: null,
+        _currentElement: Bridge.getDefaultValue(T),
         constructor$1: function (q) {
             this._q = q;
             this._version = this._q._version;
@@ -1588,8 +1594,10 @@
             this._index = -1;
             this._currentElement = Bridge.getDefaultValue(T);
         },
+        $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 2005474994;
             hash = hash * 23 + (this._q == null ? 0 : Bridge.getHashCode(this._q));
             hash = hash * 23 + (this._index == null ? 0 : Bridge.getHashCode(this._index));
             hash = hash * 23 + (this._version == null ? 0 : Bridge.getHashCode(this._version));
@@ -1597,13 +1605,13 @@
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.Collections.Queue$1.Enumerator)) {
+            if (!Bridge.is(o,Bridge.Collections.Queue$1.Enumerator(T))) {
                 return false;
             }
             return Bridge.equals(this._q, o._q) && Bridge.equals(this._index, o._index) && Bridge.equals(this._version, o._version) && Bridge.equals(this._currentElement, o._currentElement);
         },
         $clone: function (to) {
-            var s = to || new Bridge.Collections.Queue$1.Enumerator();
+            var s = to || new Bridge.Collections.Queue$1.Enumerator(T)();
             s._q = this._q;
             s._index = this._index;
             s._version = this._version;
@@ -1621,16 +1629,16 @@
         _size: 0,
         _version: 0,
         constructor: function () {
-            this._array = Bridge.Array.init(0, null);
+            this._array = Bridge.Array.init(0, {"Value":"Bridge.getDefaultValue(T)"});
         },
         constructor$2: function (capacity) {
             if (capacity < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("capacity", "Non-negative number required.");
             }
-            this._array = Bridge.Array.init(capacity, null);
+            this._array = Bridge.Array.init(capacity, {"Value":"Bridge.getDefaultValue(T)"});
         },
         constructor$1: function (collection) {
-            if (!Bridge.hasValue(collection)) {
+            if (collection == null) {
                 throw new Bridge.ArgumentNullException("collection");
             }
             var length = { };
@@ -1650,13 +1658,13 @@
     
             var c = new Bridge.EqualityComparer$1(T)();
             while (Bridge.identity(count, (count = (count - 1) | 0)) > 0) {
-                if (!Bridge.hasValue(item)) {
-                    if (!Bridge.hasValue(this._array[count])) {
+                if (item == null) {
+                    if (this._array[count] == null) {
                         return true;
                     }
                 }
                 else  {
-                    if (Bridge.hasValue(this._array[count]) && c.equals(this._array[count], item)) {
+                    if (this._array[count] != null && c.equals2(this._array[count], item)) {
                         return true;
                     }
                 }
@@ -1664,7 +1672,7 @@
             return false;
         },
         copyTo: function (array, arrayIndex) {
-            if (!Bridge.hasValue(array)) {
+            if (array == null) {
                 throw new Bridge.ArgumentNullException("array");
             }
     
@@ -1676,7 +1684,7 @@
                 throw new Bridge.ArgumentException("Offset and length were out of bounds for the array or count is greater than the number of elements from index to the end of the source collection.");
             }
     
-            if (array !== this._array) {
+            if (!Bridge.referenceEquals(array, this._array)) {
                 var srcIndex = 0;
                 var dstIndex = (arrayIndex + this._size) | 0;
                 for (var i = 0; i < this._size; i = (i + 1) | 0) {
@@ -1690,7 +1698,7 @@
             }
         },
         copyTo$1: function (array, arrayIndex) {
-            if (!Bridge.hasValue(array)) {
+            if (array == null) {
                 throw new Bridge.ArgumentNullException("array");
             }
     
@@ -1729,7 +1737,7 @@
             return new Bridge.Collections.Stack$1.Enumerator(T)("constructor$1", this);
         },
         trimExcess: function () {
-            var threshold = Bridge.Int.clip32((this._array.length) * 0.9);
+            var threshold = Bridge.Int.clip32(this._array.length * 0.9);
             if (this._size < threshold) {
                 var localArray = { v : this._array };
                 Bridge.Array.resize(localArray, this._size, null);
@@ -1755,14 +1763,14 @@
         push: function (item) {
             if (this._size === this._array.length) {
                 var localArray = { v : this._array };
-                Bridge.Array.resize(localArray, (this._array.length === 0) ? Bridge.Collections.Stack$1(T).defaultCapacity : ((2 * this._array.length) | 0), null);
+                Bridge.Array.resize(localArray, (this._array.length === 0) ? Bridge.Collections.Stack$1(T).DefaultCapacity : ((2 * this._array.length) | 0), null);
                 this._array = localArray.v;
             }
             this._array[Bridge.identity(this._size, (this._size = (this._size + 1) | 0))] = item;
             this._version = (this._version + 1) | 0;
         },
         toArray: function () {
-            var objArray = Bridge.Array.init(this._size, null);
+            var objArray = Bridge.Array.init(this._size, {"Value":"Bridge.getDefaultValue(T)"});
             var i = 0;
             while (i < this._size) {
                 objArray[i] = this._array[((((this._size - i) | 0) - 1) | 0)];
@@ -1775,12 +1783,12 @@
     Bridge.define('Bridge.Collections.Stack$1.Enumerator', function (T) { return {
         inherits: [Bridge.IEnumerator$1(T),Bridge.IEnumerator],
         statics: {
-            getDefaultValue: function () { return new Bridge.Collections.Stack$1.Enumerator(); }
+            getDefaultValue: function () { return new Bridge.Collections.Stack$1.Enumerator(T)(); }
         },
         _stack: null,
         _index: 0,
         _version: 0,
-        _currentElement: null,
+        _currentElement: Bridge.getDefaultValue(T),
         constructor$1: function (stack) {
             this._stack = stack;
             this._version = this._stack._version;
@@ -1843,8 +1851,10 @@
             this._index = -2;
             this._currentElement = Bridge.getDefaultValue(T);
         },
+        $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + 2005474994;
             hash = hash * 23 + (this._stack == null ? 0 : Bridge.getHashCode(this._stack));
             hash = hash * 23 + (this._index == null ? 0 : Bridge.getHashCode(this._index));
             hash = hash * 23 + (this._version == null ? 0 : Bridge.getHashCode(this._version));
@@ -1852,13 +1862,13 @@
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.Collections.Stack$1.Enumerator)) {
+            if (!Bridge.is(o,Bridge.Collections.Stack$1.Enumerator(T))) {
                 return false;
             }
             return Bridge.equals(this._stack, o._stack) && Bridge.equals(this._index, o._index) && Bridge.equals(this._version, o._version) && Bridge.equals(this._currentElement, o._currentElement);
         },
         $clone: function (to) {
-            var s = to || new Bridge.Collections.Stack$1.Enumerator();
+            var s = to || new Bridge.Collections.Stack$1.Enumerator(T)();
             s._stack = this._stack;
             s._index = this._index;
             s._version = this._version;

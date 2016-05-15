@@ -50,9 +50,11 @@ Bridge.define("Bridge.Text.RegularExpressions.MatchCollection", {
 
     get: function (i) {
         var match = this._getMatch(i);
+
         if (match == null) {
             throw new Bridge.ArgumentOutOfRangeException("i");
         }
+
         return match;
     },
 
@@ -62,6 +64,7 @@ Bridge.define("Bridge.Text.RegularExpressions.MatchCollection", {
         }
 
         var count = this.getCount();
+
         if (array.length < arrayIndex + count) {
             throw new Bridge.IndexOutOfRangeException();
         }
@@ -84,14 +87,17 @@ Bridge.define("Bridge.Text.RegularExpressions.MatchCollection", {
         if (i < 0) {
             return null;
         }
+
         if (this._matches.length > i) {
             return this._matches[i];
         }
+
         if (this._done) {
             return null;
         }
 
         var match;
+
         do {
             match = this._regex._runner.run(false, this._prevLen, this._input, this._beginning, this._length, this._startat);
             if (!match.getSuccess()) {
@@ -120,7 +126,7 @@ Bridge.define("Bridge.Text.RegularExpressions.MatchEnumerator", {
     _curindex: 0,
     _done: false,
 
-    constructor: function(matchColl) {
+    constructor: function (matchColl) {
         this._matchcoll = matchColl;
     },
 
@@ -134,13 +140,14 @@ Bridge.define("Bridge.Text.RegularExpressions.MatchEnumerator", {
  
         if (this._match == null) {
             this._done = true;
+
             return false;
         }
  
         return true;
     },
 
-    getCurrent: function() {
+    getCurrent: function () {
         if (this._match == null) {
             throw new Bridge.InvalidOperationException("Enumeration has either not started or has already finished.");
         }
@@ -148,7 +155,7 @@ Bridge.define("Bridge.Text.RegularExpressions.MatchEnumerator", {
         return this._match;
     },
 
-    reset: function() {
+    reset: function () {
         this._curindex = 0;
         this._done = false;
         this._match = null;

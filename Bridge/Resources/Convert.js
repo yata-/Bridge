@@ -360,6 +360,7 @@
 
             for (var i = 0; i < allowedCodes.length; i++) {
                 var allowedCode = allowedCodes[i];
+
                 codeValues[allowedCode] = i;
             }
 
@@ -367,9 +368,11 @@
             var lastAllowed = allowedCodes[allowedCodes.length - 1];
 
             var res, totalMax, code, j;
+
             if (typeCode === typeCodes.Int64 || typeCode === typeCodes.UInt64) {
                 for (j = startIndex; j < str.length; j++) {
                     code = str[j].charCodeAt(0);
+
                     if (!(code >= firstAllowed && code <= lastAllowed)) {
                         if (j === startIndex) {
                             throw new Bridge.FormatException("Could not find any recognizable digits.");
@@ -396,8 +399,10 @@
                 // Parse the number:
                 res = 0;
                 totalMax = maxValue - minValue + 1;
+
                 for (j = startIndex; j < str.length; j++) {
                     code = str[j].charCodeAt(0);
+
                     if (code >= firstAllowed && code <= lastAllowed) {
                         res *= fromBase;
                         res += codeValues[code];
@@ -414,18 +419,18 @@
                     }
                 }
 
-            if (isNegative) {
-                res *= -1;
-            }
+                if (isNegative) {
+                    res *= -1;
+                }
 
-            if (res > maxValue && fromBase !== 10 && minValue < 0) {
-                // Assume that the value is negative, transform it:
-                res = res - totalMax;
-            }
+                if (res > maxValue && fromBase !== 10 && minValue < 0) {
+                    // Assume that the value is negative, transform it:
+                    res = res - totalMax;
+                }
 
-            if (res < minValue || res > maxValue) {
-                throw new Bridge.OverflowException("Value was either too large or too small.");
-            }
+                if (res < minValue || res > maxValue) {
+                    throw new Bridge.OverflowException("Value was either too large or too small.");
+                }
 
                 return res;
             }
@@ -446,8 +451,7 @@
                 if (value.lt(minValue) || value.gt(maxValue)) {
                     throw new Bridge.OverflowException("Value was either too large or too small for an unsigned byte.");
                 }
-            }
-            else if (value < minValue || value > maxValue) {
+            } else if (value < minValue || value > maxValue) {
                 throw new Bridge.OverflowException("Value was either too large or too small for an unsigned byte.");
             }
 
@@ -488,9 +492,11 @@
             // Fill Value-To-Char map:
             var charByValues = {};
             var allowedCharArr = allowedChars.split("");
+            var allowedChar;
 
             for (var i = 0; i < allowedCharArr.length; i++) {
-                var allowedChar = allowedCharArr[i];
+                allowedChar = allowedCharArr[i];
+
                 charByValues[i] = allowedChar;
             }
 
@@ -501,6 +507,7 @@
                 res = "0";
             } else {
                 var mod, char;
+
                 if (special) {
                     while (value.gt(0)) {
                         mod = value.mod(toBase);
@@ -952,11 +959,13 @@
                         var str = value;
                         if (typeCode === typeCodes.Int64) {
                             value = new Bridge.Long(value);
+
                             if (str !== value.toString()) {
                                 this.throwOverflow(scope.internal.getTypeCodeName(typeCode));
                             }
                         } else if (typeCode === typeCodes.UInt64) {
                             value = new Bridge.ULong(value);
+
                             if (str !== value.toString()) {
                                 this.throwOverflow(scope.internal.getTypeCodeName(typeCode));
                             }
@@ -1022,13 +1031,11 @@
                         if (value.gt(Bridge.Long.MaxValue)) {
                             this.throwOverflow(typeName);
                         }
-                    }
-                    else if (value instanceof Bridge.Decimal) {
+                    } else if (value instanceof Bridge.Decimal) {
                         if ((value.gt(new Bridge.Decimal(maxValue)) || value.lt(new Bridge.Decimal(minValue)))) {
                             this.throwOverflow(typeName);
                         }
-                    }
-                    else if (!(value instanceof Bridge.Long)) {
+                    } else if (!(value instanceof Bridge.Long)) {
                         if (minValue.toNumber() > value || maxValue.toNumber() < value) {
                             this.throwOverflow(typeName);
                         }
@@ -1041,26 +1048,24 @@
                         if (value.isNegative()) {
                             this.throwOverflow(typeName);
                         }
-                    }
-                    else if (value instanceof Bridge.Decimal) {
+                    } else if (value instanceof Bridge.Decimal) {
                         if ((value.gt(new Bridge.Decimal(maxValue)) || value.lt(new Bridge.Decimal(minValue)))) {
                             this.throwOverflow(typeName);
                         }
-                    }
-                    else if (!(value instanceof Bridge.ULong)) {
+                    } else if (!(value instanceof Bridge.ULong)) {
                         if (minValue.toNumber() > value || maxValue.toNumber() < value) {
                             this.throwOverflow(typeName);
                         }
                     }
+
                     value = new Bridge.ULong(value);
                 }
-            }
-            else if (value < minValue || value > maxValue) {
+            } else if (value < minValue || value > maxValue) {
                 this.throwOverflow(typeName);
             }
         },
 
-        throwOverflow: function(typeName) {
+        throwOverflow: function (typeName) {
             throw new Bridge.OverflowException("Value was either too large or too small for '" + typeName + "'.");
         },
 

@@ -73,6 +73,7 @@ var array = {
 
     getLower: function (arr, d) {
         Bridge.Array.getLength(arr, d);
+
         return 0;
     },
 
@@ -146,6 +147,7 @@ var array = {
                 type.$$name && Bridge.String.startsWith(type.$$name, "Bridge.IEnumerator")) {
                 return true;
             }
+
             return false;
         }
 
@@ -249,10 +251,11 @@ var array = {
             startIndex = startIndex || 0;
             count = count || arr.length;
             endIndex = startIndex + count;
+
             for (i = startIndex; i < endIndex; i++) {
                 el = arr[i];
 
-                if (el === item || Bridge.EqualityComparer$1.$default.equals(el, item)) {
+                if (el === item || Bridge.EqualityComparer$1.$default.equals2(el, item)) {
                     return i;
                 }
             }
@@ -392,6 +395,7 @@ var array = {
         }
 
         var lb = 0;
+
         if (index < lb || length < 0) {
             throw new Bridge.ArgumentOutOfRangeException(index < lb ? "index" : "length", "Non-negative number required.");
         }
@@ -429,8 +433,7 @@ var array = {
 
             if (c < 0) {
                 lo = i + 1;
-            }
-            else {
+            } else {
                 hi = i - 1;
             }
         }
@@ -464,6 +467,7 @@ var array = {
             array.sort(Bridge.fn.bind(comparer, comparer.compare));
         } else {
             var newarray = array.slice(index, index + length);
+
             newarray.sort(Bridge.fn.bind(comparer, comparer.compare));
 
             for (var i = index; i < (index + length) ; i++) {
@@ -475,6 +479,7 @@ var array = {
     min: function (arr, minValue) {
         var min = arr[0],
             len = arr.length;
+
         for (var i = 0; i < len; i++) {
             if ((arr[i] < min || min < minValue) && !(arr[i] < minValue)) {
                 min = arr[i];
@@ -486,20 +491,22 @@ var array = {
     max: function (arr, maxValue) {
         var max = arr[0],
             len = arr.length;
+
         for (var i = 0; i < len; i++) {
             if ((arr[i] > max || max > maxValue) && !(arr[i] > maxValue)) {
                 max = arr[i];
             }
         }
+
         return max;
     },
 
     addRange: function (arr, items) {
         if (Bridge.isArray(items)) {
             arr.push.apply(arr, items);
-        }
-        else {
+        } else {
             var e = Bridge.getEnumerator(items);
+
             try {
                 while (e.moveNext()) {
                     arr.push(e.getCurrent());
@@ -517,13 +524,17 @@ var array = {
         if (!Bridge.hasValue(array)) {
             throw new Bridge.ArgumentNullException("array");
         }
+
         if (!Bridge.hasValue(converter)) {
             throw new Bridge.ArgumentNullException("converter");
         }
+
         var array2 = [];
+
         for (var i = 0; i < array.length; i++) {
             array2[i] = converter(array[i]);
         }
+
         return array2;
     },
 
@@ -531,14 +542,17 @@ var array = {
         if (!Bridge.hasValue(array)) {
             throw new Bridge.ArgumentNullException("array");
         }
+
         if (!Bridge.hasValue(match)) {
             throw new Bridge.ArgumentNullException("match");
         }
+
         for (var i = 0; i < array.length; i++) {
             if (match(array[i])) {
                 return array[i];
             }
         }
+
         return Bridge.getDefaultValue(T);
     },
 
@@ -546,15 +560,19 @@ var array = {
         if (!Bridge.hasValue(array)) {
             throw new Bridge.ArgumentNullException("array");
         }
+
         if (!Bridge.hasValue(match)) {
             throw new Bridge.ArgumentNullException("match");
         }
+
         var list = [];
+
         for (var i = 0; i < array.length; i++) {
             if (match(array[i])) {
                 list.push(array[i]);
             }
         }
+
         return list;
     },
 
@@ -567,8 +585,7 @@ var array = {
             match = startIndex;
             startIndex = 0;
             count = array.length;
-        }
-        else if (arguments.length === 3) {
+        } else if (arguments.length === 3) {
             match = count;
             count = array.length - startIndex;
         }
@@ -576,17 +593,23 @@ var array = {
         if (startIndex < 0 || startIndex > array.length) {
             throw new Bridge.ArgumentOutOfRangeException("startIndex");
         }
+
         if (count < 0 || startIndex > array.length - count) {
             throw new Bridge.ArgumentOutOfRangeException("count");
         }
+
         if (!Bridge.hasValue(match)) {
             throw new Bridge.ArgumentNullException("match");
         }
+
         var endIndex = startIndex + count;
+
         for (var i = startIndex; i < endIndex; i++) {
-            if (match(array[i]))
+            if (match(array[i])) {
                 return i;
+            }
         }
+
         return -1;
     },
 
@@ -594,14 +617,17 @@ var array = {
         if (!Bridge.hasValue(array)) {
             throw new Bridge.ArgumentNullException("array");
         }
+
         if (!Bridge.hasValue(match)) {
             throw new Bridge.ArgumentNullException("match");
         }
+
         for (var i = array.length - 1; i >= 0; i--) {
             if (match(array[i])) {
                 return array[i];
             }
         }
+
         return Bridge.getDefaultValue(T);
     },
 
@@ -614,8 +640,7 @@ var array = {
             match = startIndex;
             startIndex = array.length - 1;
             count = array.length;
-        }
-        else if (arguments.length === 3) {
+        } else if (arguments.length === 3) {
             match = count;
             count = startIndex + 1;
         }
@@ -628,22 +653,24 @@ var array = {
             if (startIndex !== -1) {
                 throw new Bridge.ArgumentOutOfRangeException("startIndex");
             }
-        }
-        else {
+        } else {
             if (startIndex < 0 || startIndex >= array.length) {
                 throw new Bridge.ArgumentOutOfRangeException("startIndex");
             }
         }
+
         if (count < 0 || startIndex - count + 1 < 0) {
             throw new Bridge.ArgumentOutOfRangeException("count");
         }
 
         var endIndex = startIndex - count;
+
         for (var i = startIndex; i > endIndex; i--) {
             if (match(array[i])) {
                 return i;
             }
         }
+
         return -1;
     },
 
@@ -651,9 +678,11 @@ var array = {
         if (!Bridge.hasValue(array)) {
             throw new Bridge.ArgumentNullException("array");
         }
+
         if (!Bridge.hasValue(action)) {
             throw new Bridge.ArgumentNullException("action");
         }
+
         for (var i = 0; i < array.length; i++) {
             action(array[i]);
         }
@@ -667,17 +696,18 @@ var array = {
         if (arguments.length === 2) {
             startIndex = 0;
             count = array.length;
-        }
-        else if (arguments.length === 3) {
+        } else if (arguments.length === 3) {
             count = array.length - startIndex;
         }
 
         if (startIndex < 0 || (startIndex >= array.length && array.length > 0)) {
             throw new Bridge.ArgumentOutOfRangeException("startIndex", "out of range");
         }
+
         if (count < 0 || count > array.length - startIndex) {
             throw new Bridge.ArgumentOutOfRangeException("count", "out of range");
         }
+
         return Bridge.Array.indexOf(array, value, startIndex, count);
     },
 
@@ -689,25 +719,28 @@ var array = {
         if (arguments.length === 2) {
             startIndex = array.length - 1;
             count = array.length;
-        }
-        else if (arguments.length === 3) {
+        } else if (arguments.length === 3) {
             count = (array.length === 0) ? 0 : (startIndex + 1);
         }
 
         if (startIndex < 0 || (startIndex >= array.length && array.length > 0)) {
             throw new Bridge.ArgumentOutOfRangeException("startIndex", "out of range");
         }
+
         if (count < 0 || startIndex - count + 1 < 0) {
             throw new Bridge.ArgumentOutOfRangeException("count", "out of range");
         }
 
         var endIndex = startIndex - count + 1;
+
         for (var i = startIndex; i >= endIndex; i--) {
             var el = array[i];
-            if (el === value || Bridge.EqualityComparer$1.$default.equals(el, value)) {
+
+            if (el === value || Bridge.EqualityComparer$1.$default.equals2(el, value)) {
                 return i;
             }
         }
+
         return -1;
     },
 
@@ -715,14 +748,17 @@ var array = {
         if (!Bridge.hasValue(array)) {
             throw new Bridge.ArgumentNullException("array");
         }
+
         if (!Bridge.hasValue(match)) {
             throw new Bridge.ArgumentNullException("match");
         }
+
         for (var i = 0; i < array.length; i++) {
             if (!match(array[i])) {
                 return false;
             }
         }
+
         return true;
     }
 };

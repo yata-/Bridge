@@ -26,6 +26,11 @@ namespace Bridge.Translator
             this.TargetResolveResult = targetResolveResult;
         }
 
+        public int[] IgnoreRange
+        {
+            get; set;
+        }
+
         public IMethod Method
         {
             get; set;
@@ -63,6 +68,7 @@ namespace Bridge.Translator
             if (Regex.IsMatch(key, "^\\d+$"))
             {
                 var list = new List<Expression>();
+
                 list.Add(expressions.Skip(int.Parse(key)).First().Expression);
 
                 return list;
@@ -76,9 +82,9 @@ namespace Bridge.Translator
             return types.Where(e => e.Name == key && e.AstType != null).Select(e => e.AstType).FirstOrDefault();
         }
 
-        protected virtual IType GetITypeByKey(IEnumerable<TypeParamExpression> types, string key)
+        protected virtual TypeParamExpression GetTypeByKey(IEnumerable<TypeParamExpression> types, string key)
         {
-            return types.Where(e => e.Name == key && e.IType != null).Select(e => e.IType).FirstOrDefault();
+            return types.Where(e => e.Name == key && e.IType != null).FirstOrDefault();
         }
 
         public static string ReplaceInlineArgs(AbstractEmitterBlock block, string inline, Expression[] args)
@@ -255,6 +261,11 @@ namespace Bridge.Translator
 
             inline = _formatArg.Replace(inline, delegate(Match m)
             {
+                if (this.IgnoreRange != null && m.Index >= this.IgnoreRange[0] && m.Index <= this.IgnoreRange[1])
+                {
+                    return m.Value;
+                }
+
                 int count = this.Emitter.Writers.Count;
                 string key = m.Groups[2].Value;
                 bool isRaw = m.Groups[1].Success && m.Groups[1].Value == "*";
@@ -336,7 +347,21 @@ namespace Bridge.Translator
                                 type = ((MemberResolveResult) rr).TargetResult.Type;
                             }
 
-                            this.Write(BridgeTypes.ToJsName(type, this.Emitter));
+                            bool needName = this.NeedName(type);
+
+                            if (needName)
+                            {
+                                this.Write(BridgeTypes.ToJsName(type, this.Emitter));
+                            }
+                            else
+                            {
+                                string thisValue = argsInfo.GetThisValue();
+
+                                if (thisValue != null)
+                                {
+                                    this.Write("Bridge.getType(" + thisValue + ")");
+                                } 
+                            }
                         }
                     }
                     else
@@ -357,15 +382,19 @@ namespace Bridge.Translator
                     {
                         if (modifier == "type")
                         {
+                            IType type = null;
                             if (paramsName == key && paramsType != null)
                             {
-                                this.Write(BridgeTypes.ToJsName(paramsType, this.Emitter));
+                                type = paramsType;
                             }
                             else
                             {
                                 var rr = this.Emitter.Resolver.ResolveNode(exprs[0], this.Emitter);
-                                this.Write(BridgeTypes.ToJsName(rr.Type, this.Emitter));
+                                type = rr.Type;
                             }
+
+                            bool needName = this.NeedName(type);
+                            this.WriteGetType(needName, type, exprs[0], modifier);
                         }
                         else if (exprs.Count > 1 || paramsName == key)
                         {
@@ -400,7 +429,48 @@ namespace Bridge.Translator
                             {
                                 var writer = this.SaveWriter();
                                 this.NewWriter();
-                                exprs[0].AcceptVisitor(this.Emitter);
+
+                                var directExpr = exprs[0] as DirectionExpression;
+                                if (directExpr != null)
+                                {
+                                    var rr = this.Emitter.Resolver.ResolveNode(exprs[0], this.Emitter) as ByReferenceResolveResult;
+
+                                    if (rr != null && !(rr.ElementResult is LocalResolveResult))
+                                    {
+                                        this.Write("Bridge.ref(");
+
+                                        this.Emitter.IsRefArg = true;
+                                        exprs[0].AcceptVisitor(this.Emitter);
+                                        this.Emitter.IsRefArg = false;
+
+                                        if (this.Emitter.Writers.Count != count)
+                                        {
+                                            this.PopWriter();
+                                            count = this.Emitter.Writers.Count;
+                                        }
+
+                                        this.Write(")");
+                                    }
+                                    else
+                                    {
+                                        exprs[0].AcceptVisitor(this.Emitter);
+                                    }
+                                }
+                                else if (modifier == "plain")
+                                {
+                                    var an = exprs[0] as AnonymousTypeCreateExpression;
+                                    if (an == null)
+                                    {
+                                        throw new EmitterException(exprs[0], "Plain modifier can be applied to AnonymousTypeCreateExpression only");
+                                    }
+
+                                    new AnonymousTypeCreateBlock(this.Emitter, an, true).Emit();
+                                }
+                                else
+                                {
+                                    exprs[0].AcceptVisitor(this.Emitter);
+                                }
+                                
                                 s = this.Emitter.Output.ToString();
                                 this.RestoreWriter(writer);
 
@@ -435,18 +505,18 @@ namespace Bridge.Translator
                         }
                         else
                         {
-                            var iType = this.GetITypeByKey(typeParams, key);
+                            var iType = this.GetTypeByKey(typeParams, key);
 
                             if (iType != null)
                             {
                                 if (modifier == "default" || modifier == "defaultFn")
                                 {
-                                    var def = Inspector.GetDefaultFieldValue(iType);
+                                    var def = Inspector.GetDefaultFieldValue(iType.IType, iType.AstType);
                                     this.GetDefaultValue(def, modifier);
                                 }
                                 else
                                 {
-                                    new CastBlock(this.Emitter, iType).Emit();
+                                    new CastBlock(this.Emitter, iType.IType).Emit();
                                 }
                             }
                         }
@@ -470,6 +540,55 @@ namespace Bridge.Translator
             {
                 this.Write("; }");
             }
+        }
+
+        private void WriteGetType(bool needName, IType type, AstNode node, string modifier)
+        {
+            if (needName)
+            {
+                this.Write(BridgeTypes.ToJsName(type, this.Emitter));
+            }
+            else
+            {
+                string s;
+                if (node != null)
+                {
+                    var writer = this.SaveWriter();
+                    this.NewWriter();
+                    node.AcceptVisitor(this.Emitter);
+                    s = this.Emitter.Output.ToString();
+                    this.RestoreWriter(writer);
+
+                    if (modifier == "raw")
+                    {
+                        s = s.Trim('"');
+                    }
+                }
+                else
+                {
+                    s = "null";
+                }
+
+                this.Write(this.WriteIndentToString("Bridge.getType(" + s + ")"));
+            }
+        }
+
+        private bool NeedName(IType type)
+        {
+            var def = type.GetDefinition();
+            return (def != null && def.IsSealed)
+                   || type.Kind == TypeKind.Enum 
+                   || type.IsKnownType(KnownTypeCode.Enum)
+                   || Helpers.IsIntegerType(type, this.Emitter.Resolver)
+                   || Helpers.IsFloatType(type, this.Emitter.Resolver)
+                   || Helpers.IsKnownType(KnownTypeCode.Enum, type, this.Emitter.Resolver)
+                   || Helpers.IsKnownType(KnownTypeCode.Boolean, type, this.Emitter.Resolver)
+                   || Helpers.IsKnownType(KnownTypeCode.Type, type, this.Emitter.Resolver)
+                   || Helpers.IsKnownType(KnownTypeCode.Array, type, this.Emitter.Resolver)
+                   || Helpers.IsKnownType(KnownTypeCode.Char, type, this.Emitter.Resolver)
+                   || Helpers.IsKnownType(KnownTypeCode.DateTime, type, this.Emitter.Resolver)
+                   || Helpers.IsKnownType(KnownTypeCode.Delegate, type, this.Emitter.Resolver)
+                   || Helpers.IsKnownType(KnownTypeCode.String, type, this.Emitter.Resolver);
         }
 
         private void GetDefaultValue(object def, string modifier)

@@ -1,6 +1,5 @@
 ﻿// @source Text/RegularExpressions/RegexGroupCollection.js
 
-
 Bridge.define("Bridge.Text.RegularExpressions.GroupCollection", {
     inherits: function () {
         return [Bridge.ICollection];
@@ -41,6 +40,7 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupCollection", {
         }
 
         var groupnum = this._match._regex.groupNumberFromName(groupname);
+
         return this._getGroup(groupnum);
     },
 
@@ -50,6 +50,7 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupCollection", {
         }
 
         var count = this.getCount();
+
         if (array.length < arrayIndex + count) {
             throw new Bridge.IndexOutOfRangeException();
         }
@@ -73,6 +74,7 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupCollection", {
 
         if (this._captureMap != null) {
             var num = this._captureMap[groupnum];
+
             if (num == null) {
                 group = Bridge.Text.RegularExpressions.Group.getEmpty();
             } else {
@@ -96,6 +98,7 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupCollection", {
         }
 
         this._ensureGroupsInited();
+
         return this._groups[groupnum];
     },
 
@@ -103,6 +106,7 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupCollection", {
         // Construct all the Group objects the first time GetGroup is called
         if (this._groups == null) {
             var groups = [];
+
             groups.length = this._match._matchcount.length;
 
             if (groups.length > 0) {
@@ -147,6 +151,7 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupEnumerator", {
         }
  
         this._curindex++;
+
         return (this._curindex < size);
     },
 

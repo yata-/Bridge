@@ -354,8 +354,8 @@ namespace Bridge.Translator
                 {
                     name = value.ToString();
                     if (!isIgnore &&
-                        ((isStatic && Emitter.IsReservedStaticName(name)) ||
-                        Helpers.IsReservedWord(name)))
+                        ((isStatic && Emitter.IsReservedStaticName(name)) /*||
+                        Helpers.IsReservedWord(name)*/))
                     {
                         name = Helpers.ChangeReservedWord(name);
                     }
@@ -364,15 +364,15 @@ namespace Bridge.Translator
 
                 preserveMemberCase = !(bool)value;
             }
-
+            
             if (name.Contains("."))
             {
                 name = Object.Net.Utilities.StringUtils.RightOfRightmostOf(name, '.');
             }
             name = preserveMemberCase ? name : Object.Net.Utilities.StringUtils.ToLowerCamelCase(name);
             if (!isIgnore &&
-                ((isStatic && Emitter.IsReservedStaticName(name)) ||
-                Helpers.IsReservedWord(name)))
+                ((isStatic && Emitter.IsReservedStaticName(name)) /*||
+                Helpers.IsReservedWord(name)*/))
             {
                 name = Helpers.ChangeReservedWord(name);
             }
@@ -411,7 +411,7 @@ namespace Bridge.Translator
                 if (value is string)
                 {
                     name = value.ToString();
-                    if (!isIgnore && ((member.IsStatic && Emitter.IsReservedStaticName(name)) || Helpers.IsReservedWord(name)))
+                    if (!isIgnore && ((member.IsStatic && Emitter.IsReservedStaticName(name)) /*|| Helpers.IsReservedWord(name)*/))
                     {
                         name = Helpers.ChangeReservedWord(name);
                     }
@@ -433,7 +433,7 @@ namespace Bridge.Translator
             }
 
 
-            if (member is IMember && this.IsMemberConst((IMember)member)/* || member.DeclaringType.Kind == TypeKind.Anonymous*/)
+            if (member is IMember && this.IsMemberConst((IMember)member) || member is IEvent)
             {
                 preserveMemberChange = true;
             }
@@ -451,7 +451,7 @@ namespace Bridge.Translator
                 if (value is string)
                 {
                     name = value.ToString();
-                    if (!isIgnore && ((member.IsStatic && Emitter.IsReservedStaticName(name)) || Helpers.IsReservedWord(name)))
+                    if (!isIgnore && ((member.IsStatic && Emitter.IsReservedStaticName(name)) /*|| Helpers.IsReservedWord(name)*/))
                     {
                         name = Helpers.ChangeReservedWord(name);
                     }
@@ -484,7 +484,7 @@ namespace Bridge.Translator
             }
             
 
-            if (!isIgnore && ((member.IsStatic && Emitter.IsReservedStaticName(name)) || Helpers.IsReservedWord(name)))
+            if (!isIgnore && ((member.IsStatic && Emitter.IsReservedStaticName(name))/* || Helpers.IsReservedWord(name)*/))
             {
                 name = Helpers.ChangeReservedWord(name);
             }
@@ -663,12 +663,24 @@ namespace Bridge.Translator
 
         public virtual bool IsMemberConst(IMember member)
         {
-            return (member is DefaultResolvedField) && (((DefaultResolvedField)member).IsConst && member.DeclaringType.Kind != TypeKind.Enum);
+            var specializedField = member as SpecializedField;
+            if (specializedField != null)
+            {
+                return specializedField.IsConst && member.DeclaringType.Kind != TypeKind.Enum;
+            }
+
+            var defaultResolvedField = member as DefaultResolvedField;
+            if (defaultResolvedField != null)
+            {
+                return defaultResolvedField.IsConst && member.DeclaringType.Kind != TypeKind.Enum;
+            }
+
+            return false;
         }
 
         public virtual bool IsInlineConst(IMember member)
         {
-            bool isConst = (member is DefaultResolvedField) && (((DefaultResolvedField)member).IsConst && member.DeclaringType.Kind != TypeKind.Enum);
+            bool isConst = IsMemberConst(member);
 
             if (isConst)
             {
@@ -690,7 +702,7 @@ namespace Bridge.Translator
             this.LocalsStack = null;
             this.IteratorCount = 0;
             this.ThisRefCounter = 0;
-            this.Writers = new Stack<Tuple<string, StringBuilder, bool, Action>>();
+            this.Writers = new Stack<IWriter>();
             this.IsAssignment = false;
             this.Level = 0;
             this.IsNewLine = true;

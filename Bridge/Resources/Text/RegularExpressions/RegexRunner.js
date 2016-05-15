@@ -1,8 +1,7 @@
 ﻿// @source Text/RegularExpressions/RegexRunner.js
 
 Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
-    statics: {
-    },
+    statics: { },
 
     _runregex: null,
     _netEngine: null,
@@ -56,6 +55,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
 
         var stoppos;
         var bump;
+
         if (this._runregex.getRightToLeft()) {
             stoppos = this._runtextbeg;
             bump = -1;
@@ -114,11 +114,11 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
         for (i = 0; i < jsMatch.groups.length; i++) {
             jsGroup = jsMatch.groups[i];
 
-            // Paste group index/length according to group ordering:
+                // Paste group index/length according to group ordering:
             grOrder = 0;
-            if (jsGroup.descriptor != null) {
-                grOrder = this._runregex.groupNumberFromName(jsGroup.descriptor.name);
-            }
+                if (jsGroup.descriptor != null) {
+                    grOrder = this._runregex.groupNumberFromName(jsGroup.descriptor.name);
+                }
 
             for (j = 0; j < jsGroup.captures.length; j++) {
                 jsCapture = jsGroup.captures[j];
@@ -128,6 +128,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
 
         var textEndPos = jsMatch.capIndex + jsMatch.capLength;
         match._tidy(textEndPos);
+
         return match;
     }
 });

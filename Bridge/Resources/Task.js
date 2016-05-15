@@ -55,13 +55,13 @@
 
                 if (Bridge.is(tasks, Bridge.IEnumerable)) {
                     tasks = Bridge.toArray(tasks);
-                }
-                else if (!Bridge.isArray(tasks)) {
+                } else if (!Bridge.isArray(tasks)) {
                     tasks = Array.prototype.slice.call(arguments, 0);
                 }
 
                 if (tasks.length === 0) {
                     tcs.setResult([]);
+
                     return tcs.task;
                 }
 
@@ -69,7 +69,7 @@
                 result = new Array(tasks.length);
 
                 for (i = 0; i < tasks.length; i++) {
-                    (function(i) {
+                    (function (i) {
                         tasks[i].continueWith(function (t) {
                             switch (t.status) {
                                 case Bridge.TaskStatus.ranToCompletion:
@@ -104,8 +104,7 @@
             whenAny: function (tasks) {
                 if (Bridge.is(tasks, Bridge.IEnumerable)) {
                     tasks = Bridge.toArray(tasks);
-                }
-                else if (!Bridge.isArray(tasks)) {
+                } else if (!Bridge.isArray(tasks)) {
                     tasks = Array.prototype.slice.call(arguments, 0);
                 }
 
@@ -195,8 +194,7 @@
 
                 if (typeof (handler) === 'number') {
                     handler = (function (i) { return function () { return arguments[i >= 0 ? i : (arguments.length + i)]; }; })(handler);
-                }
-                else if (typeof (handler) !== 'function') {
+                } else if (typeof (handler) !== 'function') {
                     handler = function () { return Array.prototype.slice.call(arguments, 0); };
                 }
 
@@ -359,7 +357,7 @@
 
 
     Bridge.define("Bridge.TaskCompletionSource", {
-        constructor: function() {
+        constructor: function () {
             this.task = new Bridge.Task();
             this.task.status = Bridge.TaskStatus.running;
         },
@@ -370,27 +368,27 @@
             }
         },
 
-        setResult: function(result) {
+        setResult: function (result) {
             if (!this.task.complete(result)) {
                 throw new Bridge.InvalidOperationException("Task was already completed.");
             }
         },
 
-        setException: function(exception) {
+        setException: function (exception) {
             if (!this.trySetException(exception)) {
                 throw new Bridge.InvalidOperationException("Task was already completed.");
             }
         },
 
-        trySetCanceled: function() {
+        trySetCanceled: function () {
             return this.task.cancel();
         },
 
-        trySetResult: function(result) {
+        trySetResult: function (result) {
             return this.task.complete(result);
         },
 
-        trySetException: function(exception) {
+        trySetException: function (exception) {
             if (Bridge.is(exception, Bridge.Exception)) {
                 exception = [exception];
             }
@@ -400,6 +398,8 @@
     });
 
     Bridge.define("Bridge.CancellationToken", {
+         $struct: true,
+
          constructor: function (source) {
             if (!Bridge.is(source, Bridge.CancellationTokenSource)) {
                 source = source ? Bridge.CancellationToken.sourceTrue : Bridge.CancellationToken.sourceFalse;
@@ -426,18 +426,31 @@
             return this.source.register(cb, s);
         },
 
+        getHashCode: function () {
+            return Bridge.getHashCode(this.source);
+        },
+
+        equals: function (other) {
+            return other.source === this.source;
+        },
+
+        equalsT: function (other) {
+            return other.source === this.source;
+        },
+
         statics: {
             sourceTrue: {
                 isCancellationRequested: true, 
-                register: function(f, s) {
-                    f(s); 
+                register: function (f, s) {
+                    f(s);
+
                     return new Bridge.CancellationTokenRegistration();
                 } 
             },
             sourceFalse: {
                 uncancellable: true, 
                 isCancellationRequested: false, 
-                register: function() {
+                register: function () {
                      return new Bridge.CancellationTokenRegistration();
                 }
             },
@@ -450,7 +463,7 @@
     Bridge.CancellationToken.none = new Bridge.CancellationToken();
 
     Bridge.define("Bridge.CancellationTokenRegistration", {
-        inherits: function() {
+        inherits: function () {
             return [Bridge.IDisposable, Bridge.IEquatable$1(Bridge.CancellationTokenRegistration)];
         },
         constructor: function (cts, o) {
@@ -466,6 +479,10 @@
         },
 
         equalsT: function (o) {
+            return this === o;
+        },
+
+        equals: function (o) {
             return this === o;
         },
 
@@ -500,8 +517,7 @@
             for (var i = 0; i < h.length; i++) {
                 try {
                     h[i].f(h[i].s);
-                }
-                catch (ex) {
+                } catch (ex) {
                     if (throwFirst && throwFirst !== -1) {
                         throw ex;
                     }
@@ -509,6 +525,7 @@
                     x.push(ex);
                 }
             }
+
             if (x.length > 0 && throwFirst !== -1) {
                 throw new Bridge.AggregateException(null, x);
             }
@@ -530,17 +547,19 @@
         register: function (f, s) {
             if (this.isCancellationRequested) {
                 f(s);
+
                 return new Bridge.CancellationTokenRegistration();
-            }
-            else {
+            } else {
                 var o = {f: f, s: s };
                 this.handlers.push(o);
+
                 return new Bridge.CancellationTokenRegistration(this, o);
             }
         },
 
         deregister: function (o) {
             var ix = this.handlers.indexOf(o);
+
             if (ix >= 0) {
                 this.handlers.splice(ix, 1);
             }
@@ -570,11 +589,15 @@
         statics: {
             createLinked: function () {
                 var cts = new Bridge.CancellationTokenSource();
+
                 cts.links = [];
+
                 var d = Bridge.fn.bind(cts, cts.cancel);
+
                 for (var i = 0; i < arguments.length; i++) {
                     cts.links.push(arguments[i].register(d));
                 }
+
                 return cts;
             }
         }

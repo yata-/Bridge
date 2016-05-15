@@ -7,6 +7,26 @@
 
         identity: function (x) { return x; },
 
+        ref: function(o, n) {
+            if (Bridge.isArray(n)) {
+                n = Bridge.Array.toIndex(o, n);
+            }
+
+            var proxy = {};
+
+            Object.defineProperty(proxy, "v", {
+                get: function () {
+                    return o[n];
+                },
+
+                set: function (value) {
+                    o[n] = value;
+                }
+            });
+
+            return proxy;
+        },
+        
         property : function (scope, name, v) {
             scope[name] = v;
 
@@ -43,6 +63,46 @@
                     this[name] = Bridge.fn.remove(this[name], value);
                 };
             })(name);
+        },
+
+        createInstance: function (type) {
+            if (type === Bridge.Decimal) {
+                return Bridge.Decimal.Zero;
+            }
+
+            if (type === Bridge.Long) {
+                return Bridge.Long.Zero;
+            }
+
+            if (type === Bridge.ULong) {
+                return Bridge.ULong.Zero;
+            }
+
+            if (type === Bridge.Double ||
+                type === Bridge.Single ||
+                type === Bridge.Byte ||
+	            type === Bridge.SByte ||
+	            type === Bridge.Int16 ||
+	            type === Bridge.UInt16 ||
+	            type === Bridge.Int32 ||
+	            type === Bridge.UInt32 ||
+                type === Bridge.Int) {
+                return 0;
+            }
+
+            if (typeof (type.getDefaultValue) === 'function') {
+                return type.getDefaultValue();
+            } else if (type === Boolean) {
+                return false;
+            } else if (type === Date) {
+                return new Date(0);
+            } else if (type === Number) {
+                return 0;
+            } else if (type === String) {
+                return '';
+            } else {
+                return new type();
+            }
         },
 
         clone: function (obj) {
@@ -155,6 +215,11 @@
         },
 
         getHashCode: function (value, safe) {
+            // In CLR: mutable object should keep on returning same value
+            // Bridge.NET goals: make it deterministic (to make testing easier) without breaking CLR contracts
+            //     for value types it returns deterministic values (f.e. for int 3 it returns 3) 
+            //     for reference types it returns random value
+
             if (Bridge.isEmpty(value, true)) {
                 if (safe) {
                     return 0;
@@ -187,7 +252,7 @@
 
             if (Bridge.isString(value)) {
                 var hash = 0,
-                    i;
+                i;
 
                 for (i = 0; i < value.length; i++) {
                     hash = (((hash << 5) - hash) + value.charCodeAt(i)) & 0xFFFFFFFF;
@@ -200,56 +265,13 @@
                 return value.$$hashCode;
             }
 
-            if (typeof value === "object") {
-                var result = 0,
-                    removeCache = false,
-                    len,
-                    i,
-                    item,
-                    cacheItem,
-                    temp;
+            value.$$hashCode = (Math.random() * 0x100000000) | 0;
 
-                if (!Bridge.$$hashCodeCache) {
-                    Bridge.$$hashCodeCache = [];
-                    Bridge.$$hashCodeCalculated = [];
-                    removeCache = true;
-                }
-
-                for (i = 0, len = Bridge.$$hashCodeCache.length; i < len; i += 1) {
-                    item = Bridge.$$hashCodeCache[i];
-
-                    if (item.obj === value) {
-                        return item.hash;
-                    }
-                }
-
-                cacheItem = { obj: value, hash: 0 };
-                Bridge.$$hashCodeCache.push(cacheItem);
-
-                for (var property in value) {
-                    if (value.hasOwnProperty(property) && property !== "__insideHashCode") {
-                        temp = Bridge.isEmpty(value[property], true) ? 0 : Bridge.getHashCode(value[property]);
-                        result = 29 * result + temp;
-                    }
-                }
-
-                cacheItem.hash = result;
-
-                if (removeCache) {
-                    delete Bridge.$$hashCodeCache;
-                }
-
-                if (result !== 0) {
-                    return result;
-                }
-            }
-
-            return value.$$hashCode || (value.$$hashCode = (Math.random() * 0x100000000) | 0);
+            return value.$$hashCode;
         },
 
         getDefaultValue: function (type) {
-            if (
-                (type.getDefaultValue) && type.getDefaultValue.length === 0) {
+            if ((type.getDefaultValue) && type.getDefaultValue.length === 0) {
                 return type.getDefaultValue();
             } else if (type === Boolean) {
                 return false;
@@ -383,6 +405,8 @@
                 to instanceof String ||
                 to instanceof Function ||
                 to instanceof Date ||
+                to instanceof Bridge.Double ||
+                to instanceof Bridge.Single ||
                 to instanceof Bridge.Byte ||
 	            to instanceof Bridge.SByte ||
 	            to instanceof Bridge.Int16 ||
@@ -405,10 +429,12 @@
 
 	            for (i = 0; i < from.length; i++) {
 	                var item = from[i];
+
                     if (!Bridge.isArray(item)) {
                         item = [item];
                     }
-	                fn.apply(to, item);
+
+                    fn.apply(to, item);
 	            }
 	        } else {
 	            for (key in from) {
@@ -556,12 +582,20 @@
             return o;
         },
 
+        referenceEquals: function(a, b) {
+            return Bridge.hasValue(a) ? a === b : !Bridge.hasValue(b);
+        },
+
         equals: function (a, b) {
+            if (a == null && b == null) {
+                return true;
+            }
+
             if (a && Bridge.isFunction(a.equals) && a.equals.length === 1) {
                 return a.equals(b);
             }
             if (b && Bridge.isFunction(b.equals) && b.equals.length === 1) {
-                return a.equals(b);
+                return b.equals(a);
             } else if (Bridge.isDate(a) && Bridge.isDate(b)) {
                 return a.valueOf() === b.valueOf();
             } else if (Bridge.isNull(a) && Bridge.isNull(b)) {
@@ -571,8 +605,8 @@
             }
 
             var eq = a === b;
-            if (!eq && typeof a === "object" && typeof b === "object") {
-                return (Bridge.getHashCode(a) === Bridge.getHashCode(b)) && Bridge.objectEquals(a, b);
+            if (!eq && typeof a === "object" && typeof b === "object" && a !== null && b !== null && a.$struct && b.$struct && a.$$name === b.$$name) {
+                return Bridge.getHashCode(a) === Bridge.getHashCode(b) && Bridge.objectEquals(a, b);
             }
 
             return eq;
@@ -592,6 +626,10 @@
 
         deepEquals: function (a, b) {
             if (typeof a === "object" && typeof b === "object") {
+                if (a === b) {
+                    return true;
+                }
+
                 if (Bridge.$$leftChain.indexOf(a) > -1 || Bridge.$$rightChain.indexOf(b) > -1) {
                     return false;
                 }
@@ -613,7 +651,10 @@
                         return false;
                     }
 
-                    if (typeof (a[p]) === "object") {
+                    if (a[p] === b[p]) {
+                        continue;
+                    }
+                    else if (typeof (a[p]) === "object") {
                         Bridge.$$leftChain.push(a);
                         Bridge.$$rightChain.push(b);
 
@@ -692,6 +733,14 @@
         getType: function (instance) {
             if (!Bridge.isDefined(instance, true)) {
                 throw new Bridge.NullReferenceException("instance is null");
+            }
+
+            if (typeof(instance) === "number") {
+                if (Math.floor(instance, 0) === instance) {
+                    return Bridge.Int32;
+                } else {
+                    return Bridge.Double;
+                }
             }
 
             try {
@@ -871,6 +920,7 @@
                         if (list1[i] === list2[j] ||
                             ((list1[i].$method && (list1[i].$method === list2[j].$method)) && (list1[i].$scope && (list1[i].$scope === list2[j].$scope)))) {
                             exclude = true;
+
                             break;
                         }
                     }
@@ -900,6 +950,7 @@
             }
 
             var start = new Date().getTime();
+
             while ((new Date().getTime() - start) < ms) {
                 if ((new Date().getTime() - start) > 2147483647) {
                     break;
