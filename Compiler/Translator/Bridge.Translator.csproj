@@ -193,6 +193,7 @@
     <Compile Include="Utils\IResolveResultVisitor.cs" />
     <Compile Include="Utils\JsDoc.cs" />
     <Compile Include="Utils\CaptureAnalyzer.cs" />
+    <Compile Include="Utils\RawValue.cs" />
     <Compile Include="Utils\YieldSearchVisitor.cs" />
     <Compile Include="Utils\LambdaVisitor.cs" />
     <Compile Include="Utils\ParsedSourceFile.cs" />
