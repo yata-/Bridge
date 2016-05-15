@@ -6660,6 +6660,57 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1340', {
+        statics: {
+            testGenericMembersDefaultValue: function () {
+                var o = new Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Int32)("constructor");
+    
+                Bridge.Test.Assert.areEqual(0, o.getValue1());
+                Bridge.Test.Assert.areEqual(0, o.value2);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1', function (T) { return {
+        statics: {
+            getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(T)(); }
+        },
+        value2: Bridge.getDefaultValue(T),
+        config: {
+            properties: {
+                Value1: Bridge.getDefaultValue(T)
+            }
+        },
+        constructor$1: function (v1, v2) {
+            Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(T).prototype.$constructor.call(this);
+    
+            this.setValue1(v1);
+            this.value2 = v2;
+        },
+        constructor: function () {
+        },
+        $struct: true,
+        getHashCode: function () {
+            var hash = 17;
+            hash = hash * 23 + 2620942;
+            hash = hash * 23 + (this.value2 == null ? 0 : Bridge.getHashCode(this.value2));
+            hash = hash * 23 + (this.Value1 == null ? 0 : Bridge.getHashCode(this.Value1));
+            return hash;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(T))) {
+                return false;
+            }
+            return Bridge.equals(this.value2, o.value2) && Bridge.equals(this.Value1, o.Value1);
+        },
+        $clone: function (to) {
+            var s = to || new Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(T)();
+            s.value2 = this.value2;
+            s.Value1 = this.Value1;
+            return s;
+        }
+    }; });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1341', {
         statics: {
             testPlainObject: function () {
@@ -10380,7 +10431,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652C$1', function (T) { return {
-        bar: null,
+        bar: Bridge.getDefaultValue(T),
         constructor: function () {
             this.bar = new T();
         }
@@ -10397,7 +10448,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge652.Bridge652D$1', function (T) { return {
-        bar: null,
+        bar: Bridge.getDefaultValue(T),
         constructor: function () {
             this.bar = new T();
         }
@@ -10511,7 +10562,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             },
             getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge660Optional$1(T)(); }
         },
-        value: null,
+        value: Bridge.getDefaultValue(T),
         isDefined: false,
         constructor$1: function (value) {
             Bridge.ClientTest.BridgeIssues.Bridge660Optional$1(T).prototype.constructor$2.call(this, value, value != null);
@@ -24473,9 +24524,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.PropertyAccessorTests.B4$1', function (T) { return {
-        f1: null,
-        f2: null,
-        f3: null,
+        f1: Bridge.getDefaultValue(T),
+        f2: Bridge.getDefaultValue(T),
+        f3: Bridge.getDefaultValue(T),
         getP1: function () {
             return this.f1;
         },
@@ -24527,9 +24578,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.PropertyAccessorTests.C2$1', function (T) { return {
         statics: {
-            fS1: null,
-            fS2: null,
-            fS3: null,
+            fS1: Bridge.getDefaultValue(T),
+            fS2: Bridge.getDefaultValue(T),
+            fS3: Bridge.getDefaultValue(T),
             getPS1: function () {
                 return ((Bridge.ClientTest.PropertyAccessorTests.C2$1(T).fS1 + 1) | 0);
             },
@@ -24543,9 +24594,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.PropertyAccessorTests.C2$1(T).fS3 = value - 1;
             }
         },
-        f1: null,
-        f2: null,
-        f3: null,
+        f1: Bridge.getDefaultValue(T),
+        f2: Bridge.getDefaultValue(T),
+        f3: Bridge.getDefaultValue(T),
         getP1: function () {
             return ((this.f1 + 1) | 0);
         },
