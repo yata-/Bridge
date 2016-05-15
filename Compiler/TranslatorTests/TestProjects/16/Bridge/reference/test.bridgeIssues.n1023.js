@@ -7,7 +7,7 @@
         },
         config: {
             properties: {
-                Value: null
+                Value: Bridge.getDefaultValue(T)
             }
         },
         constructor$1: function (value) {
@@ -17,8 +17,10 @@
         },
         constructor: function () {
         },
+        $struct: true,
         getHashCode: function () {
             var hash = 17;
+            hash = hash * 23 + -1412376807;
             hash = hash * 23 + (this.Value == null ? 0 : Bridge.getHashCode(this.Value));
             return hash;
         },

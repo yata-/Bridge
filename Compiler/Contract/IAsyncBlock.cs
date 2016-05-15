@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ICSharpCode.NRefactory.CSharp;
 
 namespace Bridge.Contract
@@ -15,6 +16,12 @@ namespace Bridge.Contract
         }
 
         ICSharpCode.NRefactory.CSharp.Expression[] AwaitExpressions
+        {
+            get;
+            set;
+        }
+
+        List<ICSharpCode.NRefactory.CSharp.AstNode> WrittenAwaitExpressions
         {
             get;
             set;

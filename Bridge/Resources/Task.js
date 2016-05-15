@@ -398,6 +398,8 @@
     });
 
     Bridge.define("Bridge.CancellationToken", {
+         $struct: true,
+
          constructor: function (source) {
             if (!Bridge.is(source, Bridge.CancellationTokenSource)) {
                 source = source ? Bridge.CancellationToken.sourceTrue : Bridge.CancellationToken.sourceFalse;
@@ -422,6 +424,18 @@
 
         register: function (cb, s) {
             return this.source.register(cb, s);
+        },
+
+        getHashCode: function () {
+            return Bridge.getHashCode(this.source);
+        },
+
+        equals: function (other) {
+            return other.source === this.source;
+        },
+
+        equalsT: function (other) {
+            return other.source === this.source;
         },
 
         statics: {
@@ -465,6 +479,10 @@
         },
 
         equalsT: function (o) {
+            return this === o;
+        },
+
+        equals: function (o) {
             return this === o;
         },
 

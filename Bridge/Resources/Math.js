@@ -23,7 +23,29 @@
             }
 
             return Math.round(n) / m;
+        },
+
+        sinh: function(x) {
+            return (Math.exp(x) - Math.exp(-x)) / 2;
+        },
+
+        cosh: function(x) {
+            return (Math.exp(x) + Math.exp(-x)) / 2;
+        },
+
+        tanh: function(x) {
+            if (x === Infinity) {
+                return 1;
+            } else if (x === -Infinity) {
+                return -1;
+            } else {
+                var y = Math.exp(2 * x);
+                return (y - 1) / (y + 1);
+            }
         }
     };
 
-    Bridge.Math = math;
+    math.sinh = Math.sinh || math.sinh;
+    math.cosh = Math.cosh || math.cosh;
+    math.tanh = Math.tanh || math.tanh;
+    Bridge.Math = math;    

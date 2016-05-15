@@ -214,13 +214,11 @@
             }
         },
 
-        getHashCode: function (value, safe, store) {
-            //in CLR: mutable object should keep on returning same value
-            //bridge.net goals: make it deterministic (to make testing easier) without breaking CLR contracts
-            // thus:
+        getHashCode: function (value, safe) {
+            // In CLR: mutable object should keep on returning same value
+            // Bridge.NET goals: make it deterministic (to make testing easier) without breaking CLR contracts
             //     for value types it returns deterministic values (f.e. for int 3 it returns 3) 
-            //     for reference types it returns value derived recursively from its properties
-            var store = (typeof store === 'undefined') ? true : store; 
+            //     for reference types it returns random value
 
             if (Bridge.isEmpty(value, true)) {
                 if (safe) {
@@ -254,7 +252,7 @@
 
             if (Bridge.isString(value)) {
                 var hash = 0,
-                    i;
+                i;
 
                 for (i = 0; i < value.length; i++) {
                     hash = (((hash << 5) - hash) + value.charCodeAt(i)) & 0xFFFFFFFF;
@@ -267,64 +265,13 @@
                 return value.$$hashCode;
             }
 
-            if (typeof value === "object") {
-                var result = 0,
-                    removeCache = false,
-                    len,
-                    i,
-                    item,
-                    cacheItem,
-                    temp;
+            value.$$hashCode = (Math.random() * 0x100000000) | 0;
 
-                if (!Bridge.$$hashCodeCache) {
-                    Bridge.$$hashCodeCache = [];
-                    Bridge.$$hashCodeCalculated = [];
-                    removeCache = true;
-                }
-
-                for (i = 0, len = Bridge.$$hashCodeCache.length; i < len; i += 1) {
-                    item = Bridge.$$hashCodeCache[i];
-
-                    if (item.obj === value) {
-                        return item.hash;
-                    }
-                }
-
-                cacheItem = { obj: value, hash: 0 };
-                Bridge.$$hashCodeCache.push(cacheItem);
-
-                for (var property in value) {
-                    if (value.hasOwnProperty(property) && property !== "__insideHashCode") {
-                        temp = Bridge.isEmpty(value[property], true) ? 0 : Bridge.getHashCode(value[property], safe, false);
-                        result = 29 * result + temp;
-                    }
-                }
-
-                cacheItem.hash = result;
-
-                if (removeCache) {
-                    delete Bridge.$$hashCodeCache;
-                }
-
-                if (store) {
-                    value.$$hashCode = result;
-                }
-
-                if (result !== 0) {
-                    return result;
-                }
-            }
-
-            if (store === false) {
-                return value.$$hashCode || ((Math.random() * 0x100000000) | 0);
-            }
-
-            return value.$$hashCode || (value.$$hashCode = (Math.random() * 0x100000000) | 0);
+            return value.$$hashCode;
         },
 
         getDefaultValue: function (type) {
-            if (
-                (type.getDefaultValue) && type.getDefaultValue.length === 0) {
+            if ((type.getDefaultValue) && type.getDefaultValue.length === 0) {
                 return type.getDefaultValue();
             } else if (type === Boolean) {
                 return false;
@@ -648,7 +595,7 @@
                 return a.equals(b);
             }
             if (b && Bridge.isFunction(b.equals) && b.equals.length === 1) {
-                return a.equals(b);
+                return b.equals(a);
             } else if (Bridge.isDate(a) && Bridge.isDate(b)) {
                 return a.valueOf() === b.valueOf();
             } else if (Bridge.isNull(a) && Bridge.isNull(b)) {
@@ -658,9 +605,8 @@
             }
 
             var eq = a === b;
-
-            if (!eq && typeof a === "object" && typeof b === "object") {
-                return (Bridge.getHashCode(a) === Bridge.getHashCode(b)) && Bridge.objectEquals(a, b);
+            if (!eq && typeof a === "object" && typeof b === "object" && a !== null && b !== null && a.$struct && b.$struct && a.$$name === b.$$name) {
+                return Bridge.getHashCode(a) === Bridge.getHashCode(b) && Bridge.objectEquals(a, b);
             }
 
             return eq;
@@ -680,6 +626,10 @@
 
         deepEquals: function (a, b) {
             if (typeof a === "object" && typeof b === "object") {
+                if (a === b) {
+                    return true;
+                }
+
                 if (Bridge.$$leftChain.indexOf(a) > -1 || Bridge.$$rightChain.indexOf(b) > -1) {
                     return false;
                 }
@@ -701,7 +651,10 @@
                         return false;
                     }
 
-                    if (typeof (a[p]) === "object") {
+                    if (a[p] === b[p]) {
+                        continue;
+                    }
+                    else if (typeof (a[p]) === "object") {
                         Bridge.$$leftChain.push(a);
                         Bridge.$$rightChain.push(b);
 

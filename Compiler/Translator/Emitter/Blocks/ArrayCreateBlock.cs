@@ -48,7 +48,7 @@ namespace Bridge.Translator
                     arrayCreateExpression.Arguments.First().AcceptVisitor(this.Emitter);
                     this.WriteComma();
 
-                    var def = Inspector.GetDefaultFieldValue(at.ElementType);
+                    var def = Inspector.GetDefaultFieldValue(at.ElementType, arrayCreateExpression.Type);
                     if (def == at.ElementType)
                     {
                         this.WriteFunction();
@@ -73,7 +73,7 @@ namespace Bridge.Translator
             if (at.Dimensions > 1)
             {
                 this.Write("Bridge.Array.create(");
-                var defaultInitializer = new PrimitiveExpression(Inspector.GetDefaultFieldValue(at.ElementType), "?");
+                var defaultInitializer = new PrimitiveExpression(Inspector.GetDefaultFieldValue(at.ElementType, arrayCreateExpression.Type), "?");
 
                 if (defaultInitializer.Value is IType)
                 {

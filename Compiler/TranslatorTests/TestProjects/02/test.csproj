@@ -56,10 +56,13 @@
     <Folder Include="Bridge\output\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <UsingTask TaskName="GenerateScript" AssemblyFile="$(ProjectDir)..\..\..\Build\$(OutDir)Bridge.Build.dll" />
   <PropertyGroup>
-    <PostBuildEvent Condition="$(OS) != Unix">"$(ProjectDir)..\..\..\Builder\$(OutDir)Bridge.Builder.exe" -p "$(ProjectPath)" -b "$(ProjectDir)$(OutDir)Bridge.dll" -cfg "$(Configuration)"</PostBuildEvent>
-    <PostBuildEvent Condition="$(OS) == Unix">mono "$(ProjectDir)../../../Builder/$(OutDir)Bridge.Builder.exe" -p "$(ProjectDir)/$(MSBuildProjectFile)" -b "$(ProjectDir)$(OutDir)Bridge.dll" -cfg "$(Configuration)"</PostBuildEvent>
+    <NoStdLib>True</NoStdLib>
     <AddAdditionalExplicitAssemblyReferences>false</AddAdditionalExplicitAssemblyReferences>
     <AdditionalExplicitAssemblyReferences />
   </PropertyGroup>
+  <Target Name="AfterBuild">
+    <GenerateScript DefineConstants="$(DefineConstants)" OutputPath="$(OutputPath)" Configuration="$(Configuration)" Assembly="@(IntermediateAssembly)" AssembliesPath="$(OutputPath)" ProjectPath="$(MSBuildProjectFullPath)" />
+  </Target>
 </Project>

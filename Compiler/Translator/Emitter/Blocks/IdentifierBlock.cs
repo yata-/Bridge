@@ -118,12 +118,20 @@ namespace Bridge.Translator
                 }
 
                 var thisArg = this.Emitter.Output.ToString();
+                int thisIndex = inlineCode.IndexOf("{this}");
                 inlineCode = inlineCode.Replace("{this}", thisArg);
                 this.Emitter.Output = oldBuilder;
 
+                int[] range = null;
+
+                if (thisIndex > -1)
+                {
+                    range = new[] { thisIndex, thisIndex + thisArg.Length };
+                }
+
                 if (resolveResult is InvocationResolveResult)
                 {
-                    this.PushWriter(inlineCode, null, thisArg);
+                    this.PushWriter(inlineCode, null, thisArg, range);
                 }
                 else
                 {

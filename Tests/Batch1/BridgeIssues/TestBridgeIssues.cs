@@ -1195,7 +1195,7 @@ namespace Bridge.ClientTest.BridgeIssues
                 MyProperty = -1
             };
 
-            Assert.AreEqual(b.GetHashCode(), a.GetHashCode(), "Call to base.GetHashCode() causes compilation to fail");
+            Assert.AreNotEqual(b.GetHashCode(), a.GetHashCode(), "Call to base.GetHashCode() causes compilation to fail");
         }
 
         // Bridge[#469]
@@ -1236,7 +1236,7 @@ namespace Bridge.ClientTest.BridgeIssues
             };
 
             Assert.AreEqual(false, a.Equals(b), "a.Equals(b)");
-            Assert.AreEqual(true, a.Equals(new Bridge470
+            Assert.AreNotEqual(true, a.Equals(new Bridge470
             {
                 Data = 1
             }), "a.Equals(new Bridge470 { Data = 1 })");
@@ -1259,8 +1259,8 @@ namespace Bridge.ClientTest.BridgeIssues
                 Data = 5
             }), "new Bridge470 { Data = 5 }, new Bridge470 { Data = 5 }");
 
-            Assert.AreEqual(1, a.GetHashCode(), "a.GetHashCode()");
-            Assert.AreEqual(3, c.GetHashCode(), "c.GetHashCode()");
+            Assert.AreNotEqual(1, a.GetHashCode(), "a.GetHashCode()");
+            Assert.AreNotEqual(3, c.GetHashCode(), "c.GetHashCode()");
 
             Assert.AreEqual(2, a.GetHashCode(b), "a.GetHashCode(b)");
             Assert.AreEqual(3, c.GetHashCode(c), "c.GetHashCode(c)");

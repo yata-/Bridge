@@ -26,6 +26,11 @@ namespace Bridge.Translator
             this.TargetResolveResult = targetResolveResult;
         }
 
+        public int[] IgnoreRange
+        {
+            get; set;
+        }
+
         public IMethod Method
         {
             get; set;
@@ -63,6 +68,7 @@ namespace Bridge.Translator
             if (Regex.IsMatch(key, "^\\d+$"))
             {
                 var list = new List<Expression>();
+
                 list.Add(expressions.Skip(int.Parse(key)).First().Expression);
 
                 return list;
@@ -76,9 +82,9 @@ namespace Bridge.Translator
             return types.Where(e => e.Name == key && e.AstType != null).Select(e => e.AstType).FirstOrDefault();
         }
 
-        protected virtual IType GetITypeByKey(IEnumerable<TypeParamExpression> types, string key)
+        protected virtual TypeParamExpression GetTypeByKey(IEnumerable<TypeParamExpression> types, string key)
         {
-            return types.Where(e => e.Name == key && e.IType != null).Select(e => e.IType).FirstOrDefault();
+            return types.Where(e => e.Name == key && e.IType != null).FirstOrDefault();
         }
 
         public static string ReplaceInlineArgs(AbstractEmitterBlock block, string inline, Expression[] args)
@@ -255,6 +261,11 @@ namespace Bridge.Translator
 
             inline = _formatArg.Replace(inline, delegate(Match m)
             {
+                if (this.IgnoreRange != null && m.Index >= this.IgnoreRange[0] && m.Index <= this.IgnoreRange[1])
+                {
+                    return m.Value;
+                }
+
                 int count = this.Emitter.Writers.Count;
                 string key = m.Groups[2].Value;
                 bool isRaw = m.Groups[1].Success && m.Groups[1].Value == "*";
@@ -445,6 +456,16 @@ namespace Bridge.Translator
                                         exprs[0].AcceptVisitor(this.Emitter);
                                     }
                                 }
+                                else if (modifier == "plain")
+                                {
+                                    var an = exprs[0] as AnonymousTypeCreateExpression;
+                                    if (an == null)
+                                    {
+                                        throw new EmitterException(exprs[0], "Plain modifier can be applied to AnonymousTypeCreateExpression only");
+                                    }
+
+                                    new AnonymousTypeCreateBlock(this.Emitter, an, true).Emit();
+                                }
                                 else
                                 {
                                     exprs[0].AcceptVisitor(this.Emitter);
@@ -484,18 +505,18 @@ namespace Bridge.Translator
                         }
                         else
                         {
-                            var iType = this.GetITypeByKey(typeParams, key);
+                            var iType = this.GetTypeByKey(typeParams, key);
 
                             if (iType != null)
                             {
                                 if (modifier == "default" || modifier == "defaultFn")
                                 {
-                                    var def = Inspector.GetDefaultFieldValue(iType);
+                                    var def = Inspector.GetDefaultFieldValue(iType.IType, iType.AstType);
                                     this.GetDefaultValue(def, modifier);
                                 }
                                 else
                                 {
-                                    new CastBlock(this.Emitter, iType).Emit();
+                                    new CastBlock(this.Emitter, iType.IType).Emit();
                                 }
                             }
                         }

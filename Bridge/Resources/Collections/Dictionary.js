@@ -68,7 +68,7 @@ Bridge.define('Bridge.Dictionary$2', function (TKey, TValue) {
         },
 
         findEntry: function (key) {
-            var hash = this.comparer.getHashCode(key),
+            var hash = this.comparer.getHashCode2(key),
                 entries,
                 i;
 
@@ -76,7 +76,7 @@ Bridge.define('Bridge.Dictionary$2', function (TKey, TValue) {
                 entries = this.entries[hash];
 
                 for (i = 0; i < entries.length; i++) {
-                    if (this.comparer.equals(entries[i].key, key)) {
+                    if (this.comparer.equals2(entries[i].key, key)) {
                         return entries[i];
                     }
                 }
@@ -95,7 +95,7 @@ Bridge.define('Bridge.Dictionary$2', function (TKey, TValue) {
                     var entries = this.entries[e];
 
                     for (i = 0; i < entries.length; i++) {
-                        if (this.comparer.equals(entries[i].value, value)) {
+                        if (this.comparer.equals2(entries[i].value, value)) {
                             return true;
                         }
                     }
@@ -132,7 +132,7 @@ Bridge.define('Bridge.Dictionary$2', function (TKey, TValue) {
                 return;
             }
 
-            hash = this.comparer.getHashCode(key);
+            hash = this.comparer.getHashCode2(key);
             entry = new Bridge.KeyValuePair$2(TKey, TValue)(key, value);
 
             if (this.entries[hash]) {
@@ -153,7 +153,7 @@ Bridge.define('Bridge.Dictionary$2', function (TKey, TValue) {
         },
 
         remove: function (key) {
-            var hash = this.comparer.getHashCode(key),
+            var hash = this.comparer.getHashCode2(key),
                 entries,
                 i;
 
@@ -164,7 +164,7 @@ Bridge.define('Bridge.Dictionary$2', function (TKey, TValue) {
             entries = this.entries[hash];
 
             for (i = 0; i < entries.length; i++) {
-                if (this.comparer.equals(entries[i].key, key)) {
+                if (this.comparer.equals2(entries[i].key, key)) {
                     entries.splice(i, 1);
 
                     if (entries.length == 0) {

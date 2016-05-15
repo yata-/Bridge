@@ -79,7 +79,7 @@ Bridge.define('Bridge.List$1', function (T) {
             for (i = startIndex; i < this.items.length; i++) {
                 el = this.items[i];
 
-                if (el === item || Bridge.EqualityComparer$1.$default.equals(el, item)) {
+                if (el === item || Bridge.EqualityComparer$1.$default.equals2(el, item)) {
                     return i;
                 }
             }

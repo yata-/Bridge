@@ -127,6 +127,13 @@ namespace Bridge.Translator
                     writeScript = true;
                 }
 
+                if (constValue is RawValue)
+                {
+                    constValue = ((RawValue) constValue).Value;
+                    write = true;
+                    writeScript = false;
+                }
+
                 var isNull = member.Initializer.IsNull || member.Initializer is NullReferenceExpression;
 
                 if (!isNull && !isPrimitive)
@@ -166,16 +173,18 @@ namespace Bridge.Translator
                         this.RestoreWriter(oldWriter);
 
                         ResolveResult rr = null;
+                        AstType astType = null;
                         if (member.VarInitializer != null)
                         {
                             rr = this.Emitter.Resolver.ResolveNode(member.VarInitializer, this.Emitter);
                         }
                         else
                         {
+                            astType = member.Entity.ReturnType;
                             rr = this.Emitter.Resolver.ResolveNode(member.Entity, this.Emitter);
                         }
-                
-                        constValue = Inspector.GetDefaultFieldValue(rr.Type);
+
+                        constValue = Inspector.GetDefaultFieldValue(rr.Type, astType);
                         isNullable = NullableType.IsNullable(rr.Type);
                         needContinue = constValue is IType;
                         writeScript = true;

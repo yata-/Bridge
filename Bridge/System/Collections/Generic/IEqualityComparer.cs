@@ -6,10 +6,10 @@ namespace System.Collections.Generic
     [Namespace("Bridge")]
     public interface IEqualityComparer<in T> : IBridgeClass
     {
-        [Template("{this}.equals({x}, {y})")]
+        [Name("equals2")]
         bool Equals(T x, T y);
 
-        [Template("{this}.getHashCode({obj}, true)")]
+        [Name("getHashCode2")]
         int GetHashCode(T obj);
     }
 
@@ -26,10 +26,7 @@ namespace System.Collections.Generic
             }
         }
 
-        [Template("{this}.equals({x}, {y})")]
         public virtual extern bool Equals(T x, T y);
-
-        [Template("{this}.getHashCode({obj}, true)")]
         public virtual extern int GetHashCode(T obj);
     }
 }
