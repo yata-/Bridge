@@ -6660,6 +6660,242 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1328', {
+        statics: {
+            testOptionalParamsForClasses: function () {
+                var l1 = new Bridge.ClientTest.BridgeIssues.Bridge1328.ClassLink("url", "test", "some");
+                Bridge.Test.Assert.areEqual("some", l1.name);
+    
+                var l2 = new Bridge.ClientTest.BridgeIssues.Bridge1328.ClassLink2("url2", "test2", void 0);
+                Bridge.Test.Assert.notNull(l2.name);
+    
+                var l3 = new Bridge.ClientTest.BridgeIssues.Bridge1328.ClassLink3("url3", "test3", void 0);
+                Bridge.Test.Assert.areEqual("url3", l3.getUrl());
+                Bridge.Test.Assert.areEqual("test3", l3.getText());
+                Bridge.Test.Assert.notNull(l3.name.$clone());
+                Bridge.Test.Assert.areEqual(0, l3.name.getValue());
+            },
+            testOptionalParamsForStructs: function () {
+                var l1 = new Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink("constructor$1", "url", "test", "some");
+                Bridge.Test.Assert.areEqual("some", l1.name);
+    
+                var l2 = new Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink2("constructor$1", "url2", "test2", void 0);
+                Bridge.Test.Assert.notNull(l2.name);
+    
+                var l3 = new Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink3("constructor$1", "url3", "test3", void 0);
+                Bridge.Test.Assert.areEqual("url3", l3.getUrl());
+                Bridge.Test.Assert.areEqual("test3", l3.getText());
+                Bridge.Test.Assert.notNull(l3.name.$clone());
+                Bridge.Test.Assert.areEqual(0, l3.name.getValue());
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1328.ClassLink', {
+        name: null,
+        constructor: function (url, text, name) {
+            if (name === void 0) { name = "some"; }
+    
+            this.name = name;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1328.ClassLink2', {
+        config: {
+            init: function () {
+                this.name = new Bridge.ClientTest.BridgeIssues.Bridge1328.Optional2$1(String)();
+            }
+        },
+        constructor: function (url, text, name) {
+            if (name === void 0) { name = new Bridge.ClientTest.BridgeIssues.Bridge1328.Optional2$1(String)(); }
+    
+            this.name = name;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1328.ClassLink3', {
+        config: {
+            properties: {
+                Url: null,
+                Text: null
+            },
+            init: function () {
+                this.name = new Bridge.ClientTest.BridgeIssues.Bridge1328.Optional3$1(Bridge.Int32)();
+            }
+        },
+        constructor: function (url, text, name) {
+            if (name === void 0) { name = new Bridge.ClientTest.BridgeIssues.Bridge1328.Optional3$1(Bridge.Int32)(); }
+    
+            this.name = name.$clone();
+            this.setUrl(url);
+            this.setText(text);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1328.Optional2$1', function (T) { return {
+        statics: {
+            getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge1328.Optional2$1(T)(); }
+        },
+        $struct: true,
+        $clone: function (to) { return this; }
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1328.Optional3$1', function (T) { return {
+        statics: {
+            getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge1328.Optional3$1(T)(); }
+        },
+        config: {
+            properties: {
+                Value: Bridge.getDefaultValue(T)
+            }
+        },
+        constructor$1: function (v) {
+            Bridge.ClientTest.BridgeIssues.Bridge1328.Optional3$1(T).prototype.$constructor.call(this);
+    
+            this.setValue(v);
+        },
+        constructor: function () {
+        },
+        $struct: true,
+        getHashCode: function () {
+            var hash = 17;
+            hash = hash * 23 + -1469106983;
+            hash = hash * 23 + (this.Value == null ? 0 : Bridge.getHashCode(this.Value));
+            return hash;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1328.Optional3$1(T))) {
+                return false;
+            }
+            return Bridge.equals(this.Value, o.Value);
+        },
+        $clone: function (to) {
+            var s = to || new Bridge.ClientTest.BridgeIssues.Bridge1328.Optional3$1(T)();
+            s.Value = this.Value;
+            return s;
+        }
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink', {
+        statics: {
+            getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink(); }
+        },
+        name: null,
+        constructor$1: function (url, text, name) {
+            if (name === void 0) { name = "some"; }
+    
+            Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink.prototype.$constructor.call(this);
+    
+            this.name = name;
+        },
+        constructor: function () {
+        },
+        $struct: true,
+        getHashCode: function () {
+            var hash = 17;
+            hash = hash * 23 + 1552938783;
+            hash = hash * 23 + (this.name == null ? 0 : Bridge.getHashCode(this.name));
+            return hash;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink)) {
+                return false;
+            }
+            return Bridge.equals(this.name, o.name);
+        },
+        $clone: function (to) {
+            var s = to || new Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink();
+            s.name = this.name;
+            return s;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink2', {
+        statics: {
+            getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink2(); }
+        },
+        config: {
+            init: function () {
+                this.name = new Bridge.ClientTest.BridgeIssues.Bridge1328.Optional2$1(String)();
+            }
+        },
+        constructor$1: function (url, text, name) {
+            if (name === void 0) { name = new Bridge.ClientTest.BridgeIssues.Bridge1328.Optional2$1(String)(); }
+    
+            Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink2.prototype.$constructor.call(this);
+    
+            this.name = name;
+        },
+        constructor: function () {
+        },
+        $struct: true,
+        getHashCode: function () {
+            var hash = 17;
+            hash = hash * 23 + 344944561;
+            hash = hash * 23 + (this.name == null ? 0 : Bridge.getHashCode(this.name));
+            return hash;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink2)) {
+                return false;
+            }
+            return Bridge.equals(this.name, o.name);
+        },
+        $clone: function (to) {
+            var s = to || new Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink2();
+            s.name = this.name;
+            return s;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink3', {
+        statics: {
+            getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink3(); }
+        },
+        config: {
+            properties: {
+                Url: null,
+                Text: null
+            },
+            init: function () {
+                this.name = new Bridge.ClientTest.BridgeIssues.Bridge1328.Optional3$1(Bridge.Int32)();
+            }
+        },
+        constructor$1: function (url, text, name) {
+            if (name === void 0) { name = new Bridge.ClientTest.BridgeIssues.Bridge1328.Optional3$1(Bridge.Int32)(); }
+    
+            Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink3.prototype.$constructor.call(this);
+    
+            this.name = name.$clone();
+            this.setUrl(url);
+            this.setText(text);
+        },
+        constructor: function () {
+        },
+        $struct: true,
+        getHashCode: function () {
+            var hash = 17;
+            hash = hash * 23 + 344944560;
+            hash = hash * 23 + (this.name == null ? 0 : Bridge.getHashCode(this.name));
+            hash = hash * 23 + (this.Url == null ? 0 : Bridge.getHashCode(this.Url));
+            hash = hash * 23 + (this.Text == null ? 0 : Bridge.getHashCode(this.Text));
+            return hash;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink3)) {
+                return false;
+            }
+            return Bridge.equals(this.name, o.name) && Bridge.equals(this.Url, o.Url) && Bridge.equals(this.Text, o.Text);
+        },
+        $clone: function (to) {
+            var s = to || new Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink3();
+            s.name = this.name;
+            s.Url = this.Url;
+            s.Text = this.Text;
+            return s;
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1340', {
         statics: {
             testStructGenericMembersDefaultValue: function () {
