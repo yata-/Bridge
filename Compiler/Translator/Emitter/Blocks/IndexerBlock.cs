@@ -183,10 +183,19 @@ namespace Bridge.Translator
                 indexerExpression.Target.AcceptVisitor(this.Emitter);
                 this.Emitter.IsAssignment = oldIsAssignment;
                 this.Emitter.IsUnaryAccessor = oldUnary;
-                inlineCode = inlineCode.Replace("{this}", this.Emitter.Output.ToString());
+                int thisIndex = inlineCode.IndexOf("{this}");
+                var thisArg = this.Emitter.Output.ToString();
+                inlineCode = inlineCode.Replace("{this}", thisArg);
                 this.Emitter.Output = oldBuilder;
 
-                this.PushWriter(inlineCode);
+                int[] range = null;
+
+                if (thisIndex > -1)
+                {
+                    range = new[] { thisIndex, thisIndex + thisArg.Length };
+                }
+
+                this.PushWriter(inlineCode, null, thisArg, range);
                 new ExpressionListBlock(this.Emitter, indexerExpression.Arguments, null).Emit();
 
                 if (!this.Emitter.IsAssignment)

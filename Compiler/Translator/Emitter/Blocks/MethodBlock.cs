@@ -127,6 +127,10 @@ namespace Bridge.Translator
             var list = fields.ToList();
             list.AddRange(props);
 
+            this.EnsureComma();
+            this.Write("$struct: true");
+            this.Emitter.Comma = true;
+
             if (list.Count == 0)
             {
                 this.EnsureComma();
@@ -141,6 +145,9 @@ namespace Bridge.Translator
                 this.Write("getHashCode: function () ");
                 this.BeginBlock();
                 this.Write("var hash = 17;");
+
+                this.WriteNewLine();
+                this.Write("hash = hash * 23 + " + this.TypeInfo.Name.GetHashCode() + ";");
 
                 foreach (var field in list)
                 {

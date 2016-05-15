@@ -11,7 +11,7 @@ namespace Bridge.Translator
         {
         }
 
-        protected virtual void WriteObjectInitializer(IEnumerable<Expression> expressions, bool changeCase)
+        protected virtual void WriteObjectInitializer(IEnumerable<Expression> expressions, bool changeCase, bool valuesOnly = false)
         {
             bool needComma = false;
 
@@ -72,7 +72,11 @@ namespace Bridge.Translator
                     name = Object.Net.Utilities.StringUtils.ToLowerCamelCase(name);
                 }
 
-                this.Write(name, ": ");
+                if (!valuesOnly)
+                {
+                    this.Write(name, ": ");    
+                }
+                
                 expression.AcceptVisitor(this.Emitter);
             }
         }

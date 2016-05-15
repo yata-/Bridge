@@ -33,5 +33,11 @@ namespace Bridge.Contract
             get;
             set;
         }
+
+        int[] IgnoreRange
+        {
+            get;
+            set;
+        }
     }
 }

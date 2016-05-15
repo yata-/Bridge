@@ -251,12 +251,20 @@ namespace Bridge.Translator
                 this.Emitter.IsUnaryAccessor = oldUnary;
                 var oldInline = inline;
                 var thisArg = this.Emitter.Output.ToString();
+                int thisIndex = inline.IndexOf("{this}");
                 inline = inline.Replace("{this}", thisArg);
                 this.Emitter.Output = oldBuilder;
 
+                int[] range = null;
+
+                if (thisIndex > -1)
+                {
+                    range = new[] { thisIndex, thisIndex + thisArg.Length };
+                }
+
                 if (resolveResult is InvocationResolveResult)
                 {
-                    this.PushWriter(inline, null, thisArg);
+                    this.PushWriter(inline, null, thisArg, range);
                 }
                 else
                 {
