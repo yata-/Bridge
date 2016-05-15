@@ -7,7 +7,7 @@
         },
         config: {
             properties: {
-                Value: null
+                Value: Bridge.getDefaultValue(T)
             }
         },
         constructor$1: function (value) {
