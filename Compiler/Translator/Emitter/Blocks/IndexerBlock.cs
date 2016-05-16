@@ -1108,14 +1108,18 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    this.WriteOpenBracket();    
+                    this.WriteDot();
+                    this.Write("$get");
+                    this.WriteOpenParentheses();
+                    this.WriteOpenBracket();
                 }
                 
                 index.AcceptVisitor(this.Emitter);
 
                 if (!this.isRefArg)
                 {
-                    this.WriteCloseBracket();    
+                    this.WriteCloseBracket();
+                    this.WriteCloseParentheses();
                 }
                 
                 this.Emitter.IsAssignment = oldIsAssignment;
