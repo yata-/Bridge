@@ -5,9 +5,9 @@
     [Enum(Emit.StringName)]
     public enum GamepadMappingType
     {
-        [Name("standard")]
-        Standard,
         [Name("")]
-        _empty
+        None,
+        [Name("standard")]
+        Standard
     }
 }
