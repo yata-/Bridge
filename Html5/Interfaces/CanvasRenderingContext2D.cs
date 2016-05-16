@@ -619,7 +619,7 @@ namespace Bridge.Html5
         /// <param name="d">m22: Vertical scaling.</param>
         /// <param name="e">dx: Horizontal moving.</param>
         /// <param name="f">dy: Vertical moving.</param>
-        public virtual void SetTransfrom(Any<int, double> a, Any<int, double> b, Any<int, double> c,
+        public virtual void SetTransform(Any<int, double> a, Any<int, double> b, Any<int, double> c,
                                          Any<int, double> d, Any<int, double> e, Any<int, double> f)
         {
             return;
@@ -667,7 +667,7 @@ namespace Bridge.Html5
         /// The Y coordinate in the destination canvas at which to place the top-left corner of the source image.
         /// </param>
         public virtual void DrawImage(Any<ImageElement, VideoElement, CanvasElement, CanvasRenderingContext2D> image,
-                                      Any<int, int, float, double> dx, Any<int, int, float, double> dy)
+                                      Any<int, uint, float, double> dx, Any<int, uint, float, double> dy)
         {
             return;
         }
@@ -694,8 +694,8 @@ namespace Bridge.Html5
         /// If null, the image is not scaled in height when drawn.
         /// </param>
         public virtual void DrawImage(Any<ImageElement, VideoElement, CanvasElement, CanvasRenderingContext2D> image,
-                                      Any<int, int, float, double> dx, Any<int, int, float, double> dy,
-                                      Any<int?, int?, float?, double?> dWidth, Any<int?, int?, float?, double?> dHeight)
+                                      Any<int, uint, float, double> dx, Any<int, uint, float, double> dy,
+                                      Any<int?, uint?, float?, double?> dWidth, Any<int?, uint?, float?, double?> dHeight)
         {
             return;
         }
@@ -736,12 +736,12 @@ namespace Bridge.Html5
         /// If not specified or null, the image is not scaled in height when drawn.
         /// </param>
         public virtual void DrawImage(Any<ImageElement, VideoElement, CanvasElement, CanvasRenderingContext2D> image,
-                                      Any<int, int, float, double> sx, Any<int, int, float, double> sy,
-                                      Any<int?, int?, float?, double?> sWidth,
-                                      Any<int?, int?, float?, double?> sHeight,
-                                      Any<int, int, float, double> dx, Any<int, int, float, double> dy,
-                                      Any<int?, int?, float?, double?> dWidth,
-                                      Any<int?, int?, float?, double?> dHeight)
+                                      Any<int, uint, float, double> sx, Any<int, uint, float, double> sy,
+                                      Any<int?, uint?, float?, double?> sWidth,
+                                      Any<int?, uint?, float?, double?> sHeight,
+                                      Any<int, uint, float, double> dx, Any<int, uint, float, double> dy,
+                                      Any<int?, uint?, float?, double?> dWidth,
+                                      Any<int?, uint?, float?, double?> dHeight)
         {
             return;
         }
