@@ -7,7 +7,7 @@ namespace Bridge.Html5
     /// The Event interface represents any event of the DOM. It contains common properties and methods to any event.
     /// </summary>
     [External]
-    [Name("Event")]
+    [Name(false)]
     public class Event
     {
         internal Event()
