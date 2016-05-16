@@ -5,6 +5,11 @@
     public class Gamepad
     {
         /// <summary>
+        /// Returns the VRDisplay.displayId of the associated VRDisplay — the VRDisplay that the gamepad is controlling the displayed scene of.
+        /// </summary>
+        public readonly int DisplayId;
+
+        /// <summary>
         /// An identification string for the gamepad. This string identifies the brand or style of connected gamepad device. Typically, this will include the USB vendor and a product ID.
         /// </summary>
         public readonly string Id;
