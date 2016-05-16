@@ -61,11 +61,8 @@ namespace Bridge.Html5
         public readonly string UserAgent;
 
         /// <summary>
-        /// Gets all of the gamepads from the navigator. It is the equivalent of getGamepads.
+        /// Returns an array: the first value is null, and the others are all Gamepad objects, one for each gamepad connected to the device. So if no gamepads are connected, the method will just return null.
         /// </summary>
-        public static extern Gamepad[] Gamepads
-        {
-            get;
-        }
+        public extern Gamepad[] GetGamepads();
     }
 }
