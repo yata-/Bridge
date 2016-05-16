@@ -7134,22 +7134,22 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.null$1(Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Double,String).value2, "string 2");
             },
             testStaticClass1TwoGenericInheritedMembersDefaultValue: function () {
-                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass1$2(Bridge.Int32,Bridge.Decimal).getValue1(), "int 1");
-                Bridge.Test.Assert.areEqual$1(Bridge.Decimal(0.0), Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass1$2(Bridge.Int32,Bridge.Decimal).value2, "decimal 2");
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Int32,Bridge.Decimal).getValue1(), "int 1");
+                Bridge.Test.Assert.areEqual$1(Bridge.Decimal(0.0), Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Int32,Bridge.Decimal).value2, "decimal 2");
     
-                Bridge.Test.Assert.areEqual$1(Bridge.Long(0), Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass1$2(Bridge.Long,Boolean).getValue1(), "long 1");
-                Bridge.Test.Assert.areEqual$1(false, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass1$2(Bridge.Long,Boolean).value2, "bool 2");
+                Bridge.Test.Assert.areEqual$1(Bridge.Long(0), Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Long,Boolean).getValue1(), "long 1");
+                Bridge.Test.Assert.areEqual$1(false, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Long,Boolean).value2, "bool 2");
     
-                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass1$2(Bridge.Double,String).getValue1(), "double 1");
-                Bridge.Test.Assert.null$1(Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass1$2(Bridge.Double,String).value2, "string 2");
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Double,String).getValue1(), "double 1");
+                Bridge.Test.Assert.null$1(Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Double,String).value2, "string 2");
             },
             testStaticClass2TwoGenericInheritedMembersDefaultValue: function () {
-                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass2$2(Bridge.Decimal,Boolean).getValue1(), "int 1");
-                Bridge.Test.Assert.null$1(Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass2$2(Bridge.Decimal,Boolean).value2, "string 2");
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Int32,String).getValue1(), "int 1");
+                Bridge.Test.Assert.null$1(Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Int32,String).value2, "string 2");
             },
             testStaticClass3TwoGenericInheritedMembersDefaultValue: function () {
-                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass3$2(Bridge.Long,Bridge.Decimal).getValue1(), "int 1");
-                Bridge.Test.Assert.null$1(Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass3$2(Bridge.Long,Bridge.Decimal).value2, "string 2");
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Int32,String).getValue1(), "int 1");
+                Bridge.Test.Assert.null$1(Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Int32,String).value2, "string 2");
                 Bridge.Test.Assert.areEqual$1(Bridge.Long(0), Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass3$2(Bridge.Long,Bridge.Decimal).getValue3(), "long 1");
                 Bridge.Test.Assert.areEqual$1(Bridge.Decimal(0.0), Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass3$2(Bridge.Long,Bridge.Decimal).value4, "decimal 4");
             }

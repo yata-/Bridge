@@ -45,9 +45,10 @@ namespace Bridge.Translator
                 this.MemberReferenceExpression.Target.AcceptVisitor(this.Emitter);
                 return;
             }
-
-            var method = member.Member as IMethod;
-            if (method == null || method.IsExtensionMethod)
+            
+            var imethod = member.Member as IMethod;
+            var imember = member.Member as IMember;
+            if ((imethod != null && imethod.IsExtensionMethod) || imember == null)            
             {
                 this.MemberReferenceExpression.Target.AcceptVisitor(this.Emitter);
                 return;
