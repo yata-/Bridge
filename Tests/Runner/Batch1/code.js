@@ -7039,12 +7039,133 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.null$1(o.value2, "string 2");
                 Bridge.Test.Assert.areEqual$1(Bridge.Long(0), o.getValue3(), "long 1");
                 Bridge.Test.Assert.areEqual$1(Bridge.Decimal(0.0), o.value4, "decimal 4");
+            },
+            testStructStaticIntArray: function () {
+                Bridge.Test.Assert.areEqual(0, Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Int32).array[0]);
+                Bridge.Test.Assert.areEqual(0, Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Int32).array[1]);
+                Bridge.Test.Assert.areEqual(0, Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Int32).array[2]);
+    
+                Bridge.Test.Assert.notNull(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Int32)).array[0].$clone());
+                Bridge.Test.Assert.notNull(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Int32)).array[1].$clone());
+                Bridge.Test.Assert.notNull(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Int32)).array[2].$clone());
+    
+                var o = new Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Int32)("constructor");
+                Bridge.Test.Assert.areEqual(0, o.returnArray()[0]);
+                Bridge.Test.Assert.areEqual(0, o.returnArray()[1]);
+                Bridge.Test.Assert.areEqual(0, o.returnArray()[2]);
+    
+                var o1 = new Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Int32))("constructor");
+                Bridge.Test.Assert.notNull(o1.returnArray()[0].$clone());
+                Bridge.Test.Assert.notNull(o1.returnArray()[1].$clone());
+                Bridge.Test.Assert.notNull(o1.returnArray()[2].$clone());
+            },
+            testStructStaticLongArray: function () {
+                Bridge.Test.Assert.areEqual(Bridge.Long(0), Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Long).array[0]);
+                Bridge.Test.Assert.areEqual(Bridge.Long(0), Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Long).array[1]);
+                Bridge.Test.Assert.areEqual(Bridge.Long(0), Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Long).array[2]);
+    
+                Bridge.Test.Assert.notNull(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Long)).array[0].$clone());
+                Bridge.Test.Assert.notNull(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Long)).array[1].$clone());
+                Bridge.Test.Assert.notNull(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Long)).array[2].$clone());
+    
+                var o = new Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Long)("constructor");
+                Bridge.Test.Assert.areEqual(Bridge.Long(0), o.returnArray()[0]);
+                Bridge.Test.Assert.areEqual(Bridge.Long(0), o.returnArray()[1]);
+                Bridge.Test.Assert.areEqual(Bridge.Long(0), o.returnArray()[2]);
+    
+                var o1 = new Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Long))("constructor");
+                Bridge.Test.Assert.notNull(o1.returnArray()[0].$clone());
+                Bridge.Test.Assert.notNull(o1.returnArray()[1].$clone());
+                Bridge.Test.Assert.notNull(o1.returnArray()[2].$clone());
+            },
+            testStructStaticStringArray: function () {
+                Bridge.Test.Assert.null(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(String).array[0]);
+                Bridge.Test.Assert.null(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(String).array[1]);
+                Bridge.Test.Assert.null(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(String).array[2]);
+    
+                Bridge.Test.Assert.notNull(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(String)).array[0].$clone());
+                Bridge.Test.Assert.notNull(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(String)).array[1].$clone());
+                Bridge.Test.Assert.notNull(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(String)).array[2].$clone());
+    
+                var o = new Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(String)("constructor");
+                Bridge.Test.Assert.null(o.returnArray()[0]);
+                Bridge.Test.Assert.null(o.returnArray()[1]);
+                Bridge.Test.Assert.null(o.returnArray()[2]);
+    
+                var o1 = new Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(String))("constructor");
+                Bridge.Test.Assert.notNull(o1.returnArray()[0].$clone());
+                Bridge.Test.Assert.notNull(o1.returnArray()[1].$clone());
+                Bridge.Test.Assert.notNull(o1.returnArray()[2].$clone());
+            },
+            testStaticClassGenericMembersDefaultValue: function () {
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$1(Bridge.Int32).getValue1(), "int 1");
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$1(Bridge.Int32).value2, "int 2");
+    
+                Bridge.Test.Assert.areEqual$1(Bridge.Decimal(0.0), Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$1(Bridge.Decimal).getValue1(), "decimal 1");
+                Bridge.Test.Assert.areEqual$1(Bridge.Decimal(0.0), Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$1(Bridge.Decimal).value2, "decimal 2");
+    
+                Bridge.Test.Assert.areEqual$1(Bridge.Long(0), Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$1(Bridge.Long).getValue1(), "long 1");
+                Bridge.Test.Assert.areEqual$1(Bridge.Long(0), Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$1(Bridge.Long).value2, "long 2");
+    
+                Bridge.Test.Assert.areEqual$1(false, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$1(Boolean).getValue1(), "bool 1");
+                Bridge.Test.Assert.areEqual$1(false, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$1(Boolean).value2, "bool 2");
+    
+                Bridge.Test.Assert.null$1(Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$1(String).getValue1(), "string 1");
+                Bridge.Test.Assert.null$1(Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$1(String).value2, "string 2");
+    
+                Bridge.Test.Assert.notNull$1(Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$1(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Int32)).getValue1().$clone(), "Data<int> 1");
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$1(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Int32)).getValue1().getValue1(), "Data<int>.Value1 1");
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$1(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Int32)).getValue1().value2, "Data<int>.Value1 2");
+                Bridge.Test.Assert.notNull$1(Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$1(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Int32)).value2.$clone(), "Data<int> 2");
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$1(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Int32)).value2.getValue1(), "Data<int>.Value2 1");
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$1(Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(Bridge.Int32)).value2.value2, "Data<int>.Value2 2");
+    
+                Bridge.Test.Assert.null$1(Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$1(Bridge.ClientTest.BridgeIssues.Bridge1340.DataClass$1(Bridge.Int32)).getValue1(), "DataClass<int> 1");
+                Bridge.Test.Assert.null$1(Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$1(Bridge.ClientTest.BridgeIssues.Bridge1340.DataClass$1(Bridge.Int32)).value2, "DataClass<int> 2");
+            },
+            testStaticClassTwoGenericMembersDefaultValue: function () {
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Int32,Bridge.Decimal).getValue1(), "int 1");
+                Bridge.Test.Assert.areEqual$1(Bridge.Decimal(0.0), Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Int32,Bridge.Decimal).value2, "decimal 2");
+    
+                Bridge.Test.Assert.areEqual$1(Bridge.Long(0), Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Long,Boolean).getValue1(), "long 1");
+                Bridge.Test.Assert.areEqual$1(false, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Long,Boolean).value2, "bool 2");
+    
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Double,String).getValue1(), "double 1");
+                Bridge.Test.Assert.null$1(Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Double,String).value2, "string 2");
+            },
+            testStaticClass1TwoGenericInheritedMembersDefaultValue: function () {
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Int32,Bridge.Decimal).getValue1(), "int 1");
+                Bridge.Test.Assert.areEqual$1(Bridge.Decimal(0.0), Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Int32,Bridge.Decimal).value2, "decimal 2");
+    
+                Bridge.Test.Assert.areEqual$1(Bridge.Long(0), Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Long,Boolean).getValue1(), "long 1");
+                Bridge.Test.Assert.areEqual$1(false, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Long,Boolean).value2, "bool 2");
+    
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Double,String).getValue1(), "double 1");
+                Bridge.Test.Assert.null$1(Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Double,String).value2, "string 2");
+            },
+            testStaticClass2TwoGenericInheritedMembersDefaultValue: function () {
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Int32,String).getValue1(), "int 1");
+                Bridge.Test.Assert.null$1(Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Int32,String).value2, "string 2");
+            },
+            testStaticClass3TwoGenericInheritedMembersDefaultValue: function () {
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Int32,String).getValue1(), "int 1");
+                Bridge.Test.Assert.null$1(Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(Bridge.Int32,String).value2, "string 2");
+                Bridge.Test.Assert.areEqual$1(Bridge.Long(0), Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass3$2(Bridge.Long,Bridge.Decimal).getValue3(), "long 1");
+                Bridge.Test.Assert.areEqual$1(Bridge.Decimal(0.0), Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass3$2(Bridge.Long,Bridge.Decimal).value4, "decimal 4");
             }
         }
     });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1', function (T) { return {
         statics: {
+            array: null,
+            config: {
+                init: function () {
+                    this.array = Bridge.Array.init(3, function (){
+        return Bridge.getDefaultValue(T);
+    });
+                }
+            },
             getDefaultValue: function () { return new Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(T)(); }
         },
         value2: Bridge.getDefaultValue(T),
@@ -7060,6 +7181,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             this.value2 = v2;
         },
         constructor: function () {
+        },
+        returnArray: function () {
+            return Bridge.Array.init(3, function (){
+                return Bridge.getDefaultValue(T);
+            });
         },
         $struct: true,
         getHashCode: function () {
@@ -7131,6 +7257,28 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         config: {
             properties: {
                 Value1: Bridge.getDefaultValue(T)
+            }
+        }
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$1', function (T) { return {
+        statics: {
+            value2: Bridge.getDefaultValue(T),
+            config: {
+                properties: {
+                    Value1: Bridge.getDefaultValue(T)
+                }
+            }
+        }
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2', function (T, K) { return {
+        statics: {
+            value2: Bridge.getDefaultValue(K),
+            config: {
+                properties: {
+                    Value1: Bridge.getDefaultValue(T)
+                }
             }
         }
     }; });
@@ -33579,6 +33727,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge1340.DataClass$2(T,K)]
     }; });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass1$2', function (T, K) { return {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(T,K)]
+    }; });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge240B', {
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge240A],
         getString: function () {
@@ -36944,6 +37096,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge1340.DataClass1$2(Bridge.Int32,String)]
     }; });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass2$2', function (T, K) { return {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass1$2(Bridge.Int32,String)]
+    }; });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge436Third', {
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge436Second],
         toObject: function () {
@@ -36983,6 +37139,18 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         config: {
             properties: {
                 Value3: Bridge.getDefaultValue(T)
+            }
+        }
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass3$2', function (T, K) { return {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass2$2(Bridge.Int32,String)],
+        statics: {
+            value4: Bridge.getDefaultValue(K),
+            config: {
+                properties: {
+                    Value3: Bridge.getDefaultValue(T)
+                }
             }
         }
     }; });
