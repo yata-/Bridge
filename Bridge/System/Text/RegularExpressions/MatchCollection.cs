@@ -10,9 +10,7 @@ namespace System.Text.RegularExpressions
     [External]
     public class MatchCollection : ICollection
     {
-        internal MatchCollection(Regex regex, string input, int beginning, int length, int startat)
-        {
-        }
+        internal extern MatchCollection(Regex regex, string input, int beginning, int length, int startat);
 
         /// <summary>
         /// Gets the number of matches.

@@ -7,9 +7,7 @@ namespace System
     [Constructor("Number")]
     public struct Char : IComparable, IComparable<Char>, IEquatable<Char>, IFormattable
     {
-        private Char(int i)
-        {
-        }
+        private extern Char(int i);
 
         [InlineConst]
         public const char MinValue = '\0';
@@ -18,237 +16,120 @@ namespace System
         public const char MaxValue = '\xFFFF';
 
         [Template("Bridge.Char.format({this}, {format})")]
-        public string Format(string format)
-        {
-            return null;
-        }
+        public extern string Format(string format);
 
         [Template("Bridge.Char.format({this}, {format}, {provider})")]
-        public string Format(string format, IFormatProvider provider)
-        {
-            return null;
-        }
+        public extern string Format(string format, IFormatProvider provider);
 
         [Template("Bridge.Char.charCodeAt({s}, 0)")]
-        public static char Parse(string s)
-        {
-            return '\0';
-        }
+        public static extern char Parse(string s);
 
         [Template("String.fromCharCode({this})")]
-        public override string ToString()
-        {
-            return null;
-        }
+        public override extern string ToString();
 
         [Template("Bridge.Char.format({this}, {format})")]
-        public string ToString(string format)
-        {
-            return null;
-        }
+        public extern string ToString(string format);
 
         [Template("Bridge.Char.format({this}, {format}, {provider})")]
-        public string ToString(string format, IFormatProvider provider)
-        {
-            return null;
-        }
+        public extern string ToString(string format, IFormatProvider provider);
 
         [Template("Bridge.compare({this}, {other})")]
-        public int CompareTo(char other)
-        {
-            return 0;
-        }
+        public extern int CompareTo(char other);
 
         [Template("Bridge.compare({this}, {obj})")]
-        public int CompareTo(object obj)
-        {
-            return 0;
-        }
+        public extern int CompareTo(object obj);
 
         [Template("{this} === {other}")]
-        public bool Equals(char other)
-        {
-            return false;
-        }
+        public extern bool Equals(char other);
 
         [Template("Bridge.isLower({ch})")]
-        public static bool IsLower(char ch)
-        {
-            return false;
-        }
+        public static extern bool IsLower(char ch);
 
         [Template("Bridge.isUpper({ch})")]
-        public static bool IsUpper(char ch)
-        {
-            return false;
-        }
+        public static extern bool IsUpper(char ch);
 
         [Template("String.fromCharCode({ch}).toLowerCase().charCodeAt(0)")]
-        public static char ToLower(char ch)
-        {
-            return (char)0;
-        }
+        public static extern char ToLower(char ch);
 
         [Template("String.fromCharCode({ch}).toUpperCase().charCodeAt(0)")]
-        public static char ToUpper(char ch)
-        {
-            return (char)0;
-        }
+        public static extern char ToUpper(char ch);
 
         [Template("Bridge.Char.isLetter({ch})")]
-        public static bool IsLetter(char ch)
-        {
-            return false;
-        }
+        public static extern bool IsLetter(char ch);
 
         [Template("Bridge.Char.isLetter({s}.charCodeAt({index}))")]
-        public static bool IsLetter(string s, int index)
-        {
-            return false;
-        }
+        public static extern bool IsLetter(string s, int index);
 
         [Template("Bridge.Char.isDigit({ch})")]
-        public static bool IsDigit(char ch)
-        {
-            return false;
-        }
+        public static extern bool IsDigit(char ch);
 
         [Template("Bridge.Char.isDigit({s}.charCodeAt({index}))")]
-        public static bool IsDigit(string s, int index)
-        {
-            return false;
-        }
+        public static extern bool IsDigit(string s, int index);
 
         [Template("(Bridge.Char.isDigit({ch}) || Bridge.Char.isLetter({ch}))")]
-        public static bool IsLetterOrDigit(char ch)
-        {
-            return false;
-        }
+        public static extern bool IsLetterOrDigit(char ch);
 
         [Template("(Bridge.Char.isDigit({s}.charCodeAt({index})) || Bridge.Char.isLetter({s}.charCodeAt({index})))")]
-        public static bool IsLetterOrDigit(string s, int index)
-        {
-            return false;
-        }
+        public static extern bool IsLetterOrDigit(string s, int index);
 
         [Template("Bridge.Char.isWhiteSpace(String.fromCharCode({ch}))")]
-        public static bool IsWhiteSpace(char ch)
-        {
-            return false;
-        }
+        public static extern bool IsWhiteSpace(char ch);
 
         [Template("Bridge.Char.isWhiteSpace({s}.charAt({index}))")]
-        public static bool IsWhiteSpace(string s, int index)
-        {
-            return false;
-        }
+        public static extern bool IsWhiteSpace(string s, int index);
 
         [Template("Bridge.Char.isHighSurrogate({ch})")]
-        public static bool IsHighSurrogate(char ch)
-        {
-            return false;
-        }
+        public static extern bool IsHighSurrogate(char ch);
 
         [Template("Bridge.Char.isHighSurrogate({s}.charCodeAt({index}))")]
-        public static bool IsHighSurrogate(string s, int index)
-        {
-            return false;
-        }
+        public static extern bool IsHighSurrogate(string s, int index);
 
         [Template("Bridge.Char.isLowSurrogate({ch})")]
-        public static bool IsLowSurrogate(char ch)
-        {
-            return false;
-        }
+        public static extern bool IsLowSurrogate(char ch);
 
         [Template("Bridge.Char.isLowSurrogate({s}.charCodeAt({index}))")]
-        public static bool IsLowSurrogate(string s, int index)
-        {
-            return false;
-        }
+        public static extern bool IsLowSurrogate(string s, int index);
 
         [Template("Bridge.Char.isSurrogate({ch})")]
-        public static bool IsSurrogate(char ch)
-        {
-            return false;
-        }
+        public static extern bool IsSurrogate(char ch);
 
         [Template("Bridge.Char.isSurrogate({s}.charCodeAt({index}))")]
-        public static bool IsSurrogate(string s, int index)
-        {
-            return false;
-        }
+        public static extern bool IsSurrogate(string s, int index);
 
         [Template("(Bridge.Char.isHighSurrogate({ch1}) && Bridge.Char.isLowSurrogate({ch2}))")]
-        public static bool IsSurrogatePair(char ch1, char ch2)
-        {
-            return false;
-        }
+        public static extern bool IsSurrogatePair(char ch1, char ch2);
 
         [Template("(Bridge.Char.isHighSurrogate({s}.charCodeAt({index})) && Bridge.Char.isLowSurrogate({s}.charCodeAt({index}+1)))")]
-        public static bool IsSurrogatePair(string s, int index)
-        {
-            return false;
-        }
+        public static extern bool IsSurrogatePair(string s, int index);
 
         [Template("Bridge.Char.isSymbol({ch})")]
-        public static bool IsSymbol(char ch)
-        {
-            return false;
-        }
+        public static extern bool IsSymbol(char ch);
 
         [Template("Bridge.Char.isSymbol({s}.charCodeAt({index}))")]
-        public static bool IsSymbol(string s, int index)
-        {
-            return false;
-        }
+        public static extern bool IsSymbol(string s, int index);
 
         [Template("Bridge.Char.isSeparator({ch})")]
-        public static bool IsSeparator(char ch)
-        {
-            return false;
-        }
+        public static extern bool IsSeparator(char ch);
 
         [Template("Bridge.Char.isSeparator({s}.charCodeAt({index}))")]
-        public static bool IsSeparator(string s, int index)
-        {
-            return false;
-        }
+        public static extern bool IsSeparator(string s, int index);
 
         [Template("Bridge.Char.isPunctuation({ch})")]
-        public static bool IsPunctuation(char ch)
-        {
-            return false;
-        }
+        public static extern bool IsPunctuation(char ch);
 
         [Template("Bridge.Char.isPunctuation({s}.charCodeAt({index}))")]
-        public static bool IsPunctuation(string s, int index)
-        {
-            return false;
-        }
+        public static extern bool IsPunctuation(string s, int index);
 
         [Template("Bridge.Char.isNumber({ch})")]
-        public static bool IsNumber(char ch)
-        {
-            return false;
-        }
+        public static extern bool IsNumber(char ch);
 
         [Template("Bridge.Char.isNumber({s}.charCodeAt({index}))")]
-        public static bool IsNumber(string s, int index)
-        {
-            return false;
-        }
+        public static extern bool IsNumber(string s, int index);
 
         [Template("Bridge.Char.isControl({ch})")]
-        public static bool IsControl(char ch)
-        {
-            return false;
-        }
+        public static extern bool IsControl(char ch);
 
         [Template("Bridge.Char.isControl({s}.charCodeAt({index}))")]
-        public static bool IsControl(string s, int index)
-        {
-            return false;
-        }
+        public static extern bool IsControl(string s, int index);
     }
 }

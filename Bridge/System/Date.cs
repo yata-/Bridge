@@ -6,188 +6,89 @@ namespace System
     [Name("Date")]
     public class Date
     {
-        public static double operator -(Date d1, Date d2)
-        {
-            return 0;
-        }
+        public static extern double operator -(Date d1, Date d2);
 
-        public static double operator -(Date d1, int d2)
-        {
-            return 0;
-        }
+        public static extern double operator -(Date d1, int d2);
 
-        public static double operator -(Date d1, double d2)
-        {
-            return 0;
-        }
+        public static extern double operator -(Date d1, double d2);
 
-        public static bool operator <(Date d1, Date d2)
-        {
-            return false;
-        }
+        public static extern bool operator <(Date d1, Date d2);
 
-        public static bool operator <(Date d1, int d2)
-        {
-            return false;
-        }
+        public static extern bool operator <(Date d1, int d2);
 
-        public static bool operator <(Date d1, double d2)
-        {
-            return false;
-        }
+        public static extern bool operator <(Date d1, double d2);
 
-        public static bool operator <(int d1, Date d2)
-        {
-            return false;
-        }
+        public static extern bool operator <(int d1, Date d2);
 
-        public static bool operator <(double d1, Date d2)
-        {
-            return false;
-        }
+        public static extern bool operator <(double d1, Date d2);
 
-        public static bool operator >(Date d1, Date d2)
-        {
-            return false;
-        }
+        public static extern bool operator >(Date d1, Date d2);
 
-        public static bool operator >(Date d1, int d2)
-        {
-            return false;
-        }
+        public static extern bool operator >(Date d1, int d2);
 
-        public static bool operator >(Date d1, double d2)
-        {
-            return false;
-        }
+        public static extern bool operator >(Date d1, double d2);
 
-        public static bool operator >(int d1, Date d2)
-        {
-            return false;
-        }
+        public static extern bool operator >(int d1, Date d2);
 
-        public static bool operator >(double d1, Date d2)
-        {
-            return false;
-        }
+        public static extern bool operator >(double d1, Date d2);
 
-        public static bool operator <=(Date d1, Date d2)
-        {
-            return false;
-        }
+        public static extern bool operator <=(Date d1, Date d2);
 
-        public static bool operator <=(Date d1, int d2)
-        {
-            return false;
-        }
+        public static extern bool operator <=(Date d1, int d2);
 
-        public static bool operator <=(Date d1, double d2)
-        {
-            return false;
-        }
+        public static extern bool operator <=(Date d1, double d2);
 
-        public static bool operator <=(int d1, Date d2)
-        {
-            return false;
-        }
+        public static extern bool operator <=(int d1, Date d2);
 
-        public static bool operator <=(double d1, Date d2)
-        {
-            return false;
-        }
+        public static extern bool operator <=(double d1, Date d2);
 
-        public static bool operator >=(Date d1, Date d2)
-        {
-            return false;
-        }
+        public static extern bool operator >=(Date d1, Date d2);
 
-        public static bool operator >=(Date d1, int d2)
-        {
-            return false;
-        }
+        public static extern bool operator >=(Date d1, int d2);
 
-        public static bool operator >=(Date d1, double d2)
-        {
-            return false;
-        }
+        public static extern bool operator >=(Date d1, double d2);
 
-        public static bool operator >=(int d1, Date d2)
-        {
-            return false;
-        }
+        public static extern bool operator >=(int d1, Date d2);
 
-        public static bool operator >=(double d1, Date d2)
-        {
-            return false;
-        }
+        public static extern bool operator >=(double d1, Date d2);
 
         [Template("Bridge.equals({0}, {1})")]
-        public static bool operator ==(Date d1, object d2)
-        {
-            return false;
-        }
+        public static extern bool operator ==(Date d1, object d2);
 
         [Template("Bridge.equals({0}, {1})")]
-        public static bool operator ==(Date d1, Date d2)
-        {
-            return false;
-        }
+        public static extern bool operator ==(Date d1, Date d2);
 
         [Template("!Bridge.equals({0}, {1})")]
-        public static bool operator !=(Date d1, object d2)
-        {
-            return false;
-        }
+        public static extern bool operator !=(Date d1, object d2);
 
         [Template("!Bridge.equals({0}, {1})")]
-        public static bool operator !=(Date d1, Date d2)
-        {
-            return false;
-        }
+        public static extern bool operator !=(Date d1, Date d2);
 
-        public Date()
-        {
-        }
+        public extern Date();
 
         /// <summary>
         /// Double value representing the number of milliseconds since 1 January 1970 00:00:00 UTC (Unix Epoch).
         /// </summary>
         /// <param name="value">The numberof milliseconds since 1 January 1970 00:00:00 UTC (Unix Epoch)</param>
-        public Date(double value)
-        {
-        }
+        public extern Date(double value);
 
         /// <summary>
         /// String value representing a date. The string should be in a format recognized by the Date.parse() method (IETF-compliant RFC 2822 timestamps and also a version of ISO8601).
         /// </summary>
         /// <param name="dateString"></param>
-        public Date(string dateString)
-        {
-        }
+        public extern Date(string dateString);
 
-        public Date(int year, int month, int date, int hours, int minutes, int seconds, int ms)
-        {
-        }
+        public extern Date(int year, int month, int date, int hours, int minutes, int seconds, int ms);
 
-        public Date(int year, int month, int date, int hours, int minutes, int seconds)
-        {
-        }
+        public extern Date(int year, int month, int date, int hours, int minutes, int seconds);
 
-        public Date(int year, int month, int date, int hours, int minutes)
-        {
-        }
+        public extern Date(int year, int month, int date, int hours, int minutes);
 
-        public Date(int year, int month, int date, int hours)
-        {
-        }
+        public extern Date(int year, int month, int date, int hours);
 
-        public Date(int year, int month, int date)
-        {
-        }
+        public extern Date(int year, int month, int date);
 
-        public Date(int year, int month)
-        {
-        }
+        public extern Date(int year, int month);
 
         public static extern double Parse(string value);
 

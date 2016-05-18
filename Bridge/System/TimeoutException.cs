@@ -6,19 +6,11 @@ namespace System
     [Namespace("Bridge")]
     public class TimeoutException : SystemException
     {
-        public TimeoutException()
-        {
-        }
+        public extern TimeoutException();
 
-        public TimeoutException(string message)
-            : base(message)
-        {
-        }
+        public extern TimeoutException(string message);
 
         [Template("new Bridge.TimeoutException({message}, {innerException})")]
-        public TimeoutException(string message, Exception innerException)
-            : base(message, innerException)
-        {
-        }
+        public extern TimeoutException(string message, Exception innerException);
     }
 }

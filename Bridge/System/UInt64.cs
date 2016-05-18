@@ -7,9 +7,7 @@ namespace System
     [Constructor("Bridge.ULong")]
     public struct UInt64 : IComparable, IComparable<UInt64>, IEquatable<UInt64>, IFormattable
     {
-        private UInt64(int i)
-        {
-        }
+        private extern UInt64(int i);
 
         [Name(false)]
         public const ulong MinValue = 0;
@@ -18,57 +16,26 @@ namespace System
         public const ulong MaxValue = 18446744073709551615;
 
         [Template("Bridge.ULong.parse({s})")]
-        public static ulong Parse(string s)
-        {
-            return 0;
-        }
+        public static extern ulong Parse(string s);
 
         [Template("Bridge.ULong.tryParse({s}, {result})")]
-        public static bool TryParse(string s, out ulong result)
-        {
-            result = 0;
-            return false;
-        }
+        public static extern bool TryParse(string s, out ulong result);
 
-        public string ToString(int radix)
-        {
-            return null;
-        }
+        public extern string ToString(int radix);
 
-        public string Format(string format)
-        {
-            return null;
-        }
+        public extern string Format(string format);
 
-        public string Format(string format, IFormatProvider provider)
-        {
-            return null;
-        }
+        public extern string Format(string format, IFormatProvider provider);
 
-        public string ToString(string format)
-        {
-            return null;
-        }
+        public extern string ToString(string format);
 
-        public string ToString(string format, IFormatProvider provider)
-        {
-            return null;
-        }
+        public extern string ToString(string format, IFormatProvider provider);
 
-        public int CompareTo(ulong other)
-        {
-            return 0;
-        }
+        public extern int CompareTo(ulong other);
 
-        public int CompareTo(object obj)
-        {
-            return 0;
-        }
+        public extern int CompareTo(object obj);
 
-        public bool Equals(ulong other)
-        {
-            return false;
-        }
+        public extern bool Equals(ulong other);
 
         //[Template("Bridge.ULong.lift({value})")]
         public static extern implicit operator ulong(byte value);

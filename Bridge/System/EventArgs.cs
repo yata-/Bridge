@@ -17,8 +17,6 @@ namespace System
         /// <summary>
         /// Initializes a new instance of the System.EventArgs class.
         /// </summary>
-        public EventArgs()
-        {
-        }
+        public extern EventArgs();
     }
 }

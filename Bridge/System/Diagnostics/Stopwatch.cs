@@ -6,8 +6,8 @@ namespace System.Diagnostics
     [Namespace("Bridge")]
     public class Stopwatch
     {
-        public static readonly long Frequency = 0;
-        public static readonly bool IsHighResolution = false;
+        public const long Frequency = 0;
+        public const bool IsHighResolution = false;
 
         public static extern Stopwatch StartNew();
 

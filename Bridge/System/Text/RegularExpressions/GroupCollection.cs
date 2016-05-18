@@ -10,9 +10,7 @@ namespace System.Text.RegularExpressions
     [External]
     public class GroupCollection : ICollection
     {
-        internal GroupCollection()
-        {
-        }
+        internal extern GroupCollection();
 
         /// <summary>
         /// Gets an object that can be used to synchronize access to the GroupCollection.

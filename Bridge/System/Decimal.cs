@@ -14,19 +14,19 @@ namespace System
     public struct Decimal : IComparable, IComparable<Decimal>, IEquatable<Decimal>, IFormattable
     {
         [Name(false)]
-        public static readonly decimal Zero = 0;
+        public const decimal Zero = 0;
 
         [Name(false)]
-        public static readonly decimal One = 1;
+        public const decimal One = 1;
 
         [Name(false)]
-        public static readonly decimal MinusOne = -1;
+        public const decimal MinusOne = -1;
 
         [Name(false)]
-        public static readonly decimal MaxValue = 0;
+        public const decimal MaxValue = 0;
 
         [Name(false)]
-        public static readonly decimal MinValue = 0;
+        public const decimal MinValue = 0;
 
         [Template("Bridge.Decimal(0)")]
         private extern Decimal(DummyTypeUsedToAddAttributeToDefaultValueTypeConstructor _);
@@ -59,28 +59,16 @@ namespace System
         public extern string Format(string format, IFormatProvider provider);
 
         [Template("Bridge.Int.format({this}, {format})")]
-        public string ToString(string format)
-        {
-            return null;
-        }
+        public extern string ToString(string format);
 
         [Template("Bridge.Int.format({this}, {format}, {provider})")]
-        public string ToString(string format, IFormatProvider provider)
-        {
-            return null;
-        }
+        public extern string ToString(string format, IFormatProvider provider);
 
         [Template("Bridge.Int.format({this}, 'G', {provider})")]
-        public string ToString(IFormatProvider provider)
-        {
-            return null;
-        }
+        public extern string ToString(IFormatProvider provider);
 
         [Template("Bridge.Int.format({this}, 'G')")]
-        public override string ToString()
-        {
-            return null;
-        }
+        public override extern string ToString();
 
         public extern decimal Abs();
 
@@ -353,33 +341,22 @@ namespace System
 
         public extern decimal ToSignificantDigits(int sd, MidpointRounding rm);
 
-        public static decimal Max(params decimal[] values)
-        {
-            return 0;
-        }
+        public static extern decimal Max(params decimal[] values);
 
-        public static decimal Min(params decimal[] values)
-        {
-            return 0;
-        }
+        public static extern decimal Min(params decimal[] values);
 
         /// <summary>
         /// Returns a new Decimal with a pseudo-random value equal to or greater than 0 and less than 1.
         /// </summary>
         /// <param name="dp">The return value will have dp decimal places (or less if trailing zeros are produced). If dp is omitted then the number of decimal places will default to the current precision setting.</param>
         /// <returns></returns>
-        public static decimal Random(int dp)
-        {
-            return 0m;
-        }
+        public static extern decimal Random(int dp);
 
         /// <summary>
         /// Configures the 'global' settings for this particular Decimal constructor.
         /// </summary>
         /// <param name="config"></param>
-        public static void SetConfig(DecimalConfig config)
-        {
-        }
+        public static extern void SetConfig(DecimalConfig config);
 
         public extern string ToFormat();
 

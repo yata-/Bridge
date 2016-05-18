@@ -6,19 +6,11 @@ namespace System
     [Namespace("Bridge")]
     public class SystemException : Exception, IBridgeClass
     {
-        public SystemException()
-        {
-        }
+        public extern SystemException();
 
-        public SystemException(string message)
-            : base(message)
-        {
-        }
+        public extern SystemException(string message);
 
         [Template("new Bridge.SystemException({message}, {innerException})")]
-        public SystemException(string message, Exception innerException)
-            : base(message, innerException)
-        {
-        }
+        public extern SystemException(string message, Exception innerException);
     }
 }

@@ -6,16 +6,10 @@ namespace System
     [Namespace("Bridge")]
     public class RankException : Exception, IBridgeClass
     {
-        public RankException()
-        {
-        }
+        public extern RankException();
 
-        public RankException(string message)
-        {
-        }
+        public extern RankException(string message);
 
-        public RankException(string message, Exception innerException)
-        {
-        }
+        public extern RankException(string message, Exception innerException);
     }
 }

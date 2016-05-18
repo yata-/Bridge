@@ -6,16 +6,10 @@ namespace System
     [Namespace("Bridge")]
     public class IndexOutOfRangeException : SystemException, IBridgeClass
     {
-        public IndexOutOfRangeException()
-        {
-        }
+        public extern IndexOutOfRangeException();
 
-        public IndexOutOfRangeException(string message)
-        {
-        }
+        public extern IndexOutOfRangeException(string message);
 
-        public IndexOutOfRangeException(string message, Exception innerException)
-        {
-        }
+        public extern IndexOutOfRangeException(string message, Exception innerException);
     }
 }

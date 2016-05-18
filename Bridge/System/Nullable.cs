@@ -8,50 +8,30 @@ namespace System
     public struct Nullable<T> where T : struct
     {
         [Template("{0}")]
-        public Nullable(T value)
-        {
-        }
+        public extern Nullable(T value);
 
-        public bool HasValue
+        public extern bool HasValue
         {
             [Template("Bridge.Nullable.hasValue({this})")]
-            get
-            {
-                return false;
-            }
+            get;
         }
 
-        public T Value
+        public extern T Value
         {
             [Template("Bridge.Nullable.getValue({this})")]
-            get
-            {
-                return default(T);
-            }
+            get;
         }
 
         [Template("Bridge.Nullable.getValueOrDefault({this}, {T:default})")]
-        public T GetValueOrDefault()
-        {
-            return default(T);
-        }
+        public extern T GetValueOrDefault();
 
         [Template("Bridge.Nullable.getValueOrDefault({this}, {0})")]
-        public T GetValueOrDefault(T defaultValue)
-        {
-            return default(T);
-        }
+        public extern T GetValueOrDefault(T defaultValue);
 
-        public static implicit operator T? (T value)
-        {
-            return null;
-        }
+        public static extern implicit operator T? (T value);
 
         [Template("Bridge.Nullable.getValue({this})")]
-        public static explicit operator T(T? value)
-        {
-            return default(T);
-        }
+        public static extern explicit operator T(T? value);
 
         [Template("Bridge.Nullable.equalsT({this}, {other})")]
         public override extern bool Equals(object other);

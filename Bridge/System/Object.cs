@@ -8,17 +8,12 @@ namespace System
     [Constructor("{ }")]
     public class Object
     {
-        public virtual object this[string name]
+        public virtual extern object this[string name]
         {
             [External]
-            get
-            {
-                return null;
-            }
+            get;
             [External]
-            set
-            {
-            }
+            set;
         }
 
         public virtual extern string ToString();

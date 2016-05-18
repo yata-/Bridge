@@ -12,9 +12,7 @@ namespace System
     [Name("Bridge.Attribute")]
     public class Attribute : IBridgeClass
     {
-        protected Attribute()
-        {
-        }
+        protected extern Attribute();
     }
 
     [External]
@@ -47,15 +45,13 @@ namespace System
     [AttributeUsage(AttributeTargets.Class)]
     public class AttributeUsageAttribute : Attribute
     {
-        public AttributeUsageAttribute(AttributeTargets validOn)
-        {
-        }
+        public extern AttributeUsageAttribute(AttributeTargets validOn);
 
         internal extern AttributeUsageAttribute(AttributeTargets validOn, bool allowMultiple, bool inherited);
 
         /// <summary>Gets or sets a Boolean value indicating whether more than one instance of the indicated attribute can be specified for a single program element.</summary>
         /// <returns>true if more than one instance is allowed to be specified; otherwise, false. The default is false.</returns>
-        public bool AllowMultiple
+        public extern bool AllowMultiple
         {
             get;
             set;
@@ -77,12 +73,12 @@ namespace System
         }
     }
 
-    [AttributeUsage(AttributeTargets.Enum, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Enum, AllowMultiple = false), External]
     public class FlagsAttribute : Attribute
     {
     }
 
-    [AttributeUsage(AttributeTargets.Delegate | AttributeTargets.Interface | AttributeTargets.Event | AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Method | AttributeTargets.Constructor | AttributeTargets.Enum | AttributeTargets.Struct | AttributeTargets.Class, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Delegate | AttributeTargets.Interface | AttributeTargets.Event | AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Method | AttributeTargets.Constructor | AttributeTargets.Enum | AttributeTargets.Struct | AttributeTargets.Class, Inherited = false), External]
     public sealed class ObsoleteAttribute : Attribute
     {
         public extern ObsoleteAttribute();
@@ -110,12 +106,9 @@ namespace System.Runtime.InteropServices
     [External]
     public sealed class ComVisibleAttribute : Attribute
     {
-        public ComVisibleAttribute(bool visibility)
-        {
-            this.Value = visibility;
-        }
+        public extern ComVisibleAttribute(bool visibility);
 
-        public bool Value
+        public extern bool Value
         {
             get;
             private set;
@@ -136,12 +129,9 @@ namespace System.Runtime.InteropServices
     [External]
     public sealed class GuidAttribute : Attribute
     {
-        public GuidAttribute(string guid)
-        {
-            this.Value = guid;
-        }
+        public extern GuidAttribute(string guid);
 
-        public string Value
+        public extern string Value
         {
             get;
             private set;
@@ -155,12 +145,9 @@ namespace System.Reflection
     [External]
     public sealed class AssemblyTitleAttribute : Attribute
     {
-        public AssemblyTitleAttribute(string title)
-        {
-            this.Title = title;
-        }
+        public extern AssemblyTitleAttribute(string title);
 
-        public string Title
+        public extern string Title
         {
             get;
             private set;
@@ -171,12 +158,9 @@ namespace System.Reflection
     [External]
     public sealed class AssemblyDescriptionAttribute : Attribute
     {
-        public AssemblyDescriptionAttribute(string description)
-        {
-            this.Description = description;
-        }
+        public extern AssemblyDescriptionAttribute(string description);
 
-        public string Description
+        public extern string Description
         {
             get;
             private set;
@@ -187,12 +171,9 @@ namespace System.Reflection
     [External]
     public sealed class AssemblyConfigurationAttribute : Attribute
     {
-        public AssemblyConfigurationAttribute(string configuration)
-        {
-            this.Configuration = configuration;
-        }
+        public extern AssemblyConfigurationAttribute(string configuration);
 
-        public string Configuration
+        public extern string Configuration
         {
             get;
             private set;
@@ -203,12 +184,9 @@ namespace System.Reflection
     [External]
     public sealed class AssemblyCompanyAttribute : Attribute
     {
-        public AssemblyCompanyAttribute(string company)
-        {
-            this.Company = company;
-        }
+        public extern AssemblyCompanyAttribute(string company);
 
-        public string Company
+        public extern string Company
         {
             get;
             private set;
@@ -219,12 +197,9 @@ namespace System.Reflection
     [External]
     public sealed class AssemblyProductAttribute : Attribute
     {
-        public AssemblyProductAttribute(string product)
-        {
-            this.Product = product;
-        }
+        public extern AssemblyProductAttribute(string product);
 
-        public string Product
+        public extern string Product
         {
             get;
             private set;
@@ -235,12 +210,9 @@ namespace System.Reflection
     [External]
     public sealed class AssemblyCopyrightAttribute : Attribute
     {
-        public AssemblyCopyrightAttribute(string copyright)
-        {
-            this.Copyright = copyright;
-        }
+        public extern AssemblyCopyrightAttribute(string copyright);
 
-        public string Copyright
+        public extern string Copyright
         {
             get;
             private set;
@@ -251,12 +223,9 @@ namespace System.Reflection
     [External]
     public sealed class AssemblyTrademarkAttribute : Attribute
     {
-        public AssemblyTrademarkAttribute(string trademark)
-        {
-            this.Trademark = trademark;
-        }
+        public extern AssemblyTrademarkAttribute(string trademark);
 
-        public string Trademark
+        public extern string Trademark
         {
             get;
             private set;
@@ -267,12 +236,9 @@ namespace System.Reflection
     [External]
     public sealed class AssemblyCultureAttribute : Attribute
     {
-        public AssemblyCultureAttribute(string culture)
-        {
-            this.Culture = culture;
-        }
+        public extern AssemblyCultureAttribute(string culture);
 
-        public string Culture
+        public extern string Culture
         {
             get;
             private set;
@@ -283,12 +249,9 @@ namespace System.Reflection
     [External]
     public sealed class AssemblyVersionAttribute : Attribute
     {
-        public AssemblyVersionAttribute(string version)
-        {
-            this.Version = version;
-        }
+        public extern AssemblyVersionAttribute(string version);
 
-        public string Version
+        public extern string Version
         {
             get;
             private set;
@@ -299,12 +262,9 @@ namespace System.Reflection
     [External]
     public sealed class AssemblyFileVersionAttribute : Attribute
     {
-        public AssemblyFileVersionAttribute(string version)
-        {
-            this.Version = version;
-        }
+        public extern AssemblyFileVersionAttribute(string version);
 
-        public string Version
+        public extern string Version
         {
             get;
             private set;
@@ -326,12 +286,9 @@ namespace System.Reflection
     [External]
     public sealed class DefaultMemberAttribute : Attribute
     {
-        public DefaultMemberAttribute(string memberName)
-        {
-            this.MemberName = memberName;
-        }
+        public extern DefaultMemberAttribute(string memberName);
 
-        public string MemberName
+        public extern string MemberName
         {
             get;
             private set;
@@ -345,22 +302,17 @@ namespace System.Runtime.Versioning
     [External]
     public sealed class TargetFrameworkAttribute : Attribute
     {
-        public TargetFrameworkAttribute()
-        {
-        }
+        public extern TargetFrameworkAttribute();
 
-        public TargetFrameworkAttribute(string frameworkName)
-        {
-            this.FrameworkName = frameworkName;
-        }
+        public extern TargetFrameworkAttribute(string frameworkName);
 
-        public string FrameworkDisplayName
+        public extern string FrameworkDisplayName
         {
             get;
             set;
         }
 
-        public string FrameworkName
+        public extern string FrameworkName
         {
             get;
             private set;
@@ -377,21 +329,16 @@ namespace System.Runtime.CompilerServices
     [External]
     public sealed class DummyTypeUsedToAddAttributeToDefaultValueTypeConstructor
     {
-        private DummyTypeUsedToAddAttributeToDefaultValueTypeConstructor()
-        {
-        }
+        private extern DummyTypeUsedToAddAttributeToDefaultValueTypeConstructor();
     }
 
     [External]
     [AttributeUsage(AttributeTargets.Property)]
     public class IndexerNameAttribute : Attribute
     {
-        public IndexerNameAttribute(string indexerName)
-        {
-            this.Value = indexerName;
-        }
+        public extern IndexerNameAttribute(string indexerName);
 
-        public string Value
+        public extern string Value
         {
             get;
             private set;
@@ -401,20 +348,13 @@ namespace System.Runtime.CompilerServices
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field)]
     public sealed class DecimalConstantAttribute : Attribute
     {
-        public DecimalConstantAttribute(byte scale, byte sign, int hi, int mid, int low)
-        {
-        }
+        public extern DecimalConstantAttribute(byte scale, byte sign, int hi, int mid, int low);
 
-        public DecimalConstantAttribute(byte scale, byte sign, uint hi, uint mid, uint low)
-        {
-        }
+        public extern DecimalConstantAttribute(byte scale, byte sign, uint hi, uint mid, uint low);
 
-        public decimal Value
+        public extern decimal Value
         {
-            get
-            {
-                return 0m;
-            }
+            get;
         }
     }
 
@@ -423,12 +363,9 @@ namespace System.Runtime.CompilerServices
     {
         public static extern void InitializeArray(Array array, RuntimeFieldHandle handle);
 
-        public static int OffsetToStringData
+        public static extern int OffsetToStringData
         {
-            get
-            {
-                return 0;
-            }
+            get;
         }
 
         public static extern int GetHashCode(object obj);
@@ -438,41 +375,29 @@ namespace System.Runtime.CompilerServices
     [External]
     public sealed class ExtensionAttribute : Attribute
     {
-        public ExtensionAttribute()
-        {
-        }
+        public extern ExtensionAttribute();
     }
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter | AttributeTargets.ReturnValue)]
     [External]
     public sealed class DynamicAttribute : Attribute
     {
-        public DynamicAttribute()
-        {
-        }
+        public extern DynamicAttribute();
 
-        public DynamicAttribute(bool[] transformFlags)
-        {
-        }
+        public extern DynamicAttribute(bool[] transformFlags);
 
-        public List<bool> TransformFlags
+        public extern List<bool> TransformFlags
         {
-            get
-            {
-                return null;
-            }
+            get;
         }
     }
 
     [External]
     public class CallSite
     {
-        public CallSiteBinder Binder
+        public extern CallSiteBinder Binder
         {
-            get
-            {
-                return null;
-            }
+            get;
         }
 
         public static extern CallSite Create(Type delegateType, CallSiteBinder binder);
@@ -481,12 +406,9 @@ namespace System.Runtime.CompilerServices
     [External]
     public sealed class CallSite<T> : CallSite where T : class
     {
-        public T Update
+        public extern T Update
         {
-            get
-            {
-                return null;
-            }
+            get;
         }
 
         public T Target;
@@ -497,12 +419,9 @@ namespace System.Runtime.CompilerServices
     [External]
     public abstract class CallSiteBinder
     {
-        public static LabelTarget UpdateLabel
+        public static extern LabelTarget UpdateLabel
         {
-            get
-            {
-                return null;
-            }
+            get;
         }
 
         public extern T BindDelegate<T>(CallSite<T> site, object[] args) where T : class;
@@ -511,128 +430,77 @@ namespace System.Runtime.CompilerServices
     [External]
     public struct AsyncVoidMethodBuilder
     {
-        public static AsyncVoidMethodBuilder Create()
-        {
-            return default(AsyncVoidMethodBuilder);
-        }
+        public static extern AsyncVoidMethodBuilder Create();
 
-        public void Start<TStateMachine>(ref TStateMachine stateMachine) where TStateMachine : IAsyncStateMachine
-        {
-        }
+        public extern void Start<TStateMachine>(ref TStateMachine stateMachine) where TStateMachine : IAsyncStateMachine;
 
-        public void SetStateMachine(IAsyncStateMachine stateMachine)
-        {
-        }
+        public extern void SetStateMachine(IAsyncStateMachine stateMachine);
 
-        public void AwaitOnCompleted<TAwaiter, TStateMachine>(ref TAwaiter awaiter, ref TStateMachine stateMachine)
+        public extern void AwaitOnCompleted<TAwaiter, TStateMachine>(ref TAwaiter awaiter, ref TStateMachine stateMachine)
             where TAwaiter : INotifyCompletion
-            where TStateMachine : IAsyncStateMachine
-        {
-        }
+            where TStateMachine : IAsyncStateMachine;
 
-        public void AwaitUnsafeOnCompleted<TAwaiter, TStateMachine>(ref TAwaiter awaiter, ref TStateMachine stateMachine)
+        public extern void AwaitUnsafeOnCompleted<TAwaiter, TStateMachine>(ref TAwaiter awaiter, ref TStateMachine stateMachine)
             where TAwaiter : ICriticalNotifyCompletion
-            where TStateMachine : IAsyncStateMachine
-        {
-        }
+            where TStateMachine : IAsyncStateMachine;
 
-        public void SetResult()
-        {
-        }
+        public extern void SetResult();
 
-        public void SetException(Exception exception)
-        {
-        }
+        public extern void SetException(Exception exception);
     }
 
     [External]
     public struct AsyncTaskMethodBuilder
     {
-        public Task Task
+        public extern Task Task
         {
-            get
-            {
-                return null;
-            }
+            get;
         }
 
-        public static AsyncTaskMethodBuilder Create()
-        {
-            return default(AsyncTaskMethodBuilder);
-        }
+        public static extern AsyncTaskMethodBuilder Create();
 
-        public void Start<TStateMachine>(ref TStateMachine stateMachine) where TStateMachine : IAsyncStateMachine
-        {
-        }
+        public extern void Start<TStateMachine>(ref TStateMachine stateMachine) where TStateMachine : IAsyncStateMachine;
 
-        public void SetStateMachine(IAsyncStateMachine stateMachine)
-        {
-        }
+        public extern void SetStateMachine(IAsyncStateMachine stateMachine);
 
-        public void AwaitOnCompleted<TAwaiter, TStateMachine>(ref TAwaiter awaiter, ref TStateMachine stateMachine)
+        public extern void AwaitOnCompleted<TAwaiter, TStateMachine>(ref TAwaiter awaiter, ref TStateMachine stateMachine)
             where TAwaiter : INotifyCompletion
-            where TStateMachine : IAsyncStateMachine
-        {
-        }
+            where TStateMachine : IAsyncStateMachine;
 
-        public void AwaitUnsafeOnCompleted<TAwaiter, TStateMachine>(ref TAwaiter awaiter, ref TStateMachine stateMachine)
+        public extern void AwaitUnsafeOnCompleted<TAwaiter, TStateMachine>(ref TAwaiter awaiter, ref TStateMachine stateMachine)
             where TAwaiter : ICriticalNotifyCompletion
-            where TStateMachine : IAsyncStateMachine
-        {
-        }
+            where TStateMachine : IAsyncStateMachine;
 
-        public void SetResult()
-        {
-        }
+        public extern void SetResult();
 
-        public void SetException(Exception exception)
-        {
-        }
+        public extern void SetException(Exception exception);
     }
 
     [External]
     public struct AsyncTaskMethodBuilder<TResult>
     {
-        public Task<TResult> Task
+        public extern Task<TResult> Task
         {
-            get
-            {
-                return null;
-            }
+            get;
         }
 
-        public static AsyncTaskMethodBuilder<TResult> Create()
-        {
-            return default(AsyncTaskMethodBuilder<TResult>);
-        }
+        public static extern AsyncTaskMethodBuilder<TResult> Create();
 
-        public void Start<TStateMachine>(ref TStateMachine stateMachine) where TStateMachine : IAsyncStateMachine
-        {
-        }
+        public extern void Start<TStateMachine>(ref TStateMachine stateMachine) where TStateMachine : IAsyncStateMachine;
 
-        public void SetStateMachine(IAsyncStateMachine stateMachine)
-        {
-        }
+        public extern void SetStateMachine(IAsyncStateMachine stateMachine);
 
-        public void AwaitOnCompleted<TAwaiter, TStateMachine>(ref TAwaiter awaiter, ref TStateMachine stateMachine)
+        public extern void AwaitOnCompleted<TAwaiter, TStateMachine>(ref TAwaiter awaiter, ref TStateMachine stateMachine)
             where TAwaiter : INotifyCompletion
-            where TStateMachine : IAsyncStateMachine
-        {
-        }
+            where TStateMachine : IAsyncStateMachine;
 
-        public void AwaitUnsafeOnCompleted<TAwaiter, TStateMachine>(ref TAwaiter awaiter, ref TStateMachine stateMachine)
+        public extern void AwaitUnsafeOnCompleted<TAwaiter, TStateMachine>(ref TAwaiter awaiter, ref TStateMachine stateMachine)
             where TAwaiter : ICriticalNotifyCompletion
-            where TStateMachine : IAsyncStateMachine
-        {
-        }
+            where TStateMachine : IAsyncStateMachine;
 
-        public void SetResult(TResult result)
-        {
-        }
+        public extern void SetResult(TResult result);
 
-        public void SetException(Exception exception)
-        {
-        }
+        public extern void SetException(Exception exception);
     }
 
     [External]
@@ -723,24 +591,16 @@ namespace System.Linq.Expressions
     [External]
     public sealed class LabelTarget
     {
-        internal LabelTarget()
+        internal extern LabelTarget();
+
+        public extern string Name
         {
+            get;
         }
 
-        public string Name
+        public extern Type Type
         {
-            get
-            {
-                return null;
-            }
-        }
-
-        public Type Type
-        {
-            get
-            {
-                return null;
-            }
+            get;
         }
     }
 
@@ -837,6 +697,7 @@ namespace System.Linq.Expressions
 
 namespace System.Diagnostics
 {
+    [External]
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Constructor | AttributeTargets.Method)]
     public sealed class DebuggerStepThroughAttribute : Attribute
     {

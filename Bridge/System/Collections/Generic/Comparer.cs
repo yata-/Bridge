@@ -6,13 +6,10 @@ namespace System.Collections.Generic
     [External]
     public abstract class Comparer<T> : IComparer<T>
     {
-        public static Comparer<T> Default
+        public static extern Comparer<T> Default
         {
             [Template("new Bridge.Comparer$1({T})(Bridge.Comparer$1.$default.fn)")]
-            get
-            {
-                return null;
-            }
+            get;
         }
 
         public abstract int Compare(T x, T y);

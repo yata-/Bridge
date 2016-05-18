@@ -6,16 +6,10 @@ namespace System
     [Namespace("Bridge")]
     public class OverflowException : ArithmeticException, IBridgeClass
     {
-        public OverflowException()
-        {
-        }
+        public extern OverflowException();
 
-        public OverflowException(string message)
-        {
-        }
+        public extern OverflowException(string message);
 
-        public OverflowException(string message, Exception innerException)
-        {
-        }
+        public extern OverflowException(string message, Exception innerException);
     }
 }

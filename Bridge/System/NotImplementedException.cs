@@ -6,16 +6,10 @@ namespace System
     [Namespace("Bridge")]
     public class NotImplementedException : Exception, IBridgeClass
     {
-        public NotImplementedException()
-        {
-        }
+        public extern NotImplementedException();
 
-        public NotImplementedException(string message)
-        {
-        }
+        public extern NotImplementedException(string message);
 
-        public NotImplementedException(string message, Exception innerException)
-        {
-        }
+        public extern NotImplementedException(string message, Exception innerException);
     }
 }

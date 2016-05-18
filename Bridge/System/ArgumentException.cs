@@ -6,36 +6,23 @@ namespace System
     [Namespace("Bridge")]
     public class ArgumentException : Exception, IBridgeClass
     {
-        public ArgumentException()
-        {
-        }
+        public extern ArgumentException();
 
-        public ArgumentException(string message)
-        {
-        }
+        public extern ArgumentException(string message);
 
         [Template("new Bridge.ArgumentException({message}, null, {innerException})")]
-        public ArgumentException(string message, Exception innerException)
-        {
-        }
+        public extern ArgumentException(string message, Exception innerException);
 
-        public ArgumentException(string message, string paramName)
-        {
-        }
+        public extern ArgumentException(string message, string paramName);
 
-        public ArgumentException(string message, string paramName, Exception innerException)
-        {
-        }
+        public extern ArgumentException(string message, string paramName, Exception innerException);
 
         /// <summary>
         /// Gets the name of the parameter that causes this exception.
         /// </summary>
-        public string ParamName
+        public extern string ParamName
         {
-            get
-            {
-                return null;
-            }
+            get;
         }
     }
 }
