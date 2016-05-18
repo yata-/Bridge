@@ -129,7 +129,7 @@ namespace Bridge.Translator
 
                 if (constValue is RawValue)
                 {
-                    constValue = ((RawValue) constValue).Value;
+                    constValue = constValue.ToString();
                     write = true;
                     writeScript = false;
                 }
