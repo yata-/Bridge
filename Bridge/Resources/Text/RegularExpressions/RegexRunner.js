@@ -1,7 +1,7 @@
 ﻿// @source Text/RegularExpressions/RegexRunner.js
 
 Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
-    statics: { },
+    statics: {},
 
     _runregex: null,
     _netEngine: null,
@@ -80,7 +80,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
         return result;
     },
 
-    parsePattern: function() {
+    parsePattern: function () {
         var result = this._netEngine.parsePattern();
         return result;
     },
@@ -114,11 +114,11 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
         for (i = 0; i < jsMatch.groups.length; i++) {
             jsGroup = jsMatch.groups[i];
 
-                // Paste group index/length according to group ordering:
+            // Paste group index/length according to group ordering:
             grOrder = 0;
-                if (jsGroup.descriptor != null) {
-                    grOrder = this._runregex.groupNumberFromName(jsGroup.descriptor.name);
-                }
+            if (jsGroup.descriptor != null) {
+                grOrder = this._runregex.groupNumberFromName(jsGroup.descriptor.name);
+            }
 
             for (j = 0; j < jsGroup.captures.length; j++) {
                 jsCapture = jsGroup.captures[j];

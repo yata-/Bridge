@@ -162,11 +162,11 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
             throw new Bridge.ArgumentOutOfRangeException("options");
         }
 
-        if (((options & scope.RegexOptions.ECMAScript) !== 0)
-            && ((options & ~(scope.RegexOptions.ECMAScript |
-                    scope.RegexOptions.IgnoreCase |
-                    scope.RegexOptions.Multiline |
-                    scope.RegexOptions.CultureInvariant
+        if (((options & scope.RegexOptions.ECMAScript) !== 0) &&
+            ((options & ~(scope.RegexOptions.ECMAScript |
+                scope.RegexOptions.IgnoreCase |
+                scope.RegexOptions.Multiline |
+                scope.RegexOptions.CultureInvariant
             )) !== 0)) {
             throw new Bridge.ArgumentOutOfRangeException("options");
         }
@@ -311,7 +311,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         var key;
         var max;
         var i;
- 
+
         if (caps == null) {
             result = [];
             max = this._capsize;
@@ -326,7 +326,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
                 }
             }
         }
- 
+
         return result;
     },
 
@@ -499,7 +499,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         if (ms > 0 && ms <= 2147483646) {
             return;
         }
- 
+
         throw new Bridge.ArgumentOutOfRangeException("matchTimeout");
     }
 });

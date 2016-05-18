@@ -3,26 +3,27 @@
 Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
     statics: {
 
-        _Q : 5,     // quantifier
-        _S : 4,     // ordinary stoppper
-        _Z : 3,     // ScanBlank stopper
-        _X : 2,     // whitespace
-        _E : 1,     // should be escaped
+        _Q: 5, // quantifier
+        _S: 4, // ordinary stoppper
+        _Z: 3, // ScanBlank stopper
+        _X: 2, // whitespace
+        _E: 1, // should be escaped
 
         _category: [
-            //  0 1 2 3 4 5 6 7 8 9 A B C D E F 0 1 2 3 4 5 6 7 8 9 A B C D E F 
-                0,0,0,0,0,0,0,0,0,2,2,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-            //  ! " # $ % & ' ( ) * + , - . / 0 1 2 3 4 5 6 7 8 9 : ; < = > ? 
-                2,0,0,3,4,0,0,0,4,4,5,5,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,
-            //  @ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z [ \ ] ^ _
-                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,0,4,0,
-            //  ' a b c d e f g h i j k l m n o p q r s t u v w x y z { | } ~ 
-                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,4,0,0,0],
+            //0 1 2  3  4  5  6  7  8  9  A  B  C  D  E  F  0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            //! " #  $  %  &  '  (  )  *  +  ,  -  .  /  0  1  2  3  4  5  6  7  8  9  :  ;  <  =  >  ?  
+            2, 0, 0, 3, 4, 0, 0, 0, 4, 4, 5, 5, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5,
+            //@ A B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U  V  W  X  Y  Z  [  \  ]  ^  _
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 4, 0,
+            //' a b  c  d  e  f  g  h  i  j  k  l  m  n  o  p  q  r  s  t  u  v  w  x  y  z  {  |  }  ~  
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 4, 0, 0, 0
+        ],
 
         escape: function (input) {
             var sb;
             var ch;
-                    var lastpos;
+            var lastpos;
             var i;
 
             for (i = 0; i < input.length; i++) {
@@ -53,30 +54,30 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
                         sb += ch;
                         i++;
                         lastpos = i;
- 
+
                         while (i < input.length) {
                             ch = input[i];
 
                             if (Bridge.Text.RegularExpressions.RegexParser._isMetachar(ch)) {
                                 break;
                             }
- 
+
                             i++;
                         }
- 
+
                         sb += input.slice(lastpos, i);
- 
+
                     } while (i < input.length);
- 
+
                     return sb;
                 }
             }
- 
+
             return input;
         },
 
         unescape: function (input) {
-                    var culture = Bridge.CultureInfo.invariantCulture;
+            var culture = Bridge.CultureInfo.invariantCulture;
             var sb;
             var lastpos;
             var i;
@@ -87,7 +88,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
                     sb = "";
                     p = new Bridge.Text.RegularExpressions.RegexParser(culture);
                     p._setPattern(input);
- 
+
                     sb += input.slice(0, i);
 
                     do {
@@ -107,13 +108,13 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
                         }
 
                         sb += input.slice(lastpos, i);
- 
+
                     } while (i < input.length);
- 
+
                     return sb;
                 }
             }
- 
+
             return input;
         },
 
@@ -202,7 +203,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
         return this._concatenation;
     },
 
-    _addConcatenate: function (pos, cch/*, bool isReplacement*/) {
+    _addConcatenate: function (pos, cch /*, bool isReplacement*/ ) {
         if (cch === 0) {
             return;
         }
@@ -218,11 +219,11 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
 
             node = new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.One, this._options, ch);
         }
- 
+
         this._concatenation.addChild(node);
     },
 
-    _useOptionE: function  () {
+    _useOptionE: function () {
         return (this._options & Bridge.Text.RegularExpressions.RegexOptions.ECMAScript) !== 0;
     },
 
@@ -231,8 +232,8 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
     },
 
     _scanDollar: function () {
-        var maxValueDiv10 = 214748364;  // Int32.MaxValue / 10;
-        var maxValueMod10 = 7;          // Int32.MaxValue % 10;
+        var maxValueDiv10 = 214748364; // Int32.MaxValue / 10;
+        var maxValueMod10 = 7; // Int32.MaxValue % 10;
 
         if (this._charsRight() === 0) {
             return new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.One, this._options, "$");
@@ -291,8 +292,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
                 if (capnum >= 0) {
                     return new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.Ref, this._options, capnum);
                 }
-            }
-            else {
+            } else {
                 capnum = this._scanDecimal();
                 if (!angled || this._charsRight() > 0 && this._moveRightGetChar() === "}") {
                     if (this._isCaptureSlot(capnum)) {
@@ -300,8 +300,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
                     }
                 }
             }
-        }
-        else if (angled && this._isWordChar(ch)) {
+        } else if (angled && this._isWordChar(ch)) {
             var capname = this._scanCapname();
 
             if (this._charsRight() > 0 && this._moveRightGetChar() === "}") {
@@ -311,8 +310,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
                     return new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.Ref, this._options, captureSlot);
                 }
             }
-        }
-        else if (!angled) {
+        } else if (!angled) {
             capnum = 1;
 
             switch (ch) {
@@ -358,8 +356,8 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
     _scanDecimal: function () {
         // Scans any number of decimal digits (pegs value at 2^31-1 if too large)
 
-        var maxValueDiv10 = 214748364;  // Int32.MaxValue / 10;
-        var maxValueMod10 = 7;          // Int32.MaxValue % 10;
+        var maxValueDiv10 = 214748364; // Int32.MaxValue / 10;
+        var maxValueMod10 = 7; // Int32.MaxValue % 10;
         var i = 0;
         var ch;
         var d;
@@ -389,18 +387,18 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
         var d;
         var i;
         var c;
- 
+
         // Consume octal chars only up to 3 digits and value 0377
- 
+
         c = 3;
- 
+
         if (c > this._charsRight()) {
             c = this._charsRight();
         }
- 
+
         for (i = 0; c > 0 && (d = this._rightChar() - "0") <= 7; c -= 1) {
             this._moveRight();
-            
+
             i *= 8;
             i += d;
 
@@ -408,31 +406,31 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
                 break;
             }
         }
- 
+
         // Octal codes only go up to 255.  Any larger and the behavior that Perl follows
         // is simply to truncate the high bits. 
         i &= 0xFF;
-            
+
         return i;
     },
 
     _scanHex: function (c) {
         var i;
         var d;
- 
+
         i = 0;
- 
+
         if (this._charsRight() >= c) {
-            for (; c > 0 && ((d = this._hexDigit(this._moveRightGetChar())) >= 0) ; c -= 1) {
+            for (; c > 0 && ((d = this._hexDigit(this._moveRightGetChar())) >= 0); c -= 1) {
                 i *= 0x10;
                 i += d;
             }
         }
- 
+
         if (c > 0) {
             throw this._makeException("Insufficient hexadecimal digits.");
         }
- 
+
         return i;
     },
 
@@ -440,19 +438,19 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
         var d;
 
         var code = ch.charCodeAt(0);
- 
+
         if ((d = code - "0".charCodeAt(0)) <= 9) {
             return d;
         }
- 
+
         if ((d = code - "a".charCodeAt(0)) <= 5) {
             return d + 0xa;
         }
- 
+
         if ((d = code - "A".charCodeAt(0)) <= 5) {
             return d + 0xa;
         }
- 
+
         return -1;
     },
 
@@ -460,9 +458,9 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
         if (this._charsRight() <= 0) {
             throw this._makeException("Missing control character.");
         }
- 
+
         var ch = this._moveRightGetChar();
- 
+
         // \ca interpreted as \cA
 
         var code = ch.charCodeAt(0);
@@ -470,17 +468,17 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
         if (code >= "a".charCodeAt(0) && code <= "z".charCodeAt(0)) {
             code = code - ("a".charCodeAt(0) - "A".charCodeAt(0));
         }
- 
+
         if ((code = (code - "@".charCodeAt(0))) < " ".charCodeAt(0)) {
             return String.fromCharCode(code);
         }
- 
+
         throw this._makeException("Unrecognized control character.");
     },
 
     _scanCapname: function () {
         var startpos = this._textpos();
- 
+
         while (this._charsRight() > 0) {
             if (!this._isWordChar(this._moveRightGetChar())) {
                 this._moveLeft();
@@ -488,19 +486,19 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
                 break;
             }
         }
- 
+
         return _pattern.slice(startpos, this._textpos());
     },
 
     _scanCharEscape: function () {
         var ch = this._moveRightGetChar();
- 
+
         if (ch >= "0" && ch <= "7") {
             this._moveLeft();
 
             return this._scanOctal();
         }
- 
+
         switch (ch) {
             case "x":
                 return this._scanHex(2);
@@ -528,7 +526,6 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
                 if (!this._useOptionE() && this._isWordChar(ch)) {
                     throw this._makeException("Unrecognized escape sequence.");
                 }
-
                 return ch;
         }
     },

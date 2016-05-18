@@ -2,7 +2,7 @@
 
 Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
     statics: {
-        jsRegex: function(text, textStart, pattern, isMultiLine, isCaseInsensitive, returnAllMatches, re) {
+        jsRegex: function (text, textStart, pattern, isMultiLine, isCaseInsensitive, returnAllMatches, re) {
             if (text == null) {
                 throw new Bridge.ArgumentNullException("text");
             }
@@ -18,7 +18,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
             var modifiers = "g"; // use "global" modifier by default to allow TextStart configuration
 
             // use "multiline" modifier by default (corresponding anchors must be modified correspondingly)
-                modifiers += "m";
+            modifiers += "m";
 
             if (isCaseInsensitive) {
                 modifiers += "i";
@@ -49,11 +49,11 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                 } while (match != null)
 
                 return matches;
-            } 
+            }
 
             return match;
-                }
-        },
+        }
+    },
 
     _pattern: "",
     _originalPattern: "",
@@ -96,8 +96,8 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         this._timeoutTime = this._timeoutMs > 0 ? new Date().getTime() + Bridge.Convert.toInt32(this._timeoutMs + 0.5) : -1;
 
         var match = {
-            capIndex: 0,       // start index of total capture
-            capLength: 0,      // length of total capture
+            capIndex: 0, // start index of total capture
+            capLength: 0, // length of total capture
             success: false,
             value: "",
             groups: [],
@@ -189,7 +189,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                     capIndex: 0,
                     capLength: 0,
                     value: "",
-                    valueFull: "",  //TODO: Remove?
+                    valueFull: "", //TODO: Remove?
                     success: false,
                     captures: [],
                     ctx: null
@@ -198,7 +198,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                 descToGroupMap[groupDesc.exprIndex] = group;
 
                 parentGroupDesc = groupDesc.parentGroup;
-                if (parentGroupDesc == null) { 
+                if (parentGroupDesc == null) {
                     // Match a root group using the global context:
                     this._matchGroup(globalCtx, group, 0);
 
@@ -247,7 +247,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
                     } else {
                         // Add a new group record for the uniquely named group:
-                    match.groups.push(group);
+                        match.groups.push(group);
                         groupMap[groupDesc.name] = group;
                     }
                 }
@@ -270,7 +270,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         return match;
     },
 
-    parsePattern: function() {
+    parsePattern: function () {
         if (this._patternInfo == null) {
             var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
             var patternInfo = scope.parsePattern(this._pattern, this._isCaseInsensitive, this._isMultiLine, this._isSingleline, this._isIgnoreWhitespace);
@@ -317,8 +317,8 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
                     textOffset: 0,
 
                     pattern: ctx.pattern,
-                    patternStart: groupStart + groupStartStep,  // start index of the group content without the opening bracket
-                    patternEnd: groupEnd - 1                    // end index of the group content without the closing bracket
+                    patternStart: groupStart + groupStartStep, // start index of the group content without the opening bracket
+                    patternEnd: groupEnd - 1 // end index of the group content without the closing bracket
                 };
             }
         }

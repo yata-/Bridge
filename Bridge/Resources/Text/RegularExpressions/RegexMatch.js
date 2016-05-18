@@ -92,14 +92,14 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
         if (replacement == null) {
             throw new Bridge.ArgumentNullException("replacement");
         }
- 
+
         if (this._regex == null) {
             throw new Bridge.NotSupportedException("Result cannot be called on a failed Match.");
         }
 
         var repl = Bridge.Text.RegularExpressions.RegexParser.parseReplacement(replacement, this._regex._caps, this._regex._capsize, this._regex._capnames, this._regex._options);
         //TODO: cache
- 
+
         return repl.replacement(this);
     },
 
@@ -190,7 +190,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
         if (c === 0) {
             return "";
         }
- 
+
         var matches = this._matches[groupnum];
         var capIndex = matches[(c - 1) * 2];
         var capLength = matches[(c * 2) - 1];

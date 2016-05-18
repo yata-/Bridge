@@ -80,8 +80,7 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupCollection", {
             } else {
                 group = this._getGroupImpl(num);
             }
-        }
-        else {
+        } else {
             if (groupnum >= this._match._matchcount.length || groupnum < 0) {
                 group = Bridge.Text.RegularExpressions.Group.getEmpty();
             } else {
@@ -118,11 +117,11 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupCollection", {
             var matchCapcount;
             var i;
 
-            for (i = 0; i < groups.length-1; i++) {
+            for (i = 0; i < groups.length - 1; i++) {
                 matchText = this._match._text;
                 matchCaps = this._match._matches[i + 1];
                 matchCapcount = this._match._matchcount[i + 1];
-                groups[i+1] = new Bridge.Text.RegularExpressions.Group(matchText, matchCaps, matchCapcount);
+                groups[i + 1] = new Bridge.Text.RegularExpressions.Group(matchText, matchCaps, matchCapcount);
             }
             this._groups = groups;
         }
@@ -145,11 +144,11 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupEnumerator", {
 
     moveNext: function () {
         var size = this._groupColl.getCount();
- 
+
         if (this._curindex >= size) {
             return false;
         }
- 
+
         this._curindex++;
 
         return (this._curindex < size);
