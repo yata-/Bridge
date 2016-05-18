@@ -27,22 +27,22 @@
             //This algorithm comes from Numerical Recipes in C (2nd Ed.)
             var subtraction = (Seed === -2147483648) ? 2147483647 : Math.abs(Seed);
             mj = (Bridge.Random.MSEED - subtraction) | 0;
-            this.seedArray[55] = mj;
+            this.seedArray.$get([55]) = mj;
             mk = 1;
             for (var i = 1; i < 55; i = (i + 1) | 0) { //Apparently the range [1..55] is special (Knuth) and so we're wasting the 0'th position.
                 ii = (((21 * i) | 0)) % 55;
-                this.seedArray[ii] = mk;
+                this.seedArray.$get([ii]) = mk;
                 mk = (mj - mk) | 0;
                 if (mk < 0) {
                     mk = (mk + Bridge.Random.MBIG) | 0;
                 }
-                mj = this.seedArray[ii];
+                mj = this.seedArray.$get([ii]);
             }
             for (var k = 1; k < 5; k = (k + 1) | 0) {
                 for (var i1 = 1; i1 < 56; i1 = (i1 + 1) | 0) {
-                    this.seedArray[i1] = (this.seedArray[i1] - this.seedArray[((1 + (((i1 + 30) | 0)) % 55) | 0)]) | 0;
-                    if (this.seedArray[i1] < 0) {
-                        this.seedArray[i1] = (this.seedArray[i1] + Bridge.Random.MBIG) | 0;
+                    this.seedArray.$get([i1]) = (this.seedArray.$get([i1]) - this.seedArray.$get([((1 + (((i1 + 30) | 0)) % 55) | 0)])) | 0;
+                    if (this.seedArray.$get([i1]) < 0) {
+                        this.seedArray.$get([i1]) = (this.seedArray.$get([i1]) + Bridge.Random.MBIG) | 0;
                     }
                 }
             }
@@ -68,7 +68,7 @@
                 locINextp = 1;
             }
     
-            retVal = (this.seedArray[locINext] - this.seedArray[locINextp]) | 0;
+            retVal = (this.seedArray.$get([locINext]) - this.seedArray.$get([locINextp])) | 0;
     
             if (retVal === Bridge.Random.MBIG) {
                 retVal = (retVal - 1) | 0;
@@ -78,7 +78,7 @@
                 retVal = (retVal + Bridge.Random.MBIG) | 0;
             }
     
-            this.seedArray[locINext] = retVal;
+            this.seedArray.$get([locINext]) = retVal;
     
             this.inext = locINext;
             this.inextp = locINextp;
@@ -132,7 +132,7 @@
                 throw new Bridge.ArgumentNullException("buffer");
             }
             for (var i = 0; i < buffer.length; i = (i + 1) | 0) {
-                buffer[i] = ((this.internalSample() % (256))) & 255;
+                buffer.$get([i]) = ((this.internalSample() % (256))) & 255;
             }
         }
     });
