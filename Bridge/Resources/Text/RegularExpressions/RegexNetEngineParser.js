@@ -725,7 +725,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                     --i;
                     continue;
 
-                } else if (token.type === tokenTypes.commentXMode) {
+                } else if (token.type === tokenTypes.commentInline || token.type === tokenTypes.commentXMode) {
 
                     // We can safely remove comments from the pattern
                     tokens.splice(i, 1);
