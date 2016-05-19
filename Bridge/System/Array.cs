@@ -28,7 +28,7 @@ namespace System
         [Template("new Bridge.ReadOnlyCollection$1({T})({array})")]
         public extern static ReadOnlyCollection<T> AsReadOnly<T>(T[] array);
 
-        [Template("Bridge.Array.convertAll({array}, {converter})")]
+        [Template("{array}.map({converter})")]
         public extern static TOutput[] ConvertAll<TInput, TOutput>(TInput[] array, Converter<TInput, TOutput> converter);
 
         [Template("(Bridge.Array.findIndex({array}, {match}) !== -1)")]
