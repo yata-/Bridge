@@ -10,22 +10,22 @@ namespace System
         private extern Double(int i);
 
         [Name("max")]
-        public const double MaxValue = 0;
+        public const double MaxValue = 1.7976931348623157E+308;
 
         [Name("min")]
-        public const double MinValue = 0;
+        public const double MinValue = 1.7976931348623157E+308;
 
         [InlineConst]
         public const double Epsilon = 4.94065645841247E-324;
 
         [Template("Number.NEGATIVE_INFINITY")]
-        public const double NegativeInfinity = 0;
+        public const double NegativeInfinity = -1/0;
 
         [Template("Number.POSITIVE_INFINITY")]
-        public const double PositiveInfinity = 0;
+        public const double PositiveInfinity = 1/0;
 
         [Template("Number.NaN")]
-        public const double NaN = 0;
+        public const double NaN = 0/0;
 
         [Template("Bridge.Double.format({this}, {format})")]
         public extern string Format(string format);
