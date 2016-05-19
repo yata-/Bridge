@@ -24,10 +24,11 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
             // Populate all groups by looking at each one
             var groups = match.getGroups();
             var groupsCount = groups.getCount();
+            var group;
+            var i;
 
-            for (var i = 0; i < groupsCount; i++) {
-                var group = groups.get(i);
-
+            for (i = 0; i < groupsCount; i++) {
+                group = groups.get(i);
                 Bridge.Text.RegularExpressions.Group.synchronized(group);
             }
 
@@ -56,7 +57,8 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
         this._matchcount = [];
         this._matchcount.length = capcount;
 
-        for (var i = 0; i < capcount; i++) {
+        var i;
+        for (i = 0; i < capcount; i++) {
             this._matchcount[i] = 0;
         }
 
@@ -83,21 +85,21 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
             return this;
         }
 
-        return this._regex._runner.run(this._regex, false, this._length, this._text, this._textbeg, this._textend - this._textbeg, this._textpos);
+        return this._regex._runner.run(false, this._length, this._text, this._textbeg, this._textend - this._textbeg, this._textpos);
     },
 
     result: function (replacement) {
         if (replacement == null) {
             throw new Bridge.ArgumentNullException("replacement");
         }
- 
+
         if (this._regex == null) {
             throw new Bridge.NotSupportedException("Result cannot be called on a failed Match.");
         }
 
         var repl = Bridge.Text.RegularExpressions.RegexParser.parseReplacement(replacement, this._regex._caps, this._regex._capsize, this._regex._capnames, this._regex._options);
         //TODO: cache
- 
+
         return repl.replacement(this);
     },
 
@@ -115,8 +117,9 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
         if (capcount * 2 + 2 > this._matches[cap].length) {
             var oldmatches = this._matches[cap];
             var newmatches = new Array(capcount * 8);
+            var j;
 
-            for (var j = 0; j < capcount * 2; j++) {
+            for (j = 0; j < capcount * 2; j++) {
                 newmatches[j] = oldmatches[j];
             }
 
@@ -145,12 +148,14 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
             // until we find a balance captures.  Then we check each subsequent entry.  If it's a balance
             // capture (it's negative), we decrement j.  If it's a real capture, we increment j and copy 
             // it down to the last free position. 
-            for (var cap = 0; cap < this._matchcount.length; cap++) {
+            var cap;
+            var i;
+            var j;
+
+            for (cap = 0; cap < this._matchcount.length; cap++) {
 
                 var limit = this._matchcount[cap] * 2;
                 var matcharray = this._matches[cap];
-                var i;
-                var j;
 
                 for (i = 0; i < limit; i++) {
                     if (matcharray[i] < 0) {
@@ -185,7 +190,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
         if (c === 0) {
             return "";
         }
- 
+
         var matches = this._matches[groupnum];
         var capIndex = matches[(c - 1) * 2];
         var capLength = matches[(c * 2) - 1];
@@ -196,4 +201,27 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
     _lastGroupToStringImpl: function () {
         return this._groupToStringImpl(this._matchcount.length - 1);
     }
+});
+
+Bridge.define("Bridge.Text.RegularExpressions.MatchSparse", {
+    inherits: function () {
+        return [Bridge.Text.RegularExpressions.Match];
+    },
+
+    _caps: null,
+
+    constructor: function (regex, caps, capcount, text, begpos, len, startpos) {
+        var scope = Bridge.Text.RegularExpressions;
+        scope.Match.prototype.$constructor.call(this, regex, capcount, text, begpos, len, startpos);
+
+        this._caps = caps;
+    },
+
+    getGroups: function () {
+        if (this._groupColl == null) {
+            this._groupColl = new Bridge.Text.RegularExpressions.GroupCollection(this, this._caps);
+        }
+        return this._groupColl;
+    },
+
 });

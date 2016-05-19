@@ -162,17 +162,21 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
             throw new Bridge.ArgumentOutOfRangeException("options");
         }
 
-        if (((options & scope.RegexOptions.ECMAScript) !== 0)
-            && ((options & ~(scope.RegexOptions.ECMAScript |
-                    scope.RegexOptions.IgnoreCase |
-                    scope.RegexOptions.Multiline |
-                    scope.RegexOptions.CultureInvariant
+        if (((options & scope.RegexOptions.ECMAScript) !== 0) &&
+            ((options & ~(scope.RegexOptions.ECMAScript |
+                scope.RegexOptions.IgnoreCase |
+                scope.RegexOptions.Multiline |
+                scope.RegexOptions.CultureInvariant
             )) !== 0)) {
             throw new Bridge.ArgumentOutOfRangeException("options");
         }
 
         // Check if the specified options are supported.
-        var supportedOptions = Bridge.Text.RegularExpressions.RegexOptions.IgnoreCase | Bridge.Text.RegularExpressions.RegexOptions.Multiline;
+        var supportedOptions =
+            Bridge.Text.RegularExpressions.RegexOptions.IgnoreCase |
+            Bridge.Text.RegularExpressions.RegexOptions.Multiline |
+            Bridge.Text.RegularExpressions.RegexOptions.Singleline |
+            Bridge.Text.RegularExpressions.RegexOptions.IgnorePatternWhitespace;
 
         if ((options | supportedOptions) !== supportedOptions) {
             throw new Bridge.NotSupportedException("Specified Regex options are not supported.");
@@ -183,40 +187,24 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         this._pattern = pattern;
         this._options = options;
         this._matchTimeout = matchTimeout;
-        this._runner = new scope.RegexRunner();
+        this._runner = new scope.RegexRunner(this);
 
         //TODO: cache
-        var groupInfos = Bridge.Text.RegularExpressions.RegexNetEngine.parsePatternGroups(this._pattern);
+        var patternInfo = this._runner.parsePattern();
+        var slotNames = patternInfo.sparseSettings.sparseSlotNames;
 
-        this._capsize = groupInfos.length;
+        this._capsize = slotNames.length;
         this._capslist = [];
         this._capnames = {};
 
-        this._capsize ++;
-        this._capslist.push("0");
-        this._capnames["0"] = 0;
-
         var i;
-        var groupInfo;
+        var groupName;
 
         // Add group without names first (their names are indexes)
-        for (i = 0; i < groupInfos.length; i++) {
-            groupInfo = groupInfos[i];
-
-            if (!groupInfo.hasName && !groupInfo.constructs.isNonCapturing) {
-                this._capslist.push(groupInfo.name);
-                this._capnames[groupInfo.name] = this._capslist.length - 1;
-            }
-        }
-
-        // Then add named groups:
-        for (i = 0; i < groupInfos.length; i++) {
-            groupInfo = groupInfos[i];
-
-            if (groupInfo.hasName) {
-                this._capslist.push(groupInfo.name);
-                this._capnames[groupInfo.name] = this._capslist.length - 1;
-            }
+        for (i = 0; i < slotNames.length; i++) {
+            groupName = slotNames[i];
+            this._capslist.push(groupName);
+            this._capnames[groupName] = i;
         }
     },
 
@@ -248,7 +236,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         }
 
 
-        var match = this._runner.run(this, true, -1, input, 0, input.length, startat);
+        var match = this._runner.run(true, -1, input, 0, input.length, startat);
 
         return match == null;
     },
@@ -268,7 +256,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
             throw new Bridge.ArgumentNullException("input");
         }
 
-        return this._runner.run(this, false, -1, input, 0, input.length, startat);
+        return this._runner.run(false, -1, input, 0, input.length, startat);
     },
 
     match$2: function (input, beginning, length) {
@@ -278,7 +266,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
         var startat = this.getRightToLeft() ? beginning + length : beginning;
 
-        return this._runner.run(this, false, -1, input, beginning, length, startat);
+        return this._runner.run(false, -1, input, beginning, length, startat);
     },
 
     matches: function (input) {
@@ -305,8 +293,9 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
             var result = [];
             var max = this._capsize;
+            var i;
 
-            for (var i = 0; i < max; i++) {
+            for (i = 0; i < max; i++) {
                 result[i] = Bridge.Convert.toString(i, invariantCulture, Bridge.Convert.typeCodes.Int32);
             }
 
@@ -317,26 +306,27 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
     },
 
     getGroupNumbers: function () {
-        var result;
         var caps = this._caps;
- 
+        var result;
+        var key;
+        var max;
+        var i;
+
         if (caps == null) {
             result = [];
-            var max = this._capsize;
-
-            for (var i = 0; i < max; i++) {
+            max = this._capsize;
+            for (i = 0; i < max; i++) {
                 result.push(i);
             }
         } else {
             result = [];
-
-            for (var key in caps) {
+            for (key in caps) {
                 if (caps.hasOwnProperty(key)) {
                     result[caps[key]] = key;
                 }
             }
         }
- 
+
         return result;
     },
 
@@ -350,7 +340,6 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
             }
 
             return "";
-
         } else {
             if (this._caps != null) {
                 var obj = this._caps[i];
@@ -388,9 +377,11 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
         // convert to an int if it looks like a number
         var result = 0;
+        var ch;
+        var i;
 
-        for (var i = 0; i < name.Length; i++) {
-            var ch = name[i];
+        for (i = 0; i < name.Length; i++) {
+            ch = name[i];
 
             if (ch > "9" || ch < "0") {
                 return -1;
@@ -508,7 +499,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         if (ms > 0 && ms <= 2147483646) {
             return;
         }
- 
+
         throw new Bridge.ArgumentOutOfRangeException("matchTimeout");
     }
 });

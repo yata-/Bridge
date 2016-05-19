@@ -246,8 +246,8 @@ namespace Bridge.ClientTest.Text.RegularExpressions
                 {RegexOptions.Multiline, true},
                 {(RegexOptions) 0x0004, false},
                 {(RegexOptions) 0x0008, false},
-                {(RegexOptions) 0x0010, false},
-                {(RegexOptions) 0x0020, false},
+                {RegexOptions.Singleline, true},
+                {RegexOptions.IgnorePatternWhitespace, true},
                 {(RegexOptions) 0x0040, false},
                 {(RegexOptions) 0x0100, false},
                 {(RegexOptions) 0x0200, false}

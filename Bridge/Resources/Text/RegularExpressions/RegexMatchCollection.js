@@ -69,9 +69,12 @@ Bridge.define("Bridge.Text.RegularExpressions.MatchCollection", {
             throw new Bridge.IndexOutOfRangeException();
         }
 
-        for (var i = arrayIndex, j = 0; j < count; i++, j++) {
-            var match = this._getMatch(j);
+        var match;
+        var i;
+        var j;
 
+        for (i = arrayIndex, j = 0; j < count; i++, j++) {
+            match = this._getMatch(j);
             Bridge.Array.set(array, match, [i]);
         }
     },
@@ -96,8 +99,7 @@ Bridge.define("Bridge.Text.RegularExpressions.MatchCollection", {
         var match;
 
         do {
-            match = this._regex._runner.run(this._regex, false, this._prevLen, this._input, this._beginning, this._length, this._startat);
-
+            match = this._regex._runner.run(false, this._prevLen, this._input, this._beginning, this._length, this._startat);
             if (!match.getSuccess()) {
                 this._done = true;
                 return null;
@@ -132,16 +134,16 @@ Bridge.define("Bridge.Text.RegularExpressions.MatchEnumerator", {
         if (this._done) {
             return false;
         }
- 
+
         this._match = this._matchcoll._getMatch(this._curindex);
-        this._curindex ++;
- 
+        this._curindex++;
+
         if (this._match == null) {
             this._done = true;
 
             return false;
         }
- 
+
         return true;
     },
 

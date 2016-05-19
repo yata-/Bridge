@@ -680,6 +680,7 @@
     <Content Include="Resources\Text\RegularExpressions\RegexMatch.js" />
     <Content Include="Resources\Text\RegularExpressions\RegexMatchCollection.js" />
     <Content Include="Resources\Text\RegularExpressions\RegexNetEngine.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexNetEngineParser.js" />
     <Content Include="Resources\Text\RegularExpressions\RegexNode.js" />
     <Content Include="Resources\Text\RegularExpressions\RegexOptions.js" />
     <Content Include="Resources\Text\RegularExpressions\RegexParser.js" />

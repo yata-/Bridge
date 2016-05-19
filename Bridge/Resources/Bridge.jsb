@@ -53,6 +53,7 @@
   <file name="Text/RegularExpressions/RegexNode.js" />
   <file name="Text/RegularExpressions/RegexReplacement.js" />
   <file name="Text/RegularExpressions/RegexNetEngine.js" />
+  <file name="Text/RegularExpressions/RegexNetEngineParser.js" />
   <file name="timer.js" />
   <target name="Bridge.NET" file="$output\bridge.js" debug="True">
     <include name="Init.js" />
@@ -106,6 +107,7 @@
     <include name="Text/RegularExpressions/RegexNode.js" />
     <include name="Text/RegularExpressions/RegexReplacement.js" />
     <include name="Text/RegularExpressions/RegexNetEngine.js" />
+    <include name="Text/RegularExpressions/RegexNetEngineParser.js" />
     <include name="Console.js" />
     <include name="timer.js" />
     <include name="End.js" />

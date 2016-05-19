@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Bridge.Test;
 
@@ -8,6 +9,8 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
     [TestFixture(TestNameFormat = "Regex.Escape - {0}")]
     public class RegexEscapeTests : RegexTestBase
     {
+        #region Msdn
+
         [Test]
         public void EscapeTest()
         {
@@ -47,6 +50,40 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
             var unescaped = Regex.Unescape(escaped);
 
             Assert.AreEqual(pattern, unescaped);
+        }
+
+        #endregion
+
+        [Test(ExpectedCount=0)]
+        public void EscapeCharSetTest()
+        {
+            var escapable = "!\"#%&'()*,-./:;?@ABDGSWZ[\\]abdefnrstvwz{}";
+            foreach (var ch in escapable)
+            {
+                try
+                {
+                    var rgx = new Regex(@"\" + ch);
+                    rgx.Match("" + ch);
+                }
+                catch (Exception)
+                {
+                    Assert.False(true, "Char must be escapable: " + ch);
+                }
+            }
+        }
+
+        [Test]
+        public void NonEscapeCharSetTest()
+        {
+            var escapable = "CEFHIJKLMNOPQRTUVXY_cghijklmopquxy";
+            foreach (var ch in escapable)
+            {
+                Assert.Throws<ArgumentException>(() =>
+                {
+                    var rgx = new Regex(@"\" + ch);
+                    rgx.Match("" + ch);
+                }, "Char must not be escapable: " + ch);
+            }
         }
     }
 }

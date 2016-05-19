@@ -398,7 +398,9 @@
                 try {
                     if (en.moveNext()) {
                         var DefaultCapacity = 4;
-                        var arr = { v : Bridge.Array.init(DefaultCapacity, null) };
+                        var arr = { v : Bridge.Array.init(DefaultCapacity, function (){
+                            return Bridge.getDefaultValue(T);
+                        }) };
                         arr.v[0] = en.getCurrent$1();
                         var count = 1;
     
@@ -443,7 +445,9 @@
                 }
     
                 length.v = 0;
-                return Bridge.Array.init(0, null);
+                return Bridge.Array.init(0, function (){
+                    return Bridge.getDefaultValue(T);
+                });
             }
         }
     });
@@ -1184,7 +1188,9 @@
             return result.$clone();
         },
         toArray: function () {
-            var newArray = Bridge.Array.init(this.getCount(), null);
+            var newArray = Bridge.Array.init(this.getCount(), function (){
+                return Bridge.getDefaultValue(T);
+            });
             this.copyTo(newArray);
             return newArray;
         },
@@ -1234,7 +1240,7 @@
         _set: null,
         _index: 0,
         _version: 0,
-        _current: null,
+        _current: Bridge.getDefaultValue(T),
         constructor$1: function (set) {
             this._set = set;
             this._index = 0;
@@ -1308,7 +1314,7 @@
             getDefaultValue: function () { return new Bridge.Collections.HashSet$1.Slot(T)(); }
         },
         hashCode: 0,
-        value: null,
+        value: Bridge.getDefaultValue(T),
         next: 0,
         constructor: function () {
         },
@@ -1349,20 +1355,26 @@
         _size: 0,
         _version: 0,
         constructor: function () {
-            this._array = Bridge.Array.init(0, null);
+            this._array = Bridge.Array.init(0, function (){
+                return Bridge.getDefaultValue(T);
+            });
         },
         constructor$2: function (capacity) {
             if (capacity < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("capacity", "Non-negative number required.");
             }
-            this._array = Bridge.Array.init(capacity, null);
+            this._array = Bridge.Array.init(capacity, function (){
+                return Bridge.getDefaultValue(T);
+            });
         },
         constructor$1: function (collection) {
             if (collection == null) {
                 throw new Bridge.ArgumentNullException("collection");
             }
     
-            this._array = Bridge.Array.init(Bridge.Collections.Queue$1(T).DefaultCapacity, null);
+            this._array = Bridge.Array.init(Bridge.Collections.Queue$1(T).DefaultCapacity, function (){
+                return Bridge.getDefaultValue(T);
+            });
     
             var en = Bridge.getEnumerator(collection, "$1");
             try {
@@ -1486,7 +1498,9 @@
             return this._array[(((this._head + i) | 0)) % this._array.length];
         },
         toArray: function () {
-            var arr = Bridge.Array.init(this._size, null);
+            var arr = Bridge.Array.init(this._size, function (){
+                return Bridge.getDefaultValue(T);
+            });
             if (this._size === 0) {
                 return arr;
             } // consider replacing with Array.Empty<T>() to be consistent with non-generic Queue
@@ -1502,7 +1516,9 @@
             return arr;
         },
         setCapacity: function (capacity) {
-            var newarray = Bridge.Array.init(capacity, null);
+            var newarray = Bridge.Array.init(capacity, function (){
+                return Bridge.getDefaultValue(T);
+            });
             if (this._size > 0) {
                 if (this._head < this._tail) {
                     Bridge.Array.copy(this._array, this._head, newarray, 0, this._size);
@@ -1540,7 +1556,7 @@
         _q: null,
         _index: 0,
         _version: 0,
-        _currentElement: null,
+        _currentElement: Bridge.getDefaultValue(T),
         constructor$1: function (q) {
             this._q = q;
             this._version = this._q._version;
@@ -1629,13 +1645,17 @@
         _size: 0,
         _version: 0,
         constructor: function () {
-            this._array = Bridge.Array.init(0, null);
+            this._array = Bridge.Array.init(0, function (){
+                return Bridge.getDefaultValue(T);
+            });
         },
         constructor$2: function (capacity) {
             if (capacity < 0) {
                 throw new Bridge.ArgumentOutOfRangeException("capacity", "Non-negative number required.");
             }
-            this._array = Bridge.Array.init(capacity, null);
+            this._array = Bridge.Array.init(capacity, function (){
+                return Bridge.getDefaultValue(T);
+            });
         },
         constructor$1: function (collection) {
             if (collection == null) {
@@ -1770,7 +1790,9 @@
             this._version = (this._version + 1) | 0;
         },
         toArray: function () {
-            var objArray = Bridge.Array.init(this._size, null);
+            var objArray = Bridge.Array.init(this._size, function (){
+                return Bridge.getDefaultValue(T);
+            });
             var i = 0;
             while (i < this._size) {
                 objArray[i] = this._array[((((this._size - i) | 0) - 1) | 0)];
@@ -1788,7 +1810,7 @@
         _stack: null,
         _index: 0,
         _version: 0,
-        _currentElement: null,
+        _currentElement: Bridge.getDefaultValue(T),
         constructor$1: function (stack) {
             this._stack = stack;
             this._version = this._stack._version;

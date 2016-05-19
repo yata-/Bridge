@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using Bridge.Test;
 
 namespace Bridge.ClientTest.Text.RegularExpressions
@@ -152,7 +153,9 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             {
                 Assert.NotNull(actual, msg + " is not NULL");
                 Assert.AreEqual(expected.Length, actual.Length, msg + ".Length");
-                for (int i = 0; i < expected.Length; i++)
+
+                var minLength = Math.Min(expected.Length, actual.Length);
+                for (int i = 0; i < minLength; i++)
                 {
                     Assert.AreEqual(expected[i], actual[i], msg + "[" + i + "]");
                 }

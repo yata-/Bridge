@@ -2,10 +2,10 @@
 
 Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
     statics: {
-        One: 9,         // char     a
-        Multi: 12,      // string   abcdef
-        Ref: 13,        // index    \1
-        Empty: 23,      //          ()
+        One: 9, // char     a
+        Multi: 12, // string   abcdef
+        Ref: 13, // index    \1
+        Empty: 23, //          ()
         Concatenate: 25 //          ab
     },
 
@@ -59,7 +59,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
             case Bridge.Text.RegularExpressions.RegexNode.Concatenate:
                 n = this._reduceConcatenation();
                 break;
- 
+
             default:
                 n = this;
                 break;
@@ -72,25 +72,25 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
         var wasLastString = false;
         var optionsLast = 0;
         var optionsAt;
+        var at;
+        var prev;
         var i;
         var j;
- 
+        var k;
+
         if (this._children == null) {
             return new Bridge.Text.RegularExpression.RegexNode(Bridge.Text.RegularExpressions.RegexNode.Empty, this._options);
         }
 
         for (i = 0, j = 0; i < this._children.length; i++, j++) {
-            var at;
-            var prev;
- 
             at = this._children[i];
- 
+
             if (j < i) {
                 this._children[j] = at;
             }
 
             if (at._type === Bridge.Text.RegularExpressions.RegexNode.Concatenate && at._isRightToLeft()) {
-                for (var k = 0; k < at._children.length; k++) {
+                for (k = 0; k < at._children.length; k++) {
                     at._children[k]._next = this;
                 }
 
@@ -126,11 +126,11 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
                 wasLastString = false;
             }
         }
- 
+
         if (j < i) {
             this._children.splice(j, i - j);
         }
- 
+
         return this._stripEnation(Bridge.Text.RegularExpressions.RegexNode.Empty);
     },
 
