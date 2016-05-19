@@ -520,24 +520,6 @@ var array = {
         }
     },
 
-    convertAll: function (array, converter) {
-        if (!Bridge.hasValue(array)) {
-            throw new Bridge.ArgumentNullException("array");
-        }
-
-        if (!Bridge.hasValue(converter)) {
-            throw new Bridge.ArgumentNullException("converter");
-        }
-
-        var array2 = [];
-
-        for (var i = 0; i < array.length; i++) {
-            array2[i] = converter(array[i]);
-        }
-
-        return array2;
-    },
-
     find: function (T, array, match) {
         if (!Bridge.hasValue(array)) {
             throw new Bridge.ArgumentNullException("array");
