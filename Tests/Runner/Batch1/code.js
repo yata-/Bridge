@@ -38033,6 +38033,17 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
             this.validateGroup(m, 0, 0, 6, true, "abcdef", 1);
             this.validateCapture(m, 0, 0, 0, 6, "abcdef");
+        },
+        inlineCommentTest1: function () {
+            var pattern = "abc(?# comment )";
+            var text = "abc";
+            var rgx = new Bridge.Text.RegularExpressions.Regex("constructor$1", pattern, 0);
+            var m = rgx.match(text);
+    
+            this.validateMatch(m, 0, 3, "abc", 1, true);
+    
+            this.validateGroup(m, 0, 0, 3, true, "abc", 1);
+            this.validateCapture(m, 0, 0, 0, 3, "abc");
         }
     });
     

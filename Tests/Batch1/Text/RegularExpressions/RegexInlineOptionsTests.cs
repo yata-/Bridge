@@ -599,5 +599,19 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             ValidateGroup(m, 0, 0, 6, true, "abcdef", 1);
             ValidateCapture(m, 0, 0, 0, 6, "abcdef");
         }
+
+        [Test]
+        public void InlineCommentTest1()
+        {
+            const string pattern = "abc(?# comment )";
+            const string text = "abc";
+            var rgx = new Regex(pattern, RegexOptions.None);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 0, 3, "abc", 1, true);
+
+            ValidateGroup(m, 0, 0, 3, true, "abc", 1);
+            ValidateCapture(m, 0, 0, 0, 3, "abc");
+        }
     }
 }

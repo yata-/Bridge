@@ -1671,6 +1671,7 @@
                 QUnit.test("Regex IMNSX - IngoreWhitespaceInlineOptionTest7", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.ingoreWhitespaceInlineOptionTest7);
                 QUnit.test("Regex IMNSX - IngoreWhitespaceInlineOptionTest8", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.ingoreWhitespaceInlineOptionTest8);
                 QUnit.test("Regex IMNSX - IngoreWhitespaceInlineOptionTest9", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.ingoreWhitespaceInlineOptionTest9);
+                QUnit.test("Regex IMNSX - InlineCommentTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.inlineCommentTest1);
                 QUnit.test("RegexMatchCollection - CaseDataTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchCollectionTests.caseDataTest);
                 QUnit.test("RegexMatchCollection - MatchCollectionFieldsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchCollectionTests.matchCollectionFieldsTest);
                 QUnit.test("RegexMatchCollection - MatchCollectionItemsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchCollectionTests.matchCollectionItemsTest);
@@ -11845,6 +11846,10 @@
             ingoreWhitespaceInlineOptionTest9: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
                 t.getFixture().ingoreWhitespaceInlineOptionTest9();
+            },
+            inlineCommentTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().inlineCommentTest1();
             }
         }
     });
