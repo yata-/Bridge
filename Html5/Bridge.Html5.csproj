@@ -57,6 +57,7 @@
     <Compile Include="Elements\MarkElement.cs" />
     <Compile Include="Elements\TemplateElement.cs" />
     <Compile Include="Events\GamepadEvent.cs" />
+    <Compile Include="Events\DragEvent.cs" />
     <Compile Include="Events\MessageEvent.cs" />
     <Compile Include="Events\CloseEvent.cs" />
     <Compile Include="Events\TouchEvent.cs" />
