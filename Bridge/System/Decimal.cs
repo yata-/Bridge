@@ -26,7 +26,7 @@ namespace System
         public const decimal MaxValue = 79228162514264337593543950335m;
 
         [Name(false)]
-        public const decimal MinValue = 79228162514264337593543950335m;
+        public const decimal MinValue = -79228162514264337593543950335m;
 
         [Template("Bridge.Decimal(0)")]
         private extern Decimal(DummyTypeUsedToAddAttributeToDefaultValueTypeConstructor _);
