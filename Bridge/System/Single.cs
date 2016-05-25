@@ -3,7 +3,7 @@ using Bridge;
 namespace System
 {
     [External]
-    [Name("Bridge.Single")]
+    //[Name("System.Single")]
     [Constructor("Number")]
     public struct Single : IComparable, IComparable<Single>, IEquatable<Single>, IFormattable
     {
@@ -29,13 +29,13 @@ namespace System
         [Template("Number.POSITIVE_INFINITY")]
         public static readonly float PositiveInfinity = 0;
 
-        [Template("Bridge.Single.format({this}, {format})")]
+        [Template("System.Single.format({this}, {format})")]
         public string Format(string format)
         {
             return null;
         }
 
-        [Template("Bridge.Single.format({this}, {format}, {provider})")]
+        [Template("System.Single.format({this}, {format}, {provider})")]
         public string Format(string format, IFormatProvider provider)
         {
             return null;
@@ -46,50 +46,50 @@ namespace System
             return null;
         }
 
-        [Template("Bridge.Single.format({this}, {format})")]
+        [Template("System.Single.format({this}, {format})")]
         public string ToString(string format)
         {
             return null;
         }
 
-        [Template("Bridge.Single.format({this}, {format}, {provider})")]
+        [Template("System.Single.format({this}, {format}, {provider})")]
         public string ToString(string format, IFormatProvider provider)
         {
             return null;
         }
 
-        [Template("Bridge.Single.format({this}, 'G')")]
+        [Template("System.Single.format({this}, 'G')")]
         public override string ToString()
         {
             return null;
         }
 
-        [Template("Bridge.Single.format({this}, 'G', {provider})")]
+        [Template("System.Single.format({this}, 'G', {provider})")]
         public string ToString(IFormatProvider provider)
         {
             return null;
         }
 
-        [Template("Bridge.Single.parse({s})")]
+        [Template("System.Single.parse({s})")]
         public static float Parse(string s)
         {
             return 0;
         }
 
-        [Template("Bridge.Single.parse({s}, {provider})")]
+        [Template("System.Single.parse({s}, {provider})")]
         public static float Parse(string s, IFormatProvider provider)
         {
             return 0;
         }
 
-        [Template("Bridge.Single.tryParse({s}, null, {result})")]
+        [Template("System.Single.tryParse({s}, null, {result})")]
         public static bool TryParse(string s, out float result)
         {
             result = 0;
             return false;
         }
 
-        [Template("Bridge.Single.tryParse({s}, {provider}, {result})")]
+        [Template("System.Single.tryParse({s}, {provider}, {result})")]
         public static bool TryParse(string s, IFormatProvider provider, out float result)
         {
             result = 0;

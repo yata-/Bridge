@@ -3,7 +3,6 @@ using Bridge;
 namespace System
 {
     [External]
-    [Namespace("Bridge")]
     public class TimeoutException : SystemException
     {
         public TimeoutException()
@@ -15,7 +14,7 @@ namespace System
         {
         }
 
-        [Template("new Bridge.TimeoutException({message}, {innerException})")]
+        [Template("new System.TimeoutException({message}, {innerException})")]
         public TimeoutException(string message, Exception innerException)
             : base(message, innerException)
         {

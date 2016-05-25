@@ -3,7 +3,6 @@
 namespace System
 {
     [External]
-    [Namespace("Bridge")]
     public class OutOfMemoryException : SystemException, IBridgeClass
     {
         public OutOfMemoryException()
@@ -15,7 +14,7 @@ namespace System
         {
         }
 
-        [Template("new Bridge.OutOfMemoryException({message}, {innerException})")]
+        [Template("new System.OutOfMemoryException({message}, {innerException})")]
         public OutOfMemoryException(string message, Exception innerException)
             : base(message, innerException)
         {

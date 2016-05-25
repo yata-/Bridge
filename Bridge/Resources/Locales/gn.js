@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("gn", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("gn", true), {
     englishName: "Guarani",
     nativeName: "Guarani",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "ndaha’éi papaha",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["teĩ","kõi","apy","ndy","po","oteĩ","okõi"],
         abbreviatedMonthGenitiveNames: ["jteĩ","jkõi","japy","jrun","jpo","jpot","jpok","jpoa","jpor","jpa","jpat","jpak",""],
         abbreviatedMonthNames: ["jteĩ","jkõi","japy","jrun","jpo","jpot","jpok","jpoa","jpor","jpa","jpat","jpak",""],

@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("uz", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("uz", true), {
     englishName: "Uzbek",
     nativeName: "O'zbekcha",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Ya","Du","Se","Ch","Pa","Ju","Sh"],
         abbreviatedMonthGenitiveNames: ["Yan","Fev","Mar","Apr","May","Iyn","Iyl","Avg","Sen","Okt","Noy","Dek",""],
         abbreviatedMonthNames: ["Yan","Fev","Mar","Apr","May","Iyn","Iyl","Avg","Sen","Okt","Noy","Dek",""],

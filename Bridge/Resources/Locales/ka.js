@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("ka", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("ka", true), {
     englishName: "Georgian",
     nativeName: "ქართული",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "არ არის რიცხვი",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["კვ.","ორშ.","სამშ.","ოთხშ.","ხუთშ.","პარ.","შაბ."],
         abbreviatedMonthGenitiveNames: ["იან","თებ","მარ","აპრ","მაის","ივნ","ივლ","აგვ","სექ","ოქტ","ნოემ","დეკ",""],
         abbreviatedMonthNames: ["იან","თებ","მარ","აპრ","მაის","ივნ","ივლ","აგვ","სექ","ოქტ","ნოემ","დეკ",""],

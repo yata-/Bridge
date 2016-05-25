@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("qut-GT", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("qut-GT", true), {
     englishName: "K'iche' (Guatemala)",
     nativeName: "K'iche' (Guatemala)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NeuN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["juq'","kaq'","oxq'","kajq'","joq'","waqq'","wuqq'"],
         abbreviatedMonthGenitiveNames: ["nab'e","ukab'","urox","ukaj","uro","uwaq","uwuq","uwajxaq","ub'elej","ulaj","ujulaj","ukab'laj",""],
         abbreviatedMonthNames: ["nab'e","ukab'","urox","ukaj","uro","uwaq","uwuq","uwajxaq","ub'elej","ulaj","ujulaj","ukab'laj",""],

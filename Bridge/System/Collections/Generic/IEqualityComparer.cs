@@ -3,7 +3,6 @@ using Bridge;
 namespace System.Collections.Generic
 {
     [External]
-    [Namespace("Bridge")]
     public interface IEqualityComparer<in T> : IBridgeClass
     {
         [Name("equals2")]
@@ -14,12 +13,11 @@ namespace System.Collections.Generic
     }
 
     [External]
-    [Namespace("Bridge")]
     public abstract class EqualityComparer<T> : IEqualityComparer<T>, IBridgeClass
     {
         public static EqualityComparer<T> Default
         {
-            [Template("new Bridge.EqualityComparer$1({T})()")]
+            [Template("new System.Collections.Generic.EqualityComparer$1({T})()")]
             get
             {
                 return null;

@@ -1,7 +1,10 @@
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
+
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -343,7 +346,7 @@ namespace Bridge.Translator
                         {
                             if (isNullable)
                             {
-                                this.Write("Bridge.Nullable.lift1");
+                                this.Write(TypeNames.Nullable + ".lift1");
                                 this.WriteOpenParentheses();
                                 if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment ||
                                     this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
@@ -463,7 +466,7 @@ namespace Bridge.Translator
                         {
                             if (isNullable)
                             {
-                                this.Write("Bridge.Nullable.lift1");
+                                this.Write(TypeNames.Nullable + ".lift1");
                                 this.WriteOpenParentheses();
                                 if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment ||
                                     this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
@@ -743,7 +746,7 @@ namespace Bridge.Translator
                         {
                             if (isNullable)
                             {
-                                this.Write("Bridge.Nullable.lift1");
+                                this.Write(TypeNames.Nullable + ".lift1");
                                 this.WriteOpenParentheses();
                                 if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
                                 {
@@ -870,7 +873,7 @@ namespace Bridge.Translator
                         {
                             if (isNullable)
                             {
-                                this.Write("Bridge.Nullable.lift1");
+                                this.Write(TypeNames.Nullable + ".lift1");
                                 this.WriteOpenParentheses();
                                 if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment ||
                                     this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)

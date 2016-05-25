@@ -3,7 +3,6 @@ using Bridge;
 namespace System
 {
     [External]
-    [Name("Bridge.Double")]
     [Constructor("Number")]
     public struct Double : IComparable, IComparable<Double>, IEquatable<Double>, IFormattable
     {
@@ -29,13 +28,13 @@ namespace System
         [Template("Number.NaN")]
         public static readonly double NaN = 0;
 
-        [Template("Bridge.Double.format({this}, {format})")]
+        [Template("System.Double.format({this}, {format})")]
         public string Format(string format)
         {
             return null;
         }
 
-        [Template("Bridge.Double.format({this}, {format}, {provider})")]
+        [Template("System.Double.format({this}, {format}, {provider})")]
         public string Format(string format, IFormatProvider provider)
         {
             return null;
@@ -46,31 +45,31 @@ namespace System
             return null;
         }
 
-        [Template("Bridge.Double.format({this}, {format})")]
+        [Template("System.Double.format({this}, {format})")]
         public string ToString(string format)
         {
             return null;
         }
 
-        [Template("Bridge.Double.format({this}, {format}, {provider})")]
+        [Template("System.Double.format({this}, {format}, {provider})")]
         public string ToString(string format, IFormatProvider provider)
         {
             return null;
         }
 
-        [Template("Bridge.Double.format({this}, 'G')")]
+        [Template("System.Double.format({this}, 'G')")]
         public override string ToString()
         {
             return null;
         }
 
-        [Template("Bridge.Double.format({this}, 'G', {provider})")]
+        [Template("System.Double.format({this}, 'G', {provider})")]
         public string ToString(IFormatProvider provider)
         {
             return null;
         }
 
-        [Template("Bridge.Double.parse({s})")]
+        [Template("System.Double.parse({s})")]
         public static double Parse(string s)
         {
             return 0;
@@ -82,14 +81,14 @@ namespace System
             return 0;
         }
 
-        [Template("Bridge.Double.tryParse({s}, null, {result})")]
+        [Template("System.Double.tryParse({s}, null, {result})")]
         public static bool TryParse(string s, out double result)
         {
             result = 0;
             return false;
         }
 
-        [Template("Bridge.Double.tryParse({s}, {provider}, {result})")]
+        [Template("System.Double.tryParse({s}, {provider}, {result})")]
         public static bool TryParse(string s, IFormatProvider provider, out double result)
         {
             result = 0;

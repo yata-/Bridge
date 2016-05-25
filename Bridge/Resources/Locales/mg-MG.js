@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("mg-MG", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("mg-MG", true), {
     englishName: "Malagasy (Madagascar)",
     nativeName: "Malagasy (Madagasikara)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Alah","Alats","Tal","Alar","Alak","Zom","Asab"],
         abbreviatedMonthGenitiveNames: ["Jan","Feb","Mar","Apr","Mey","Jon","Jol","Aog","Sep","Okt","Nov","Des",""],
         abbreviatedMonthNames: ["Jan","Feb","Mar","Apr","Mey","Jon","Jol","Aog","Sep","Okt","Nov","Des",""],

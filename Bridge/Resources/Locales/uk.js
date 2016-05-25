@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("uk", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("uk", true), {
     englishName: "Ukrainian",
     nativeName: "українська",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Нд","Пн","Вт","Ср","Чт","Пт","Сб"],
         abbreviatedMonthGenitiveNames: ["січ","лют","бер","кві","тра","чер","лип","сер","вер","жов","лис","гру",""],
         abbreviatedMonthNames: ["Січ","Лют","Бер","Кві","Тра","Чер","Лип","Сер","Вер","Жов","Лис","Гру",""],

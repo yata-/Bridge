@@ -3,7 +3,7 @@
     (function () {
         var createIntType = function (name, min, max) {
             var type = Bridge.define(name, {
-                inherits: [Bridge.IComparable, Bridge.IFormattable],
+                inherits: [System.IComparable, System.IFormattable],
 
                 statics: {
                     min: min,
@@ -27,19 +27,19 @@
                 }
             });
 
-            Bridge.Class.addExtend(type, [Bridge.IComparable$1(type), Bridge.IEquatable$1(type)]);
+            Bridge.Class.addExtend(type, [System.IComparable$1(type), System.IEquatable$1(type)]);
         };
 
-        createIntType("Bridge.Byte", 0, 255);
-        createIntType("Bridge.SByte", -128, 127);
-        createIntType("Bridge.Int16", -32768, 32767);
-        createIntType("Bridge.UInt16", 0, 65535);
-        createIntType("Bridge.Int32", -2147483648, 2147483647);
-        createIntType("Bridge.UInt32", 0, 4294967295);
+        createIntType("System.Byte", 0, 255);
+        createIntType("System.SByte", -128, 127);
+        createIntType("System.Int16", -32768, 32767);
+        createIntType("System.UInt16", 0, 65535);
+        createIntType("System.Int32", -2147483648, 2147483647);
+        createIntType("System.UInt32", 0, 4294967295);
     })();
 
     Bridge.define("Bridge.Int", {
-        inherits: [Bridge.IComparable, Bridge.IFormattable],
+        inherits: [System.IComparable, System.IFormattable],
         statics: {
             instanceOf: function (instance) {
                 return typeof(instance) === "number" && isFinite(instance) && Math.floor(instance, 0) === instance;
@@ -50,11 +50,11 @@
             },
 
             format: function (number, format, provider) {
-                var nf = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.NumberFormatInfo),
+                var nf = (provider || System.Globalization.CultureInfo.getCurrentCulture()).getFormat(System.Globalization.NumberFormatInfo),
                     decimalSeparator = nf.numberDecimalSeparator,
                     groupSeparator = nf.numberGroupSeparator,
-                    isDecimal = number instanceof Bridge.Decimal,
-                    isLong = number instanceof Bridge.Long || number instanceof Bridge.ULong,
+                    isDecimal = number instanceof System.Decimal,
+                    isLong = number instanceof System.Int64 || number instanceof System.UInt64,
                     isNeg = isDecimal || isLong ? number.isNegative() : number < 0,
                     match,
                     precision,
@@ -180,7 +180,7 @@
                     }
                 }
 
-                if (format.indexOf(",.") !== -1 || Bridge.String.endsWith(format, ",")) {
+                if (format.indexOf(",.") !== -1 || System.String.endsWith(format, ",")) {
                     var count = 0,
                         index = format.indexOf(",.");
 
@@ -236,7 +236,7 @@
             defaultFormat: function (number, minIntLen, minDecLen, maxDecLen, provider, noGroup, name) {
                 name = name || "number";
 
-                var nf = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.NumberFormatInfo),
+                var nf = (provider || System.Globalization.CultureInfo.getCurrentCulture()).getFormat(System.Globalization.NumberFormatInfo),
                     str,
                     decimalIndex,
                     negPattern,
@@ -252,8 +252,8 @@
                     part,
                     sep,
                     buffer = "",
-                    isDecimal = number instanceof Bridge.Decimal,
-                    isLong = number instanceof Bridge.Long || number instanceof Bridge.ULong,
+                    isDecimal = number instanceof System.Decimal,
+                    isLong = number instanceof System.Int64 || number instanceof System.UInt64,
                     isNeg = isDecimal || isLong ? number.isNegative() : number < 0;
 
                 roundingFactor = Math.pow(10, maxDecLen);
@@ -261,7 +261,7 @@
                 if (isDecimal) {
                     str = number.abs().toDecimalPlaces(maxDecLen).toString();
                 } else if (isLong) {
-                    str = number.eq(Bridge.Long.MinValue) ? number.value.toUnsigned().toString() : number.abs().toString();
+                    str = number.eq(System.Int64.MinValue) ? number.value.toUnsigned().toString() : number.abs().toString();
                 } else {
                     str = "" + (+Math.abs(number).toFixed(maxDecLen));
                 }
@@ -342,11 +342,11 @@
                 }
 
                 if (isNeg) {
-                    negPattern = Bridge.NumberFormatInfo[name + "NegativePatterns"][nf[name + "NegativePattern"]];
+                    negPattern = System.Globalization.NumberFormatInfo[name + "NegativePatterns"][nf[name + "NegativePattern"]];
 
                     return negPattern.replace("-", nf.negativeSign).replace("%", nf.percentSymbol).replace("$", nf.currencySymbol).replace("n", buffer);
-                } else if (Bridge.NumberFormatInfo[name + "PositivePatterns"]) {
-                    negPattern = Bridge.NumberFormatInfo[name + "PositivePatterns"][nf[name + "PositivePattern"]];
+                } else if (System.Globalization.NumberFormatInfo[name + "PositivePatterns"]) {
+                    negPattern = System.Globalization.NumberFormatInfo[name + "PositivePatterns"][nf[name + "PositivePattern"]];
 
                     return negPattern.replace("%", nf.percentSymbol).replace("$", nf.currencySymbol).replace("n", buffer);
                 }
@@ -373,8 +373,8 @@
                     isZeroInt = false,
                     wasSeparator = false,
                     wasIntPart = false,
-                    isDecimal = number instanceof Bridge.Decimal,
-                    isLong = number instanceof Bridge.Long || number instanceof Bridge.ULong,
+                    isDecimal = number instanceof System.Decimal,
+                    isLong = number instanceof System.Int64 || number instanceof System.UInt64,
                     isNeg = isDecimal || isLong ? number.isNegative() : number < 0;
 
                 name = "number";
@@ -525,10 +525,10 @@
 
             parseFloat: function (str, provider) {
                 if (str == null) {
-                    throw new Bridge.ArgumentNullException("str");
+                    throw new System.ArgumentNullException("str");
                 }
 
-                var nfInfo = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.NumberFormatInfo),
+                var nfInfo = (provider || System.Globalization.CultureInfo.getCurrentCulture()).getFormat(System.Globalization.NumberFormatInfo),
                     result = parseFloat(str.replace(nfInfo.numberDecimalSeparator, "."));
 
                 if (isNaN(result) && str !== nfInfo.nanSymbol) {
@@ -540,7 +540,7 @@
                         return Number.POSITIVE_INFINITY;
                     }
 
-                    throw new Bridge.FormatException("Input string was not in a correct format.");
+                    throw new System.FormatException("Input string was not in a correct format.");
                 }
 
                 return result;
@@ -553,7 +553,7 @@
                     return false;
                 }
 
-                var nfInfo = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.NumberFormatInfo);
+                var nfInfo = (provider || System.Globalization.CultureInfo.getCurrentCulture()).getFormat(System.Globalization.NumberFormatInfo);
 
                 result.v = parseFloat(str.replace(nfInfo.numberDecimalSeparator, "."));
 
@@ -576,21 +576,21 @@
 
             parseInt: function (str, min, max, radix) {
                 if (str == null) {
-                    throw new Bridge.ArgumentNullException("str");
+                    throw new System.ArgumentNullException("str");
                 }
 
                 if (!/^[+-]?[0-9]+$/.test(str)) {
-                    throw new Bridge.FormatException("Input string was not in a correct format.");
+                    throw new System.FormatException("Input string was not in a correct format.");
                 }
 
                 var result = parseInt(str, radix || 10);
 
                 if (isNaN(result)) {
-                    throw new Bridge.FormatException("Input string was not in a correct format.");
+                    throw new System.FormatException("Input string was not in a correct format.");
                 }
 
                 if (result < min || result > max) {
-                    throw new Bridge.OverflowException();
+                    throw new System.OverflowException();
                 }
 
                 return result;
@@ -630,7 +630,7 @@
                 }
 
                 if (y === 0) {
-                    throw new Bridge.DivideByZeroException();
+                    throw new System.DivideByZeroException();
                 }
 
                 return this.trunc(x / y);
@@ -642,25 +642,25 @@
                 }
 
                 if (y === 0) {
-                    throw new Bridge.DivideByZeroException();
+                    throw new System.DivideByZeroException();
                 }
 
                 return x % y;
             },
 
             check: function (x, type) {
-                if (Bridge.Long.is64Bit(x)) {
-                    return Bridge.Long.check(x, type);
-                } else if (x instanceof Bridge.Decimal) {
-                    return Bridge.Decimal.toInt(x, type);
+                if (System.Int64.is64Bit(x)) {
+                    return System.Int64.check(x, type);
+                } else if (x instanceof System.Decimal) {
+                    return System.Decimal.toInt(x, type);
                 }
 
                 if (Bridge.isNumber(x) && !type.instanceOf(x)) {
-                    throw new Bridge.OverflowException();
+                    throw new System.OverflowException();
                 }
 
                 if (Bridge.Int.isInfinite(x)) {
-                    if (type === Bridge.Long || type === Bridge.ULong) {
+                    if (type === System.Int64 || type === System.UInt64) {
                         return type.MinValue;
                     }
 
@@ -671,43 +671,43 @@
             },
 
             sxb: function (x) {
-                return Bridge.isNumber(x) ? (x | (x & 0x80 ? 0xffffff00 : 0)) : (Bridge.Int.isInfinite(x) ? Bridge.SByte.min : null);
+                return Bridge.isNumber(x) ? (x | (x & 0x80 ? 0xffffff00 : 0)) : (Bridge.Int.isInfinite(x) ? System.SByte.min : null);
             },
 
             sxs: function (x) {
-                return Bridge.isNumber(x) ? (x | (x & 0x8000 ? 0xffff0000 : 0)) : (Bridge.Int.isInfinite(x) ? Bridge.Int16.min : null);
+                return Bridge.isNumber(x) ? (x | (x & 0x8000 ? 0xffff0000 : 0)) : (Bridge.Int.isInfinite(x) ? System.Int16.min : null);
             },
 
             clip8: function (x) {
-                return Bridge.isNumber(x) ? Bridge.Int.sxb(x & 0xff) : (Bridge.Int.isInfinite(x) ? Bridge.SByte.min : null);
+                return Bridge.isNumber(x) ? Bridge.Int.sxb(x & 0xff) : (Bridge.Int.isInfinite(x) ? System.SByte.min : null);
             },
 
             clipu8: function (x) {
-                return Bridge.isNumber(x) ? x & 0xff : (Bridge.Int.isInfinite(x) ? Bridge.Byte.min : null);
+                return Bridge.isNumber(x) ? x & 0xff : (Bridge.Int.isInfinite(x) ? System.Byte.min : null);
             },
 
             clip16: function (x) {
-                return Bridge.isNumber(x) ? Bridge.Int.sxs(x & 0xffff) : (Bridge.Int.isInfinite(x) ? Bridge.Int16.min : null);
+                return Bridge.isNumber(x) ? Bridge.Int.sxs(x & 0xffff) : (Bridge.Int.isInfinite(x) ? System.Int16.min : null);
             },
 
             clipu16: function (x) {
-                return Bridge.isNumber(x) ? x & 0xffff : (Bridge.Int.isInfinite(x) ? Bridge.UInt16.min : null);
+                return Bridge.isNumber(x) ? x & 0xffff : (Bridge.Int.isInfinite(x) ? System.UInt16.min : null);
             },
 
             clip32: function (x) {
-                return Bridge.isNumber(x) ? x | 0 : (Bridge.Int.isInfinite(x) ? Bridge.Int32.min : null);
+                return Bridge.isNumber(x) ? x | 0 : (Bridge.Int.isInfinite(x) ? System.Int32.min : null);
             },
 
             clipu32: function (x) {
-                return Bridge.isNumber(x) ? x >>> 0 : (Bridge.Int.isInfinite(x) ? Bridge.UInt32.min : null);
+                return Bridge.isNumber(x) ? x >>> 0 : (Bridge.Int.isInfinite(x) ? System.UInt32.min : null);
             },
 
             clip64: function (x) {
-                return Bridge.isNumber(x) ? Bridge.Long(Bridge.Int.trunc(x)) : (Bridge.Int.isInfinite(x) ? Bridge.Long.MinValue : null);
+                return Bridge.isNumber(x) ? System.Int64(Bridge.Int.trunc(x)) : (Bridge.Int.isInfinite(x) ? System.Int64.MinValue : null);
             },
 
             clipu64: function (x) {
-                return Bridge.isNumber(x) ? Bridge.ULong(Bridge.Int.trunc(x)) : (Bridge.Int.isInfinite(x) ? Bridge.ULong.MinValue : null);
+                return Bridge.isNumber(x) ? System.UInt64(Bridge.Int.trunc(x)) : (Bridge.Int.isInfinite(x) ? System.UInt64.MinValue : null);
             },
 
             sign: function (x) {
@@ -716,10 +716,10 @@
         }
     });
 
-    Bridge.Class.addExtend(Bridge.Int, [Bridge.IComparable$1(Bridge.Int), Bridge.IEquatable$1(Bridge.Int)]);
+    Bridge.Class.addExtend(Bridge.Int, [System.IComparable$1(Bridge.Int), System.IEquatable$1(Bridge.Int)]);
 
-    Bridge.define("Bridge.Double", {
-        inherits: [Bridge.IComparable, Bridge.IFormattable],
+    Bridge.define("System.Double", {
+        inherits: [System.IComparable, System.IFormattable],
         statics: {
             min: -Number.MAX_VALUE,
             max: Number.MAX_VALUE,
@@ -741,20 +741,20 @@
             }
         }
     });
-    Bridge.Class.addExtend(Bridge.Double, [Bridge.IComparable$1(Bridge.Double), Bridge.IEquatable$1(Bridge.Double)]);
+    Bridge.Class.addExtend(System.Double, [System.IComparable$1(System.Double), System.IEquatable$1(System.Double)]);
 
-    Bridge.define("Bridge.Single", {
-        inherits: [Bridge.IComparable, Bridge.IFormattable],
+    Bridge.define("System.Single", {
+        inherits: [System.IComparable, System.IFormattable],
         statics: {
             min: -3.40282346638528859e+38,
             max: 3.40282346638528859e+38,
 
-            instanceOf: Bridge.Double.instanceOf,
-            getDefaultValue: Bridge.Double.getDefaultValue,
-            parse: Bridge.Double.parse,
-            tryParse: Bridge.Double.tryParse,
-            format: Bridge.Double.format
+            instanceOf: System.Double.instanceOf,
+            getDefaultValue: System.Double.getDefaultValue,
+            parse: System.Double.parse,
+            tryParse: System.Double.tryParse,
+            format: System.Double.format
         }
     });
 
-    Bridge.Class.addExtend(Bridge.Single, [Bridge.IComparable$1(Bridge.Single), Bridge.IEquatable$1(Bridge.Single)]);
+    Bridge.Class.addExtend(System.Single, [System.IComparable$1(System.Single), System.IEquatable$1(System.Single)]);

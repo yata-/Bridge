@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("vi", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("vi", true), {
     englishName: "Vietnamese",
     nativeName: "Tiếng Việt",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["CN","T2","T3","Tư","Năm","Sáu","Bảy"],
         abbreviatedMonthGenitiveNames: ["Thg1","Thg2","Thg3","Thg4","Thg5","Thg6","Thg7","Thg8","Thg9","Thg10","Thg11","Thg12",""],
         abbreviatedMonthNames: ["Thg1","Thg2","Thg3","Thg4","Thg5","Thg6","Thg7","Thg8","Thg9","Thg10","Thg11","Thg12",""],

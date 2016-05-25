@@ -40,7 +40,7 @@
                     } else if (lowCaseVal === "false") {
                         return false;
                     } else {
-                        throw new Bridge.FormatException("String was not recognized as a valid Boolean.");
+                        throw new System.FormatException("String was not recognized as a valid Boolean.");
                     }
 
                 case "object":
@@ -48,11 +48,11 @@
                         return false;
                     }
 
-                    if (value instanceof Bridge.Decimal) {
+                    if (value instanceof System.Decimal) {
                         return !value.isZero();
                     }
 
-                    if (Bridge.Long.is64Bit(value)) {
+                    if (System.Int64.is64Bit(value)) {
                         return value.ne(0);
                     }
 
@@ -70,11 +70,11 @@
         toChar: function (value, formatProvider, valueTypeCode) {
             var typeCodes = scope.convert.typeCodes;
 
-            if (value instanceof Bridge.Decimal) {
+            if (value instanceof System.Decimal) {
                 value = value.toFloat();
             }
 
-            if (value instanceof Bridge.Long || value instanceof Bridge.ULong) {
+            if (value instanceof System.Int64 || value instanceof System.UInt64) {
                 value = value.toNumber();
             }
 
@@ -103,11 +103,11 @@
 
                     case "string":
                         if (value == null) {
-                            throw new Bridge.ArgumentNullException("value");
+                            throw new System.ArgumentNullException("value");
                         }
 
                         if (value.length !== 1) {
-                            throw new Bridge.FormatException("String must be exactly one character long.");
+                            throw new System.FormatException("String must be exactly one character long.");
                         }
 
                         return value.charCodeAt(0);
@@ -157,12 +157,12 @@
 
         toInt64: function (value, formatProvider) {
             var result = scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.Int64);
-	    return new Bridge.Long(result);
+	    return new System.Int64(result);
         },
 
         toUInt64: function (value, formatProvider) {
             var result = scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.UInt64);
-	    return new Bridge.ULong(result);
+	    return new System.UInt64(result);
         },
 
         toSingle: function (value, formatProvider) {
@@ -174,11 +174,11 @@
         },
 
         toDecimal: function (value, formatProvider) {
-            if (value instanceof Bridge.Decimal) {
+            if (value instanceof System.Decimal) {
                 return value;
             }
 
-            return new Bridge.Decimal(scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.Decimal));
+            return new System.Decimal(scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.Decimal));
         },
 
         toDateTime: function (value, formatProvider) {
@@ -206,15 +206,15 @@
                         return value;
                     }
 
-                    if (value instanceof Bridge.Decimal) {
+                    if (value instanceof System.Decimal) {
                         scope.internal.throwInvalidCastEx(typeCodes.Decimal, typeCodes.DateTime);
                     }
 
-                    if (value instanceof Bridge.Long) {
+                    if (value instanceof System.Int64) {
                         scope.internal.throwInvalidCastEx(typeCodes.Int64, typeCodes.DateTime);
                     }
 
-                    if (value instanceof Bridge.ULong) {
+                    if (value instanceof System.UInt64) {
                         scope.internal.throwInvalidCastEx(typeCodes.UInt64, typeCodes.DateTime);
                     }
 
@@ -264,14 +264,14 @@
                         return Bridge.Date.format(value, null, formatProvider || null);
                     }
 
-                    if (value instanceof Bridge.Decimal) {
+                    if (value instanceof System.Decimal) {
                         if (value.isInteger()) {
                             return value.toFixed(0, 4);
                         }
                         return value.toPrecision(value.precision());
                     }
 
-                    if (Bridge.Long.is64Bit(value)) {
+                    if (System.Int64.is64Bit(value)) {
                         return value.toString();
                     }
 
@@ -290,25 +290,25 @@
 
         toNumberInBase: function (str, fromBase, typeCode) {
             if (fromBase !== 2 && fromBase !== 8 && fromBase !== 10 && fromBase !== 16) {
-                throw new Bridge.ArgumentException("Invalid Base.");
+                throw new System.ArgumentException("Invalid Base.");
             }
 
             var typeCodes = scope.convert.typeCodes;
 
             if (str == null) {
                 if (typeCode === typeCodes.Int64) {
-                    return Bridge.Long.Zero;
+                    return System.Int64.Zero;
                 }
 
                 if (typeCode === typeCodes.UInt64) {
-                    return Bridge.ULong.Zero;
+                    return System.UInt64.Zero;
                 }
 
                 return 0;
             }
 
             if (str.length === 0) {
-                throw new Bridge.ArgumentOutOfRangeException("Index was out of range. Must be non-negative and less than the size of the collection.");
+                throw new System.ArgumentOutOfRangeException("Index was out of range. Must be non-negative and less than the size of the collection.");
             }
 
             // Let's process the string in lower case.
@@ -323,11 +323,11 @@
 
             if (str[startIndex] === "-") {
                 if (fromBase !== 10) {
-                    throw new Bridge.ArgumentException("String cannot contain a minus sign if the base is not 10.");
+                    throw new System.ArgumentException("String cannot contain a minus sign if the base is not 10.");
                 }
 
                 if (minValue >= 0) {
-                    throw new Bridge.OverflowException("The string was being parsed as an unsigned number and could not have a negative sign.");
+                    throw new System.OverflowException("The string was being parsed as an unsigned number and could not have a negative sign.");
                 }
 
                 isNegative = true;
@@ -352,7 +352,7 @@
             } else if (fromBase === 16) {
                 allowedCodes = scope.internal.charsToCodes("0123456789abcdef");
             } else {
-                throw new Bridge.ArgumentException("Invalid Base.");
+                throw new System.ArgumentException("Invalid Base.");
             }
 
             // Create charCode-to-Value map
@@ -375,9 +375,9 @@
 
                     if (!(code >= firstAllowed && code <= lastAllowed)) {
                         if (j === startIndex) {
-                            throw new Bridge.FormatException("Could not find any recognizable digits.");
+                            throw new System.FormatException("Could not find any recognizable digits.");
                         } else {
-                            throw new Bridge.FormatException("Additional non-parsable characters are at the end of the string.");
+                            throw new System.FormatException("Additional non-parsable characters are at the end of the string.");
                         }
                     }
                 }
@@ -385,13 +385,13 @@
                 var isSign = typeCode === typeCodes.Int64;
 
                 if (isSign) {
-                    res = new Bridge.Long(Bridge.$Long.fromString(str, false, fromBase));
+                    res = new System.Int64(Bridge.$Long.fromString(str, false, fromBase));
                 } else {
-                    res = new Bridge.ULong(Bridge.$Long.fromString(str, true, fromBase));
+                    res = new System.UInt64(Bridge.$Long.fromString(str, true, fromBase));
                 }
 
                 if (res.toString(fromBase) !== str) {
-                    throw new Bridge.OverflowException("Value was either too large or too small.");
+                    throw new System.OverflowException("Value was either too large or too small.");
                 }
 
                 return res;
@@ -408,13 +408,13 @@
                         res += codeValues[code];
 
                         if (res > scope.internal.typeRanges.Int64_MaxValue) {
-                            throw new Bridge.OverflowException("Value was either too large or too small.");
+                            throw new System.OverflowException("Value was either too large or too small.");
                         }
                     } else {
                         if (j === startIndex) {
-                            throw new Bridge.FormatException("Could not find any recognizable digits.");
+                            throw new System.FormatException("Could not find any recognizable digits.");
                         } else {
-                            throw new Bridge.FormatException("Additional non-parsable characters are at the end of the string.");
+                            throw new System.FormatException("Additional non-parsable characters are at the end of the string.");
                         }
                     }
                 }
@@ -429,7 +429,7 @@
                 }
 
                 if (res < minValue || res > maxValue) {
-                    throw new Bridge.OverflowException("Value was either too large or too small.");
+                    throw new System.OverflowException("Value was either too large or too small.");
                 }
 
                 return res;
@@ -440,19 +440,19 @@
             var typeCodes = scope.convert.typeCodes;
 
             if (toBase !== 2 && toBase !== 8 && toBase !== 10 && toBase !== 16) {
-                throw new Bridge.ArgumentException("Invalid Base.");
+                throw new System.ArgumentException("Invalid Base.");
             }
 
             var minValue = scope.internal.getMinValue(typeCode);
             var maxValue = scope.internal.getMaxValue(typeCode);
-            var special = Bridge.Long.is64Bit(value);
+            var special = System.Int64.is64Bit(value);
 
             if (special) {
                 if (value.lt(minValue) || value.gt(maxValue)) {
-                    throw new Bridge.OverflowException("Value was either too large or too small for an unsigned byte.");
+                    throw new System.OverflowException("Value was either too large or too small for an unsigned byte.");
                 }
             } else if (value < minValue || value > maxValue) {
-                throw new Bridge.OverflowException("Value was either too large or too small for an unsigned byte.");
+                throw new System.OverflowException("Value was either too large or too small for an unsigned byte.");
             }
 
             // Handle negative numbers:
@@ -486,7 +486,7 @@
             } else if (toBase === 16) {
                 allowedChars = "0123456789abcdef";
             } else {
-                throw new Bridge.ArgumentException("Invalid Base.");
+                throw new System.ArgumentException("Invalid Base.");
             }
 
             // Fill Value-To-Char map:
@@ -538,7 +538,7 @@
 
         toBase64String: function (inArray, offset, length, options) {
             if (inArray == null) {
-                throw new Bridge.ArgumentNullException("inArray");
+                throw new System.ArgumentNullException("inArray");
             }
 
             offset = offset || 0;
@@ -546,21 +546,21 @@
             options = options || 0; // 0 - means "None", 1 - stands for "InsertLineBreaks"
 
             if (length < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("length", "Index was out of range. Must be non-negative and less than the size of the collection.");
+                throw new System.ArgumentOutOfRangeException("length", "Index was out of range. Must be non-negative and less than the size of the collection.");
             }
 
             if (offset < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("offset", "Value must be positive.");
+                throw new System.ArgumentOutOfRangeException("offset", "Value must be positive.");
             }
 
             if (options < 0 || options > 1) {
-                throw new Bridge.ArgumentException("Illegal enum value.");
+                throw new System.ArgumentException("Illegal enum value.");
             }
 
             var inArrayLength = inArray.length;
 
             if (offset > (inArrayLength - length)) {
-                throw new Bridge.ArgumentOutOfRangeException("offset", "Offset and length must refer to a position in the string.");
+                throw new System.ArgumentOutOfRangeException("offset", "Offset and length must refer to a position in the string.");
             }
 
             if (inArrayLength === 0) {
@@ -582,34 +582,34 @@
 
         toBase64CharArray: function (inArray, offsetIn, length, outArray, offsetOut, options) {
             if (inArray == null) {
-                throw new Bridge.ArgumentNullException("inArray");
+                throw new System.ArgumentNullException("inArray");
             }
 
             if (outArray == null) {
-                throw new Bridge.ArgumentNullException("outArray");
+                throw new System.ArgumentNullException("outArray");
             }
 
             if (length < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("length", "Index was out of range. Must be non-negative and less than the size of the collection.");
+                throw new System.ArgumentOutOfRangeException("length", "Index was out of range. Must be non-negative and less than the size of the collection.");
             }
 
             if (offsetIn < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("offsetIn", "Value must be positive.");
+                throw new System.ArgumentOutOfRangeException("offsetIn", "Value must be positive.");
             }
 
             if (offsetOut < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("offsetOut", "Value must be positive.");
+                throw new System.ArgumentOutOfRangeException("offsetOut", "Value must be positive.");
             }
 
             options = options || 0;     // 0 - means "None", 1 - stands for "InsertLineBreaks"
 
             if (options < 0 || options > 1) {
-                throw new Bridge.ArgumentException("Illegal enum value.");
+                throw new System.ArgumentException("Illegal enum value.");
             }
             var inArrayLength = inArray.length;
 
             if (offsetIn > inArrayLength - length) {
-                throw new Bridge.ArgumentOutOfRangeException("offsetIn", "Offset and length must refer to a position in the string.");
+                throw new System.ArgumentOutOfRangeException("offsetIn", "Offset and length must refer to a position in the string.");
             }
 
             if (inArrayLength === 0) {
@@ -623,7 +623,7 @@
             var numElementsToCopy = scope.internal.toBase64_CalculateAndValidateOutputLength(length, insertLineBreaks);
 
             if (offsetOut > (outArrayLength - numElementsToCopy)) {
-                throw new Bridge.ArgumentOutOfRangeException("offsetOut", "Either offset did not refer to a position in the string, or there is an insufficient length of destination character array.");
+                throw new System.ArgumentOutOfRangeException("offsetOut", "Either offset did not refer to a position in the string, or there is an insufficient length of destination character array.");
             }
 
             var charsArr = [];
@@ -638,7 +638,7 @@
             // "s" is an unfortunate parameter name, but we need to keep it for backward compat.
 
             if (s == null) {
-                throw new Bridge.ArgumentNullException("s");
+                throw new System.ArgumentNullException("s");
             }
 
             var sChars = s.split("");
@@ -649,19 +649,19 @@
 
         fromBase64CharArray: function (inArray, offset, length) {
             if (inArray == null) {
-                throw new Bridge.ArgumentNullException("inArray");
+                throw new System.ArgumentNullException("inArray");
             }
 
             if (length < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("length", "Index was out of range. Must be non-negative and less than the size of the collection.");
+                throw new System.ArgumentOutOfRangeException("length", "Index was out of range. Must be non-negative and less than the size of the collection.");
             }
 
             if (offset < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("offset", "Value must be positive.");
+                throw new System.ArgumentOutOfRangeException("offset", "Value must be positive.");
             }
 
             if (offset > (inArray.length - length)) {
-                throw new Bridge.ArgumentOutOfRangeException("offset", "Offset and length must refer to a position in the string.");
+                throw new System.ArgumentOutOfRangeException("offset", "Offset and length must refer to a position in the string.");
             }
 
             var chars = scope.internal.codesToChars(inArray);
@@ -672,7 +672,7 @@
 
         convertToType: function (typeCode, value, formatProvider) {
             //TODO: #822 IConvertible 
-            throw new Bridge.NotSupportedException("IConvertible interface is not supported.");
+            throw new System.NotSupportedException("IConvertible interface is not supported.");
         }
     };
 
@@ -707,11 +707,11 @@
             UInt32_MinValue: 0,
             UInt32_MaxValue: 4294967295,
 
-            Int64_MinValue: Bridge.Long.MinValue,
-            Int64_MaxValue: Bridge.Long.MaxValue,
+            Int64_MinValue: System.Int64.MinValue,
+            Int64_MaxValue: System.Int64.MaxValue,
 
-            UInt64_MinValue: Bridge.ULong.MinValue,
-            UInt64_MaxValue: Bridge.ULong.MaxValue,
+            UInt64_MinValue: System.UInt64.MinValue,
+            UInt64_MaxValue: System.UInt64.MaxValue,
 
             Single_MinValue: -3.40282347e+38,
             Single_MaxValue: 3.40282347e+38,
@@ -719,8 +719,8 @@
             Double_MinValue: -1.7976931348623157e+308,
             Double_MaxValue: 1.7976931348623157e+308,
 
-            Decimal_MinValue: Bridge.Decimal.MinValue,
-            Decimal_MaxValue: Bridge.Decimal.MaxValue
+            Decimal_MinValue: System.Decimal.MinValue,
+            Decimal_MaxValue: System.Decimal.MaxValue
         },
 
         base64LineBreakPosition: 76,
@@ -746,7 +746,7 @@
             var name = scope.internal.typeCodeNames[typeCode];
 
             if (name == null) {
-                throw Bridge.ArgumentOutOfRangeException("typeCode", "The specified typeCode is undefined.");
+                throw System.ArgumentOutOfRangeException("typeCode", "The specified typeCode is undefined.");
             }
 
             return name;
@@ -850,7 +850,7 @@
                 case typeCodes.Decimal:
                     return scope.internal.typeRanges.Decimal_MaxValue;
                 default:
-                    throw new Bridge.ArgumentOutOfRangeException("typeCode", "The specified typeCode is undefined.");
+                    throw new System.ArgumentOutOfRangeException("typeCode", "The specified typeCode is undefined.");
             }
         },
 
@@ -874,7 +874,7 @@
                 type = "string";
             }
 
-            if (Bridge.Long.is64Bit(value) || value instanceof Bridge.Decimal) {
+            if (System.Int64.is64Bit(value) || value instanceof System.Decimal) {
                 type = "number";
             }
 
@@ -886,25 +886,25 @@
                     if (typeCode === typeCodes.Decimal) {
                         scope.internal.validateNumberRange(value, typeCode, true);
 
-                        return new Bridge.Decimal(value, formatProvider);
+                        return new System.Decimal(value, formatProvider);
                     }
 
                     if (typeCode === typeCodes.Int64) {
                         scope.internal.validateNumberRange(value, typeCode, true);
 
-                        return new Bridge.Long(value);
+                        return new System.Int64(value);
                     }
 
                     if (typeCode === typeCodes.UInt64) {
                         scope.internal.validateNumberRange(value, typeCode, true);
 
-                        return new Bridge.ULong(value);
+                        return new System.UInt64(value);
                     }
 
-                    if (Bridge.Long.is64Bit(value)) {
+                    if (System.Int64.is64Bit(value)) {
                         value = value.toNumber();
                     }
-                    else if (value instanceof Bridge.Decimal) {
+                    else if (value instanceof System.Decimal) {
                         value = value.toFloat();
                     }
 
@@ -929,7 +929,7 @@
                 case "string":
                     if (value == null) {
                         if (formatProvider != null) {
-                            throw new Bridge.ArgumentNullException("String", "Value cannot be null.");
+                            throw new System.ArgumentNullException("String", "Value cannot be null.");
                         }
 
                         return 0;
@@ -939,32 +939,32 @@
                         if (typeCode === typeCodes.Decimal) {
                             if (!/^[+-]?[0-9]+[.,]?[0-9]$/.test(value)) {
                                 if (!/^[+-]?[0-9]+$/.test(value)) {
-                                    throw new Bridge.FormatException("Input string was not in a correct format.");
+                                    throw new System.FormatException("Input string was not in a correct format.");
                                 }
                             }
 
-                            value = Bridge.Decimal(value, formatProvider);
+                            value = System.Decimal(value, formatProvider);
                         } else {
                             if (!/^[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?$/.test(value)) {
-                                throw new Bridge.FormatException("Input string was not in a correct format.");
+                                throw new System.FormatException("Input string was not in a correct format.");
                             }
 
                             value = parseFloat(value);
                         }
                     } else {
                         if (!/^[+-]?[0-9]+$/.test(value)) {
-                            throw new Bridge.FormatException("Input string was not in a correct format.");
+                            throw new System.FormatException("Input string was not in a correct format.");
                         }
 
                         var str = value;
                         if (typeCode === typeCodes.Int64) {
-                            value = new Bridge.Long(value);
+                            value = new System.Int64(value);
 
                             if (str !== value.toString()) {
                                 this.throwOverflow(scope.internal.getTypeCodeName(typeCode));
                             }
                         } else if (typeCode === typeCodes.UInt64) {
-                            value = new Bridge.ULong(value);
+                            value = new System.UInt64(value);
 
                             if (str !== value.toString()) {
                                 this.throwOverflow(scope.internal.getTypeCodeName(typeCode));
@@ -975,7 +975,7 @@
                     }
 
                     if (isNaN(value)) {
-                        throw new Bridge.FormatException("Input string was not in a correct format.");
+                        throw new System.FormatException("Input string was not in a correct format.");
                     }
 
                     scope.internal.validateNumberRange(value, typeCode, true);
@@ -1018,47 +1018,47 @@
 
             if (typeCode === typeCodes.Decimal || typeCode === typeCodes.Int64 || typeCode === typeCodes.UInt64) {
                 if (typeCode === typeCodes.Decimal) {
-                    if (!Bridge.Long.is64Bit(value)) {
+                    if (!System.Int64.is64Bit(value)) {
                         if (minValue.gt(value) || maxValue.lt(value)) {
                             this.throwOverflow(typeName);
                         }
                     }
 
-                    value = new Bridge.Decimal(value);
+                    value = new System.Decimal(value);
                 }
                 else if (typeCode === typeCodes.Int64) {
-                    if (value instanceof Bridge.ULong) {
-                        if (value.gt(Bridge.Long.MaxValue)) {
+                    if (value instanceof System.UInt64) {
+                        if (value.gt(System.Int64.MaxValue)) {
                             this.throwOverflow(typeName);
                         }
-                    } else if (value instanceof Bridge.Decimal) {
-                        if ((value.gt(new Bridge.Decimal(maxValue)) || value.lt(new Bridge.Decimal(minValue)))) {
+                    } else if (value instanceof System.Decimal) {
+                        if ((value.gt(new System.Decimal(maxValue)) || value.lt(new System.Decimal(minValue)))) {
                             this.throwOverflow(typeName);
                         }
-                    } else if (!(value instanceof Bridge.Long)) {
+                    } else if (!(value instanceof System.Int64)) {
                         if (minValue.toNumber() > value || maxValue.toNumber() < value) {
                             this.throwOverflow(typeName);
                         }
                     }
 
-                    value = new Bridge.Long(value);
+                    value = new System.Int64(value);
                 }
                 else if (typeCode === typeCodes.UInt64) {
-                    if (value instanceof Bridge.Long) {
+                    if (value instanceof System.Int64) {
                         if (value.isNegative()) {
                             this.throwOverflow(typeName);
                         }
-                    } else if (value instanceof Bridge.Decimal) {
-                        if ((value.gt(new Bridge.Decimal(maxValue)) || value.lt(new Bridge.Decimal(minValue)))) {
+                    } else if (value instanceof System.Decimal) {
+                        if ((value.gt(new System.Decimal(maxValue)) || value.lt(new System.Decimal(minValue)))) {
                             this.throwOverflow(typeName);
                         }
-                    } else if (!(value instanceof Bridge.ULong)) {
+                    } else if (!(value instanceof System.UInt64)) {
                         if (minValue.toNumber() > value || maxValue.toNumber() < value) {
                             this.throwOverflow(typeName);
                         }
                     }
 
-                    value = new Bridge.ULong(value);
+                    value = new System.UInt64(value);
                 }
             } else if (value < minValue || value > maxValue) {
                 this.throwOverflow(typeName);
@@ -1066,7 +1066,7 @@
         },
 
         throwOverflow: function (typeName) {
-            throw new Bridge.OverflowException("Value was either too large or too small for '" + typeName + "'.");
+            throw new System.OverflowException("Value was either too large or too small for '" + typeName + "'.");
         },
 
         roundToInt: function (value, typeCode) {
@@ -1105,7 +1105,7 @@
 
             var typeName = scope.internal.getTypeCodeName(typeCode);
 
-            throw new Bridge.OverflowException("Value was either too large or too small for an '" + typeName + "'.");
+            throw new System.OverflowException("Value was either too large or too small for an '" + typeName + "'.");
         },
 
         toBase64_CalculateAndValidateOutputLength: function (inputLength, insertLineBreaks) {
@@ -1131,7 +1131,7 @@
             // If we overflow an int then we cannot allocate enough
             // memory to output the value so throw
             if (outlen > 2147483647) {
-                throw new Bridge.OutOfMemoryException();
+                throw new System.OutOfMemoryException();
             }
 
             return outlen;
@@ -1197,11 +1197,11 @@
 
         fromBase64CharPtr: function (input, offset, inputLength) {
             if (inputLength < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("inputLength", "Index was out of range. Must be non-negative and less than the size of the collection.");
+                throw new System.ArgumentOutOfRangeException("inputLength", "Index was out of range. Must be non-negative and less than the size of the collection.");
             }
 
             if (offset < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("offset", "Value must be positive.");
+                throw new System.ArgumentOutOfRangeException("offset", "Value must be positive.");
             }
 
             // We need to get rid of any trailing white spaces.
@@ -1220,7 +1220,7 @@
             var resultLength = scope.internal.fromBase64_ComputeResultLength(input, offset, inputLength);
 
             if (0 > resultLength) {
-                throw new Bridge.InvalidOperationException("Contract voilation: 0 <= resultLength.");
+                throw new System.InvalidOperationException("Contract voilation: 0 <= resultLength.");
             }
 
             // resultLength can be zero. We will still enter FromBase64_Decode and process the input.
@@ -1315,7 +1315,7 @@
 
                             // Other chars are illegal:
                         default:
-                            throw new Bridge.FormatException("The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.");
+                            throw new System.FormatException("The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.");
                     }
                 }
 
@@ -1344,12 +1344,12 @@
             } // end of while
 
             if (!allInputConsumed && !equalityCharEncountered) {
-                throw new Bridge.InvalidOperationException("Contract violation: should never get here.");
+                throw new System.InvalidOperationException("Contract violation: should never get here.");
             }
 
             if (equalityCharEncountered) {
                 if (currCode !== intEq) {
-                    throw new Bridge.InvalidOperationException("Contract violation: currCode == intEq.");
+                    throw new System.InvalidOperationException("Contract violation: currCode == intEq.");
                 }
 
                 // Recall that inputIndex is now one position past where '=' was read.
@@ -1361,7 +1361,7 @@
 
                     // The '=' did not complete a 4-group. The input must be bad:
                     if ((currBlockCodes & 0x80000000) === 0) {
-                        throw new Bridge.FormatException("Invalid length for a Base-64 char array or string.");
+                        throw new System.FormatException("Invalid length for a Base-64 char array or string.");
                     }
 
                     if ((endDestIndex - destIndex) < 2) {
@@ -1396,7 +1396,7 @@
 
                         // The '=' did not complete a 4-group. The input must be bad:
                         if ((currBlockCodes & 0x80000000) === 0) {
-                            throw new Bridge.FormatException("Invalid length for a Base-64 char array or string.");
+                            throw new System.FormatException("Invalid length for a Base-64 char array or string.");
                         }
 
                         if ((endDestIndex - destIndex) < 1) {
@@ -1412,7 +1412,7 @@
 
                     } else {
                         // '=' is not ok at places other than the end:
-                        throw new Bridge.FormatException("The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.");
+                        throw new System.FormatException("The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.");
                     }
                 }
 
@@ -1421,7 +1421,7 @@
             // We get here either from above or by jumping out of the loop:
             // The last block of chars has less than 4 items
             if (currBlockCodes !== 0x000000FF) {
-                throw new Bridge.FormatException("Invalid length for a Base-64 char array or string.");
+                throw new System.FormatException("Invalid length for a Base-64 char array or string.");
             }
 
             // Return how many bytes were actually recovered:
@@ -1434,7 +1434,7 @@
             var intSpace = " ";
 
             if (inputLength < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("inputLength", "Index was out of range. Must be non-negative and less than the size of the collection.");
+                throw new System.ArgumentOutOfRangeException("inputLength", "Index was out of range. Must be non-negative and less than the size of the collection.");
             }
 
             var endIndex = startIndex + inputLength;
@@ -1458,13 +1458,13 @@
             }
 
             if (0 > usefulInputLength) {
-                throw new Bridge.InvalidOperationException("Contract violation: 0 <= usefulInputLength.");
+                throw new System.InvalidOperationException("Contract violation: 0 <= usefulInputLength.");
             }
 
             if (0 > padding) {
                 // For legal input, we can assume that 0 <= padding < 3. But it may be more for illegal input.
                 // We will notice it at decode when we see a '=' at the wrong place.
-                throw new Bridge.InvalidOperationException("Contract violation: 0 <= padding.");
+                throw new System.InvalidOperationException("Contract violation: 0 <= padding.");
             }
 
             // Perf: reuse the variable that stored the number of '=' to store the number of bytes encoded by the
@@ -1475,7 +1475,7 @@
                 } else if (padding === 2) {
                     padding = 1;
                 } else {
-                    throw new Bridge.FormatException("The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.");
+                    throw new System.FormatException("The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.");
                 }
             }
 
@@ -1522,8 +1522,8 @@
             var fromType = scope.internal.getTypeCodeName(fromTypeCode);
             var toType = scope.internal.getTypeCodeName(toTypeCode);
 
-            throw new Bridge.InvalidCastException("Invalid cast from '" + fromType + "' to '" + toType + "'.");
+            throw new System.InvalidCastException("Invalid cast from '" + fromType + "' to '" + toType + "'.");
         }
     };
 
-    Bridge.Convert = scope.convert;
+    System.Convert = scope.convert;

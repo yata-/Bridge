@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("ur-IN", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("ur-IN", true), {
     englishName: "Urdu (India)",
     nativeName: "اردو (بھارت)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["اتوار","پیر","منگل","بدھ","جمعرات","جمعہ","ہفتہ"],
         abbreviatedMonthGenitiveNames: ["جنوری","فروری","مارچ","اپریل"," مئی","جون"," جولائی","اگست","ستمبر","اکتوبر","نومبر","دسمبر",""],
         abbreviatedMonthNames: ["جنوری","فروری","مارچ","اپریل"," مئی","جون"," جولائی","اگست","ستمبر","اکتوبر","نومبر","دسمبر",""],

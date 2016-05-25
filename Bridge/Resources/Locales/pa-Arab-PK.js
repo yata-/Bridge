@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("pa-Arab-PK", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("pa-Arab-PK", true), {
     englishName: "Punjabi (Pakistan)",
     nativeName: "پنجابی (پاکستان)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "Nan",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 2
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["پير","منگل","بدھ","جمعرات","جمعه","هفته","اتوار"],
         abbreviatedMonthGenitiveNames: ["جنوری","فروری","مارچ","اپریل","مئی","جون","جولائی","اگست","ستمبر","اکتوبر","نومبر","دسمبر",""],
         abbreviatedMonthNames: ["جنوری","فروری","مارچ","اپریل","مئی","جون","جولائی","اگست","ستمبر","اکتوبر","نومبر","دسمبر",""],

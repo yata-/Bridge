@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 namespace System.Threading.Tasks
 {
     [External]
-    [Name("Bridge.Task")]
+    //[Name("System.Threading.Tasks.Task")]
     public class TaskAwaiter : INotifyCompletion
     {
         internal TaskAwaiter()
@@ -28,7 +28,7 @@ namespace System.Threading.Tasks
     }
 
     [External]
-    [Name("Bridge.Task")]
+    [Name("System.Threading.Tasks.Task")]
     public class TaskAwaiter<TResult> : INotifyCompletion
     {
         internal TaskAwaiter()

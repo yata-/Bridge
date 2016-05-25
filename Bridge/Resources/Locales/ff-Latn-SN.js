@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("ff-Latn-SN", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("ff-Latn-SN", true), {
     englishName: "Fulah (Latin, Senegal)",
     nativeName: "Fulah (Sénégal)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "Non Numérique",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["alet","alt.","tal.","alar.","alk.","alj.","aset"],
         abbreviatedMonthGenitiveNames: ["samw","feeb","mar","awr","me","suy","sul","ut","sat","okt","now","dees",""],
         abbreviatedMonthNames: ["samw","feeb","mar","awr","me","suy","sul","ut","sat","okt","now","dees",""],

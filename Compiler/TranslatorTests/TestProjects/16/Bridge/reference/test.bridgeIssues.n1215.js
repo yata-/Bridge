@@ -8,7 +8,7 @@
             v = ++v;
         },
         testDecimal: function () {
-            var v = Bridge.Decimal(0);
+            var v = System.Decimal(0);
             v = (v = v.dec());
             v = (v = v.inc());
         },
@@ -18,7 +18,7 @@
             v = ++v;
         },
         testLong: function () {
-            var v = Bridge.Long(0);
+            var v = System.Int64(0);
             v = (v = v.dec());
             v = (v = v.inc());
         }

@@ -3,7 +3,7 @@ using Bridge;
 namespace System
 {
     [External]
-    [Name("Bridge.TimeSpan")]
+    //[Name("System.TimeSpan")]
     public struct TimeSpan : IComparable, IComparable<TimeSpan>, IEquatable<TimeSpan>, IFormattable, IBridgeClass
     {
         [InlineConst]
@@ -41,61 +41,61 @@ namespace System
         {
         }
 
-        [Template("Bridge.TimeSpan.neg({t})")]
+        [Template("System.TimeSpan.neg({t})")]
         public static TimeSpan operator -(TimeSpan t)
         {
             return new TimeSpan();
         }
 
-        [Template("Bridge.TimeSpan.sub({t1}, {t2})")]
+        [Template("System.TimeSpan.sub({t1}, {t2})")]
         public static TimeSpan operator -(TimeSpan t1, TimeSpan t2)
         {
             return new TimeSpan();
         }
 
-        [Template("Bridge.TimeSpan.neq({t1}, {t2})")]
+        [Template("System.TimeSpan.neq({t1}, {t2})")]
         public static bool operator !=(TimeSpan t1, TimeSpan t2)
         {
             return false;
         }
 
-        [Template("Bridge.TimeSpan.plus({t})")]
+        [Template("System.TimeSpan.plus({t})")]
         public static TimeSpan operator +(TimeSpan t)
         {
             return new TimeSpan();
         }
 
-        [Template("Bridge.TimeSpan.add({t1}, {t2})")]
+        [Template("System.TimeSpan.add({t1}, {t2})")]
         public static TimeSpan operator +(TimeSpan t1, TimeSpan t2)
         {
             return new TimeSpan();
         }
 
-        [Template("Bridge.TimeSpan.lt({t1}, {t2})")]
+        [Template("System.TimeSpan.lt({t1}, {t2})")]
         public static bool operator <(TimeSpan t1, TimeSpan t2)
         {
             return false;
         }
 
-        [Template("Bridge.TimeSpan.lte({t1}, {t2})")]
+        [Template("System.TimeSpan.lte({t1}, {t2})")]
         public static bool operator <=(TimeSpan t1, TimeSpan t2)
         {
             return false;
         }
 
-        [Template("Bridge.TimeSpan.eq({t1}, {t2})")]
+        [Template("System.TimeSpan.eq({t1}, {t2})")]
         public static bool operator ==(TimeSpan t1, TimeSpan t2)
         {
             return false;
         }
 
-        [Template("Bridge.TimeSpan.gt({t1}, {t2})")]
+        [Template("System.TimeSpan.gt({t1}, {t2})")]
         public static bool operator >(TimeSpan t1, TimeSpan t2)
         {
             return false;
         }
 
-        [Template("Bridge.TimeSpan.gte({t1}, {t2})")]
+        [Template("System.TimeSpan.gte({t1}, {t2})")]
         public static bool operator >=(TimeSpan t1, TimeSpan t2)
         {
             return false;

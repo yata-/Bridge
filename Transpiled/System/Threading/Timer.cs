@@ -7,7 +7,7 @@ namespace Transpiled.System.Threading
 {
     public delegate void TimerCallback(Object state);
 
-    [Namespace("Bridge.Threading")]
+    [Namespace("System.Threading")]
     public sealed class Timer : IDisposable
     {
         private const UInt32 MAX_SUPPORTED_TIMEOUT = (uint)0xfffffffe;

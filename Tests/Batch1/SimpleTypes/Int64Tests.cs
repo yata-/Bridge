@@ -8,7 +8,7 @@ namespace Bridge.ClientTest.SimpleTypes
     [TestFixture(TestNameFormat = "Int64 - {0}")]
     public class Int64Tests
     {
-        private void AssertLong(object expected, object actual, string message = "", string checkedType = "Bridge.Long")
+        private void AssertLong(object expected, object actual, string message = "", string checkedType = "System.Int64")
         {
             if (message == null)
             {
@@ -27,7 +27,7 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.True((object)(long)0 is long);
             Assert.False((object)0.5 is long);
             Assert.False((object)1e100 is long);
-            Assert.AreEqual("Bridge.Long", typeof(long).GetClassName());
+            Assert.AreEqual("System.Int64", typeof(long).GetClassName());
 
             object l = (long)0;
             Assert.True(l is long);
@@ -129,9 +129,9 @@ namespace Bridge.ClientTest.SimpleTypes
 
             long l = 100;
 
-            AssertLong("111", dcml + l, null, "Bridge.Decimal");
-            AssertLong("112", dbl + l, null, "Bridge.Int32");
-            AssertLong("113", flt + l, null, "Bridge.Int32");
+            AssertLong("111", dcml + l, null, "System.Decimal");
+            AssertLong("112", dbl + l, null, "System.Int32");
+            AssertLong("113", flt + l, null, "System.Int32");
         }
 
         private T GetDefaultValue<T>()

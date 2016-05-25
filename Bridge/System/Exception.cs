@@ -4,7 +4,6 @@ using System.Collections.Generic;
 namespace System
 {
     [External]
-    [Name("Bridge.Exception")]
     public class Exception : IBridgeClass
     {
         /// <summary>

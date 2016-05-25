@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("smn", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("smn", true), {
     englishName: "Sami (Inari)",
     nativeName: "sämikielâ",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["pas","vuo","maj","kos","tuo","vás","láv"],
         abbreviatedMonthGenitiveNames: ["uđiv","kuov","njuh","cuáŋ","vyes","kesi","syei","porg","čohč","roov","skam","juov",""],
         abbreviatedMonthNames: ["uđiv","kuov","njuh","cuáŋ","vyes","kesi","syei","porg","čohč","roov","skam","juov",""],

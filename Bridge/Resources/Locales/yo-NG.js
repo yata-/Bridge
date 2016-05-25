@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("yo-NG", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("yo-NG", true), {
     englishName: "Yoruba (Nigeria)",
     nativeName: "Yoruba (Nigeria)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Àìk","Ajé","Ìṣg","Ọjr","Ọjb","Ẹti","Àbá"],
         abbreviatedMonthGenitiveNames: ["Oṣu Muharram","Oṣu Safar","Oṣu R Awwal","Oṣu R Aakhir","Oṣu J Awwal","Oṣu J Aakhira","Oṣu Rajab","Oṣu Sha'baan","Oṣu Ramadhan","Oṣu Shawwal","Oṣu Dhul Qa'dah","Oṣu Dhul Hijjah",""],
         abbreviatedMonthNames: ["Oṣu Muharram","Oṣu Safar","Oṣu R Awwal","Oṣu R Aakhir","Oṣu J Awwal","Oṣu J Aakhira","Oṣu Rajab","Oṣu Sha'baan","Oṣu Ramadhan","Oṣu Shawwal","Oṣu Dhul Qa'dah","Oṣu Dhul Hijjah",""],

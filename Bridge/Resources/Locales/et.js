@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("et", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("et", true), {
     englishName: "Estonian",
     nativeName: "eesti",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "avaldamatu",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["P","E","T","K","N","R","L"],
         abbreviatedMonthGenitiveNames: ["jaan","veebr","märts","apr","mai","juuni","juuli","aug","sept","okt","nov","dets",""],
         abbreviatedMonthNames: ["jaan","veebr","märts","apr","mai","juuni","juuli","aug","sept","okt","nov","dets",""],

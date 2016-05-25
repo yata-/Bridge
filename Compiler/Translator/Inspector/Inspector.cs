@@ -269,7 +269,7 @@ namespace Bridge.Translator
         /// <returns></returns>
         protected static bool IsConflictingNamespace(string namespaceName)
         {
-            return (namespaceName == "Bridge");
+            return (namespaceName == Translator.Bridge_ASSEMBLY);
         }
 
         /// <summary>

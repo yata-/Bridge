@@ -4,7 +4,6 @@ using System.Collections.Generic;
 namespace System.Collections.ObjectModel
 {
     [External]
-    [Namespace("Bridge")]
     public class ReadOnlyCollection<T> : IList<T>
     {
         public ReadOnlyCollection(IList<T> list)

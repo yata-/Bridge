@@ -1,6 +1,6 @@
 ﻿// @source /Collections/Dictionary.js
 
-Bridge.define('Bridge.KeyValuePair$2', function (TKey, TValue) {
+Bridge.define('System.Collections.Generic.KeyValuePair$2', function (TKey, TValue) {
     return {
         constructor: function (key, value) {
             this.key = key;
@@ -27,15 +27,15 @@ Bridge.define('Bridge.KeyValuePair$2', function (TKey, TValue) {
     };
 });
 
-Bridge.define('Bridge.Dictionary$2', function (TKey, TValue) {
+Bridge.define('System.Collections.Generic.Dictionary$2', function (TKey, TValue) {
     return {
-        inherits: [Bridge.IDictionary$2(TKey, TValue)],
+        inherits: [System.Collections.Generic.IDictionary$2(TKey, TValue)],
 
         constructor: function (obj, comparer) {
-            this.comparer = comparer || Bridge.EqualityComparer$1.$default;
+            this.comparer = comparer || System.Collections.Generic.EqualityComparer$1.$default;
             this.clear();
 
-            if (Bridge.is(obj, Bridge.Dictionary$2(TKey, TValue))) {
+            if (Bridge.is(obj, System.Collections.Generic.Dictionary$2(TKey, TValue))) {
                 var e = Bridge.getEnumerator(obj),
                     c;
 
@@ -55,11 +55,11 @@ Bridge.define('Bridge.Dictionary$2', function (TKey, TValue) {
         },
 
         getKeys: function () {
-            return new Bridge.DictionaryCollection$1(TKey)(this, true);
+            return new System.Collections.Generic.DictionaryCollection$1(TKey)(this, true);
         },
 
         getValues: function () {
-            return new Bridge.DictionaryCollection$1(TValue)(this, false);
+            return new System.Collections.Generic.DictionaryCollection$1(TValue)(this, false);
         },
 
         clear: function () {
@@ -109,7 +109,7 @@ Bridge.define('Bridge.Dictionary$2', function (TKey, TValue) {
             var entry = this.findEntry(key);
 
             if (!entry) {
-                throw new Bridge.KeyNotFoundException('Key ' + key + ' does not exist.');
+                throw new System.Collections.Generic.KeyNotFoundException('Key ' + key + ' does not exist.');
             }
 
             return entry.value;
@@ -125,7 +125,7 @@ Bridge.define('Bridge.Dictionary$2', function (TKey, TValue) {
 
             if (entry) {
                 if (add) {
-                    throw new Bridge.ArgumentException('Key ' + key + ' already exists.');
+                    throw new System.ArgumentException('Key ' + key + ' already exists.');
                 }
 
                 entry.value = value;
@@ -133,7 +133,7 @@ Bridge.define('Bridge.Dictionary$2', function (TKey, TValue) {
             }
 
             hash = this.comparer.getHashCode2(key);
-            entry = new Bridge.KeyValuePair$2(TKey, TValue)(key, value);
+            entry = new System.Collections.Generic.KeyValuePair$2(TKey, TValue)(key, value);
 
             if (this.entries[hash]) {
                 this.entries[hash].push(entry);
@@ -229,9 +229,9 @@ Bridge.define('Bridge.Dictionary$2', function (TKey, TValue) {
     };
 });
 
-Bridge.define('Bridge.DictionaryCollection$1', function (T) {
+Bridge.define('System.Collections.Generic.DictionaryCollection$1', function (T) {
     return {
-        inherits: [Bridge.ICollection$1(T)],
+        inherits: [System.Collections.Generic.ICollection$1(T)],
 
         constructor: function (dictionary, keys) {
             this.dictionary = dictionary;
@@ -255,15 +255,15 @@ Bridge.define('Bridge.DictionaryCollection$1', function (T) {
         },
 
         add: function (v) {
-            throw new Bridge.NotSupportedException();
+            throw new System.NotSupportedException();
         },
 
         clear: function () {
-            throw new Bridge.NotSupportedException();
+            throw new System.NotSupportedException();
         },
 
         remove: function () {
-            throw new Bridge.NotSupportedException();
+            throw new System.NotSupportedException();
         }
     };
 });

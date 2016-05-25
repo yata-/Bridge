@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("he", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("he", true), {
     englishName: "Hebrew",
     nativeName: "עברית",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "לא מספר",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["יום א","יום ב","יום ג","יום ד","יום ה","יום ו","שבת"],
         abbreviatedMonthGenitiveNames: ["ינו","פבר","מרץ","אפר","מאי","יונ","יול","אוג","ספט","אוק","נוב","דצמ",""],
         abbreviatedMonthNames: ["ינו","פבר","מרץ","אפר","מאי","יונ","יול","אוג","ספט","אוק","נוב","דצמ",""],

@@ -29,7 +29,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual("Bridge.Exception", typeof(Exception).GetClassName(), "Name");
+            Assert.AreEqual("System.Exception", typeof(Exception).GetClassName(), "Name");
             object d = new Exception();
             Assert.True(d is Exception);
         }

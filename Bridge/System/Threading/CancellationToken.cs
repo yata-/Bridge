@@ -3,8 +3,7 @@ using Bridge;
 namespace System.Threading
 {
     [External]
-    [Namespace("Bridge")]
-    [Name("Bridge.CancellationToken")]
+    //[Name("Bridge.CancellationToken")]
     public struct CancellationToken
     {
         public extern CancellationToken(bool canceled);

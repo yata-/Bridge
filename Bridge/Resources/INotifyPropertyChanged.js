@@ -1,8 +1,8 @@
 ﻿    // @source INotifyPropertyChanged.js
 
-    Bridge.define("Bridge.INotifyPropertyChanged");
+    Bridge.define("System.ComponentModel.INotifyPropertyChanged");
 
-    Bridge.define("Bridge.PropertyChangedEventArgs", {
+    Bridge.define("System.ComponentModel.PropertyChangedEventArgs", {
         constructor: function (propertyName) {
             this.propertyName = propertyName;
         }

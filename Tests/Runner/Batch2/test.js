@@ -77,7 +77,7 @@
                     block();
                 }
                 catch (ex) {
-                    ex = Bridge.Exception.create(ex);
+                    ex = System.Exception.create(ex);
                     actual = Bridge.getTypeName(ex);
                 }
     
@@ -140,8 +140,8 @@
                 if (expectedCount === void 0) { expectedCount = null; }
                 Bridge.Test.Assert.assert = assert;
     
-                if (Bridge.Nullable.hasValue(expectedCount)) {
-                    assert.expect(Bridge.Nullable.getValue(expectedCount));
+                if (System.Nullable.hasValue(expectedCount)) {
+                    assert.expect(System.Nullable.getValue(expectedCount));
                 }
     
                 var instance = Bridge.Test.QUnit.TestFixture$1(T).instanceFabric$1(type);
@@ -151,7 +151,7 @@
                     instance.setUp();
                 }
                 catch ($e1) {
-                    $e1 = Bridge.Exception.create($e1);
+                    $e1 = System.Exception.create($e1);
                     assert.ok(false, "The test failed SetUp");
     
                     throw $e1;

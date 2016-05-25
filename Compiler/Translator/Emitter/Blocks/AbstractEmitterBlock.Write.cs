@@ -1,4 +1,6 @@
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using System;
 using System.Globalization;
 using System.Text;
@@ -79,15 +81,15 @@ namespace Bridge.Translator
             }
             else if (value is decimal)
             {
-                s = "Bridge.Decimal(" + this.DecimalConstant((decimal)value) + ")";
+                s = TypeNames.Decimal + "(" + this.DecimalConstant((decimal)value) + ")";
             }
             else if (value is long)
             {
-                s = "Bridge.Long(" + this.LongConstant((long)value) + ")";
+                s = TypeNames.Int64 + "(" + this.LongConstant((long)value) + ")";
             }
             else if (value is ulong)
             {
-                s = "Bridge.ULong(" + this.ULongConstant((ulong)value) + ")";
+                s = TypeNames.UInt64 + "(" + this.ULongConstant((ulong)value) + ")";
             }
             else
             {

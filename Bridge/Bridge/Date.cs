@@ -1,6 +1,4 @@
-using Bridge;
-
-namespace System
+namespace Bridge
 {
     [External]
     [Name("Date")]

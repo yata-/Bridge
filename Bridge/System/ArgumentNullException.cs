@@ -3,7 +3,6 @@ using Bridge;
 namespace System
 {
     [External]
-    [Namespace("Bridge")]
     public class ArgumentNullException : ArgumentException, IBridgeClass
     {
         public ArgumentNullException()
@@ -18,7 +17,7 @@ namespace System
         {
         }
 
-        [Template("new Bridge.ArgumentNullException(null, {message}, {innerException})")]
+        [Template("new System.ArgumentNullException(null, {message}, {innerException})")]
         public ArgumentNullException(string message, Exception innerException)
         {
         }

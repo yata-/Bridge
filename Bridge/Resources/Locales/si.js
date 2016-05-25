@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("si", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("si", true), {
     englishName: "Sinhala",
     nativeName: "සිංහල",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["ඉරිදා","සඳුදා","කුජදා","බුදදා","ගුරුදා","කිවිදා","ශනිදා"],
         abbreviatedMonthGenitiveNames: ["ජන.","පෙබ.","මාර්තු.","අප්‍රේල්.","මැයි","ජූනි","ජූලි","අගෝ.","සැප්.","ඔක්.","නොවැ.","දෙසැ.",""],
         abbreviatedMonthNames: ["ජන.","පෙබ.","මාර්තු.","අප්‍රේල්.","මැයි","ජූනි","ජූලි","අගෝ.","සැප්.","ඔක්.","නොවැ.","දෙසැ.",""],

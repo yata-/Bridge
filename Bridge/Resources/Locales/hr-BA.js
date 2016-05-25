@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("hr-BA", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("hr-BA", true), {
     englishName: "Croatian (Latin, Bosnia and Herzegovina)",
     nativeName: "hrvatski (Bosna i Hercegovina)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 2
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["ned","pon","uto","sri","čet","pet","sub"],
         abbreviatedMonthGenitiveNames: ["sij","vlj","ožu","tra","svi","lip","srp","kol","ruj","lis","stu","pro",""],
         abbreviatedMonthNames: ["sij","vlj","ožu","tra","svi","lip","srp","kol","ruj","lis","stu","pro",""],

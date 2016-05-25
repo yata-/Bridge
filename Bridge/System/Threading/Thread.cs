@@ -6,7 +6,6 @@ using System.ComponentModel;
 namespace System.Threading
 {
     [External]
-    [Namespace("Bridge.Threading")]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public sealed class Thread
     {

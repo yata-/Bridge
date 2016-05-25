@@ -6,7 +6,6 @@ namespace System.Text.RegularExpressions
     /// <summary>
     /// Represents the set of successful matches found by iteratively applying a regular expression pattern to the input string.
     /// </summary>
-    [Namespace("Bridge.Text.RegularExpressions")]
     [External]
     public class MatchCollection : ICollection
     {

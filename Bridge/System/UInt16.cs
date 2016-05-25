@@ -3,7 +3,7 @@ using Bridge;
 namespace System
 {
     [External]
-    [Name("Bridge.UInt16")]
+    //[Name("System.UInt16")]
     [Constructor("Number")]
     public struct UInt16 : IComparable, IComparable<UInt16>, IEquatable<UInt16>, IFormattable
     {
@@ -17,26 +17,26 @@ namespace System
         [InlineConst]
         public const ushort MaxValue = 65535;
 
-        [Template("Bridge.UInt16.parse({s})")]
+        [Template("System.UInt16.parse({s})")]
         public static ushort Parse(string s)
         {
             return 0;
         }
 
-        [Template("Bridge.UInt16.parse({s}, {radix})")]
+        [Template("System.UInt16.parse({s}, {radix})")]
         public static ushort Parse(string s, int radix)
         {
             return 0;
         }
 
-        [Template("Bridge.UInt16.tryParse({s}, {result})")]
+        [Template("System.UInt16.tryParse({s}, {result})")]
         public static bool TryParse(string s, out ushort result)
         {
             result = 0;
             return false;
         }
 
-        [Template("Bridge.UInt16.tryParse({s}, {result}, {radix})")]
+        [Template("System.UInt16.tryParse({s}, {result}, {radix})")]
         public static bool TryParse(string s, out ushort result, int radix)
         {
             result = 0;
@@ -48,25 +48,25 @@ namespace System
             return null;
         }
 
-        [Template("Bridge.UInt16.format({this}, {format})")]
+        [Template("System.UInt16.format({this}, {format})")]
         public string Format(string format)
         {
             return null;
         }
 
-        [Template("Bridge.UInt16.format({this}, {format}, {provider})")]
+        [Template("System.UInt16.format({this}, {format}, {provider})")]
         public string Format(string format, IFormatProvider provider)
         {
             return null;
         }
 
-        [Template("Bridge.UInt16.format({this}, {format})")]
+        [Template("System.UInt16.format({this}, {format})")]
         public string ToString(string format)
         {
             return null;
         }
 
-        [Template("Bridge.UInt16.format({this}, {format}, {provider})")]
+        [Template("System.UInt16.format({this}, {format}, {provider})")]
         public string ToString(string format, IFormatProvider provider)
         {
             return null;

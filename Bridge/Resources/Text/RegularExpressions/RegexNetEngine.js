@@ -1,18 +1,18 @@
 ﻿// @source Text/RegularExpressions/RegexNetEngine.js
 
-Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
+Bridge.define("System.Text.RegularExpressions.RegexNetEngine", {
     statics: {
         jsRegex: function (text, textStart, pattern, isMultiLine, isCaseInsensitive, returnAllMatches, re) {
             if (text == null) {
-                throw new Bridge.ArgumentNullException("text");
+                throw new System.ArgumentNullException("text");
             }
 
             if (textStart != null && (textStart < 0 || textStart > text.length)) {
-                throw new Bridge.ArgumentOutOfRangeException("textStart", "Start index cannot be less than 0 or greater than input length.");
+                throw new System.ArgumentOutOfRangeException("textStart", "Start index cannot be less than 0 or greater than input length.");
             }
 
             if (pattern == null) {
-                throw new Bridge.ArgumentNullException("pattern");
+                throw new System.ArgumentNullException("pattern");
             }
 
             var modifiers = "g"; // use "global" modifier by default to allow TextStart configuration
@@ -70,7 +70,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
     constructor: function (pattern, isCaseInsensitive, isMultiLine, isSingleline, isIgnoreWhitespace, timeoutMs) {
         if (pattern == null) {
-            throw new Bridge.ArgumentNullException("pattern");
+            throw new System.ArgumentNullException("pattern");
         }
 
         this._pattern = pattern;
@@ -84,16 +84,16 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
     match: function (text, textStart, prevLength) {
         if (text == null) {
-            throw new Bridge.ArgumentNullException("text");
+            throw new System.ArgumentNullException("text");
         }
 
         if (textStart != null && (textStart < 0 || textStart > text.length)) {
-            throw new Bridge.ArgumentOutOfRangeException("textStart", "Start index cannot be less than 0 or greater than input length.");
+            throw new System.ArgumentOutOfRangeException("textStart", "Start index cannot be less than 0 or greater than input length.");
         }
 
         this._text = text;
         this._textStart = textStart;
-        this._timeoutTime = this._timeoutMs > 0 ? new Date().getTime() + Bridge.Convert.toInt32(this._timeoutMs + 0.5) : -1;
+        this._timeoutTime = this._timeoutMs > 0 ? new Date().getTime() + System.Convert.toInt32(this._timeoutMs + 0.5) : -1;
 
         var match = {
             capIndex: 0, // start index of total capture
@@ -121,7 +121,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         }
 
         // The 1st run (to know the total capture):
-        var total = Bridge.Text.RegularExpressions.RegexNetEngine.jsRegex(this._text, this._textStart, this._pattern, this._isMultiLine, this._isCaseInsensitive, false, this);
+        var total = System.Text.RegularExpressions.RegexNetEngine.jsRegex(this._text, this._textStart, this._pattern, this._isMultiLine, this._isCaseInsensitive, false, this);
 
         if (total == null) {
             return match;
@@ -272,7 +272,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
 
     parsePattern: function () {
         if (this._patternInfo == null) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
             var patternInfo = scope.parsePattern(this._pattern, this._isCaseInsensitive, this._isMultiLine, this._isSingleline, this._isIgnoreWhitespace);
 
             this._patternInfo = patternInfo;
@@ -341,10 +341,10 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
             var qCh = groupDesc.quantifier[0];
 
             if (qCh === "*" || qCh === "+" || qCh === "{") {
-                var capMatches = Bridge.Text.RegularExpressions.RegexNetEngine.jsRegex(group.valueFull, 0, groupDesc.expr, this._isMultiLine, this._isCaseInsensitive, true, this);
+                var capMatches = System.Text.RegularExpressions.RegexNetEngine.jsRegex(group.valueFull, 0, groupDesc.expr, this._isMultiLine, this._isCaseInsensitive, true, this);
 
                 if (capMatches == null) {
-                    throw new Bridge.InvalidOperationException("Can't identify captures for the already matched group.");
+                    throw new System.InvalidOperationException("Can't identify captures for the already matched group.");
                 }
 
                 var capMatch;
@@ -380,19 +380,19 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         // transforms the pattern to: "<subexpression>(?=<everything else>)"
 
         if (textOffset < 0 || textOffset > text.length) {
-            throw new Bridge.ArgumentOutOfRangeException("textOffset");
+            throw new System.ArgumentOutOfRangeException("textOffset");
         }
         if (patternStartIndex < 0 || patternStartIndex >= pattern.length) {
-            throw new Bridge.ArgumentOutOfRangeException("patternStartIndex");
+            throw new System.ArgumentOutOfRangeException("patternStartIndex");
         }
         if (patternEndIndex < patternStartIndex || patternEndIndex > pattern.length) {
-            throw new Bridge.ArgumentOutOfRangeException("patternEndIndex");
+            throw new System.ArgumentOutOfRangeException("patternEndIndex");
         }
         if (subExprStartIndex < patternStartIndex || subExprStartIndex >= patternEndIndex) {
-            throw new Bridge.ArgumentOutOfRangeException("subExprStartIndex");
+            throw new System.ArgumentOutOfRangeException("subExprStartIndex");
         }
         if (subExprEndIndex < subExprStartIndex || subExprEndIndex > patternEndIndex) {
-            throw new Bridge.ArgumentOutOfRangeException("subExprEndIndex");
+            throw new System.ArgumentOutOfRangeException("subExprEndIndex");
         }
 
         if (textOffset === text.length) {
@@ -403,7 +403,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         var restExpr = pattern.slice(subExprEndIndex, patternEndIndex);
         var transformedPattern = subExpr + "(?=" + restExpr + ")";
 
-        var subExpRes = Bridge.Text.RegularExpressions.RegexNetEngine.jsRegex(text, textOffset, transformedPattern, this._isMultiLine, this._isCaseInsensitive, false, this);
+        var subExpRes = System.Text.RegularExpressions.RegexNetEngine.jsRegex(text, textOffset, transformedPattern, this._isMultiLine, this._isCaseInsensitive, false, this);
 
         if (subExpRes != null) {
             return {
@@ -425,7 +425,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngine", {
         var time = new Date().getTime();
 
         if (time >= this._timeoutTime) {
-            throw new Bridge.RegexMatchTimeoutException(this._text, this._pattern, Bridge.TimeSpan.fromMilliseconds(this._timeoutMs));
+            throw new System.RegexMatchTimeoutException(this._text, this._pattern, System.TimeSpan.fromMilliseconds(this._timeoutMs));
         }
     }
 });

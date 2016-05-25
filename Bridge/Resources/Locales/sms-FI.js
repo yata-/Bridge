@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("sms-FI", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("sms-FI", true), {
     englishName: "Sami, Skolt (Finland)",
     nativeName: "sää´mǩiõll (Lää´ddjânnam)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["pâ","vu","mâ","se","ne","pi","su"],
         abbreviatedMonthGenitiveNames: ["ođđee´jjmannu","tä´lvvmannu","pâ´zzlâšttam-mannu","njuhččmannu","vue´ssmannu","ǩie´ssmannu","suei´nnmannu","på´rǧǧmannu","čõhččmannu","kålggmannu","skamm-mannu","rosttovmannu",""],
         abbreviatedMonthNames: ["ođđee´jjmään","tä´lvvmään","pâ´zzlâšttam-mään","njuhččmään","vue´ssmään","ǩie´ssmään","suei´nnmään","på´rǧǧmään","čõhččmään","kålggmään","skamm-mään","rosttovmään",""],

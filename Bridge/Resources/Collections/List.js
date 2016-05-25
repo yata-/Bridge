@@ -1,12 +1,12 @@
 // @source /Collections/List.js
 
-Bridge.define('Bridge.List$1', function (T) {
+Bridge.define('System.Collections.Generic.List$1', function (T) {
     return {
-        inherits: [Bridge.ICollection$1(T), Bridge.ICollection, Bridge.IList$1(T)],
+        inherits: [System.Collections.Generic.ICollection$1(T), System.Collections.ICollection, System.Collections.Generic.IList$1(T)],
         constructor: function (obj) {
             if (Object.prototype.toString.call(obj) === '[object Array]') {
-                this.items = Bridge.Array.clone(obj);
-            } else if (Bridge.is(obj, Bridge.IEnumerable)) {
+                this.items = System.Array.clone(obj);
+            } else if (Bridge.is(obj, System.Collections.IEnumerable)) {
                 this.items = Bridge.toArray(obj);
             } else {
                 this.items = [];
@@ -15,7 +15,7 @@ Bridge.define('Bridge.List$1', function (T) {
 
         checkIndex: function (index) {
             if (index < 0 || index > (this.items.length - 1)) {
-                throw new Bridge.ArgumentOutOfRangeException('Index out of range');
+                throw new System.ArgumentOutOfRangeException('Index out of range');
             }
         },
 
@@ -79,7 +79,7 @@ Bridge.define('Bridge.List$1', function (T) {
             for (i = startIndex; i < this.items.length; i++) {
                 el = this.items[i];
 
-                if (el === item || Bridge.EqualityComparer$1.$default.equals2(el, item)) {
+                if (el === item || System.Collections.Generic.EqualityComparer$1.$default.equals2(el, item)) {
                     return i;
                 }
             }
@@ -132,7 +132,7 @@ Bridge.define('Bridge.List$1', function (T) {
                 result.push(this.items[i]);
             }
 
-            return new Bridge.List$1(T)(result);
+            return new System.Collections.Generic.List$1(T)(result);
         },
 
         insert: function (index, item) {
@@ -207,12 +207,12 @@ Bridge.define('Bridge.List$1', function (T) {
         slice: function (start, end) {
             this.checkReadOnly();
 
-            return new Bridge.List$1(this.$$name.substr(this.$$name.lastIndexOf('$')+1))(this.items.slice(start, end));
+            return new System.Collections.Generic.List$1(this.$$name.substr(this.$$name.lastIndexOf('$')+1))(this.items.slice(start, end));
         },
 
         sort: function (comparison) {
             this.checkReadOnly();
-            this.items.sort(comparison || Bridge.Comparer$1.$default.compare);
+            this.items.sort(comparison || System.Collections.Generic.Comparer$1.$default.compare);
         },
 
         splice: function (start, count, items) {
@@ -231,7 +231,7 @@ Bridge.define('Bridge.List$1', function (T) {
 
         checkReadOnly: function () {
             if (this.readOnly) {
-                throw new Bridge.NotSupportedException();
+                throw new System.NotSupportedException();
             }
         },
 
@@ -257,18 +257,18 @@ Bridge.define('Bridge.List$1', function (T) {
             }
 
             if (!comparer) {
-                comparer = Bridge.Comparer$1.$default;
+                comparer = System.Collections.Generic.Comparer$1.$default;
             }
 
-            return Bridge.Array.binarySearch(this.items, index, length, value, comparer);
+            return System.Array.binarySearch(this.items, index, length, value, comparer);
         },
 
         convertAll: function (TOutput, converter) {
             if (!Bridge.hasValue(converter)) {
-                throw new Bridge.ArgumentNullException("converter is null.");
+                throw new System.ArgumentNullException("converter is null.");
             }
 
-            var list = new Bridge.List$1(TOutput)(this.items.length);
+            var list = new System.Collections.Generic.List$1(TOutput)(this.items.length);
             for (var i = 0; i < this.items.length; i++) {
                 list.items[i] = converter(this.items[i]);
             }
@@ -278,15 +278,15 @@ Bridge.define('Bridge.List$1', function (T) {
     };
 });
 
-Bridge.define('Bridge.ReadOnlyCollection$1', function (T) {
+Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T) {
     return {
-        inherits: [Bridge.List$1(T)],
+        inherits: [System.Collections.Generic.List$1(T)],
         constructor: function (list) {
             if (list == null) {
-                throw new Bridge.ArgumentNullException("list");
+                throw new System.ArgumentNullException("list");
             }
 
-            Bridge.List$1(T).prototype.$constructor.call(this, list);
+            System.Collections.Generic.List$1(T).prototype.$constructor.call(this, list);
             this.readOnly = true;
         }
     };

@@ -24,7 +24,7 @@ namespace Transpiled.System
 {
     using Bridge;
 
-    [Name("Bridge.Random")]
+    [Name("System.Random")]
     public class Random
     {
         //

@@ -3,7 +3,6 @@ using Bridge;
 namespace System
 {
     [External]
-    [Namespace("Bridge")]
     public interface IConvertible : IBridgeClass
     {
         TypeCode GetTypeCode();

@@ -1,6 +1,6 @@
 ﻿// @source Text/RegularExpressions/RegexNetEngineParser.js
 
-Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
+Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
     statics: {
         _hexSymbols: "0123456789abcdefABCDEF",
         _octSymbols: "01234567",
@@ -61,7 +61,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         parsePattern: function (pattern, isIgnoreCaseMode, isMultilineMode, isSinglelineMode, isIgnoreWhitespaceMode) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
             var settings = {
                 ignoreCase: isIgnoreCaseMode,
                 multiline: isMultilineMode,
@@ -105,7 +105,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _fillGroupDescriptors: function (tokens, groups) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
             var group;
             var i;
 
@@ -129,7 +129,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _fillGroupStructure: function (groups, tokens, parentGroup) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
             var group;
             var token;
@@ -184,7 +184,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _getGroupSparseInfo: function (groups) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
 
             var sparseSlotNames = ["0"];
             var sparseSlotNumbers = [0];
@@ -336,7 +336,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                 getSingleGroupBySlotId: function (slotId) {
                     var slotGroups = this.sparseSlotGroupsMap[slotId];
                     if (slotGroups.length !== 1) {
-                        throw new Bridge.NotSupportedException("Redefined groups are not supported."); //TODO: [Intentional Variation] Can be changed when backrefereces are resolved manually (they should use the closest group/capture)
+                        throw new System.NotSupportedException("Redefined groups are not supported."); //TODO: [Intentional Variation] Can be changed when backrefereces are resolved manually (they should use the closest group/capture)
                     }
                     return slotGroups[0];
                 }
@@ -351,7 +351,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _addSparseSlotForSameNamedGroups: function (groups, slotNumber, sparseSlotNames, sparseSlotNumbers) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
             var i;
 
             scope._addSparseSlot(groups[0], slotNumber, sparseSlotNames, sparseSlotNumbers);
@@ -366,7 +366,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _fillGroupConstructs: function (childToken) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
             var constructs = {
                 name1: null,
@@ -429,7 +429,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                         break;
 
                     default:
-                        throw new Bridge.ArgumentException("Unrecognized grouping construct.");
+                        throw new System.ArgumentException("Unrecognized grouping construct.");
                 }
 
             } else if (childToken.type === tokenTypes.groupConstructName) {
@@ -441,7 +441,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                 var nameExpr = childToken.value.slice(2, childToken.length - 1);
                 var groupNames = nameExpr.split("-");
                 if (groupNames.length === 0 || groupNames.length > 2) {
-                    throw new Bridge.ArgumentException("Invalid group name.");
+                    throw new System.ArgumentException("Invalid group name.");
                 }
 
                 constructs.name1 = groupNames[0];
@@ -486,15 +486,15 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
 
         _validateGroupName: function (name) {
             if (!name || !name.length) {
-                throw new Bridge.ArgumentException("Invalid group name: Group names must begin with a word character.");
+                throw new System.ArgumentException("Invalid group name: Group names must begin with a word character.");
             }
 
             var isDigit = name[0] >= "0" && name[0] <= "9";
             if (isDigit) {
-                var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+                var scope = System.Text.RegularExpressions.RegexNetEngineParser;
                 var res = scope._matchChars(name, 0, name.length, scope._decSymbols);
                 if (res.matchLength !== name.length) {
-                    throw new Bridge.ArgumentException("Invalid group name: Group names must begin with a word character.");
+                    throw new System.ArgumentException("Invalid group name: Group names must begin with a word character.");
                 }
             }
 
@@ -504,7 +504,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _preTransformBackrefTokens: function (pattern, tokens, sparseSettings) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var groupNumberStr;
@@ -530,13 +530,13 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
 
                     if (groupNumberStr.length === 1) {
                         // The expressions \1 through \9 are always interpreted as backreferences, and not as octal codes.
-                        throw new Bridge.ArgumentException("Reference to undefined group number " + groupNumberStr + ".");
+                        throw new System.ArgumentException("Reference to undefined group number " + groupNumberStr + ".");
                     }
 
                     // Otherwise, transform the token to OctalNumber:
                     octalCharToken = scope._parseOctalCharToken(token.value, 0, token.length);
                     if (octalCharToken == null) {
-                        throw new Bridge.ArgumentException("Unrecognized escape sequence " + token.value.slice(0, 2) + ".");
+                        throw new System.ArgumentException("Unrecognized escape sequence " + token.value.slice(0, 2) + ".");
                     }
 
                     extraLength = token.length - octalCharToken.length;
@@ -555,7 +555,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _transformTokensForJsPattern: function (settings, tokens, sparseSettings, allowedBackrefRawIds, nestedGroupIds, nestingLevel) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
             var extraTokenStr;
             var extraToken;
@@ -594,22 +594,22 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                 } else if (token.type === tokenTypes.escBackrefNumber) {
 
                     if (nestingLevel > 0) {
-                        throw new Bridge.NotSupportedException("Backreferences inside groups are not supported."); //TODO: support references inside groups
+                        throw new System.NotSupportedException("Backreferences inside groups are not supported."); //TODO: support references inside groups
                     }
 
                     value = token.value.slice(1);
                     groupNumber = parseInt(value, 10);
                     group = sparseSettings.getSingleGroupByNumber(groupNumber);
                     if (group == null) {
-                        throw new Bridge.ArgumentException("Reference to undefined group number " + value + ".");
+                        throw new System.ArgumentException("Reference to undefined group number " + value + ".");
                     }
 
                     // Replace the group number with RawIndex as JavaScript does not change the ordering
                     if (allowedBackrefRawIds.indexOf(group.rawIndex) < 0) {
-                        throw new Bridge.NotSupportedException("Reference to unreachable group number " + value + "."); //TODO: [Intentional Variation] .Net returns "Success=false". However, it has no sense.
+                        throw new System.NotSupportedException("Reference to unreachable group number " + value + "."); //TODO: [Intentional Variation] .Net returns "Success=false". However, it has no sense.
                     }
                     if (nestedGroupIds.indexOf(group.rawIndex) >= 0) {
-                        throw new Bridge.NotSupportedException("References to self/parent group number " + value + " are not supported."); //TODO: [Intentional Variation] This require pattern change with every capture. Not supported.
+                        throw new System.NotSupportedException("References to self/parent group number " + value + " are not supported."); //TODO: [Intentional Variation] This require pattern change with every capture. Not supported.
                     }
                     if (group.rawIndex !== groupNumber) {
                         value = "\\" + group.rawIndex.toString();
@@ -619,7 +619,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                 } else if (token.type === tokenTypes.escBackrefName) {
 
                     if (nestingLevel > 0) {
-                        throw new Bridge.NotSupportedException("Backreferences inside groups are not supported."); //TODO: support references inside groups
+                        throw new System.NotSupportedException("Backreferences inside groups are not supported."); //TODO: support references inside groups
                     }
 
                     value = token.value.slice(3, token.length - 1);
@@ -633,15 +633,15 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                             --i; // process the token again
                             continue;
                         }
-                        throw new Bridge.ArgumentException("Reference to undefined group name '" + value + "'.");
+                        throw new System.ArgumentException("Reference to undefined group name '" + value + "'.");
                     }
 
                     // Replace the group number with RawIndex as JavaScript does not change the ordering
                     if (allowedBackrefRawIds.indexOf(group.rawIndex) < 0) {
-                        throw new Bridge.NotSupportedException("Reference to unreachable group name '" + value + "'."); //TODO: [Intentional Variation] .Net returns "Success=false". However, it has no sense.
+                        throw new System.NotSupportedException("Reference to unreachable group name '" + value + "'."); //TODO: [Intentional Variation] .Net returns "Success=false". However, it has no sense.
                     }
                     if (nestedGroupIds.indexOf(group.rawIndex) >= 0) {
-                        throw new Bridge.NotSupportedException("References to self/parent group name '" + value + "' are not supported."); //TODO: [Intentional Variation] This require pattern change with every capture. Not supported.
+                        throw new System.NotSupportedException("References to self/parent group name '" + value + "' are not supported."); //TODO: [Intentional Variation] This require pattern change with every capture. Not supported.
                     }
                     value = "\\" + group.rawIndex.toString();
                     scope._updatePatternToken(token, tokenTypes.escBackrefNumber, token.index, value.length, value);
@@ -763,7 +763,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _updateGroupDescriptors: function (tokens, parentIndex) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
             var group;
             var token;
@@ -831,16 +831,16 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
 
         _parsePatternImpl: function (pattern, settings, startIndex, endIndex) {
             if (pattern == null) {
-                throw new Bridge.ArgumentNullException("pattern");
+                throw new System.ArgumentNullException("pattern");
             }
             if (startIndex < 0 || startIndex > pattern.length) {
-                throw new Bridge.ArgumentOutOfRangeException("startIndex");
+                throw new System.ArgumentOutOfRangeException("startIndex");
             }
             if (endIndex < startIndex || endIndex > pattern.length) {
-                throw new Bridge.ArgumentOutOfRangeException("endIndex");
+                throw new System.ArgumentOutOfRangeException("endIndex");
             }
 
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
             var tokens = [];
             var prevToken = null;
@@ -903,7 +903,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _parseEscapeToken: function (pattern, i, endIndex) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -911,7 +911,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                 return null;
             }
             if (i + 1 >= endIndex) {
-                throw new Bridge.ArgumentException("Illegal \\ at end of pattern.");
+                throw new System.ArgumentException("Illegal \\ at end of pattern.");
             }
 
             ch = pattern[i + 1];
@@ -947,15 +947,15 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                     }
                 }
 
-                throw new Bridge.ArgumentException("Malformed \\k<...> named back reference.");
+                throw new System.ArgumentException("Malformed \\k<...> named back reference.");
             }
 
             // Unrecognized escape sequence:
-            throw new Bridge.ArgumentException("Unrecognized escape sequence \\" + ch + ".");
+            throw new System.ArgumentException("Unrecognized escape sequence \\" + ch + ".");
         },
 
         _parseOctalCharToken: function (pattern, i, endIndex) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -973,7 +973,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _parseEscapedChar: function (pattern, i, endIndex) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -988,13 +988,13 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                 if (ch === "x") {
                     var hexDigits = scope._matchChars(pattern, i + 2, endIndex, scope._hexSymbols, 2);
                     if (hexDigits.matchLength !== 2) {
-                        throw new Bridge.ArgumentException("Insufficient hexadecimal digits.");
+                        throw new System.ArgumentException("Insufficient hexadecimal digits.");
                     }
 
                     return scope._createPatternToken(pattern, tokenTypes.escCharHex, i, 4); // "\xnn"
                 } else if (ch === "c") {
                     if (i + 2 >= endIndex) {
-                        throw new Bridge.ArgumentException("Missing control character.");
+                        throw new System.ArgumentException("Missing control character.");
                     }
 
                     var ctrlCh = pattern[i + 2];
@@ -1002,11 +1002,11 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                         return scope._createPatternToken(pattern, tokenTypes.escCharCtrl, i, 3); // "\cx" or "\cX"
                     }
 
-                    throw new Bridge.ArgumentException("Unrecognized control character.");
+                    throw new System.ArgumentException("Unrecognized control character.");
                 } else if (ch === "u") {
                     var ucodeDigits = scope._matchChars(pattern, i + 2, endIndex, scope._hexSymbols, 4);
                     if (ucodeDigits.matchLength !== 4) {
-                        throw new Bridge.ArgumentException("Insufficient hexadecimal digits.");
+                        throw new System.ArgumentException("Insufficient hexadecimal digits.");
                     }
 
                     return scope._createPatternToken(pattern, tokenTypes.escCharUnicode, i, 6); // "\unnnn"
@@ -1027,7 +1027,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                 if (ch === "p" || ch === "P") {
                     var catNameChars = scope._matchUntil(pattern, i + 2, endIndex, "}"); // the longest category name is 37 + 2 brackets, but .NET does not limit the value on this step
                     if (catNameChars.matchLength < 3 || catNameChars.match[0] !== "{" || catNameChars.unmatchLength !== 1) {
-                        throw new Bridge.ArgumentException("Incomplete \p{X} character escape.");
+                        throw new System.ArgumentException("Incomplete \p{X} character escape.");
                     }
 
                     var catName = catNameChars.slice(1);
@@ -1040,7 +1040,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                         return scope._createPatternToken(pattern, tokenTypes.escCharClassBlock, i, 2 + catNameChars.matchLength + 1); // "\p{Name}" or "\P{Name}"
                     }
 
-                    throw new Bridge.ArgumentException("Unknown property '" + catName + "'.");
+                    throw new System.ArgumentException("Unknown property '" + catName + "'.");
                 }
 
                 return scope._createPatternToken(pattern, tokenTypes.escCharClass, i, 2); // "\w" or "\W" or "\s" or "\S" or "\d" or "\D"
@@ -1055,7 +1055,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _parseCharRangeToken: function (pattern, i, endIndex) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
             var tokens = [];
 
@@ -1075,7 +1075,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                 if (ch === "\\") {
                     escapeToken = scope._parseEscapedChar(pattern, index, endIndex);
                     if (escapeToken == null) {
-                        throw new Bridge.ArgumentException("Unrecognized escape sequence \\" + ch + ".");
+                        throw new System.ArgumentException("Unrecognized escape sequence \\" + ch + ".");
                     }
                     tokens.push(escapeToken);
                     index += escapeToken.length;
@@ -1094,7 +1094,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
             }
 
             if (closeBracketIndex < 0 || tokens.length < 1) {
-                throw new Bridge.ArgumentException("Unterminated [] set.");
+                throw new System.ArgumentException("Unterminated [] set.");
             }
 
             var groupToken = scope._createPatternToken(pattern, tokenTypes.charGroup, i, 1 + closeBracketIndex - i, tokens, "[", "]");
@@ -1102,7 +1102,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _parseDotToken: function (pattern, i) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -1114,7 +1114,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _parseAnchorToken: function (pattern, i) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -1144,7 +1144,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _parseGroupToken: function (pattern, settings, i, endIndex) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
             var groupSettings = {
                 ignoreCase: settings.ignoreCase,
@@ -1212,13 +1212,13 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
 
             if (isComment) {
                 if (closeBracketIndex < 0) {
-                    throw new Bridge.ArgumentException("Unterminated (?#...) comment.");
+                    throw new System.ArgumentException("Unterminated (?#...) comment.");
                 }
                 return scope._createPatternToken(pattern, tokenTypes.commentInline, i, 1 + closeBracketIndex - i);
             }
 
             if (closeBracketIndex < 0) {
-                throw new Bridge.ArgumentException("Not enough )'s.");
+                throw new System.ArgumentException("Not enough )'s.");
             }
 
             // Parse the "Body" of the group
@@ -1240,7 +1240,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                     if (innerToken.type === tokenTypes.alternation) {
                         ++altCount;
                         if (altCount > 1) {
-                            throw new Bridge.ArgumentException("Too many | in (?()|).");
+                            throw new System.ArgumentException("Too many | in (?()|).");
                         }
                     }
                 }
@@ -1279,7 +1279,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
             // ?>
             // ?#
 
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -1311,7 +1311,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                 var closingCh = ch === "<" ? ">" : ch;
                 var nameChars = scope._matchUntil(pattern, i + 2, endIndex, closingCh);
                 if (nameChars.unmatchLength !== 1 || nameChars.matchLength === 0) {
-                    throw new Bridge.ArgumentException("Unrecognized grouping construct.");
+                    throw new System.ArgumentException("Unrecognized grouping construct.");
                 }
 
                 var nameFirstCh = nameChars.match.slice(0, 1);
@@ -1321,7 +1321,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                     // RL 1.4 Simple Word Boundaries  The class of <word_character> includes all Alphabetic
                     // values from the Unicode character database, from UnicodeData.txt [UData], plus the U+200C
                     // ZERO WIDTH NON-JOINER and U+200D ZERO WIDTH JOINER.
-                    throw new Bridge.ArgumentException("Invalid group name: Group names must begin with a word character.");
+                    throw new System.ArgumentException("Invalid group name: Group names must begin with a word character.");
                 }
 
                 return scope._createPatternToken(pattern, tokenTypes.groupConstructName, i, 2 + nameChars.matchLength + 1);
@@ -1334,11 +1334,11 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                 return scope._createPatternToken(pattern, imnsxTokenType, i, 1 + imnsxChars.matchLength + imnsxPostfixLen);
             }
 
-            throw new Bridge.ArgumentException("Unrecognized grouping construct.");
+            throw new System.ArgumentException("Unrecognized grouping construct.");
         },
 
         _parseQuantifierToken: function (pattern, i, endIndex) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -1373,7 +1373,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _parseAlternationToken: function (pattern, i) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -1385,7 +1385,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _parseAlternationGroupExprToken: function (pattern, settings, i, endIndex) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -1406,7 +1406,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
                     case tokenTypes.groupConstructName:
                     case tokenTypes.groupConstructImnsx:
                     case tokenTypes.groupConstructImnsxMisc:
-                        throw new Bridge.NotSupportedException("Group constructs are not supported for Alternation expressions.");
+                        throw new System.NotSupportedException("Group constructs are not supported for Alternation expressions.");
                 }
             }
 
@@ -1415,7 +1415,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _parseXModeCommentToken: function (pattern, i, endIndex) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -1437,13 +1437,13 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _createLiteralToken: function (body) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
             var token = scope._createPatternToken(body, scope.tokenTypes.literal, 0, body.length);
             return token;
         },
 
         _createPositiveLookaheadToken: function (body, settings) {
-            var scope = Bridge.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
 
             var pattern = "(?=" + body + ")";
             var groupToken = scope._parseGroupToken(pattern, settings, 0, pattern.length);

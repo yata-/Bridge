@@ -1,5 +1,8 @@
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
+
 using System;
 using System.Linq;
 
@@ -38,7 +41,7 @@ namespace Bridge.Translator
                 var count = tryStatement.CatchClauses.Count;
                 var firstClause = tryStatement.CatchClauses.Count == 1 ? tryStatement.CatchClauses.First() : null;
                 var exceptionType = (firstClause == null || firstClause.Type.IsNull) ? null : BridgeTypes.ToJsName(firstClause.Type, this.Emitter);
-                var isBaseException = exceptionType == null || exceptionType == "Bridge.Exception";
+                var isBaseException = exceptionType == null || exceptionType == TypeNames.Exception;
 
                 string name = this.Emitter.CatchBlockVariable ?? "$async_e";
                 if (count == 1 && isBaseException)

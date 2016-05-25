@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("hu", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("hu", true), {
     englishName: "Hungarian",
     nativeName: "magyar",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "nem szám",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["V","H","K","Sze","Cs","P","Szo"],
         abbreviatedMonthGenitiveNames: ["jan.","febr.","márc.","ápr.","máj.","jún.","júl.","aug.","szept.","okt.","nov.","dec.",""],
         abbreviatedMonthNames: ["jan.","febr.","márc.","ápr.","máj.","jún.","júl.","aug.","szept.","okt.","nov.","dec.",""],

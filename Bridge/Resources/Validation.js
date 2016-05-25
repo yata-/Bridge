@@ -6,7 +6,7 @@
         },
 
         isEmpty: function (value) {
-            return value == null || value.length === 0 || Bridge.is(value, Bridge.ICollection) ? value.getCount() === 0 : false;
+            return value == null || value.length === 0 || Bridge.is(value, System.Collections.ICollection) ? value.getCount() === 0 : false;
         },
 
         isNotEmptyOrWhitespace: function (value) {

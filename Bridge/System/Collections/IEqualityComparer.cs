@@ -3,7 +3,6 @@
 namespace System.Collections
 {
     [External]
-    [Namespace("Bridge")]
     public interface IEqualityComparer : IBridgeClass
     {
         [Template("{this}.equals({x}, {y})")]

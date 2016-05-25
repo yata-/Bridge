@@ -1,7 +1,7 @@
 ﻿
-Bridge.define("Bridge.Guid", {
+Bridge.define("System.Guid", {
     inherits: function () {
-        return [Bridge.IComparable$1(Bridge.Guid), Bridge.IEquatable$1(Bridge.Guid), Bridge.IFormattable];
+        return [System.IComparable$1(System.Guid), System.IEquatable$1(System.Guid), System.IFormattable];
     },
 
     statics: {
@@ -11,28 +11,28 @@ Bridge.define("Bridge.Guid", {
 
 		config: {
 		    init: function () {
-		        this.$rng = new Bridge.Random();
+		        this.$rng = new System.Random();
 		    }
 		},
 
 		instanceOf: function (instance) {
-			return typeof(instance) === 'string' && instance.match(Bridge.Guid.$valid);
+			return typeof(instance) === 'string' && instance.match(System.Guid.$valid);
 		},
 		getDefaultValue: function() {
-			return Bridge.Guid.empty;
+			return System.Guid.empty;
 		},
 		parse: function(uuid, format) {
 			var r = {};
-			if (Bridge.Guid.tryParse(uuid, format, r)) {
+			if (System.Guid.tryParse(uuid, format, r)) {
 			    return r.v;
 			}
-			throw new Bridge.FormatException('Unable to parse UUID');
+			throw new System.FormatException('Unable to parse UUID');
 		},
 		tryParse: function (uuid, format, r) {
 		    var m;
-		    r.v = Bridge.Guid.empty;
+		    r.v = System.Guid.empty;
 			if (!Bridge.hasValue(uuid)) {
-			    throw new Bridge.ArgumentNullException('uuid');
+			    throw new System.ArgumentNullException('uuid');
 			} 
 			    
 			if (!format) {
@@ -45,7 +45,7 @@ Bridge.define("Bridge.Guid", {
 			else {
                 format = format.toUpperCase();
 				if (format === 'N') {
-					m = Bridge.Guid.$split.exec(uuid);
+					m = System.Guid.$split.exec(uuid);
 					if (!m) {
 					    return false;
 					}
@@ -59,7 +59,7 @@ Bridge.define("Bridge.Guid", {
 						
 					uuid = uuid.substr(1, uuid.length - 2);
 				}
-				if (uuid.match(Bridge.Guid.$valid)) {
+				if (uuid.match(System.Guid.$valid)) {
 					r.v = uuid.toLowerCase();
 					return true;
 				}
@@ -83,18 +83,18 @@ Bridge.define("Bridge.Guid", {
 		},
 		fromBytes: function(b) {
 			if (!b || b.length !== 16) {
-			    throw new Bridge.ArgumentException('b', 'Must be 16 bytes');
+			    throw new System.ArgumentException('b', 'Must be 16 bytes');
 			}
 				
 			var s = b.map(function(x) { return Bridge.Int.format(x & 0xff, 'x2'); }).join('');
-			return Bridge.Guid.$split.exec(s).slice(1).join('-');
+			return System.Guid.$split.exec(s).slice(1).join('-');
 		},
 		newGuid: function () {
 			var a = Array(16);
-			Bridge.Guid.$rng.nextBytes(a);
+			System.Guid.$rng.nextBytes(a);
 			a[6] = a[6] & 0x0f | 0x40;
 			a[8] = a[8] & 0xbf | 0x80;
-			return Bridge.Guid.fromBytes(a);
+			return System.Guid.fromBytes(a);
 		},
 		getBytes: function(uuid) {
 			var a = Array(16);

@@ -6,7 +6,7 @@ namespace System
     /// An object with some or all of the following properties:
     /// </summary>
     [External]
-    [Name("LocaleOptions")]
+    //[Name("LocaleOptions")]
     [ObjectLiteral]
     public sealed class LocaleOptions
     {
