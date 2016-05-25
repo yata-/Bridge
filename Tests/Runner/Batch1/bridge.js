@@ -7212,7 +7212,8 @@ var array = {
         if (obj instanceof Bridge.ArrayEnumerator) {
             if ((obj.constructor === type) || (obj instanceof type) ||
                 type === Bridge.ArrayEnumerator ||
-                type.$$name && Bridge.String.startsWith(type.$$name, "System.Collections.IEnumerator")) {
+                type.$$name && Bridge.String.startsWith(type.$$name, "System.Collections.IEnumerator") ||
+                type.$$name && Bridge.String.startsWith(type.$$name, "System.Collections.Generic.IEnumerator")) {
                 return true;
             }
 
