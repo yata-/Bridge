@@ -233,7 +233,7 @@ namespace Bridge.Translator
                 this.Emitter.AssignmentType = oldAssigmentType;
                 this.Emitter.IsAssignment = oldAssigment;
 
-                this.Write("Bridge.Int.div(");
+                this.Write(TypeNames.Int + ".div(");
                 assignmentExpression.Left.AcceptVisitor(this.Emitter);
                 this.Write(", ");
                 oldValue1 = this.Emitter.ReplaceAwaiterByVar;

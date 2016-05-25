@@ -9,5 +9,7 @@
         public const string Nullable = "System.Nullable";
         public const string TaskCompletionSource = "System.Threading.Tasks.TaskCompletionSource";
         public const string Exception = "System.Exception";
+        public const string IBridgeClass = "Bridge.IBridgeClass";
+        public const string Int = "Bridge.Int";
     }
 }

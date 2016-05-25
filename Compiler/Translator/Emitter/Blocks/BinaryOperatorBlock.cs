@@ -222,7 +222,7 @@ namespace Bridge.Translator
                     Helpers.IsIntegerType(this.Emitter.Resolver.Resolver.GetExpectedType(binaryOperatorExpression.Right), this.Emitter.Resolver))
                 ))
             {
-                this.Write("Bridge.Int.div(");
+                this.Write(TypeNames.Int + ".div(");
                 binaryOperatorExpression.Left.AcceptVisitor(this.Emitter);
                 this.Write(", ");
                 binaryOperatorExpression.Right.AcceptVisitor(this.Emitter);

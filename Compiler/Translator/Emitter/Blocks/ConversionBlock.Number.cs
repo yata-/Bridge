@@ -348,11 +348,11 @@ namespace Bridge.Translator
 
             if (isChecked)
             {
-                block.Write("Bridge.Int.check(");
+                block.Write(TypeNames.Int + ".check(");
 
                 if (fromFloatingPoint)
                 {
-                    block.Write("Bridge.Int.trunc");
+                    block.Write(TypeNames.Int + ".trunc");
                     block.WriteOpenParentheses();
                 }
 
@@ -414,7 +414,7 @@ namespace Bridge.Translator
                         throw new ArgumentException("Can not narrow to " + targetType, "targetType");
                     }
 
-                    block.Write("Bridge.Int.");
+                    block.Write(TypeNames.Int + ".");
                     block.Write(action);
                     if (!(expression is CastExpression && ((CastExpression)expression).Expression is ParenthesizedExpression))
                     {
@@ -460,7 +460,7 @@ namespace Bridge.Translator
                     }
                     else if (targetType.IsKnownType(KnownTypeCode.SByte))
                     {
-                        block.Write("Bridge.Int.sxb(");
+                        block.Write(TypeNames.Int + ".sxb(");
                         if (!skipInnerWrap)
                         {
                             block.WriteOpenParentheses();
@@ -479,7 +479,7 @@ namespace Bridge.Translator
                     }
                     else if (targetType.IsKnownType(KnownTypeCode.Int16))
                     {
-                        block.Write("Bridge.Int.sxs(");
+                        block.Write(TypeNames.Int + ".sxs(");
                         if (!skipInnerWrap)
                         {
                             block.WriteOpenParentheses();
@@ -516,12 +516,12 @@ namespace Bridge.Translator
                     }
                     else if (targetType.IsKnownType(KnownTypeCode.Int64))
                     {
-                        block.Write("Bridge.Int.clip64(");
+                        block.Write(TypeNames.Int + ".clip64(");
                         block.AfterOutput += ")";
                     }
                     else if (targetType.IsKnownType(KnownTypeCode.UInt64))
                     {
-                        block.Write("Bridge.Int.clipu64(");
+                        block.Write(TypeNames.Int + ".clipu64(");
                         block.AfterOutput += ")";
                     }
                     else
