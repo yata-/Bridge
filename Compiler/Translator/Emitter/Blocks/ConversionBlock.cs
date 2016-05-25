@@ -1,4 +1,6 @@
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
@@ -196,7 +198,7 @@ namespace Bridge.Translator
                 if (isLifted)
                 {
                     level++;
-                    block.Write("Bridge.Nullable.getValue(");
+                    block.Write(TypeNames.Nullable + ".getValue(");
                 }
 
                 if (conversion.IsUserDefined)
@@ -273,7 +275,7 @@ namespace Bridge.Translator
 
                     if (Helpers.IsDecimalType(arg.Type, block.Emitter.Resolver, arg.IsParams) && !Helpers.IsDecimalType(rr.Type, block.Emitter.Resolver) && !expression.IsNull)
                     {
-                        block.Write("Bridge.Decimal");
+                        block.Write(TypeNames.Decimal);
                         if (NullableType.IsNullable(arg.Type) && ConversionBlock.ShouldBeLifted(expression))
                         {
                             block.Write(".lift");
@@ -290,7 +292,7 @@ namespace Bridge.Translator
                     if (Helpers.Is64Type(arg.Type, block.Emitter.Resolver, arg.IsParams) && !Helpers.Is64Type(rr.Type, block.Emitter.Resolver) && !expression.IsNull)
                     {
                         var isUint = Helpers.IsULongType(arg.Type, block.Emitter.Resolver, arg.IsParams);
-                        block.Write("Bridge." + (isUint ? "ULong" : "Long"));
+                        block.Write(isUint ? TypeNames.UInt64 : TypeNames.Int64);
                         if (NullableType.IsNullable(arg.Type) && ConversionBlock.ShouldBeLifted(expression))
                         {
                             block.Write(".lift");
@@ -666,7 +668,7 @@ namespace Bridge.Translator
                          && !Helpers.IsDecimalType(elementType, block.Emitter.Resolver)
                          && isType(rr.Type, block.Emitter.Resolver))
                 {
-                    block.Write("Bridge.Long.toNumber");
+                    block.Write(TypeNames.Int64 + ".toNumber");
                     if (expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
                     {
@@ -995,19 +997,19 @@ namespace Bridge.Translator
 
         private static bool CheckDecimalConversion(ConversionBlock block, Expression expression, ResolveResult rr, IType expectedType, Conversion conversion)
         {
-            return CheckTypeConversion(block, expression, rr, expectedType, conversion, "Bridge.Decimal", Helpers.IsDecimalType);
+            return CheckTypeConversion(block, expression, rr, expectedType, conversion, TypeNames.Decimal, Helpers.IsDecimalType);
         }
 
         private static bool CheckLongConversion(ConversionBlock block, Expression expression, ResolveResult rr, IType expectedType, Conversion conversion)
         {
-            return CheckTypeConversion(block, expression, rr, expectedType, conversion, "Bridge.Long", Helpers.IsLongType) ||
-                   CheckTypeConversion(block, expression, rr, expectedType, conversion, "Bridge.ULong", Helpers.IsULongType);
+            return CheckTypeConversion(block, expression, rr, expectedType, conversion, TypeNames.Int64, Helpers.IsLongType) ||
+                   CheckTypeConversion(block, expression, rr, expectedType, conversion, TypeNames.UInt64, Helpers.IsULongType);
         }
 
         private static bool IsLongConversion(ConversionBlock block, Expression expression, ResolveResult rr, IType expectedType, Conversion conversion)
         {
-            return IsTypeConversion(block, expression, rr, expectedType, conversion, "Bridge.Long", Helpers.IsLongType) ||
-                   IsTypeConversion(block, expression, rr, expectedType, conversion, "Bridge.ULong", Helpers.IsULongType);
+            return IsTypeConversion(block, expression, rr, expectedType, conversion, TypeNames.Int64, Helpers.IsLongType) ||
+                   IsTypeConversion(block, expression, rr, expectedType, conversion, TypeNames.UInt64, Helpers.IsULongType);
         }
 
         public static bool ShouldBeLifted(Expression expr)

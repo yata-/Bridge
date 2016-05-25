@@ -1,10 +1,13 @@
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using Mono.Cecil;
 using Newtonsoft.Json;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -188,15 +191,15 @@ namespace Bridge.Translator
 
                 if (member.Name == "Equals")
                 {
-                    tpl = string.Format("Bridge.Nullable.equals({{this}}, {{{0}}}, {1})", method.Parameters.First().Name, tpl);    
+                    tpl = string.Format(TypeNames.Nullable + ".equals({{this}}, {{{0}}}, {1})", method.Parameters.First().Name, tpl);    
                 }
                 else if (member.Name == "ToString")
                 {
-                    tpl = string.Format("Bridge.Nullable.toString({{this}}, {0})", tpl);
+                    tpl = string.Format(TypeNames.Nullable + ".toString({{this}}, {0})", tpl);
                 }
                 else if (member.Name == "GetHashCode")
                 {
-                    tpl = string.Format("Bridge.Nullable.getHashCode({{this}}, {0})", tpl);
+                    tpl = string.Format(TypeNames.Nullable + ".getHashCode({{this}}, {0})", tpl);
                 }
 
                 info = new Tuple<bool, bool, string>(info.Item1, info.Item2, tpl);

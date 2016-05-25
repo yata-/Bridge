@@ -1,11 +1,15 @@
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
+
 using System;
 using System.Linq;
-using ICSharpCode.NRefactory.CSharp.Resolver;
+
 
 namespace Bridge.Translator
 {
@@ -62,7 +66,7 @@ namespace Bridge.Translator
 
                     if (orr.IsLiftedOperator)
                     {
-                        this.Write(Bridge.Translator.Emitter.ROOT + ".Nullable.lift(");
+                        this.Write(TypeNames.Nullable + ".lift(");
                     }
 
                     this.Write(BridgeTypes.ToJsName(method.DeclaringType, this.Emitter));
@@ -298,7 +302,7 @@ namespace Bridge.Translator
             }
 
             bool nullable = orr != null && orr.IsLiftedOperator;
-            string root = Bridge.Translator.Emitter.ROOT + ".Nullable.";
+            string root = TypeNames.Nullable + ".";
 
             bool special = nullable;
 
@@ -666,7 +670,7 @@ namespace Bridge.Translator
 
                 if (orr.IsLiftedOperator)
                 {
-                    this.Write(Bridge.Translator.Emitter.ROOT + ".Nullable.");
+                    this.Write(TypeNames.Nullable + ".");
                     string action = "lift2";
                     
                     this.Write(action);
@@ -715,7 +719,7 @@ namespace Bridge.Translator
             {
                 if (orr.IsLiftedOperator)
                 {
-                    this.Write(Bridge.Translator.Emitter.ROOT + ".Nullable.");
+                    this.Write(TypeNames.Nullable + ".");
                     string action = "lift2";
 
                     this.Write(action);
