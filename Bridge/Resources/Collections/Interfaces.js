@@ -1,51 +1,51 @@
 ﻿// @source /Collections/Interfaces.js
 
-Bridge.define('Bridge.IEnumerable');
-Bridge.define('Bridge.IEnumerator');
-Bridge.define('Bridge.IEqualityComparer');
-Bridge.define('Bridge.ICollection', {
-    inherits: [Bridge.IEnumerable]
+Bridge.define('System.Collections.IEnumerable');
+Bridge.define('System.Collections.IEnumerator');
+Bridge.define('System.Collections.IEqualityComparer');
+Bridge.define('System.Collections.ICollection', {
+    inherits: [System.Collections.IEnumerable]
 });
 
-Bridge.define('Bridge.IEnumerator$1', function (T) { return {
-    inherits: [Bridge.IEnumerator]
+Bridge.define('System.Collections.Generic.IEnumerator$1', function (T) { return {
+    inherits: [System.Collections.IEnumerator]
 };
 });
 
-Bridge.define('Bridge.IEnumerable$1', function (T) {
+Bridge.define('System.Collections.Generic.IEnumerable$1', function (T) {
     return {
-        inherits: [Bridge.IEnumerable]
+        inherits: [System.Collections.IEnumerable]
     };
 });
 
-Bridge.define('Bridge.ICollection$1', function (T) {
+Bridge.define('System.Collections.Generic.ICollection$1', function (T) {
     return {
-        inherits: [Bridge.IEnumerable$1(T)]
+        inherits: [System.Collections.Generic.IEnumerable$1(T)]
     };
 });
 
-Bridge.define('Bridge.IEqualityComparer$1', function (T) {
+Bridge.define('System.Collections.Generic.IEqualityComparer$1', function (T) {
     return {};
 });
 
-Bridge.define('Bridge.IDictionary$2', function (TKey, TValue) {
+Bridge.define('System.Collections.Generic.IDictionary$2', function (TKey, TValue) {
     return {
-        inherits: [Bridge.IEnumerable$1(Bridge.KeyValuePair$2(TKey, TValue))]
+        inherits: [System.Collections.Generic.IEnumerable$1(System.Collections.Generic.KeyValuePair$2(TKey, TValue))]
     };
 });
 
-Bridge.define('Bridge.IList$1', function (T) {
+Bridge.define('System.Collections.Generic.IList$1', function (T) {
     return {
-        inherits: [Bridge.ICollection$1(T)]
+        inherits: [System.Collections.Generic.ICollection$1(T)]
     };
 });
 
-Bridge.define('Bridge.IComparer$1', function (T) {
+Bridge.define('System.Collections.Generic.IComparer$1', function (T) {
     return {};
 });
 
-Bridge.define('Bridge.ISet$1', function (T) {
+Bridge.define('System.Collections.Generic.ISet$1', function (T) {
     return {
-        inherits: [Bridge.ICollection$1(T)]
+        inherits: [System.Collections.Generic.ICollection$1(T)]
     };
 });

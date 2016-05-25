@@ -1,14 +1,14 @@
 ﻿// @source Text/RegularExpressions/RegexMatch.js
 
-Bridge.define("Bridge.Text.RegularExpressions.Match", {
+Bridge.define("System.Text.RegularExpressions.Match", {
     inherits: function () {
-        return [Bridge.Text.RegularExpressions.Group];
+        return [System.Text.RegularExpressions.Group];
     },
 
     statics: {
         config: {
             init: function () {
-                var empty = new Bridge.Text.RegularExpressions.Match(null, 1, "", 0, 0, 0);
+                var empty = new System.Text.RegularExpressions.Match(null, 1, "", 0, 0, 0);
 
                 this.getEmpty = function () {
                     return empty;
@@ -18,7 +18,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
 
         synchronized: function (match) {
             if (match == null) {
-                throw new Bridge.ArgumentNullException("match");
+                throw new System.ArgumentNullException("match");
             }
 
             // Populate all groups by looking at each one
@@ -29,7 +29,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
 
             for (i = 0; i < groupsCount; i++) {
                 group = groups.get(i);
-                Bridge.Text.RegularExpressions.Group.synchronized(group);
+                System.Text.RegularExpressions.Group.synchronized(group);
             }
 
             return match;
@@ -47,7 +47,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
     _textpos: 0,
 
     constructor: function (regex, capcount, text, begpos, len, startpos) {
-        var scope = Bridge.Text.RegularExpressions;
+        var scope = System.Text.RegularExpressions;
         var caps = [0, 0];
 
         scope.Group.prototype.$constructor.call(this, text, caps, 0);
@@ -74,7 +74,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
 
     getGroups: function () {
         if (this._groupColl == null) {
-            this._groupColl = new Bridge.Text.RegularExpressions.GroupCollection(this, null);
+            this._groupColl = new System.Text.RegularExpressions.GroupCollection(this, null);
         }
 
         return this._groupColl;
@@ -90,14 +90,14 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
 
     result: function (replacement) {
         if (replacement == null) {
-            throw new Bridge.ArgumentNullException("replacement");
+            throw new System.ArgumentNullException("replacement");
         }
 
         if (this._regex == null) {
-            throw new Bridge.NotSupportedException("Result cannot be called on a failed Match.");
+            throw new System.NotSupportedException("Result cannot be called on a failed Match.");
         }
 
-        var repl = Bridge.Text.RegularExpressions.RegexParser.parseReplacement(replacement, this._regex._caps, this._regex._capsize, this._regex._capnames, this._regex._options);
+        var repl = System.Text.RegularExpressions.RegexParser.parseReplacement(replacement, this._regex._caps, this._regex._capsize, this._regex._capnames, this._regex._options);
         //TODO: cache
 
         return repl.replacement(this);
@@ -203,15 +203,15 @@ Bridge.define("Bridge.Text.RegularExpressions.Match", {
     }
 });
 
-Bridge.define("Bridge.Text.RegularExpressions.MatchSparse", {
+Bridge.define("System.Text.RegularExpressions.MatchSparse", {
     inherits: function () {
-        return [Bridge.Text.RegularExpressions.Match];
+        return [System.Text.RegularExpressions.Match];
     },
 
     _caps: null,
 
     constructor: function (regex, caps, capcount, text, begpos, len, startpos) {
-        var scope = Bridge.Text.RegularExpressions;
+        var scope = System.Text.RegularExpressions;
         scope.Match.prototype.$constructor.call(this, regex, capcount, text, begpos, len, startpos);
 
         this._caps = caps;
@@ -219,7 +219,7 @@ Bridge.define("Bridge.Text.RegularExpressions.MatchSparse", {
 
     getGroups: function () {
         if (this._groupColl == null) {
-            this._groupColl = new Bridge.Text.RegularExpressions.GroupCollection(this, this._caps);
+            this._groupColl = new System.Text.RegularExpressions.GroupCollection(this, this._caps);
         }
         return this._groupColl;
     },

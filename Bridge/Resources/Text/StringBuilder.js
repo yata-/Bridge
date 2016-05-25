@@ -1,6 +1,6 @@
 // @source Text/StringBuilder.js
 
-Bridge.define("Bridge.Text.StringBuilder", {
+Bridge.define("System.Text.StringBuilder", {
     constructor: function () {
         this.buffer = [],
         this.capacity = 16;
@@ -72,7 +72,7 @@ Bridge.define("Bridge.Text.StringBuilder", {
             if (count === 0) {
                 return this;
             } else if (count < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("count", "cannot be less than zero");
+                throw new System.ArgumentOutOfRangeException("count", "cannot be less than zero");
             }
 
             value = Array(count + 1).join(value).toString();
@@ -155,7 +155,7 @@ Bridge.define("Bridge.Text.StringBuilder", {
             if (count === 0) {
                 return this;
             } else if (count < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("count", "cannot be less than zero");
+                throw new System.ArgumentOutOfRangeException("count", "cannot be less than zero");
             }
 
             value = Array(count + 1).join(value).toString();
@@ -204,15 +204,15 @@ Bridge.define("Bridge.Text.StringBuilder", {
 
     checkLimits: function (value, startIndex, length) {
         if (length < 0) {
-            throw new Bridge.ArgumentOutOfRangeException("length", "must be non-negative");
+            throw new System.ArgumentOutOfRangeException("length", "must be non-negative");
         }
 
         if (startIndex < 0) {
-            throw new Bridge.ArgumentOutOfRangeException("startIndex", "startIndex cannot be less than zero");
+            throw new System.ArgumentOutOfRangeException("startIndex", "startIndex cannot be less than zero");
         }
 
         if (length > value.length - startIndex) {
-            throw new Bridge.ArgumentOutOfRangeException("Index and length must refer to a location within the string");
+            throw new System.ArgumentOutOfRangeException("Index and length must refer to a location within the string");
         }
     }
 });

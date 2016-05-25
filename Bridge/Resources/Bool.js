@@ -5,9 +5,9 @@
         falseString: "False",
 
         is: function (obj, type) {
-            if (type === Bridge.IComparable ||
-                type.$$name === "Bridge.IEquatable$1$Boolean" ||
-                type.$$name === "Bridge.IComparable$1$Boolean") {
+            if (type === System.IComparable ||
+                type.$$name === "System.IEquatable$1$Boolean" ||
+                type.$$name === "System.IComparable$1$Boolean") {
                 return true;
             }
 
@@ -23,18 +23,18 @@
         },
 
         toString: function (v) {
-            return v ? Bridge.Boolean.trueString : Bridge.Boolean.falseString;
+            return v ? System.Boolean.trueString : System.Boolean.falseString;
         },
 
         parse: function (value) {
             if (!Bridge.hasValue(value)) {
-                throw new Bridge.ArgumentNullException("value");
+                throw new System.ArgumentNullException("value");
             }
 
             var result = { v: false };
 
-            if (!Bridge.Boolean.tryParse(value, result)) {
-                throw new Bridge.FormatException("Bad format for Boolean value");
+            if (!System.Boolean.tryParse(value, result)) {
+                throw new System.FormatException("Bad format for Boolean value");
             }
 
             return result.v;
@@ -47,12 +47,12 @@
                 return false;
             }
 
-            if (Bridge.String.equals(Bridge.Boolean.trueString, value, 5)) {
+            if (Bridge.String.equals(System.Boolean.trueString, value, 5)) {
                 result.v = true;
                 return true;
             }
 
-            if (Bridge.String.equals(Bridge.Boolean.falseString, value, 5)) {
+            if (Bridge.String.equals(System.Boolean.falseString, value, 5)) {
                 result.v = false;
                 return true;
             }
@@ -61,7 +61,7 @@
                 end = value.length-1;
  
             while (start < value.length) {
-                if (!Bridge.Char.isWhiteSpace(value[start]) && !Bridge.Char.isNull(value.charCodeAt(start))) {
+                if (!System.Char.isWhiteSpace(value[start]) && !System.Char.isNull(value.charCodeAt(start))) {
                     break;
                 }
 
@@ -69,7 +69,7 @@
             }
  
             while (end >= start) {
-                if (!Bridge.Char.isWhiteSpace(value[end]) && !Bridge.Char.isNull(value.charCodeAt(end))) {
+                if (!System.Char.isWhiteSpace(value[end]) && !System.Char.isNull(value.charCodeAt(end))) {
                     break;
                 }
 
@@ -78,12 +78,12 @@
  
             value = value.substr(start, end - start + 1);
 
-            if (Bridge.String.equals(Bridge.Boolean.trueString, value, 5)) {
+            if (Bridge.String.equals(System.Boolean.trueString, value, 5)) {
                 result.v = true;
                 return true;
             }
 
-            if (Bridge.String.equals(Bridge.Boolean.falseString, value, 5)) {
+            if (Bridge.String.equals(System.Boolean.falseString, value, 5)) {
                 result.v = false;
                 return true;
             }
@@ -92,4 +92,4 @@
         }
     };
 
-    Bridge.Boolean = _boolean;
+    System.Boolean = _boolean;

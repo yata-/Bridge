@@ -196,6 +196,11 @@
                 extend = extend();
             }
 
+            if (extend && !extend[0])
+            {
+                var ttt = 0;
+            }
+
             base = extend ? extend[0].prototype : this.prototype;
 
             // Instantiate a base class (but only create the instance,

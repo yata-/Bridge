@@ -10,10 +10,10 @@
                 return true;
             }
 
-            if (type === Bridge.IEnumerable ||
-                type.$$name && Bridge.String.startsWith(type.$$name, "Bridge.IEnumerable$1") ||
-                type.$$name && Bridge.String.startsWith(type.$$name, "Bridge.IComparable$1") ||
-                type.$$name && Bridge.String.startsWith(type.$$name, "Bridge.IEquatable$1")) {
+            if (type === System.Collections.IEnumerable ||
+                type.$$name && Bridge.String.startsWith(type.$$name, "System.Collections.Generic.IEnumerable$1") ||
+                type.$$name && Bridge.String.startsWith(type.$$name, "System.IComparable$1") ||
+                type.$$name && Bridge.String.startsWith(type.$$name, "System.IEquatable$1")) {
                 return true;
             }
 
@@ -64,7 +64,7 @@
             if (count >= 0) {
                 return String(Array(count + 1).join(String.fromCharCode(c)));
             } else {
-                throw new Bridge.ArgumentOutOfRangeException("count", "cannot be less than zero");
+                throw new System.ArgumentOutOfRangeException("count", "cannot be less than zero");
             }
         },
 
@@ -97,7 +97,7 @@
             index = parseInt(index, 10);
 
             if (index > args.length - 1) {
-                throw new Bridge.FormatException("Input string was not in a correct format.");
+                throw new System.FormatException("Input string was not in a correct format.");
             }
 
             value = args[index];
@@ -106,7 +106,7 @@
                 value = "";
             }
 
-            if (formatStr && Bridge.is(value, Bridge.IFormattable)) {
+            if (formatStr && Bridge.is(value, System.IFormattable)) {
                 value = Bridge.format(value, formatStr);
             } else {
                 value = "" + value;
@@ -200,7 +200,7 @@
 
         contains: function (str, value) {
             if (value == null) {
-                throw new Bridge.ArgumentNullException();
+                throw new System.ArgumentNullException();
             }
 
             if (str == null) {
@@ -212,7 +212,7 @@
 
         indexOfAny: function (str, anyOf) {
             if (anyOf == null) {
-                throw new Bridge.ArgumentNullException();
+                throw new System.ArgumentNullException();
             }
 
             if (str == null || str === "") {
@@ -222,17 +222,17 @@
             var startIndex = (arguments.length > 2) ? arguments[2] : 0;
 
             if (startIndex < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("startIndex", "startIndex cannot be less than zero");
+                throw new System.ArgumentOutOfRangeException("startIndex", "startIndex cannot be less than zero");
             }
 
             var length = (arguments.length > 3) ? arguments[3] : str.length - startIndex;
 
             if (length < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("length", "must be non-negative");
+                throw new System.ArgumentOutOfRangeException("length", "must be non-negative");
             }
 
             if (length > str.length - startIndex) {
-                throw new Bridge.ArgumentOutOfRangeException("Index and length must refer to a location within the string");
+                throw new System.ArgumentOutOfRangeException("Index and length must refer to a location within the string");
             }
 
             var s = str.substr(startIndex, length);
@@ -251,7 +251,7 @@
 
         indexOf: function (str, value) {
             if (value == null) {
-                throw new Bridge.ArgumentNullException();
+                throw new System.ArgumentNullException();
             }
 
             if (str == null || str === "") {
@@ -261,7 +261,7 @@
             var startIndex = (arguments.length > 2) ? arguments[2] : 0;
 
             if (startIndex < 0 || startIndex > str.length) {
-                throw new Bridge.ArgumentOutOfRangeException("startIndex", "startIndex cannot be less than zero and must refer to a location within the string");
+                throw new System.ArgumentOutOfRangeException("startIndex", "startIndex cannot be less than zero and must refer to a location within the string");
             }
 
             if (value === "") {
@@ -271,11 +271,11 @@
             var length = (arguments.length > 3) ? arguments[3] : str.length - startIndex;
 
             if (length < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("length", "must be non-negative");
+                throw new System.ArgumentOutOfRangeException("length", "must be non-negative");
             }
 
             if (length > str.length - startIndex) {
-                throw new Bridge.ArgumentOutOfRangeException("Index and length must refer to a location within the string");
+                throw new System.ArgumentOutOfRangeException("Index and length must refer to a location within the string");
             }
 
             var s = str.substr(startIndex, length);
@@ -311,11 +311,11 @@
                     // StringComparison
                     switch (arguments[2]) {
                         case 1: // CurrentCultureIgnoreCase
-                            return strA.localeCompare(strB, Bridge.CultureInfo.getCurrentCulture().name, { sensitivity: "accent" });
+                            return strA.localeCompare(strB, System.Globalization.CultureInfo.getCurrentCulture().name, { sensitivity: "accent" });
                         case 2: // InvariantCulture
-                            return strA.localeCompare(strB, Bridge.CultureInfo.invariantCulture.name);
+                            return strA.localeCompare(strB, System.Globalization.CultureInfo.invariantCulture.name);
                         case 3: // InvariantCultureIgnoreCase
-                            return strA.localeCompare(strB, Bridge.CultureInfo.invariantCulture.name, { sensitivity: "accent" });
+                            return strA.localeCompare(strB, System.Globalization.CultureInfo.invariantCulture.name, { sensitivity: "accent" });
                         case 4: // Ordinal
                             return (strA === strB) ? 0 : ((strA > strB) ? 1 : -1);
                         case 5: // OrdinalIgnoreCase
@@ -343,11 +343,11 @@
 
         toCharArray: function (str, startIndex, length) {
             if (startIndex < 0 || startIndex > str.length || startIndex > str.length - length) {
-                throw new Bridge.ArgumentOutOfRangeException("startIndex", "startIndex cannot be less than zero and must refer to a location within the string");
+                throw new System.ArgumentOutOfRangeException("startIndex", "startIndex cannot be less than zero and must refer to a location within the string");
             }
 
             if (length < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("length", "must be non-negative");
+                throw new System.ArgumentOutOfRangeException("length", "must be non-negative");
             }
 
             if (!Bridge.hasValue(startIndex)) {

@@ -1,6 +1,6 @@
 ﻿// @source Text/RegularExpressions/RegexRunner.js
 
-Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
+Bridge.define("System.Text.RegularExpressions.RegexRunner", {
     statics: {},
 
     _runregex: null,
@@ -17,13 +17,13 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
 
     constructor: function (regex) {
         if (regex == null) {
-            throw new Bridge.ArgumentNullException("regex");
+            throw new System.ArgumentNullException("regex");
         }
 
         this._runregex = regex;
 
         var options = regex.getOptions();
-        var optionsEnum = Bridge.Text.RegularExpressions.RegexOptions;
+        var optionsEnum = System.Text.RegularExpressions.RegexOptions;
 
         var isCaseInsensitive = (options & optionsEnum.IgnoreCase) === optionsEnum.IgnoreCase;
         var isMultiline = (options & optionsEnum.Multiline) === optionsEnum.Multiline;
@@ -32,13 +32,13 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
 
         var timeoutMs = regex._matchTimeout.getTotalMilliseconds();
 
-        this._netEngine = new Bridge.Text.RegularExpressions.RegexNetEngine(regex._pattern, isCaseInsensitive, isMultiline, isSingleline, isIgnoreWhitespace, timeoutMs);
+        this._netEngine = new System.Text.RegularExpressions.RegexNetEngine(regex._pattern, isCaseInsensitive, isMultiline, isSingleline, isIgnoreWhitespace, timeoutMs);
 
     },
 
     run: function (quick, prevlen, input, beginning, length, startat) {
         if (startat < 0 || startat > input.Length) {
-            throw new Bridge.ArgumentOutOfRangeException("start", "Start index cannot be less than 0 or greater than input length.");
+            throw new System.ArgumentOutOfRangeException("start", "Start index cannot be less than 0 or greater than input length.");
         }
 
         if (length < 0 || length > input.Length) {
@@ -66,7 +66,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
 
         if (this._prevlen === 0) {
             if (this._runtextstart === stoppos) {
-                return Bridge.Text.RegularExpressions.Match.getEmpty();
+                return System.Text.RegularExpressions.Match.getEmpty();
             }
 
             this._runtextstart += bump;
@@ -93,16 +93,16 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
         }
 
         if (!jsMatch.success) {
-            return Bridge.Text.RegularExpressions.Match.getEmpty();
+            return System.Text.RegularExpressions.Match.getEmpty();
         }
 
         var patternInfo = this.parsePattern();
         var match;
 
         if (patternInfo.sparseSettings.isSparse) {
-            match = new Bridge.Text.RegularExpressions.MatchSparse(this._runregex, patternInfo.sparseSettings.sparseSlotNumberMap, jsMatch.groups.length, this._runtext, 0, this._runtext.length, this._runtextstart);
+            match = new System.Text.RegularExpressions.MatchSparse(this._runregex, patternInfo.sparseSettings.sparseSlotNumberMap, jsMatch.groups.length, this._runtext, 0, this._runtext.length, this._runtextstart);
         } else {
-            match = new Bridge.Text.RegularExpressions.Match(this._runregex, jsMatch.groups.length, this._runtext, 0, this._runtext.length, this._runtextstart);
+            match = new System.Text.RegularExpressions.Match(this._runregex, jsMatch.groups.length, this._runtext, 0, this._runtext.length, this._runtextstart);
         }
 
         var jsGroup;

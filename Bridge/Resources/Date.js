@@ -1,6 +1,6 @@
 ﻿    // @source Date.js
 
-Bridge.define("Bridge.DayOfWeek", {
+Bridge.define("System.DayOfWeek", {
     $enum: true,
     $statics: {
         sunday: 0,
@@ -31,7 +31,7 @@ var date = {
         },
 
         timeOfDay: function (dt) {
-            return new Bridge.TimeSpan((dt - new Date(dt.getFullYear(), dt.getMonth(), dt.getDate())) * 10000);
+            return new System.TimeSpan((dt - new Date(dt.getFullYear(), dt.getMonth(), dt.getDate())) * 10000);
         },
 
         isUseGenitiveForm: function (format, index, tokenLen, patternToMatch) {
@@ -69,7 +69,7 @@ var date = {
 
         format: function (date, format, provider) {
             var me = this,
-                df = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.DateTimeFormatInfo),
+                df = (provider || System.Globalization.CultureInfo.getCurrentCulture()).getFormat(System.Globalization.DateTimeFormatInfo),
                 year = date.getFullYear(),
                 month = date.getMonth(),
                 dayOfMonth = date.getDate(),
@@ -266,7 +266,7 @@ var date = {
             if (!isNaN(dt)) {
                 return new Date(dt);
             } else if (!silent) {
-                throw new Bridge.FormatException("String does not contain a valid string representation of a date and time.");
+                throw new System.FormatException("String does not contain a valid string representation of a date and time.");
             }
         },
 
@@ -291,10 +291,10 @@ var date = {
                     return null;
                 }
 
-                throw new Bridge.FormatException("String does not contain a valid string representation of a date and time.");
+                throw new System.FormatException("String does not contain a valid string representation of a date and time.");
             }
 
-            var df = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.DateTimeFormatInfo),
+            var df = (provider || System.Globalization.CultureInfo.getCurrentCulture()).getFormat(System.Globalization.DateTimeFormatInfo),
                 am = df.amDesignator,
                 pm = df.pmDesignator,
                 idx = 0,
@@ -323,7 +323,7 @@ var date = {
                 formats;
 
             if (str == null) {
-                throw new Bridge.ArgumentNullException("str");
+                throw new System.ArgumentNullException("str");
             }
 
             format = format || "G";
@@ -671,7 +671,7 @@ var date = {
                     return null;
                 }
 
-                throw new Bridge.FormatException("String does not contain a valid string representation of a date and time.");
+                throw new System.FormatException("String does not contain a valid string representation of a date and time.");
             }
 
             if (hh < 12 && tt === pm) {
@@ -787,7 +787,7 @@ var date = {
         },
 
         subdd: function (a, b) {
-            return Bridge.hasValue(a) && Bridge.hasValue(b) ? (new Bridge.TimeSpan(Bridge.Date.dateDiff(a, b) * 10000)) : null;
+            return Bridge.hasValue(a) && Bridge.hasValue(b) ? (new System.TimeSpan(Bridge.Date.dateDiff(a, b) * 10000)) : null;
         },
 
         gt: function (a, b) {

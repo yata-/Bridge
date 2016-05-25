@@ -6,15 +6,15 @@
         },
 
         getValue: function (obj) {
-            if (!Bridge.Nullable.hasValue(obj)) {
-                throw new Bridge.InvalidOperationException("Nullable instance doesn't have a value.");
+            if (!System.Nullable.hasValue(obj)) {
+                throw new System.InvalidOperationException("Nullable instance doesn't have a value.");
             }
 
             return obj;
         },
 
         getValueOrDefault: function (obj, defValue) {
-            return Bridge.Nullable.hasValue(obj) ? obj : defValue;
+            return System.Nullable.hasValue(obj) ? obj : defValue;
         },
 
         add: function (a, b) {
@@ -176,5 +176,5 @@
         }
     };
 
-    Bridge.Nullable = nullable;
-    Bridge.hasValue = Bridge.Nullable.hasValue;
+    System.Nullable = nullable;
+    Bridge.hasValue = System.Nullable.hasValue;

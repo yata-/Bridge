@@ -1,14 +1,14 @@
 ﻿// @source Text/RegularExpressions/RegexGroup.js
 
-Bridge.define("Bridge.Text.RegularExpressions.Group", {
+Bridge.define("System.Text.RegularExpressions.Group", {
     inherits: function () {
-        return [Bridge.Text.RegularExpressions.Capture];
+        return [System.Text.RegularExpressions.Capture];
     },
 
     statics: {
         config: {
             init: function () {
-                var empty = new Bridge.Text.RegularExpressions.Group("", [], 0);
+                var empty = new System.Text.RegularExpressions.Group("", [], 0);
 
                 this.getEmpty = function () {
                     return empty;
@@ -18,7 +18,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Group", {
 
         synchronized: function (group) {
             if (group == null) {
-                throw new Bridge.ArgumentNullException("group");
+                throw new System.ArgumentNullException("group");
             }
 
             // force Captures to be computed.
@@ -37,7 +37,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Group", {
     _capColl: null,
 
     constructor: function (text, caps, capcount) {
-        var scope = Bridge.Text.RegularExpressions;
+        var scope = System.Text.RegularExpressions;
         var index = capcount === 0 ? 0 : caps[(capcount - 1) * 2];
         var length = capcount === 0 ? 0 : caps[(capcount * 2) - 1];
 
@@ -53,7 +53,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Group", {
 
     getCaptures: function () {
         if (this._capColl == null) {
-            this._capColl = new Bridge.Text.RegularExpressions.CaptureCollection(this);
+            this._capColl = new System.Text.RegularExpressions.CaptureCollection(this);
         }
 
         return this._capColl;

@@ -1,49 +1,49 @@
 ﻿    // @source TimeSpan.js
 
-    Bridge.define("Bridge.TimeSpan", {
-        inherits: [Bridge.IComparable],
+    Bridge.define("System.TimeSpan", {
+        inherits: [System.IComparable],
         $struct: true,
         statics: {
             fromDays: function (value) {
-                return new Bridge.TimeSpan(value * 864e9);
+                return new System.TimeSpan(value * 864e9);
             },
 
             fromHours: function (value) {
-                return new Bridge.TimeSpan(value * 36e9);
+                return new System.TimeSpan(value * 36e9);
             },
 
             fromMilliseconds: function (value) {
-                return new Bridge.TimeSpan(value * 1e4);
+                return new System.TimeSpan(value * 1e4);
             },
 
             fromMinutes: function (value) {
-                return new Bridge.TimeSpan(value * 6e8);
+                return new System.TimeSpan(value * 6e8);
             },
 
             fromSeconds: function (value) {
-                return new Bridge.TimeSpan(value * 1e7);
+                return new System.TimeSpan(value * 1e7);
             },
 
             fromTicks: function (value) {
-                return new Bridge.TimeSpan(value);
+                return new System.TimeSpan(value);
             },
 
             constructor: function () {
-                this.zero = new Bridge.TimeSpan(Bridge.Long.Zero);
-                this.maxValue = new Bridge.TimeSpan(Bridge.Long.MaxValue);
-                this.minValue = new Bridge.TimeSpan(Bridge.Long.MinValue);
+                this.zero = new System.TimeSpan(System.Int64.Zero);
+                this.maxValue = new System.TimeSpan(System.Int64.MaxValue);
+                this.minValue = new System.TimeSpan(System.Int64.MinValue);
             },
 
             getDefaultValue: function () {
-                return new Bridge.TimeSpan(Bridge.Long.Zero);
+                return new System.TimeSpan(System.Int64.Zero);
             },
 
             neg: function (t) {
-                return Bridge.hasValue(t) ? (new Bridge.TimeSpan(t.ticks.neg())) : null;
+                return Bridge.hasValue(t) ? (new System.TimeSpan(t.ticks.neg())) : null;
             },
 
             sub: function (t1, t2) {
-                return Bridge.hasValue(t1) && Bridge.hasValue(t2) ? (new Bridge.TimeSpan(t1.ticks.sub(t2.ticks))) : null;
+                return Bridge.hasValue(t1) && Bridge.hasValue(t2) ? (new System.TimeSpan(t1.ticks.sub(t2.ticks))) : null;
             },
 
             eq: function (t1, t2) {
@@ -55,11 +55,11 @@
             },
 
             plus: function (t) {
-                return Bridge.hasValue(t) ? (new Bridge.TimeSpan(t.ticks)) : null;
+                return Bridge.hasValue(t) ? (new System.TimeSpan(t.ticks)) : null;
             },
 
             add: function (t1, t2) {
-                return Bridge.hasValue(t1) && Bridge.hasValue(t2) ? (new Bridge.TimeSpan(t1.ticks.add(t2.ticks))) : null;
+                return Bridge.hasValue(t1) && Bridge.hasValue(t2) ? (new System.TimeSpan(t1.ticks.add(t2.ticks))) : null;
             },
 
             gt: function (a, b) {
@@ -80,16 +80,16 @@
         },
 
         constructor: function () {
-            this.ticks = Bridge.Long.Zero;
+            this.ticks = System.Int64.Zero;
 
             if (arguments.length === 1) {
-                this.ticks = arguments[0] instanceof Bridge.Long ? arguments[0] : new Bridge.Long(arguments[0]);
+                this.ticks = arguments[0] instanceof System.Int64 ? arguments[0] : new System.Int64(arguments[0]);
             } else if (arguments.length === 3) {
-                this.ticks = new Bridge.Long(arguments[0]).mul(60).add(arguments[1]).mul(60).add(arguments[2]).mul(1e7);
+                this.ticks = new System.Int64(arguments[0]).mul(60).add(arguments[1]).mul(60).add(arguments[2]).mul(1e7);
             } else if (arguments.length === 4) {
-                this.ticks = new Bridge.Long(arguments[0]).mul(24).add(arguments[1]).mul(60).add(arguments[2]).mul(60).add(arguments[3]).mul(1e7);
+                this.ticks = new System.Int64(arguments[0]).mul(24).add(arguments[1]).mul(60).add(arguments[2]).mul(60).add(arguments[3]).mul(1e7);
             } else if (arguments.length === 5) {
-                this.ticks = new Bridge.Long(arguments[0]).mul(24).add(arguments[1]).mul(60).add(arguments[2]).mul(60).add(arguments[3]).mul(1e3).add(arguments[4]).mul(1e4);
+                this.ticks = new System.Int64(arguments[0]).mul(24).add(arguments[1]).mul(60).add(arguments[2]).mul(60).add(arguments[3]).mul(1e3).add(arguments[4]).mul(1e4);
             }
         },
 
@@ -142,19 +142,19 @@
         },
 
         add: function (ts) {
-            return new Bridge.TimeSpan(this.ticks.add(ts.ticks));
+            return new System.TimeSpan(this.ticks.add(ts.ticks));
         },
 
         subtract: function (ts) {
-            return new Bridge.TimeSpan(this.ticks.sub(ts.ticks));
+            return new System.TimeSpan(this.ticks.sub(ts.ticks));
         },
 
         duration: function () {
-            return new Bridge.TimeSpan(this.ticks.abs());
+            return new System.TimeSpan(this.ticks.abs());
         },
 
         negate: function () {
-            return new Bridge.TimeSpan(this.ticks.neg());
+            return new System.TimeSpan(this.ticks.neg());
         },
 
         compareTo: function (other) {
@@ -181,7 +181,7 @@
             var ticks = this.ticks,
                 result = "",
                 me = this,
-                dtInfo = (provider || Bridge.CultureInfo.getCurrentCulture()).getFormat(Bridge.DateTimeFormatInfo),
+                dtInfo = (provider || System.Globalization.CultureInfo.getCurrentCulture()).getFormat(System.Globalization.DateTimeFormatInfo),
                 format = function (t, n) {
                     return Bridge.String.alignString((t | 0).toString(), n || 2, "0", 2);
                 };
@@ -239,4 +239,4 @@
         }
     });
 
-    Bridge.Class.addExtend(Bridge.TimeSpan, [Bridge.IComparable$1(Bridge.TimeSpan), Bridge.IEquatable$1(Bridge.TimeSpan)]);
+    Bridge.Class.addExtend(System.TimeSpan, [System.IComparable$1(System.TimeSpan), System.IEquatable$1(System.TimeSpan)]);

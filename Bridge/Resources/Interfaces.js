@@ -1,6 +1,6 @@
 ﻿    // @source Interfaces.js
 
-    Bridge.define("Bridge.IFormattable", {
+    Bridge.define("System.IFormattable", {
         statics: {
             $is: function (obj) {
                 if (Bridge.isNumber(obj)) {
@@ -11,21 +11,21 @@
                     return true;
                 }
 
-                return Bridge.is(obj, Bridge.IFormattable, true);
+                return Bridge.is(obj, System.IFormattable, true);
             }
         }
     });
 
-    Bridge.define("Bridge.IComparable");
+    Bridge.define("System.IComparable");
 
-    Bridge.define("Bridge.IFormatProvider");
+    Bridge.define("System.IFormatProvider");
 
-    Bridge.define("Bridge.ICloneable");
+    Bridge.define("System.ICloneable");
 
-    Bridge.define('Bridge.IComparable$1', function (T) { return {}; });
+    Bridge.define('System.IComparable$1', function (T) { return {}; });
 
-    Bridge.define('Bridge.IEquatable$1', function (T) { return {}; });
+    Bridge.define('System.IEquatable$1', function (T) { return {}; });
 
     Bridge.define("Bridge.IPromise");
 
-    Bridge.define("Bridge.IDisposable");
+    Bridge.define("System.IDisposable");
