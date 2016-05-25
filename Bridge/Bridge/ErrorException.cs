@@ -1,9 +1,9 @@
-using Bridge;
+using System;
 
-namespace System
+namespace Bridge
 {
     [External]
-    [Name("Bridge.ErrorException")]
+    //[Name("Bridge.ErrorException")]
     public class ErrorException : Exception, IBridgeClass
     {
         public virtual Error Error
