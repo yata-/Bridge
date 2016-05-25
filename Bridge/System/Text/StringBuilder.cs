@@ -3,7 +3,6 @@ using Bridge;
 namespace System.Text
 {
     [External]
-    [Namespace("Bridge.Text")]
     public class StringBuilder : IBridgeClass
     {
         public StringBuilder()
@@ -24,7 +23,7 @@ namespace System.Text
         {
         }
 
-        [Template("new Bridge.Text.StringBuilder(\"\", {capacity})")]
+        [Template("new System.Text.StringBuilder(\"\", {capacity})")]
         public StringBuilder(int capacity)
             : this(string.Empty, capacity)
         {

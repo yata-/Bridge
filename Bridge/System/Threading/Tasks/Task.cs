@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace System.Threading.Tasks
 {
     [External]
-    [Name("Bridge.Task")]
+    //[Name("Bridge.Task")]
     public class Task : IDisposable, IBridgeClass
     {
         public Task(Action action)
@@ -106,7 +106,7 @@ namespace System.Threading.Tasks
 
     [External]
     [IgnoreGeneric]
-    [Name("Bridge.Task")]
+    [Name("System.Threading.Tasks.Task")]
     public class Task<TResult> : Task
     {
         public Task(Func<TResult> function)

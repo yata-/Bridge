@@ -4,7 +4,7 @@ namespace System
 {
     [External]
     [Constructor("")]
-    [Name("Bridge.Nullable")]
+    [Name("System.Nullable")]
     public struct Nullable<T> where T : struct
     {
         [Template("{0}")]
@@ -14,7 +14,7 @@ namespace System
 
         public bool HasValue
         {
-            [Template("Bridge.Nullable.hasValue({this})")]
+            [Template("System.Nullable.hasValue({this})")]
             get
             {
                 return false;
@@ -23,20 +23,20 @@ namespace System
 
         public T Value
         {
-            [Template("Bridge.Nullable.getValue({this})")]
+            [Template("System.Nullable.getValue({this})")]
             get
             {
                 return default(T);
             }
         }
 
-        [Template("Bridge.Nullable.getValueOrDefault({this}, {T:default})")]
+        [Template("System.Nullable.getValueOrDefault({this}, {T:default})")]
         public T GetValueOrDefault()
         {
             return default(T);
         }
 
-        [Template("Bridge.Nullable.getValueOrDefault({this}, {0})")]
+        [Template("System.Nullable.getValueOrDefault({this}, {0})")]
         public T GetValueOrDefault(T defaultValue)
         {
             return default(T);
@@ -47,19 +47,19 @@ namespace System
             return null;
         }
 
-        [Template("Bridge.Nullable.getValue({this})")]
+        [Template("System.Nullable.getValue({this})")]
         public static explicit operator T(T? value)
         {
             return default(T);
         }
 
-        [Template("Bridge.Nullable.equalsT({this}, {other})")]
+        [Template("System.Nullable.equalsT({this}, {other})")]
         public override extern bool Equals(object other);
 
-        [Template("Bridge.Nullable.getHashCode({this})")]
+        [Template("System.Nullable.getHashCode({this})")]
         public override extern int GetHashCode();
 
-        [Template("Bridge.Nullable.toString({this})")]
+        [Template("System.Nullable.toString({this})")]
         public override extern string ToString();
     }
 }

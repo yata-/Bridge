@@ -4,7 +4,6 @@ namespace System.Threading.Tasks
 {
     [External]
     [Enum(Emit.Name)]
-    [Namespace("Bridge")]
     public enum TaskStatus
     {
         /// <summary>

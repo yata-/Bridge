@@ -3,7 +3,6 @@ using Bridge;
 namespace System
 {
     [External]
-    [Namespace("Bridge")]
     public class InvalidCastException : Exception, IBridgeClass
     {
         public InvalidCastException()

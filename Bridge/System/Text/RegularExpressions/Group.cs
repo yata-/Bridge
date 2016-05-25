@@ -5,7 +5,6 @@ namespace System.Text.RegularExpressions
     /// <summary>
     /// Represents the results from a single capturing group.
     /// </summary>
-    [Namespace("Bridge.Text.RegularExpressions")]
     [External]
     public class Group : Capture
     {

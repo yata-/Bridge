@@ -3,7 +3,6 @@ using Bridge;
 namespace System.Globalization
 {
     [External]
-    [Namespace("Bridge")]
     public sealed class DateTimeFormatInfo : IFormatProvider, ICloneable, IBridgeClass
     {
         public DateTimeFormatInfo()

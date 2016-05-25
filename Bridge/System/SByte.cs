@@ -3,7 +3,7 @@ using Bridge;
 namespace System
 {
     [External]
-    [Name("Bridge.SByte")]
+    //[Name("System.SByte")]
     [Constructor("Number")]
     public struct SByte : IComparable, IComparable<SByte>, IEquatable<SByte>, IFormattable
     {
@@ -17,26 +17,26 @@ namespace System
         [InlineConst]
         public const sbyte MaxValue = 127;
 
-        [Template("Bridge.SByte.parse({s})")]
+        [Template("System.SByte.parse({s})")]
         public static sbyte Parse(string s)
         {
             return 0;
         }
 
-        [Template("Bridge.SByte.parse({s}, {radix})")]
+        [Template("System.SByte.parse({s}, {radix})")]
         public static sbyte Parse(string s, int radix)
         {
             return 0;
         }
 
-        [Template("Bridge.SByte.tryParse({s}, {result})")]
+        [Template("System.SByte.tryParse({s}, {result})")]
         public static bool TryParse(string s, out sbyte result)
         {
             result = 0;
             return false;
         }
 
-        [Template("Bridge.SByte.tryParse({s}, {result}, {radix})")]
+        [Template("System.SByte.tryParse({s}, {result}, {radix})")]
         public static bool TryParse(string s, out sbyte result, int radix)
         {
             result = 0;
@@ -48,25 +48,25 @@ namespace System
             return null;
         }
 
-        [Template("Bridge.SByte.format({this}, {format})")]
+        [Template("System.SByte.format({this}, {format})")]
         public string Format(string format)
         {
             return null;
         }
 
-        [Template("Bridge.SByte.format({this}, {format}, {provider})")]
+        [Template("System.SByte.format({this}, {format}, {provider})")]
         public string Format(string format, IFormatProvider provider)
         {
             return null;
         }
 
-        [Template("Bridge.SByte.format({this}, {format})")]
+        [Template("System.SByte.format({this}, {format})")]
         public string ToString(string format)
         {
             return null;
         }
 
-        [Template("Bridge.SByte.format({this}, {format}, {provider})")]
+        [Template("System.SByte.format({this}, {format}, {provider})")]
         public string ToString(string format, IFormatProvider provider)
         {
             return null;

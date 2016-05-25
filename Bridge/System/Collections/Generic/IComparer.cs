@@ -2,7 +2,6 @@ using Bridge;
 
 namespace System.Collections.Generic
 {
-    [Namespace("Bridge")]
     [External]
     public interface IComparer<in T>
     {

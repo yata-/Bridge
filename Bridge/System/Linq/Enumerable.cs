@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace System.Linq
 {
     [External]
-    [Name("Bridge.Linq.Enumerable")]
+    [Name("System.Linq.Enumerable")]
     public static class Enumerable
     {
         /// <summary>
@@ -29,7 +29,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).aggregate({func})")]
+        [Template("System.Linq.Enumerable.from({source}).aggregate({func})")]
         public static TSource Aggregate<TSource>(this IEnumerable<TSource> source, Func<TSource, TSource, TSource> func)
         {
             return default(TSource);
@@ -60,7 +60,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or func is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).aggregate({seed}, {func})")]
+        [Template("System.Linq.Enumerable.from({source}).aggregate({seed}, {func})")]
         public static TAccumulate Aggregate<TSource, TAccumulate>(this IEnumerable<TSource> source, TAccumulate seed,
             Func<TAccumulate, TSource, TAccumulate> func)
         {
@@ -99,7 +99,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or func or resultSelector is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).aggregate({seed}, {func}, {resultSelector})")]
+        [Template("System.Linq.Enumerable.from({source}).aggregate({seed}, {func}, {resultSelector})")]
         public static TResult Aggregate<TSource, TAccumulate, TResult>(this IEnumerable<TSource> source, TAccumulate seed,
             Func<TAccumulate, TSource, TAccumulate> func, Func<TAccumulate, TResult> resultSelector)
         {
@@ -126,7 +126,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or predicate is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).all({predicate})")]
+        [Template("System.Linq.Enumerable.from({source}).all({predicate})")]
         public static bool All<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             return default(bool);
@@ -147,7 +147,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).any()")]
+        [Template("System.Linq.Enumerable.from({source}).any()")]
         public static bool Any<TSource>(this IEnumerable<TSource> source)
         {
             return default(bool);
@@ -173,7 +173,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or predicate is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).any({predicate})")]
+        [Template("System.Linq.Enumerable.from({source}).any({predicate})")]
         public static bool Any<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             return default(bool);
@@ -257,7 +257,7 @@ namespace System.Linq
         /// The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage()")]
+        [Template("System.Linq.Enumerable.from({source}).nullableAverage()")]
         public static decimal? Average(this IEnumerable<decimal?> source)
         {
             return default(decimal?);
@@ -299,7 +299,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).average()")]
+        [Template("System.Linq.Enumerable.from({source}).average()")]
         public static decimal Average(this IEnumerable<decimal> source)
         {
             return default(decimal);
@@ -339,7 +339,7 @@ namespace System.Linq
         /// source is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage()")]
+        [Template("System.Linq.Enumerable.from({source}).nullableAverage()")]
         public static double? Average(this IEnumerable<double?> source)
         {
             return default(double?);
@@ -381,7 +381,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).average()")]
+        [Template("System.Linq.Enumerable.from({source}).average()")]
         public static double Average(this IEnumerable<double> source)
         {
             return default(double);
@@ -421,7 +421,7 @@ namespace System.Linq
         /// source is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage()")]
+        [Template("System.Linq.Enumerable.from({source}).nullableAverage()")]
         public static float? Average(this IEnumerable<float?> source)
         {
             return default(float?);
@@ -463,7 +463,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).average()")]
+        [Template("System.Linq.Enumerable.from({source}).average()")]
         public static float Average(this IEnumerable<float> source)
         {
             return default(float);
@@ -509,7 +509,7 @@ namespace System.Linq
         /// The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage()")]
+        [Template("System.Linq.Enumerable.from({source}).nullableAverage()")]
         public static double? Average(this IEnumerable<int?> source)
         {
             return default(double?);
@@ -551,7 +551,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).average()")]
+        [Template("System.Linq.Enumerable.from({source}).average()")]
         public static double Average(this IEnumerable<int> source)
         {
             return default(double);
@@ -597,7 +597,7 @@ namespace System.Linq
         /// The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage()")]
+        [Template("System.Linq.Enumerable.from({source}).nullableAverage()")]
         public static double? Average(this IEnumerable<long?> source)
         {
             return default(double?);
@@ -639,7 +639,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).average()")]
+        [Template("System.Linq.Enumerable.from({source}).average()")]
         public static double Average(this IEnumerable<long> source)
         {
             return default(double);
@@ -670,7 +670,7 @@ namespace System.Linq
         /// The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).nullableAverage({selector})")]
         public static decimal? Average<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal?> selector)
         {
             return default(decimal?);
@@ -701,7 +701,7 @@ namespace System.Linq
         /// <exception cref="System.OverflowException">
         /// The sum of the elements in the sequence is larger than System.Decimal.MaxValue.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).average({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).average({selector})")]
         public static decimal Average<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal> selector)
         {
             return default(decimal);
@@ -729,7 +729,7 @@ namespace System.Linq
         /// source or selector is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).nullableAverage({selector})")]
         public static double? Average<TSource>(this IEnumerable<TSource> source, Func<TSource, double?> selector)
         {
             return default(double?);
@@ -757,7 +757,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).average({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).average({selector})")]
         public static double Average<TSource>(this IEnumerable<TSource> source, Func<TSource, double> selector)
         {
             return default(double);
@@ -785,7 +785,7 @@ namespace System.Linq
         /// source or selector is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).nullableAverage({selector})")]
         public static float? Average<TSource>(this IEnumerable<TSource> source, Func<TSource, float?> selector)
         {
             return default(float?);
@@ -813,7 +813,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).average({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).average({selector})")]
         public static float Average<TSource>(this IEnumerable<TSource> source, Func<TSource, float> selector)
         {
             return default(float);
@@ -843,7 +843,7 @@ namespace System.Linq
         /// The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).nullableAverage({selector})")]
         public static double? Average<TSource>(this IEnumerable<TSource> source, Func<TSource, int?> selector)
         {
             return default(double?);
@@ -874,7 +874,7 @@ namespace System.Linq
         /// <exception cref="System.OverflowException">
         /// The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).average({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).average({selector})")]
         public static double Average<TSource>(this IEnumerable<TSource> source, Func<TSource, int> selector)
         {
             return default(double);
@@ -898,7 +898,7 @@ namespace System.Linq
         /// empty or contains only values that are null.
         /// </returns>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableAverage({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).nullableAverage({selector})")]
         public static double? Average<TSource>(this IEnumerable<TSource> source, Func<TSource, long?> selector)
         {
             return default(double?);
@@ -929,7 +929,7 @@ namespace System.Linq
         /// <exception cref="System.OverflowException">
         /// The sum of the elements in the sequence is larger than System.Int64.MaxValue.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).average({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).average({selector})")]
         public static double Average<TSource>(this IEnumerable<TSource> source, Func<TSource, long> selector)
         {
             return default(double);
@@ -956,7 +956,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidCastException">
         /// An element in the sequence cannot be cast to type TResult.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).select(function(x) { return Bridge.cast(x, {TResult}); })")]
+        [Template("System.Linq.Enumerable.from({source}).select(function(x) { return Bridge.cast(x, {TResult}); })")]
         public static EnumerableInstance<TResult> Cast<TResult>(this IEnumerable source)
         {
             return default(EnumerableInstance<TResult>);
@@ -982,7 +982,7 @@ namespace System.Linq
         /// first or second is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({first}).concat({second})")]
+        [Template("System.Linq.Enumerable.from({first}).concat({second})")]
         public static EnumerableInstance<TSource> Concat<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second)
         {
             return default(EnumerableInstance<TSource>);
@@ -1008,7 +1008,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).contains({value})")]
+        [Template("System.Linq.Enumerable.from({source}).contains({value})")]
         public static bool Contains<TSource>(this IEnumerable<TSource> source, TSource value)
         {
             return default(bool);
@@ -1037,7 +1037,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).contains({value}, {comparer})")]
+        [Template("System.Linq.Enumerable.from({source}).contains({value}, {comparer})")]
         public static bool Contains<TSource>(this IEnumerable<TSource> source, TSource value,
             IEqualityComparer<TSource> comparer)
         {
@@ -1062,7 +1062,7 @@ namespace System.Linq
         /// <exception cref="System.OverflowException">
         /// The number of elements in source is larger than System.Int32.MaxValue.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).count()")]
+        [Template("System.Linq.Enumerable.from({source}).count()")]
         public static int Count<TSource>(this IEnumerable<TSource> source)
         {
             return default(int);
@@ -1091,7 +1091,7 @@ namespace System.Linq
         /// <exception cref="System.OverflowException">
         /// The number of elements in source is larger than System.Int32.MaxValue.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).count({predicate})")]
+        [Template("System.Linq.Enumerable.from({source}).count({predicate})")]
         public static int Count<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             return default(int);
@@ -1114,7 +1114,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).defaultIfEmpty({TSource:default})")]
+        [Template("System.Linq.Enumerable.from({source}).defaultIfEmpty({TSource:default})")]
         public static EnumerableInstance<TSource> DefaultIfEmpty<TSource>(this IEnumerable<TSource> source)
         {
             return default(EnumerableInstance<TSource>);
@@ -1137,7 +1137,7 @@ namespace System.Linq
         /// An System.Collections.Generic.IEnumerable&lt;T&gt; that contains defaultValue if
         /// source is empty; otherwise, source.
         /// </returns>
-        [Template("Bridge.Linq.Enumerable.from({source}).defaultIfEmpty({defaultValue})")]
+        [Template("System.Linq.Enumerable.from({source}).defaultIfEmpty({defaultValue})")]
         public static EnumerableInstance<TSource> DefaultIfEmpty<TSource>(this IEnumerable<TSource> source,
             TSource defaultValue)
         {
@@ -1161,7 +1161,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).distinct()")]
+        [Template("System.Linq.Enumerable.from({source}).distinct()")]
         public static EnumerableInstance<TSource> Distinct<TSource>(this IEnumerable<TSource> source)
         {
             return default(EnumerableInstance<TSource>);
@@ -1187,7 +1187,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).distinct({comparer})")]
+        [Template("System.Linq.Enumerable.from({source}).distinct({comparer})")]
         public static EnumerableInstance<TSource> Distinct<TSource>(this IEnumerable<TSource> source,
             IEqualityComparer<TSource> comparer)
         {
@@ -1216,7 +1216,7 @@ namespace System.Linq
         /// index is less than 0 or greater than or equal to the number of elements in
         /// source.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).elementAt({index})")]
+        [Template("System.Linq.Enumerable.from({source}).elementAt({index})")]
         public static TSource ElementAt<TSource>(this IEnumerable<TSource> source, int index)
         {
             return default(TSource);
@@ -1242,7 +1242,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).elementAtOrDefault({index}, {TSource:default})")]
+        [Template("System.Linq.Enumerable.from({source}).elementAtOrDefault({index}, {TSource:default})")]
         public static TSource ElementAtOrDefault<TSource>(this IEnumerable<TSource> source, int index)
         {
             return default(TSource);
@@ -1287,7 +1287,7 @@ namespace System.Linq
         /// first or second is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({first}).except({second})")]
+        [Template("System.Linq.Enumerable.from({first}).except({second})")]
         public static EnumerableInstance<TSource> Except<TSource>(this IEnumerable<TSource> first,
             IEnumerable<TSource> second)
         {
@@ -1320,7 +1320,7 @@ namespace System.Linq
         /// first or second is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({first}).except({second}, {comparer})")]
+        [Template("System.Linq.Enumerable.from({first}).except({second}, {comparer})")]
         public static EnumerableInstance<TSource> Except<TSource>(this IEnumerable<TSource> first,
             IEnumerable<TSource> second, IEqualityComparer<TSource> comparer)
         {
@@ -1346,7 +1346,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// The source sequence is empty.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).first()")]
+        [Template("System.Linq.Enumerable.from({source}).first()")]
         public static TSource First<TSource>(this IEnumerable<TSource> source)
         {
             return default(TSource);
@@ -1375,7 +1375,7 @@ namespace System.Linq
         /// No element satisfies the condition in predicate.-or-The source sequence is
         /// empty.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).first({predicate})")]
+        [Template("System.Linq.Enumerable.from({source}).first({predicate})")]
         public static TSource First<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             return default(TSource);
@@ -1398,7 +1398,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).firstOrDefault(null, {TSource:default})")]
+        [Template("System.Linq.Enumerable.from({source}).firstOrDefault(null, {TSource:default})")]
         public static TSource FirstOrDefault<TSource>(this IEnumerable<TSource> source)
         {
             return default(TSource);
@@ -1425,7 +1425,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or predicate is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).firstOrDefault({predicate}, {TSource:default})")]
+        [Template("System.Linq.Enumerable.from({source}).firstOrDefault({predicate}, {TSource:default})")]
         public static TSource FirstOrDefault<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             return default(TSource);
@@ -1454,7 +1454,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or keySelector is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).groupBy({keySelector})")]
+        [Template("System.Linq.Enumerable.from({source}).groupBy({keySelector})")]
         public static EnumerableInstance<Grouping<TKey, TSource>> GroupBy<TSource, TKey>(this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector)
         {
@@ -1487,7 +1487,7 @@ namespace System.Linq
         /// A collection of elements of type TResult where each element represents a
         /// projection over a group and its key.
         /// </returns>
-        [Template("Bridge.Linq.Enumerable.from({source}).groupBy({keySelector}, null, {resultSelector})")]
+        [Template("System.Linq.Enumerable.from({source}).groupBy({keySelector}, null, {resultSelector})")]
         public static EnumerableInstance<TResult> GroupBy<TSource, TKey, TResult>(this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector, Func<TKey, IEnumerable<TSource>, TResult> resultSelector)
         {
@@ -1524,7 +1524,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or keySelector or elementSelector is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).groupBy({keySelector}, {elementSelector})")]
+        [Template("System.Linq.Enumerable.from({source}).groupBy({keySelector}, {elementSelector})")]
         public static EnumerableInstance<Grouping<TKey, TElement>> GroupBy<TSource, TKey, TElement>(
             this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector)
         {
@@ -1558,7 +1558,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or keySelector is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).groupBy({keySelector}, null, null, {comparer})")]
+        [Template("System.Linq.Enumerable.from({source}).groupBy({keySelector}, null, null, {comparer})")]
         public static EnumerableInstance<Grouping<TKey, TSource>> GroupBy<TSource, TKey>(this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector, IEqualityComparer<TKey> comparer)
         {
@@ -1595,7 +1595,7 @@ namespace System.Linq
         /// A collection of elements of type TResult where each element represents a
         /// projection over a group and its key.
         /// </returns>
-        [Template("Bridge.Linq.Enumerable.from({source}).groupBy({keySelector}, null, {resultSelector}, {comparer})")]
+        [Template("System.Linq.Enumerable.from({source}).groupBy({keySelector}, null, {resultSelector}, {comparer})")]
         public static EnumerableInstance<TResult> GroupBy<TSource, TKey, TResult>(this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector, Func<TKey, IEnumerable<TSource>, TResult> resultSelector,
             IEqualityComparer<TKey> comparer)
@@ -1636,7 +1636,7 @@ namespace System.Linq
         /// A collection of elements of type TResult where each element represents a
         /// projection over a group and its key.
         /// </returns>
-        [Template("Bridge.Linq.Enumerable.from({source}).groupBy({keySelector}, {elementSelector}, {resultSelector})")]
+        [Template("System.Linq.Enumerable.from({source}).groupBy({keySelector}, {elementSelector}, {resultSelector})")]
         public static EnumerableInstance<TResult> GroupBy<TSource, TKey, TElement, TResult>(
             this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector,
             Func<TKey, IEnumerable<TElement>, TResult> resultSelector)
@@ -1678,7 +1678,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or keySelector or elementSelector is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).groupBy({keySelector}, {elementSelector}, null, {comparer})")]
+        [Template("System.Linq.Enumerable.from({source}).groupBy({keySelector}, {elementSelector}, null, {comparer})")]
         public static EnumerableInstance<Grouping<TKey, TElement>> GroupBy<TSource, TKey, TElement>(
             this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector,
             IEqualityComparer<TKey> comparer)
@@ -1723,7 +1723,7 @@ namespace System.Linq
         /// A collection of elements of type TResult where each element represents a
         /// projection over a group and its key.
         /// </returns>
-        [Template("Bridge.Linq.Enumerable.from({source}).groupBy({keySelector}, {elementSelector}, {resultSelector}, {comparer})")]
+        [Template("System.Linq.Enumerable.from({source}).groupBy({keySelector}, {elementSelector}, {resultSelector}, {comparer})")]
         public static EnumerableInstance<TResult> GroupBy<TSource, TKey, TElement, TResult>(
             this IEnumerable<TSource> source, Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector,
             Func<TKey, IEnumerable<TElement>, TResult> resultSelector, IEqualityComparer<TKey> comparer)
@@ -1771,7 +1771,7 @@ namespace System.Linq
         /// outer or inner or outerKeySelector or innerKeySelector or resultSelector
         /// is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({outer}).groupJoin({inner}, {outerKeySelector}, {innerKeySelector}, {resultSelector})")]
+        [Template("System.Linq.Enumerable.from({outer}).groupJoin({inner}, {outerKeySelector}, {innerKeySelector}, {resultSelector})")]
         public static EnumerableInstance<TResult> GroupJoin<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer,
             IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector,
             Func<TOuter, IEnumerable<TInner>, TResult> resultSelector)
@@ -1823,7 +1823,7 @@ namespace System.Linq
         /// outer or inner or outerKeySelector or innerKeySelector or resultSelector
         /// is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({outer}).groupJoin({inner}, {outerKeySelector}, {innerKeySelector}, {resultSelector}, {comparer})")]
+        [Template("System.Linq.Enumerable.from({outer}).groupJoin({inner}, {outerKeySelector}, {innerKeySelector}, {resultSelector}, {comparer})")]
         public static EnumerableInstance<TResult> GroupJoin<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer,
             IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector,
             Func<TOuter, IEnumerable<TInner>, TResult> resultSelector, IEqualityComparer<TKey> comparer)
@@ -1853,7 +1853,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// first or second is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({first}).intersect({second})")]
+        [Template("System.Linq.Enumerable.from({first}).intersect({second})")]
         public static EnumerableInstance<TSource> Intersect<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second)
         {
             return default(EnumerableInstance<TSource>);
@@ -1884,7 +1884,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// first or second is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({first}).intersect({second}, {comparer})")]
+        [Template("System.Linq.Enumerable.from({first}).intersect({second}, {comparer})")]
         public static EnumerableInstance<TSource> Intersect<TSource>(this IEnumerable<TSource> first,
             IEnumerable<TSource> second, IEqualityComparer<TSource> comparer)
         {
@@ -1930,7 +1930,7 @@ namespace System.Linq
         /// outer or inner or outerKeySelector or innerKeySelector or resultSelector
         /// is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({this}).join({inner}, {outerKeySelector}, {innerKeySelector}, {resultSelector})")]
+        [Template("System.Linq.Enumerable.from({this}).join({inner}, {outerKeySelector}, {innerKeySelector}, {resultSelector})")]
         public static EnumerableInstance<TResult> Join<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer,
             IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector,
             Func<TOuter, TInner, TResult> resultSelector)
@@ -1980,7 +1980,7 @@ namespace System.Linq
         /// outer or inner or outerKeySelector or innerKeySelector or resultSelector
         /// is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({this}).join({inner}, {outerKeySelector}, {innerKeySelector}, {resultSelector}, {comparer})")]
+        [Template("System.Linq.Enumerable.from({this}).join({inner}, {outerKeySelector}, {innerKeySelector}, {resultSelector}, {comparer})")]
         public static EnumerableInstance<TResult> Join<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer,
             IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector,
             Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey> comparer)
@@ -2009,7 +2009,7 @@ namespace System.Linq
         /// The number of elements exceeds System.Int64.MaxValue.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).count()")]
+        [Template("System.Linq.Enumerable.from({source}).count()")]
         public static long LongCount<TSource>(this IEnumerable<TSource> source)
         {
             return default(long);
@@ -2040,7 +2040,7 @@ namespace System.Linq
         /// The number of matching elements exceeds System.Int64.MaxValue.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).count({predicate})")]
+        [Template("System.Linq.Enumerable.from({source}).count({predicate})")]
         public static long LongCount<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             return default(long);
@@ -2064,7 +2064,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// The source sequence is empty.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).last()")]
+        [Template("System.Linq.Enumerable.from({source}).last()")]
         public static TSource Last<TSource>(this IEnumerable<TSource> source)
         {
             return default(TSource);
@@ -2093,7 +2093,7 @@ namespace System.Linq
         /// No element satisfies the condition in predicate.-or-The source sequence is
         /// empty.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).last({predicate})")]
+        [Template("System.Linq.Enumerable.from({source}).last({predicate})")]
         public static TSource Last<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             return default(TSource);
@@ -2116,7 +2116,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).lastOrDefault(null, {TSource:default})")]
+        [Template("System.Linq.Enumerable.from({source}).lastOrDefault(null, {TSource:default})")]
         public static TSource LastOrDefault<TSource>(this IEnumerable<TSource> source)
         {
             return default(TSource);
@@ -2143,7 +2143,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or predicate is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).lastOrDefault({predicate}, {TSource:default})")]
+        [Template("System.Linq.Enumerable.from({source}).lastOrDefault({predicate}, {TSource:default})")]
         public static TSource LastOrDefault<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             return default(TSource);
@@ -2185,7 +2185,7 @@ namespace System.Linq
         /// source is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax()")]
+        [Template("System.Linq.Enumerable.from({source}).nullableMax()")]
         public static decimal? Max(this IEnumerable<decimal?> source)
         {
             return default(decimal?);
@@ -2227,7 +2227,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).max()")]
+        [Template("System.Linq.Enumerable.from({source}).max()")]
         public static decimal Max(this IEnumerable<decimal> source)
         {
             return default(decimal);
@@ -2269,7 +2269,7 @@ namespace System.Linq
         /// source is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax()")]
+        [Template("System.Linq.Enumerable.from({source}).nullableMax()")]
         public static double? Max(this IEnumerable<double?> source)
         {
             return default(double?);
@@ -2311,7 +2311,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).max()")]
+        [Template("System.Linq.Enumerable.from({source}).max()")]
         public static double Max(this IEnumerable<double> source)
         {
             return default(double);
@@ -2353,7 +2353,7 @@ namespace System.Linq
         /// source is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax()")]
+        [Template("System.Linq.Enumerable.from({source}).nullableMax()")]
         public static float? Max(this IEnumerable<float?> source)
         {
             return default(float?);
@@ -2395,7 +2395,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).max()")]
+        [Template("System.Linq.Enumerable.from({source}).max()")]
         public static float Max(this IEnumerable<float> source)
         {
             return default(float);
@@ -2437,7 +2437,7 @@ namespace System.Linq
         /// source is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax()")]
+        [Template("System.Linq.Enumerable.from({source}).nullableMax()")]
         public static int? Max(this IEnumerable<int?> source)
         {
             return default(int?);
@@ -2479,7 +2479,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).max()")]
+        [Template("System.Linq.Enumerable.from({source}).max()")]
         public static int Max(this IEnumerable<int> source)
         {
             return default(int);
@@ -2521,7 +2521,7 @@ namespace System.Linq
         /// source is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax()")]
+        [Template("System.Linq.Enumerable.from({source}).nullableMax()")]
         public static long? Max(this IEnumerable<long?> source)
         {
             return default(long?);
@@ -2563,7 +2563,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).max()")]
+        [Template("System.Linq.Enumerable.from({source}).max()")]
         public static extern long Max(this IEnumerable<long> source);
 
         /// <summary>
@@ -2587,7 +2587,7 @@ namespace System.Linq
         /// source or selector is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).nullableMax({selector})")]
         public static decimal? Max<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal?> selector)
         {
             return default(decimal?);
@@ -2615,7 +2615,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).max({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).max({selector})")]
         public static decimal Max<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal> selector)
         {
             return default(decimal);
@@ -2642,7 +2642,7 @@ namespace System.Linq
         /// source or selector is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).nullableMax({selector})")]
         public static double? Max<TSource>(this IEnumerable<TSource> source, Func<TSource, double?> selector)
         {
             return default(double?);
@@ -2670,7 +2670,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).max({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).max({selector})")]
         public static double Max<TSource>(this IEnumerable<TSource> source, Func<TSource, double> selector)
         {
             return default(double);
@@ -2697,7 +2697,7 @@ namespace System.Linq
         /// source or selector is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).nullableMax({selector})")]
         public static float? Max<TSource>(this IEnumerable<TSource> source, Func<TSource, float?> selector)
         {
             return default(float?);
@@ -2725,7 +2725,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).max({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).max({selector})")]
         public static float Max<TSource>(this IEnumerable<TSource> source, Func<TSource, float> selector)
         {
             return default(float);
@@ -2752,7 +2752,7 @@ namespace System.Linq
         /// source or selector is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).nullableMax({selector})")]
         public static int? Max<TSource>(this IEnumerable<TSource> source, Func<TSource, int?> selector)
         {
             return default(int?);
@@ -2780,7 +2780,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).max({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).max({selector})")]
         public static int Max<TSource>(this IEnumerable<TSource> source, Func<TSource, int> selector)
         {
             return default(int);
@@ -2807,7 +2807,7 @@ namespace System.Linq
         /// source or selector is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableMax({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).nullableMax({selector})")]
         public static long? Max<TSource>(this IEnumerable<TSource> source, Func<TSource, long?> selector)
         {
             return default(long?);
@@ -2835,7 +2835,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).max({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).max({selector})")]
         public static long Max<TSource>(this IEnumerable<TSource> source, Func<TSource, long> selector)
         {
             return default(long);
@@ -2877,7 +2877,7 @@ namespace System.Linq
         /// source is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin()")]
+        [Template("System.Linq.Enumerable.from({source}).nullableMin()")]
         public static decimal? Min(this IEnumerable<decimal?> source)
         {
             return default(decimal?);
@@ -2902,7 +2902,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).max()")]
+        [Template("System.Linq.Enumerable.from({source}).max()")]
         public static TSource Max<TSource>(this IEnumerable<TSource> source)
         {
             return default(TSource);
@@ -2933,7 +2933,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).max({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).max({selector})")]
         public static TResult Max<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
         {
             return default(TResult);
@@ -2957,7 +2957,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).min()")]
+        [Template("System.Linq.Enumerable.from({source}).min()")]
         public static TSource Min<TSource>(this IEnumerable<TSource> source)
         {
             return default(TSource);
@@ -2988,7 +2988,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).min({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).min({selector})")]
         public static TResult Min<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> selector)
         {
             return default(TResult);
@@ -3030,7 +3030,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).min()")]
+        [Template("System.Linq.Enumerable.from({source}).min()")]
         public static decimal Min(this IEnumerable<decimal> source)
         {
             return default(decimal);
@@ -3072,7 +3072,7 @@ namespace System.Linq
         /// source is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin()")]
+        [Template("System.Linq.Enumerable.from({source}).nullableMin()")]
         public static double? Min(this IEnumerable<double?> source)
         {
             return default(double?);
@@ -3114,7 +3114,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).min()")]
+        [Template("System.Linq.Enumerable.from({source}).min()")]
         public static double Min(this IEnumerable<double> source)
         {
             return default(double);
@@ -3156,7 +3156,7 @@ namespace System.Linq
         /// source is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin()")]
+        [Template("System.Linq.Enumerable.from({source}).nullableMin()")]
         public static float? Min(this IEnumerable<float?> source)
         {
             return default(float?);
@@ -3198,7 +3198,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).min()")]
+        [Template("System.Linq.Enumerable.from({source}).min()")]
         public static float Min(this IEnumerable<float> source)
         {
             return default(float);
@@ -3240,7 +3240,7 @@ namespace System.Linq
         /// source is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin()")]
+        [Template("System.Linq.Enumerable.from({source}).nullableMin()")]
         public static int? Min(this IEnumerable<int?> source)
         {
             return default(int?);
@@ -3282,7 +3282,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).min()")]
+        [Template("System.Linq.Enumerable.from({source}).min()")]
         public static int Min(this IEnumerable<int> source)
         {
             return default(int);
@@ -3324,7 +3324,7 @@ namespace System.Linq
         /// source is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin()")]
+        [Template("System.Linq.Enumerable.from({source}).nullableMin()")]
         public static long? Min(this IEnumerable<long?> source)
         {
             return default(long?);
@@ -3366,7 +3366,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).min()")]
+        [Template("System.Linq.Enumerable.from({source}).min()")]
         public static long Min(this IEnumerable<long> source)
         {
             return default(long);
@@ -3393,7 +3393,7 @@ namespace System.Linq
         /// source or selector is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).nullableMin({selector})")]
         public static decimal? Min<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal?> selector)
         {
             return default(decimal?);
@@ -3421,7 +3421,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).min({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).min({selector})")]
         public static decimal Min<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal> selector)
         {
             return default(decimal);
@@ -3448,7 +3448,7 @@ namespace System.Linq
         /// source or selector is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).nullableMin({selector})")]
         public static double? Min<TSource>(this IEnumerable<TSource> source, Func<TSource, double?> selector)
         {
             return default(double?);
@@ -3476,7 +3476,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).min({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).min({selector})")]
         public static double Min<TSource>(this IEnumerable<TSource> source, Func<TSource, double> selector)
         {
             return default(double);
@@ -3503,7 +3503,7 @@ namespace System.Linq
         /// source or selector is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).nullableMin({selector})")]
         public static float? Min<TSource>(this IEnumerable<TSource> source, Func<TSource, float?> selector)
         {
             return default(float?);
@@ -3531,7 +3531,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).min({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).min({selector})")]
         public static float Min<TSource>(this IEnumerable<TSource> source, Func<TSource, float> selector)
         {
             return default(float);
@@ -3558,7 +3558,7 @@ namespace System.Linq
         /// source or selector is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).nullableMin({selector})")]
         public static int? Min<TSource>(this IEnumerable<TSource> source, Func<TSource, int?> selector)
         {
             return default(int?);
@@ -3586,7 +3586,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).min({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).min({selector})")]
         public static int Min<TSource>(this IEnumerable<TSource> source, Func<TSource, int> selector)
         {
             return default(int);
@@ -3613,7 +3613,7 @@ namespace System.Linq
         /// source or selector is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableMin({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).nullableMin({selector})")]
         public static long? Min<TSource>(this IEnumerable<TSource> source, Func<TSource, long?> selector)
         {
             return default(long?);
@@ -3641,7 +3641,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// source contains no elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).min({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).min({selector})")]
         public static long Min<TSource>(this IEnumerable<TSource> source, Func<TSource, long> selector)
         {
             return default(long);
@@ -3664,7 +3664,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).ofType({TResult})")]
+        [Template("System.Linq.Enumerable.from({source}).ofType({TResult})")]
         public static EnumerableInstance<TResult> OfType<TResult>(this IEnumerable source)
         {
             return default(EnumerableInstance<TResult>);
@@ -3692,7 +3692,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or keySelector is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).orderBy({keySelector})")]
+        [Template("System.Linq.Enumerable.from({source}).orderBy({keySelector})")]
         public static OrderedEnumerable<TSource> OrderBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
         {
             return default(OrderedEnumerable<TSource>);
@@ -3724,7 +3724,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or keySelector is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).orderBy({keySelector}, {comparer})")]
+        [Template("System.Linq.Enumerable.from({source}).orderBy({keySelector}, {comparer})")]
         public static OrderedEnumerable<TSource> OrderBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector,
             IComparer<TKey> comparer)
         {
@@ -3753,7 +3753,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or keySelector is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).orderByDescending({keySelector})")]
+        [Template("System.Linq.Enumerable.from({source}).orderByDescending({keySelector})")]
         public static OrderedEnumerable<TSource> OrderByDescending<TSource, TKey>(this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector)
         {
@@ -3786,7 +3786,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or keySelector is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).orderByDescending({keySelector}, {comparer})")]
+        [Template("System.Linq.Enumerable.from({source}).orderByDescending({keySelector}, {comparer})")]
         public static OrderedEnumerable<TSource> OrderByDescending<TSource, TKey>(this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
         {
@@ -3853,7 +3853,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).reverse()")]
+        [Template("System.Linq.Enumerable.from({source}).reverse()")]
         public static EnumerableInstance<TSource> Reverse<TSource>(this IEnumerable<TSource> source)
         {
             return default(EnumerableInstance<TSource>);
@@ -3883,7 +3883,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or selector is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).select({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).select({selector})")]
         public static EnumerableInstance<TResult> Select<TSource, TResult>(this IEnumerable<TSource> source,
             Func<TSource, int, TResult> selector)
         {
@@ -3912,7 +3912,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or selector is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).select({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).select({selector})")]
         public static EnumerableInstance<TResult> Select<TSource, TResult>(this IEnumerable<TSource> source,
             Func<TSource, TResult> selector)
         {
@@ -3943,7 +3943,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or selector is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).selectMany({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).selectMany({selector})")]
         public static EnumerableInstance<TResult> SelectMany<TSource, TResult>(this IEnumerable<TSource> source,
             Func<TSource, IEnumerable<TResult>> selector)
         {
@@ -3976,7 +3976,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or selector is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).selectMany({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).selectMany({selector})")]
         public static EnumerableInstance<TResult> SelectMany<TSource, TResult>(this IEnumerable<TSource> source,
             Func<TSource, int, IEnumerable<TResult>> selector)
         {
@@ -4015,7 +4015,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or collectionSelector or resultSelector is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).selectMany({collectionSelector}, {resultSelector})")]
+        [Template("System.Linq.Enumerable.from({source}).selectMany({collectionSelector}, {resultSelector})")]
         public static EnumerableInstance<TResult> SelectMany<TSource, TCollection, TResult>(this IEnumerable<TSource> source,
             Func<TSource, IEnumerable<TCollection>> collectionSelector, Func<TSource, TCollection, TResult> resultSelector)
         {
@@ -4056,7 +4056,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or collectionSelector or resultSelector is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).selectMany({collectionSelector}, {resultSelector})")]
+        [Template("System.Linq.Enumerable.from({source}).selectMany({collectionSelector}, {resultSelector})")]
         public static EnumerableInstance<TResult> SelectMany<TSource, TCollection, TResult>(this IEnumerable<TSource> source,
             Func<TSource, int, IEnumerable<TCollection>> collectionSelector, Func<TSource, TCollection, TResult> resultSelector)
         {
@@ -4084,7 +4084,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// first or second is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({first}).sequenceEqual({second})")]
+        [Template("System.Linq.Enumerable.from({first}).sequenceEqual({second})")]
         public static bool SequenceEqual<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second)
         {
             return default(bool);
@@ -4113,7 +4113,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// first or second is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({first}).sequenceEqual({second}, {comparer})")]
+        [Template("System.Linq.Enumerable.from({first}).sequenceEqual({second}, {comparer})")]
         public static bool SequenceEqual<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second,
             IEqualityComparer<TSource> comparer)
         {
@@ -4141,7 +4141,7 @@ namespace System.Linq
         /// The input sequence contains more than one element.-or-The input sequence
         /// is empty.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).single()")]
+        [Template("System.Linq.Enumerable.from({source}).single()")]
         public static TSource Single<TSource>(this IEnumerable<TSource> source)
         {
             return default(TSource);
@@ -4170,7 +4170,7 @@ namespace System.Linq
         /// No element satisfies the condition in predicate.-or-More than one element
         /// satisfies the condition in predicate.-or-The source sequence is empty.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).single({predicate})")]
+        [Template("System.Linq.Enumerable.from({source}).single({predicate})")]
         public static TSource Single<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             return default(TSource);
@@ -4198,7 +4198,7 @@ namespace System.Linq
         /// <exception cref="System.InvalidOperationException">
         /// The input sequence contains more than one element.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).singleOrDefault(null, {TSource:default})")]
+        [Template("System.Linq.Enumerable.from({source}).singleOrDefault(null, {TSource:default})")]
         public static TSource SingleOrDefault<TSource>(this IEnumerable<TSource> source)
         {
             return default(TSource);
@@ -4225,7 +4225,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or predicate is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).singleOrDefault({predicate}, {TSource:default})")]
+        [Template("System.Linq.Enumerable.from({source}).singleOrDefault({predicate}, {TSource:default})")]
         public static TSource SingleOrDefault<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             return default(TSource);
@@ -4251,7 +4251,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).skip({count})")]
+        [Template("System.Linq.Enumerable.from({source}).skip({count})")]
         public static EnumerableInstance<TSource> Skip<TSource>(this IEnumerable<TSource> source, int count)
         {
             return default(EnumerableInstance<TSource>);
@@ -4278,7 +4278,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or predicate is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).skipWhile({predicate})")]
+        [Template("System.Linq.Enumerable.from({source}).skipWhile({predicate})")]
         public static EnumerableInstance<TSource> SkipWhile<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             return default(EnumerableInstance<TSource>);
@@ -4307,7 +4307,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or predicate is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).skipWhile({predicate})")]
+        [Template("System.Linq.Enumerable.from({source}).skipWhile({predicate})")]
         public static EnumerableInstance<TSource> SkipWhile<TSource>(this IEnumerable<TSource> source, Func<TSource, int, bool> predicate)
         {
             return default(EnumerableInstance<TSource>);
@@ -4351,7 +4351,7 @@ namespace System.Linq
         /// The sum is larger than System.Decimal.MaxValue.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum()")]
+        [Template("System.Linq.Enumerable.from({source}).nullableSum()")]
         public static decimal? Sum(this IEnumerable<decimal?> source)
         {
             return default(decimal?);
@@ -4393,7 +4393,7 @@ namespace System.Linq
         /// <exception cref="System.OverflowException">
         /// The sum is larger than System.Decimal.MaxValue.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).sum()")]
+        [Template("System.Linq.Enumerable.from({source}).sum()")]
         public static decimal Sum(this IEnumerable<decimal> source)
         {
             return default(decimal);
@@ -4431,7 +4431,7 @@ namespace System.Linq
         /// source is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum()")]
+        [Template("System.Linq.Enumerable.from({source}).nullableSum()")]
         public static double? Sum(this IEnumerable<double?> source)
         {
             return default(double?);
@@ -4467,7 +4467,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).sum()")]
+        [Template("System.Linq.Enumerable.from({source}).sum()")]
         public static double Sum(this IEnumerable<double> source)
         {
             return default(double);
@@ -4505,7 +4505,7 @@ namespace System.Linq
         /// source is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum()")]
+        [Template("System.Linq.Enumerable.from({source}).nullableSum()")]
         public static float? Sum(this IEnumerable<float?> source)
         {
             return default(float?);
@@ -4541,7 +4541,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).sum()")]
+        [Template("System.Linq.Enumerable.from({source}).sum()")]
         public static float Sum(this IEnumerable<float> source)
         {
             return default(float);
@@ -4585,7 +4585,7 @@ namespace System.Linq
         /// The sum is larger than System.Int32.MaxValue.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum()")]
+        [Template("System.Linq.Enumerable.from({source}).nullableSum()")]
         public static int? Sum(this IEnumerable<int?> source)
         {
             return default(int?);
@@ -4627,7 +4627,7 @@ namespace System.Linq
         /// <exception cref="System.OverflowException">
         /// The sum is larger than System.Int32.MaxValue.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).sum()")]
+        [Template("System.Linq.Enumerable.from({source}).sum()")]
         public static int Sum(this IEnumerable<int> source)
         {
             return default(int);
@@ -4671,7 +4671,7 @@ namespace System.Linq
         /// The sum is larger than System.Int64.MaxValue.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum()")]
+        [Template("System.Linq.Enumerable.from({source}).nullableSum()")]
         public static long? Sum(this IEnumerable<long?> source)
         {
             return default(long?);
@@ -4713,7 +4713,7 @@ namespace System.Linq
         /// <exception cref="System.OverflowException">
         /// The sum is larger than System.Int64.MaxValue.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).sum()")]
+        [Template("System.Linq.Enumerable.from({source}).sum()")]
         public static long Sum(this IEnumerable<long> source)
         {
             return default(long);
@@ -4742,7 +4742,7 @@ namespace System.Linq
         /// The sum is larger than System.Decimal.MaxValue.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).nullableSum({selector})")]
         public static decimal? Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal?> selector)
         {
             return default(decimal?);
@@ -4770,7 +4770,7 @@ namespace System.Linq
         /// <exception cref="System.OverflowException">
         /// The sum is larger than System.Decimal.MaxValue.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).sum({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).sum({selector})")]
         public static decimal Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, decimal> selector)
         {
             return default(decimal);
@@ -4796,7 +4796,7 @@ namespace System.Linq
         /// source or selector is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).nullableSum({selector})")]
         public static double? Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, double?> selector)
         {
             return default(double?);
@@ -4821,7 +4821,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or selector is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).sum({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).sum({selector})")]
         public static double Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, double> selector)
         {
             return default(double);
@@ -4847,7 +4847,7 @@ namespace System.Linq
         /// source or selector is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).nullableSum({selector})")]
         public static float? Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, float?> selector)
         {
             return default(float?);
@@ -4872,7 +4872,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or selector is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).sum({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).sum({selector})")]
         public static float Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, float> selector)
         {
             return default(float);
@@ -4901,7 +4901,7 @@ namespace System.Linq
         /// The sum is larger than System.Int32.MaxValue.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).nullableSum({selector})")]
         public static int? Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, int?> selector)
         {
             return default(int?);
@@ -4929,7 +4929,7 @@ namespace System.Linq
         /// <exception cref="System.OverflowException">
         /// The sum is larger than System.Int32.MaxValue.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).sum({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).sum({selector})")]
         public static int Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, int> selector)
         {
             return default(int);
@@ -4958,7 +4958,7 @@ namespace System.Linq
         /// The sum is larger than System.Int64.MaxValue.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).nullableSum({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).nullableSum({selector})")]
         public static long? Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, long?> selector)
         {
             return default(long?);
@@ -4986,7 +4986,7 @@ namespace System.Linq
         /// <exception cref="System.OverflowException">
         /// The sum is larger than System.Int64.MaxValue.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).sum({selector})")]
+        [Template("System.Linq.Enumerable.from({source}).sum({selector})")]
         public static long Sum<TSource>(this IEnumerable<TSource> source, Func<TSource, long> selector)
         {
             return default(long);
@@ -5011,7 +5011,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).take({count})")]
+        [Template("System.Linq.Enumerable.from({source}).take({count})")]
         public static EnumerableInstance<TSource> Take<TSource>(this IEnumerable<TSource> source, int count)
         {
             return default(EnumerableInstance<TSource>);
@@ -5037,7 +5037,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or predicate is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).takeWhile({predicate})")]
+        [Template("System.Linq.Enumerable.from({source}).takeWhile({predicate})")]
         public static EnumerableInstance<TSource> TakeWhile<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             return default(EnumerableInstance<TSource>);
@@ -5065,7 +5065,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or predicate is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).takeWhile({predicate})")]
+        [Template("System.Linq.Enumerable.from({source}).takeWhile({predicate})")]
         public static EnumerableInstance<TSource> TakeWhile<TSource>(this IEnumerable<TSource> source, Func<TSource, int, bool> predicate)
         {
             return default(EnumerableInstance<TSource>);
@@ -5095,7 +5095,7 @@ namespace System.Linq
         /// source or keySelector is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).thenBy({keySelector})")]
+        [Template("System.Linq.Enumerable.from({source}).thenBy({keySelector})")]
         public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector)
         {
             return default(IOrderedEnumerable<TSource>);
@@ -5128,7 +5128,7 @@ namespace System.Linq
         /// source or keySelector is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).thenBy({keySelector}, {comparer})")]
+        [Template("System.Linq.Enumerable.from({source}).thenBy({keySelector}, {comparer})")]
         public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
         {
             return default(IOrderedEnumerable<TSource>);
@@ -5158,7 +5158,7 @@ namespace System.Linq
         /// source or keySelector is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).thenByDescending({keySelector}, {comparer})")]
+        [Template("System.Linq.Enumerable.from({source}).thenByDescending({keySelector}, {comparer})")]
         public static IOrderedEnumerable<TSource> ThenByDescending<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector)
         {
             return default(IOrderedEnumerable<TSource>);
@@ -5191,7 +5191,7 @@ namespace System.Linq
         /// source or keySelector is null.
         /// </exception>
         /// <remarks>Bridge.NET has no mapping for this in JavaScript.</remarks>
-        [Template("Bridge.Linq.Enumerable.from({source}).thenByDescending({keySelector}, {comparer})")]
+        [Template("System.Linq.Enumerable.from({source}).thenByDescending({keySelector}, {comparer})")]
         public static IOrderedEnumerable<TSource> ThenByDescending<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
         {
             return default(IOrderedEnumerable<TSource>);
@@ -5212,7 +5212,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).toArray()")]
+        [Template("System.Linq.Enumerable.from({source}).toArray()")]
         public static TSource[] ToArray<TSource>(this IEnumerable<TSource> source)
         {
             return default(TSource[]);
@@ -5245,7 +5245,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentException">
         /// keySelector produces duplicate keys for two elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).toDictionary({keySelector}, null, {TKey}, {TSource})")]
+        [Template("System.Linq.Enumerable.from({source}).toDictionary({keySelector}, null, {TKey}, {TSource})")]
         public static Dictionary<TKey, TSource> ToDictionary<TSource, TKey>(this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector)
         {
@@ -5286,7 +5286,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentException">
         /// keySelector produces duplicate keys for two elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).toDictionary({keySelector}, {elementSelector}, {TKey}, {TElement})")]
+        [Template("System.Linq.Enumerable.from({source}).toDictionary({keySelector}, {elementSelector}, {TKey}, {TElement})")]
         public static Dictionary<TKey, TElement> ToDictionary<TSource, TKey, TElement>(this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector)
         {
@@ -5323,7 +5323,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentException">
         /// keySelector produces duplicate keys for two elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).toDictionary({keySelector}, null, {TKey}, {TSource}, {comparer})")]
+        [Template("System.Linq.Enumerable.from({source}).toDictionary({keySelector}, null, {TKey}, {TSource}, {comparer})")]
         public static Dictionary<TKey, TSource> ToDictionary<TSource, TKey>(this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector, IEqualityComparer<TKey> comparer)
         {
@@ -5368,7 +5368,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentException">
         /// keySelector produces duplicate keys for two elements.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).toDictionary({keySelector}, {elementSelector}, {TKey}, {TElement}, {comparer})")]
+        [Template("System.Linq.Enumerable.from({source}).toDictionary({keySelector}, {elementSelector}, {TKey}, {TElement}, {comparer})")]
         public static Dictionary<TKey, TElement> ToDictionary<TSource, TKey, TElement>(this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, IEqualityComparer<TKey> comparer)
         {
@@ -5392,7 +5392,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).toList({TSource})")]
+        [Template("System.Linq.Enumerable.from({source}).toList({TSource})")]
         public static List<TSource> ToList<TSource>(this IEnumerable<TSource> source)
         {
             return default(List<TSource>);
@@ -5421,7 +5421,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or keySelector is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).toLookup({keySelector})")]
+        [Template("System.Linq.Enumerable.from({source}).toLookup({keySelector})")]
         public static Lookup<TKey, TSource> ToLookup<TSource, TKey>(this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector)
         {
@@ -5458,7 +5458,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or keySelector or elementSelector is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).toLookup({keySelector}, {elementSelector})")]
+        [Template("System.Linq.Enumerable.from({source}).toLookup({keySelector}, {elementSelector})")]
         public static Lookup<TKey, TElement> ToLookup<TSource, TKey, TElement>(this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector)
         {
@@ -5491,7 +5491,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or keySelector is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).toLookup({keySelector}, null, {comparer})")]
+        [Template("System.Linq.Enumerable.from({source}).toLookup({keySelector}, null, {comparer})")]
         public static Lookup<TKey, TSource> ToLookup<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector,
             IEqualityComparer<TKey> comparer)
         {
@@ -5532,7 +5532,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or keySelector or elementSelector is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).toLookup({keySelector}, {elementSelector}, {comparer})")]
+        [Template("System.Linq.Enumerable.from({source}).toLookup({keySelector}, {elementSelector}, {comparer})")]
         public static Lookup<TKey, TElement> ToLookup<TSource, TKey, TElement>(this IEnumerable<TSource> source,
             Func<TSource, TKey> keySelector, Func<TSource, TElement> elementSelector, IEqualityComparer<TKey> comparer)
         {
@@ -5560,7 +5560,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// first or second is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({first}).union({second})")]
+        [Template("System.Linq.Enumerable.from({first}).union({second})")]
         public static EnumerableInstance<TSource> Union<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second)
         {
             return default(EnumerableInstance<TSource>);
@@ -5590,7 +5590,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// first or second is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({first}).union({second}, {comparer})")]
+        [Template("System.Linq.Enumerable.from({first}).union({second}, {comparer})")]
         public static EnumerableInstance<TSource> Union<TSource>(this IEnumerable<TSource> first, IEnumerable<TSource> second,
             IEqualityComparer<TSource> comparer)
         {
@@ -5616,7 +5616,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or predicate is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).where({predicate})")]
+        [Template("System.Linq.Enumerable.from({source}).where({predicate})")]
         public static EnumerableInstance<TSource> Where<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
         {
             return default(EnumerableInstance<TSource>);
@@ -5643,7 +5643,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// source or predicate is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({source}).where({predicate})")]
+        [Template("System.Linq.Enumerable.from({source}).where({predicate})")]
         public static EnumerableInstance<TSource> Where<TSource>(this IEnumerable<TSource> source, Func<TSource, int, bool> predicate)
         {
             return default(EnumerableInstance<TSource>);
@@ -5677,7 +5677,7 @@ namespace System.Linq
         /// <exception cref="System.ArgumentNullException">
         /// first or second is null.
         /// </exception>
-        [Template("Bridge.Linq.Enumerable.from({first}).zip({second}, {resultSelector})")]
+        [Template("System.Linq.Enumerable.from({first}).zip({second}, {resultSelector})")]
         public static EnumerableInstance<TResult> Zip<TFirst, TSecond, TResult>(this IEnumerable<TFirst> first, IEnumerable<TSecond> second,
             Func<TFirst, TSecond, TResult> resultSelector)
         {

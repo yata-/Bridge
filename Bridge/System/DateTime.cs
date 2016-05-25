@@ -59,37 +59,37 @@ namespace System
         {
         }
 
-        [Template("Bridge.Long(Date.UTC({year}, {month} - 1, {day}, {hours}, {minutes}, {seconds}, {ms}))")]
+        [Template("System.Int64(Date.UTC({year}, {month} - 1, {day}, {hours}, {minutes}, {seconds}, {ms}))")]
         public static long Utc(int year, int month, int day, int hours, int minutes, int seconds, int ms)
         {
             return 0;
         }
 
-        [Template("Bridge.Long(Date.UTC({year}, {month} - 1, {day}, {hours}, {minutes}, {seconds}))")]
+        [Template("System.Int64(Date.UTC({year}, {month} - 1, {day}, {hours}, {minutes}, {seconds}))")]
         public static long Utc(int year, int month, int day, int hours, int minutes, int seconds)
         {
             return 0;
         }
 
-        [Template("Bridge.Long(Date.UTC({year}, {month} - 1, {day}, {hours}, {minutes}))")]
+        [Template("System.Int64(Date.UTC({year}, {month} - 1, {day}, {hours}, {minutes}))")]
         public static long Utc(int year, int month, int day, int hours, int minutes)
         {
             return 0;
         }
 
-        [Template("Bridge.Long(Date.UTC({year}, {month} - 1, {day}, {hours}))")]
+        [Template("System.Int64(Date.UTC({year}, {month} - 1, {day}, {hours}))")]
         public static long Utc(int year, int month, int day, int hours)
         {
             return 0;
         }
 
-        [Template("Bridge.Long(Date.UTC({year}, {month} - 1, {day}))")]
+        [Template("System.Int64(Date.UTC({year}, {month} - 1, {day}))")]
         public static long Utc(int year, int month, int day)
         {
             return 0;
         }
 
-        [Template("Bridge.Long(Date.UTC({year}, {month} - 1))")]
+        [Template("System.Int64(Date.UTC({year}, {month} - 1))")]
         public static long Utc(int year, int month)
         {
             return 0;
@@ -193,7 +193,7 @@ namespace System
             return 0;
         }
 
-        [Template("Bridge.Long(({this}).getTime())")]
+        [Template("System.Int64(({this}).getTime())")]
         public long GetTime()
         {
             return 0;
@@ -706,7 +706,7 @@ namespace System
         [Template("new Date(({this}).getTime() + (({value}).ticks.div(10000).toNumber()))")]
         public extern DateTime Add(TimeSpan value);
 
-        [Template("new Date(Bridge.Long(({this}).getTime()).add(({value}).div(10000)).toNumber())")]
+        [Template("new Date(System.Int64(({this}).getTime()).add(({value}).div(10000)).toNumber())")]
         public extern DateTime AddTicks(long value);
 
         [Template("new Date({this} - new Date(({value}).ticks.div(10000).toNumber()))")]
@@ -723,7 +723,7 @@ namespace System
 
         public long Ticks
         {
-            [Template("Bridge.Long(({this}).getTime()).mul(10000)")]
+            [Template("System.Int64(({this}).getTime()).mul(10000)")]
             get
             {
                 return 0;

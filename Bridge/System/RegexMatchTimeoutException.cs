@@ -2,7 +2,6 @@
 
 namespace System
 {
-    [Namespace("Bridge")]
     public class RegexMatchTimeoutException : TimeoutException
     {
         public extern string Pattern { get; }

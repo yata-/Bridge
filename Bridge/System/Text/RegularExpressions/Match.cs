@@ -5,7 +5,6 @@ namespace System.Text.RegularExpressions
     /// <summary>
     /// Represents the results from a single regular expression match.
     /// </summary>
-    [Namespace("Bridge.Text.RegularExpressions")]
     [External]
     public class Match : Group
     {

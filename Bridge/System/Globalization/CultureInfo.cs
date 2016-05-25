@@ -2,7 +2,6 @@ using Bridge;
 
 namespace System.Globalization
 {
-    [Namespace("Bridge")]
     [External]
     public sealed class CultureInfo : IFormatProvider, ICloneable, IBridgeClass
     {

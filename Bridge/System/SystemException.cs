@@ -3,7 +3,6 @@
 namespace System
 {
     [External]
-    [Namespace("Bridge")]
     public class SystemException : Exception, IBridgeClass
     {
         public SystemException()
@@ -15,7 +14,7 @@ namespace System
         {
         }
 
-        [Template("new Bridge.SystemException({message}, {innerException})")]
+        [Template("new System.SystemException({message}, {innerException})")]
         public SystemException(string message, Exception innerException)
             : base(message, innerException)
         {

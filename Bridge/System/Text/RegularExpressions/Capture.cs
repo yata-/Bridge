@@ -5,7 +5,6 @@ namespace System.Text.RegularExpressions
     /// <summary>
     /// Represents the results from a single successful subexpression capture.
     /// </summary>
-    [Namespace("Bridge.Text.RegularExpressions")]
     [External]
     public class Capture
     {

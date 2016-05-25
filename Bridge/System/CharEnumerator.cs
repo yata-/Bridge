@@ -5,7 +5,6 @@ using System.Collections.Generic;
 namespace System
 {
     [External]
-    [Name("Bridge.CharEnumerator")]
     public sealed class CharEnumerator : IEnumerator, /*ICloneable,*/ IEnumerator<char>, IDisposable
     {
         private string str;

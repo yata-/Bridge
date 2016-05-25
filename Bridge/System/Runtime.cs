@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace System
 {
     [External]
-    [Name("Bridge.Attribute")]
+    [Name("System.Attribute")]
     public class Attribute : IBridgeClass
     {
         protected Attribute()

@@ -3,14 +3,13 @@ using Bridge;
 namespace System.Threading
 {
     [External]
-    [Namespace("Bridge")]
     public class CancellationTokenSource : IDisposable
     {
         public extern CancellationTokenSource();
 
         public extern CancellationTokenSource(int millisecondsDelay);
 
-        [Template("new Bridge.CancellationTokenSource({delay}.ticks / 10000)")]
+        [Template("new System.Threading.CancellationTokenSource({delay}.ticks / 10000)")]
         public extern CancellationTokenSource(TimeSpan delay);
 
         [FieldProperty]
@@ -41,7 +40,7 @@ namespace System.Threading
         [Name("createLinked")]
         public static extern CancellationTokenSource CreateLinkedTokenSource(CancellationToken token1, CancellationToken token2);
 
-        [Template("Bridge.CancellationTokenSource.createLinked({*tokens})")]
+        [Template("System.Threading.CancellationTokenSource.createLinked({*tokens})")]
         public static extern CancellationTokenSource CreateLinkedTokenSource(params CancellationToken[] tokens);
     }
 }

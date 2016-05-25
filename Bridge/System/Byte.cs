@@ -3,7 +3,6 @@ using Bridge;
 namespace System
 {
     [External]
-    [Name("Bridge.Byte")]
     [Constructor("Number")]
     public struct Byte : IComparable, IComparable<Byte>, IEquatable<Byte>, IFormattable
     {
@@ -17,26 +16,26 @@ namespace System
         [InlineConst]
         public const byte MaxValue = 255;
 
-        [Template("Bridge.Byte.parse({s})")]
+        [Template("System.Byte.parse({s})")]
         public static byte Parse(string s)
         {
             return 0;
         }
 
-        [Template("Bridge.Byte.parse({s}, {radix})")]
+        [Template("System.Byte.parse({s}, {radix})")]
         public static byte Parse(string s, int radix)
         {
             return 0;
         }
 
-        [Template("Bridge.Byte.tryParse({s}, {result})")]
+        [Template("System.Byte.tryParse({s}, {result})")]
         public static bool TryParse(string s, out byte result)
         {
             result = 0;
             return false;
         }
 
-        [Template("Bridge.Byte.tryParse({s}, {result}, {radix})")]
+        [Template("System.Byte.tryParse({s}, {result}, {radix})")]
         public static bool TryParse(string s, out byte result, int radix)
         {
             result = 0;
@@ -48,25 +47,25 @@ namespace System
             return null;
         }
 
-        [Template("Bridge.Byte.format({this}, {format})")]
+        [Template("System.Byte.format({this}, {format})")]
         public string Format(string format)
         {
             return null;
         }
 
-        [Template("Bridge.Byte.format({this}, {format}, {provider})")]
+        [Template("System.Byte.format({this}, {format}, {provider})")]
         public string Format(string format, IFormatProvider provider)
         {
             return null;
         }
 
-        [Template("Bridge.Byte.format({this}, {format})")]
+        [Template("System.Byte.format({this}, {format})")]
         public string ToString(string format)
         {
             return null;
         }
 
-        [Template("Bridge.Byte.format({this}, {format}, {provider})")]
+        [Template("System.Byte.format({this}, {format}, {provider})")]
         public string ToString(string format, IFormatProvider provider)
         {
             return null;
