@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("ru-RU", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("ru-RU", true), {
     englishName: "Russian (Russia)",
     nativeName: "русский (Россия)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Вс","Пн","Вт","Ср","Чт","Пт","Сб"],
         abbreviatedMonthGenitiveNames: ["янв","фев","мар","апр","мая","июн","июл","авг","сен","окт","ноя","дек",""],
         abbreviatedMonthNames: ["янв","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек",""],
@@ -57,11 +57,11 @@
     })
 });
 
-Bridge.merge(new Bridge.CultureInfo("en-US", true), {
+Bridge.merge(new System.Globalization.CultureInfo("en-US", true), {
     englishName: "English (United States)",
     nativeName: "English (United States)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -88,7 +88,7 @@ Bridge.merge(new Bridge.CultureInfo("en-US", true), {
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
         abbreviatedMonthGenitiveNames: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec",""],
         abbreviatedMonthNames: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec",""],
@@ -116,11 +116,11 @@ Bridge.merge(new Bridge.CultureInfo("en-US", true), {
     })
 });
 
-Bridge.merge(new Bridge.CultureInfo("es-419", true), {
+Bridge.merge(new System.Globalization.CultureInfo("es-419", true), {
     englishName: "Spanish (Latin America)",
     nativeName: "español (Latinoamérica)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -147,7 +147,7 @@ Bridge.merge(new Bridge.CultureInfo("es-419", true), {
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dom","lun","mar","mié","jue","vie","sáb"],
         abbreviatedMonthGenitiveNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
         abbreviatedMonthNames: ["ene","feb","mar","abr","mayo","jun","jul","ago","sep","oct","nov","dic",""],
@@ -175,11 +175,11 @@ Bridge.merge(new Bridge.CultureInfo("es-419", true), {
     })
 });
 
-Bridge.merge(new Bridge.CultureInfo("es-AR", true), {
+Bridge.merge(new System.Globalization.CultureInfo("es-AR", true), {
     englishName: "Spanish (Argentina)",
     nativeName: "español (Argentina)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NuN",
         negativeSign: "-",
         positiveSign: "+",
@@ -206,7 +206,7 @@ Bridge.merge(new Bridge.CultureInfo("es-AR", true), {
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dom","lun","mar","mié","jue","vie","sáb"],
         abbreviatedMonthGenitiveNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
         abbreviatedMonthNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
@@ -234,11 +234,11 @@ Bridge.merge(new Bridge.CultureInfo("es-AR", true), {
     })
 });
 
-Bridge.merge(new Bridge.CultureInfo("es-BO", true), {
+Bridge.merge(new System.Globalization.CultureInfo("es-BO", true), {
     englishName: "Spanish (Bolivia)",
     nativeName: "español (Bolivia)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NeuN",
         negativeSign: "-",
         positiveSign: "+",
@@ -265,7 +265,7 @@ Bridge.merge(new Bridge.CultureInfo("es-BO", true), {
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dom","lun","mar","mié","jue","vie","sáb"],
         abbreviatedMonthGenitiveNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
         abbreviatedMonthNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
@@ -293,11 +293,11 @@ Bridge.merge(new Bridge.CultureInfo("es-BO", true), {
     })
 });
 
-Bridge.merge(new Bridge.CultureInfo("es-CL", true), {
+Bridge.merge(new System.Globalization.CultureInfo("es-CL", true), {
     englishName: "Spanish (Chile)",
     nativeName: "español (Chile)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NeuN",
         negativeSign: "-",
         positiveSign: "+",
@@ -324,7 +324,7 @@ Bridge.merge(new Bridge.CultureInfo("es-CL", true), {
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dom","lun","mar","mié","jue","vie","sáb"],
         abbreviatedMonthGenitiveNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
         abbreviatedMonthNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
@@ -352,11 +352,11 @@ Bridge.merge(new Bridge.CultureInfo("es-CL", true), {
     })
 });
 
-Bridge.merge(new Bridge.CultureInfo("es-CO", true), {
+Bridge.merge(new System.Globalization.CultureInfo("es-CO", true), {
     englishName: "Spanish (Colombia)",
     nativeName: "español (Colombia)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NeuN",
         negativeSign: "-",
         positiveSign: "+",
@@ -383,7 +383,7 @@ Bridge.merge(new Bridge.CultureInfo("es-CO", true), {
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dom.","lun.","mar.","mié.","jue.","vie.","sáb."],
         abbreviatedMonthGenitiveNames: ["ene.","feb.","mar.","abr.","may.","jun.","jul.","ago.","sep.","oct.","nov.","dic.",""],
         abbreviatedMonthNames: ["ene.","feb.","mar.","abr.","may.","jun.","jul.","ago.","sep.","oct.","nov.","dic.",""],
@@ -411,11 +411,11 @@ Bridge.merge(new Bridge.CultureInfo("es-CO", true), {
     })
 });
 
-Bridge.merge(new Bridge.CultureInfo("es-CR", true), {
+Bridge.merge(new System.Globalization.CultureInfo("es-CR", true), {
     englishName: "Spanish (Costa Rica)",
     nativeName: "español (Costa Rica)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NeuN",
         negativeSign: "-",
         positiveSign: "+",
@@ -442,7 +442,7 @@ Bridge.merge(new Bridge.CultureInfo("es-CR", true), {
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dom","lun","mar","mié","jue","vie","sáb"],
         abbreviatedMonthGenitiveNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
         abbreviatedMonthNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
@@ -470,11 +470,11 @@ Bridge.merge(new Bridge.CultureInfo("es-CR", true), {
     })
 });
 
-Bridge.merge(new Bridge.CultureInfo("es-DO", true), {
+Bridge.merge(new System.Globalization.CultureInfo("es-DO", true), {
     englishName: "Spanish (Dominican Republic)",
     nativeName: "español (República Dominicana)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NeuN",
         negativeSign: "-",
         positiveSign: "+",
@@ -501,7 +501,7 @@ Bridge.merge(new Bridge.CultureInfo("es-DO", true), {
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dom.","lun.","mar.","mié.","jue.","vie.","sáb."],
         abbreviatedMonthGenitiveNames: ["ene.","feb.","mar.","abr.","may.","jun.","jul.","ago.","sep.","oct.","nov.","dic.",""],
         abbreviatedMonthNames: ["ene.","feb.","mar.","abr.","may.","jun.","jul.","ago.","sep.","oct.","nov.","dic.",""],
@@ -529,11 +529,11 @@ Bridge.merge(new Bridge.CultureInfo("es-DO", true), {
     })
 });
 
-Bridge.merge(new Bridge.CultureInfo("es-EC", true), {
+Bridge.merge(new System.Globalization.CultureInfo("es-EC", true), {
     englishName: "Spanish (Ecuador)",
     nativeName: "español (Ecuador)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NeuN",
         negativeSign: "-",
         positiveSign: "+",
@@ -560,7 +560,7 @@ Bridge.merge(new Bridge.CultureInfo("es-EC", true), {
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dom","lun","mar","mié","jue","vie","sáb"],
         abbreviatedMonthGenitiveNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
         abbreviatedMonthNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
@@ -588,11 +588,11 @@ Bridge.merge(new Bridge.CultureInfo("es-EC", true), {
     })
 });
 
-Bridge.merge(new Bridge.CultureInfo("es-ES", true), {
+Bridge.merge(new System.Globalization.CultureInfo("es-ES", true), {
     englishName: "Spanish (Spain, International Sort)",
     nativeName: "español (España, alfabetización internacional)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -619,7 +619,7 @@ Bridge.merge(new Bridge.CultureInfo("es-ES", true), {
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["do.","lu.","ma.","mi.","ju.","vi.","sá."],
         abbreviatedMonthGenitiveNames: ["ene.","feb.","mar.","abr.","may.","jun.","jul.","ago.","sep.","oct.","nov.","dic.",""],
         abbreviatedMonthNames: ["ene.","feb.","mar.","abr.","may.","jun.","jul.","ago.","sep.","oct.","nov.","dic.",""],
@@ -647,11 +647,11 @@ Bridge.merge(new Bridge.CultureInfo("es-ES", true), {
     })
 });
 
-Bridge.merge(new Bridge.CultureInfo("es-GT", true), {
+Bridge.merge(new System.Globalization.CultureInfo("es-GT", true), {
     englishName: "Spanish (Guatemala)",
     nativeName: "español (Guatemala)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NeuN",
         negativeSign: "-",
         positiveSign: "+",
@@ -678,7 +678,7 @@ Bridge.merge(new Bridge.CultureInfo("es-GT", true), {
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dom.","lun.","mar.","mié.","jue.","vie.","sáb."],
         abbreviatedMonthGenitiveNames: ["ene.","feb.","mar.","abr.","may.","jun.","jul.","ago.","sep.","oct.","nov.","dic.",""],
         abbreviatedMonthNames: ["ene.","feb.","mar.","abr.","may.","jun.","jul.","ago.","sep.","oct.","nov.","dic.",""],
@@ -706,11 +706,11 @@ Bridge.merge(new Bridge.CultureInfo("es-GT", true), {
     })
 });
 
-Bridge.merge(new Bridge.CultureInfo("es-HN", true), {
+Bridge.merge(new System.Globalization.CultureInfo("es-HN", true), {
     englishName: "Spanish (Honduras)",
     nativeName: "español (Honduras)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NeuN",
         negativeSign: "-",
         positiveSign: "+",
@@ -737,7 +737,7 @@ Bridge.merge(new Bridge.CultureInfo("es-HN", true), {
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dom.","lun.","mar.","mié",".jue.","vie.","sáb."],
         abbreviatedMonthGenitiveNames: ["ene.","feb.","mar.","abr.","may.","jun.","jul.","ago.","sept.","oct.","nov.","dic.",""],
         abbreviatedMonthNames: ["ene.","feb.","mar.","abr.","may.","jun.","jul.","ago.","sept.","oct.","nov.","dic.",""],
@@ -765,11 +765,11 @@ Bridge.merge(new Bridge.CultureInfo("es-HN", true), {
     })
 });
 
-Bridge.merge(new Bridge.CultureInfo("es-MX", true), {
+Bridge.merge(new System.Globalization.CultureInfo("es-MX", true), {
     englishName: "Spanish (Mexico)",
     nativeName: "español (México)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -796,7 +796,7 @@ Bridge.merge(new Bridge.CultureInfo("es-MX", true), {
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dom.","lun.","mar.","mié.","jue.","vie.","sáb."],
         abbreviatedMonthGenitiveNames: ["ene.","feb.","mar.","abr.","may.","jun.","jul.","ago.","sep.","oct.","nov.","dic.",""],
         abbreviatedMonthNames: ["ene.","feb.","mar.","abr.","may.","jun.","jul.","ago.","sep.","oct.","nov.","dic.",""],
@@ -824,11 +824,11 @@ Bridge.merge(new Bridge.CultureInfo("es-MX", true), {
     })
 });
 
-Bridge.merge(new Bridge.CultureInfo("es-NI", true), {
+Bridge.merge(new System.Globalization.CultureInfo("es-NI", true), {
     englishName: "Spanish (Nicaragua)",
     nativeName: "español (Nicaragua)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NeuN",
         negativeSign: "-",
         positiveSign: "+",
@@ -855,7 +855,7 @@ Bridge.merge(new Bridge.CultureInfo("es-NI", true), {
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dom","lun","mar","mié","jue","vie","sáb"],
         abbreviatedMonthGenitiveNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
         abbreviatedMonthNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
@@ -883,11 +883,11 @@ Bridge.merge(new Bridge.CultureInfo("es-NI", true), {
     })
 });
 
-Bridge.merge(new Bridge.CultureInfo("es-PA", true), {
+Bridge.merge(new System.Globalization.CultureInfo("es-PA", true), {
     englishName: "Spanish (Panama)",
     nativeName: "español (Panamá)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NeuN",
         negativeSign: "-",
         positiveSign: "+",
@@ -914,7 +914,7 @@ Bridge.merge(new Bridge.CultureInfo("es-PA", true), {
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dom.","lun.","mar.","mié.","jue.","vie.","sáb."],
         abbreviatedMonthGenitiveNames: ["ene.","feb.","mar.","abr.","may.","jun.","jul.","ago.","sep.","oct.","nov.","dic.",""],
         abbreviatedMonthNames: ["ene.","feb.","mar.","abr.","may.","jun.","jul.","ago.","sep.","oct.","nov.","dic.",""],
@@ -942,11 +942,11 @@ Bridge.merge(new Bridge.CultureInfo("es-PA", true), {
     })
 });
 
-Bridge.merge(new Bridge.CultureInfo("es-PE", true), {
+Bridge.merge(new System.Globalization.CultureInfo("es-PE", true), {
     englishName: "Spanish (Peru)",
     nativeName: "español (Perú)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NeuN",
         negativeSign: "-",
         positiveSign: "+",
@@ -973,7 +973,7 @@ Bridge.merge(new Bridge.CultureInfo("es-PE", true), {
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dom","lun","mar","mié","jue","vie","sáb"],
         abbreviatedMonthGenitiveNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
         abbreviatedMonthNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
@@ -1001,11 +1001,11 @@ Bridge.merge(new Bridge.CultureInfo("es-PE", true), {
     })
 });
 
-Bridge.merge(new Bridge.CultureInfo("es-PR", true), {
+Bridge.merge(new System.Globalization.CultureInfo("es-PR", true), {
     englishName: "Spanish (Puerto Rico)",
     nativeName: "español (Puerto Rico)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NeuN",
         negativeSign: "-",
         positiveSign: "+",
@@ -1032,7 +1032,7 @@ Bridge.merge(new Bridge.CultureInfo("es-PR", true), {
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dom","lun","mar","mié","jue","vie","sáb"],
         abbreviatedMonthGenitiveNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
         abbreviatedMonthNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
@@ -1060,11 +1060,11 @@ Bridge.merge(new Bridge.CultureInfo("es-PR", true), {
     })
 });
 
-Bridge.merge(new Bridge.CultureInfo("es-PY", true), {
+Bridge.merge(new System.Globalization.CultureInfo("es-PY", true), {
     englishName: "Spanish (Paraguay)",
     nativeName: "español (Paraguay)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NeuN",
         negativeSign: "-",
         positiveSign: "+",
@@ -1091,7 +1091,7 @@ Bridge.merge(new Bridge.CultureInfo("es-PY", true), {
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dom","lun","mar","mié","jue","vie","sáb"],
         abbreviatedMonthGenitiveNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
         abbreviatedMonthNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
@@ -1119,11 +1119,11 @@ Bridge.merge(new Bridge.CultureInfo("es-PY", true), {
     })
 });
 
-Bridge.merge(new Bridge.CultureInfo("es-SV", true), {
+Bridge.merge(new System.Globalization.CultureInfo("es-SV", true), {
     englishName: "Spanish (El Salvador)",
     nativeName: "español (El Salvador)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NeuN",
         negativeSign: "-",
         positiveSign: "+",
@@ -1150,7 +1150,7 @@ Bridge.merge(new Bridge.CultureInfo("es-SV", true), {
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dom","lun","mar","mié","jue","vie","sáb"],
         abbreviatedMonthGenitiveNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
         abbreviatedMonthNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
@@ -1178,11 +1178,11 @@ Bridge.merge(new Bridge.CultureInfo("es-SV", true), {
     })
 });
 
-Bridge.merge(new Bridge.CultureInfo("es-US", true), {
+Bridge.merge(new System.Globalization.CultureInfo("es-US", true), {
     englishName: "Spanish (United States)",
     nativeName: "español (Estados Unidos)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NeuN",
         negativeSign: "-",
         positiveSign: "+",
@@ -1209,7 +1209,7 @@ Bridge.merge(new Bridge.CultureInfo("es-US", true), {
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dom","lun","mar","mié","jue","vie","sáb"],
         abbreviatedMonthGenitiveNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
         abbreviatedMonthNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
@@ -1237,11 +1237,11 @@ Bridge.merge(new Bridge.CultureInfo("es-US", true), {
     })
 });
 
-Bridge.merge(new Bridge.CultureInfo("es-UY", true), {
+Bridge.merge(new System.Globalization.CultureInfo("es-UY", true), {
     englishName: "Spanish (Uruguay)",
     nativeName: "español (Uruguay)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NeuN",
         negativeSign: "-",
         positiveSign: "+",
@@ -1268,7 +1268,7 @@ Bridge.merge(new Bridge.CultureInfo("es-UY", true), {
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dom","lun","mar","mié","jue","vie","sáb"],
         abbreviatedMonthGenitiveNames: ["ene","feb","mar","abr","may","jun","jul","ago","set","oct","nov","dic",""],
         abbreviatedMonthNames: ["ene","feb","mar","abr","may","jun","jul","ago","set","oct","nov","dic",""],
@@ -1296,11 +1296,11 @@ Bridge.merge(new Bridge.CultureInfo("es-UY", true), {
     })
 });
 
-Bridge.merge(new Bridge.CultureInfo("es-VE", true), {
+Bridge.merge(new System.Globalization.CultureInfo("es-VE", true), {
     englishName: "Spanish (Bolivarian Republic of Venezuela)",
     nativeName: "español (Republica Bolivariana de Venezuela)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NeuN",
         negativeSign: "-",
         positiveSign: "+",
@@ -1327,7 +1327,7 @@ Bridge.merge(new Bridge.CultureInfo("es-VE", true), {
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dom","lun","mar","mié","jue","vie","sáb"],
         abbreviatedMonthGenitiveNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
         abbreviatedMonthNames: ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic",""],
@@ -1355,11 +1355,11 @@ Bridge.merge(new Bridge.CultureInfo("es-VE", true), {
     })
 });
 
-Bridge.merge(new Bridge.CultureInfo("es", true), {
+Bridge.merge(new System.Globalization.CultureInfo("es", true), {
     englishName: "Spanish",
     nativeName: "español",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -1386,7 +1386,7 @@ Bridge.merge(new Bridge.CultureInfo("es", true), {
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["do.","lu.","ma.","mi.","ju.","vi.","sá."],
         abbreviatedMonthGenitiveNames: ["ene.","feb.","mar.","abr.","may.","jun.","jul.","ago.","sep.","oct.","nov.","dic.",""],
         abbreviatedMonthNames: ["ene.","feb.","mar.","abr.","may.","jun.","jul.","ago.","sep.","oct.","nov.","dic.",""],

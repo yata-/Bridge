@@ -9,7 +9,7 @@
                 }
             },
             main: function () {
-                Bridge.Console.log(new TestIssue599.Issue599()._something);
+                System.Console.log(new TestIssue599.Issue599()._something);
             }
         },
         _something: "HI!"
