@@ -340,7 +340,7 @@
             }
 
             if (Bridge.isString(obj)) {
-                return Bridge.String.is(obj, type);
+                return System.String.is(obj, type);
             }
 
             if (Bridge.isBoolean(obj)) {
@@ -477,7 +477,7 @@
 
 	    getEnumerator: function (obj, suffix) {
 	        if (typeof obj === "string") {
-	            obj = Bridge.String.toCharArray(obj);
+	            obj = System.String.toCharArray(obj);
 	        }
 
 	        if (suffix && obj && obj["getEnumerator" + suffix]) {
@@ -1174,9 +1174,9 @@
             }
 
             if (type === System.Collections.IEnumerable ||
-                type.$$name && Bridge.String.startsWith(type.$$name, "System.Collections.Generic.IEnumerable$1") ||
-                type.$$name && Bridge.String.startsWith(type.$$name, "System.IComparable$1") ||
-                type.$$name && Bridge.String.startsWith(type.$$name, "System.IEquatable$1")) {
+                type.$$name && System.String.startsWith(type.$$name, "System.Collections.Generic.IEnumerable$1") ||
+                type.$$name && System.String.startsWith(type.$$name, "System.IComparable$1") ||
+                type.$$name && System.String.startsWith(type.$$name, "System.IEquatable$1")) {
                 return true;
             }
 
@@ -1283,7 +1283,7 @@
                 }
             }
 
-            return Bridge.String.alignString(value.toString(), alignment);
+            return System.String.alignString(value.toString(), alignment);
         },
 
         decodeBraceSequence: function (braces, remove) {
@@ -1342,7 +1342,7 @@
                 return false;
             }
 
-            prefix = Bridge.String.escape(prefix);
+            prefix = System.String.escape(prefix);
 
             return str.match("^" + prefix) !== null;
         },
@@ -1356,7 +1356,7 @@
                 return false;
             }
 
-            suffix = Bridge.String.escape(suffix);
+            suffix = System.String.escape(suffix);
 
             return str.match(suffix + "$") !== null;
         },
@@ -1447,7 +1447,7 @@
             if (index > -1) {
                 if (arguments.length === 5) {
                     // StringComparison
-                    return (Bridge.String.compare(value, s.substr(index, value.length), arguments[4]) === 0) ? index + startIndex : -1;
+                    return (System.String.compare(value, s.substr(index, value.length), arguments[4]) === 0) ? index + startIndex : -1;
                 } else {
                     return index + startIndex;
                 }
@@ -1457,7 +1457,7 @@
         },
 
         equals: function () {
-            return Bridge.String.compare.apply(this, arguments) === 0;
+            return System.String.compare.apply(this, arguments) === 0;
         },
 
         compare: function (strA, strB) {
@@ -1535,7 +1535,7 @@
         },
 
         replaceAll: function (str, a, b) {
-            var reg = new RegExp(Bridge.String.escape(a), "g");
+            var reg = new RegExp(System.String.escape(a), "g");
 
             return str.replace(reg, b);
         },
@@ -1553,7 +1553,7 @@
         },
 
         split: function (s, strings, limit, options) {
-            var re = (!Bridge.hasValue(strings) || strings.length === 0) ? new RegExp("\\s", "g") : new RegExp(strings.map(Bridge.String.escape).join('|'), 'g'),
+            var re = (!Bridge.hasValue(strings) || strings.length === 0) ? new RegExp("\\s", "g") : new RegExp(strings.map(System.String.escape).join('|'), 'g'),
                 res = [],
                 m,
                 i;
@@ -1579,19 +1579,19 @@
         },
 
         trimEnd: function (s, chars) {
-            return s.replace(chars ? new RegExp('[' + Bridge.String.escape(String.fromCharCode.apply(null, chars)) + ']+$') : /\s*$/, '');
+            return s.replace(chars ? new RegExp('[' + System.String.escape(String.fromCharCode.apply(null, chars)) + ']+$') : /\s*$/, '');
         },
 
         trimStart: function (s, chars) {
-            return s.replace(chars ? new RegExp('^[' + Bridge.String.escape(String.fromCharCode.apply(null, chars)) + ']+') : /^\s*/, '');
+            return s.replace(chars ? new RegExp('^[' + System.String.escape(String.fromCharCode.apply(null, chars)) + ']+') : /^\s*/, '');
         },
 
         trim: function (s, chars) {
-            return Bridge.String.trimStart(Bridge.String.trimEnd(s, chars), chars);
+            return System.String.trimStart(System.String.trimEnd(s, chars), chars);
         }
     };
 
-    Bridge.String = string;
+    System.String = string;
 
     // @source Enum.js
 
@@ -1939,7 +1939,7 @@
             if (this.$multipleCtors && arguments.length > 0 && typeof value == "string") {
                 value = value === "constructor" ? "$constructor" : value;
 
-                if ((value === "$constructor" || Bridge.String.startsWith(value, "constructor$")) && Bridge.isFunction(this[value])) {
+                if ((value === "$constructor" || System.String.startsWith(value, "constructor$")) && Bridge.isFunction(this[value])) {
                     this[value].apply(this, Array.prototype.slice.call(arguments, 1));
 
                     return;
@@ -2184,7 +2184,7 @@
                 isCtor = name === "constructor";
                 ctorName = isCtor ? "$constructor" : name;
 
-                if (Bridge.isFunction(v) && (isCtor || Bridge.String.startsWith(name, "constructor$"))) {
+                if (Bridge.isFunction(v) && (isCtor || System.String.startsWith(name, "constructor$"))) {
                     ctorCounter++;
                     isCtor = true;
                 }
@@ -3452,12 +3452,12 @@ Bridge.Class.addExtend(System.Char, [System.IComparable$1(System.Char), System.I
                 return false;
             }
 
-            if (Bridge.String.equals(System.Boolean.trueString, value, 5)) {
+            if (System.String.equals(System.Boolean.trueString, value, 5)) {
                 result.v = true;
                 return true;
             }
 
-            if (Bridge.String.equals(System.Boolean.falseString, value, 5)) {
+            if (System.String.equals(System.Boolean.falseString, value, 5)) {
                 result.v = false;
                 return true;
             }
@@ -3483,12 +3483,12 @@ Bridge.Class.addExtend(System.Char, [System.IComparable$1(System.Char), System.I
  
             value = value.substr(start, end - start + 1);
 
-            if (Bridge.String.equals(System.Boolean.trueString, value, 5)) {
+            if (System.String.equals(System.Boolean.trueString, value, 5)) {
                 result.v = true;
                 return true;
             }
 
-            if (Bridge.String.equals(System.Boolean.falseString, value, 5)) {
+            if (System.String.equals(System.Boolean.falseString, value, 5)) {
                 result.v = false;
                 return true;
             }
@@ -3681,7 +3681,7 @@ Bridge.Class.addExtend(System.Char, [System.IComparable$1(System.Char), System.I
                     }
                 }
 
-                if (format.indexOf(",.") !== -1 || Bridge.String.endsWith(format, ",")) {
+                if (format.indexOf(",.") !== -1 || System.String.endsWith(format, ",")) {
                     var count = 0,
                         index = format.indexOf(",.");
 
@@ -5741,10 +5741,10 @@ var date = {
 			            case "zz":
 			            case "zzz":
 			                part = timezoneOffset / 60;
-			                part = ((part >= 0) ? "-" : "+") + Bridge.String.alignString(Math.floor(Math.abs(part)).toString(), 2, "0", 2);
+			                part = ((part >= 0) ? "-" : "+") + System.String.alignString(Math.floor(Math.abs(part)).toString(), 2, "0", 2);
 
 			                if (match === "zzz") {
-			                    part += df.timeSeparator + Bridge.String.alignString(Math.floor(Math.abs(timezoneOffset % 60)).toString(), 2, "0", 2);
+			                    part += df.timeSeparator + System.String.alignString(Math.floor(Math.abs(timezoneOffset % 60)).toString(), 2, "0", 2);
 			                }
 
 			                break;
@@ -6506,7 +6506,7 @@ var date = {
                 me = this,
                 dtInfo = (provider || System.Globalization.CultureInfo.getCurrentCulture()).getFormat(System.Globalization.DateTimeFormatInfo),
                 format = function (t, n) {
-                    return Bridge.String.alignString((t | 0).toString(), n || 2, "0", 2);
+                    return System.String.alignString((t | 0).toString(), n || 2, "0", 2);
                 };
 
             if (formatStr) {
@@ -6661,7 +6661,7 @@ Bridge.define("System.Text.StringBuilder", {
     },
 
     appendFormat: function (format) {
-        return this.append(Bridge.String.format.apply(Bridge.String, arguments));
+        return this.append(System.String.format.apply(System.String, arguments));
     },
 
     clear: function () {
@@ -7212,8 +7212,8 @@ var array = {
         if (obj instanceof Bridge.ArrayEnumerator) {
             if ((obj.constructor === type) || (obj instanceof type) ||
                 type === Bridge.ArrayEnumerator ||
-                type.$$name && Bridge.String.startsWith(type.$$name, "System.Collections.IEnumerator") ||
-                type.$$name && Bridge.String.startsWith(type.$$name, "System.Collections.Generic.IEnumerator")) {
+                type.$$name && System.String.startsWith(type.$$name, "System.Collections.IEnumerator") ||
+                type.$$name && System.String.startsWith(type.$$name, "System.Collections.Generic.IEnumerator")) {
                 return true;
             }
 
@@ -7232,9 +7232,9 @@ var array = {
         if (type === System.Collections.IEnumerable ||
             type === System.Collections.ICollection ||
             type === System.ICloneable ||
-            type.$$name && Bridge.String.startsWith(type.$$name, "System.Collections.Generic.IEnumerable$1") ||
-            type.$$name && Bridge.String.startsWith(type.$$name, "System.Collections.Generic.ICollection$1") ||
-            type.$$name && Bridge.String.startsWith(type.$$name, "System.Collections.Generic.IList$1")) {
+            type.$$name && System.String.startsWith(type.$$name, "System.Collections.Generic.IEnumerable$1") ||
+            type.$$name && System.String.startsWith(type.$$name, "System.Collections.Generic.ICollection$1") ||
+            type.$$name && System.String.startsWith(type.$$name, "System.Collections.Generic.IList$1")) {
             return true;
         }
 
