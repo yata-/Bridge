@@ -529,7 +529,7 @@ namespace Bridge.Translator
                 return false;
             }
 
-            if (this.HasAttribute(entity.Attributes, AttributeConstants.ACCESSORSINDEXER_ATTRIBUTE_NAME))
+            if (this.HasAttribute(entity.Attributes, Attributes.ACCESSORSINDEXER_ATTRIBUTE_NAME))
             {
                 return true;
             }
