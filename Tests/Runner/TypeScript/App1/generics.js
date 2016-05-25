@@ -61,8 +61,8 @@
             genericNewAndClass: null,
             config: {
                 init: function () {
-                    this.simpleGenericInt = new Generics.SimpleGeneric$1(Bridge.Int32)(1);
-                    this.simpleDoubleGenericIntString = new Generics.SimpleDoubleGeneric$2(Bridge.Int32,String)("constructor");
+                    this.simpleGenericInt = new Generics.SimpleGeneric$1(System.Int32)(1);
+                    this.simpleDoubleGenericIntString = new Generics.SimpleDoubleGeneric$2(System.Int32,String)("constructor");
                     this.genericINamedEntity = new Generics.GenericINamedEntity$1(Generics.INamedEntity)(new Generics.NamedEntity());
                     this.genericNamedEntity = new Generics.GenericNamedEntity$1(Generics.NamedEntity)(new Generics.NamedEntity());
                     this.genericClassObject = new Generics.GenericClass$1(Object)(2);
