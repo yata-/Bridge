@@ -1139,7 +1139,7 @@ namespace Bridge.ClientTest.BridgeIssues
         {
             List<int> magic = new List<int>() { 0, 1, 2, 3, 4 };
             List<int> epic = magic.GetRange(0, 3);
-            Assert.AreEqual("Bridge.List$1$Bridge.Int32", epic.GetType().GetClassName(), "epic.GetType().GetClassName()");
+            Assert.AreEqual("System.Collections.Generic.List$1$System.Int32", epic.GetType().GetClassName(), "epic.GetType().GetClassName()");
         }
 
         // Bridge[#439]
@@ -1290,7 +1290,7 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void N499()
         {
             var v1 = new Version();
-            Assert.AreEqual("Bridge.Version", v1.GetClassName(), "#499 Version type name");
+            Assert.AreEqual("System.Version", v1.GetClassName(), "#499 Version type name");
         }
     }
 }

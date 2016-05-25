@@ -14,7 +14,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual("Bridge.FormatException", typeof(FormatException).GetClassName(), "Name");
+            Assert.AreEqual("System.FormatException", typeof(FormatException).GetClassName(), "Name");
             object d = new FormatException();
             Assert.True(d is FormatException, "is FormatException");
             Assert.True(d is Exception, "is Exception");

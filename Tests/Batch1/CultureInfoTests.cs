@@ -13,7 +13,7 @@ namespace Bridge.ClientTest
         public void TypePropertiesAreCorrect()
         {
             var culture = CultureInfo.InvariantCulture;
-            Assert.AreEqual("Bridge.CultureInfo", typeof(CultureInfo).GetClassName());
+            Assert.AreEqual("System.Globalization.CultureInfo", typeof(CultureInfo).GetClassName());
             Assert.True(culture is CultureInfo);
         }
 

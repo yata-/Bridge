@@ -13,7 +13,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual("Bridge.RegexMatchTimeoutException", typeof(RegexMatchTimeoutException).GetClassName(), "Name");
+            Assert.AreEqual("System.RegexMatchTimeoutException", typeof(RegexMatchTimeoutException).GetClassName(), "Name");
             object d = new RegexMatchTimeoutException();
             Assert.True(d is RegexMatchTimeoutException, "is RegexMatchTimeoutException");
             Assert.True(d is TimeoutException, "is TimeoutException");
