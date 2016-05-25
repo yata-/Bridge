@@ -12,7 +12,7 @@
             method: function () {
             }
         },
-        main: function () {
+        main1: function () {
             // Should be TestIssue1050.App.something = 1;
             TestIssue1050.App.field = 1;
     

@@ -3,7 +3,7 @@
 
     Bridge.define('Test.BridgeIssues.N391.Class391', {
         statics: {
-            main: function () {
+            main1: function () {
                 var $t, $t1, $t2, $t3;
                 var TestArray1 = ["TestA", "TestB", "TestC"];
                 var TestArray2 = ["TestA", "TestB", "TestC"];

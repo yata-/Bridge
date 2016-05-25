@@ -13393,7 +13393,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         statics: {
             testUseCase: function () {
                 Bridge.Test.Assert.notNull$1(new Bridge.ClientTest.BridgeIssues.Bridge883_1(), "Bridge883_1 created");
-                Bridge.Test.Assert.areEqual$1(1, Bridge.ClientTest.BridgeIssues.Bridge883_3.main(), "Bridge883_3.Main");
+                Bridge.Test.Assert.areEqual$1(1, Bridge.ClientTest.BridgeIssues.Bridge883_3.main1(), "Bridge883_3.Main1");
             }
         }
     });
@@ -13402,7 +13402,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge883_3', {
         statics: {
-            main: function () {
+            main1: function () {
                 var f = Bridge.ClientTest.BridgeIssues.Bridge883_4.field1;
                 return f;
             }

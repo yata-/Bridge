@@ -5,7 +5,7 @@
     
     Bridge.define('TestIssue958.Issue958', {
         statics: {
-            main: function () {
+            main1: function () {
                 var message = new TestIssue958.SetValue("Hi!");
                 TestIssue958.Issue958.processMessage(message);
             },

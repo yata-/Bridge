@@ -5,10 +5,10 @@
         statics: {
             config: {
                 init: function () {
-                    Bridge.ready(this.main);
+                    Bridge.ready(this.main1);
                 }
             },
-            main: function () {
+            main1: function () {
                 System.Console.log(new TestIssue599.Issue599()._something);
             }
         },
