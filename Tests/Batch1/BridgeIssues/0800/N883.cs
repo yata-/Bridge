@@ -16,7 +16,7 @@ namespace Bridge.ClientTest.BridgeIssues
 
     public class Bridge883_3
     {
-        public static int Main()
+        public static int Main1()
         {
             int f = Bridge883_4.field1;
             return f;
@@ -37,7 +37,7 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void TestUseCase()
         {
             Assert.NotNull(new Bridge883_1(), "Bridge883_1 created");
-            Assert.AreEqual(1, Bridge883_3.Main(), "Bridge883_3.Main");
+            Assert.AreEqual(1, Bridge883_3.Main1(), "Bridge883_3.Main1");
         }
     }
 }

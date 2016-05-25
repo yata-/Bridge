@@ -3,7 +3,7 @@
 
     Bridge.define('Test.BridgeIssues.N1092.App', {
         statics: {
-            main: function () {
+            main1: function () {
                 // Should contain instruction to check data type range as cspoj contains <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
                 var maxInt32 = 2147483647;
                 var rInt32Max = Bridge.Int.check(maxInt32 + 1, System.Int32);
@@ -22,7 +22,7 @@
     
     Bridge.define('Test.BridgeIssues.N772.App', {
         statics: {
-            main: function () {
+            main1: function () {
                 //These arrays depend on "useTypedArray" bridge.json option
                 var byteArray = new Uint8Array(1);
                 var sbyteArray = new Int8Array(2);

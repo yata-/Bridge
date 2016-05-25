@@ -7,7 +7,7 @@ namespace TestIssue1050
         static int Property { get; set; }
         static void Method() { }
 
-        public void Main()
+        public void Main1()
         {
             // Should be TestIssue1050.App.something = 1;
             App.Field = 1;

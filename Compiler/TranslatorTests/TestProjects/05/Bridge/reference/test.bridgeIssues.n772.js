@@ -3,7 +3,7 @@
 
     Bridge.define('Test.BridgeIssues.N772.App', {
         statics: {
-            main: function () {
+            main1: function () {
                 //These arrays depend on "useTypedArray" bridge.json option
                 var byteArray = System.Array.init(1, 0);
                 var sbyteArray = System.Array.init(2, 0);

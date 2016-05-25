@@ -10,7 +10,7 @@
     
     Bridge.define('Test.BridgeIssues.N963.Class963', {
         statics: {
-            main: function () {
+            main1: function () {
                 var i = 5;
                 i = (i + 1) | 0;
             }
