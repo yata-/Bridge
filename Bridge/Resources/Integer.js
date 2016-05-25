@@ -180,7 +180,7 @@
                     }
                 }
 
-                if (format.indexOf(",.") !== -1 || Bridge.String.endsWith(format, ",")) {
+                if (format.indexOf(",.") !== -1 || System.String.endsWith(format, ",")) {
                     var count = 0,
                         index = format.indexOf(",.");
 

@@ -183,7 +183,7 @@
                 me = this,
                 dtInfo = (provider || System.Globalization.CultureInfo.getCurrentCulture()).getFormat(System.Globalization.DateTimeFormatInfo),
                 format = function (t, n) {
-                    return Bridge.String.alignString((t | 0).toString(), n || 2, "0", 2);
+                    return System.String.alignString((t | 0).toString(), n || 2, "0", 2);
                 };
 
             if (formatStr) {

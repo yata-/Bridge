@@ -47,12 +47,12 @@
                 return false;
             }
 
-            if (Bridge.String.equals(System.Boolean.trueString, value, 5)) {
+            if (System.String.equals(System.Boolean.trueString, value, 5)) {
                 result.v = true;
                 return true;
             }
 
-            if (Bridge.String.equals(System.Boolean.falseString, value, 5)) {
+            if (System.String.equals(System.Boolean.falseString, value, 5)) {
                 result.v = false;
                 return true;
             }
@@ -78,12 +78,12 @@
  
             value = value.substr(start, end - start + 1);
 
-            if (Bridge.String.equals(System.Boolean.trueString, value, 5)) {
+            if (System.String.equals(System.Boolean.trueString, value, 5)) {
                 result.v = true;
                 return true;
             }
 
-            if (Bridge.String.equals(System.Boolean.falseString, value, 5)) {
+            if (System.String.equals(System.Boolean.falseString, value, 5)) {
                 result.v = false;
                 return true;
             }

@@ -11,9 +11,9 @@
             }
 
             if (type === System.Collections.IEnumerable ||
-                type.$$name && Bridge.String.startsWith(type.$$name, "System.Collections.Generic.IEnumerable$1") ||
-                type.$$name && Bridge.String.startsWith(type.$$name, "System.IComparable$1") ||
-                type.$$name && Bridge.String.startsWith(type.$$name, "System.IEquatable$1")) {
+                type.$$name && System.String.startsWith(type.$$name, "System.Collections.Generic.IEnumerable$1") ||
+                type.$$name && System.String.startsWith(type.$$name, "System.IComparable$1") ||
+                type.$$name && System.String.startsWith(type.$$name, "System.IEquatable$1")) {
                 return true;
             }
 
@@ -120,7 +120,7 @@
                 }
             }
 
-            return Bridge.String.alignString(value.toString(), alignment);
+            return System.String.alignString(value.toString(), alignment);
         },
 
         decodeBraceSequence: function (braces, remove) {
@@ -179,7 +179,7 @@
                 return false;
             }
 
-            prefix = Bridge.String.escape(prefix);
+            prefix = System.String.escape(prefix);
 
             return str.match("^" + prefix) !== null;
         },
@@ -193,7 +193,7 @@
                 return false;
             }
 
-            suffix = Bridge.String.escape(suffix);
+            suffix = System.String.escape(suffix);
 
             return str.match(suffix + "$") !== null;
         },
@@ -284,7 +284,7 @@
             if (index > -1) {
                 if (arguments.length === 5) {
                     // StringComparison
-                    return (Bridge.String.compare(value, s.substr(index, value.length), arguments[4]) === 0) ? index + startIndex : -1;
+                    return (System.String.compare(value, s.substr(index, value.length), arguments[4]) === 0) ? index + startIndex : -1;
                 } else {
                     return index + startIndex;
                 }
@@ -294,7 +294,7 @@
         },
 
         equals: function () {
-            return Bridge.String.compare.apply(this, arguments) === 0;
+            return System.String.compare.apply(this, arguments) === 0;
         },
 
         compare: function (strA, strB) {
@@ -372,7 +372,7 @@
         },
 
         replaceAll: function (str, a, b) {
-            var reg = new RegExp(Bridge.String.escape(a), "g");
+            var reg = new RegExp(System.String.escape(a), "g");
 
             return str.replace(reg, b);
         },
@@ -390,7 +390,7 @@
         },
 
         split: function (s, strings, limit, options) {
-            var re = (!Bridge.hasValue(strings) || strings.length === 0) ? new RegExp("\\s", "g") : new RegExp(strings.map(Bridge.String.escape).join('|'), 'g'),
+            var re = (!Bridge.hasValue(strings) || strings.length === 0) ? new RegExp("\\s", "g") : new RegExp(strings.map(System.String.escape).join('|'), 'g'),
                 res = [],
                 m,
                 i;
@@ -416,16 +416,16 @@
         },
 
         trimEnd: function (s, chars) {
-            return s.replace(chars ? new RegExp('[' + Bridge.String.escape(String.fromCharCode.apply(null, chars)) + ']+$') : /\s*$/, '');
+            return s.replace(chars ? new RegExp('[' + System.String.escape(String.fromCharCode.apply(null, chars)) + ']+$') : /\s*$/, '');
         },
 
         trimStart: function (s, chars) {
-            return s.replace(chars ? new RegExp('^[' + Bridge.String.escape(String.fromCharCode.apply(null, chars)) + ']+') : /^\s*/, '');
+            return s.replace(chars ? new RegExp('^[' + System.String.escape(String.fromCharCode.apply(null, chars)) + ']+') : /^\s*/, '');
         },
 
         trim: function (s, chars) {
-            return Bridge.String.trimStart(Bridge.String.trimEnd(s, chars), chars);
+            return System.String.trimStart(System.String.trimEnd(s, chars), chars);
         }
     };
 
-    Bridge.String = string;
+    System.String = string;

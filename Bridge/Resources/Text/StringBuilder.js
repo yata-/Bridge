@@ -95,7 +95,7 @@ Bridge.define("System.Text.StringBuilder", {
     },
 
     appendFormat: function (format) {
-        return this.append(Bridge.String.format.apply(Bridge.String, arguments));
+        return this.append(System.String.format.apply(System.String, arguments));
     },
 
     clear: function () {

@@ -144,8 +144,8 @@ var array = {
         if (obj instanceof Bridge.ArrayEnumerator) {
             if ((obj.constructor === type) || (obj instanceof type) ||
                 type === Bridge.ArrayEnumerator ||
-                type.$$name && Bridge.String.startsWith(type.$$name, "System.Collections.IEnumerator") ||
-                type.$$name && Bridge.String.startsWith(type.$$name, "System.Collections.Generic.IEnumerator")) {
+                type.$$name && System.String.startsWith(type.$$name, "System.Collections.IEnumerator") ||
+                type.$$name && System.String.startsWith(type.$$name, "System.Collections.Generic.IEnumerator")) {
                 return true;
             }
 
@@ -164,9 +164,9 @@ var array = {
         if (type === System.Collections.IEnumerable ||
             type === System.Collections.ICollection ||
             type === System.ICloneable ||
-            type.$$name && Bridge.String.startsWith(type.$$name, "System.Collections.Generic.IEnumerable$1") ||
-            type.$$name && Bridge.String.startsWith(type.$$name, "System.Collections.Generic.ICollection$1") ||
-            type.$$name && Bridge.String.startsWith(type.$$name, "System.Collections.Generic.IList$1")) {
+            type.$$name && System.String.startsWith(type.$$name, "System.Collections.Generic.IEnumerable$1") ||
+            type.$$name && System.String.startsWith(type.$$name, "System.Collections.Generic.ICollection$1") ||
+            type.$$name && System.String.startsWith(type.$$name, "System.Collections.Generic.IList$1")) {
             return true;
         }
 

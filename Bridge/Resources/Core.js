@@ -329,7 +329,7 @@
             }
 
             if (Bridge.isString(obj)) {
-                return Bridge.String.is(obj, type);
+                return System.String.is(obj, type);
             }
 
             if (Bridge.isBoolean(obj)) {
@@ -466,7 +466,7 @@
 
 	    getEnumerator: function (obj, suffix) {
 	        if (typeof obj === "string") {
-	            obj = Bridge.String.toCharArray(obj);
+	            obj = System.String.toCharArray(obj);
 	        }
 
 	        if (suffix && obj && obj["getEnumerator" + suffix]) {
