@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("om-ET", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("om-ET", true), {
     englishName: "Oromo (Ethiopia)",
     nativeName: "Oromoo (Itoophiyaa)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Dil","Wix","Qib","Rob","Kam","Jim","San"],
         abbreviatedMonthGenitiveNames: ["Ama","Gur","Bit","Elb","Cam","Wax","Ado","Hag","Ful","Onk","Sad","Mud",""],
         abbreviatedMonthNames: ["Ama","Gur","Bit","Elb","Cam","Wax","Ado","Hag","Ful","Onk","Sad","Mud",""],

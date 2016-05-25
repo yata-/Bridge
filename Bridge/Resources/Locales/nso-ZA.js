@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("nso-ZA", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("nso-ZA", true), {
     englishName: "Sesotho sa Leboa (South Africa)",
     nativeName: "Sesotho sa Leboa (Afrika Borwa)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Lam","Moš","Lbb","Lbr","Lbn","Lbh","Mok"],
         abbreviatedMonthGenitiveNames: ["Jan","Feb","Matš","Apr","Mei","June","Julae","Agost","Set","Oky","Nof","Dis",""],
         abbreviatedMonthNames: ["Jan","Feb","Matš","Apr","Mei","June","Julae","Agost","Set","Oky","Nof","Dis",""],

@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("fy-NL", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("fy-NL", true), {
     englishName: "Frisian (Netherlands)",
     nativeName: "Frysk (Nederlân)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["sni","moa","tii","woa","ton","fre","sno"],
         abbreviatedMonthGenitiveNames: ["jan","feb","mrt","apr","maa","jun","jul","aug","sep","okt","nov","des",""],
         abbreviatedMonthNames: ["jan","feb","mrt","apr","maa","jun","jul","aug","sep","okt","nov","des",""],

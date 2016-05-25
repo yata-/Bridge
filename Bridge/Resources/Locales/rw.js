@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("rw", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("rw", true), {
     englishName: "Kinyarwanda",
     nativeName: "Kinyarwanda",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["cyu.","mbe.","kab.","gat.","kan.","gat.","gat."],
         abbreviatedMonthGenitiveNames: ["Mut","Gas","Wer","Mat","Gic","Kam","Nyak","Kan","Nze","Ukwak","Ugus","Ukub",""],
         abbreviatedMonthNames: ["Mut","Gas","Wer","Mat","Gic","Kam","Nyak","Kan","Nze","Ukwak","Ugus","Ukub",""],

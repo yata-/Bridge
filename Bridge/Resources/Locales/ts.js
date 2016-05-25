@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("ts", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("ts", true), {
     englishName: "Tsonga",
     nativeName: "Xitsonga",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Son","Mus","Bir","Har","Ne","Tlh","Mug"],
         abbreviatedMonthGenitiveNames: ["Sun","Yan","Kul","Dzi","Mud","Kho","Maw","Mha","Ndz","Nhl","Huk","N'w",""],
         abbreviatedMonthNames: ["Sun","Yan","Kul","Dzi","Mud","Kho","Maw","Mha","Ndz","Nhl","Huk","N'w",""],

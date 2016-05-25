@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("hsb", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("hsb", true), {
     englishName: "Upper Sorbian",
     nativeName: "hornjoserbšćina",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "njedefinowane",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["nje","pón","wut","srj","štw","pja","sob"],
         abbreviatedMonthGenitiveNames: ["jan","feb","měr","apr","mej","jun","jul","awg","sep","okt","now","dec",""],
         abbreviatedMonthNames: ["jan","feb","měr","apr","mej","jun","jul","awg","sep","okt","now","dec",""],

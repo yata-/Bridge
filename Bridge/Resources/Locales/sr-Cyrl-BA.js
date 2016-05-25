@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("sr-Cyrl-BA", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("sr-Cyrl-BA", true), {
     englishName: "Serbian (Cyrillic, Bosnia and Herzegovina)",
     nativeName: "српски (Босна и Херцеговина)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "није број",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["нед","пон","уто","сри","чет","пет","суб"],
         abbreviatedMonthGenitiveNames: ["јан","феб","мар","апр","мај","јун","јул","авг","сеп","окт","нов","дец",""],
         abbreviatedMonthNames: ["јан","феб","мар","апр","мај","јун","јул","авг","сеп","окт","нов","дец",""],

@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("mn-MN", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("mn-MN", true), {
     englishName: "Mongolian (Cyrillic, Mongolia)",
     nativeName: "Монгол хэл (Монгол улс)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Ня","Да","Мя","Лха","Пү","Ба","Бя"],
         abbreviatedMonthGenitiveNames: ["1-р сарын","2-р сарын","3-р сарын","4-р сарын","5-р сарын","6-р сарын","7-р сарын","8-р сарын","9-р сарын","10-р сарын","11-р сарын","12-р сарын",""],
         abbreviatedMonthNames: ["1-р сар","2-р сар","3-р сар","4-р сар","5-р сар","6-р сар","7-р сар","8-р сар","9-р сар","10-р сар","11-р сар","12-р сар",""],

@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("sma-SE", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("sma-SE", true), {
     englishName: "Sami, Southern (Sweden)",
     nativeName: "åarjelsaemiengïele (Sveerje)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["aej","måa","dæj","gask","duar","bearj","laav"],
         abbreviatedMonthGenitiveNames: ["tsïen","goevt","njok","voer","sueh","ruff","snja","mïet","skïer","golk","rahk","goev",""],
         abbreviatedMonthNames: ["tsïen","goevt","njok","voer","sueh","ruff","snja","mïet","skïer","golk","rahk","goev",""],

@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("km", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("km", true), {
     englishName: "Khmer",
     nativeName: "ភាសាខ្មែរ",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NAN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 2
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["អាទិ.","ច.","អ.","ពុ","ព្រហ.","សុ.","ស."],
         abbreviatedMonthGenitiveNames: ["១","២","៣","៤","៥","៦","៧","៨","៩","១០","១១","១២",""],
         abbreviatedMonthNames: ["១","២","៣","៤","៥","៦","៧","៨","៩","១០","១១","១២",""],

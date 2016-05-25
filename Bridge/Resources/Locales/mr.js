@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("mr", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("mr", true), {
     englishName: "Marathi",
     nativeName: "मराठी",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["रवि.","सोम.","मंगळ.","बुध.","गुरु.","शुक्र.","शनि."],
         abbreviatedMonthGenitiveNames: ["जाने.","फेब्रु.","मार्च","एप्रि","मे","जून","जुलै","ऑग.","सप्टें.","ऑक्टो.","नोव्हें.","डिसें.",""],
         abbreviatedMonthNames: ["जाने.","फेब्रु.","मार्च","एप्रि","मे","जून","जुलै","ऑग.","सप्टें.","ऑक्टो.","नोव्हें.","डिसें.",""],

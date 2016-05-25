@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("zu", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("zu", true), {
     englishName: "isiZulu",
     nativeName: "isiZulu",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Son.","Mso.","Bi.","Tha.","Ne.","Hla.","Mgq."],
         abbreviatedMonthGenitiveNames: ["Jan","Feb","Mas","Eph","Mey","Jun","Jul","Agas","Sep","Okt","Nov","Dis",""],
         abbreviatedMonthNames: ["Jan","Feb","Mas","Eph","Mey","Jun","Jul","Agas","Sep","Okt","Nov","Dis",""],

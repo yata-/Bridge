@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("tzm-Latn-DZ", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("tzm-Latn-DZ", true), {
     englishName: "Central Atlas Tamazight (Latin, Algeria)",
     nativeName: "Tamazight (Djazaïr)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "war amdhan",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["lh'd","let","ttl","lar","lex","ldj","sse"],
         abbreviatedMonthGenitiveNames: ["Yen","Fur","Megh","Yeb","May","Yun","Yul","Ghu","Cut","Tub","Nun","Duj",""],
         abbreviatedMonthNames: ["Yen","Fur","Megh","Yeb","May","Yun","Yul","Ghu","Cut","Tub","Nun","Duj",""],

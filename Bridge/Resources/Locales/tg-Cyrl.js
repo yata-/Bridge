@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("tg-Cyrl", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("tg-Cyrl", true), {
     englishName: "Tajik (Cyrillic)",
     nativeName: "Тоҷикӣ",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["пкш","дшб","сшб","чшб","пшб","ҷум","шнб"],
         abbreviatedMonthGenitiveNames: ["янв","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек",""],
         abbreviatedMonthNames: ["янв","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек",""],

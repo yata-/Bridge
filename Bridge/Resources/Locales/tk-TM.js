@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("tk-TM", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("tk-TM", true), {
     englishName: "Turkmen (Turkmenistan)",
     nativeName: "Türkmen dili (Türkmenistan)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Ýb","Db","Sb","Çb","Pb","An","Şb"],
         abbreviatedMonthGenitiveNames: ["Ýan","Few","Mart","Apr","Maý","lýun","lýul","Awg","Sen","Okt","Noý","Dek",""],
         abbreviatedMonthNames: ["Ýan","Few","Mart","Apr","Maý","lýun","lýul","Awg","Sen","Okt","Noý","Dek",""],

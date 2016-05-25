@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("th-TH", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("th-TH", true), {
     englishName: "Thai (Thailand)",
     nativeName: "ไทย (ไทย)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["อา.","จ.","อ.","พ.","พฤ.","ศ.","ส."],
         abbreviatedMonthGenitiveNames: ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.",""],
         abbreviatedMonthNames: ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.",""],

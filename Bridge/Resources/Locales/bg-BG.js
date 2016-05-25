@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("bg-BG", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("bg-BG", true), {
     englishName: "Bulgarian (Bulgaria)",
     nativeName: "български (България)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["нед","пон","вт","ср","четв","пет","съб"],
         abbreviatedMonthGenitiveNames: ["яну","фев","мар","апр","май","юни","юли","авг","сеп","окт","ное","дек",""],
         abbreviatedMonthNames: ["яну","фев","мар","апр","май","юни","юли","авг","сеп","окт","ное","дек",""],

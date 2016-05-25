@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("sah-RU", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("sah-RU", true), {
     englishName: "Sakha (Russia)",
     nativeName: "Саха (Россия)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NAN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Өр","Бн","Оп","Ср","Чп","Бт","Сб"],
         abbreviatedMonthGenitiveNames: ["тхс","олн","клн","мсу","ыам","бэс","оты","атр","блҕ","алт","сэт","ахс",""],
         abbreviatedMonthNames: ["Тхс","Олн","Клн","Мсу","Ыам","Бэс","Оты","Атр","Блҕ","Алт","Сэт","Ахс",""],

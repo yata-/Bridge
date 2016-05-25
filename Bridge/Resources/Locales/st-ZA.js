@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("st-ZA", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("st-ZA", true), {
     englishName: "Southern Sotho (South Africa)",
     nativeName: "Sesotho (South Africa)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Son","Mma","Bed","Rar","Ne","Hla","Moq"],
         abbreviatedMonthGenitiveNames: ["Phe","Kol","Ube","Mme","Mot","Jan","Upu","Pha","Leo","Mph","Pun","Tsh",""],
         abbreviatedMonthNames: ["Phe","Kol","Ube","Mme","Mot","Jan","Upu","Pha","Leo","Mph","Pun","Tsh",""],

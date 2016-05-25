@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("dv-MV", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("dv-MV", true), {
     englishName: "Divehi (Maldives)",
     nativeName: "ދިވެހިބަސް (ދިވެހި ރާއްޖެ)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["އާދީއްތަ","ހޯމަ","އަންގާރަ","ބުދަ","ބުރާސްފަތި","ހުކުރު","ހޮނިހިރު"],
         abbreviatedMonthGenitiveNames: ["ޖަނަވަރީ","ފެބްރުއަރީ","މާރޗް","އޭޕްރިލް","މެއި","ޖޫން","ޖުލައި","އޮގަސްޓް","ސެޕްޓެމްބަރ","އޮކްޓޯބަރ","ނޮވެމްބަރ","ޑިސެމްބަރ",""],
         abbreviatedMonthNames: ["ޖަނަވަރީ","ފެބްރުއަރީ","މާރޗް","އޭޕްރިލް","މެއި","ޖޫން","ޖުލައި","އޮގަސްޓް","ސެޕްޓެމްބަރ","އޮކްޓޯބަރ","ނޮވެމްބަރ","ޑިސެމްބަރ",""],

@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("fil", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("fil", true), {
     englishName: "Filipino",
     nativeName: "Filipino",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Lin","Lun","Mar","Miy","Huw","Biy","Sab"],
         abbreviatedMonthGenitiveNames: ["Ene","Peb","Mar","Abr","Mayo","Hun","Hul","Ago","Set","Okt","Nob","Dis",""],
         abbreviatedMonthNames: ["Ene","Peb","Mar","Abr","Mayo","Hun","Hul","Ago","Set","Okt","Nob","Dis",""],

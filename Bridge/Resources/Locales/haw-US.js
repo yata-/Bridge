@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("haw-US", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("haw-US", true), {
     englishName: "Hawaiian (United States)",
     nativeName: "Hawaiʻi (ʻAmelika)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Lp","P1","P2","P3","P4","P5","P6"],
         abbreviatedMonthGenitiveNames: ["Ian","Pep","Mal","ʻAp","Mei","Iun","Iul","ʻAuk","Kep","ʻOk","Now","Kek",""],
         abbreviatedMonthNames: ["Ian","Pep","Mal","ʻAp","Mei","Iun","Iul","ʻAuk","Kep","ʻOk","Now","Kek",""],

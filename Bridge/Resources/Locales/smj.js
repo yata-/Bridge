@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("smj", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("smj", true), {
     englishName: "Sami (Lule)",
     nativeName: "julevusámegiella",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["ájl","mán","dis","gas","duor","bier","láv"],
         abbreviatedMonthGenitiveNames: ["ådåj","guov","snju","vuor","moar","bieh","snji","bårg","ragá","gålg","basá","javl",""],
         abbreviatedMonthNames: ["ådåj","guov","snju","vuor","moar","bieh","snji","bårg","ragá","gålg","basá","javl",""],

@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("ro-MD", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("ro-MD", true), {
     englishName: "Romanian (Moldova)",
     nativeName: "română (Republica Moldova)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Du","Lu","Ma","Mi","Jo","Vi","Sâ"],
         abbreviatedMonthGenitiveNames: ["ian.","feb.","mar.","apr.","mai","iun.","iul.","aug.","sept.","oct.","nov.","dec.",""],
         abbreviatedMonthNames: ["ian.","feb.","mar.","apr.","mai","iun.","iul.","aug.","sept.","oct.","nov.","dec.",""],
