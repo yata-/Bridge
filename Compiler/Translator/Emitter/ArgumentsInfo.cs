@@ -355,9 +355,9 @@ namespace Bridge.Translator
                 bool named = false;
                 int i = 0;
 
-                if (resolvedMethod != null)
+                if (resolveResult.Member != null)
                 {
-                    var inlineStr = this.Emitter.GetInline(resolvedMethod);
+                    var inlineStr = this.Emitter.GetInline(resolveResult.Member);
                     named = !string.IsNullOrEmpty(inlineStr);
                 }
 
@@ -377,7 +377,7 @@ namespace Bridge.Translator
                     {
                         if (paramsArg == null && (parameters.Count > (i + shift)) && parameters[i + shift].IsParams)
                         {
-                            if (resolvedMethod.DeclaringTypeDefinition == null || !this.Emitter.Validator.IsIgnoreType(resolvedMethod.DeclaringTypeDefinition))
+                            if (resolveResult.Member.DeclaringTypeDefinition == null || !this.Emitter.Validator.IsIgnoreType(resolveResult.Member.DeclaringTypeDefinition))
                             {
                                 paramsArg = arg;
                             }
