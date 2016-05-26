@@ -74,7 +74,7 @@ namespace Bridge.Html5
         /// <summary>
         /// Is a DOMString representing the textual content of an element and all its descendants.
         /// </summary>
-        public readonly string TextContent;
+        public string TextContent;
 
         /// <summary>
         /// Adds a node to the end of the list of children of a specified parent node. If the node already exists it is removed from current parent node, then added to new parent node.
