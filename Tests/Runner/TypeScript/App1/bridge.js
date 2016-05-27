@@ -1619,9 +1619,14 @@
         },
 
         parse: function (enumType, s, ignoreCase, silent) {
-            var values = enumType;
-
             System.Enum.checkEnumType(enumType);
+
+            var intValue = {};
+            if (System.Int32.tryParse(s, intValue)) {
+                return intValue.v;
+            }
+
+            var values = enumType;
 
             if (!enumType.prototype || !enumType.prototype.$flags) {
                 for (var f in values) {
@@ -7598,11 +7603,7 @@ var array = {
             throw new System.ArgumentNullException("converter");
         }
 
-        var array2 = [];
-
-        for (var i = 0; i < array.length; i++) {
-            array2[i] = converter(array[i]);
-        }
+        var array2 = array.map(converter);
 
         return array2;
     },
