@@ -6,10 +6,16 @@ namespace System
     [Name("Object")]
     public static class Environment
     {
-        [InlineConst]
-        public const string NewLine = "\n";
+        public static extern string NewLine
+        {
+            [Template("'\\n'")]
+            get;
+        }
 
-        [InlineConst]
-        public const int CurrentManagedThreadId = 0;
+        public static extern int CurrentManagedThreadId
+        {
+            [Template("0")]
+            get;
+        }
     }
 }
