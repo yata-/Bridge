@@ -27,6 +27,7 @@
             var intReturnValue = {};
             if (Bridge.Int32.tryParse(s, intReturnValue)) {
                 return intReturnValue.v;
+            }
             var values = enumType;
 
             Bridge.Enum.checkEnumType(enumType);
