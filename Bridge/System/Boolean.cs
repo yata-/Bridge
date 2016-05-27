@@ -7,8 +7,10 @@ namespace System
     [Name("Boolean")]
     public struct Boolean: IComparable, IComparable<bool>, IEquatable<bool>
     {
-        public const string TrueString = "True";
-        public const string FalseString = "False";
+        [Template("System.Boolean.trueString")]
+        public static readonly string TrueString = "True";
+        [Template("System.Boolean.falseString")]
+        public static readonly string FalseString = "False";
 
         private extern Boolean(DummyTypeUsedToAddAttributeToDefaultValueTypeConstructor _);
 
