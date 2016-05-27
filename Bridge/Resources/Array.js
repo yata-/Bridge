@@ -530,11 +530,7 @@ var array = {
             throw new System.ArgumentNullException("converter");
         }
 
-        var array2 = [];
-
-        for (var i = 0; i < array.length; i++) {
-            array2[i] = converter(array[i]);
-        }
+        var array2 = array.map(converter);
 
         return array2;
     },
