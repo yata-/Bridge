@@ -218,6 +218,8 @@ namespace System
 
         public extern string ToTimeString();
 
+        public extern string ToLocaleTimeString();
+
         [Name("toUTCString")]
         public extern string ToUtcString();
 
