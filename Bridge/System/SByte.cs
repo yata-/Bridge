@@ -7,9 +7,7 @@ namespace System
     [Constructor("Number")]
     public struct SByte : IComparable, IComparable<SByte>, IEquatable<SByte>, IFormattable
     {
-        private SByte(int i)
-        {
-        }
+        private extern SByte(int i);
 
         [InlineConst]
         public const sbyte MinValue = -128;
@@ -18,76 +16,38 @@ namespace System
         public const sbyte MaxValue = 127;
 
         [Template("System.SByte.parse({s})")]
-        public static sbyte Parse(string s)
-        {
-            return 0;
-        }
+        public static extern sbyte Parse(string s);
 
         [Template("System.SByte.parse({s}, {radix})")]
-        public static sbyte Parse(string s, int radix)
-        {
-            return 0;
-        }
+        public static extern sbyte Parse(string s, int radix);
 
         [Template("System.SByte.tryParse({s}, {result})")]
-        public static bool TryParse(string s, out sbyte result)
-        {
-            result = 0;
-            return false;
-        }
+        public static extern bool TryParse(string s, out sbyte result);
 
         [Template("System.SByte.tryParse({s}, {result}, {radix})")]
-        public static bool TryParse(string s, out sbyte result, int radix)
-        {
-            result = 0;
-            return false;
-        }
+        public static extern bool TryParse(string s, out sbyte result, int radix);
 
-        public string ToString(int radix)
-        {
-            return null;
-        }
+        public extern string ToString(int radix);
 
         [Template("System.SByte.format({this}, {format})")]
-        public string Format(string format)
-        {
-            return null;
-        }
+        public extern string Format(string format);
 
         [Template("System.SByte.format({this}, {format}, {provider})")]
-        public string Format(string format, IFormatProvider provider)
-        {
-            return null;
-        }
+        public extern string Format(string format, IFormatProvider provider);
 
         [Template("System.SByte.format({this}, {format})")]
-        public string ToString(string format)
-        {
-            return null;
-        }
+        public extern string ToString(string format);
 
         [Template("System.SByte.format({this}, {format}, {provider})")]
-        public string ToString(string format, IFormatProvider provider)
-        {
-            return null;
-        }
+        public extern string ToString(string format, IFormatProvider provider);
 
         [Template("Bridge.compare({this}, {other})")]
-        public int CompareTo(sbyte other)
-        {
-            return 0;
-        }
+        public extern int CompareTo(sbyte other);
 
         [Template("Bridge.compare({this}, {obj})")]
-        public int CompareTo(object obj)
-        {
-            return 0;
-        }
+        public extern int CompareTo(object obj);
 
         [Template("{this} === {other}")]
-        public bool Equals(sbyte other)
-        {
-            return false;
-        }
+        public extern bool Equals(sbyte other);
     }
 }

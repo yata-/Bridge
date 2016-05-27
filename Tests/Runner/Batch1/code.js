@@ -6606,6 +6606,30 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1311', {
+        statics: {
+            testEnumNumberParsing: function () {
+                var ec = System.Enum.parse(Bridge.ClientTest.BridgeIssues.Bridge1311.SimpleEnum, "C");
+                Bridge.Test.Assert.areEqual$1(4, ec, "C");
+    
+                var e3 = System.Enum.parse(Bridge.ClientTest.BridgeIssues.Bridge1311.SimpleEnum, "3");
+                Bridge.Test.Assert.areEqual$1(3, e3, "3");
+    
+    
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1311.SimpleEnum', {
+        statics: {
+            A: 0,
+            B: 3,
+            C: 4,
+            D: 10
+        },
+        $enum: true
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1316', {
         statics: {
             testUseCase: function () {
@@ -8024,6 +8048,78 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1343.M', {
         getHashCode: function () {
             return Bridge.getHashCode(System.String.format("{0} {1}", 1, 2));
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1374', {
+        statics: {
+            config: {
+                properties: {
+                    Value: 0
+                }
+            },
+            staticIntConverter: function (i) {
+                return (((Bridge.ClientTest.BridgeIssues.Bridge1374.getValue() + i) | 0)).toString();
+            },
+            testConvertAllForIntListStaticMethod: function () {
+                var l = [1, 2, 3];
+    
+                Bridge.ClientTest.BridgeIssues.Bridge1374.setValue(100);
+    
+                Bridge.Test.Assert.areDeepEqual(["101", "102", "103"], System.Array.convertAll(l, Bridge.ClientTest.BridgeIssues.Bridge1374.staticIntConverter));
+            },
+            testConvertAllForIntListInstanceMethod: function () {
+                var l = [1, 2, 3];
+    
+                var t = Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1374.ScopeContainer(), {
+                    setValue: 10
+                } );
+    
+                Bridge.Test.Assert.areDeepEqual(["11", "12", "13"], System.Array.convertAll(l, Bridge.fn.bind(t, t.instanceIntConverter)));
+            },
+            testConvertAllForIntListLambda: function () {
+                var l = [1, 2, 3];
+    
+                Bridge.Test.Assert.areDeepEqual(["1", "2", "3"], System.Array.convertAll(l, $_.Bridge.ClientTest.BridgeIssues.Bridge1374.f1));
+            },
+            testConvertAllForNullConverter: function () {
+                var l = [1, 2, 3];
+    
+                var converter = null;
+    
+                Bridge.Test.Assert.throws$7(System.ArgumentNullException, function () {
+                    System.Array.convertAll(l, converter);
+                }, "Null converter throws exception");
+            },
+            testConvertAllForNullArray: function () {
+                var l = null;
+    
+                Bridge.Test.Assert.throws$7(System.ArgumentNullException, function () {
+                    System.Array.convertAll(l, $_.Bridge.ClientTest.BridgeIssues.Bridge1374.f2);
+                }, "Null array throws exception");
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1374", $_)
+    
+    Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1374, {
+        f1: function (x) {
+            return x.toString();
+        },
+        f2: function (x) {
+            return x;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1374.ScopeContainer', {
+        config: {
+            properties: {
+                Value: 0
+            }
+        },
+        instanceIntConverter: function (i) {
+            return (((this.getValue() + i) | 0)).toString();
         }
     });
     
@@ -15103,14 +15199,15 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(DecimalMinValue, "-7.9228162514264337593543950335e+28", "DecimalMinValue");
     
                 // Decimal consts in expressions
-                DecimalZero = System.Decimal.Zero.add(System.Decimal(0));
-                DecimalOne = System.Decimal.One.add(System.Decimal(0));
+                var dz = System.Decimal(0.0);
+                DecimalZero = System.Decimal.Zero.add(dz);
+                DecimalOne = System.Decimal.One.add(dz);
                 ;
-                DecimalMinusOne = System.Decimal.MinusOne.add(System.Decimal(0));
+                DecimalMinusOne = System.Decimal.MinusOne.add(dz);
                 ;
-                DecimalMaxValue = System.Decimal.MaxValue.add(System.Decimal(0));
+                DecimalMaxValue = System.Decimal.MaxValue.add(dz);
                 ;
-                DecimalMinValue = System.Decimal.MinValue.add(System.Decimal(0));
+                DecimalMinValue = System.Decimal.MinValue.add(dz);
                 ;
     
                 Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(DecimalZero, "0", "DecimalZeroin expression");
@@ -15118,6 +15215,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(DecimalMinusOne, "-1", "DecimalMinusOnein expression");
                 Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(DecimalMaxValue, "7.9228162514264337593543950335e+28", "DecimalMaxValuein expression");
                 Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(DecimalMinValue, "-7.9228162514264337593543950335e+28", "DecimalMinValuein expression");
+    
+    
+                var numberPositiveInfinity = Number.POSITIVE_INFINITY;
+                var numberNegativeInfinity = Number.NEGATIVE_INFINITY;
+                var numberNaN = NaN;
     
                 // Double consts
                 var DoubleMaxValue = System.Double.max;
@@ -15130,24 +15232,25 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(DoubleMaxValue, "1.7976931348623157e+308", "DoubleMaxValue");
                 Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(DoubleMinValue, "-1.7976931348623157e+308", "DoubleMinValue");
                 Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(DoubleEpsilon, "5e-324", "DoubleEpsilon");
-                Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(DoubleNegativeInfinity, "-Infinity", "DoubleNegativeInfinity");
-                Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(DoublePositiveInfinity, "Infinity", "DoublePositiveInfinity");
-                Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(DoubleNaN, "NaN", "DoubleNaN");
+                Bridge.Test.Assert.areEqual$1(numberNegativeInfinity, DoubleNegativeInfinity, "DoubleNegativeInfinity");
+                Bridge.Test.Assert.areEqual$1(numberPositiveInfinity, DoublePositiveInfinity, "DoublePositiveInfinity");
+                Bridge.Test.Assert.areEqual$1(numberNaN, DoubleNaN, "DoubleNaN");
     
                 // Double consts in expressions
-                DoubleMaxValue = System.Double.max + 0;
-                DoubleMinValue = System.Double.min + 0;
-                DoubleEpsilon = 4.94065645841247E-324;
-                DoubleNegativeInfinity = Number.NEGATIVE_INFINITY + 0;
-                DoublePositiveInfinity = Number.POSITIVE_INFINITY + 0;
-                DoubleNaN = Number.NaN + 0;
+                var dblz = 0.0;
+                DoubleMaxValue = System.Double.max + dblz;
+                DoubleMinValue = System.Double.min + dblz;
+                DoubleEpsilon = 4.94065645841247E-324 + dblz;
+                DoubleNegativeInfinity = Number.NEGATIVE_INFINITY + dblz;
+                DoublePositiveInfinity = Number.POSITIVE_INFINITY + dblz;
+                DoubleNaN = Number.NaN + dblz;
     
                 Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(DoubleMaxValue, "1.7976931348623157e+308", "DoubleMaxValuein expression");
                 Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(DoubleMinValue, "-1.7976931348623157e+308", "DoubleMinValuein expression");
                 Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(DoubleEpsilon, "5e-324", "DoubleEpsilonin expression");
-                Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(DoubleNegativeInfinity, "-Infinity", "DoubleNegativeInfinityin expression");
-                Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(DoublePositiveInfinity, "Infinity", "DoublePositiveInfinityin expression");
-                Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(DoubleNaN, "NaN", "DoubleNaNin expression");
+                Bridge.Test.Assert.areEqual$1(numberNegativeInfinity, DoubleNegativeInfinity, "DoubleNegativeInfinityin expression");
+                Bridge.Test.Assert.areEqual$1(numberPositiveInfinity, DoublePositiveInfinity, "DoublePositiveInfinityin expression");
+                Bridge.Test.Assert.areEqual$1(numberNaN, DoubleNaN, "DoubleNaNin expression");
     
                 // Math consts
                 var MathE = Math.E;
@@ -15200,24 +15303,25 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(SingleMaxValue, "3.40282347e+38", "SingleMaxValue");
                 Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(SingleMinValue, "-3.40282347e+38", "SingleMinValue");
                 Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(SingleEpsilon, "1.401298e-45", "SingleEpsilon");
-                Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(SingleNaN, "NaN", "SingleNaN");
-                Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(SingleNegativeInfinity, "-Infinity", "SingleNegativeInfinity");
-                Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(SinglePositiveInfinity, "Infinity", "SinglePositiveInfinity");
+                Bridge.Test.Assert.areEqual$1(numberNaN, SingleNaN, "SingleNaN");
+                Bridge.Test.Assert.areEqual$1(numberNegativeInfinity, SingleNegativeInfinity, "SingleNegativeInfinity");
+                Bridge.Test.Assert.areEqual$1(numberPositiveInfinity, SinglePositiveInfinity, "SinglePositiveInfinity");
     
                 // Single consts in expression
-                SingleMaxValue = 3.40282347E+38;
-                SingleMinValue = -3.40282347E+38;
-                SingleEpsilon = 1.401298E-45;
-                SingleNaN = Number.NaN + 0;
-                SingleNegativeInfinity = Number.NEGATIVE_INFINITY + 0;
-                SinglePositiveInfinity = Number.POSITIVE_INFINITY + 0;
+                var fz = 0;
+                SingleMaxValue = 3.40282347E+38 + fz;
+                SingleMinValue = -3.40282347E+38 + fz;
+                SingleEpsilon = 1.401298E-45 + fz;
+                SingleNaN = Number.NaN + fz;
+                SingleNegativeInfinity = Number.NEGATIVE_INFINITY + fz;
+                SinglePositiveInfinity = Number.POSITIVE_INFINITY + fz;
     
                 Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(SingleMaxValue, "3.40282347e+38", "SingleMaxValuein expression");
                 Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(SingleMinValue, "-3.40282347e+38", "SingleMinValuein expression");
                 Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(SingleEpsilon, "1.401298e-45", "SingleEpsilonin expression");
-                Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(SingleNaN, "NaN", "SingleNaNin expression");
-                Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(SingleNegativeInfinity, "-Infinity", "SingleNegativeInfinityin expression");
-                Bridge.ClientTest.BridgeIssues.TestBridgeIssues.ensureNumber(SinglePositiveInfinity, "Infinity", "SinglePositiveInfinityin expression");
+                Bridge.Test.Assert.areEqual$1(numberNaN, SingleNaN, "SingleNaNin expression");
+                Bridge.Test.Assert.areEqual$1(numberNegativeInfinity, SingleNegativeInfinity, "SingleNegativeInfinityin expression");
+                Bridge.Test.Assert.areEqual$1(numberPositiveInfinity, SinglePositiveInfinity, "SinglePositiveInfinityin expression");
             },
             n418: function () {
                 var t = new Bridge.ClientTest.BridgeIssues.Bridge418();
@@ -25469,6 +25573,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             this.verifyBooleanTryParse(26, "T", false, false);
             this.verifyBooleanTryParse(27, "0", false, false);
             this.verifyBooleanTryParse(28, "1", false, false);
+        },
+        boolStringWorks: function () {
+            Bridge.Test.Assert.areEqual("True", System.Boolean.trueString);
+            Bridge.Test.Assert.areEqual("False", System.Boolean.falseString);
         },
         verifyBooleanTryParse: function (i, value, expectedResult, expectedReturn) {
             var result = { };

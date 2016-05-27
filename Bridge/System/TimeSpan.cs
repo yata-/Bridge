@@ -25,267 +25,139 @@ namespace System
         public static readonly TimeSpan MinValue;
         public static readonly TimeSpan Zero;
 
-        public TimeSpan(long ticks)
-        {
-        }
+        public extern TimeSpan(long ticks);
 
-        public TimeSpan(int hours, int minutes, int seconds)
-        {
-        }
+        public extern TimeSpan(int hours, int minutes, int seconds);
 
-        public TimeSpan(int days, int hours, int minutes, int seconds)
-        {
-        }
+        public extern TimeSpan(int days, int hours, int minutes, int seconds);
 
-        public TimeSpan(int days, int hours, int minutes, int seconds, int milliseconds)
-        {
-        }
+        public extern TimeSpan(int days, int hours, int minutes, int seconds, int milliseconds);
 
         [Template("System.TimeSpan.neg({t})")]
-        public static TimeSpan operator -(TimeSpan t)
-        {
-            return new TimeSpan();
-        }
+        public static extern TimeSpan operator -(TimeSpan t);
 
         [Template("System.TimeSpan.sub({t1}, {t2})")]
-        public static TimeSpan operator -(TimeSpan t1, TimeSpan t2)
-        {
-            return new TimeSpan();
-        }
+        public static extern TimeSpan operator -(TimeSpan t1, TimeSpan t2);
 
         [Template("System.TimeSpan.neq({t1}, {t2})")]
-        public static bool operator !=(TimeSpan t1, TimeSpan t2)
-        {
-            return false;
-        }
+        public static extern bool operator !=(TimeSpan t1, TimeSpan t2);
 
         [Template("System.TimeSpan.plus({t})")]
-        public static TimeSpan operator +(TimeSpan t)
-        {
-            return new TimeSpan();
-        }
+        public static extern TimeSpan operator +(TimeSpan t);
 
         [Template("System.TimeSpan.add({t1}, {t2})")]
-        public static TimeSpan operator +(TimeSpan t1, TimeSpan t2)
-        {
-            return new TimeSpan();
-        }
+        public static extern TimeSpan operator +(TimeSpan t1, TimeSpan t2);
 
         [Template("System.TimeSpan.lt({t1}, {t2})")]
-        public static bool operator <(TimeSpan t1, TimeSpan t2)
-        {
-            return false;
-        }
+        public static extern bool operator <(TimeSpan t1, TimeSpan t2);
 
         [Template("System.TimeSpan.lte({t1}, {t2})")]
-        public static bool operator <=(TimeSpan t1, TimeSpan t2)
-        {
-            return false;
-        }
+        public static extern bool operator <=(TimeSpan t1, TimeSpan t2);
 
         [Template("System.TimeSpan.eq({t1}, {t2})")]
-        public static bool operator ==(TimeSpan t1, TimeSpan t2)
-        {
-            return false;
-        }
+        public static extern bool operator ==(TimeSpan t1, TimeSpan t2);
 
         [Template("System.TimeSpan.gt({t1}, {t2})")]
-        public static bool operator >(TimeSpan t1, TimeSpan t2)
-        {
-            return false;
-        }
+        public static extern bool operator >(TimeSpan t1, TimeSpan t2);
 
         [Template("System.TimeSpan.gte({t1}, {t2})")]
-        public static bool operator >=(TimeSpan t1, TimeSpan t2)
+        public static extern bool operator >=(TimeSpan t1, TimeSpan t2);
+
+        public extern int Days
         {
-            return false;
+            get;
         }
 
-        public int Days
+        public extern int Hours
         {
-            get
-            {
-                return 0;
-            }
+            get;
         }
 
-        public int Hours
+        public extern int Milliseconds
         {
-            get
-            {
-                return 0;
-            }
+            get;
         }
 
-        public int Milliseconds
+        public extern int Minutes
         {
-            get
-            {
-                return 0;
-            }
+            get;
         }
 
-        public int Minutes
+        public extern int Seconds
         {
-            get
-            {
-                return 0;
-            }
+            get;
         }
 
-        public int Seconds
+        public extern long Ticks
         {
-            get
-            {
-                return 0;
-            }
+            get;
         }
 
-        public long Ticks
+        public extern double TotalDays
         {
-            get
-            {
-                return 0;
-            }
+            get;
         }
 
-        public double TotalDays
+        public extern double TotalHours
         {
-            get
-            {
-                return 0;
-            }
+            get;
         }
 
-        public double TotalHours
+        public extern double TotalMilliseconds
         {
-            get
-            {
-                return 0;
-            }
+            get;
         }
 
-        public double TotalMilliseconds
+        public extern double TotalMinutes
         {
-            get
-            {
-                return 0;
-            }
+            get;
         }
 
-        public double TotalMinutes
+        public extern double TotalSeconds
         {
-            get
-            {
-                return 0;
-            }
+            get;
         }
 
-        public double TotalSeconds
-        {
-            get
-            {
-                return 0;
-            }
-        }
-
-        public TimeSpan Add(TimeSpan ts)
-        {
-            return new TimeSpan();
-        }
+        public extern TimeSpan Add(TimeSpan ts);
 
         [Template("{t1}.compareTo({t2})")]
-        public static int Compare(TimeSpan t1, TimeSpan t2)
-        {
-            return 0;
-        }
+        public static extern int Compare(TimeSpan t1, TimeSpan t2);
 
-        public int CompareTo(object value)
-        {
-            return 0;
-        }
+        public extern int CompareTo(object value);
 
-        public int CompareTo(TimeSpan value)
-        {
-            return 0;
-        }
+        public extern int CompareTo(TimeSpan value);
 
-        public TimeSpan Duration()
-        {
-            return new TimeSpan();
-        }
+        public extern TimeSpan Duration();
 
-        public bool Equals(TimeSpan obj)
-        {
-            return false;
-        }
+        public extern bool Equals(TimeSpan obj);
 
         [Template("({t1}).ticks.eq(({t2}).ticks)")]
-        public static bool Equals(TimeSpan t1, TimeSpan t2)
-        {
-            return false;
-        }
+        public static extern bool Equals(TimeSpan t1, TimeSpan t2);
 
-        public static TimeSpan FromDays(double value)
-        {
-            return new TimeSpan();
-        }
+        public static extern TimeSpan FromDays(double value);
 
-        public static TimeSpan FromHours(double value)
-        {
-            return new TimeSpan();
-        }
+        public static extern TimeSpan FromHours(double value);
 
-        public static TimeSpan FromMilliseconds(double value)
-        {
-            return new TimeSpan();
-        }
+        public static extern TimeSpan FromMilliseconds(double value);
 
-        public static TimeSpan FromMinutes(double value)
-        {
-            return new TimeSpan();
-        }
+        public static extern TimeSpan FromMinutes(double value);
 
-        public static TimeSpan FromSeconds(double value)
-        {
-            return new TimeSpan();
-        }
+        public static extern TimeSpan FromSeconds(double value);
 
-        public static TimeSpan FromTicks(long value)
-        {
-            return new TimeSpan();
-        }
+        public static extern TimeSpan FromTicks(long value);
 
-        public TimeSpan Negate()
-        {
-            return new TimeSpan();
-        }
+        public extern TimeSpan Negate();
 
-        public TimeSpan Subtract(TimeSpan ts)
-        {
-            return new TimeSpan();
-        }
+        public extern TimeSpan Subtract(TimeSpan ts);
 
-        public string ToString(string format)
-        {
-            return null;
-        }
+        public extern string ToString(string format);
 
-        public string ToString(string format, IFormatProvider provider)
-        {
-            return null;
-        }
+        public extern string ToString(string format, IFormatProvider provider);
 
         [Name("toString")]
-        public string Format(string format)
-        {
-            return null;
-        }
+        public extern string Format(string format);
 
         [Name("toString")]
-        public string Format(string format, IFormatProvider provider)
-        {
-            return null;
-        }
+        public extern string Format(string format, IFormatProvider provider);
     }
 }
