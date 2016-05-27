@@ -73,12 +73,14 @@ namespace System
         }
     }
 
-    [AttributeUsage(AttributeTargets.Enum, AllowMultiple = false), External]
+    [AttributeUsage(AttributeTargets.Enum, AllowMultiple = false)]
+    [External]
     public class FlagsAttribute : Attribute
     {
     }
 
-    [AttributeUsage(AttributeTargets.Delegate | AttributeTargets.Interface | AttributeTargets.Event | AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Method | AttributeTargets.Constructor | AttributeTargets.Enum | AttributeTargets.Struct | AttributeTargets.Class, Inherited = false), External]
+    [AttributeUsage(AttributeTargets.Delegate | AttributeTargets.Interface | AttributeTargets.Event | AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Method | AttributeTargets.Constructor | AttributeTargets.Enum | AttributeTargets.Struct | AttributeTargets.Class, Inherited = false)]
+	[External]
     public sealed class ObsoleteAttribute : Attribute
     {
         public extern ObsoleteAttribute();

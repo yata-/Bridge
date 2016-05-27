@@ -7,7 +7,8 @@ namespace System
     // internally as a -1.  By definition, an unspecified component matches anything
     // (both unspecified and specified), and an unspecified component is "less than" any
     // specified component.
-    [Name("Bridge.Version"), External]
+    [Name("Bridge.Version")]
+	[External]
     public sealed class Version : ICloneable, IComparable<Version>, IEquatable<Version>
     {
         public extern Version(int major, int minor, int build, int revision);
