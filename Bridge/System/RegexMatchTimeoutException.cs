@@ -2,6 +2,7 @@
 
 namespace System
 {
+    [External]
     public class RegexMatchTimeoutException : TimeoutException
     {
         public extern string Pattern { get; }
@@ -9,22 +10,12 @@ namespace System
         public extern TimeSpan MatchTimeout { get; }
 
 
-        public RegexMatchTimeoutException()
-        {
-        }
+        public extern RegexMatchTimeoutException();
 
-        public RegexMatchTimeoutException(string message)
-            : base(message)
-        {
-        }
+        public extern RegexMatchTimeoutException(string message);
 
-        public RegexMatchTimeoutException(string message, Exception innerException)
-            : base(message, innerException)
-        {
-        }
+        public extern RegexMatchTimeoutException(string message, Exception innerException);
 
-        public RegexMatchTimeoutException(string regexInput, string regexPattern, TimeSpan matchTimeout)
-        {
-        }
+        public extern RegexMatchTimeoutException(string regexInput, string regexPattern, TimeSpan matchTimeout);
     }
 }

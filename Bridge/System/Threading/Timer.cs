@@ -20,7 +20,8 @@ namespace System.Threading
     /// The start time for a Timer is passed in the dueTime parameter of the Timer constructors, and the period is passed in the period parameter.
     /// For an example that demonstrates creating and using a TimerCallback delegate, see System.Threading.Timer.
     /// </remarks>
-    public delegate void TimerCallback(Object state);
+    [External]
+    public delegate void TimerCallback(object state);
 
     /// <summary>
     /// Provides a mechanism for executing a method at specified intervals. This class cannot be inherited.

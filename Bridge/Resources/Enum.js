@@ -24,6 +24,10 @@
         },
 
         parse: function (enumType, s, ignoreCase, silent) {
+            var intReturnValue = {};
+            if (Bridge.Int32.tryParse(s, intReturnValue)) {
+                return intReturnValue.v;
+            }
             var values = enumType;
 
             System.Enum.checkEnumType(enumType);

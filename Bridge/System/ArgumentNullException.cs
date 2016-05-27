@@ -5,21 +5,13 @@ namespace System
     [External]
     public class ArgumentNullException : ArgumentException, IBridgeClass
     {
-        public ArgumentNullException()
-        {
-        }
+        public extern ArgumentNullException();
 
-        public ArgumentNullException(string paramName)
-        {
-        }
+        public extern ArgumentNullException(string paramName);
 
-        public ArgumentNullException(string paramName, string message)
-        {
-        }
+        public extern ArgumentNullException(string paramName, string message);
 
         [Template("new System.ArgumentNullException(null, {message}, {innerException})")]
-        public ArgumentNullException(string message, Exception innerException)
-        {
-        }
+        public extern ArgumentNullException(string message, Exception innerException);
     }
 }

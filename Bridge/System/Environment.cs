@@ -6,22 +6,10 @@ namespace System
     [Name("Object")]
     public static class Environment
     {
-        public static string NewLine
-        {
-            [Template("'\\n'")]
-            get
-            {
-                return null;
-            }
-        }
+        [InlineConst]
+        public const string NewLine = "\n";
 
-        public static int CurrentManagedThreadId
-        {
-            [Template("0")]
-            get
-            {
-                return 0;
-            }
-        }
+        [InlineConst]
+        public const int CurrentManagedThreadId = 0;
     }
 }

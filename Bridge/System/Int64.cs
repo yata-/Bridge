@@ -7,9 +7,7 @@ namespace System
     //[Constructor("Bridge.Int64")]
     public struct Int64 : IComparable, IComparable<Int64>, IEquatable<Int64>, IFormattable
     {
-        private Int64(int i)
-        {
-        }
+        private extern Int64(int i);
 
         [Name(false)]
         public const long MinValue = -9223372036854775808;
@@ -18,57 +16,26 @@ namespace System
         public const long MaxValue = 9223372036854775807;
 
         [Template("System.Int64.parse({s})")]
-        public static long Parse(string s)
-        {
-            return 0;
-        }
+        public static extern long Parse(string s);
 
         [Template("System.Int64.tryParse({s}, {result})")]
-        public static bool TryParse(string s, out long result)
-        {
-            result = 0;
-            return false;
-        }
+        public static extern bool TryParse(string s, out long result);
 
-        public string ToString(int radix)
-        {
-            return null;
-        }
+        public extern string ToString(int radix);
 
-        public string Format(string format)
-        {
-            return null;
-        }
+        public extern string Format(string format);
 
-        public string Format(string format, IFormatProvider provider)
-        {
-            return null;
-        }
+        public extern string Format(string format, IFormatProvider provider);
 
-        public string ToString(string format)
-        {
-            return null;
-        }
+        public extern string ToString(string format);
 
-        public string ToString(string format, IFormatProvider provider)
-        {
-            return null;
-        }
+        public extern string ToString(string format, IFormatProvider provider);
 
-        public int CompareTo(long other)
-        {
-            return 0;
-        }
+        public extern int CompareTo(long other);
 
-        public int CompareTo(object obj)
-        {
-            return 0;
-        }
+        public extern int CompareTo(object obj);
 
-        public bool Equals(long other)
-        {
-            return false;
-        }
+        public extern bool Equals(long other);
 
         //[Template("System.Int64.lift({value})")]
         public static extern implicit operator long(byte value);

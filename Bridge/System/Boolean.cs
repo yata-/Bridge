@@ -5,10 +5,10 @@ namespace System
 {
     [External]
     [Name("Boolean")]
-    public struct Boolean: IComparable, IComparable<Boolean>, IEquatable<Boolean>
+    public struct Boolean: IComparable, IComparable<bool>, IEquatable<bool>
     {
-        public static readonly String TrueString = "True";
-        public static readonly String FalseString = "False";
+        public const string TrueString = "True";
+        public const string FalseString = "False";
 
         private extern Boolean(DummyTypeUsedToAddAttributeToDefaultValueTypeConstructor _);
 
@@ -28,9 +28,6 @@ namespace System
         public extern int CompareTo(object obj);
 
         [Template("System.Boolean.toString({this})")]
-        public override string ToString()
-        {
-            return base.ToString();
-        }
+        public override extern string ToString();
     }
 }
