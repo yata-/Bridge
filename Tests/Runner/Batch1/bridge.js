@@ -4793,27 +4793,27 @@ System.Int64.check = function (v, tp) {
 };
 
 System.Int64.clip8 = function (x) {
-    return x ? Bridge.Int.sxb(x.toNumber() & 0xff) : (Bridge.Int.isInfinite(x) ? System.SByte.min : null);
+    return x ? Bridge.Int.sxb(x.value.low & 0xff) : (Bridge.Int.isInfinite(x) ? System.SByte.min : null);
 };
 
 System.Int64.clipu8 = function (x) {
-    return x ? x.toNumber() & 0xff : (Bridge.Int.isInfinite(x) ? System.Byte.min : null);
+    return x ? x.value.low & 0xff : (Bridge.Int.isInfinite(x) ? System.Byte.min : null);
 };
 
 System.Int64.clip16 = function (x) {
-    return x ? Bridge.Int.sxs(x.toNumber() & 0xffff) : (Bridge.Int.isInfinite(x) ? System.Int16.min : null);
+    return x ? Bridge.Int.sxs(x.value.low & 0xffff) : (Bridge.Int.isInfinite(x) ? System.Int16.min : null);
 };
 
 System.Int64.clipu16 = function (x) {
-    return x ? x.toNumber() & 0xffff : (Bridge.Int.isInfinite(x) ? System.UInt16.min : null);
+    return x ? x.value.low & 0xffff : (Bridge.Int.isInfinite(x) ? System.UInt16.min : null);
 };
 
 System.Int64.clip32 = function (x) {
-    return x ? x.toNumber() | 0 : (Bridge.Int.isInfinite(x) ? System.Int32.min : null);
+    return x ? x.value.low | 0 : (Bridge.Int.isInfinite(x) ? System.Int32.min : null);
 };
 
 System.Int64.clipu32 = function (x) {
-    return x ? x.toNumber() >>> 0 : (Bridge.Int.isInfinite(x) ? System.UInt32.min : null);
+    return x ? x.value.low >>> 0 : (Bridge.Int.isInfinite(x) ? System.UInt32.min : null);
 };
 
 System.Int64.clip64 = function (x) {
