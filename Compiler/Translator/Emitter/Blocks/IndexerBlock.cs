@@ -1111,9 +1111,6 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    this.WriteDot();
-                    this.Write("$get");
-                    this.WriteOpenParentheses();
                     this.WriteOpenBracket();
                 }
                 
@@ -1122,7 +1119,6 @@ namespace Bridge.Translator
                 if (!this.isRefArg)
                 {
                     this.WriteCloseBracket();
-                    this.WriteCloseParentheses();
                 }
                 
                 this.Emitter.IsAssignment = oldIsAssignment;
