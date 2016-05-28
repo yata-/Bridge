@@ -8123,6 +8123,24 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1411', {
+        statics: {
+            testTemplateCtor: function () {
+                var c1 = 'test_string';
+                Bridge.Test.Assert.areEqual("test_string", c1);
+    
+                var c2 = new Bridge.ClientTest.BridgeIssues.Bridge1411.Thing("constructor", 1);
+                Bridge.Test.Assert.true(true);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1411.Thing', {
+        constructor: function (x) {
+            // 2
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
