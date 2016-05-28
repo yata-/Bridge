@@ -24,9 +24,14 @@
         },
 
         parse: function (enumType, s, ignoreCase, silent) {
-            var values = enumType;
-
             System.Enum.checkEnumType(enumType);
+
+            var intValue = {};
+            if (System.Int32.tryParse(s, intValue)) {
+                return intValue.v;
+            }
+
+            var values = enumType;
 
             if (!enumType.prototype || !enumType.prototype.$flags) {
                 for (var f in values) {

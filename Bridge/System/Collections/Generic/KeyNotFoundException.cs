@@ -5,16 +5,10 @@ namespace System.Collections.Generic
     [External]
     public class KeyNotFoundException : Exception, IBridgeClass
     {
-        public KeyNotFoundException()
-        {
-        }
+        public extern KeyNotFoundException();
 
-        public KeyNotFoundException(string message)
-        {
-        }
+        public extern KeyNotFoundException(string message);
 
-        public KeyNotFoundException(string message, Exception innerException)
-        {
-        }
+        public extern KeyNotFoundException(string message, Exception innerException);
     }
 }

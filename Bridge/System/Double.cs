@@ -6,171 +6,92 @@ namespace System
     [Constructor("Number")]
     public struct Double : IComparable, IComparable<Double>, IEquatable<Double>, IFormattable
     {
-        private Double(int i)
-        {
-        }
+        private extern Double(int i);
 
         [Name("max")]
-        public static readonly double MaxValue = 0;
+        public static readonly double MaxValue = 1.7976931348623157E+308;
 
         [Name("min")]
-        public static readonly double MinValue = 0;
+        public static readonly double MinValue = -1.7976931348623157E+308;
 
         [InlineConst]
         public const double Epsilon = 4.94065645841247E-324;
 
         [Template("Number.NEGATIVE_INFINITY")]
-        public static readonly double NegativeInfinity = 0;
+        public static readonly double NegativeInfinity = -1.0/0.0;
 
         [Template("Number.POSITIVE_INFINITY")]
-        public static readonly double PositiveInfinity = 0;
+        public static readonly double PositiveInfinity = 1.0/0.0;
 
         [Template("Number.NaN")]
-        public static readonly double NaN = 0;
+        public static readonly double NaN = 0.0/0.0;
 
         [Template("System.Double.format({this}, {format})")]
-        public string Format(string format)
-        {
-            return null;
-        }
+        public extern string Format(string format);
 
         [Template("System.Double.format({this}, {format}, {provider})")]
-        public string Format(string format, IFormatProvider provider)
-        {
-            return null;
-        }
+        public extern string Format(string format, IFormatProvider provider);
 
-        public string ToString(int radix)
-        {
-            return null;
-        }
+        public extern string ToString(int radix);
 
         [Template("System.Double.format({this}, {format})")]
-        public string ToString(string format)
-        {
-            return null;
-        }
+        public extern string ToString(string format);
 
         [Template("System.Double.format({this}, {format}, {provider})")]
-        public string ToString(string format, IFormatProvider provider)
-        {
-            return null;
-        }
+        public extern string ToString(string format, IFormatProvider provider);
 
         [Template("System.Double.format({this}, 'G')")]
-        public override string ToString()
-        {
-            return null;
-        }
+        public override extern string ToString();
 
         [Template("System.Double.format({this}, 'G', {provider})")]
-        public string ToString(IFormatProvider provider)
-        {
-            return null;
-        }
+        public extern string ToString(IFormatProvider provider);
 
         [Template("System.Double.parse({s})")]
-        public static double Parse(string s)
-        {
-            return 0;
-        }
+        public static extern double Parse(string s);
 
         [Template("Bridge.Int.parseFloat({s}, {provider})")]
-        public static double Parse(string s, IFormatProvider provider)
-        {
-            return 0;
-        }
+        public static extern double Parse(string s, IFormatProvider provider);
 
         [Template("System.Double.tryParse({s}, null, {result})")]
-        public static bool TryParse(string s, out double result)
-        {
-            result = 0;
-            return false;
-        }
+        public static extern bool TryParse(string s, out double result);
 
         [Template("System.Double.tryParse({s}, {provider}, {result})")]
-        public static bool TryParse(string s, IFormatProvider provider, out double result)
-        {
-            result = 0;
-            return false;
-        }
+        public static extern bool TryParse(string s, IFormatProvider provider, out double result);
 
-        public string ToExponential()
-        {
-            return null;
-        }
+        public extern string ToExponential();
 
-        public string ToExponential(int fractionDigits)
-        {
-            return null;
-        }
+        public extern string ToExponential(int fractionDigits);
 
-        public string ToFixed()
-        {
-            return null;
-        }
+        public extern string ToFixed();
 
-        public string ToFixed(int fractionDigits)
-        {
-            return null;
-        }
+        public extern string ToFixed(int fractionDigits);
 
-        public string ToPrecision()
-        {
-            return null;
-        }
+        public extern string ToPrecision();
 
-        public string ToPrecision(int precision)
-        {
-            return null;
-        }
+        public extern string ToPrecision(int precision);
 
         [Template("({d} === Number.POSITIVE_INFINITY)")]
-        public static bool IsPositiveInfinity(double d)
-        {
-            return false;
-        }
+        public static extern bool IsPositiveInfinity(double d);
 
         [Template("({d} === Number.NEGATIVE_INFINITY)")]
-        public static bool IsNegativeInfinity(double d)
-        {
-            return false;
-        }
+        public static extern bool IsNegativeInfinity(double d);
 
         [Template("(Math.abs({d}) === Number.POSITIVE_INFINITY)")]
-        public static bool IsInfinity(double d)
-        {
-            return false;
-        }
+        public static extern bool IsInfinity(double d);
 
         [Template("isFinite({d})")]
-        public static bool IsFinite(double d)
-        {
-            return false;
-        }
+        public static extern bool IsFinite(double d);
 
         [Template("isNaN({d})")]
-        public static bool IsNaN(double d)
-        {
-            return false;
-        }
+        public static extern bool IsNaN(double d);
 
         [Template("Bridge.compare({this}, {other})")]
-        public int CompareTo(double other)
-        {
-            return 0;
-        }
+        public extern int CompareTo(double other);
 
         [Template("Bridge.compare({this}, {obj})")]
-        public int CompareTo(object obj)
-        {
-            return 0;
-        }
+        public extern int CompareTo(object obj);
 
         [Template("{this} === {other}")]
-        public bool Equals(double other)
-        {
-            return false;
-        }
+        public extern bool Equals(double other);
     }
 }

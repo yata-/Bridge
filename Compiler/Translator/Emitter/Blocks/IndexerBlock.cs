@@ -1111,14 +1111,14 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    this.WriteOpenBracket();    
+                    this.WriteOpenBracket();
                 }
                 
                 index.AcceptVisitor(this.Emitter);
 
                 if (!this.isRefArg)
                 {
-                    this.WriteCloseBracket();    
+                    this.WriteCloseBracket();
                 }
                 
                 this.Emitter.IsAssignment = oldIsAssignment;

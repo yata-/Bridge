@@ -6,24 +6,19 @@ namespace System.Collections.ObjectModel
     [External]
     public class ReadOnlyCollection<T> : IList<T>
     {
-        public ReadOnlyCollection(IList<T> list)
-        {
-        }
+        public extern ReadOnlyCollection(IList<T> list);
 
-        public int Count
+        public extern int Count
         {
             get;
             private set;
         }
 
         [AccessorsIndexer]
-        public T this[int index]
+        public extern T this[int index]
         {
             [Name("get")]
-            get
-            {
-                return default(T);
-            }
+            get;
         }
 
         public extern bool Contains(T value);
@@ -32,16 +27,11 @@ namespace System.Collections.ObjectModel
 
         public extern int IndexOf(T value);
 
-        T IList<T>.this[int index]
+        extern T IList<T>.this[int index]
         {
             [Name("get")]
-            get
-            {
-                return default(T);
-            }
-            set
-            {
-            }
+            get;
+            set;
         }
 
         extern void ICollection<T>.Add(T value);

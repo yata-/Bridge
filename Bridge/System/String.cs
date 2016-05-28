@@ -16,36 +16,27 @@ namespace System
     public sealed class String : IEnumerable, IEnumerable<char>, IComparable<String>, IEquatable<String>
     {
         [FieldProperty]
-        public int Length
+        public extern int Length
         {
-            get
-            {
-                return 0;
-            }
+            get;
         }
 
         [InlineConst]
         public const string Empty = "";
 
         [Template("String.fromCharCode.apply(null, {value})")]
-        public String(char[] value)
-        {
-        }
+        public extern String(char[] value);
 
         /// <summary>
         /// The String global object is a constructor for strings, or a sequence of characters.
         /// </summary>
-        public String()
-        {
-        }
+        public extern String();
 
         /// <summary>
         /// The String global object is a constructor for strings, or a sequence of characters.
         /// </summary>
         /// <param name="thing">Anything to be converted to a string.</param>
-        public String(object thing)
-        {
-        }
+        public extern String(object thing);
 
         /// <summary>
         /// Constructs a string from the value indicated by a specified character repeated a specified number of times.
@@ -53,9 +44,7 @@ namespace System
         /// <param name="c">A character.</param>
         /// <param name="count">The number of times the character occurs.</param>
         [Template("System.String.fromCharCount({c}, {count})")]
-        public String(char c, int count)
-        {
-        }
+        public extern String(char c, int count);
 
         [Template("String.fromCharCode.apply(null, {value}.slice({startIndex}, {startIndex} + {length}))")]
         public extern String(char[] value, int startIndex, int length);
@@ -301,10 +290,7 @@ namespace System
         /// <param name="searchValue">A character to search for.</param>
         /// <returns>The zero-based index position of value if that character is found, or -1 if it is not.</returns>
         [Template("System.String.indexOf({this}, String.fromCharCode({searchValue}))")]
-        public int IndexOf(char searchValue)
-        {
-            return -1;
-        }
+        public extern int IndexOf(char searchValue);
 
         /// <summary>
         /// The indexOf() method returns the index within the calling String object of the first occurrence of the specified value, starting the search at fromIndex. Returns -1 if the value is not found.
@@ -313,10 +299,7 @@ namespace System
         /// <param name="fromIndex">The location within the calling string to start the search from.</param>
         /// <returns>The zero-based index position of value if that character is found, or -1 if it is not.</returns>
         [Template("System.String.indexOf({this}, String.fromCharCode({searchValue}), {fromIndex})")]
-        public int IndexOf(char searchValue, int fromIndex)
-        {
-            return -1;
-        }
+        public extern int IndexOf(char searchValue, int fromIndex);
 
         /// <summary>
         /// The indexOf() method returns the index within the calling String object of the first occurrence of the specified value. Returns -1 if the value is not found.
@@ -324,10 +307,7 @@ namespace System
         /// <param name="searchValue">A string representing the value to search for.</param>
         /// <returns></returns>
         [Template("System.String.indexOf({this}, {searchValue})")]
-        public int IndexOf(string searchValue)
-        {
-            return -1;
-        }
+        public extern int IndexOf(string searchValue);
 
         /// <summary>
         /// The indexOf() method returns the index within the calling String object of the first occurrence of the specified value, starting the search at fromIndex. Returns -1 if the value is not found.
@@ -336,10 +316,7 @@ namespace System
         /// <param name="fromIndex">The location within the calling string to start the search from.</param>
         /// <returns></returns>
         [Template("System.String.indexOf({this}, {searchValue}, {fromIndex})")]
-        public int IndexOf(string searchValue, int fromIndex)
-        {
-            return -1;
-        }
+        public extern int IndexOf(string searchValue, int fromIndex);
 
         /// <summary>
         /// The indexOf() method returns the index within the calling String object of the first occurrence of the specified value. The search starts at a specified character position and
@@ -350,10 +327,7 @@ namespace System
         /// <param name="count">The number of character positions to examine.</param>
         /// <returns></returns>
         [Template("System.String.indexOf({this}, String.fromCharCode({searchValue}), {fromIndex}, {count})")]
-        public int IndexOf(char searchValue, int fromIndex, int count)
-        {
-            return -1;
-        }
+        public extern int IndexOf(char searchValue, int fromIndex, int count);
 
         /// <summary>
         /// The indexOf() method returns the index within the calling String object of the first occurrence of the specified value. The search starts at a specified character position and
@@ -364,10 +338,7 @@ namespace System
         /// <param name="count">The number of character positions to examine.</param>
         /// <returns></returns>
         [Template("System.String.indexOf({this}, {searchValue}, {fromIndex}, {count})")]
-        public int IndexOf(string searchValue, int fromIndex, int count)
-        {
-            return -1;
-        }
+        public extern int IndexOf(string searchValue, int fromIndex, int count);
 
         /// <summary>
         /// Reports the zero-based index of the first occurrence of the specified string in the current System.String object. A parameter specifies the type of search
@@ -377,10 +348,7 @@ namespace System
         /// <param name="comparisonType">One of the enumeration values that specifies the rules for the search.</param>
         /// <returns>The zero-based index position of value if that string is found, or -1 if it is not. If value is System.String.Empty, the return value is 0.</returns>
         [Template("System.String.indexOf({this}, {searchValue}, 0, {this}.length, {comparisonType})")]
-        public int IndexOf(string searchValue, StringComparison comparisonType)
-        {
-            return -1;
-        }
+        public extern int IndexOf(string searchValue, StringComparison comparisonType);
 
         /// <summary>
         /// Reports the zero-based index of the first occurrence of the specified string in the current System.String object. Parameters specify the starting search
@@ -391,10 +359,7 @@ namespace System
         /// <param name="comparisonType">One of the enumeration values that specifies the rules for the search.</param>
         /// <returns>The zero-based index position of value if that string is found, or -1 if it is not. If value is System.String.Empty, the return value is 0.</returns>
         [Template("System.String.indexOf({this}, {searchValue}, {fromIndex}, {this}.length, {comparisonType})")]
-        public int IndexOf(string searchValue, int fromIndex, StringComparison comparisonType)
-        {
-            return -1;
-        }
+        public extern int IndexOf(string searchValue, int fromIndex, StringComparison comparisonType);
 
         /// <summary>
         /// Reports the zero-based index of the first occurrence of the specified string in the current System.String object. Parameters specify the starting search
@@ -407,10 +372,7 @@ namespace System
         /// <param name="comparisonType">One of the enumeration values that specifies the rules for the search.</param>
         /// <returns>The zero-based index position of value if that string is found, or -1 if it is not. If value is System.String.Empty, the return value is 0.</returns>
         [Template("System.String.indexOf({this}, {searchValue}, {fromIndex}, {count}, {comparisonType})")]
-        public int IndexOf(string searchValue, int fromIndex, int count, StringComparison comparisonType)
-        {
-            return -1;
-        }
+        public extern int IndexOf(string searchValue, int fromIndex, int count, StringComparison comparisonType);
 
         [Template("{this}.lastIndexOf(String.fromCharCode({ch}))")]
         public extern int LastIndexOf(char ch);
@@ -829,22 +791,13 @@ namespace System
         public static extern String Format(String format, object arg0, object arg1, object arg2);
 
         [Template("System.String.indexOfAny({this}, {anyOf})")]
-        public int IndexOfAny(char[] anyOf)
-        {
-            return -1;
-        }
+        public extern int IndexOfAny(char[] anyOf);
 
         [Template("System.String.indexOfAny({this}, {anyOf}, {startIndex})")]
-        public int IndexOfAny(char[] anyOf, int startIndex)
-        {
-            return -1;
-        }
+        public extern int IndexOfAny(char[] anyOf, int startIndex);
 
         [Template("System.String.indexOfAny({this}, {anyOf}, {startIndex}, {count})")]
-        public int IndexOfAny(char[] anyOf, int startIndex, int count)
-        {
-            return -1;
-        }
+        public extern int IndexOfAny(char[] anyOf, int startIndex, int count);
 
         [Template("System.String.toCharArray({this}, 0, {this}.length)")]
         public extern char[] ToCharArray();
@@ -852,25 +805,16 @@ namespace System
         [Template("System.String.toCharArray({this}, {startIndex}, {count})")]
         public extern char[] ToCharArray(int startIndex, int count);
 
-        public static bool operator ==(string s1, string s2)
-        {
-            return false;
-        }
+        public static extern bool operator ==(string s1, string s2);
 
-        public static bool operator !=(string s1, string s2)
-        {
-            return false;
-        }
+        public static extern bool operator !=(string s1, string s2);
 
         [IndexerName("Chars")]
-        public char this[int index]
+        public extern char this[int index]
         {
             [External]
             [Template("charCodeAt({0})")]
-            get
-            {
-                return default(char);
-            }
+            get;
         }
 
         [Template("Bridge.getEnumerator({this})")]
