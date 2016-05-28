@@ -687,6 +687,7 @@
     <Content Include="Resources\Text\RegularExpressions\RegexReplacement.js" />
     <Content Include="Resources\Text\RegularExpressions\RegexRunner.js" />
     <Content Include="Resources\timer.js" />
+    <Content Include="Resources\Type.js" />
     <Content Include="Resources\Version.js" />
     <None Include="AdditionalCompilerOptions.txt" />
     <Content Include="Resources\Array.js" />

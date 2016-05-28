@@ -19,6 +19,8 @@ namespace System
         }
 
         public static extern Type GetTypeFromHandle(RuntimeTypeHandle typeHandle);
+
+        public extern bool IsAssignableFrom(Type type);
     }
 
     [External]
