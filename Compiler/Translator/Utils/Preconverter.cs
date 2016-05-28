@@ -10,8 +10,10 @@ using ICSharpCode.NRefactory.MonoCSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
+using AnonymousMethodExpression = ICSharpCode.NRefactory.CSharp.AnonymousMethodExpression;
 using Expression = ICSharpCode.NRefactory.CSharp.Expression;
 using ExpressionStatement = ICSharpCode.NRefactory.CSharp.ExpressionStatement;
+using LambdaExpression = ICSharpCode.NRefactory.CSharp.LambdaExpression;
 using ParenthesizedExpression = ICSharpCode.NRefactory.CSharp.ParenthesizedExpression;
 using Statement = ICSharpCode.NRefactory.CSharp.Statement;
 
@@ -368,7 +370,15 @@ namespace Bridge.Translator
                         throw new ArgumentOutOfRangeException();
                 }
 
-                if (clonAssignmentExpression.Right is BinaryOperatorExpression)
+                var wrap = !(clonAssignmentExpression.Right is ParenthesizedExpression || 
+                             clonAssignmentExpression.Right is IdentifierExpression || 
+                             clonAssignmentExpression.Right is MemberReferenceExpression ||
+                             clonAssignmentExpression.Right is PrimitiveExpression ||
+                             clonAssignmentExpression.Right is IndexerExpression ||
+                             clonAssignmentExpression.Right is LambdaExpression ||
+                             clonAssignmentExpression.Right is AnonymousMethodExpression ||
+                             clonAssignmentExpression.Right is ObjectCreateExpression);
+                if (wrap)
                 {
                     clonAssignmentExpression.Right = new BinaryOperatorExpression(clonAssignmentExpression.Left.Clone(), opType, new ParenthesizedExpression(clonAssignmentExpression.Right.Clone()));
                 }

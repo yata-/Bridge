@@ -416,6 +416,10 @@ namespace Bridge.Translator
 
             if (this.ResolveOperator(assignmentExpression, orr, initCount))
             {
+                if (needReturnValue)
+                {
+                    this.Write(")");
+                }
                 return;
             }
 
@@ -578,7 +582,26 @@ namespace Bridge.Translator
             }
             else
             {
+                var wrap = assignmentExpression.Operator != AssignmentOperatorType.Assign && this.Emitter.Writers.Count > initCount && 
+                    !(assignmentExpression.Right is ParenthesizedExpression || 
+                      assignmentExpression.Right is IdentifierExpression || 
+                      assignmentExpression.Right is MemberReferenceExpression ||
+                      assignmentExpression.Right is PrimitiveExpression ||
+                      assignmentExpression.Right is IndexerExpression ||
+                      assignmentExpression.Right is LambdaExpression ||
+                      assignmentExpression.Right is AnonymousMethodExpression ||
+                      assignmentExpression.Right is ObjectCreateExpression);
+                if (wrap)
+                {
+                    this.WriteOpenParentheses();
+                }
+
                 assignmentExpression.Right.AcceptVisitor(this.Emitter);
+
+                if (wrap)
+                {
+                    this.WriteCloseParentheses();
+                }
             }
 
             if (!special && isBool &&
