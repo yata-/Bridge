@@ -556,26 +556,34 @@ namespace Bridge.Translator
                 if (index >= 0)
                 {
                     var invocationrr = block.Emitter.Resolver.ResolveNode(indexerExpr, block.Emitter) as InvocationResolveResult;
-
-                    if (invocationrr != null && isType(invocationrr.Member.Parameters.ElementAt(index).Type, block.Emitter.Resolver) && !isType(rr.Type, block.Emitter.Resolver))
+                    if (invocationrr != null)
                     {
-                        if (expression.IsNull)
+                        var parameters = invocationrr.Member.Parameters;
+                        if (parameters.Count <= index)
                         {
-                            return false;
+                            index = parameters.Count - 1;
                         }
 
-                        block.Write(typeName);
-                        if (NullableType.IsNullable(invocationrr.Member.Parameters.ElementAt(index).Type) && ConversionBlock.ShouldBeLifted(expression))
+                        if (isType(invocationrr.Member.Parameters.ElementAt(index).Type, block.Emitter.Resolver) && !isType(rr.Type, block.Emitter.Resolver))
                         {
-                            block.Write(".lift");
+                            if (expression.IsNull)
+                            {
+                                return false;
+                            }
+
+                            block.Write(typeName);
+                            if (NullableType.IsNullable(invocationrr.Member.Parameters.ElementAt(index).Type) && ConversionBlock.ShouldBeLifted(expression))
+                            {
+                                block.Write(".lift");
+                            }
+                            if (expression is CastExpression &&
+                                ((CastExpression)expression).Expression is ParenthesizedExpression)
+                            {
+                                return false;
+                            }
+                            block.WriteOpenParentheses();
+                            return true;
                         }
-                        if (expression is CastExpression &&
-                            ((CastExpression)expression).Expression is ParenthesizedExpression)
-                        {
-                            return false;
-                        }
-                        block.WriteOpenParentheses();
-                        return true;
                     }
                 }
             }

@@ -8123,6 +8123,23 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1389', {
+        statics: {
+            testParamsIndexer: function () {
+                var app = new Bridge.ClientTest.BridgeIssues.Bridge1389();
+                var list = app.getItem(["1", "2", "3", "4", "5"]);
+    
+                Bridge.Test.Assert.notNull(list);
+                Bridge.Test.Assert.areEqual(5, System.Linq.Enumerable.from(list).count());
+                Bridge.Test.Assert.areEqual("1", System.Linq.Enumerable.from(list).first());
+                Bridge.Test.Assert.areEqual("5", System.Linq.Enumerable.from(list).last());
+            }
+        },
+        getItem: function (keys) {
+            return keys;
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
