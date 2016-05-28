@@ -201,6 +201,7 @@
                 QUnit.test("WithNoUncheckedKeyword - Batch2 TestLong", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_WithNoUncheckedKeywordTests.testLong);
                 QUnit.test("WithNoUncheckedKeyword - Batch2 TestULong", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_WithNoUncheckedKeywordTests.testULong);
                 QUnit.module("Issues");
+                QUnit.test("#1385 - Batch2 TestIsTypedArrayForByte", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_Bridge1385.testIsTypedArrayForByte);
                 QUnit.test("#1122 - Batch2 TestClippingInJavaScriptOverflowMode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N1122.testClippingInJavaScriptOverflowMode);
                 QUnit.test("#1122 - Batch2 TestIntegerDivisionInJavaScriptOverflowMode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N1122.testIntegerDivisionInJavaScriptOverflowMode);
                 QUnit.test("#1204 - Batch2 TestStrictNullChecksOptionForNulls", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N1204.testStrictNullChecksOptionForNulls);
@@ -254,6 +255,16 @@
                 QUnit.test("#772 - Batch2 IListRemoveAtWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N772.iListRemoveAtWorks);
                 QUnit.test("#772 - Batch2 IssueSpecific", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N772.issueSpecific);
                 QUnit.test("#772 - Batch2 TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N772.testUseCase);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_Bridge1385', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch2.BridgeIssues.Bridge1385)],
+        statics: {
+            testIsTypedArrayForByte: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch2.BridgeIssues.Bridge1385).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_Bridge1385);
+                Bridge.ClientTest.Batch2.BridgeIssues.Bridge1385.testIsTypedArrayForByte();
             }
         }
     });
