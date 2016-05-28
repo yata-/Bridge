@@ -1,10 +1,12 @@
 ﻿using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
-using Object.Net.Utilities;
+using ICSharpCode.NRefactory.TypeSystem;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ICSharpCode.NRefactory.TypeSystem;
 
 namespace Bridge.Translator
 {
@@ -134,7 +136,7 @@ namespace Bridge.Translator
             if (list.Count == 0)
             {
                 this.EnsureComma();
-                this.Write("$clone: function (to) { return this; }");
+                this.Write(Functions.CLONE + ": function (to) { return this; }");
                 this.Emitter.Comma = true;
                 return;
             }
@@ -214,11 +216,11 @@ namespace Bridge.Translator
 
             if (immutable)
             {
-                this.Write("$clone: function (to) { return this; }");
+                this.Write(Functions.CLONE + ": function (to) { return this; }");
             }
             else
             {
-                this.Write("$clone: function (to) ");
+                this.Write(Functions.CLONE + ": function (to) ");
                 this.BeginBlock();
                 this.Write("var s = to || new ");
                 this.Write(structName);

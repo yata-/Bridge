@@ -646,7 +646,7 @@ namespace Bridge.Translator
                                 {
                                     if (isNullable)
                                     {
-                                        this.Write(TypeNames.Nullable + ".lift1");
+                                        this.Write(Types.Nullable + ".lift1");
                                         this.WriteOpenParentheses();
                                         if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
                                         {
@@ -834,7 +834,7 @@ namespace Bridge.Translator
                                 {
                                     if (isNullable)
                                     {
-                                        this.Write(TypeNames.Nullable + ".lift1");
+                                        this.Write(Types.Nullable + ".lift1");
                                         this.WriteOpenParentheses();
                                         if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
                                         {

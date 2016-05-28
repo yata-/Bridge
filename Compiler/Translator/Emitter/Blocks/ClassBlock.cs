@@ -1,8 +1,11 @@
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using Object.Net.Utilities;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -131,13 +134,13 @@ namespace Bridge.Translator
             {
                 var bridgeType = this.Emitter.BridgeTypes.Get(this.Emitter.TypeInfo);
 
-                if (this.TypeInfo.InstanceMethods.Any(m => m.Value.Any(subm => this.Emitter.GetEntityName(subm) == "inherits")) ||
-                    this.TypeInfo.InstanceConfig.Fields.Any(m => m.GetName(this.Emitter) == "inherits"))
+                if (this.TypeInfo.InstanceMethods.Any(m => m.Value.Any(subm => this.Emitter.GetEntityName(subm) == Properties.INHERITS)) ||
+                    this.TypeInfo.InstanceConfig.Fields.Any(m => m.GetName(this.Emitter) == Properties.INHERITS))
                 {
                     this.Write("$");
                 }
 
-                this.Write("inherits");
+                this.Write(Properties.INHERITS);
                 this.WriteColon();
                 if (Helpers.IsTypeArgInSubclass(bridgeType.TypeDefinition, bridgeType.TypeDefinition, this.Emitter, false))
                 {
@@ -207,14 +210,14 @@ namespace Bridge.Translator
             if (this.TypeInfo.IsEnum)
             {
                 this.EnsureComma();
-                this.Write("$enum: true");
+                this.Write(Properties.ENUM + ": true");
                 this.Emitter.Comma = true;
 
                 if (this.Emitter.GetTypeDefinition(this.TypeInfo.Type)
                         .CustomAttributes.Any(attr => attr.AttributeType.FullName == "System.FlagsAttribute"))
                 {
                     this.EnsureComma();
-                    this.Write("$flags: true");
+                    this.Write(Properties.FLAGS + ": true");
                     this.Emitter.Comma = true;
                 }
             }
@@ -222,7 +225,7 @@ namespace Bridge.Translator
             if (HasEntryPoint)
             {
                 this.EnsureComma();
-                this.Write("$entryPoint: true");
+                this.Write(Properties.ENTRY_POINT + ": true");
                 this.Emitter.Comma = true;
             }
 

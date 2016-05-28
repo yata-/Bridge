@@ -1,4 +1,6 @@
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
 
 namespace Bridge.Translator
@@ -32,7 +34,7 @@ namespace Bridge.Translator
                         Node = finallyNode,
                         Output = this.Emitter.Output
                     });
-                    this.Write("$step = ${" + hashcode + "};");
+                    this.Write(Variables.STEP + " = ${" + hashcode + "};");
                     this.WriteNewLine();
                     this.Write("$jumpFromFinally = ");
                     this.Emitter.JumpStatements.Add(new JumpInfo(this.Emitter.Output, this.Emitter.Output.Length, false));
@@ -41,7 +43,7 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    this.Write("$step = ");
+                    this.Write(Variables.STEP + " = ");
                     this.Emitter.JumpStatements.Add(new JumpInfo(this.Emitter.Output, this.Emitter.Output.Length, false));
 
                     this.WriteSemiColon();

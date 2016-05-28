@@ -263,15 +263,15 @@ namespace Bridge.Translator
             {
                 if (Helpers.IsDecimalType(expectedType, this.Emitter.Resolver))
                 {
-                    typeName = TypeNames.Decimal;
+                    typeName = Types.Decimal;
                 }
                 else if (Helpers.IsLongType(expectedType, this.Emitter.Resolver))
                 {
-                    typeName = TypeNames.Int64;
+                    typeName = Types.Int64;
                 }
                 else if (Helpers.IsULongType(expectedType, this.Emitter.Resolver))
                 {
-                    typeName = TypeNames.UInt64;
+                    typeName = Types.UInt64;
                 }
             }
 

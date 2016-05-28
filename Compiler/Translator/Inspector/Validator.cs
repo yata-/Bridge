@@ -1,6 +1,5 @@
 ﻿using Bridge.Contract;
 using Bridge.Contract.Constants;
-using Bridge.Translator.Constants;
 
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
@@ -75,7 +74,7 @@ namespace Bridge.Translator
         {
             foreach (var i in type.Interfaces)
             {
-                if (i.FullName == TypeNames.IBridgeClass)
+                if (i.FullName == Types.IBridgeClass)
                 {
                     return true;
                 }

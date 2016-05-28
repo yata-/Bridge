@@ -36,7 +36,7 @@ namespace Bridge.Translator
 
                 if (Helpers.IsDecimalType(expectedType, block.Emitter.Resolver) && !Helpers.IsDecimalType(fromType, block.Emitter.Resolver))
                 {
-                    block.Write(TypeNames.Decimal + "(");
+                    block.Write(Types.Decimal + "(");
                     block.AfterOutput += ")";
                 }
                 else if (Helpers.IsDecimalType(fromType, block.Emitter.Resolver))
@@ -72,7 +72,7 @@ namespace Bridge.Translator
 
                 if (be == null || be.Operator != BinaryOperatorType.Divide || be.Left != expression)
                 {
-                    block.Write(TypeNames.Int64 + ".toNumber");
+                    block.Write(Types.Int64 + ".toNumber");
                     if (!(expression is CastExpression && ((CastExpression)expression).Expression is ParenthesizedExpression))
                     {
                         block.Write("(");
@@ -237,7 +237,7 @@ namespace Bridge.Translator
 
             if (toFloat || (block.Emitter.IsJavaScriptOverflowMode && !InsideOverflowContext(block.Emitter, expression)))
             {
-                block.Write(TypeNames.Decimal + ".toFloat");
+                block.Write(Types.Decimal + ".toFloat");
                 if (!(expression is CastExpression && ((CastExpression)expression).Expression is ParenthesizedExpression))
                 {
                     block.Write("(");
@@ -246,7 +246,7 @@ namespace Bridge.Translator
             }
             else
             {
-                block.Write(TypeNames.Decimal + ".toInt(");
+                block.Write(Types.Decimal + ".toInt(");
                 block.AfterOutput = ", " + BridgeTypes.ToJsName(expectedType, block.Emitter) + ")";
             }
         }
@@ -260,7 +260,7 @@ namespace Bridge.Translator
 
             if (isChecked)
             {
-                block.Write(TypeNames.Int64 + ".check(");
+                block.Write(Types.Int64 + ".check(");
 
                 block.AfterOutput += ", ";
                 block.AfterOutput += BridgeTypes.ToJsName(expectedType, block.Emitter);
@@ -316,7 +316,7 @@ namespace Bridge.Translator
                     throw new ArgumentException("Can not narrow to " + expectedType, "expectedType");
                 }
 
-                block.Write(TypeNames.Int64 + ".");
+                block.Write(Types.Int64 + ".");
                 block.Write(action);
                 if (!(expression is CastExpression && ((CastExpression)expression).Expression is ParenthesizedExpression))
                 {
@@ -348,11 +348,11 @@ namespace Bridge.Translator
 
             if (isChecked)
             {
-                block.Write(TypeNames.Int + ".check(");
+                block.Write(Types.Int + ".check(");
 
                 if (fromFloatingPoint)
                 {
-                    block.Write(TypeNames.Int + ".trunc");
+                    block.Write(Types.Int + ".trunc");
                     block.WriteOpenParentheses();
                 }
 
@@ -414,7 +414,7 @@ namespace Bridge.Translator
                         throw new ArgumentException("Can not narrow to " + targetType, "targetType");
                     }
 
-                    block.Write(TypeNames.Int + ".");
+                    block.Write(Types.Int + ".");
                     block.Write(action);
                     if (!(expression is CastExpression && ((CastExpression)expression).Expression is ParenthesizedExpression))
                     {
@@ -460,7 +460,7 @@ namespace Bridge.Translator
                     }
                     else if (targetType.IsKnownType(KnownTypeCode.SByte))
                     {
-                        block.Write(TypeNames.Int + ".sxb(");
+                        block.Write(Types.Int + ".sxb(");
                         if (!skipInnerWrap)
                         {
                             block.WriteOpenParentheses();
@@ -479,7 +479,7 @@ namespace Bridge.Translator
                     }
                     else if (targetType.IsKnownType(KnownTypeCode.Int16))
                     {
-                        block.Write(TypeNames.Int + ".sxs(");
+                        block.Write(Types.Int + ".sxs(");
                         if (!skipInnerWrap)
                         {
                             block.WriteOpenParentheses();
@@ -516,12 +516,12 @@ namespace Bridge.Translator
                     }
                     else if (targetType.IsKnownType(KnownTypeCode.Int64))
                     {
-                        block.Write(TypeNames.Int + ".clip64(");
+                        block.Write(Types.Int + ".clip64(");
                         block.AfterOutput += ")";
                     }
                     else if (targetType.IsKnownType(KnownTypeCode.UInt64))
                     {
-                        block.Write(TypeNames.Int + ".clipu64(");
+                        block.Write(Types.Int + ".clipu64(");
                         block.AfterOutput += ")";
                     }
                     else

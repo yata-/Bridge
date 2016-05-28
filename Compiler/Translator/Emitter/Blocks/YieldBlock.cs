@@ -82,11 +82,11 @@ namespace Bridge.Translator
 
             if (returnType != null && returnType.Name == "IEnumerator")
             {
-                block.Write(TypeNames.Array + ".toEnumerator($yield)");
+                block.Write(Types.Array + ".toEnumerator($yield)");
             }
             else
             {
-                block.Write(TypeNames.Array + ".toEnumerable($yield)");
+                block.Write(Types.Array + ".toEnumerable($yield)");
             }
 
             block.WriteSemiColon();

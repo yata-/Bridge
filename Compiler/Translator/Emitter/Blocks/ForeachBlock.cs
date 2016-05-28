@@ -1,5 +1,8 @@
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -92,7 +95,7 @@ namespace Bridge.Translator
             this.WriteCloseParentheses();
             this.WriteSemiColon();
             this.WriteNewLine();
-            this.Write("$step = " + this.Emitter.AsyncBlock.Step + ";");
+            this.Write(Variables.STEP + " = " + this.Emitter.AsyncBlock.Step + ";");
             this.WriteNewLine();
             this.Write("continue;");
             this.WriteNewLine();
@@ -122,7 +125,7 @@ namespace Bridge.Translator
             this.WriteSemiColon();
             this.WriteNewLine();
 
-            this.Write("$step = " + this.Emitter.AsyncBlock.Step + ";");
+            this.Write(Variables.STEP + " = " + this.Emitter.AsyncBlock.Step + ";");
             this.WriteNewLine();
             this.Write("continue;");
 
@@ -154,7 +157,7 @@ namespace Bridge.Translator
 
             if (!AbstractEmitterBlock.IsJumpStatementLast(this.Emitter.Output.ToString()))
             {
-                this.Write("$step = " + conditionStep.Step + ";");
+                this.Write(Variables.STEP + " = " + conditionStep.Step + ";");
                 this.WriteNewLine();
                 this.Write("continue;");
                 this.WriteNewLine();

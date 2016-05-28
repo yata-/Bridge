@@ -53,7 +53,7 @@ namespace Bridge.Translator
                 {
                     if (orr.IsLiftedOperator)
                     {
-                        this.Write(TypeNames.Nullable + ".");
+                        this.Write(Types.Nullable + ".");
 
                         string action = "lift";
 
@@ -222,7 +222,7 @@ namespace Bridge.Translator
                     Helpers.IsIntegerType(this.Emitter.Resolver.Resolver.GetExpectedType(binaryOperatorExpression.Right), this.Emitter.Resolver))
                 ))
             {
-                this.Write(TypeNames.Int + ".div(");
+                this.Write(Types.Int + ".div(");
                 binaryOperatorExpression.Left.AcceptVisitor(this.Emitter);
                 this.Write(", ");
                 binaryOperatorExpression.Right.AcceptVisitor(this.Emitter);
@@ -245,7 +245,7 @@ namespace Bridge.Translator
 
             bool nullable = orr != null && orr.IsLiftedOperator;
             bool isCoalescing = binaryOperatorExpression.Operator == BinaryOperatorType.NullCoalescing;
-            string root = TypeNames.Nullable + ".";
+            string root = Types.Nullable + ".";
             bool special = nullable;
             bool rootSpecial = nullable;
             bool isBool = NullableType.IsNullable(resolveOperator.Type) ? NullableType.GetUnderlyingType(resolveOperator.Type).IsKnownType(KnownTypeCode.Boolean) : resolveOperator.Type.IsKnownType(KnownTypeCode.Boolean);
@@ -493,7 +493,7 @@ namespace Bridge.Translator
 
                 if (orr.IsLiftedOperator)
                 {
-                    this.Write(TypeNames.Nullable + ".");
+                    this.Write(Types.Nullable + ".");
                     this.Write(action);
                     this.WriteOpenParentheses();
                     this.WriteScript(op_name);
@@ -529,7 +529,7 @@ namespace Bridge.Translator
             {
                 if (orr.IsLiftedOperator)
                 {
-                    this.Write(TypeNames.Nullable + ".");
+                    this.Write(Types.Nullable + ".");
                     this.Write(action);
                     this.WriteOpenParentheses();
                     this.WriteScript(op_name);

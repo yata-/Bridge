@@ -1,6 +1,6 @@
 ﻿namespace Bridge.Contract.Constants
 {
-    public class TypeNames
+    public class Types
     {
         public const string UInt64 = "System.UInt64";
         public const string Int64 = "System.Int64";

@@ -388,12 +388,12 @@ namespace Bridge.Contract
                 {
                     if (nullable)
                     {
-                        block.Emitter.Output.Insert(insertPosition, TypeNames.Nullable + ".lift1(\"$clone\", ");
+                        block.Emitter.Output.Insert(insertPosition, Types.Nullable + ".lift1(\"" + Functions.CLONE + "\", ");
                         block.WriteCloseParentheses();
                     }
                     else
                     {
-                        block.Write(".$clone()");
+                        block.Write("." + Functions.CLONE + "()");
                     }
 
                     return;
@@ -419,12 +419,12 @@ namespace Bridge.Contract
 
                     if (nullable)
                     {
-                        block.Emitter.Output.Insert(insertPosition, TypeNames.Nullable + ".lift1(\"$clone\", ");
+                        block.Emitter.Output.Insert(insertPosition, Types.Nullable + ".lift1(\"" + Functions.CLONE + "\", ");
                         block.WriteCloseParentheses();
                     }
                     else
                     {
-                        block.Write(".$clone()");
+                        block.Write("." + Functions.CLONE + "()");
                     }
                 }
             }

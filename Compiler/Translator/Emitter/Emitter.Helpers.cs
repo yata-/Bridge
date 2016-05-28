@@ -191,15 +191,15 @@ namespace Bridge.Translator
 
                 if (member.Name == "Equals")
                 {
-                    tpl = string.Format(TypeNames.Nullable + ".equals({{this}}, {{{0}}}, {1})", method.Parameters.First().Name, tpl);    
+                    tpl = string.Format(Contract.Constants.Types.Nullable + ".equals({{this}}, {{{0}}}, {1})", method.Parameters.First().Name, tpl);    
                 }
                 else if (member.Name == "ToString")
                 {
-                    tpl = string.Format(TypeNames.Nullable + ".toString({{this}}, {0})", tpl);
+                    tpl = string.Format(Contract.Constants.Types.Nullable + ".toString({{this}}, {0})", tpl);
                 }
                 else if (member.Name == "GetHashCode")
                 {
-                    tpl = string.Format(TypeNames.Nullable + ".getHashCode({{this}}, {0})", tpl);
+                    tpl = string.Format(Contract.Constants.Types.Nullable + ".getHashCode({{this}}, {0})", tpl);
                 }
 
                 info = new Tuple<bool, bool, string>(info.Item1, info.Item2, tpl);
