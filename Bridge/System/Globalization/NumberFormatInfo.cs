@@ -5,176 +5,171 @@ namespace System.Globalization
     [External]
     public sealed class NumberFormatInfo : IFormatProvider, ICloneable, IBridgeClass
     {
-        public NumberFormatInfo()
-        {
-        }
+        public extern NumberFormatInfo();
 
         [FieldProperty]
-        public static NumberFormatInfo InvariantInfo
+        public static extern NumberFormatInfo InvariantInfo
         {
-            get
-            {
-                return null;
-            }
+            get;
         }
 
         [Name("nanSymbol")]
         [FieldProperty]
-        public string NaNSymbol
+        public extern string NaNSymbol
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string NegativeSign
+        public extern string NegativeSign
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string PositiveSign
+        public extern string PositiveSign
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string NegativeInfinitySymbol
+        public extern string NegativeInfinitySymbol
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string PositiveInfinitySymbol
+        public extern string PositiveInfinitySymbol
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string PercentSymbol
+        public extern string PercentSymbol
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public int[] PercentGroupSizes
+        public extern int[] PercentGroupSizes
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public int PercentDecimalDigits
+        public extern int PercentDecimalDigits
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string PercentDecimalSeparator
+        public extern string PercentDecimalSeparator
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string PercentGroupSeparator
+        public extern string PercentGroupSeparator
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public int PercentPositivePattern
+        public extern int PercentPositivePattern
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public int PercentNegativePattern
+        public extern int PercentNegativePattern
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string CurrencySymbol
+        public extern string CurrencySymbol
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public int[] CurrencyGroupSizes
+        public extern int[] CurrencyGroupSizes
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public int CurrencyDecimalDigits
+        public extern int CurrencyDecimalDigits
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string CurrencyDecimalSeparator
+        public extern string CurrencyDecimalSeparator
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string CurrencyGroupSeparator
+        public extern string CurrencyGroupSeparator
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public int CurrencyPositivePattern
+        public extern int CurrencyPositivePattern
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public int CurrencyNegativePattern
+        public extern int CurrencyNegativePattern
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public int[] NumberGroupSizes
+        public extern int[] NumberGroupSizes
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public int NumberDecimalDigits
+        public extern int NumberDecimalDigits
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string NumberDecimalSeparator
+        public extern string NumberDecimalSeparator
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string NumberGroupSeparator
+        public extern string NumberGroupSeparator
         {
             get;
             set;
@@ -185,12 +180,9 @@ namespace System.Globalization
         public extern object Clone();
 
         [FieldProperty]
-        public static NumberFormatInfo CurrentInfo
+        public static extern NumberFormatInfo CurrentInfo
         {
-            get
-            {
-                return null;
-            }
+            get;
         }
     }
 }
