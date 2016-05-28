@@ -8123,6 +8123,53 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1378', {
+        statics: {
+            config: {
+                properties: {
+                    x: 0
+                }
+            },
+            testAssigmentWithOperator: function () {
+                var a = 4;
+                var b = 2;
+                Bridge.ClientTest.BridgeIssues.Bridge1378.setx(Bridge.ClientTest.BridgeIssues.Bridge1378.getx()-(a - b));
+                Bridge.Test.Assert.areEqual(-2, Bridge.ClientTest.BridgeIssues.Bridge1378.getx());
+            },
+            testAssigmentWithOverloadOperator: function () {
+                var $int = new Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper(3);
+                $int = Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper.op_Addition($int, ($int = Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper.op_Addition($int, new Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper(1))));
+                Bridge.Test.Assert.areEqual(7, $int.toInt());
+            },
+            testAssigmentWithConditionalOperator: function () {
+                var tabSize = 4;
+                var tabLength1 = 0;
+                var text = "        There is two tabs.";
+    
+                for (var i = 0; i < text.length; i = (i + 1) | 0) {
+                    tabLength1 = (tabLength1 + ((text.charCodeAt(i) === 9) ? tabSize : 1)) | 0;
+                }
+    
+                Bridge.Test.Assert.areEqual(26, tabLength1);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper', {
+        statics: {
+            op_Addition: function (a, b) {
+                return new Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper(((a.value + b.value) | 0));
+            }
+        },
+        value: 0,
+        constructor: function (value) {
+            this.value = value;
+        },
+        toInt: function () {
+            return this.value;
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
