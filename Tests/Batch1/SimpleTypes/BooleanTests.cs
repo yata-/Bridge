@@ -304,6 +304,13 @@ namespace Bridge.ClientTest.SimpleTypes
 	        VerifyBooleanTryParse(28, "1", false, false);
         }
 
+        [Test] //#1405
+        public void BoolStringWorks()
+        {
+            Assert.AreEqual("True", bool.TrueString);
+            Assert.AreEqual("False", bool.FalseString);
+        }
+
         private void VerifyBooleanTryParse(int i, string value, bool expectedResult, bool expectedReturn)
         {
             bool result;

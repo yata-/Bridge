@@ -7,11 +7,13 @@ namespace System
     [Name("Function")]
     public class Delegate
     {
-        public readonly int Length = 0;
-
-        protected Delegate()
+        public extern int Length
         {
+            [Template("{this}.length")]
+            get;
         }
+
+        protected extern Delegate();
 
         public virtual extern object Apply(object thisArg);
 
@@ -37,8 +39,6 @@ namespace System
     [Name("Function")]
     public class MulticastDelegate : Delegate
     {
-        protected MulticastDelegate()
-        {
-        }
+        protected extern MulticastDelegate();
     }
 }

@@ -6,22 +6,16 @@ namespace System
     [Name("Object")]
     public static class Environment
     {
-        public static string NewLine
+        public static extern string NewLine
         {
             [Template("'\\n'")]
-            get
-            {
-                return null;
-            }
+            get;
         }
 
-        public static int CurrentManagedThreadId
+        public static extern int CurrentManagedThreadId
         {
             [Template("0")]
-            get
-            {
-                return 0;
-            }
+            get;
         }
     }
 }
