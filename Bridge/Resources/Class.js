@@ -149,7 +149,7 @@
                 delete prop.inherits;
             }
 
-            if (prop.isEntryPoint) {
+            if (isEntryPoint) {
                 delete prop.$entryPoint;
             }
 
