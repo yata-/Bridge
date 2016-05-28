@@ -12,6 +12,7 @@
                 System.Console.log(new TestIssue599.Issue599()._something);
             }
         },
+        $entryPoint: true,
         _something: "HI!"
     });
     
