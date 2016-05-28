@@ -2058,6 +2058,7 @@
 
             var extend = prop.$inherits || prop.inherits,
                 statics = prop.$statics || prop.statics,
+                isEntryPoint = prop.$entryPoint,
                 base,
                 cacheName = prop.$cacheName,
                 prototype,
@@ -2073,6 +2074,10 @@
                 delete prop.$inherits;
             } else {
                 delete prop.inherits;
+            }
+
+            if (prop.isEntryPoint) {
+                delete prop.$entryPoint;
             }
 
             if (Bridge.isFunction(statics)) {
@@ -2264,7 +2269,10 @@
                 }
             };
 
-            Bridge.Class.$queue.push(Class);
+            if (isEntryPoint) {
+                Bridge.Class.$queue.push(Class);
+            }
+            
             Class.$staticInit = fn;
 
             return Class;
@@ -14319,9 +14327,6 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
 // @source random.js
 
-(function (globals) {
-    "use strict";
-
     Bridge.define('System.Random', {
         statics: {
             MBIG: 2147483647,
@@ -14457,9 +14462,6 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             }
         }
     });
-
-    Bridge.init();
-})(this);
 
 Bridge.define("System.Guid", {
     inherits: function () {
@@ -19208,9 +19210,6 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
     };
 // @source timer.js
 
-(function (globals) {
-    "use strict";
-
     Bridge.define('System.Threading.Timer', {
         inherits: [System.IDisposable],
         statics: {
@@ -19334,9 +19333,6 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             this.disposed = true;
         }
     });
-
-    Bridge.init();
-})(this);
     // @source End.js
 
     // module export

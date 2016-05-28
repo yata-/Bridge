@@ -8027,6 +8027,46 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391', {
+        statics: {
+            builder: null,
+            getBuilder: function () {
+                var $t;
+                return ($t = Bridge.ClientTest.BridgeIssues.Bridge1391.builder, $t != null ? $t : ((Bridge.ClientTest.BridgeIssues.Bridge1391.builder = new System.Text.StringBuilder(), Bridge.ClientTest.BridgeIssues.Bridge1391.builder)));
+            },
+            testStaticCtorOrder: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1391.getBuilder().clear();
+    
+                var f = new Bridge.ClientTest.BridgeIssues.Bridge1391.Foo();
+                var b = new Bridge.ClientTest.BridgeIssues.Bridge1391.Bar();
+                Bridge.Test.Assert.areEqual("FooBar", Bridge.ClientTest.BridgeIssues.Bridge1391.builder.toString());
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391.Bar', {
+        statics: {
+            i: 0,
+            config: {
+                init: function () {
+                    this.i = Bridge.ClientTest.BridgeIssues.Bridge1391.Bar.init();
+                }
+            },
+            init: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1391.getBuilder().append("Bar");
+                return 0;
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391.Foo', {
+        statics: {
+            constructor: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1391.getBuilder().append("Foo");
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,

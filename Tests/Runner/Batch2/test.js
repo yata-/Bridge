@@ -255,7 +255,8 @@
                 QUnit.test("#772 - Batch2 IssueSpecific", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N772.issueSpecific);
                 QUnit.test("#772 - Batch2 TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N772.testUseCase);
             }
-        }
+        },
+        $entryPoint: true
     });
     
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N1122', {
