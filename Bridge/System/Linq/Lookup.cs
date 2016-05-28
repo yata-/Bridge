@@ -27,24 +27,16 @@ namespace System.Linq
     [IgnoreGeneric]
     public class Lookup<TKey, TElement> : ILookup<TKey, TElement>
     {
-        internal Lookup()
+        internal extern Lookup();
+
+        public extern int Count
         {
+            get;
         }
 
-        public int Count
+        public extern EnumerableInstance<TElement> this[TKey key]
         {
-            get
-            {
-                return 0;
-            }
-        }
-
-        public EnumerableInstance<TElement> this[TKey key]
-        {
-            get
-            {
-                return null;
-            }
+            get;
         }
 
         public extern bool Contains(TKey key);

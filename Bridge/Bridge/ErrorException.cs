@@ -6,26 +6,15 @@ namespace Bridge
     //[Name("Bridge.ErrorException")]
     public class ErrorException : Exception, IBridgeClass
     {
-        public virtual Error Error
+        public extern virtual Error Error
         {
-            get
-            {
-                return null;
-            }
+            get;
         }
 
-        public ErrorException()
-        {
-        }
+        public extern ErrorException();
 
-        public ErrorException(string message)
-            : base(message)
-        {
-        }
+        public extern ErrorException(string message);
 
-        public ErrorException(string message, Exception innerException)
-            : base(message, innerException)
-        {
-        }
+        public extern ErrorException(string message, Exception innerException);
     }
 }

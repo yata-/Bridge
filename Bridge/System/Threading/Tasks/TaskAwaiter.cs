@@ -7,17 +7,12 @@ namespace System.Threading.Tasks
     //[Name("System.Threading.Tasks.Task")]
     public class TaskAwaiter : INotifyCompletion
     {
-        internal TaskAwaiter()
-        {
-        }
+        internal extern TaskAwaiter();
 
-        public bool IsCompleted
+        public extern bool IsCompleted
         {
             [Name("isCompleted")]
-            get
-            {
-                return false;
-            }
+            get;
         }
 
         [Name("continueWith")]
@@ -31,26 +26,18 @@ namespace System.Threading.Tasks
     [Name("System.Threading.Tasks.Task")]
     public class TaskAwaiter<TResult> : INotifyCompletion
     {
-        internal TaskAwaiter()
-        {
-        }
+        internal extern TaskAwaiter();
 
-        public bool IsCompleted
+        public extern bool IsCompleted
         {
             [Name("isCompleted")]
-            get
-            {
-                return false;
-            }
+            get;
         }
 
         [Name("continueWith")]
         public extern void OnCompleted(Action continuation);
 
         [Name("getAwaitedResult")]
-        public TResult GetResult()
-        {
-            return default(TResult);
-        }
+        public extern TResult GetResult();
     }
 }

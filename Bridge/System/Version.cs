@@ -1,5 +1,3 @@
-using Bridge;
-
 namespace System
 {
     // A Version object contains four hierarchical numeric components: major, minor,
@@ -7,76 +5,48 @@ namespace System
     // internally as a -1.  By definition, an unspecified component matches anything
     // (both unspecified and specified), and an unspecified component is "less than" any
     // specified component.
-    //[Name("Bridge.Version")]
+    //[External] the class should have External attribute as it uses transpiled js code Version.js
     public sealed class Version : ICloneable, IComparable<Version>, IEquatable<Version>
     {
-        public Version(int major, int minor, int build, int revision)
-        {
-        }
+        public extern Version(int major, int minor, int build, int revision);
 
-        public Version(int major, int minor, int build)
-        {
-        }
+        public extern Version(int major, int minor, int build);
 
-        public Version(int major, int minor)
-        {
-        }
+        public extern Version(int major, int minor);
 
-        public Version(String version)
-        {
-        }
+        public extern Version(String version);
 
-        public Version()
-        {
-        }
+        public extern Version();
 
         // Properties for setting and getting version numbers
-        public int Major
+        public extern int Major
         {
-            get
-            {
-                return 0;
-            }
+            get;
         }
 
-        public int Minor
+        public extern int Minor
         {
-            get
-            {
-                return 0;
-            }
+            get;
         }
 
-        public int Build
+        public extern int Build
         {
-            get
-            {
-                return 0;
-            }
+            get;
         }
 
-        public int Revision
+        public extern int Revision
         {
-            get
-            {
-                return 0;
-            }
+            get;
         }
 
-        public short MajorRevision
+        public extern short MajorRevision
         {
-            get
-            {
-                return 0;
-            }
+            get;
         }
 
-        public short MinorRevision
+        public extern short MinorRevision
         {
-            get
-            {
-                return 0;
-            }
+            get;
         }
 
         public extern Object Clone();
@@ -85,15 +55,9 @@ namespace System
 
         public extern int CompareTo(Version value);
 
-        public override bool Equals(Object obj)
-        {
-            return true;
-        }
+        public override extern bool Equals(Object obj);
 
-        public bool Equals(Version obj)
-        {
-            return true;
-        }
+        public extern bool Equals(Version obj);
 
         public override extern int GetHashCode();
 
@@ -103,40 +67,18 @@ namespace System
 
         public static extern Version Parse(string input);
 
-        public static bool TryParse(string input, out Version result)
-        {
-            result = null;
-            return false;
-        }
+        public static extern bool TryParse(string input, out Version result);
 
-        public static bool operator ==(Version v1, Version v2)
-        {
-            return false;
-        }
+        public static extern bool operator ==(Version v1, Version v2);
 
-        public static bool operator !=(Version v1, Version v2)
-        {
-            return false;
-        }
+        public static extern bool operator !=(Version v1, Version v2);
 
-        public static bool operator <(Version v1, Version v2)
-        {
-            return false;
-        }
+        public static extern bool operator <(Version v1, Version v2);
 
-        public static bool operator <=(Version v1, Version v2)
-        {
-            return false;
-        }
+        public static extern bool operator <=(Version v1, Version v2);
 
-        public static bool operator >(Version v1, Version v2)
-        {
-            return false;
-        }
+        public static extern bool operator >(Version v1, Version v2);
 
-        public static bool operator >=(Version v1, Version v2)
-        {
-            return false;
-        }
+        public static extern bool operator >=(Version v1, Version v2);
     }
 }

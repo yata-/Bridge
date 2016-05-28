@@ -5,16 +5,10 @@ namespace System
     [External]
     public class FormatException : Exception, IBridgeClass
     {
-        public FormatException()
-        {
-        }
+        public extern FormatException();
 
-        public FormatException(string message)
-        {
-        }
+        public extern FormatException(string message);
 
-        public FormatException(string message, Exception innerException)
-        {
-        }
+        public extern FormatException(string message, Exception innerException);
     }
 }

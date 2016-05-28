@@ -1619,9 +1619,14 @@
         },
 
         parse: function (enumType, s, ignoreCase, silent) {
-            var values = enumType;
-
             System.Enum.checkEnumType(enumType);
+
+            var intValue = {};
+            if (System.Int32.tryParse(s, intValue)) {
+                return intValue.v;
+            }
+
+            var values = enumType;
 
             if (!enumType.prototype || !enumType.prototype.$flags) {
                 for (var f in values) {
@@ -4801,27 +4806,27 @@ System.Int64.check = function (v, tp) {
 };
 
 System.Int64.clip8 = function (x) {
-    return x ? Bridge.Int.sxb(x.toNumber() & 0xff) : (Bridge.Int.isInfinite(x) ? System.SByte.min : null);
+    return x ? Bridge.Int.sxb(x.value.low & 0xff) : (Bridge.Int.isInfinite(x) ? System.SByte.min : null);
 };
 
 System.Int64.clipu8 = function (x) {
-    return x ? x.toNumber() & 0xff : (Bridge.Int.isInfinite(x) ? System.Byte.min : null);
+    return x ? x.value.low & 0xff : (Bridge.Int.isInfinite(x) ? System.Byte.min : null);
 };
 
 System.Int64.clip16 = function (x) {
-    return x ? Bridge.Int.sxs(x.toNumber() & 0xffff) : (Bridge.Int.isInfinite(x) ? System.Int16.min : null);
+    return x ? Bridge.Int.sxs(x.value.low & 0xffff) : (Bridge.Int.isInfinite(x) ? System.Int16.min : null);
 };
 
 System.Int64.clipu16 = function (x) {
-    return x ? x.toNumber() & 0xffff : (Bridge.Int.isInfinite(x) ? System.UInt16.min : null);
+    return x ? x.value.low & 0xffff : (Bridge.Int.isInfinite(x) ? System.UInt16.min : null);
 };
 
 System.Int64.clip32 = function (x) {
-    return x ? x.toNumber() | 0 : (Bridge.Int.isInfinite(x) ? System.Int32.min : null);
+    return x ? x.value.low | 0 : (Bridge.Int.isInfinite(x) ? System.Int32.min : null);
 };
 
 System.Int64.clipu32 = function (x) {
-    return x ? x.toNumber() >>> 0 : (Bridge.Int.isInfinite(x) ? System.UInt32.min : null);
+    return x ? x.value.low >>> 0 : (Bridge.Int.isInfinite(x) ? System.UInt32.min : null);
 };
 
 System.Int64.clip64 = function (x) {
@@ -7216,6 +7221,18 @@ var array = {
         return new Bridge.ArrayEnumerator(array);
     },
 
+    _typedArrays : {
+        Float32Array: true,
+        Float64Array: true,
+        Int8Array: true,
+        Int16Array: true,
+        Int32Array: true,
+        Uint8Array: true,
+        Uint8ClampedArray: true,
+        Uint16Array: true,
+        Uint32Array: true
+    },
+
     is: function (obj, type) {
         if (obj instanceof Bridge.ArrayEnumerator) {
             if ((obj.constructor === type) || (obj instanceof type) ||
@@ -7246,7 +7263,7 @@ var array = {
             return true;
         }
 
-        return false;
+        return !!System.Array._typedArrays[String.prototype.slice.call(Object.prototype.toString.call(obj), 8, -1)];
     },
 
     clone: function (arr) {
@@ -7606,11 +7623,7 @@ var array = {
             throw new System.ArgumentNullException("converter");
         }
 
-        var array2 = [];
-
-        for (var i = 0; i < array.length; i++) {
-            array2[i] = converter(array[i]);
-        }
+        var array2 = array.map(converter);
 
         return array2;
     },

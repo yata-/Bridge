@@ -9,23 +9,20 @@ namespace System
     [Name("Array")]
     public sealed class Array : IEnumerable, ICloneable
     {
-        public readonly int Length = 0;
-
-        private Array()
+        public extern int Length
         {
+            [Template("{this}.length")]
+            get;
         }
+    
+        private extern Array();
 
-        public object this[int index]
+        public extern object this[int index]
         {
             [External]
-            get
-            {
-                return null;
-            }
+            get;
             [External]
-            set
-            {
-            }
+            set;
         }
 
         [Template("new System.Collections.ObjectModel.ReadOnlyCollection$1({T})({array})")]
@@ -174,13 +171,10 @@ namespace System
         [Template("System.Array.getLength({this}, {dimension})")]
         public extern int GetLength(int dimension);
 
-        public int Rank
+        public extern int Rank
         {
             [Template("System.Array.getRank({this})")]
-            get
-            {
-                return 0;
-            }
+            get;
         }
 
         [Template("System.Array.getLower({this}, {dimension})")]

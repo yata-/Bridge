@@ -4,17 +4,11 @@ namespace System.Text.RegularExpressions
 {
     public sealed class Regex
     {
-        public Regex(string pattern)
-        {
-        }
+        public extern Regex(string pattern);
 
-        public Regex(string pattern, RegexOptions options)
-        {
-        }
+        public extern Regex(string pattern, RegexOptions options);
 
-        public Regex(string pattern, RegexOptions options, TimeSpan matchTimeout)
-        {
-        }
+        public extern Regex(string pattern, RegexOptions options, TimeSpan matchTimeout);
 
         #region Instance members
 

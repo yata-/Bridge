@@ -7,9 +7,7 @@ namespace System
     [Constructor("Number")]
     public struct UInt16 : IComparable, IComparable<UInt16>, IEquatable<UInt16>, IFormattable
     {
-        private UInt16(int i)
-        {
-        }
+        private extern UInt16(int i);
 
         [InlineConst]
         public const ushort MinValue = 0;
@@ -18,76 +16,38 @@ namespace System
         public const ushort MaxValue = 65535;
 
         [Template("System.UInt16.parse({s})")]
-        public static ushort Parse(string s)
-        {
-            return 0;
-        }
+        public static extern ushort Parse(string s);
 
         [Template("System.UInt16.parse({s}, {radix})")]
-        public static ushort Parse(string s, int radix)
-        {
-            return 0;
-        }
+        public static extern ushort Parse(string s, int radix);
 
         [Template("System.UInt16.tryParse({s}, {result})")]
-        public static bool TryParse(string s, out ushort result)
-        {
-            result = 0;
-            return false;
-        }
+        public static extern bool TryParse(string s, out ushort result);
 
         [Template("System.UInt16.tryParse({s}, {result}, {radix})")]
-        public static bool TryParse(string s, out ushort result, int radix)
-        {
-            result = 0;
-            return false;
-        }
+        public static extern bool TryParse(string s, out ushort result, int radix);
 
-        public string ToString(int radix)
-        {
-            return null;
-        }
+        public extern string ToString(int radix);
 
         [Template("System.UInt16.format({this}, {format})")]
-        public string Format(string format)
-        {
-            return null;
-        }
+        public extern string Format(string format);
 
         [Template("System.UInt16.format({this}, {format}, {provider})")]
-        public string Format(string format, IFormatProvider provider)
-        {
-            return null;
-        }
+        public extern string Format(string format, IFormatProvider provider);
 
         [Template("System.UInt16.format({this}, {format})")]
-        public string ToString(string format)
-        {
-            return null;
-        }
+        public extern string ToString(string format);
 
         [Template("System.UInt16.format({this}, {format}, {provider})")]
-        public string ToString(string format, IFormatProvider provider)
-        {
-            return null;
-        }
+        public extern string ToString(string format, IFormatProvider provider);
 
         [Template("Bridge.compare({this}, {other})")]
-        public int CompareTo(ushort other)
-        {
-            return 0;
-        }
+        public extern int CompareTo(ushort other);
 
         [Template("Bridge.compare({this}, {obj})")]
-        public int CompareTo(object obj)
-        {
-            return 0;
-        }
+        public extern int CompareTo(object obj);
 
         [Template("{this} === {other}")]
-        public bool Equals(ushort other)
-        {
-            return false;
-        }
+        public extern bool Equals(ushort other);
     }
 }
