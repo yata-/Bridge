@@ -8123,6 +8123,15 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1385', {
+        statics: {
+            testIsTypedArray: function () {
+                var value = new Uint8Array(3);
+                Bridge.Test.Assert.true(Bridge.is(value, Array));
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1389', {
         statics: {
             testParamsIndexer: function () {
