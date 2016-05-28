@@ -1,7 +1,7 @@
 ﻿// @source /Collections/ArrayEnumerator.js
 
 Bridge.define('Bridge.ArrayEnumerator', {
-    inherits: [Bridge.IEnumerator],
+    inherits: [System.Collections.IEnumerator],
 
     constructor: function (array) {
         this.array = array;
@@ -30,7 +30,7 @@ Bridge.define('Bridge.ArrayEnumerator', {
 });
 
 Bridge.define('Bridge.ArrayEnumerable', {
-    inherits: [Bridge.IEnumerable],
+    inherits: [System.Collections.IEnumerable],
     constructor: function (array) {
         this.array = array;
     },

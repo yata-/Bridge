@@ -5,10 +5,12 @@ namespace System
 {
     [External]
     [Name("Boolean")]
-    public struct Boolean: IComparable, IComparable<Boolean>, IEquatable<Boolean>
+    public struct Boolean: IComparable, IComparable<bool>, IEquatable<bool>
     {
-        public static readonly String TrueString = "True";
-        public static readonly String FalseString = "False";
+        [Template("System.Boolean.trueString")]
+        public static readonly string TrueString = "True";
+        [Template("System.Boolean.falseString")]
+        public static readonly string FalseString = "False";
 
         private extern Boolean(DummyTypeUsedToAddAttributeToDefaultValueTypeConstructor _);
 
@@ -18,19 +20,16 @@ namespace System
         [Template("{this} === {other}")]
         public extern bool Equals(bool other);
 
-        [Template("Bridge.Boolean.parse({value})")]
+        [Template("System.Boolean.parse({value})")]
         public static extern bool Parse(string value);
 
-        [Template("Bridge.Boolean.tryParse({value}, {result})")]
+        [Template("System.Boolean.tryParse({value}, {result})")]
         public static extern bool TryParse(string value, out bool result);
 
         [Template("Bridge.compare({this}, {other})")]
         public extern int CompareTo(object obj);
 
-        [Template("Bridge.Boolean.toString({this})")]
-        public override string ToString()
-        {
-            return base.ToString();
-        }
+        [Template("System.Boolean.toString({this})")]
+        public override extern string ToString();
     }
 }

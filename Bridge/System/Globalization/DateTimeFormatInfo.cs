@@ -3,25 +3,19 @@ using Bridge;
 namespace System.Globalization
 {
     [External]
-    [Namespace("Bridge")]
     public sealed class DateTimeFormatInfo : IFormatProvider, ICloneable, IBridgeClass
     {
-        public DateTimeFormatInfo()
-        {
-        }
+        public extern DateTimeFormatInfo();
 
         [FieldProperty]
-        public static DateTimeFormatInfo InvariantInfo
+        public static extern DateTimeFormatInfo InvariantInfo
         {
-            get
-            {
-                return null;
-            }
+            get;
         }
 
         [FieldProperty]
         [Name("amDesignator")]
-        public string AMDesignator
+        public extern string AMDesignator
         {
             get;
             set;
@@ -29,133 +23,133 @@ namespace System.Globalization
 
         [FieldProperty]
         [Name("pmDesignator")]
-        public string PMDesignator
+        public extern string PMDesignator
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string DateSeparator
+        public extern string DateSeparator
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string TimeSeparator
+        public extern string TimeSeparator
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string UniversalSortableDateTimePattern
+        public extern string UniversalSortableDateTimePattern
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string SortableDateTimePattern
+        public extern string SortableDateTimePattern
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string FullDateTimePattern
+        public extern string FullDateTimePattern
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string LongDatePattern
+        public extern string LongDatePattern
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string ShortDatePattern
+        public extern string ShortDatePattern
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string LongTimePattern
+        public extern string LongTimePattern
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string ShortTimePattern
+        public extern string ShortTimePattern
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public int FirstDayOfWeek
+        public extern int FirstDayOfWeek
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string[] DayNames
+        public extern string[] DayNames
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string[] AbbreviatedDayNames
+        public extern string[] AbbreviatedDayNames
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string[] ShortestDayNames
+        public extern string[] ShortestDayNames
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string[] MonthNames
+        public extern string[] MonthNames
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string[] MonthGenitiveNames
+        public extern string[] MonthGenitiveNames
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string[] AbbreviatedMonthNames
+        public extern string[] AbbreviatedMonthNames
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string[] AbbreviatedMonthGenitiveNames
+        public extern string[] AbbreviatedMonthGenitiveNames
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string MonthDayPattern
+        public extern string MonthDayPattern
         {
             get;
             set;
@@ -163,21 +157,21 @@ namespace System.Globalization
 
         [FieldProperty]
         [Name("rfc1123Pattern")]
-        public string RFC1123Pattern
+        public extern string RFC1123Pattern
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string YearMonthPattern
+        public extern string YearMonthPattern
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string RoundtripFormat
+        public extern string RoundtripFormat
         {
             get;
             set;
@@ -188,12 +182,9 @@ namespace System.Globalization
         public extern object Clone();
 
         [FieldProperty]
-        public static DateTimeFormatInfo CurrentInfo
+        public static extern DateTimeFormatInfo CurrentInfo
         {
-            get
-            {
-                return null;
-            }
+            get;
         }
 
         public extern string GetAbbreviatedDayName(DayOfWeek dayofweek);

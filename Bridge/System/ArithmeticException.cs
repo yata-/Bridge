@@ -3,19 +3,12 @@ using Bridge;
 namespace System
 {
     [External]
-    [Namespace("Bridge")]
     public class ArithmeticException : Exception, IBridgeClass
     {
-        public ArithmeticException()
-        {
-        }
+        public extern ArithmeticException();
 
-        public ArithmeticException(string message)
-        {
-        }
+        public extern ArithmeticException(string message);
 
-        public ArithmeticException(string message, Exception innerException)
-        {
-        }
+        public extern ArithmeticException(string message, Exception innerException);
     }
 }

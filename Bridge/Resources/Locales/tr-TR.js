@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("tr-TR", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("tr-TR", true), {
     englishName: "Turkish (Turkey)",
     nativeName: "Türkçe (Türkiye)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Paz","Pzt","Sal","Çar","Per","Cum","Cmt"],
         abbreviatedMonthGenitiveNames: ["Oca","Şub","Mar","Nis","May","Haz","Tem","Ağu","Eyl","Eki","Kas","Ara",""],
         abbreviatedMonthNames: ["Oca","Şub","Mar","Nis","May","Haz","Tem","Ağu","Eyl","Eki","Kas","Ara",""],

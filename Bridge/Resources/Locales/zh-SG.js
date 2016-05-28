@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("zh-SG", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("zh-SG", true), {
     englishName: "Chinese (Simplified, Singapore)",
     nativeName: "中文(新加坡)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["周日","周一","周二","周三","周四","周五","周六"],
         abbreviatedMonthGenitiveNames: ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月",""],
         abbreviatedMonthNames: ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月",""],

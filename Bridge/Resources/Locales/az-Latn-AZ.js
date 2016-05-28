@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("az-Latn-AZ", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("az-Latn-AZ", true), {
     englishName: "Azerbaijani (Latin, Azerbaijan)",
     nativeName: "Azərbaycan dili (Azərbaycan)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["B","Be","Ça","Ç","Ca","C","Ş"],
         abbreviatedMonthGenitiveNames: ["Yan","Fev","Mar","Apr","May","İyun","İyul","Avg","Sen","Okt","Noy","Dek",""],
         abbreviatedMonthNames: ["Yan","Fev","Mar","Apr","May","İyun","İyul","Avg","Sen","Okt","Noy","Dek",""],

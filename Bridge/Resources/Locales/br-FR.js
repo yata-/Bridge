@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("br-FR", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("br-FR", true), {
     englishName: "Breton (France)",
     nativeName: "brezhoneg (Frañs)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NkN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Sul","Lun","Meu.","Mer.","Yaou","Gwe.","Sad."],
         abbreviatedMonthGenitiveNames: ["Gen.","C'hwe.","Meur.","Ebr.","Mae","Mezh.","Goue.","Eost","Gwen.","Here","Du","Kzu",""],
         abbreviatedMonthNames: ["Gen.","C'hwe.","Meur.","Ebr.","Mae","Mezh.","Goue.","Eost","Gwen.","Here","Du","Kzu",""],

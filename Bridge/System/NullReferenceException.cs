@@ -3,19 +3,12 @@ using Bridge;
 namespace System
 {
     [External]
-    [Namespace("Bridge")]
     public class NullReferenceException : Exception, IBridgeClass
     {
-        public NullReferenceException()
-        {
-        }
+        public extern NullReferenceException();
 
-        public NullReferenceException(string message)
-        {
-        }
+        public extern NullReferenceException(string message);
 
-        public NullReferenceException(string message, Exception innerException)
-        {
-        }
+        public extern NullReferenceException(string message, Exception innerException);
     }
 }

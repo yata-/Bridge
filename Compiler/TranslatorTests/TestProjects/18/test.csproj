@@ -40,6 +40,7 @@
     <Compile Include="Issues\Issue921Generic.cs" />
     <Compile Include="Issues\Issue921Nested.cs" />
     <Compile Include="Issues\Issue1035.cs" />
+    <Compile Include="Issues\Issue1303.cs" />
     <Compile Include="Issues\Issue960.cs" />
     <Compile Include="Issues\Issue958.cs" />
     <Compile Include="Issues\Issue921Instance.cs" />

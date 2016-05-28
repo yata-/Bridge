@@ -1,6 +1,6 @@
 ﻿// @source Text/RegularExpressions/RegexCapture.js
 
-Bridge.define("Bridge.Text.RegularExpressions.Capture", {
+Bridge.define("System.Text.RegularExpressions.Capture", {
     _text: "",
     _index: 0,
     _length: 0,

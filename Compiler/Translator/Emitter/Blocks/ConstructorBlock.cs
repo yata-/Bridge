@@ -42,7 +42,7 @@ namespace Bridge.Translator
 
         protected virtual IEnumerable<string> GetInjectors()
         {
-            var handlers = this.GetEvents();
+            var handlers = this.GetEventsAndAutoStartupMethods();
             var aspects = this.Emitter.Plugins.GetConstructorInjectors(this);
             return aspects.Concat(handlers);
         }

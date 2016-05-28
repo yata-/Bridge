@@ -30,7 +30,7 @@ namespace System.Threading.Tasks
         /// </summary>
         /// <param name="promise"></param>
         /// <returns></returns>
-        [Template("Bridge.Task.fromPromise({promise})")]
+        [Template("System.Threading.Tasks.Task.fromPromise({promise})")]
         public static extern TaskAwaiter<object[]> GetAwaiter(this IPromise promise);
     }
 }

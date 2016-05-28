@@ -20,9 +20,7 @@ namespace System.Linq
     [IgnoreGeneric]
     public class OrderedEnumerable<TElement> : EnumerableInstance<TElement>, IOrderedEnumerable<TElement>
     {
-        internal OrderedEnumerable()
-        {
-        }
+        internal extern OrderedEnumerable();
 
         extern IOrderedEnumerable<TElement> IOrderedEnumerable<TElement>.ThenBy<TKey>(Func<TElement, TKey> keySelector);
 

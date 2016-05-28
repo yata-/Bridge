@@ -4,7 +4,7 @@ namespace Test.BridgeIssues.N783
 {
     public class App
     {
-        public static void Main()
+        public static void Main1()
         {
             var base1 = new Base();
             var base2 = new Base();

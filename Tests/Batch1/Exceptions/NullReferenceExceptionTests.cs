@@ -14,7 +14,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual("Bridge.NullReferenceException", typeof(NullReferenceException).GetClassName(), "Name");
+            Assert.AreEqual("System.NullReferenceException", typeof(NullReferenceException).GetClassName(), "Name");
             object d = new NullReferenceException();
             Assert.True(d is NullReferenceException, "is NullReferenceException");
             Assert.True(d is Exception, "is Exception");

@@ -10,7 +10,7 @@ namespace TestIssue958
 {
     public class Issue958
     {
-        public static void Main()
+        public static void Main1()
         {
             var message = new SetValue("Hi!");
             ProcessMessage(message);

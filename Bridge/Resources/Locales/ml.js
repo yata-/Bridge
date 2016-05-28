@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("ml", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("ml", true), {
     englishName: "Malayalam",
     nativeName: "മലയാളം",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["ഞായർ.","തിങ്കൾ.","ചൊവ്വ.","ബുധൻ.","വ്യാഴം.","വെള്ളി.","ശനി."],
         abbreviatedMonthGenitiveNames: ["ജനുവരി","ഫെബ്രുവരി","മാര്‍‌ച്ച്","ഏപ്രില്‍","മെയ്","ജൂണ്‍","ജൂലൈ","ആഗസ്റ്റ്","സെപ്‌റ്റംബര്‍","ഒക്‌ടോബര്‍","നവംബര്‍","ഡിസംബര്‍",""],
         abbreviatedMonthNames: ["ജനുവരി","ഫെബ്രുവരി","മാര്‍‌ച്ച്","ഏപ്രില്‍","മെയ്","ജൂണ്‍","ജൂലൈ","ആഗസ്റ്റ്","സെപ്‌റ്റംബര്‍","ഒക്‌ടോബര്‍","നവംബര്‍","ഡിസംബര്‍",""],

@@ -4,7 +4,7 @@
 
     public class App
     {
-        public static void Main()
+        public static void Main1()
         {
             // Should contain instruction to check data type range as cspoj contains <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
             var maxInt32 = Int32.MaxValue;

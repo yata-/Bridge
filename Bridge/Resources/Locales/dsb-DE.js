@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("dsb-DE", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("dsb-DE", true), {
     englishName: "Lower Sorbian (Germany)",
     nativeName: "dolnoserbšćina (Nimska)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "njedefinowane",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["nje","pon","wał","srj","stw","pět","sob"],
         abbreviatedMonthGenitiveNames: ["jan","feb","měr","apr","maj","jun","jul","awg","sep","okt","now","dec",""],
         abbreviatedMonthNames: ["jan","feb","měr","apr","maj","jun","jul","awg","sep","okt","now","dec",""],

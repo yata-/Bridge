@@ -421,6 +421,12 @@ namespace Bridge.Contract
         Dictionary<AnonymousType, IAnonymousTypeConfig> AnonymousTypes
         {
             get; set;
-        } 
+        }
+
+        List<string> AutoStartupMethods
+        {
+            get;
+            set;
+        }
     }
 }

@@ -1,8 +1,8 @@
     // @source Version.js
 
-    Bridge.define("Bridge.Version", {
+    Bridge.define("System.Version", {
         inherits: function () {
-            return [Bridge.ICloneable, Bridge.IComparable$1(Bridge.Version), Bridge.IEquatable$1(Bridge.Version)];
+            return [System.ICloneable, System.IComparable$1(System.Version), System.IEquatable$1(System.Version)];
         },
 
         statics: {
@@ -21,20 +21,20 @@
                 do {
                     reminder = num % 10;
                     num = Bridge.Int.div(num, 10);
-                    sb.insert(index, String.fromCharCode(Bridge.cast((Bridge.Version.ZERO_CHAR_VALUE + reminder), Bridge.Int)));
+                    sb.insert(index, String.fromCharCode(Bridge.cast((System.Version.ZERO_CHAR_VALUE + reminder), Bridge.Int)));
                 } while (num > 0);
             },
 
             parse: function (input) {
                 if (input === null) {
-                    throw new Bridge.ArgumentNullException("input");
+                    throw new System.ArgumentNullException("input");
                 }
 
-                var r = { v: new Bridge.Version.VersionResult() };
+                var r = { v: new System.Version.VersionResult() };
 
                 r.v.init("input", true);
 
-                if (!Bridge.Version.tryParseVersion(input, r)) {
+                if (!System.Version.tryParseVersion(input, r)) {
                     throw r.v.getVersionParseException();
                 }
 
@@ -42,11 +42,11 @@
             },
 
             tryParse: function (input, result) {
-                var r = { v: new Bridge.Version.VersionResult() };
+                var r = { v: new System.Version.VersionResult() };
 
                 r.v.init("input", false);
 
-                var b = Bridge.Version.tryParseVersion(input, r);
+                var b = System.Version.tryParseVersion(input, r);
 
                 result.v = r.v.m_parsedVersion;
 
@@ -57,47 +57,47 @@
                 var major = {}, minor = {}, build = {}, revision = {};
 
                 if (version === null) {
-                    result.v.setFailure(Bridge.Version.ParseFailureKind.argumentNullException);
+                    result.v.setFailure(System.Version.ParseFailureKind.argumentNullException);
                     return false;
                 }
 
-                var parsedComponents = version.split(Bridge.Version.separatorsArray);
+                var parsedComponents = version.split(System.Version.separatorsArray);
                 var parsedComponentsLength = parsedComponents.length;
 
                 if ((parsedComponentsLength < 2) || (parsedComponentsLength > 4)) {
-                    result.v.setFailure(Bridge.Version.ParseFailureKind.argumentException);
+                    result.v.setFailure(System.Version.ParseFailureKind.argumentException);
 
                     return false;
                 }
 
-                if (!Bridge.Version.tryParseComponent(parsedComponents[0], "version", result, major)) {
+                if (!System.Version.tryParseComponent(parsedComponents[0], "version", result, major)) {
                     return false;
                 }
 
-                if (!Bridge.Version.tryParseComponent(parsedComponents[1], "version", result, minor)) {
+                if (!System.Version.tryParseComponent(parsedComponents[1], "version", result, minor)) {
                     return false;
                 }
 
                 parsedComponentsLength -= 2;
 
                 if (parsedComponentsLength > 0) {
-                    if (!Bridge.Version.tryParseComponent(parsedComponents[2], "build", result, build)) {
+                    if (!System.Version.tryParseComponent(parsedComponents[2], "build", result, build)) {
                         return false;
                     }
 
                     parsedComponentsLength--;
 
                     if (parsedComponentsLength > 0) {
-                        if (!Bridge.Version.tryParseComponent(parsedComponents[3], "revision", result, revision)) {
+                        if (!System.Version.tryParseComponent(parsedComponents[3], "revision", result, revision)) {
                             return false;
                         } else {
-                            result.v.m_parsedVersion = new Bridge.Version("constructor$3", major.v, minor.v, build.v, revision.v);
+                            result.v.m_parsedVersion = new System.Version("constructor$3", major.v, minor.v, build.v, revision.v);
                         }
                     } else {
-                        result.v.m_parsedVersion = new Bridge.Version("constructor$2", major.v, minor.v, build.v);
+                        result.v.m_parsedVersion = new System.Version("constructor$2", major.v, minor.v, build.v);
                     }
                 } else {
-                    result.v.m_parsedVersion = new Bridge.Version("constructor$1", major.v, minor.v);
+                    result.v.m_parsedVersion = new System.Version("constructor$1", major.v, minor.v);
                 }
 
                 return true;
@@ -105,13 +105,13 @@
 
             tryParseComponent: function (component, componentName, result, parsedComponent) {
                 if (!Bridge.Int.tryParseInt(component, parsedComponent, -2147483648, 2147483647)) {
-                    result.v.setFailure$1(Bridge.Version.ParseFailureKind.formatException, component);
+                    result.v.setFailure$1(System.Version.ParseFailureKind.formatException, component);
 
                     return false;
                 }
 
                 if (parsedComponent.v < 0) {
-                    result.v.setFailure$1(Bridge.Version.ParseFailureKind.argumentOutOfRangeException, componentName);
+                    result.v.setFailure$1(System.Version.ParseFailureKind.argumentOutOfRangeException, componentName);
 
                     return false;
                 }
@@ -128,7 +128,7 @@
             },
 
             op_Inequality: function (v1, v2) {
-                return !(Bridge.Version.op_Equality(v1, v2));
+                return !(System.Version.op_Equality(v1, v2));
             },
 
             op_LessThan: function (v1, v2) {
@@ -156,11 +156,11 @@
             },
 
             op_GreaterThan: function (v1, v2) {
-                return (Bridge.Version.op_LessThan(v2, v1));
+                return (System.Version.op_LessThan(v2, v1));
             },
 
             op_GreaterThanOrEqual: function (v1, v2) {
-                return (Bridge.Version.op_LessThanOrEqual(v2, v1));
+                return (System.Version.op_LessThanOrEqual(v2, v1));
             }
         },
 
@@ -176,19 +176,19 @@
 
         constructor$3: function (major, minor, build, revision) {
             if (major < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("major", "Cannot be < 0");
+                throw new System.ArgumentOutOfRangeException("major", "Cannot be < 0");
             }
 
             if (minor < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("minor", "Cannot be < 0");
+                throw new System.ArgumentOutOfRangeException("minor", "Cannot be < 0");
             }
 
             if (build < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("build", "Cannot be < 0");
+                throw new System.ArgumentOutOfRangeException("build", "Cannot be < 0");
             }
 
             if (revision < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("revision", "Cannot be < 0");
+                throw new System.ArgumentOutOfRangeException("revision", "Cannot be < 0");
             }
 
             this._Major = major;
@@ -199,15 +199,15 @@
 
         constructor$2: function (major, minor, build) {
             if (major < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("major", "Cannot be < 0");
+                throw new System.ArgumentOutOfRangeException("major", "Cannot be < 0");
             }
 
             if (minor < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("minor", "Cannot be < 0");
+                throw new System.ArgumentOutOfRangeException("minor", "Cannot be < 0");
             }
 
             if (build < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("build", "Cannot be < 0");
+                throw new System.ArgumentOutOfRangeException("build", "Cannot be < 0");
             }
 
             this._Major = major;
@@ -217,11 +217,11 @@
 
         constructor$1: function (major, minor) {
             if (major < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("major", "Cannot be < 0");
+                throw new System.ArgumentOutOfRangeException("major", "Cannot be < 0");
             }
 
             if (minor < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("minor", "Cannot be < 0");
+                throw new System.ArgumentOutOfRangeException("minor", "Cannot be < 0");
             }
 
             this._Major = major;
@@ -229,7 +229,7 @@
         },
 
         constructor$4: function (version) {
-            var v = Bridge.Version.parse(version);
+            var v = System.Version.parse(version);
 
             this._Major = v.getMajor();
             this._Minor = v.getMinor();
@@ -273,7 +273,7 @@
         },
 
         clone: function () {
-            var v = new Bridge.Version("constructor");
+            var v = new System.Version("constructor");
 
             v._Major = this._Major;
             v._Minor = this._Minor;
@@ -324,10 +324,10 @@
                 return 1;
             }
 
-            var v = Bridge.as(version, Bridge.Version);
+            var v = Bridge.as(version, System.Version);
 
             if (v === null) {
-                throw new Bridge.ArgumentException("version should be of Bridge.Version type");
+                throw new System.ArgumentException("version should be of System.Version type");
             }
 
             return this.compareInternal(v);
@@ -341,7 +341,7 @@
             return this.compareInternal(value);
         },
         equals$1: function (obj) {
-            var v = Bridge.as(obj, Bridge.Version);
+            var v = Bridge.as(obj, System.Version);
 
             if (v === null) {
                 return false;
@@ -391,51 +391,51 @@
                 case 1:
                     return (this._Major.toString());
                 case 2:
-                    sb = new Bridge.Text.StringBuilder();
-                    Bridge.Version.appendPositiveNumber(this._Major, sb);
+                    sb = new System.Text.StringBuilder();
+                    System.Version.appendPositiveNumber(this._Major, sb);
                     sb.append(String.fromCharCode(46));
-                    Bridge.Version.appendPositiveNumber(this._Minor, sb);
+                    System.Version.appendPositiveNumber(this._Minor, sb);
 
                     return sb.toString();
                 default:
                     if (this._Build === -1) {
-                        throw new Bridge.ArgumentException("Build should be > 0 if fieldCount > 2", "fieldCount");
+                        throw new System.ArgumentException("Build should be > 0 if fieldCount > 2", "fieldCount");
                     }
 
                     if (fieldCount === 3) {
-                        sb = new Bridge.Text.StringBuilder();
-                        Bridge.Version.appendPositiveNumber(this._Major, sb);
+                        sb = new System.Text.StringBuilder();
+                        System.Version.appendPositiveNumber(this._Major, sb);
                         sb.append(String.fromCharCode(46));
-                        Bridge.Version.appendPositiveNumber(this._Minor, sb);
+                        System.Version.appendPositiveNumber(this._Minor, sb);
                         sb.append(String.fromCharCode(46));
-                        Bridge.Version.appendPositiveNumber(this._Build, sb);
+                        System.Version.appendPositiveNumber(this._Build, sb);
 
                         return sb.toString();
                     }
 
                     if (this._Revision === -1) {
-                        throw new Bridge.ArgumentException("Revision should be > 0 if fieldCount > 3", "fieldCount");
+                        throw new System.ArgumentException("Revision should be > 0 if fieldCount > 3", "fieldCount");
                     }
 
                     if (fieldCount === 4) {
-                        sb = new Bridge.Text.StringBuilder();
-                        Bridge.Version.appendPositiveNumber(this._Major, sb);
+                        sb = new System.Text.StringBuilder();
+                        System.Version.appendPositiveNumber(this._Major, sb);
                         sb.append(String.fromCharCode(46));
-                        Bridge.Version.appendPositiveNumber(this._Minor, sb);
+                        System.Version.appendPositiveNumber(this._Minor, sb);
                         sb.append(String.fromCharCode(46));
-                        Bridge.Version.appendPositiveNumber(this._Build, sb);
+                        System.Version.appendPositiveNumber(this._Build, sb);
                         sb.append(String.fromCharCode(46));
-                        Bridge.Version.appendPositiveNumber(this._Revision, sb);
+                        System.Version.appendPositiveNumber(this._Revision, sb);
 
                         return sb.toString();
                     }
 
-                    throw new Bridge.ArgumentException("Should be < 5", "fieldCount");
+                    throw new System.ArgumentException("Should be < 5", "fieldCount");
             }
         }
     });
 
-    Bridge.define("Bridge.Version.ParseFailureKind", {
+    Bridge.define("System.Version.ParseFailureKind", {
         statics: {
             argumentNullException: 0,
             argumentException: 1,
@@ -444,7 +444,7 @@
         }
     });
 
-    Bridge.define("Bridge.Version.VersionResult", {
+    Bridge.define("System.Version.VersionResult", {
         m_parsedVersion: null,
         m_failure: 0,
         m_exceptionArgument: null,
@@ -473,25 +473,25 @@
 
         getVersionParseException: function () {
             switch (this.m_failure) {
-                case Bridge.Version.ParseFailureKind.argumentNullException:
-                    return new Bridge.ArgumentNullException(this.m_argumentName);
-                case Bridge.Version.ParseFailureKind.argumentException:
-                    return new Bridge.ArgumentException("VersionString");
-                case Bridge.Version.ParseFailureKind.argumentOutOfRangeException:
-                    return new Bridge.ArgumentOutOfRangeException(this.m_exceptionArgument, "Cannot be < 0");
-                case Bridge.Version.ParseFailureKind.formatException:
+                case System.Version.ParseFailureKind.argumentNullException:
+                    return new System.ArgumentNullException(this.m_argumentName);
+                case System.Version.ParseFailureKind.argumentException:
+                    return new System.ArgumentException("VersionString");
+                case System.Version.ParseFailureKind.argumentOutOfRangeException:
+                    return new System.ArgumentOutOfRangeException(this.m_exceptionArgument, "Cannot be < 0");
+                case System.Version.ParseFailureKind.formatException:
                     try {
                         Bridge.Int.parseInt(this.m_exceptionArgument, -2147483648, 2147483647);
                     }
                     catch ($e) {
-                        $e = Bridge.Exception.create($e);
+                        $e = System.Exception.create($e);
                         var e;
 
-                        if (Bridge.is($e, Bridge.FormatException)) {
+                        if (Bridge.is($e, System.FormatException)) {
                             e = $e;
 
                             return e;
-                        } else if (Bridge.is($e, Bridge.OverflowException)) {
+                        } else if (Bridge.is($e, System.OverflowException)) {
                             e = $e;
 
                             return e;
@@ -499,9 +499,9 @@
                             throw $e;
                         }
                     }
-                    return new Bridge.FormatException("InvalidString");
+                    return new System.FormatException("InvalidString");
                 default:
-                    return new Bridge.ArgumentException("VersionString");
+                    return new System.ArgumentException("VersionString");
             }
         },
 
@@ -518,7 +518,7 @@
         },
 
         equals: function (o) {
-            if (!Bridge.is(o, Bridge.Version.VersionResult)) {
+            if (!Bridge.is(o, System.Version.VersionResult)) {
                 return false;
             }
 
@@ -526,7 +526,7 @@
         },
 
         $clone: function (to) {
-            var s = to || new Bridge.Version.VersionResult();
+            var s = to || new System.Version.VersionResult();
 
             s.m_parsedVersion = this.m_parsedVersion;
             s.m_failure = this.m_failure;

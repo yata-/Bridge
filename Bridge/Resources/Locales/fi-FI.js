@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("fi-FI", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("fi-FI", true), {
     englishName: "Finnish (Finland)",
     nativeName: "suomi (Suomi)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["su","ma","ti","ke","to","pe","la"],
         abbreviatedMonthGenitiveNames: ["tammi","helmi","maalis","huhti","touko","kesä","heinä","elo","syys","loka","marras","joulu",""],
         abbreviatedMonthNames: ["tammi","helmi","maalis","huhti","touko","kesä","heinä","elo","syys","loka","marras","joulu",""],

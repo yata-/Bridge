@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("lv", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("lv", true), {
     englishName: "Latvian",
     nativeName: "latviešu",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "Nav skaitlis",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["sv","pr","ot","tr","ce","pk","se"],
         abbreviatedMonthGenitiveNames: ["jan","feb","mar","apr","mai","jūn","jūl","aug","sep","okt","nov","dec",""],
         abbreviatedMonthNames: ["jan","feb","mar","apr","mai","jūn","jūl","aug","sep","okt","nov","dec",""],

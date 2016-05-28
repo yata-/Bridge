@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("am", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("am", true), {
     englishName: "Amharic",
     nativeName: "አማርኛ",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NAN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["እሑድ","ሰኞ","ማክሰ","ረቡዕ","ሐሙስ","ዓርብ","ቅዳሜ"],
         abbreviatedMonthGenitiveNames: ["ጥር","የካ.","መጋ.","ሚያ.","ግን.","ሰኔ","ሐም.","ነሐ.","መስ.","ጥቅ.","ህዳ.","ታህ.",""],
         abbreviatedMonthNames: ["ጥር","የካ.","መጋ.","ሚያ.","ግን.","ሰኔ","ሐም.","ነሐ.","መስ.","ጥቅ.","ህዳ.","ታህ.",""],

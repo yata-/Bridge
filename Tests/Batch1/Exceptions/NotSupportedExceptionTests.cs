@@ -14,7 +14,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual("Bridge.NotSupportedException", typeof(NotSupportedException).GetClassName(), "Name");
+            Assert.AreEqual("System.NotSupportedException", typeof(NotSupportedException).GetClassName(), "Name");
             object d = new NotSupportedException();
             Assert.True(d is NotSupportedException, "is NotSupportedException");
             Assert.True(d is Exception, "is Exception");

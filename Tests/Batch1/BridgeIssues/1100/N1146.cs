@@ -9,7 +9,7 @@ namespace Bridge.ClientTest.BridgeIssues
         [Test]
         public static void TestLongIssues()
         {
-            Assert.True(IntUintEquality(0, 0), "int == uint uses .Equals() between long: Bridge.Long(a).equals(Bridge.Long(b))");
+            Assert.True(IntUintEquality(0, 0), "int == uint uses .Equals() between long: System.Int64(a).equals(System.Int64(b))");
             Assert.True(Precedence(), "Correct order for `a += b >> 1` -> `(a + (b >>> 1))`");
         }
 

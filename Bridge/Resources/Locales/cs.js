@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("cs", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("cs", true), {
     englishName: "Czech",
     nativeName: "čeština",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "Není číslo",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["ne","po","út","st","čt","pá","so"],
         abbreviatedMonthGenitiveNames: ["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII",""],
         abbreviatedMonthNames: ["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII",""],

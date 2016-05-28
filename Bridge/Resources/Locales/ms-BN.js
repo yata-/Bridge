@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("ms-BN", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("ms-BN", true), {
     englishName: "Malay (Brunei Darussalam)",
     nativeName: "Bahasa Melayu (Brunei Darussalam)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Ahad","Isnin","Sel","Rabu","Khamis","Jumaat","Sabtu"],
         abbreviatedMonthGenitiveNames: ["Jan","Feb","Mac","Apr","Mei","Jun","Jul","Ogos","Sept","Okt","Nov","Dis",""],
         abbreviatedMonthNames: ["Jan","Feb","Mac","Apr","Mei","Jun","Jul","Ogos","Sept","Okt","Nov","Dis",""],

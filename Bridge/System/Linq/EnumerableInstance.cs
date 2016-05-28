@@ -8,29 +8,18 @@ namespace System.Linq
     [IgnoreGeneric]
     public class EnumerableInstance<TElement> : IEnumerable<TElement>
     {
-        internal EnumerableInstance()
-        {
-        }
+        internal extern EnumerableInstance();
 
         public extern IEnumerator<TElement> GetEnumerator();
 
         extern IEnumerator IEnumerable.GetEnumerator();
 
-        public TElement Aggregate(Func<TElement, TElement, TElement> func)
-        {
-            return default(TElement);
-        }
+        public extern TElement Aggregate(Func<TElement, TElement, TElement> func);
 
-        public TAccumulate Aggregate<TAccumulate>(TAccumulate seed, Func<TAccumulate, TElement, TAccumulate> func)
-        {
-            return default(TAccumulate);
-        }
+        public extern TAccumulate Aggregate<TAccumulate>(TAccumulate seed, Func<TAccumulate, TElement, TAccumulate> func);
 
-        public TResult Aggregate<TAccumulate, TResult>(TAccumulate seed, Func<TAccumulate, TElement, TAccumulate> func,
-            Func<TAccumulate, TResult> resultSelector)
-        {
-            return default(TResult);
-        }
+        public extern TResult Aggregate<TAccumulate, TResult>(TAccumulate seed, Func<TAccumulate, TElement, TAccumulate> func,
+            Func<TAccumulate, TResult> resultSelector);
 
         public extern bool All(Func<TElement, bool> predicate);
 
@@ -96,21 +85,12 @@ namespace System.Linq
 
         public extern EnumerableInstance<TElement> DoAction(Action<TElement, int> action);
 
-        public TElement ElementAt(int index)
-        {
-            return default(TElement);
-        }
+        public extern TElement ElementAt(int index);
 
         [Template("{this}.elementAtOrDefault({index}, {TElement:default})")]
-        public TElement ElementAtOrDefault(int index)
-        {
-            return default(TElement);
-        }
+        public extern TElement ElementAtOrDefault(int index);
 
-        public TElement ElementAtOrDefault(int index, TElement defaultValue)
-        {
-            return default(TElement);
-        }
+        public extern TElement ElementAtOrDefault(int index, TElement defaultValue);
 
         public extern EnumerableInstance<TElement> Except(IEnumerable<TElement> other);
 
@@ -118,39 +98,21 @@ namespace System.Linq
 
         public extern EnumerableInstance<TElement> FinallyAction(Action action);
 
-        public TElement First()
-        {
-            return default(TElement);
-        }
+        public extern TElement First();
 
-        public TElement First(Func<TElement, bool> predicate)
-        {
-            return default(TElement);
-        }
+        public extern TElement First(Func<TElement, bool> predicate);
 
         [Template("{this}.firstOrDefault(null, {TElement:default})")]
-        public TElement FirstOrDefault()
-        {
-            return default(TElement);
-        }
+        public extern TElement FirstOrDefault();
 
         [Template("{this}.firstOrDefault(null, {defaultValue})")]
-        public TElement FirstOrDefault(TElement defaultValue)
-        {
-            return default(TElement);
-        }
+        public extern TElement FirstOrDefault(TElement defaultValue);
 
         [Template("{this}.firstOrDefault({predicate}, {TElement:default})")]
-        public TElement FirstOrDefault(Func<TElement, bool> predicate)
-        {
-            return default(TElement);
-        }
+        public extern TElement FirstOrDefault(Func<TElement, bool> predicate);
 
         [Template("{this}.firstOrDefault({predicate}, {defaultValue})")]
-        public TElement FirstOrDefault(Func<TElement, bool> predicate, TElement defaultValue)
-        {
-            return default(TElement);
-        }
+        public extern TElement FirstOrDefault(Func<TElement, bool> predicate, TElement defaultValue);
 
         public extern EnumerableInstance<object> Flatten();
 
@@ -216,15 +178,9 @@ namespace System.Linq
             Func<TElement, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector,
             Func<TElement, TInner, TResult> resultSelector, IEqualityComparer<TKey> comparer);
 
-        public TElement Last()
-        {
-            return default(TElement);
-        }
+        public extern TElement Last();
 
-        public TElement Last(Func<TElement, bool> predicate)
-        {
-            return default(TElement);
-        }
+        public extern TElement Last(Func<TElement, bool> predicate);
 
         public extern int LastIndexOf(TElement item);
 
@@ -233,52 +189,28 @@ namespace System.Linq
         public extern int LastIndexOf(TElement item, IEqualityComparer<TElement> comparer);
 
         [Template("{this}.count()")]
-        public static long LongCount<TSource>()
-        {
-            return default(long);
-        }
+        public static extern long LongCount<TSource>();
 
         [Template("{this}.count({predicate})")]
-        public static long LongCount<TSource>(Func<TSource, bool> predicate)
-        {
-            return default(long);
-        }
+        public static extern long LongCount<TSource>(Func<TSource, bool> predicate);
 
         [Template("{this}.lastOrDefault(null, {TElement:default})")]
-        public TElement LastOrDefault()
-        {
-            return default(TElement);
-        }
+        public extern TElement LastOrDefault();
 
         [Template("{this}.lastOrDefault(null, {defaultValue})")]
-        public TElement LastOrDefault(TElement defaultValue)
-        {
-            return default(TElement);
-        }
+        public extern TElement LastOrDefault(TElement defaultValue);
 
         [Template("{this}.lastOrDefault({predicate}, {TElement:default})")]
-        public TElement LastOrDefault(Func<TElement, bool> predicate)
-        {
-            return default(TElement);
-        }
+        public extern TElement LastOrDefault(Func<TElement, bool> predicate);
 
         [Template("{this}.lastOrDefault({predicate}, {defaultValue})")]
-        public TElement LastOrDefault(Func<TElement, bool> predicate, TElement defaultValue)
-        {
-            return default(TElement);
-        }
+        public extern TElement LastOrDefault(Func<TElement, bool> predicate, TElement defaultValue);
 
         public extern EnumerableInstance<TResult> LetBind<TResult>(Func<IEnumerable<TElement>, IEnumerable<TResult>> func);
 
-        public static TSource Max<TSource>()
-        {
-            return default(TSource);
-        }
+        public static extern TSource Max<TSource>();
 
-        public static TResult Max<TSource, TResult>(Func<TSource, TResult> selector)
-        {
-            return default(TResult);
-        }
+        public static extern TResult Max<TSource, TResult>(Func<TSource, TResult> selector);
 
         public extern int Max(Func<TElement, int> selector);
 
@@ -290,42 +222,21 @@ namespace System.Linq
 
         public extern decimal Max(Func<TElement, decimal> selector);
 
-        public TElement MaxBy(Func<TElement, int> selector)
-        {
-            return default(TElement);
-        }
+        public extern TElement MaxBy(Func<TElement, int> selector);
 
-        public TElement MaxBy(Func<TElement, long> selector)
-        {
-            return default(TElement);
-        }
+        public extern TElement MaxBy(Func<TElement, long> selector);
 
-        public TElement MaxBy(Func<TElement, float> selector)
-        {
-            return default(TElement);
-        }
+        public extern TElement MaxBy(Func<TElement, float> selector);
 
-        public TElement MaxBy(Func<TElement, double> selector)
-        {
-            return default(TElement);
-        }
+        public extern TElement MaxBy(Func<TElement, double> selector);
 
-        public TElement MaxBy(Func<TElement, decimal> selector)
-        {
-            return default(TElement);
-        }
+        public extern TElement MaxBy(Func<TElement, decimal> selector);
 
         public extern EnumerableInstance<TElement> Memoize();
 
-        public static TSource Min<TSource>()
-        {
-            return default(TSource);
-        }
+        public static extern TSource Min<TSource>();
 
-        public static TResult Min<TSource, TResult>(Func<TSource, TResult> selector)
-        {
-            return default(TResult);
-        }
+        public static extern TResult Min<TSource, TResult>(Func<TSource, TResult> selector);
 
         public extern int Min(Func<TElement, int> selector);
 
@@ -337,30 +248,15 @@ namespace System.Linq
 
         public extern decimal Min(Func<TElement, decimal> selector);
 
-        public TElement MinBy(Func<TElement, int> selector)
-        {
-            return default(TElement);
-        }
+        public extern TElement MinBy(Func<TElement, int> selector);
 
-        public TElement MinBy(Func<TElement, long> selector)
-        {
-            return default(TElement);
-        }
+        public extern TElement MinBy(Func<TElement, long> selector);
 
-        public TElement MinBy(Func<TElement, float> selector)
-        {
-            return default(TElement);
-        }
+        public extern TElement MinBy(Func<TElement, float> selector);
 
-        public TElement MinBy(Func<TElement, double> selector)
-        {
-            return default(TElement);
-        }
+        public extern TElement MinBy(Func<TElement, double> selector);
 
-        public TElement MinBy(Func<TElement, decimal> selector)
-        {
-            return default(TElement);
-        }
+        public extern TElement MinBy(Func<TElement, decimal> selector);
 
         [Template("{this}.ofType({TResult})")]
         public extern EnumerableInstance<TResult> OfType<TResult>();
@@ -439,39 +335,21 @@ namespace System.Linq
 
         public extern EnumerableInstance<TElement> Shuffle();
 
-        public TElement Single()
-        {
-            return default(TElement);
-        }
+        public extern TElement Single();
 
-        public TElement Single(Func<TElement, bool> predicate)
-        {
-            return default(TElement);
-        }
+        public extern TElement Single(Func<TElement, bool> predicate);
 
         [Template("{this}.singleOrDefault(null, {TElement:default})")]
-        public TElement SingleOrDefault()
-        {
-            return default(TElement);
-        }
+        public extern TElement SingleOrDefault();
 
         [Template("{this}.singleOrDefault(null, {defaultValue})")]
-        public TElement SingleOrDefault(TElement defaultValue)
-        {
-            return default(TElement);
-        }
+        public extern TElement SingleOrDefault(TElement defaultValue);
 
         [Template("{this}.singleOrDefault({predicate}, {TElement:default})")]
-        public TElement SingleOrDefault(Func<TElement, bool> predicate)
-        {
-            return default(TElement);
-        }
+        public extern TElement SingleOrDefault(Func<TElement, bool> predicate);
 
         [Template("{this}.singleOrDefault({predicate}, {defaultValue})")]
-        public TElement SingleOrDefault(Func<TElement, bool> predicate, TElement defaultValue)
-        {
-            return default(TElement);
-        }
+        public extern TElement SingleOrDefault(Func<TElement, bool> predicate, TElement defaultValue);
 
         public extern EnumerableInstance<TElement> Skip(int count);
 
@@ -501,25 +379,13 @@ namespace System.Linq
 
         public extern EnumerableInstance<TElement> TakeWhile(Func<TElement, int, bool> predicate);
 
-        public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(Func<TSource, TKey> keySelector)
-        {
-            return default(IOrderedEnumerable<TSource>);
-        }
+        public static extern IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(Func<TSource, TKey> keySelector);
 
-        public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
-        {
-            return default(IOrderedEnumerable<TSource>);
-        }
+        public static extern IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(Func<TSource, TKey> keySelector, IComparer<TKey> comparer);
 
-        public static IOrderedEnumerable<TSource> ThenByDescending<TSource, TKey>(Func<TSource, TKey> keySelector)
-        {
-            return default(IOrderedEnumerable<TSource>);
-        }
+        public static extern IOrderedEnumerable<TSource> ThenByDescending<TSource, TKey>(Func<TSource, TKey> keySelector);
 
-        public static IOrderedEnumerable<TSource> ThenByDescending<TSource, TKey>(Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
-        {
-            return default(IOrderedEnumerable<TSource>);
-        }
+        public static extern IOrderedEnumerable<TSource> ThenByDescending<TSource, TKey>(Func<TSource, TKey> keySelector, IComparer<TKey> comparer);
 
         public extern TElement[] ToArray();
 

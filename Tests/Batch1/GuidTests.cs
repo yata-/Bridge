@@ -11,7 +11,7 @@ namespace Bridge.ClientTest
     {
 		[Test]
 		public void TypePropertiesAreCorrect() {
-			Assert.AreEqual(typeof(Guid).FullName, "Bridge.Guid");
+			Assert.AreEqual(typeof(Guid).FullName, "System.Guid");
 			
 			object o = new Guid();
 			Assert.True(o is Guid);

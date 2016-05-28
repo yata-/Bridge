@@ -19,7 +19,7 @@
             go: function () {
                 var x = new TestIssue960.Named("Test");
                 // Should not contain generic type parameter
-                Bridge.Console.log(new TestIssue960.Example().getName(x));
+                System.Console.log(new TestIssue960.Example().getName(x));
             }
         }
     });

@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("cy", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("cy", true), {
     englishName: "Welsh",
     nativeName: "Cymraeg",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "Dim rhif",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Sul","Llun","Maw","Mer","Iau","Gwe","Sad"],
         abbreviatedMonthGenitiveNames: ["Ion","Chwef","Maw","Ebr","Mai","Meh","Gorff","Awst","Medi","Hyd","Tach","Rhag",""],
         abbreviatedMonthNames: ["Ion","Chwef","Maw","Ebr","Mai","Meh","Gorff","Awst","Medi","Hyd","Tach","Rhag",""],

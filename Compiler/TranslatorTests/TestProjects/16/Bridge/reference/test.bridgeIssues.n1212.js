@@ -17,7 +17,7 @@
         },
         testDecimal: function () {
             var $t;
-            var v = Bridge.Decimal(0);
+            var v = System.Decimal(0);
             v = v.inc();
             v = v.dec();
             v = ($t = v, v = v.dec(), $t);
@@ -44,7 +44,7 @@
         },
         testLong: function () {
             var $t;
-            var v = Bridge.Long(0);
+            var v = System.Int64(0);
             v = v.inc();
             v = v.dec();
             v = ($t = v, v = v.dec(), $t);

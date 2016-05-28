@@ -1,18 +1,18 @@
 ﻿// @source Text/RegularExpressions/RegexReplacement.js
 
-Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
+Bridge.define("System.Text.RegularExpressions.RegexReplacement", {
     statics: {
         replace: function (evaluator, regex, input, count, startat) {
             if (evaluator == null) {
-                throw new Bridge.ArgumentNullException("evaluator");
+                throw new System.ArgumentNullException("evaluator");
             }
 
             if (count < -1) {
-                throw new Bridge.ArgumentOutOfRangeException("count", "Count cannot be less than -1.");
+                throw new System.ArgumentOutOfRangeException("count", "Count cannot be less than -1.");
             }
 
             if (startat < 0 || startat > input.length) {
-                throw new Bridge.ArgumentOutOfRangeException("startat", "Start index cannot be less than 0 or greater than input length.");
+                throw new System.ArgumentOutOfRangeException("startat", "Start index cannot be less than 0 or greater than input length.");
             }
 
             if (count === 0) {
@@ -94,11 +94,11 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
 
         split: function (regex, input, count, startat) {
             if (count < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("count", "Count can't be less than 0.");
+                throw new System.ArgumentOutOfRangeException("count", "Count can't be less than 0.");
             }
 
             if (startat < 0 || startat > input.length) {
-                throw new Bridge.ArgumentOutOfRangeException("startat", "Start index cannot be less than 0 or greater than input length.");
+                throw new System.ArgumentOutOfRangeException("startat", "Start index cannot be less than 0 or greater than input length.");
             }
 
             var result = [];
@@ -209,8 +209,8 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
     constructor: function (rep, concat, caps) {
         this._rep = rep;
 
-        if (concat._type !== Bridge.Text.RegularExpressions.RegexNode.Concatenate) {
-            throw new Bridge.ArgumentException("Replacement error.");
+        if (concat._type !== System.Text.RegularExpressions.RegexNode.Concatenate) {
+            throw new System.ArgumentException("Replacement error.");
         }
 
         var sb = "";
@@ -224,12 +224,12 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
             child = concat.child(i);
 
             switch (child._type) {
-                case Bridge.Text.RegularExpressions.RegexNode.Multi:
-                case Bridge.Text.RegularExpressions.RegexNode.One:
+                case System.Text.RegularExpressions.RegexNode.Multi:
+                case System.Text.RegularExpressions.RegexNode.One:
                     sb += child._str;
                     break;
 
-                case Bridge.Text.RegularExpressions.RegexNode.Ref:
+                case System.Text.RegularExpressions.RegexNode.Ref:
                     if (sb.length > 0) {
                         rules.push(strings.length);
                         strings.push(sb);
@@ -242,10 +242,10 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
                         slot = caps[slot];
                     }
 
-                    rules.push(-Bridge.Text.RegularExpressions.RegexReplacement.Specials - 1 - slot);
+                    rules.push(-System.Text.RegularExpressions.RegexReplacement.Specials - 1 - slot);
                     break;
                 default:
-                    throw new Bridge.ArgumentException("Replacement error.");
+                    throw new System.ArgumentException("Replacement error.");
             }
         }
 
@@ -268,10 +268,10 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
 
     replace: function (regex, input, count, startat) {
         if (count < -1) {
-            throw new Bridge.ArgumentOutOfRangeException("count", "Count cannot be less than -1.");
+            throw new System.ArgumentOutOfRangeException("count", "Count cannot be less than -1.");
         }
         if (startat < 0 || startat > input.length) {
-            throw new Bridge.ArgumentOutOfRangeException("startat", "Start index cannot be less than 0 or greater than input length.");
+            throw new System.ArgumentOutOfRangeException("startat", "Start index cannot be less than 0 or greater than input length.");
         }
 
         if (count === 0) {
@@ -349,7 +349,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
     },
 
     _replacementImpl: function (sb, match) {
-        var specials = Bridge.Text.RegularExpressions.RegexReplacement.Specials;
+        var specials = System.Text.RegularExpressions.RegexReplacement.Specials;
         var r;
         var i;
 
@@ -367,16 +367,16 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
             } else {
                 // special insertion patterns
                 switch (-specials - 1 - r) {
-                    case Bridge.Text.RegularExpressions.RegexReplacement.LeftPortion:
+                    case System.Text.RegularExpressions.RegexReplacement.LeftPortion:
                         sb += match._getLeftSubstring();
                         break;
-                    case Bridge.Text.RegularExpressions.RegexReplacement.RightPortion:
+                    case System.Text.RegularExpressions.RegexReplacement.RightPortion:
                         sb += match._getRightSubstring();
                         break;
-                    case Bridge.Text.RegularExpressions.RegexReplacement.LastGroup:
+                    case System.Text.RegularExpressions.RegexReplacement.LastGroup:
                         sb += match._lastGroupToStringImpl();
                         break;
-                    case Bridge.Text.RegularExpressions.RegexReplacement.WholeString:
+                    case System.Text.RegularExpressions.RegexReplacement.WholeString:
                         sb += match._getOriginalString();
                         break;
                 }
@@ -387,7 +387,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
     },
 
     _replacementImplRTL: function (al, match) {
-        var specials = Bridge.Text.RegularExpressions.RegexReplacement.Specials;
+        var specials = System.Text.RegularExpressions.RegexReplacement.Specials;
         var r;
         var i;
 
@@ -405,16 +405,16 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexReplacement", {
             } else {
                 // special insertion patterns
                 switch (-specials - 1 - r) {
-                    case Bridge.Text.RegularExpressions.RegexReplacement.LeftPortion:
+                    case System.Text.RegularExpressions.RegexReplacement.LeftPortion:
                         al.push(match._getLeftSubstring());
                         break;
-                    case Bridge.Text.RegularExpressions.RegexReplacement.RightPortion:
+                    case System.Text.RegularExpressions.RegexReplacement.RightPortion:
                         al.push(match._getRightSubstring());
                         break;
-                    case Bridge.Text.RegularExpressions.RegexReplacement.LastGroup:
+                    case System.Text.RegularExpressions.RegexReplacement.LastGroup:
                         al.push(match._lastGroupToStringImpl());
                         break;
-                    case Bridge.Text.RegularExpressions.RegexReplacement.WholeString:
+                    case System.Text.RegularExpressions.RegexReplacement.WholeString:
                         al.push(match._getOriginalString());
                         break;
                 }

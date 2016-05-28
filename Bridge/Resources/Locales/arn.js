@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("arn", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("arn", true), {
     englishName: "Mapudungun",
     nativeName: "Mapudungun",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NeuN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Kiñe","Epu","Kila","Meli","Kechu","Cayu","Regle"],
         abbreviatedMonthGenitiveNames: ["Kiñe Tripantu","Epu","Kila","Meli","Kechu","Cayu","Regle","Purha","Aiya","Marhi","Marhi Kiñe","Marhi Epu",""],
         abbreviatedMonthNames: ["Kiñe Tripantu","Epu","Kila","Meli","Kechu","Cayu","Regle","Purha","Aiya","Marhi","Marhi Kiñe","Marhi Epu",""],

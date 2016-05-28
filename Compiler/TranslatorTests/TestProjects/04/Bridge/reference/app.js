@@ -3,7 +3,7 @@
 
     Bridge.define('Test.BridgeIssues.N783.App', {
         statics: {
-            main: function () {
+            main1: function () {
                 var base1 = new Test.BridgeIssues.N783.Base();
                 var base2 = new Test.BridgeIssues.N783.Base();
     

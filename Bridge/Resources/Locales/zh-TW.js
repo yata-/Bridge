@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("zh-TW", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("zh-TW", true), {
     englishName: "Chinese (Traditional, Taiwan)",
     nativeName: "中文(台灣)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "不是一個數字",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["週日","週一","週二","週三","週四","週五","週六"],
         abbreviatedMonthGenitiveNames: ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月",""],
         abbreviatedMonthNames: ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月",""],

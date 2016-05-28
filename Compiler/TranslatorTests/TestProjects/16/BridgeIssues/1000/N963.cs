@@ -5,7 +5,7 @@ namespace Test.BridgeIssues.N963
 
     public class Class963
     {
-        public static void Main()
+        public static void Main1()
         {
             int i = 5;
             i++;

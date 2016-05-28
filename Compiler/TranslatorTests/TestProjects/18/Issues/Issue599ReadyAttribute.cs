@@ -7,7 +7,7 @@ namespace TestIssue599
         private string _something = "HI!";
 
         [Ready]
-        public static void Main()
+        public static void Main1()
         {
             System.Console.WriteLine(new Issue599()._something);
         }

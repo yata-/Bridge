@@ -3,24 +3,23 @@ using Bridge;
 namespace System.Collections.Generic
 {
     [External]
-    [Namespace("Bridge")]
     public interface IList<T> : ICollection<T>
     {
         T this[int index]
         {
-            [Template("Bridge.Array.getItem({this}, {0})")]
+            [Template("System.Array.getItem({this}, {0})")]
             get;
-            [Template("Bridge.Array.setItem({this}, {0})")]
+            [Template("System.Array.setItem({this}, {0})")]
             set;
         }
 
-        [Template("Bridge.Array.indexOf({this}, {item})")]
+        [Template("System.Array.indexOf({this}, {item})")]
         int IndexOf(T item);
 
-        [Template("Bridge.Array.insert({this}, {index}, {item})")]
+        [Template("System.Array.insert({this}, {index}, {item})")]
         void Insert(int index, T item);
 
-        [Template("Bridge.Array.removeAt({this}, {index})")]
+        [Template("System.Array.removeAt({this}, {index})")]
         void RemoveAt(int index);
     }
 }

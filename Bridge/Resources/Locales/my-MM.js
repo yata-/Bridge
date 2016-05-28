@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("my-MM", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("my-MM", true), {
     englishName: "Burmese (Myanmar)",
     nativeName: "ဗမာ (မြန်မာ)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["နွေ","လာ","ဂါ","ဟူး","တေး","ကြာ","နေ"],
         abbreviatedMonthGenitiveNames: ["ဇန်","ဖေ","မတ်","ဧပြီ","မေ","ဇွန်","ဇူ","ဩဂု","စက်တ","အောက်","နိုဝင်","ဒီဇင်",""],
         abbreviatedMonthNames: ["ဇန်","ဖေ","မတ်","ဧပြီ","မေ","ဇွန်","ဇူ","ဩဂု","စက်တ","အောက်","နိုဝင်","ဒီဇင်",""],

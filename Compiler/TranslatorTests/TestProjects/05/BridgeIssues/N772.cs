@@ -2,7 +2,7 @@
 {
     public class App
     {
-        public static void Main()
+        public static void Main1()
         {
             //These arrays depend on "useTypedArray" bridge.json option
             var byteArray = new byte[1];

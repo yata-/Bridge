@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("chr", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("chr", true), {
     englishName: "Cherokee",
     nativeName: "ᏣᎳᎩ",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "Nan",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["ᏆᏍᎬ","ᏉᏅᎯ","ᏔᎵᏁ","ᏦᎢᏁ","ᏅᎩᏁ","ᏧᎾᎩ","ᏈᏕᎾ"],
         abbreviatedMonthGenitiveNames: ["ᎤᏃᎸ","ᎧᎦᎵ","ᎠᏅᏱ","ᏝᏬᏂ","ᎠᏂᏍ","ᏕᎭᎷ","ᎫᏰᏉ","ᎦᎶᏂ","ᏚᎵᏍ","ᏚᏂᏅ","ᏅᏓᏕ","ᎤᏍᎩ",""],
         abbreviatedMonthNames: ["ᎤᏃᎸ","ᎧᎦᎵ","ᎠᏅᏱ","ᏝᏬᏂ","ᎠᏂᏍ","ᏕᎭᎷ","ᎫᏰᏉ","ᎦᎶᏂ","ᏚᎵᏍ","ᏚᏂᏅ","ᏅᏓᏕ","ᎤᏍᎩ",""],

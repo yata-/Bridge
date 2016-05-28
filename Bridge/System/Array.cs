@@ -9,101 +9,98 @@ namespace System
     [Name("Array")]
     public sealed class Array : IEnumerable, ICloneable
     {
-        public readonly int Length = 0;
-
-        private Array()
+        public extern int Length
         {
+            [Template("{this}.length")]
+            get;
         }
+    
+        private extern Array();
 
-        public object this[int index]
+        public extern object this[int index]
         {
             [External]
-            get
-            {
-                return null;
-            }
+            get;
             [External]
-            set
-            {
-            }
+            set;
         }
 
-        [Template("new Bridge.ReadOnlyCollection$1({T})({array})")]
+        [Template("new System.Collections.ObjectModel.ReadOnlyCollection$1({T})({array})")]
         public extern static ReadOnlyCollection<T> AsReadOnly<T>(T[] array);
 
-        [Template("Bridge.Array.convertAll({array}, {converter})")]
+        [Template("System.Array.convertAll({array}, {converter})")]
         public extern static TOutput[] ConvertAll<TInput, TOutput>(TInput[] array, Converter<TInput, TOutput> converter);
 
-        [Template("(Bridge.Array.findIndex({array}, {match}) !== -1)")]
+        [Template("(System.Array.findIndex({array}, {match}) !== -1)")]
         public extern static bool Exists<T>(T[] array, Predicate<T> match);
 
-        [Template("Bridge.Array.find({T}, {array}, {match})")]
+        [Template("System.Array.find({T}, {array}, {match})")]
         public extern static T Find<T>(T[] array, Predicate<T> match);
 
-        [Template("Bridge.Array.findAll({array}, {match})")]
+        [Template("System.Array.findAll({array}, {match})")]
         public extern static T[] FindAll<T>(T[] array, Predicate<T> match);
 
-        [Template("Bridge.Array.findIndex({array}, {match})")]
+        [Template("System.Array.findIndex({array}, {match})")]
         public extern static int FindIndex<T>(T[] array, Predicate<T> match);
 
-        [Template("Bridge.Array.findIndex({array}, {startIndex}, {match})")]
+        [Template("System.Array.findIndex({array}, {startIndex}, {match})")]
         public extern static int FindIndex<T>(T[] array, int startIndex, Predicate<T> match);
 
-        [Template("Bridge.Array.findIndex({array}, {startIndex}, {count}, {match})")]
+        [Template("System.Array.findIndex({array}, {startIndex}, {count}, {match})")]
         public extern static int FindIndex<T>(T[] array, int startIndex, int count, Predicate<T> match);
 
-        [Template("Bridge.Array.findLast({T}, {array}, {match})")]
+        [Template("System.Array.findLast({T}, {array}, {match})")]
         public extern static T FindLast<T>(T[] array, Predicate<T> match);
 
-        [Template("Bridge.Array.findLastIndex({array}, {match})")]
+        [Template("System.Array.findLastIndex({array}, {match})")]
         public extern static int FindLastIndex<T>(T[] array, Predicate<T> match);
 
-        [Template("Bridge.Array.findLastIndex({array}, {startIndex}, {match})")]
+        [Template("System.Array.findLastIndex({array}, {startIndex}, {match})")]
         public extern static int FindLastIndex<T>(T[] array, int startIndex, Predicate<T> match);
 
-        [Template("Bridge.Array.findLastIndex({array}, {startIndex}, {count}, {match})")]
+        [Template("System.Array.findLastIndex({array}, {startIndex}, {count}, {match})")]
         public extern static int FindLastIndex<T>(T[] array, int startIndex, int count, Predicate<T> match);
 
-        [Template("Bridge.Array.forEach({array}, {action})")]
+        [Template("System.Array.forEach({array}, {action})")]
         public extern static void ForEach<T>(T[] array, Action<T> action);
 
-        [Template("Bridge.Array.indexOfT({array}, {value})")]
+        [Template("System.Array.indexOfT({array}, {value})")]
         public extern static int IndexOf(Array array, Object value);
 
-        [Template("Bridge.Array.indexOfT({array}, {value}, {startIndex})")]
+        [Template("System.Array.indexOfT({array}, {value}, {startIndex})")]
         public extern static int IndexOf(Array array, Object value, int startIndex);
 
-        [Template("Bridge.Array.indexOfT({array}, {value}, {startIndex}, {count})")]
+        [Template("System.Array.indexOfT({array}, {value}, {startIndex}, {count})")]
         public extern static int IndexOf(Array array, Object value, int startIndex, int count);
 
-        [Template("Bridge.Array.indexOfT({array}, {value})")]
+        [Template("System.Array.indexOfT({array}, {value})")]
         public extern static int IndexOf<T>(T[] array, T value);
 
-        [Template("Bridge.Array.indexOfT({array}, {value}, {startIndex})")]
+        [Template("System.Array.indexOfT({array}, {value}, {startIndex})")]
         public extern static int IndexOf<T>(T[] array, T value, int startIndex);
 
-        [Template("Bridge.Array.indexOfT({array}, {value}, {startIndex}, {count})")]
+        [Template("System.Array.indexOfT({array}, {value}, {startIndex}, {count})")]
         public static extern int IndexOf<T>(T[] array, T value, int startIndex, int count);
 
-        [Template("Bridge.Array.lastIndexOfT({array}, {value})")]
+        [Template("System.Array.lastIndexOfT({array}, {value})")]
         public extern static int LastIndexOf(Array array, Object value);
 
-        [Template("Bridge.Array.lastIndexOfT({array}, {value}, {startIndex})")]
+        [Template("System.Array.lastIndexOfT({array}, {value}, {startIndex})")]
         public extern static int LastIndexOf(Array array, Object value, int startIndex);
 
-        [Template("Bridge.Array.lastIndexOfT({array}, {value}, {startIndex}, {count})")]
+        [Template("System.Array.lastIndexOfT({array}, {value}, {startIndex}, {count})")]
         public extern static int LastIndexOf(Array array, Object value, int startIndex, int count);
 
-        [Template("Bridge.Array.lastIndexOfT({array}, {value})")]
+        [Template("System.Array.lastIndexOfT({array}, {value})")]
         public extern static int LastIndexOf<T>(T[] array, T value);
 
-        [Template("Bridge.Array.lastIndexOfT({array}, {value}, {startIndex})")]
+        [Template("System.Array.lastIndexOfT({array}, {value}, {startIndex})")]
         public extern static int LastIndexOf<T>(T[] array, T value, int startIndex);
 
-        [Template("Bridge.Array.lastIndexOfT({array}, {value}, {startIndex}, {count})")]
+        [Template("System.Array.lastIndexOfT({array}, {value}, {startIndex}, {count})")]
         public static extern int LastIndexOf<T>(T[] array, T value, int startIndex, int count);
 
-        [Template("Bridge.Array.trueForAll({array}, {match})")]
+        [Template("System.Array.trueForAll({array}, {match})")]
         public extern static bool TrueForAll<T>(T[] array, Predicate<T> match);
 
         public extern Array Concat(params object[] items);
@@ -165,94 +162,91 @@ namespace System
         [Template("Bridge.getEnumerator({this})")]
         public extern IEnumerator GetEnumerator();
 
-        [Template("Bridge.Array.get({this}, {indices})")]
+        [Template("System.Array.get({this}, {indices})")]
         public extern object GetValue(params int[] indices);
 
-        [Template("Bridge.Array.set({this}, {value}, {indices})")]
+        [Template("System.Array.set({this}, {value}, {indices})")]
         public extern void SetValue(object value, params int[] indices);
 
-        [Template("Bridge.Array.getLength({this}, {dimension})")]
+        [Template("System.Array.getLength({this}, {dimension})")]
         public extern int GetLength(int dimension);
 
-        public int Rank
+        public extern int Rank
         {
-            [Template("Bridge.Array.getRank({this})")]
-            get
-            {
-                return 0;
-            }
+            [Template("System.Array.getRank({this})")]
+            get;
         }
 
-        [Template("Bridge.Array.getLower({this}, {dimension})")]
+        [Template("System.Array.getLower({this}, {dimension})")]
         public extern int GetLowerBound(int dimension);
 
-        [Template("(Bridge.Array.getLength({this}, {dimension}) - 1)")]
+        [Template("(System.Array.getLength({this}, {dimension}) - 1)")]
         public extern int GetUpperBound(int dimension);
 
-        [Template("Bridge.Array.toEnumerable({this})")]
+        [Template("System.Array.toEnumerable({this})")]
         public extern IEnumerable ToEnumerable();
 
-        [Template("Bridge.Array.toEnumerable({this})")]
+        [Template("System.Array.toEnumerable({this})")]
         public extern IEnumerable<T> ToEnumerable<T>();
 
-        [Template("Bridge.Array.toEnumerator({this})")]
+        [Template("System.Array.toEnumerator({this})")]
         public extern IEnumerator ToEnumerator();
 
-        [Template("Bridge.Array.toEnumerator({this})")]
+        [Template("System.Array.toEnumerator({this})")]
         public extern IEnumerator<T> ToEnumerator<T>();
 
-        [Template("Bridge.Array.clone({this})")]
+        [Template("System.Array.clone({this})")]
         public extern object Clone();
 
-        [Template("Bridge.Array.init({count}, {value})")]
+        [Template("System.Array.init({count}, {value})")]
         public static extern T[] Repeat<T>(T value, int count);
 
-        [Template("Bridge.Array.fill({dst}, {T:defaultFn}, {index}, {count})")]
+        [Template("System.Array.fill({dst}, {T:defaultFn}, {index}, {count})")]
         public static extern void Clear<T>(T[] dst, int index, int count);
 
-        [Template("Bridge.Array.copy({src}, {spos}, {dst}, {dpos}, {len})")]
+        [Template("System.Array.copy({src}, {spos}, {dst}, {dpos}, {len})")]
         public static extern void Copy(Array src, int spos, Array dst, int dpos, int len);
 
-        [Template("Bridge.Array.copy({src}, 0, {dst}, 0, {len})")]
+        [Template("System.Array.copy({src}, 0, {dst}, 0, {len})")]
         public static extern void Copy(Array src, Array dst, int len);
 
-        [Template("Bridge.Array.copy({this}, 0, {array}, {index}, {this}.length)")]
+        [Template("System.Array.copy({this}, 0, {array}, {index}, {this}.length)")]
         public extern void CopyTo(Array array, int index);
 
-        [Template("Bridge.Array.copy({this}, 0, {array}, {index}.toNumber(), {this}.length)")]
+        [Template("System.Array.copy({this}, 0, {array}, {index}.toNumber(), {this}.length)")]
         public extern void CopyTo(Array array, long index);
 
-        [Template("Bridge.Array.resize({array}, {newSize}, {T:defaultFn})")]
+        [Template("System.Array.resize({array}, {newSize}, {T:defaultFn})")]
         public static extern void Resize<T>(ref T[] array, int newSize);
 
-        [Template("Bridge.Array.reverse({array})")]
+        [Template("System.Array.reverse({array})")]
         public static extern void Reverse(Array array);
 
-        [Template("Bridge.Array.reverse({array}, {index}, {length})")]
+        [Template("System.Array.reverse({array}, {index}, {length})")]
         public static extern void Reverse(Array array, int index, int length);
 
-        [Template("Bridge.Array.binarySearch({array}, 0, {array}.length, {value})")]
+        [Template("System.Array.binarySearch({array}, 0, {array}.length, {value})")]
         public static extern int BinarySearch<T>(T[] array, T value);
 
-        [Template("Bridge.Array.binarySearch({array}, {index}, {length}, {value})")]
+        [Template("System.Array.binarySearch({array}, {index}, {length}, {value})")]
         public static extern int BinarySearch<T>(T[] array, int index, int length, T value);
 
-        [Template("Bridge.Array.binarySearch({array}, 0, {array}.length, {value}, {comparer})")]
+        [Template("System.Array.binarySearch({array}, 0, {array}.length, {value}, {comparer})")]
         public static extern int BinarySearch<T>(T[] array, T value, IComparer<T> comparer);
 
-        [Template("Bridge.Array.binarySearch({array}, {index}, {length}, {value}, {comparer})")]
+        [Template("System.Array.binarySearch({array}, {index}, {length}, {value}, {comparer})")]
         public static extern int BinarySearch<T>(T[] array, int index, int length, T value, IComparer<T> comparer);
 
-        [Template("Bridge.Array.sort({array}, {index}, {length}, {comparer})")]
+        [Template("System.Array.sort({array}, {index}, {length}, {comparer})")]
         public static extern void Sort<T>(T[] array, int index, int length, IComparer<T> comparer);
 
-        [Template("Bridge.Array.sort({array}, {index}, {length})")]
+        [Template("System.Array.sort({array}, {index}, {length})")]
         public static extern void Sort<T>(T[] array, int index, int length);
 
-        [Template("Bridge.Array.sort({array})")]
+        [Template("System.Array.sort({array})")]
         public static extern void Sort<T>(T[] array);
 
-        [Template("Bridge.Array.sort({array}, {comparer})")]
+        [Template("System.Array.sort({array}, {comparer})")]
         public static extern void Sort<T>(T[] array, IComparer<T> comparer);
     }
 

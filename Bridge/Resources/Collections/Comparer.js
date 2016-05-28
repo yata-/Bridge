@@ -1,6 +1,6 @@
-Bridge.define('Bridge.Comparer$1', function (T) {
+Bridge.define('System.Collections.Generic.Comparer$1', function (T) {
     return {
-        inherits: [Bridge.IComparer$1(T)],
+        inherits: [System.Collections.Generic.IComparer$1(T)],
 
         constructor: function (fn) {
             this.fn = fn;
@@ -9,7 +9,7 @@ Bridge.define('Bridge.Comparer$1', function (T) {
     }
 });
 
-Bridge.Comparer$1.$default = new Bridge.Comparer$1(Object)(function (x, y) {
+System.Collections.Generic.Comparer$1.$default = new System.Collections.Generic.Comparer$1(Object)(function (x, y) {
     if (!Bridge.hasValue(x)) {
         return !Bridge.hasValue(y) ? 0 : -1;
     } else if (!Bridge.hasValue(y)) {

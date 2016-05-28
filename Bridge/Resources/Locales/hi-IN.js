@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("hi-IN", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("hi-IN", true), {
     englishName: "Hindi (India)",
     nativeName: "हिंदी (भारत)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["रवि.","सोम.","मंगल.","बुध.","गुरु.","शुक्र.","शनि."],
         abbreviatedMonthGenitiveNames: ["जनवरी","फरवरी","मार्च","अप्रैल","मई","जून","जुलाई","अगस्त","सितम्बर","अक्तूबर","नवम्बर","दिसम्बर",""],
         abbreviatedMonthNames: ["जनवरी","फरवरी","मार्च","अप्रैल","मई","जून","जुलाई","अगस्त","सितम्बर","अक्तूबर","नवम्बर","दिसम्बर",""],

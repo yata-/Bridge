@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("tt-RU", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("tt-RU", true), {
     englishName: "Tatar (Russia)",
     nativeName: "Татар (Россия)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["якш.","дүш.","сиш.","чәрш.","пәнҗ.","җом.","шим."],
         abbreviatedMonthGenitiveNames: ["гыйн.","фев.","мар.","апр.","май","июнь","июль","авг.","сен.","окт.","нояб.","дек.",""],
         abbreviatedMonthNames: ["гыйн.","фев.","мар.","апр.","май","июнь","июль","авг.","сен.","окт.","нояб.","дек.",""],

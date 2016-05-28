@@ -6,13 +6,11 @@ namespace System
     /// An object with some or all of the following properties:
     /// </summary>
     [External]
-    [Name("LocaleOptions")]
+    //[Name("LocaleOptions")]
     [ObjectLiteral]
     public sealed class LocaleOptions
     {
-        public LocaleOptions()
-        {
-        }
+        public extern LocaleOptions();
 
         /// <summary>
         /// The locale matching algorithm to use. Possible values are "lookup" and "best fit"; the default is "best fit". For information about this option, see the Intl page.

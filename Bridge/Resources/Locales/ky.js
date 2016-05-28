@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("ky", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("ky", true), {
     englishName: "Kyrgyz",
     nativeName: "Кыргыз",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Жш","Дш","Шш","Шр","Бш","Жм","Иш"],
         abbreviatedMonthGenitiveNames: ["янв","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек",""],
         abbreviatedMonthNames: ["янв","фев","мар","апр","май","июн","июл","авг","сен","окт","ноя","дек",""],

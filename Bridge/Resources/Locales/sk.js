@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("sk", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("sk", true), {
     englishName: "Slovak",
     nativeName: "slovenčina",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "Nie je číslo",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["ne","po","ut","st","št","pi","so"],
         abbreviatedMonthGenitiveNames: ["1","2","3","4","5","6","7","8","9","10","11","12",""],
         abbreviatedMonthNames: ["1","2","3","4","5","6","7","8","9","10","11","12",""],

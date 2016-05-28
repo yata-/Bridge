@@ -9,7 +9,7 @@ namespace Bridge.ClientTest.SimpleTypes
     [TestFixture(TestNameFormat = "UInt64 - {0}")]
     public class UInt64Tests
     {
-        private void AssertULong(object expected, object actual, string message = "", string checkedType = "Bridge.ULong")
+        private void AssertULong(object expected, object actual, string message = "", string checkedType = "System.UInt64")
         {
             if (message == null)
             {
@@ -27,7 +27,7 @@ namespace Bridge.ClientTest.SimpleTypes
         {
             Assert.True((object)(ulong)0 is ulong);
             Assert.False((object)0.5 is ulong);
-            Assert.AreEqual("Bridge.ULong", typeof(ulong).GetClassName());
+            Assert.AreEqual("System.UInt64", typeof(ulong).GetClassName());
             object l = (ulong)0;
             Assert.True(l is ulong);
             Assert.True(l is IComparable<ulong>);
@@ -126,9 +126,9 @@ namespace Bridge.ClientTest.SimpleTypes
 
             long l = 100;
 
-            AssertULong("111", dcml + l, null, "Bridge.Decimal");
-            AssertULong("112", dbl + l, null, "Bridge.Int32");
-            AssertULong("113", flt + l, null, "Bridge.Int32");
+            AssertULong("111", dcml + l, null, "System.Decimal");
+            AssertULong("112", dbl + l, null, "System.Int32");
+            AssertULong("113", flt + l, null, "System.Int32");
         }
 
         private T GetDefaultValue<T>()
