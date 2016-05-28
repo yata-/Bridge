@@ -11,6 +11,13 @@ namespace System
             [Template("Bridge.getTypeName({this})")]
             get;
         }
+
+        public extern Type BaseType
+        {
+            [Template("({this}.$$inherits) ? {this}.$$inherits[0] : null")]
+            get;
+        }
+
         public static extern Type GetTypeFromHandle(RuntimeTypeHandle typeHandle);
     }
 
