@@ -270,6 +270,7 @@
     <Compile Include="BridgeIssues\1300\N1341.cs" />
     <Compile Include="BridgeIssues\1300\N1305.cs" />
     <Compile Include="BridgeIssues\1300\N1304.cs" />
+    <Compile Include="BridgeIssues\1400\N1402.cs" />
     <Compile Include="BridgeIssues\TestBridgeIssues.cs" />
     <Compile Include="Collections\Generic\StackTests.cs" />
     <Compile Include="Convert\ConvertFromBase64Tests.cs" />

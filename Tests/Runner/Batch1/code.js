@@ -8149,6 +8149,20 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1402', {
+        statics: {
+            testLongClipping: function () {
+                var value = System.Int64.MaxValue;
+                Bridge.Test.Assert.areEqual(255, System.Int64.clipu8(value.shr(2)));
+                Bridge.Test.Assert.areEqual(-1, System.Int64.clip8(value.shr(2)));
+                Bridge.Test.Assert.areEqual(-1, System.Int64.clip16(value.shr(2)));
+                Bridge.Test.Assert.areEqual(65535, System.Int64.clipu16(value.shr(2)));
+                Bridge.Test.Assert.areEqual(-1, System.Int64.clip32(value.shr(2)));
+                Bridge.Test.Assert.areEqual(4294967295, System.Int64.clipu32(value.shr(2)));
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
