@@ -45,6 +45,7 @@
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BridgeIssues\N1385.cs" />
     <Compile Include="BridgeIssues\N1204.cs" />
     <Compile Include="BridgeIssues\N1122.cs" />
     <Compile Include="BridgeIssues\N772.cs" />

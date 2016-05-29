@@ -8170,6 +8170,149 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1385', {
+        statics: {
+            testIsTypedArray: function () {
+                var value = new Uint8Array(3);
+                Bridge.Test.Assert.true(Bridge.is(value, Array));
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1389', {
+        statics: {
+            testParamsIndexer: function () {
+                var app = new Bridge.ClientTest.BridgeIssues.Bridge1389();
+                var list = app.getItem(["1", "2", "3", "4", "5"]);
+    
+                Bridge.Test.Assert.notNull(list);
+                Bridge.Test.Assert.areEqual(5, System.Linq.Enumerable.from(list).count());
+                Bridge.Test.Assert.areEqual("1", System.Linq.Enumerable.from(list).first());
+                Bridge.Test.Assert.areEqual("5", System.Linq.Enumerable.from(list).last());
+            }
+        },
+        getItem: function (keys) {
+            return keys;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391', {
+        statics: {
+            builder: null,
+            getBuilder: function () {
+                var $t;
+                return ($t = Bridge.ClientTest.BridgeIssues.Bridge1391.builder, $t != null ? $t : ((Bridge.ClientTest.BridgeIssues.Bridge1391.builder = new System.Text.StringBuilder(), Bridge.ClientTest.BridgeIssues.Bridge1391.builder)));
+            },
+            testStaticCtorOrder: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1391.getBuilder().clear();
+    
+                // Now, types with no Ready/Autorun methods intialized on-demand (when first time accessing the type)
+                var f = new Bridge.ClientTest.BridgeIssues.Bridge1391.Foo();
+                var b = new Bridge.ClientTest.BridgeIssues.Bridge1391.Bar();
+                Bridge.Test.Assert.areEqual("FooBar", Bridge.ClientTest.BridgeIssues.Bridge1391.builder.toString());
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391.Bar', {
+        statics: {
+            i: 0,
+            config: {
+                init: function () {
+                    this.i = Bridge.ClientTest.BridgeIssues.Bridge1391.Bar.init();
+                }
+            },
+            init: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1391.getBuilder().append("Bar");
+                return 0;
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391.Foo', {
+        statics: {
+            constructor: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1391.getBuilder().append("Foo");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391Ready', {
+        statics: {
+            testStaticCtorOrderForClassHavingReady: function () {
+                // Now, types with no Ready/Autorun methods intialized on-demand (when first time accessing the type)
+                // However, classes with [Ready] initializes on Ready
+                var r = Bridge.$N1391Result;
+                Bridge.Test.Assert.areEqual$1("FooReadyBarReady", r, "Bridge.$N1391Result");
+                Bridge.Test.Assert.areEqual$1("FooReadyBarReady", Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.getBuilder().toString(), "Current builder's state");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady', {
+        statics: {
+            builder: null,
+            config: {
+                init: function () {
+                    Bridge.ready(this.runMe);
+                }
+            },
+            getBuilder: function () {
+                var $t;
+                return ($t = Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.builder, $t != null ? $t : ((Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.builder = new System.Text.StringBuilder(), Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.builder)));
+            },
+            runMe: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.getBuilder().clear();
+    
+                // Now, types with no Ready/Autorun methods intialized on-demand (when first time accessing the type)
+                // However, classes with [Ready] initializes on Ready
+                var f = new Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.FooReady();
+                var b = new Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.BarReady();
+    
+                var r = Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.getBuilder().toString();
+    Bridge.$N1391Result =             r;
+            }
+        },
+        $entryPoint: true
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.BarReady', {
+        statics: {
+            i: 0,
+            config: {
+                init: function () {
+                    this.i = Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.BarReady.initReady();
+                }
+            },
+            initReady: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.getBuilder().append("BarReady");
+                return 0;
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.FooReady', {
+        statics: {
+            constructor: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.getBuilder().append("FooReady");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1402', {
+        statics: {
+            testLongClipping: function () {
+                var value = System.Int64.MaxValue;
+                Bridge.Test.Assert.areEqual(255, System.Int64.clipu8(value.shr(2)));
+                Bridge.Test.Assert.areEqual(-1, System.Int64.clip8(value.shr(2)));
+                Bridge.Test.Assert.areEqual(-1, System.Int64.clip16(value.shr(2)));
+                Bridge.Test.Assert.areEqual(65535, System.Int64.clipu16(value.shr(2)));
+                Bridge.Test.Assert.areEqual(-1, System.Int64.clip32(value.shr(2)));
+                Bridge.Test.Assert.areEqual(4294967295, System.Int64.clipu32(value.shr(2)));
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,

@@ -264,11 +264,15 @@
     <Compile Include="BridgeIssues\1300\N1316.cs" />
     <Compile Include="BridgeIssues\1300\N1340.cs" />
     <Compile Include="BridgeIssues\1300\N1378.cs" />
+    <Compile Include="BridgeIssues\1300\N1391.cs" />
+    <Compile Include="BridgeIssues\1300\N1385.cs" />
+    <Compile Include="BridgeIssues\1300\N1389.cs" />
     <Compile Include="BridgeIssues\1300\N1374.cs" />
     <Compile Include="BridgeIssues\1300\N1343.cs" />
     <Compile Include="BridgeIssues\1300\N1341.cs" />
     <Compile Include="BridgeIssues\1300\N1305.cs" />
     <Compile Include="BridgeIssues\1300\N1304.cs" />
+    <Compile Include="BridgeIssues\1400\N1402.cs" />
     <Compile Include="BridgeIssues\TestBridgeIssues.cs" />
     <Compile Include="Collections\Generic\StackTests.cs" />
     <Compile Include="Convert\ConvertFromBase64Tests.cs" />
