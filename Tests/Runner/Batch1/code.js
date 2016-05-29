@@ -8344,6 +8344,54 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1411', {
+        statics: {
+            testTemplateCtorThing: function () {
+                var c1 = 'test_string';
+                Bridge.Test.Assert.areEqual("test_string", c1);
+    
+                var c2 = new Bridge.ClientTest.BridgeIssues.Bridge1411.Thing("constructor", 1);
+                Bridge.Test.Assert.true(true);
+            },
+            testTemplateCtorDoodad: function () {
+                var c1 = new Bridge.ClientTest.BridgeIssues.Bridge1411.Doodad("constructor");
+                Bridge.Test.Assert.true(true);
+                Bridge.Test.Assert.areDeepEqual(3, c1.getData());
+    
+                var c2 = new Bridge.ClientTest.BridgeIssues.Bridge1411.Doodad("constructor$1", 1);
+                Bridge.Test.Assert.true(true);
+                Bridge.Test.Assert.areDeepEqual(4, c2.getData());
+            },
+            testTemplateCtorGizmo: function () {
+                var c1 = 'test_gizmo5';
+                Bridge.Test.Assert.areEqual("test_gizmo5", c1);
+    
+                var c2 = 'test_gizmo6';
+                Bridge.Test.Assert.areEqual("test_gizmo6", c2);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1411.Thing', {
+        config: {
+            properties: {
+                Data: 0
+            }
+        },
+        constructor: function (x) {
+            // 2
+            this.setData(2);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1411.Gizmo', {
+        config: {
+            properties: {
+                Data: 0
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
@@ -34061,6 +34109,22 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass1$2', function (T, K) { return {
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(T,K)]
     }; });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1411.Doodad', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge1411.Thing],
+        constructor: function () {
+            Bridge.ClientTest.BridgeIssues.Bridge1411.Thing.prototype.$constructor.call(this);
+    
+            // 3
+            this.setData(3);
+        },
+        constructor$1: function (x) {
+            Bridge.ClientTest.BridgeIssues.Bridge1411.Thing.prototype.$constructor.call(this, x);
+    
+            // 4
+            this.setData(4);
+        }
+    });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge240B', {
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge240A],
