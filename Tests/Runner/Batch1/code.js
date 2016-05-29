@@ -8051,6 +8051,18 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1355', {
+        statics: {
+            testLocalVariableWithNameWindow: function () {
+                var $window = "1";
+                var r = $window;
+    
+                Bridge.Test.Assert.areEqual$1("1", $window, "window");
+                Bridge.Test.Assert.areEqual$1("1", r, "r");
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1374', {
         statics: {
             config: {
