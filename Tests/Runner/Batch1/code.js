@@ -6920,6 +6920,27 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1339', {
+        statics: {
+            testAccessingConstantsFromDerivedClass: function () {
+                var s = "ing";
+    
+                Bridge.Test.Assert.areEqual("String", Bridge.ClientTest.BridgeIssues.Bridge1339.FooBase.Bar + s);
+                Bridge.Test.Assert.areEqual("String", Bridge.ClientTest.BridgeIssues.Bridge1339.FooBase.Bar + s);
+                Bridge.Test.Assert.areEqual("String", Bridge.ClientTest.BridgeIssues.Bridge1339.FooBase.Bar + s);
+    
+                Bridge.Test.Assert.areEqual("Doing", Bridge.ClientTest.BridgeIssues.Bridge1339.Foo3.Bar + s);
+                Bridge.Test.Assert.areEqual("Doing", Bridge.ClientTest.BridgeIssues.Bridge1339.Foo3.Bar + s);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1339.FooBase', {
+        statics: {
+            Bar: "Str"
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1340', {
         statics: {
             testStructGenericMembersDefaultValue: function () {
@@ -34114,6 +34135,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     }; });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1339.Foo1', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge1339.FooBase]
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1340.DataClass1$2', function (T, K) { return {
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge1340.DataClass$2(T,K)]
     }; });
@@ -39333,6 +39358,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1339.Foo2', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge1339.Foo1]
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1340.DataClass2$2', function (T, K) { return {
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge1340.DataClass1$2(System.Int32,String)]
     }; });
@@ -39374,6 +39403,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge883_2]
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1339.Foo3', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge1339.Foo2],
+        statics: {
+            Bar: "Do"
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1340.DataClass3$2', function (T, K) { return {
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge1340.DataClass2$2(System.Int32,String)],
         value4: Bridge.getDefaultValue(K),
@@ -39395,6 +39431,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             }
         }
     }; });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1339.Foo4', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge1339.Foo3]
+    });
     
     Bridge.init();
 })(this);
