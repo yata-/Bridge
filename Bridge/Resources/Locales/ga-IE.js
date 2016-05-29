@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("ga-IE", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("ga-IE", true), {
     englishName: "Irish (Ireland)",
     nativeName: "Gaeilge (Éire)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "nach uimhir",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Domh","Luan","Máirt","Céad","Déar","Aoi","Sath"],
         abbreviatedMonthGenitiveNames: ["Ean","Feabh","Már","Aib","Bealt","Meith","Iúil","Lún","M.Fómh","D.Fómh","Samh","Noll",""],
         abbreviatedMonthNames: ["Ean","Feabh","Már","Aib","Bealt","Meith","Iúil","Lún","M.Fómh","D.Fómh","Samh","Noll",""],

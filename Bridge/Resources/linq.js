@@ -162,8 +162,8 @@
         };
     };
     
-    Bridge.IDisposable.$$inheritors = Bridge.IDisposable.$$inheritors || [];
-    Bridge.IDisposable.$$inheritors.push(IEnumerator);
+    System.IDisposable.$$inheritors = System.IDisposable.$$inheritors || [];
+    System.IDisposable.$$inheritors.push(IEnumerator);
 
     // for tryGetNext
     var Yielder = function () {
@@ -182,8 +182,8 @@
     var Enumerable = function (getEnumerator) {
         this.getEnumerator = getEnumerator;
     };
-    Bridge.IEnumerable.$$inheritors = Bridge.IEnumerable.$$inheritors || [];
-    Bridge.IEnumerable.$$inheritors.push(Enumerable);
+    System.Collections.IEnumerable.$$inheritors = System.Collections.IEnumerable.$$inheritors || [];
+    System.Collections.IEnumerable.$$inheritors.push(Enumerable);
 
     // Utility
 
@@ -308,7 +308,7 @@
                     Functions.Blank);
             });
         }
-        var ienum = Bridge.as(obj, Bridge.IEnumerable);
+        var ienum = Bridge.as(obj, System.Collections.IEnumerable);
         if (ienum) {
             return new Enumerable(function () {
                 var enumerator;
@@ -319,7 +319,7 @@
                         return ok ? this.yieldReturn(enumerator.getCurrent()) : false;
                     },
                     function () {
-                        var disposable = Bridge.as(enumerator, Bridge.IDisposable);
+                        var disposable = Bridge.as(enumerator, System.IDisposable);
                         if (disposable) {
                             disposable.dispose();
                         }
@@ -1336,7 +1336,7 @@
     // Overload:function (value)
     // Overload:function (value, compareSelector)
     Enumerable.prototype.contains = function (value, comparer) {
-        comparer = comparer || Bridge.EqualityComparer$1.$default;
+        comparer = comparer || System.Collections.Generic.EqualityComparer$1.$default;
         var enumerator = this.getEnumerator();
         try {
             while (enumerator.moveNext()) {
@@ -1428,7 +1428,7 @@
             return new IEnumerator(
                 function () {
                     enumerator = source.getEnumerator();
-                    keys = new Bridge.Dictionary$2(Object, Object)(null, comparer);
+                    keys = new System.Collections.Generic.Dictionary$2(Object, Object)(null, comparer);
                     Enumerable.from(second).forEach(function (key) { keys.add(key); });
                 },
                 function () {
@@ -1459,9 +1459,9 @@
                 function () {
                     enumerator = source.getEnumerator();
 
-                    keys = new Bridge.Dictionary$2(Object, Object)(null, comparer);
+                    keys = new System.Collections.Generic.Dictionary$2(Object, Object)(null, comparer);
                     Enumerable.from(second).forEach(function (key) { keys.add(key); });
-                    outs = new Bridge.Dictionary$2(Object, Object)(null, comparer);
+                    outs = new System.Collections.Generic.Dictionary$2(Object, Object)(null, comparer);
                 },
                 function () {
                     while (enumerator.moveNext()) {
@@ -1480,7 +1480,7 @@
     // Overload:function (second)
     // Overload:function (second, compareSelector)
     Enumerable.prototype.sequenceEqual = function (second, comparer) {
-        comparer = comparer || Bridge.EqualityComparer$1.$default;
+        comparer = comparer || System.Collections.Generic.EqualityComparer$1.$default;
 
         var firstEnumerator = this.getEnumerator();
         try {
@@ -1516,7 +1516,7 @@
             return new IEnumerator(
                 function () {
                     firstEnumerator = source.getEnumerator();
-                    keys = new Bridge.Dictionary$2(Object, Object)(null, comparer);
+                    keys = new System.Collections.Generic.Dictionary$2(Object, Object)(null, comparer);
                 },
                 function () {
                     var current;
@@ -1687,7 +1687,7 @@
         var source = this;
         keySelector = Utils.createLambda(keySelector);
         elementSelector = Utils.createLambda(elementSelector);
-        comparer = comparer || Bridge.EqualityComparer$1.$default;
+        comparer = comparer || System.Collections.Generic.EqualityComparer$1.$default;
         var hasResultSelector;
         if (resultSelector == null) {
             hasResultSelector = false;
@@ -1781,10 +1781,10 @@
         this.forEach(function (x) {
             x = selector(x);
 
-            if (x instanceof Bridge.Decimal || Bridge.Long.is64Bit(x)) {
+            if (x instanceof System.Decimal || System.Int64.is64Bit(x)) {
                 sum = x.add(sum);
             }
-            else if (sum instanceof Bridge.Decimal || Bridge.Long.is64Bit(sum)) {
+            else if (sum instanceof System.Decimal || System.Int64.is64Bit(sum)) {
                 sum = sum.add(x);
             } else {
                 sum += x;
@@ -1793,7 +1793,7 @@
             ++count;
         });
 
-        return (sum instanceof Bridge.Decimal || Bridge.Long.is64Bit(sum)) ? sum.div(count) : (sum / count);
+        return (sum instanceof System.Decimal || System.Int64.is64Bit(sum)) ? sum.div(count) : (sum / count);
     };
 
     Enumerable.prototype.nullableAverage = function (selector) {
@@ -1869,10 +1869,10 @@
     Enumerable.prototype.sum = function (selector) {
         if (selector == null) selector = Functions.Identity;
         return this.select(selector).aggregate(0, function (a, b) {
-             if (a instanceof Bridge.Decimal || Bridge.Long.is64Bit(a)) {
+             if (a instanceof System.Decimal || System.Int64.is64Bit(a)) {
                  return a.add(b);
              }
-             if (b instanceof Bridge.Decimal || Bridge.Long.is64Bit(b)) {
+             if (b instanceof System.Decimal || System.Int64.is64Bit(b)) {
                  return b.add(a);
              }
              return a + b;
@@ -2183,7 +2183,7 @@
             });
         }
         else {
-            comparer = comparer || Bridge.EqualityComparer$1.$default;
+            comparer = comparer || System.Collections.Generic.EqualityComparer$1.$default;
             this.forEach(function (x, i) {
                 if (comparer.equals2(x, item)) {
                     found = i;
@@ -2207,7 +2207,7 @@
             });
         }
         else {
-            comparer = comparer || Bridge.EqualityComparer$1.$default;
+            comparer = comparer || System.Collections.Generic.EqualityComparer$1.$default;
             this.forEach(function (x, i) {
                 if (comparer.equals2(x, item)) result = i;
             });
@@ -2232,7 +2232,7 @@
     Enumerable.prototype.toList = function (T) {
         var array = [];
         this.forEach(function (x) { array.push(x); });
-        return new Bridge.List$1(T || Object)(array);
+        return new System.Collections.Generic.List$1(T || Object)(array);
     };
 
     // Overload:function (keySelector)
@@ -2242,7 +2242,7 @@
         keySelector = Utils.createLambda(keySelector);
         elementSelector = Utils.createLambda(elementSelector);
 
-        var dict = new Bridge.Dictionary$2(Object, Object)(null, comparer);
+        var dict = new System.Collections.Generic.Dictionary$2(Object, Object)(null, comparer);
         var order = [];
         this.forEach(function (x) {
             var key = keySelector(x);
@@ -2277,7 +2277,7 @@
         keySelector = Utils.createLambda(keySelector);
         elementSelector = Utils.createLambda(elementSelector);
 
-        var dict = new Bridge.Dictionary$2(keyType, valueType)(null, comparer);
+        var dict = new System.Collections.Generic.Dictionary$2(keyType, valueType)(null, comparer);
         this.forEach(function (x) {
             dict.add(keySelector(x), elementSelector(x));
         });
@@ -2553,7 +2553,7 @@
     var OrderedEnumerable = function (source, keySelector, comparer, descending, parent) {
         this.source = source;
         this.keySelector = Utils.createLambda(keySelector);
-        this.comparer = comparer || Bridge.Comparer$1.$default;
+        this.comparer = comparer || System.Collections.Generic.Comparer$1.$default;
         this.descending = descending;
         this.parent = parent;
     };
@@ -2898,8 +2898,8 @@
         };
     };
     
-    Bridge.IEnumerable.$$inheritors = Bridge.IEnumerable.$$inheritors || [];
-    Bridge.IEnumerable.$$inheritors.push(Lookup);
+    System.Collections.IEnumerable.$$inheritors = System.Collections.IEnumerable.$$inheritors || [];
+    System.Collections.IEnumerable.$$inheritors.push(Lookup);
 
     var Grouping = function (groupKey, elements) {
         this.key = function () {
@@ -2920,4 +2920,7 @@
 
     Bridge.Linq = {};
     Bridge.Linq.Enumerable = Enumerable;
+
+    System.Linq = {};
+    System.Linq.Enumerable = Enumerable;
 })(Bridge.global);

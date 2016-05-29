@@ -14,7 +14,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual("Bridge.InvalidCastException", typeof(InvalidCastException).GetClassName(), "Name");
+            Assert.AreEqual("System.InvalidCastException", typeof(InvalidCastException).GetClassName(), "Name");
             object d = new InvalidCastException();
             Assert.True(d is InvalidCastException, "is InvalidCastException");
             Assert.True(d is Exception, "is Exception");

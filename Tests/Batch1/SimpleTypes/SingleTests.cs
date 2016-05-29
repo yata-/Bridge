@@ -13,7 +13,7 @@ namespace Bridge.ClientTest.SimpleTypes
         public void TypePropertiesAreCorrect()
         {
             Assert.True((object)(float)0.5 is float);
-            Assert.AreEqual("Bridge.Single", typeof(float).GetClassName());
+            Assert.AreEqual("System.Single", typeof(float).GetClassName());
 
             object f = (float)0;
             Assert.True(f is float);

@@ -436,6 +436,12 @@ namespace Bridge.Translator
         {
             get;
             set;
-        } 
+        }
+
+        public List<string> AutoStartupMethods
+        {
+            get;
+            set;
+        }
     }
 }

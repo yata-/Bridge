@@ -3,26 +3,26 @@
 
     Bridge.define('Test.BridgeIssues.N1092.App', {
         statics: {
-            main: function () {
+            main1: function () {
                 // Should contain instruction to check data type range as cspoj contains <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
                 var maxInt32 = 2147483647;
-                var rInt32Max = Bridge.Int.check(maxInt32 + 1, Bridge.Int32);
+                var rInt32Max = Bridge.Int.check(maxInt32 + 1, System.Int32);
     
                 var maxUInt32 = 4294967295;
-                var rUInt32Max = Bridge.Int.check(maxUInt32 + 1, Bridge.UInt32);
+                var rUInt32Max = Bridge.Int.check(maxUInt32 + 1, System.UInt32);
     
-                var maxLong = Bridge.Long.MaxValue;
-                var rLongMax = maxLong.add(Bridge.Long(1), 1);
+                var maxLong = System.Int64.MaxValue;
+                var rLongMax = maxLong.add(System.Int64(1), 1);
     
-                var maxULong = Bridge.ULong.MaxValue;
-                var rUlongMax = maxULong.add(Bridge.ULong(1), 1);
+                var maxULong = System.UInt64.MaxValue;
+                var rUlongMax = maxULong.add(System.UInt64(1), 1);
             }
         }
     });
     
     Bridge.define('Test.BridgeIssues.N772.App', {
         statics: {
-            main: function () {
+            main1: function () {
                 //These arrays depend on "useTypedArray" bridge.json option
                 var byteArray = new Uint8Array(1);
                 var sbyteArray = new Int8Array(2);
@@ -34,8 +34,8 @@
                 var doubleArray = new Float64Array(8);
     
                 //These arrays do not depend on "useTypedArray" bridge.json option
-                var stringArray = Bridge.Array.init(9, null);
-                var decimalArray = Bridge.Array.init(10, Bridge.Decimal(0.0));
+                var stringArray = System.Array.init(9, null);
+                var decimalArray = System.Array.init(10, System.Decimal(0.0));
     
                 byteArray[0] = 1;
                 sbyteArray[0] = 2;
@@ -47,7 +47,7 @@
                 doubleArray[0] = 8;
     
                 stringArray[0] = "9";
-                decimalArray[0] = Bridge.Decimal(10.0);
+                decimalArray[0] = System.Decimal(10.0);
             }
         }
     });

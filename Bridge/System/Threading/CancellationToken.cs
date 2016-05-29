@@ -3,35 +3,25 @@ using Bridge;
 namespace System.Threading
 {
     [External]
-    [Namespace("Bridge")]
-    [Name("Bridge.CancellationToken")]
+    //[Name("Bridge.CancellationToken")]
     public struct CancellationToken
     {
         public extern CancellationToken(bool canceled);
 
         [FieldProperty]
-        public static CancellationToken None
+        public static extern CancellationToken None
         {
-            get
-            {
-                return default(CancellationToken);
-            }
+            get;
         }
 
-        public bool CanBeCanceled
+        public extern bool CanBeCanceled
         {
-            get
-            {
-                return false;
-            }
+            get;
         }
 
-        public bool IsCancellationRequested
+        public extern bool IsCancellationRequested
         {
-            get
-            {
-                return false;
-            }
+            get;
         }
 
         public extern void ThrowIfCancellationRequested();

@@ -5,8 +5,7 @@ namespace System.Threading.Tasks
 {
     [External]
     [IgnoreGeneric]
-    [Namespace("Bridge")]
-    [Name("Bridge.TaskCompletionSource")]
+    [Name("System.Threading.Tasks.TaskCompletionSource")]
     public class TaskCompletionSource<TResult>
     {
         public extern TaskCompletionSource();

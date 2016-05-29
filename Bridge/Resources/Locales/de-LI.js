@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("de-LI", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("de-LI", true), {
     englishName: "German (Liechtenstein)",
     nativeName: "Deutsch (Liechtenstein)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "n. def.",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["So","Mo","Di","Mi","Do","Fr","Sa"],
         abbreviatedMonthGenitiveNames: ["Jan","Feb","Mrz","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez",""],
         abbreviatedMonthNames: ["Jan","Feb","Mrz","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez",""],

@@ -6,7 +6,7 @@
             try {
             }
             catch ($e1) {
-                $e1 = Bridge.Exception.create($e1);
+                $e1 = System.Exception.create($e1);
             }
         }
     });

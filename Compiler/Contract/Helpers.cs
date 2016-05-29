@@ -1,8 +1,11 @@
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using Mono.Cecil;
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -385,7 +388,7 @@ namespace Bridge.Contract
                 {
                     if (nullable)
                     {
-                        block.Emitter.Output.Insert(insertPosition, "Bridge.Nullable.lift1(\"$clone\", ");
+                        block.Emitter.Output.Insert(insertPosition, TypeNames.Nullable + ".lift1(\"$clone\", ");
                         block.WriteCloseParentheses();
                     }
                     else
@@ -416,7 +419,7 @@ namespace Bridge.Contract
 
                     if (nullable)
                     {
-                        block.Emitter.Output.Insert(insertPosition, "Bridge.Nullable.lift1(\"$clone\", ");
+                        block.Emitter.Output.Insert(insertPosition, TypeNames.Nullable + ".lift1(\"$clone\", ");
                         block.WriteCloseParentheses();
                     }
                     else

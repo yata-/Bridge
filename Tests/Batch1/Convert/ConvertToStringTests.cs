@@ -656,7 +656,7 @@ namespace Bridge.ClientTest.ConvertTests
             string result = Convert.ToString(foo);
             Assert.AreEqual("FooFormattable: 3", result);
             result = Convert.ToString(foo, NumberFormatInfo.CurrentInfo);
-            Assert.AreEqual("Bridge.NumberFormatInfo: 3", result);
+            Assert.AreEqual("System.Globalization.NumberFormatInfo: 3", result);
 
             foo = null;
             result = Convert.ToString(foo, NumberFormatInfo.CurrentInfo);

@@ -3,7 +3,7 @@
 
     Bridge.define('Test.BridgeIssues.N391.Class391', {
         statics: {
-            main: function () {
+            main1: function () {
                 var $t, $t1, $t2, $t3;
                 var TestArray1 = ["TestA", "TestB", "TestC"];
                 var TestArray2 = ["TestA", "TestB", "TestC"];
@@ -15,7 +15,7 @@
                     $t1 = Bridge.getEnumerator(TestArray2);
                     while ($t1.moveNext()) {
                         var y = $t1.getCurrent();
-                        doSomething = Bridge.String.equals(x, y);
+                        doSomething = System.String.equals(x, y);
                     }
                 }
     
@@ -25,7 +25,7 @@
                     $t3 = Bridge.getEnumerator(TestArray2);
                     while ($t3.moveNext()) {
                         var y1 = $t3.getCurrent();
-                        doSomething = Bridge.String.equals(x1, y1);
+                        doSomething = System.String.equals(x1, y1);
                     }
                 }
             }

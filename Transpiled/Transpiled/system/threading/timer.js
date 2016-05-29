@@ -1,22 +1,22 @@
 ﻿(function (globals) {
     "use strict";
 
-    Bridge.define('Bridge.Threading.Timer', {
-        inherits: [Bridge.IDisposable],
+    Bridge.define('System.Threading.Timer', {
+        inherits: [System.IDisposable],
         statics: {
             MAX_SUPPORTED_TIMEOUT: 4294967294,
             EXC_LESS: "Number must be either non-negative and less than or equal to Int32.MaxValue or -1.",
             EXC_MORE: "Time-out interval must be less than 2^32-2.",
             EXC_DISPOSED: "The timer has been already disposed."
         },
-        dueTime: Bridge.Long(0),
-        period: Bridge.Long(0),
+        dueTime: System.Int64(0),
+        period: System.Int64(0),
         timerCallback: null,
         state: null,
         id: null,
         disposed: false,
         constructor$1: function (callback, state, dueTime, period) {
-            this.timerSetup(callback, state, Bridge.Long(dueTime), Bridge.Long(period));
+            this.timerSetup(callback, state, System.Int64(dueTime), System.Int64(period));
         },
         constructor$3: function (callback, state, dueTime, period) {
             var dueTm = Bridge.Int.clip64(dueTime.getTotalMilliseconds());
@@ -25,7 +25,7 @@
             this.timerSetup(callback, state, dueTm, periodTm);
         },
         constructor$4: function (callback, state, dueTime, period) {
-            this.timerSetup(callback, state, Bridge.Long(dueTime), Bridge.Long(period));
+            this.timerSetup(callback, state, System.Int64(dueTime), System.Int64(period));
         },
         constructor$2: function (callback, state, dueTime, period) {
             this.timerSetup(callback, state, dueTime, period);
@@ -36,28 +36,28 @@
             // for a timer to be fired before the returned value is assigned to the variable,
             // potentially causing the callback to reference a bogus value (if passing the timer to the callback). 
     
-            this.timerSetup(callback, this, Bridge.Long(dueTime), Bridge.Long(period));
+            this.timerSetup(callback, this, System.Int64(dueTime), System.Int64(period));
         },
         timerSetup: function (callback, state, dueTime, period) {
             if (this.disposed) {
-                throw new Bridge.InvalidOperationException(Bridge.Threading.Timer.EXC_DISPOSED);
+                throw new System.InvalidOperationException(System.Threading.Timer.EXC_DISPOSED);
             }
     
             if (callback == null) {
-                throw new Bridge.ArgumentNullException("TimerCallback");
+                throw new System.ArgumentNullException("TimerCallback");
             }
     
-            if (dueTime.lt(Bridge.Long(-1))) {
-                throw new Bridge.ArgumentOutOfRangeException("dueTime", Bridge.Threading.Timer.EXC_LESS);
+            if (dueTime.lt(System.Int64(-1))) {
+                throw new System.ArgumentOutOfRangeException("dueTime", System.Threading.Timer.EXC_LESS);
             }
-            if (period.lt(Bridge.Long(-1))) {
-                throw new Bridge.ArgumentOutOfRangeException("period", Bridge.Threading.Timer.EXC_LESS);
+            if (period.lt(System.Int64(-1))) {
+                throw new System.ArgumentOutOfRangeException("period", System.Threading.Timer.EXC_LESS);
             }
-            if (dueTime.gt(Bridge.Long(Bridge.Threading.Timer.MAX_SUPPORTED_TIMEOUT))) {
-                throw new Bridge.ArgumentOutOfRangeException("dueTime", Bridge.Threading.Timer.EXC_MORE);
+            if (dueTime.gt(System.Int64(System.Threading.Timer.MAX_SUPPORTED_TIMEOUT))) {
+                throw new System.ArgumentOutOfRangeException("dueTime", System.Threading.Timer.EXC_MORE);
             }
-            if (period.gt(Bridge.Long(Bridge.Threading.Timer.MAX_SUPPORTED_TIMEOUT))) {
-                throw new Bridge.ArgumentOutOfRangeException("period", Bridge.Threading.Timer.EXC_MORE);
+            if (period.gt(System.Int64(System.Threading.Timer.MAX_SUPPORTED_TIMEOUT))) {
+                throw new System.ArgumentOutOfRangeException("period", System.Threading.Timer.EXC_MORE);
             }
     
             this.dueTime = dueTime;
@@ -78,7 +78,7 @@
                 this.timerCallback(this.state);
     
                 // timerCallback may call Change(). To prevent double call we can check if timer changed
-                if (Bridge.Nullable.eq(this.id, myId)) {
+                if (System.Nullable.eq(this.id, myId)) {
                     this.runTimer(this.period, false);
                 }
             }
@@ -86,10 +86,10 @@
         runTimer: function (period, checkDispose) {
             if (checkDispose === void 0) { checkDispose = true; }
             if (checkDispose && this.disposed) {
-                throw new Bridge.InvalidOperationException(Bridge.Threading.Timer.EXC_DISPOSED);
+                throw new System.InvalidOperationException(System.Threading.Timer.EXC_DISPOSED);
             }
     
-            if (period.ne(Bridge.Long(-1)) && !this.disposed) {
+            if (period.ne(System.Int64(-1)) && !this.disposed) {
                 var p = period.toNumber();
                 this.id = Bridge.global.setTimeout(Bridge.fn.bind(this, this.handleCallback), p);
                 return true;
@@ -98,13 +98,13 @@
             return false;
         },
         change: function (dueTime, period) {
-            return this.changeTimer(Bridge.Long(dueTime), Bridge.Long(period));
+            return this.changeTimer(System.Int64(dueTime), System.Int64(period));
         },
         change$2: function (dueTime, period) {
             return this.changeTimer(Bridge.Int.clip64(dueTime.getTotalMilliseconds()), Bridge.Int.clip64(period.getTotalMilliseconds()));
         },
         change$3: function (dueTime, period) {
-            return this.changeTimer(Bridge.Long(dueTime), Bridge.Long(period));
+            return this.changeTimer(System.Int64(dueTime), System.Int64(period));
         },
         change$1: function (dueTime, period) {
             return this.changeTimer(dueTime, period);
@@ -114,8 +114,8 @@
             return this.timerSetup(this.timerCallback, this.state, dueTime, period);
         },
         clearTimeout: function () {
-            if (Bridge.Nullable.hasValue(this.id)) {
-                window.clearTimeout(Bridge.Nullable.getValue(this.id));
+            if (System.Nullable.hasValue(this.id)) {
+                window.clearTimeout(System.Nullable.getValue(this.id));
                 this.id = null;
             }
         },

@@ -3,40 +3,24 @@ using Bridge;
 namespace System.Collections.Generic
 {
     [External]
-    [Namespace("Bridge")]
     public class List<T> : IList<T>, IBridgeClass
     {
-        public List()
-        {
-        }
+        public extern List();
 
-        public List(int capacity)
-            : this()
-        {
-        }
+        public extern List(int capacity);
 
-        public List(IEnumerable<T> items)
-        {
-        }
+        public extern List(IEnumerable<T> items);
 
         [AccessorsIndexer]
-        public T this[int index]
+        public extern T this[int index]
         {
-            get
-            {
-                return default(T);
-            }
-            set
-            {
-            }
+            get;
+            set;
         }
 
-        public int Count
+        public extern int Count
         {
-            get
-            {
-                return 0;
-            }
+            get;
         }
 
         private extern T Items(int index);

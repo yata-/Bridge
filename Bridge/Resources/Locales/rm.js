@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("rm", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("rm", true), {
     englishName: "Romansh",
     nativeName: "Rumantsch",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "betg def.",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["du","gli","ma","me","gie","ve","so"],
         abbreviatedMonthGenitiveNames: ["da schan.","da favr.","da mars","d'avr.","da matg","da zercl.","da fan.","d'avust","da sett.","d'oct.","da nov.","da dec.",""],
         abbreviatedMonthNames: ["schan.","favr.","mars","avr.","matg","zercl.","fan.","avust","sett.","oct.","nov.","dec.",""],

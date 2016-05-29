@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("be-BY", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("be-BY", true), {
     englishName: "Belarusian (Belarus)",
     nativeName: "Беларуская (Беларусь)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["нд","пн","аўт","ср","чц","пт","сб"],
         abbreviatedMonthGenitiveNames: ["студз","лют","сак","крас","май","чэрв","ліп","жн","вер","кастр","ліст","снеж",""],
         abbreviatedMonthNames: ["студз","лют","сак","крас","май","чэрв","ліп","жн","вер","кастр","ліст","снеж",""],

@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("zh-MO", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("zh-MO", true), {
     englishName: "Chinese (Traditional, Macao SAR)",
     nativeName: "中文(澳門特別行政區)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "非數字",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["週日","週一","週二","週三","週四","週五","週六"],
         abbreviatedMonthGenitiveNames: ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月",""],
         abbreviatedMonthNames: ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月",""],

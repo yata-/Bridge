@@ -7,8 +7,6 @@ namespace System.Diagnostics
     public static class Debugger
     {
         [Template("debugger")]
-        public static void Break()
-        {
-        }
+        public static extern void Break();
     }
 }

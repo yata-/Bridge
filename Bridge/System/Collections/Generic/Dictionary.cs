@@ -3,97 +3,63 @@ using Bridge;
 namespace System.Collections.Generic
 {
     [External]
-    [Namespace("Bridge")]
     public class Dictionary<TKey, TValue> : IDictionary<TKey, TValue>, IBridgeClass
     {
-        public Dictionary()
-        {
-        }
+        public extern Dictionary();
 
-        [Template("new Bridge.Dictionary$2({TKey}, {TValue})()")]
+        [Template("new System.Collections.Generic.Dictionary$2({TKey}, {TValue})()")]
         public extern Dictionary(int capacity);
 
-        [Template("new Bridge.Dictionary$2({TKey}, {TValue})(null, {comparer})")]
-        public Dictionary(int capacity, IEqualityComparer<TKey> comparer)
-        {
-        }
+        [Template("new System.Collections.Generic.Dictionary$2({TKey}, {TValue})(null, {comparer})")]
+        public extern Dictionary(int capacity, IEqualityComparer<TKey> comparer);
 
-        public Dictionary(object obj)
-        {
-        }
+        public extern Dictionary(object obj);
 
-        public Dictionary(object obj, IEqualityComparer<TKey> comparer)
-        {
-        }
+        public extern Dictionary(object obj, IEqualityComparer<TKey> comparer);
 
-        [Template("new Bridge.Dictionary$2({TKey}, {TValue})(null, {comparer})")]
-        public Dictionary(IEqualityComparer<TKey> comparer)
-        {
-        }
+        [Template("new System.Collections.Generic.Dictionary$2({TKey}, {TValue})(null, {comparer})")]
+        public extern Dictionary(IEqualityComparer<TKey> comparer);
 
         public extern Dictionary(IDictionary<TKey, TValue> dictionary);
 
         public extern Dictionary(IDictionary<TKey, TValue> dictionary, IEqualityComparer<TKey> comparer);
 
-        public IEqualityComparer<TKey> Comparer
+        public extern IEqualityComparer<TKey> Comparer
         {
-            get
-            {
-                return null;
-            }
+            get;
         }
 
-        public int Count
+        public extern int Count
         {
-            get
-            {
-                return 0;
-            }
+            get;
         }
 
-        public new ICollection<TKey> Keys
+        public extern new ICollection<TKey> Keys
         {
-            get
-            {
-                return null;
-            }
+            get;
         }
 
-        public ICollection<TValue> Values
+        public extern ICollection<TValue> Values
         {
-            get
-            {
-                return null;
-            }
+            get;
         }
 
         [AccessorsIndexer]
-        public TValue this[TKey key]
+        public extern TValue this[TKey key]
         {
             [Name("get")]
-            get
-            {
-                return default(TValue);
-            }
+            get;
             [Name("set")]
-            set
-            {
-            }
+            set;
         }
 
         public extern void Set(TKey key, TValue value);
 
         public extern void Add(TKey key, TValue value);
 
-        public TValue Get(TKey key)
-        {
-            return default(TValue);
-        }
+        public extern TValue Get(TKey key);
 
-        private TValue Items(TKey key)
-        {
-            return default(TValue);
-        }
+        private extern TValue Items(TKey key);
 
         public extern void Clear();
 
@@ -107,10 +73,6 @@ namespace System.Collections.Generic
 
         public extern bool Remove(TKey key);
 
-        public bool TryGetValue(TKey key, out TValue value)
-        {
-            value = default(TValue);
-            return false;
-        }
+        public extern bool TryGetValue(TKey key, out TValue value);
     }
 }

@@ -17,7 +17,7 @@ namespace Test.BridgeIssues.N384
     {
         public class App
         {
-            public static void Main()
+            public static void Main1()
             {
                 var person = new Person();
 

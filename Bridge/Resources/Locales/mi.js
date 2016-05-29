@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("mi", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("mi", true), {
     englishName: "Maori",
     nativeName: "Reo Māori",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Ta","Hi","Tū","Apa","Pa","Me","Ho"],
         abbreviatedMonthGenitiveNames: ["Kohi","Hui","Pou","Pae","Hara","Pipi","Hōngo","Here","Mahu","Nuku","Rangi","Haki",""],
         abbreviatedMonthNames: ["Kohi","Hui","Pou","Pae","Hara","Pipi","Hōngo","Here","Mahu","Nuku","Rangi","Haki",""],

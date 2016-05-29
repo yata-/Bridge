@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("pl-PL", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("pl-PL", true), {
     englishName: "Polish (Poland)",
     nativeName: "polski (Polska)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "nie jest liczbą",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["N","Pn","Wt","Śr","Cz","Pt","So"],
         abbreviatedMonthGenitiveNames: ["sty","lut","mar","kwi","maj","cze","lip","sie","wrz","paź","lis","gru",""],
         abbreviatedMonthNames: ["sty","lut","mar","kwi","maj","cze","lip","sie","wrz","paź","lis","gru",""],

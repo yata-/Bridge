@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("sn-Latn", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("sn-Latn", true), {
     englishName: "Shona (Latin)",
     nativeName: "chiShona (Latin)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Svo","Muv","Chip","Chit","Chin","Chis","Mug"],
         abbreviatedMonthGenitiveNames: ["Ndi","Kuk","Kur","Kub","Chv","Chk","Chg","Nya","Gun","Gum","Mb","Zvi",""],
         abbreviatedMonthNames: ["Ndi","Kuk","Kur","Kub","Chv","Chk","Chg","Nya","Gun","Gum","Mb","Zvi",""],

@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("so-SO", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("so-SO", true), {
     englishName: "Somali (Somalia)",
     nativeName: "Soomaali (Soomaaliya)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Axd","Isn","Tal","Arb","Kha","Jim","Sab"],
         abbreviatedMonthGenitiveNames: ["Kob","Lab","Sad","Afr","Sha","Lix","Tod","Sid","Sag","Tob","KIT","LIT",""],
         abbreviatedMonthNames: ["Kob","Lab","Sad","Afr","Sha","Lix","Tod","Sid","Sag","Tob","KIT","LIT",""],

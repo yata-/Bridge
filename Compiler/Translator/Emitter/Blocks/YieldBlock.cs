@@ -1,4 +1,6 @@
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.TypeSystem;
 
@@ -80,11 +82,11 @@ namespace Bridge.Translator
 
             if (returnType != null && returnType.Name == "IEnumerator")
             {
-                block.Write("Bridge.Array.toEnumerator($yield)");
+                block.Write(TypeNames.Array + ".toEnumerator($yield)");
             }
             else
             {
-                block.Write("Bridge.Array.toEnumerable($yield)");
+                block.Write(TypeNames.Array + ".toEnumerable($yield)");
             }
 
             block.WriteSemiColon();

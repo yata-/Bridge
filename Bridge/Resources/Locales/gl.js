@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("gl", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("gl", true), {
     englishName: "Galician",
     nativeName: "galego",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NéN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dom","luns","mar","mér","xov","ven","sáb"],
         abbreviatedMonthGenitiveNames: ["xan","feb","mar","abr","maio","xuño","xul","ago","set","out","nov","dec",""],
         abbreviatedMonthNames: ["xan","feb","mar","abr","maio","xuño","xul","ago","set","out","nov","dec",""],

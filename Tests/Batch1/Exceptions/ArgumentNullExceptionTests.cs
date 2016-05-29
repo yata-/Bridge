@@ -14,7 +14,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual("Bridge.ArgumentNullException", typeof(ArgumentNullException).GetClassName(), "Name");
+            Assert.AreEqual("System.ArgumentNullException", typeof(ArgumentNullException).GetClassName(), "Name");
             object d = new ArgumentNullException();
             Assert.True(d is ArgumentNullException, "is ArgumentNullException");
             Assert.True(d is ArgumentException, "is ArgumentException");

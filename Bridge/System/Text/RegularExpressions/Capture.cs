@@ -5,13 +5,10 @@ namespace System.Text.RegularExpressions
     /// <summary>
     /// Represents the results from a single successful subexpression capture.
     /// </summary>
-    [Namespace("Bridge.Text.RegularExpressions")]
     [External]
     public class Capture
     {
-        internal Capture(string text, int i, int l)
-        {
-        }
+        internal extern Capture(string text, int i, int l);
 
         /// <summary>
         /// The position in the original string where the first character of the captured substring is found.

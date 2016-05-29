@@ -11,11 +11,11 @@
 
         checkEnumType: function (enumType) {
             if (!enumType) {
-                throw new Bridge.ArgumentNullException("enumType");
+                throw new System.ArgumentNullException("enumType");
             }
 
             if (enumType.prototype && !enumType.prototype.$enum) {
-                throw new Bridge.ArgumentException("", "enumType");
+                throw new System.ArgumentException("", "enumType");
             }
         },
 
@@ -24,9 +24,14 @@
         },
 
         parse: function (enumType, s, ignoreCase, silent) {
-            var values = enumType;
+            System.Enum.checkEnumType(enumType);
 
-            Bridge.Enum.checkEnumType(enumType);
+            var intValue = {};
+            if (System.Int32.tryParse(s, intValue)) {
+                return intValue.v;
+            }
+
+            var values = enumType;
 
             if (!enumType.prototype || !enumType.prototype.$flags) {
                 for (var f in values) {
@@ -63,14 +68,14 @@
             }
 
             if (silent !== true) {
-                throw new Bridge.ArgumentException('Invalid Enumeration Value');
+                throw new System.ArgumentException('Invalid Enumeration Value');
             }
 
             return null;
         },
 
         toString: function (enumType, value, forceFlags) {
-            Bridge.Enum.checkEnumType(enumType);
+            System.Enum.checkEnumType(enumType);
 
             var values = enumType;
 
@@ -81,7 +86,7 @@
                     }
                 }
 
-                //throw new Bridge.ArgumentException('Invalid Enumeration Value');
+                //throw new System.ArgumentException('Invalid Enumeration Value');
                 return value.toString();
             } else {
                 var parts = [];
@@ -93,7 +98,7 @@
                 }
 
                 if (!parts.length) {
-                    //throw new Bridge.ArgumentException('Invalid Enumeration Value');
+                    //throw new System.ArgumentException('Invalid Enumeration Value');
                     return value.toString();
                 }
 
@@ -102,7 +107,7 @@
         },
 
         getValues: function (enumType) {
-            Bridge.Enum.checkEnumType(enumType);
+            System.Enum.checkEnumType(enumType);
 
             var parts = [];
             var values = enumType;
@@ -117,18 +122,18 @@
         },
 
         format: function (enumType, value, format) {
-            Bridge.Enum.checkEnumType(enumType);
+            System.Enum.checkEnumType(enumType);
 
             var name;
 
             if (!Bridge.hasValue(value) && (name = "value") || !Bridge.hasValue(format) && (name = "format")) {
-                throw new Bridge.ArgumentNullException(name);
+                throw new System.ArgumentNullException(name);
             }
 
             switch (format) {
                 case "G":
                 case "g":
-                    return Bridge.Enum.toString(enumType, value);
+                    return System.Enum.toString(enumType, value);
                 case "x":
                 case "X":
                     return value.toString(16);
@@ -137,14 +142,14 @@
                     return value.toString();
                 case "f":
                 case "F":
-                    return Bridge.Enum.toString(enumType, value, true);
+                    return System.Enum.toString(enumType, value, true);
                 default:
-                    throw new Bridge.FormatException();
+                    throw new System.FormatException();
             }
         },
 
         getNames: function (enumType) {
-            Bridge.Enum.checkEnumType(enumType);
+            System.Enum.checkEnumType(enumType);
 
             var parts = [];
             var values = enumType;
@@ -159,7 +164,7 @@
         },
 
         getName: function (enumType, value) {
-            Bridge.Enum.checkEnumType(enumType);
+            System.Enum.checkEnumType(enumType);
 
             var values = enumType;
 
@@ -177,7 +182,7 @@
         },
 
         isDefined: function (enumType, value) {
-            Bridge.Enum.checkEnumType(enumType);
+            System.Enum.checkEnumType(enumType);
 
             var values = enumType;
             var isString = Bridge.isString(value);
@@ -203,4 +208,4 @@
         }
     };
 
-    Bridge.Enum = enumMethods;
+    System.Enum = enumMethods;

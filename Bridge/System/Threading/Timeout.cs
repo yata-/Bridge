@@ -3,7 +3,6 @@ using Bridge;
 namespace System.Threading
 {
     [External]
-    [Namespace("Bridge.Threading")]
     public static class Timeout
     {
         /// <summary>

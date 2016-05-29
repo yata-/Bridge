@@ -4,45 +4,32 @@ using System.Collections.Generic;
 namespace System.Threading.Tasks
 {
     [External]
-    [Name("Bridge.Task")]
+    //[Name("Bridge.Task")]
     public class Task : IDisposable, IBridgeClass
     {
-        public Task(Action action)
-        {
-        }
+        public extern Task(Action action);
 
-        public Task(Action<object> action, object state)
-        {
-        }
+        public extern Task(Action<object> action, object state);
 
         [FieldProperty]
         public extern AggregateException Exception { get; }
 
-        public bool IsCanceled
+        public extern bool IsCanceled
         {
             [Name("isCanceled")]
-            get
-            {
-                return false;
-            }
+            get;
         }
 
-        public bool IsCompleted
+        public extern bool IsCompleted
         {
             [Name("isCompleted")]
-            get
-            {
-                return false;
-            }
+            get;
         }
 
-        public bool IsFaulted
+        public extern bool IsFaulted
         {
             [Name("isFaulted")]
-            get
-            {
-                return false;
-            }
+            get;
         }
 
         [FieldProperty]
@@ -106,30 +93,17 @@ namespace System.Threading.Tasks
 
     [External]
     [IgnoreGeneric]
-    [Name("Bridge.Task")]
+    [Name("System.Threading.Tasks.Task")]
     public class Task<TResult> : Task
     {
-        public Task(Func<TResult> function)
-            : base(() =>
-            {
-            })
-        {
-        }
+        public extern Task(Func<TResult> function);
 
-        public Task(Func<object, TResult> function, object state)
-            : base(() =>
-            {
-            })
-        {
-        }
+        public extern Task(Func<object, TResult> function, object state);
 
-        public TResult Result
+        public extern TResult Result
         {
             [Name("getResult")]
-            get
-            {
-                return default(TResult);
-            }
+            get;
         }
 
         public extern Task ContinueWith(Action<Task<TResult>> continuationAction);

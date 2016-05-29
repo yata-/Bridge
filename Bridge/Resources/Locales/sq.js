@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("sq", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("sq", true), {
     englishName: "Albanian",
     nativeName: "Shqip",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Die","Hën","Mar","Mër","Enj","Pre","Sht"],
         abbreviatedMonthGenitiveNames: ["Jan","Shk","Mar","Pri","Maj","Qer","Krr","Gsh","Sht","Tet","Nën","Dhj",""],
         abbreviatedMonthNames: ["Jan","Shk","Mar","Pri","Maj","Qer","Krr","Gsh","Sht","Tet","Nën","Dhj",""],

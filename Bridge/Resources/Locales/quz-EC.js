@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("quz-EC", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("quz-EC", true), {
     englishName: "Quichua (Ecuador)",
     nativeName: "runa shimi (Ecuador Suyu)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["int","awk","wan","chy","kuk","cha","wak"],
         abbreviatedMonthGenitiveNames: ["kull","pan","paw","ayr","aym","ray","sit","kar","kus","way","sas","kap",""],
         abbreviatedMonthNames: ["kull","pan","paw","ayr","aym","ray","sit","kar","kus","way","sas","kap",""],

@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("lo", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("lo", true), {
     englishName: "Lao",
     nativeName: "ພາສາລາວ",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["ອາທິດ","ຈັນ","ອັງຄານ","ພຸດ","ພະຫັດ","ສຸກ","ເສົາ"],
         abbreviatedMonthGenitiveNames: ["ມ.ກ","ກ.ພ","ມິ.ນ","ມ.ສ","ພ.ພ","ມິ.ຖ","ກ.ລ","ສ.ຫ","ກ.ຍ","ຕ.ລ","ພ.ຈ","ທ.ວ",""],
         abbreviatedMonthNames: ["ມ.ກ","ກ.ພ","ມິ.ນ","ມ.ສ","ພ.ພ","ມິ.ຖ","ກ.ລ","ສ.ຫ","ກ.ຍ","ຕ.ລ","ພ.ຈ","ທ.ວ",""],

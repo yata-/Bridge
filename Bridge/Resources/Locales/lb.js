@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("lb", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("lb", true), {
     englishName: "Luxembourgish",
     nativeName: "Lëtzebuergesch",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Son","Méi","Dën","Mët","Don","Fre","Sam"],
         abbreviatedMonthGenitiveNames: ["Jan","Feb","Mäe","Abr","Mee","Jun","Jul","Aug","Sep","Okt","Nov","Dez",""],
         abbreviatedMonthNames: ["Jan","Feb","Mäe","Abr","Mee","Jun","Jul","Aug","Sep","Okt","Nov","Dez",""],

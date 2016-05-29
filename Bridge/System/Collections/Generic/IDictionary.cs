@@ -3,7 +3,6 @@ using Bridge;
 namespace System.Collections.Generic
 {
     [External]
-    [Namespace("Bridge")]
     public interface IDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>, IBridgeClass
     {
         [AccessorsIndexer]

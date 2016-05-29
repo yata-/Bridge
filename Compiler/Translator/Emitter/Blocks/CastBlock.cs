@@ -1,4 +1,6 @@
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
@@ -261,15 +263,15 @@ namespace Bridge.Translator
             {
                 if (Helpers.IsDecimalType(expectedType, this.Emitter.Resolver))
                 {
-                    typeName = "Bridge.Decimal";
+                    typeName = TypeNames.Decimal;
                 }
                 else if (Helpers.IsLongType(expectedType, this.Emitter.Resolver))
                 {
-                    typeName = "Bridge.Long";
+                    typeName = TypeNames.Int64;
                 }
                 else if (Helpers.IsULongType(expectedType, this.Emitter.Resolver))
                 {
-                    typeName = "Bridge.ULong";
+                    typeName = TypeNames.UInt64;
                 }
             }
 

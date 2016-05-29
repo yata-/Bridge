@@ -1,10 +1,7 @@
 ﻿using Bridge.Contract;
+using Bridge.Contract.Constants;
 using Bridge.Translator.Constants;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
+
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Semantics;
@@ -13,6 +10,11 @@ using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using Mono.Cecil;
 using Object.Net.Utilities;
 using ICustomAttributeProvider = Mono.Cecil.ICustomAttributeProvider;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 
 namespace Bridge.Translator
 {
@@ -73,7 +75,7 @@ namespace Bridge.Translator
         {
             foreach (var i in type.Interfaces)
             {
-                if (i.FullName == "Bridge.IBridgeClass")
+                if (i.FullName == TypeNames.IBridgeClass)
                 {
                     return true;
                 }
@@ -527,7 +529,7 @@ namespace Bridge.Translator
                 return false;
             }
 
-            if (this.HasAttribute(entity.Attributes, AttributeConstants.ACCESSORSINDEXER_ATTRIBUTE_NAME))
+            if (this.HasAttribute(entity.Attributes, Attributes.ACCESSORSINDEXER_ATTRIBUTE_NAME))
             {
                 return true;
             }

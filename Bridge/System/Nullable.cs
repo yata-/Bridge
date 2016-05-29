@@ -4,62 +4,42 @@ namespace System
 {
     [External]
     [Constructor("")]
-    [Name("Bridge.Nullable")]
+    [Name("System.Nullable")]
     public struct Nullable<T> where T : struct
     {
         [Template("{0}")]
-        public Nullable(T value)
+        public extern Nullable(T value);
+
+        public extern bool HasValue
         {
+            [Template("System.Nullable.hasValue({this})")]
+            get;
         }
 
-        public bool HasValue
+        public extern T Value
         {
-            [Template("Bridge.Nullable.hasValue({this})")]
-            get
-            {
-                return false;
-            }
+            [Template("System.Nullable.getValue({this})")]
+            get;
         }
 
-        public T Value
-        {
-            [Template("Bridge.Nullable.getValue({this})")]
-            get
-            {
-                return default(T);
-            }
-        }
+        [Template("System.Nullable.getValueOrDefault({this}, {T:default})")]
+        public extern T GetValueOrDefault();
 
-        [Template("Bridge.Nullable.getValueOrDefault({this}, {T:default})")]
-        public T GetValueOrDefault()
-        {
-            return default(T);
-        }
+        [Template("System.Nullable.getValueOrDefault({this}, {0})")]
+        public extern T GetValueOrDefault(T defaultValue);
 
-        [Template("Bridge.Nullable.getValueOrDefault({this}, {0})")]
-        public T GetValueOrDefault(T defaultValue)
-        {
-            return default(T);
-        }
+        public static extern implicit operator T? (T value);
 
-        public static implicit operator T? (T value)
-        {
-            return null;
-        }
+        [Template("System.Nullable.getValue({this})")]
+        public static extern explicit operator T(T? value);
 
-        [Template("Bridge.Nullable.getValue({this})")]
-        public static explicit operator T(T? value)
-        {
-            return default(T);
-        }
-
-        [Template("Bridge.Nullable.equalsT({this}, {other})")]
+        [Template("System.Nullable.equalsT({this}, {other})")]
         public override extern bool Equals(object other);
 
-        [Template("Bridge.Nullable.getHashCode({this})")]
+        [Template("System.Nullable.getHashCode({this})")]
         public override extern int GetHashCode();
 
-        [Template("Bridge.Nullable.toString({this})")]
+        [Template("System.Nullable.toString({this})")]
         public override extern string ToString();
     }
 }

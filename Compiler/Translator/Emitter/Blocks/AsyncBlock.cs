@@ -1,8 +1,11 @@
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -369,7 +372,7 @@ namespace Bridge.Translator
             {
                 if (this.IsTaskReturn)
                 {
-                    this.Emitter.AsyncVariables.Add("$tcs = new Bridge.TaskCompletionSource()");
+                    this.Emitter.AsyncVariables.Add("$tcs = new " + TypeNames.TaskCompletionSource + "()");
                 }
 
                 this.Emitter.AsyncVariables.Add("$returnValue");
@@ -416,7 +419,7 @@ namespace Bridge.Translator
                 this.EndBlock();
                 this.Write(" catch($async_e1) ");
                 this.BeginBlock();
-                this.Write("$async_e = Bridge.Exception.create($async_e1);");
+                this.Write("$async_e = " + TypeNames.Exception + ".create($async_e1);");
                 this.WriteNewLine();
                 this.InjectCatchHandlers();
 
@@ -441,7 +444,7 @@ namespace Bridge.Translator
                 list.Add(i);
             }
 
-            this.Emitter.Output.Insert(pos, "$step = Bridge.Array.min(" + this.Emitter.ToJavaScript(list.ToArray()) + ", $step);");
+            this.Emitter.Output.Insert(pos, "$step = " + TypeNames.Array + ".min(" + this.Emitter.ToJavaScript(list.ToArray()) + ", $step);");
         }
 
         protected void InjectCatchHandlers()
@@ -465,7 +468,7 @@ namespace Bridge.Translator
                         var varName = clause.Item1;
                         var exceptionType = clause.Item2;
                         var step = clause.Item3;
-                        var isBaseException = exceptionType == "Bridge.Exception";
+                        var isBaseException = exceptionType == TypeNames.Exception;
 
                         if (info.CatchBlocks.Count == 1 && isBaseException)
                         {

@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("tn-BW", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("tn-BW", true), {
     englishName: "Setswana (Botswana)",
     nativeName: "Setswana (Botswana)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Sont.","Mos.","Lab.","Labr.","Labn.","Labt.","Matlh."],
         abbreviatedMonthGenitiveNames: ["Fer.","Tlh.","Mop.","Mor.","Motsh.","Seet.","Phk.","Pht.","Lwetse.","Diph.","Ngwn.","Sed.",""],
         abbreviatedMonthNames: ["Fer.","Tlh.","Mop.","Mor.","Motsh.","Seet.","Phk.","Pht.","Lwetse.","Diph.","Ngwn.","Sed.",""],

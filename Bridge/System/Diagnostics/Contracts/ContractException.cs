@@ -3,7 +3,6 @@ using Bridge;
 namespace System.Diagnostics.Contracts
 {
     [External]
-    [Namespace("Bridge")]
     public sealed class ContractException : Exception
     {
         public extern ContractFailureKind Kind

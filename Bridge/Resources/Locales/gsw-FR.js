@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("gsw-FR", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("gsw-FR", true), {
     englishName: "Alsatian (France)",
     nativeName: "Elsässisch (Frànkrisch)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "Ohne Nummer",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Su.","Ma.","Zi.","Me.","Du.","Fr.","Sà."],
         abbreviatedMonthGenitiveNames: ["Jän.","Fev.","März","Apr.","Mai","Jüni","Jüli","Aug.","Sept.","Okt.","Now.","Dez.",""],
         abbreviatedMonthNames: ["Jän.","Fev.","März","Apr.","Mai","Jüni","Jüli","Aug.","Sept.","Okt.","Now.","Dez.",""],

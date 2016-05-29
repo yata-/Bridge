@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace System.Diagnostics.Contracts
 {
-    [Namespace("Bridge")]
     [External]
     public static class Contract
     {
@@ -20,7 +19,7 @@ namespace System.Diagnostics.Contracts
         /// </remarks>
         [Pure]
         [Conditional("DEBUG"), Conditional("CONTRACTS_FULL")]
-        [Template("Bridge.Contract.assert(5, function () { return {condition}; })")]
+        [Template("System.Diagnostics.Contracts.Contract.assert(5, function () { return {condition}; })")]
         public static extern void Assume(bool condition);
 
         /// <summary>
@@ -33,7 +32,7 @@ namespace System.Diagnostics.Contracts
         /// </remarks>
         [Pure]
         [Conditional("DEBUG"), Conditional("CONTRACTS_FULL")]
-        [Template("Bridge.Contract.assert(5, function () { return {condition}; }, {userMessage})")]
+        [Template("System.Diagnostics.Contracts.Contract.assert(5, function () { return {condition}; }, {userMessage})")]
         public static extern void Assume(bool condition, string userMessage);
 
         #endregion Assume
@@ -46,7 +45,7 @@ namespace System.Diagnostics.Contracts
         /// <param name="condition">Expression to check to always be true.</param>
         [Pure]
         [Conditional("DEBUG"), Conditional("CONTRACTS_FULL")]
-        [Template("Bridge.Contract.assert(4, function () { return {condition}; })")]
+        [Template("System.Diagnostics.Contracts.Contract.assert(4, function () { return {condition}; })")]
         public static extern void Assert(bool condition);
 
         /// <summary>
@@ -56,7 +55,7 @@ namespace System.Diagnostics.Contracts
         /// <param name="userMessage">If it is not a constant string literal, then the contract may not be understood by tools.</param>
         [Pure]
         [Conditional("DEBUG"), Conditional("CONTRACTS_FULL")]
-        [Template("Bridge.Contract.assert(4, function () { return {condition}; }, {userMessage})")]
+        [Template("System.Diagnostics.Contracts.Contract.assert(4, function () { return {condition}; }, {userMessage})")]
         public static extern void Assert(bool condition, string userMessage);
 
         #endregion Assert
@@ -74,7 +73,7 @@ namespace System.Diagnostics.Contracts
         /// </remarks>
         [Pure]
         [Conditional("CONTRACTS_FULL")]
-        [Template("Bridge.Contract.assert(0, function () { return {condition}; })")]
+        [Template("System.Diagnostics.Contracts.Contract.assert(0, function () { return {condition}; })")]
         public static extern void Requires(bool condition);
 
         /// <summary>
@@ -89,7 +88,7 @@ namespace System.Diagnostics.Contracts
         /// </remarks>
         [Pure]
         [Conditional("CONTRACTS_FULL")]
-        [Template("Bridge.Contract.assert(0, function () { return {condition}; }, {userMessage})")]
+        [Template("System.Diagnostics.Contracts.Contract.assert(0, function () { return {condition}; }, {userMessage})")]
         public static extern void Requires(bool condition, string userMessage);
 
         /// <summary>
@@ -102,7 +101,7 @@ namespace System.Diagnostics.Contracts
         /// Use this form when you want to throw a particular exception.
         /// </remarks>
         [Pure]
-        [Template("Bridge.Contract.requires({TException}, function () { return {condition}; })")]
+        [Template("System.Diagnostics.Contracts.Contract.requires({TException}, function () { return {condition}; })")]
         public static extern void Requires<TException>(bool condition) where TException : Exception;
 
         /// <summary>
@@ -116,7 +115,7 @@ namespace System.Diagnostics.Contracts
         /// Use this form when you want to throw a particular exception.
         /// </remarks>
         [Pure]
-        [Template("Bridge.Contract.requires({TException}, function () { return {condition}; }, {userMessage})")]
+        [Template("System.Diagnostics.Contracts.Contract.requires({TException}, function () { return {condition}; }, {userMessage})")]
         public static extern void Requires<TException>(bool condition, string userMessage) where TException : Exception;
 
         #endregion Requires
@@ -274,7 +273,7 @@ namespace System.Diagnostics.Contracts
         /// <returns><c>true</c> if <paramref name="predicate"/> returns <c>true</c> for all integers
         /// starting from <paramref name="fromInclusive"/> to <paramref name="toExclusive"/> - 1.</returns>
         [Pure]
-        [Template("Bridge.Contract.forAll({fromInclusive}, {toExclusive}, {predicate})")]
+        [Template("System.Diagnostics.Contracts.Contract.forAll({fromInclusive}, {toExclusive}, {predicate})")]
         public static extern bool ForAll(int fromInclusive, int toExclusive, Predicate<int> predicate);
 
         /// <summary>
@@ -286,7 +285,7 @@ namespace System.Diagnostics.Contracts
         /// <returns><c>true</c> if and only if <paramref name="predicate"/> returns <c>true</c> for all elements in
         /// <paramref name="collection"/>.</returns>
         [Pure]
-        [Template("Bridge.Contract.forAll$1({collection}, {predicate})")]
+        [Template("System.Diagnostics.Contracts.Contract.forAll$1({collection}, {predicate})")]
         public static extern bool ForAll<T>(IEnumerable<T> collection, Predicate<T> predicate);
 
         #endregion ForAll
@@ -303,7 +302,7 @@ namespace System.Diagnostics.Contracts
         /// <returns><c>true</c> if <paramref name="predicate"/> returns <c>true</c> for any integer
         /// starting from <paramref name="fromInclusive"/> to <paramref name="toExclusive"/> - 1.</returns>
         [Pure]
-        [Template("Bridge.Contract.exists({fromInclusive}, {toExclusive}, {predicate})")]
+        [Template("System.Diagnostics.Contracts.Contract.exists({fromInclusive}, {toExclusive}, {predicate})")]
         public static extern bool Exists(int fromInclusive, int toExclusive, Predicate<int> predicate);
 
         /// <summary>
@@ -315,7 +314,7 @@ namespace System.Diagnostics.Contracts
         /// <returns><c>true</c> if and only if <paramref name="predicate"/> returns <c>true</c> for an element in
         /// <paramref name="collection"/>.</returns>
         [Pure]
-        [Template("Bridge.Contract.exists$1({collection}, {predicate})")]
+        [Template("System.Diagnostics.Contracts.Contract.exists$1({collection}, {predicate})")]
         public static extern bool Exists<T>(IEnumerable<T> collection, Predicate<T> predicate);
 
         #endregion Exists

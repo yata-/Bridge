@@ -1,11 +1,11 @@
     // @source Console.js
 
-    Bridge.Console = {
+    System.Console = {
         output: null,
 
         log: function (obj) {
-            if (Bridge.Console.output != null) {
-                Bridge.Console.output += obj;
+            if (System.Console.output != null) {
+                System.Console.output += obj;
                 return;
             }
 

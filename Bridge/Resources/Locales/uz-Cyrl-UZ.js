@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("uz-Cyrl-UZ", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("uz-Cyrl-UZ", true), {
     englishName: "Uzbek (Cyrillic, Uzbekistan)",
     nativeName: "Ўзбекча (Ўзбекистон Республикаси)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["якш","дш","сш","чш","пш","ж","ш"],
         abbreviatedMonthGenitiveNames: ["Янв","Фев","Мар","Апр","Май","Июн","Июл","Авг","Сен","Окт","Ноя","Дек",""],
         abbreviatedMonthNames: ["Янв","Фев","Мар","Апр","Май","Июн","Июл","Авг","Сен","Окт","Ноя","Дек",""],

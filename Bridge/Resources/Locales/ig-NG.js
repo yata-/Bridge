@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("ig-NG", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("ig-NG", true), {
     englishName: "Igbo (Nigeria)",
     nativeName: "Igbo (Nigeria)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Sọn","Mọn","Tuz","Ojo","Tọs","Fra","Sat"],
         abbreviatedMonthGenitiveNames: ["Jen","Feb","Mac","Epr","Mey","Jun","Jul","Ọgọ","Sep","Ọkt","Nọv","Dis",""],
         abbreviatedMonthNames: ["Jen","Feb","Mac","Epr","Mey","Jun","Jul","Ọgọ","Sep","Ọkt","Nọv","Dis",""],

@@ -2,7 +2,6 @@ using Bridge;
 
 namespace System.Diagnostics
 {
-    [Namespace("Bridge")]
     [External]
     public static class Debug
     {

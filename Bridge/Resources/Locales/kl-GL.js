@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("kl-GL", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("kl-GL", true), {
     englishName: "Greenlandic (Greenland)",
     nativeName: "kalaallisut (Kalaallit Nunaat)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["sap.","at.","marl.","ping.","sis.","tall.","arf."],
         abbreviatedMonthGenitiveNames: ["jan","feb","mar","apr","mai","jun","jul","aug","sep","okt","nov","dec",""],
         abbreviatedMonthNames: ["jan","feb","mar","apr","mai","jun","jul","aug","sep","okt","nov","dec",""],

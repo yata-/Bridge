@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("ha", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("ha", true), {
     englishName: "Hausa",
     nativeName: "Hausa",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Lah","Lit","Tal","Lar","Alh","Jum","Asa"],
         abbreviatedMonthGenitiveNames: ["Jan","Fab","Mar","Afr","May","Yun","Yul","Agu","Sat","Okt","Nuw","Dis",""],
         abbreviatedMonthNames: ["Jan","Fab","Mar","Afr","May","Yun","Yul","Agu","Sat","Okt","Nuw","Dis",""],

@@ -1,19 +1,19 @@
     // @source Task.js
 
-    Bridge.define("Bridge.Task", {
-        inherits: [Bridge.IDisposable],
+    Bridge.define("System.Threading.Tasks.Task", {
+        inherits: [System.IDisposable],
         constructor: function (action, state) {
             this.action = action;
             this.state = state;
             this.exception = null;
-            this.status = Bridge.TaskStatus.created;
+            this.status = System.Threading.Tasks.TaskStatus.created;
             this.callbacks = [];
             this.result = null;
         },
 
         statics: {
             delay: function (delay, state) {
-                var tcs = new Bridge.TaskCompletionSource();
+                var tcs = new System.Threading.Tasks.TaskCompletionSource();
 
                 setTimeout(function () {
                     tcs.setResult(state);
@@ -23,22 +23,22 @@
             },
 
             fromResult: function (result) {
-                var t = new Bridge.Task();
+                var t = new System.Threading.Tasks.Task();
 
-                t.status = Bridge.TaskStatus.ranToCompletion;
+                t.status = System.Threading.Tasks.TaskStatus.ranToCompletion;
                 t.result = result;
 
                 return t;
             },
 
             run: function (fn) {
-                var tcs = new Bridge.TaskCompletionSource();
+                var tcs = new System.Threading.Tasks.TaskCompletionSource();
 
                 setTimeout(function () {
                     try {
                         tcs.setResult(fn());
                     } catch (e) {
-                        tcs.setException(Bridge.Exception.create(e));
+                        tcs.setException(System.Exception.create(e));
                     }
                 }, 0);
 
@@ -46,14 +46,14 @@
             },
 
             whenAll: function (tasks) {
-                var tcs = new Bridge.TaskCompletionSource(),
+                var tcs = new System.Threading.Tasks.TaskCompletionSource(),
                     result,
                     executing,
                     cancelled = false,
                     exceptions = [],
                     i;
 
-                if (Bridge.is(tasks, Bridge.IEnumerable)) {
+                if (Bridge.is(tasks, System.Collections.IEnumerable)) {
                     tasks = Bridge.toArray(tasks);
                 } else if (!Bridge.isArray(tasks)) {
                     tasks = Array.prototype.slice.call(arguments, 0);
@@ -72,17 +72,17 @@
                     (function (i) {
                         tasks[i].continueWith(function (t) {
                             switch (t.status) {
-                                case Bridge.TaskStatus.ranToCompletion:
+                                case System.Threading.Tasks.TaskStatus.ranToCompletion:
                                     result[i] = t.getResult();
                                     break;
-                                case Bridge.TaskStatus.canceled:
+                                case System.Threading.Tasks.TaskStatus.canceled:
                                     cancelled = true;
                                     break;
-                                case Bridge.TaskStatus.faulted:
-                                    Bridge.Array.addRange(exceptions, t.exception.innerExceptions);
+                                case System.Threading.Tasks.TaskStatus.faulted:
+                                    System.Array.addRange(exceptions, t.exception.innerExceptions);
                                     break;
                                 default:
-                                    throw new Bridge.InvalidOperationException("Invalid task status: " + t.status);
+                                    throw new System.InvalidOperationException("Invalid task status: " + t.status);
                             }
 
                             if (--executing === 0) {
@@ -102,33 +102,33 @@
             },
 
             whenAny: function (tasks) {
-                if (Bridge.is(tasks, Bridge.IEnumerable)) {
+                if (Bridge.is(tasks, System.Collections.IEnumerable)) {
                     tasks = Bridge.toArray(tasks);
                 } else if (!Bridge.isArray(tasks)) {
                     tasks = Array.prototype.slice.call(arguments, 0);
                 }
 
                 if (!tasks.length) {
-                    throw new Bridge.ArgumentException("At least one task is required");
+                    throw new System.ArgumentException("At least one task is required");
                 }
 
-                var tcs = new Bridge.TaskCompletionSource(),
+                var tcs = new System.Threading.Tasks.TaskCompletionSource(),
                     i;
 
                 for (i = 0; i < tasks.length; i++) {
                     tasks[i].continueWith(function (t) {
                         switch (t.status) {
-                            case Bridge.TaskStatus.ranToCompletion:
+                            case System.Threading.Tasks.TaskStatus.ranToCompletion:
                                 tcs.trySetResult(t);
                                 break;
-                            case Bridge.TaskStatus.canceled:
+                            case System.Threading.Tasks.TaskStatus.canceled:
                                 tcs.trySetCanceled();
                                 break;
-                            case Bridge.TaskStatus.faulted:
+                            case System.Threading.Tasks.TaskStatus.faulted:
                                 tcs.trySetException(t.exception.innerExceptions);
                                 break;
                             default:
-                                throw new Bridge.InvalidOperationException("Invalid task status: " + t.status);
+                                throw new System.InvalidOperationException("Invalid task status: " + t.status);
                         }
                     });
                 }
@@ -137,7 +137,7 @@
             },
 
             fromCallback: function (target, method) {
-                var tcs = new Bridge.TaskCompletionSource(),
+                var tcs = new System.Threading.Tasks.TaskCompletionSource(),
                     args = Array.prototype.slice.call(arguments, 2),
                     callback;
 
@@ -153,7 +153,7 @@
             },
 
             fromCallbackResult: function (target, method, resultHandler) {
-                var tcs = new Bridge.TaskCompletionSource(),
+                var tcs = new System.Threading.Tasks.TaskCompletionSource(),
                     args = Array.prototype.slice.call(arguments, 3),
                     callback;
 
@@ -169,7 +169,7 @@
             },
 
             fromCallbackOptions: function (target, method, name) {
-                var tcs = new Bridge.TaskCompletionSource(),
+                var tcs = new System.Threading.Tasks.TaskCompletionSource(),
                     args = Array.prototype.slice.call(arguments, 3),
                     callback;
 
@@ -186,7 +186,7 @@
             },
 
             fromPromise: function (promise, handler, errorHandler, progressHandler) {
-                var tcs = new Bridge.TaskCompletionSource();
+                var tcs = new System.Threading.Tasks.TaskCompletionSource();
 
                 if (!promise.then) {
                     promise = promise.promise();
@@ -209,7 +209,7 @@
         },
 
         continueWith: function (continuationAction, raise) {
-            var tcs = new Bridge.TaskCompletionSource(),
+            var tcs = new System.Threading.Tasks.TaskCompletionSource(),
                 me = this,
                 fn = raise ? function () {
                     tcs.setResult(continuationAction(me));
@@ -218,7 +218,7 @@
                         tcs.setResult(continuationAction(me));
                     }
                     catch (e) {
-                        tcs.setException(Bridge.Exception.create(e));
+                        tcs.setException(System.Exception.create(e));
                     }
                 };
 
@@ -232,13 +232,13 @@
         },
 
         start: function () {
-            if (this.status !== Bridge.TaskStatus.created) {
-                throw new Bridge.InvalidOperationException("Task was already started.");
+            if (this.status !== System.Threading.Tasks.TaskStatus.created) {
+                throw new System.InvalidOperationException("Task was already started.");
             }
 
             var me = this;
 
-            this.status = Bridge.TaskStatus.running;
+            this.status = System.Threading.Tasks.TaskStatus.running;
 
             setTimeout(function () {
                 try {
@@ -247,7 +247,7 @@
                     delete me.state;
                     me.complete(result);
                 } catch (e) {
-                    me.fail(new Bridge.AggregateException(null, [Bridge.Exception.create(e)]));
+                    me.fail(new System.AggregateException(null, [System.Exception.create(e)]));
                 }
             }, 0);
         },
@@ -270,7 +270,7 @@
             }
 
             this.result = result;
-            this.status = Bridge.TaskStatus.ranToCompletion;
+            this.status = System.Threading.Tasks.TaskStatus.ranToCompletion;
             this.runCallbacks();
 
             return true;
@@ -282,7 +282,7 @@
             }
 
             this.exception = error;
-            this.status = Bridge.TaskStatus.faulted;
+            this.status = System.Threading.Tasks.TaskStatus.faulted;
             this.runCallbacks();
 
             return true;
@@ -293,35 +293,35 @@
                 return false;
             }
 
-            this.status = Bridge.TaskStatus.canceled;
+            this.status = System.Threading.Tasks.TaskStatus.canceled;
             this.runCallbacks();
 
             return true;
         },
 
         isCanceled: function () {
-            return this.status === Bridge.TaskStatus.canceled;
+            return this.status === System.Threading.Tasks.TaskStatus.canceled;
         },
 
         isCompleted: function () {
-            return this.status === Bridge.TaskStatus.ranToCompletion || this.status === Bridge.TaskStatus.canceled || this.status === Bridge.TaskStatus.faulted;
+            return this.status === System.Threading.Tasks.TaskStatus.ranToCompletion || this.status === System.Threading.Tasks.TaskStatus.canceled || this.status === System.Threading.Tasks.TaskStatus.faulted;
         },
 
         isFaulted: function () {
-            return this.status === Bridge.TaskStatus.faulted;
+            return this.status === System.Threading.Tasks.TaskStatus.faulted;
         },
 
         _getResult: function (awaiting) {
             switch (this.status) {
-                case Bridge.TaskStatus.ranToCompletion:
+                case System.Threading.Tasks.TaskStatus.ranToCompletion:
                     return this.result;
-                case Bridge.TaskStatus.canceled:
-                    var ex = new Bridge.TaskCanceledException(null, this);
-                    throw awaiting ? ex : new Bridge.AggregateException(null, [ex]);
-                case Bridge.TaskStatus.faulted:
+                case System.Threading.Tasks.TaskStatus.canceled:
+                    var ex = new System.Threading.Tasks.TaskCanceledException(null, this);
+                    throw awaiting ? ex : new System.AggregateException(null, [ex]);
+                case System.Threading.Tasks.TaskStatus.faulted:
                     throw awaiting ? (this.exception.innerExceptions.getCount() > 0 ? this.exception.innerExceptions.get(0) : null) : this.exception;
                 default:
-                    throw new Bridge.InvalidOperationException("Task is not yet completed.");
+                    throw new System.InvalidOperationException("Task is not yet completed.");
             }
         },
 
@@ -341,7 +341,7 @@
         }
     });
 
-    Bridge.define("Bridge.TaskStatus", {
+    Bridge.define("System.Threading.Tasks.TaskStatus", {
         $enum: true,
         $statics: {
             created: 0,
@@ -356,27 +356,27 @@
     });
 
 
-    Bridge.define("Bridge.TaskCompletionSource", {
+    Bridge.define("System.Threading.Tasks.TaskCompletionSource", {
         constructor: function () {
-            this.task = new Bridge.Task();
-            this.task.status = Bridge.TaskStatus.running;
+            this.task = new System.Threading.Tasks.Task();
+            this.task.status = System.Threading.Tasks.TaskStatus.running;
         },
 
         setCanceled: function () {
             if (!this.task.cancel()) {
-                throw new Bridge.InvalidOperationException("Task was already completed.");
+                throw new System.InvalidOperationException("Task was already completed.");
             }
         },
 
         setResult: function (result) {
             if (!this.task.complete(result)) {
-                throw new Bridge.InvalidOperationException("Task was already completed.");
+                throw new System.InvalidOperationException("Task was already completed.");
             }
         },
 
         setException: function (exception) {
             if (!this.trySetException(exception)) {
-                throw new Bridge.InvalidOperationException("Task was already completed.");
+                throw new System.InvalidOperationException("Task was already completed.");
             }
         },
 
@@ -389,20 +389,20 @@
         },
 
         trySetException: function (exception) {
-            if (Bridge.is(exception, Bridge.Exception)) {
+            if (Bridge.is(exception, System.Exception)) {
                 exception = [exception];
             }
                 
-            return this.task.fail(new Bridge.AggregateException(null, exception));
+            return this.task.fail(new System.AggregateException(null, exception));
         }
     });
 
-    Bridge.define("Bridge.CancellationToken", {
+    Bridge.define("System.Threading.CancellationToken", {
          $struct: true,
 
          constructor: function (source) {
-            if (!Bridge.is(source, Bridge.CancellationTokenSource)) {
-                source = source ? Bridge.CancellationToken.sourceTrue : Bridge.CancellationToken.sourceFalse;
+            if (!Bridge.is(source, System.Threading.CancellationTokenSource)) {
+                source = source ? System.Threading.CancellationToken.sourceTrue : System.Threading.CancellationToken.sourceFalse;
             }
                 
             this.source = source;
@@ -418,7 +418,7 @@
 
         throwIfCancellationRequested: function () {
             if (this.source.isCancellationRequested) {
-                throw new Bridge.OperationCanceledException(this);
+                throw new System.OperationCanceledException(this);
             }
         },
 
@@ -444,27 +444,27 @@
                 register: function (f, s) {
                     f(s);
 
-                    return new Bridge.CancellationTokenRegistration();
+                    return new System.Threading.CancellationTokenRegistration();
                 } 
             },
             sourceFalse: {
                 uncancellable: true, 
                 isCancellationRequested: false, 
                 register: function () {
-                     return new Bridge.CancellationTokenRegistration();
+                     return new System.Threading.CancellationTokenRegistration();
                 }
             },
             getDefaultValue: function () {
-                return new Bridge.CancellationToken();
+                return new System.Threading.CancellationToken();
             }
         }
     });
 
-    Bridge.CancellationToken.none = new Bridge.CancellationToken();
+    System.Threading.CancellationToken.none = new System.Threading.CancellationToken();
 
-    Bridge.define("Bridge.CancellationTokenRegistration", {
+    Bridge.define("System.Threading.CancellationTokenRegistration", {
         inherits: function () {
-            return [Bridge.IDisposable, Bridge.IEquatable$1(Bridge.CancellationTokenRegistration)];
+            return [System.IDisposable, System.IEquatable$1(System.Threading.CancellationTokenRegistration)];
         },
         constructor: function (cts, o) {
             this.cts = cts;
@@ -488,18 +488,18 @@
 
         statics: {
             getDefaultValue: function () {
-                return new Bridge.CancellationTokenRegistration();
+                return new System.Threading.CancellationTokenRegistration();
             }
         }
     });
 
-    Bridge.define("Bridge.CancellationTokenSource", {
-        inherits: [Bridge.IDisposable],
+    Bridge.define("System.Threading.CancellationTokenSource", {
+        inherits: [System.IDisposable],
 
         constructor: function (delay) {
             this.timeout = typeof delay === "number" && delay >= 0 ? setTimeout(Bridge.fn.bind(this, this.cancel), delay, -1) : null;
             this.isCancellationRequested = false;
-            this.token = new Bridge.CancellationToken(this);
+            this.token = new System.Threading.CancellationToken(this);
             this.handlers = [];
         },
 
@@ -527,7 +527,7 @@
             }
 
             if (x.length > 0 && throwFirst !== -1) {
-                throw new Bridge.AggregateException(null, x);
+                throw new System.AggregateException(null, x);
             }
                 
         },
@@ -548,12 +548,12 @@
             if (this.isCancellationRequested) {
                 f(s);
 
-                return new Bridge.CancellationTokenRegistration();
+                return new System.Threading.CancellationTokenRegistration();
             } else {
                 var o = {f: f, s: s };
                 this.handlers.push(o);
 
-                return new Bridge.CancellationTokenRegistration(this, o);
+                return new System.Threading.CancellationTokenRegistration(this, o);
             }
         },
 
@@ -588,7 +588,7 @@
 
         statics: {
             createLinked: function () {
-                var cts = new Bridge.CancellationTokenSource();
+                var cts = new System.Threading.CancellationTokenSource();
 
                 cts.links = [];
 

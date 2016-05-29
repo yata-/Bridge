@@ -5,14 +5,10 @@ namespace System.Text.RegularExpressions
     /// <summary>
     /// Represents the results from a single regular expression match.
     /// </summary>
-    [Namespace("Bridge.Text.RegularExpressions")]
     [External]
     public class Match : Group
     {
-        internal Match(Regex regex, int capcount, String text, int begpos, int len, int startpos)
-            : base(text, new int[2], 0)
-        {
-        }
+        internal extern Match(Regex regex, int capcount, String text, int begpos, int len, int startpos);
 
         /// <summary>
         /// Gets the empty group. All failed matches return this empty match.

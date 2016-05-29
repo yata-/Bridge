@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("mk", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("mk", true), {
     englishName: "Macedonian (Former Yugoslav Republic of Macedonia)",
     nativeName: "македонски јазик",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["нед","пон","втр","срд","чет","пет","саб"],
         abbreviatedMonthGenitiveNames: ["јан","фев","мар","апр","мај","јун","јул","авг","сеп","окт","ное","дек",""],
         abbreviatedMonthNames: ["јан","фев","мар","апр","мај","јун","јул","авг","сеп","окт","ное","дек",""],

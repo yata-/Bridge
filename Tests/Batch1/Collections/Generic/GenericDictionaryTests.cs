@@ -25,7 +25,7 @@ namespace Bridge.ClientTest.Collections.Generic
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual("Bridge.Dictionary$2$Bridge.Int32$String", typeof(Dictionary<int, string>).GetClassName(), "FullName should be correct");
+            Assert.AreEqual("System.Collections.Generic.Dictionary$2$System.Int32$String", typeof(Dictionary<int, string>).GetClassName(), "FullName should be correct");
             object dict = new Dictionary<int, string>();
             Assert.True(dict is Dictionary<int, string>, "is Dictionary<int,string> should be true");
             Assert.True(dict is IDictionary<int, string>, "is IDictionary<int,string> should be true");
@@ -38,7 +38,7 @@ namespace Bridge.ClientTest.Collections.Generic
             var d = new Dictionary<int, string>();
             Assert.AreEqual(0, d.Count, "Count is 0");
             Assert.AreEqual("Bridge.CustomEnumerator", d.GetEnumerator().GetClassName(), "Enumerator should be Bridge.CustomEnumerator");
-            Assert.AreEqual("Bridge.EqualityComparer$1$Object", d.Comparer.GetClassName(), "Comparer should be Bridge.EqualityComparer$1$Object");
+            Assert.AreEqual("System.Collections.Generic.EqualityComparer$1$Object", d.Comparer.GetClassName(), "Comparer should be Bridge.EqualityComparer$1$Object");
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace Bridge.ClientTest.Collections.Generic
             var d = new Dictionary<int, string>(10);
             Assert.AreEqual(0, d.Count);
             Assert.AreEqual("Bridge.CustomEnumerator", d.GetEnumerator().GetClassName(), "Enumerator should be Bridge.CustomEnumerator");
-            Assert.AreEqual("Bridge.EqualityComparer$1$Object", d.Comparer.GetClassName(), "Comparer should be Bridge.EqualityComparer$1$Object");
+            Assert.AreEqual("System.Collections.Generic.EqualityComparer$1$Object", d.Comparer.GetClassName(), "Comparer should be Bridge.EqualityComparer$1$Object");
         }
 
         [Test]

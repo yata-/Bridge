@@ -1,8 +1,8 @@
 ﻿// @source Text/RegularExpressions/RegexCaptureCollection.js
 
-Bridge.define("Bridge.Text.RegularExpressions.CaptureCollection", {
+Bridge.define("System.Text.RegularExpressions.CaptureCollection", {
     inherits: function () {
-        return [Bridge.ICollection];
+        return [System.Collections.ICollection];
     },
 
     _group: null,
@@ -36,7 +36,7 @@ Bridge.define("Bridge.Text.RegularExpressions.CaptureCollection", {
         }
 
         if (i >= this._capcount || i < 0) {
-            throw new Bridge.ArgumentOutOfRangeException("i");
+            throw new System.ArgumentOutOfRangeException("i");
         }
 
         this._ensureCapturesInited();
@@ -46,11 +46,11 @@ Bridge.define("Bridge.Text.RegularExpressions.CaptureCollection", {
 
     copyTo: function (array, arrayIndex) {
         if (array == null) {
-            throw new Bridge.ArgumentNullException("array");
+            throw new System.ArgumentNullException("array");
         }
 
         if (array.length < arrayIndex + this._capcount) {
-            throw new Bridge.IndexOutOfRangeException();
+            throw new System.IndexOutOfRangeException();
         }
 
         var capture;
@@ -59,12 +59,12 @@ Bridge.define("Bridge.Text.RegularExpressions.CaptureCollection", {
 
         for (i = arrayIndex, j = 0; j < this._capcount; i++, j++) {
             capture = this.get(j);
-            Bridge.Array.set(array, capture, [i]);
+            System.Array.set(array, capture, [i]);
         }
     },
 
     getEnumerator: function () {
-        return new Bridge.Text.RegularExpressions.CaptureEnumerator(this);
+        return new System.Text.RegularExpressions.CaptureEnumerator(this);
     },
 
     _ensureCapturesInited: function () {
@@ -78,7 +78,7 @@ Bridge.define("Bridge.Text.RegularExpressions.CaptureCollection", {
                 var index = this._group._caps[j * 2];
                 var length = this._group._caps[j * 2 + 1];
 
-                captures[j] = new Bridge.Text.RegularExpressions.Capture(this._group._text, index, length);
+                captures[j] = new System.Text.RegularExpressions.Capture(this._group._text, index, length);
             }
 
             if (this._capcount > 0) {
@@ -90,9 +90,9 @@ Bridge.define("Bridge.Text.RegularExpressions.CaptureCollection", {
     }
 });
 
-Bridge.define("Bridge.Text.RegularExpressions.CaptureEnumerator", {
+Bridge.define("System.Text.RegularExpressions.CaptureEnumerator", {
     inherits: function () {
-        return [Bridge.IEnumerator];
+        return [System.Collections.IEnumerator];
     },
 
     _captureColl: null,
@@ -120,7 +120,7 @@ Bridge.define("Bridge.Text.RegularExpressions.CaptureEnumerator", {
 
     getCapture: function () {
         if (this._curindex < 0 || this._curindex >= this._captureColl.getCount()) {
-            throw new Bridge.InvalidOperationException("Enumeration has either not started or has already finished.");
+            throw new System.InvalidOperationException("Enumeration has either not started or has already finished.");
         }
 
         return this._captureColl.get(this._curindex);
