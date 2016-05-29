@@ -1,6 +1,15 @@
 ﻿(function (globals) {
     "use strict";
 
+    Bridge.define('Bridge.ClientTest.Batch2.BridgeIssues.Bridge1385', {
+        statics: {
+            testIsTypedArrayForByte: function () {
+                var value = new Uint8Array(3);
+                Bridge.Test.Assert.true(Bridge.is(value, Array));
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch2.BridgeIssues.N1122', {
         statics: {
             testClippingInJavaScriptOverflowMode: function () {

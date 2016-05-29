@@ -2063,6 +2063,7 @@
 
             var extend = prop.$inherits || prop.inherits,
                 statics = prop.$statics || prop.statics,
+                isEntryPoint = prop.$entryPoint,
                 base,
                 cacheName = prop.$cacheName,
                 prototype,
@@ -2078,6 +2079,10 @@
                 delete prop.$inherits;
             } else {
                 delete prop.inherits;
+            }
+
+            if (isEntryPoint) {
+                delete prop.$entryPoint;
             }
 
             if (Bridge.isFunction(statics)) {
@@ -2269,7 +2274,10 @@
                 }
             };
 
-            Bridge.Class.$queue.push(Class);
+            if (isEntryPoint) {
+                Bridge.Class.$queue.push(Class);
+            }
+            
             Class.$staticInit = fn;
 
             return Class;
@@ -4798,27 +4806,27 @@ System.Int64.check = function (v, tp) {
 };
 
 System.Int64.clip8 = function (x) {
-    return x ? Bridge.Int.sxb(x.toNumber() & 0xff) : (Bridge.Int.isInfinite(x) ? System.SByte.min : null);
+    return x ? Bridge.Int.sxb(x.value.low & 0xff) : (Bridge.Int.isInfinite(x) ? System.SByte.min : null);
 };
 
 System.Int64.clipu8 = function (x) {
-    return x ? x.toNumber() & 0xff : (Bridge.Int.isInfinite(x) ? System.Byte.min : null);
+    return x ? x.value.low & 0xff : (Bridge.Int.isInfinite(x) ? System.Byte.min : null);
 };
 
 System.Int64.clip16 = function (x) {
-    return x ? Bridge.Int.sxs(x.toNumber() & 0xffff) : (Bridge.Int.isInfinite(x) ? System.Int16.min : null);
+    return x ? Bridge.Int.sxs(x.value.low & 0xffff) : (Bridge.Int.isInfinite(x) ? System.Int16.min : null);
 };
 
 System.Int64.clipu16 = function (x) {
-    return x ? x.toNumber() & 0xffff : (Bridge.Int.isInfinite(x) ? System.UInt16.min : null);
+    return x ? x.value.low & 0xffff : (Bridge.Int.isInfinite(x) ? System.UInt16.min : null);
 };
 
 System.Int64.clip32 = function (x) {
-    return x ? x.toNumber() | 0 : (Bridge.Int.isInfinite(x) ? System.Int32.min : null);
+    return x ? x.value.low | 0 : (Bridge.Int.isInfinite(x) ? System.Int32.min : null);
 };
 
 System.Int64.clipu32 = function (x) {
-    return x ? x.toNumber() >>> 0 : (Bridge.Int.isInfinite(x) ? System.UInt32.min : null);
+    return x ? x.value.low >>> 0 : (Bridge.Int.isInfinite(x) ? System.UInt32.min : null);
 };
 
 System.Int64.clip64 = function (x) {
@@ -7213,6 +7221,18 @@ var array = {
         return new Bridge.ArrayEnumerator(array);
     },
 
+    _typedArrays : {
+        Float32Array: true,
+        Float64Array: true,
+        Int8Array: true,
+        Int16Array: true,
+        Int32Array: true,
+        Uint8Array: true,
+        Uint8ClampedArray: true,
+        Uint16Array: true,
+        Uint32Array: true
+    },
+
     is: function (obj, type) {
         if (obj instanceof Bridge.ArrayEnumerator) {
             if ((obj.constructor === type) || (obj instanceof type) ||
@@ -7243,7 +7263,7 @@ var array = {
             return true;
         }
 
-        return false;
+        return !!System.Array._typedArrays[String.prototype.slice.call(Object.prototype.toString.call(obj), 8, -1)];
     },
 
     clone: function (arr) {
@@ -14320,9 +14340,6 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
 // @source random.js
 
-(function (globals) {
-    "use strict";
-
     Bridge.define('System.Random', {
         statics: {
             MBIG: 2147483647,
@@ -14458,9 +14475,6 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             }
         }
     });
-
-    Bridge.init();
-})(this);
 
 Bridge.define("System.Guid", {
     inherits: function () {
@@ -19209,9 +19223,6 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
     };
 // @source timer.js
 
-(function (globals) {
-    "use strict";
-
     Bridge.define('System.Threading.Timer', {
         inherits: [System.IDisposable],
         statics: {
@@ -19335,9 +19346,6 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             this.disposed = true;
         }
     });
-
-    Bridge.init();
-})(this);
     // @source End.js
 
     // module export

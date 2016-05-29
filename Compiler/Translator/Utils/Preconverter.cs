@@ -1,19 +1,17 @@
-using System;
-using ICSharpCode.NRefactory.CSharp;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Bridge.Contract;
-using ICSharpCode.NRefactory.CSharp.Refactoring;
+using Bridge.Translator.Utils;
+
+using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
-using ICSharpCode.NRefactory.MonoCSharp;
 using ICSharpCode.NRefactory.Semantics;
-using ICSharpCode.NRefactory.TypeSystem;
-using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using Expression = ICSharpCode.NRefactory.CSharp.Expression;
 using ExpressionStatement = ICSharpCode.NRefactory.CSharp.ExpressionStatement;
 using ParenthesizedExpression = ICSharpCode.NRefactory.CSharp.ParenthesizedExpression;
 using Statement = ICSharpCode.NRefactory.CSharp.Statement;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Bridge.Translator
 {
@@ -368,15 +366,14 @@ namespace Bridge.Translator
                         throw new ArgumentOutOfRangeException();
                 }
 
-                if (clonAssignmentExpression.Right is BinaryOperatorExpression)
-                {
-                    clonAssignmentExpression.Right = new BinaryOperatorExpression(clonAssignmentExpression.Left.Clone(), opType, new ParenthesizedExpression(clonAssignmentExpression.Right.Clone()));
-                }
-                else
-                {
-                    clonAssignmentExpression.Right = new BinaryOperatorExpression(clonAssignmentExpression.Left.Clone(), opType, clonAssignmentExpression.Right.Clone());
-                }
+                var wrapRightExpression = AssigmentExpressionHelper.CheckIsRightAssigmentExpression(clonAssignmentExpression)
+                    ? clonAssignmentExpression.Right.Clone()
+                    : new ParenthesizedExpression(clonAssignmentExpression.Right.Clone());
 
+                clonAssignmentExpression.Right = new BinaryOperatorExpression(
+                    clonAssignmentExpression.Left.Clone(),
+                    opType,
+                    wrapRightExpression);
 
                 return clonAssignmentExpression;
             }
