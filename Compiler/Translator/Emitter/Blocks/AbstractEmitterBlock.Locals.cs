@@ -295,6 +295,7 @@ namespace Bridge.Translator
                 this.Emitter.Output.Length = pos;
 
                 this.Emitter.IsNewLine = true;
+                this.Emitter.Comma = false;
 
                 if (!skipIndent)
                 {

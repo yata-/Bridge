@@ -8123,6 +8123,227 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1378', {
+        statics: {
+            config: {
+                properties: {
+                    x: 0
+                }
+            },
+            testAssigmentWithMinusOperator: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1378.setx(1);
+    
+                var a = 4;
+                var b = 2;
+                Bridge.ClientTest.BridgeIssues.Bridge1378.setx(Bridge.ClientTest.BridgeIssues.Bridge1378.getx()-(a - b));
+    
+                Bridge.Test.Assert.areEqual(-1, Bridge.ClientTest.BridgeIssues.Bridge1378.getx());
+            },
+            testAssigmentWithPlusOperator: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1378.setx(1);
+    
+                var a = 4;
+                var b = 2;
+                Bridge.ClientTest.BridgeIssues.Bridge1378.setx(Bridge.ClientTest.BridgeIssues.Bridge1378.getx()+(a + b));
+    
+                Bridge.Test.Assert.areEqual(7, Bridge.ClientTest.BridgeIssues.Bridge1378.getx());
+            },
+            testAssigmentWithOverloadMinusOperator: function () {
+                var $int = new Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper(1);
+                $int = Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper.op_Subtraction($int, ($int = Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper.op_Subtraction($int, new Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper(7))));
+                Bridge.Test.Assert.areEqual(7, $int.toInt());
+            },
+            testAssigmentWithOverloadPlusOperator: function () {
+                var $int = new Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper(3);
+                $int = Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper.op_Addition($int, ($int = Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper.op_Addition($int, new Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper(1))));
+                Bridge.Test.Assert.areEqual(7, $int.toInt());
+            },
+            testAssigmentWithConditionalPlusOperator: function () {
+                var tabSize = 4;
+                var tabLength1 = 0;
+                var text = "        There is two tabs.";
+    
+                for (var i = 0; i < text.length; i = (i + 1) | 0) {
+                    tabLength1 = (tabLength1 + ((text.charCodeAt(i) === 9) ? tabSize : 1)) | 0;
+                }
+    
+                Bridge.Test.Assert.areEqual(26, tabLength1);
+            },
+            testAssigmentWithConditionalMinusOperator: function () {
+                var tabSize = 5;
+                var tabLength1 = 1;
+                var text = "        There is two tabs.";
+    
+                for (var i = 0; i < text.length; i = (i + 1) | 0) {
+                    tabLength1 = (tabLength1 - ((text.charCodeAt(i) === 9) ? tabSize : 1)) | 0;
+                }
+    
+                Bridge.Test.Assert.areEqual(-25, tabLength1);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper', {
+        statics: {
+            op_Addition: function (a, b) {
+                return new Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper(((a.value + b.value) | 0));
+            },
+            op_Subtraction: function (a, b) {
+                return new Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper(((a.value - b.value) | 0));
+            }
+        },
+        value: 0,
+        constructor: function (value) {
+            this.value = value;
+        },
+        toInt: function () {
+            return this.value;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1385', {
+        statics: {
+            testIsTypedArray: function () {
+                var value = new Uint8Array(3);
+                Bridge.Test.Assert.true(Bridge.is(value, Array));
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1389', {
+        statics: {
+            testParamsIndexer: function () {
+                var app = new Bridge.ClientTest.BridgeIssues.Bridge1389();
+                var list = app.getItem(["1", "2", "3", "4", "5"]);
+    
+                Bridge.Test.Assert.notNull(list);
+                Bridge.Test.Assert.areEqual(5, System.Linq.Enumerable.from(list).count());
+                Bridge.Test.Assert.areEqual("1", System.Linq.Enumerable.from(list).first());
+                Bridge.Test.Assert.areEqual("5", System.Linq.Enumerable.from(list).last());
+            }
+        },
+        getItem: function (keys) {
+            return keys;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391', {
+        statics: {
+            builder: null,
+            getBuilder: function () {
+                var $t;
+                return ($t = Bridge.ClientTest.BridgeIssues.Bridge1391.builder, $t != null ? $t : ((Bridge.ClientTest.BridgeIssues.Bridge1391.builder = new System.Text.StringBuilder(), Bridge.ClientTest.BridgeIssues.Bridge1391.builder)));
+            },
+            testStaticCtorOrder: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1391.getBuilder().clear();
+    
+                // Now, types with no Ready/Autorun methods intialized on-demand (when first time accessing the type)
+                var f = new Bridge.ClientTest.BridgeIssues.Bridge1391.Foo();
+                var b = new Bridge.ClientTest.BridgeIssues.Bridge1391.Bar();
+                Bridge.Test.Assert.areEqual("FooBar", Bridge.ClientTest.BridgeIssues.Bridge1391.builder.toString());
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391.Bar', {
+        statics: {
+            i: 0,
+            config: {
+                init: function () {
+                    this.i = Bridge.ClientTest.BridgeIssues.Bridge1391.Bar.init();
+                }
+            },
+            init: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1391.getBuilder().append("Bar");
+                return 0;
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391.Foo', {
+        statics: {
+            constructor: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1391.getBuilder().append("Foo");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391Ready', {
+        statics: {
+            testStaticCtorOrderForClassHavingReady: function () {
+                // Now, types with no Ready/Autorun methods intialized on-demand (when first time accessing the type)
+                // However, classes with [Ready] initializes on Ready
+                var r = Bridge.$N1391Result;
+                Bridge.Test.Assert.areEqual$1("FooReadyBarReady", r, "Bridge.$N1391Result");
+                Bridge.Test.Assert.areEqual$1("FooReadyBarReady", Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.getBuilder().toString(), "Current builder's state");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady', {
+        statics: {
+            builder: null,
+            config: {
+                init: function () {
+                    Bridge.ready(this.runMe);
+                }
+            },
+            getBuilder: function () {
+                var $t;
+                return ($t = Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.builder, $t != null ? $t : ((Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.builder = new System.Text.StringBuilder(), Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.builder)));
+            },
+            runMe: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.getBuilder().clear();
+    
+                // Now, types with no Ready/Autorun methods intialized on-demand (when first time accessing the type)
+                // However, classes with [Ready] initializes on Ready
+                var f = new Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.FooReady();
+                var b = new Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.BarReady();
+    
+                var r = Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.getBuilder().toString();
+    Bridge.$N1391Result =             r;
+            }
+        },
+        $entryPoint: true
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.BarReady', {
+        statics: {
+            i: 0,
+            config: {
+                init: function () {
+                    this.i = Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.BarReady.initReady();
+                }
+            },
+            initReady: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.getBuilder().append("BarReady");
+                return 0;
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.FooReady', {
+        statics: {
+            constructor: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.getBuilder().append("FooReady");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1402', {
+        statics: {
+            testLongClipping: function () {
+                var value = System.Int64.MaxValue;
+                Bridge.Test.Assert.areEqual(255, System.Int64.clipu8(value.shr(2)));
+                Bridge.Test.Assert.areEqual(-1, System.Int64.clip8(value.shr(2)));
+                Bridge.Test.Assert.areEqual(-1, System.Int64.clip16(value.shr(2)));
+                Bridge.Test.Assert.areEqual(65535, System.Int64.clipu16(value.shr(2)));
+                Bridge.Test.Assert.areEqual(-1, System.Int64.clip32(value.shr(2)));
+                Bridge.Test.Assert.areEqual(4294967295, System.Int64.clipu32(value.shr(2)));
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1411', {
         statics: {
             testTemplateCtor: function () {

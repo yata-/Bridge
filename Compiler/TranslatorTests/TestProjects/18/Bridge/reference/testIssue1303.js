@@ -15,7 +15,8 @@
             main: function () {
                 //Should be in config.init
             }
-        }
+        },
+        $entryPoint: true
     });
     
     Bridge.define('TestIssue1303.App1', {
@@ -32,7 +33,8 @@
             main: function () {
                 //Should be in config.init
             }
-        }
+        },
+        $entryPoint: true
     });
     
     Bridge.define('TestIssue1303.App2', {
@@ -45,7 +47,8 @@
             main: function () {
                 //Should be in config.init
             }
-        }
+        },
+        $entryPoint: true
     });
     
     

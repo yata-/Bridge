@@ -1,8 +1,5 @@
 ﻿// @source timer.js
 
-(function (globals) {
-    "use strict";
-
     Bridge.define('System.Threading.Timer', {
         inherits: [System.IDisposable],
         statics: {
@@ -126,6 +123,3 @@
             this.disposed = true;
         }
     });
-
-    Bridge.init();
-})(this);

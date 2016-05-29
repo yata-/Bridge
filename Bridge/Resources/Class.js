@@ -131,6 +131,7 @@
 
             var extend = prop.$inherits || prop.inherits,
                 statics = prop.$statics || prop.statics,
+                isEntryPoint = prop.$entryPoint,
                 base,
                 cacheName = prop.$cacheName,
                 prototype,
@@ -146,6 +147,10 @@
                 delete prop.$inherits;
             } else {
                 delete prop.inherits;
+            }
+
+            if (isEntryPoint) {
+                delete prop.$entryPoint;
             }
 
             if (Bridge.isFunction(statics)) {
@@ -337,7 +342,10 @@
                 }
             };
 
-            Bridge.Class.$queue.push(Class);
+            if (isEntryPoint) {
+                Bridge.Class.$queue.push(Class);
+            }
+            
             Class.$staticInit = fn;
 
             return Class;

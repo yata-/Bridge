@@ -1,6 +1,7 @@
 using Object.Net.Utilities;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Bridge.Contract;
 using Mono.Cecil;
@@ -72,7 +73,8 @@ namespace Bridge.Translator
                         tmp.Append("\n");
                     }
 
-                    var code = output.NonModuletOutput.ToString() + (isJs ? "\n\nBridge.init();" : "");
+                    var afterOutput = (isJs ? "\n\nBridge.init();" : "");
+                    var code = output.NonModuletOutput.ToString() + afterOutput;
 
                     if (isJs)
                     {

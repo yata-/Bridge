@@ -21,7 +21,8 @@
                 // Should not contain generic type parameter
                 System.Console.log(new TestIssue960.Example().getName(x));
             }
-        }
+        },
+        $entryPoint: true
     });
     
     Bridge.define('TestIssue960.Named', {
