@@ -184,6 +184,7 @@
     <Compile Include="Translator\Plugins.cs" />
     <Compile Include="Translator\Translator.Config.cs" />
     <Compile Include="Translator\TranslatorProcessor.cs" />
+    <Compile Include="Utils\AssigmentExpressionHelper.cs" />
     <Compile Include="Utils\CombinedAstAndResolveResultVisitor.cs" />
     <Compile Include="Utils\DependencyFinderVisitor.cs" />
     <Compile Include="Utils\AssemblyConfigHelper.cs" />
