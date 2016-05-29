@@ -1,5 +1,6 @@
 using Bridge.Contract;
 using Bridge.Contract.Constants;
+using Bridge.Translator.Utils;
 
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
@@ -582,15 +583,10 @@ namespace Bridge.Translator
             }
             else
             {
-                var wrap = assignmentExpression.Operator != AssignmentOperatorType.Assign && this.Emitter.Writers.Count > initCount && 
-                    !(assignmentExpression.Right is ParenthesizedExpression || 
-                      assignmentExpression.Right is IdentifierExpression || 
-                      assignmentExpression.Right is MemberReferenceExpression ||
-                      assignmentExpression.Right is PrimitiveExpression ||
-                      assignmentExpression.Right is IndexerExpression ||
-                      assignmentExpression.Right is LambdaExpression ||
-                      assignmentExpression.Right is AnonymousMethodExpression ||
-                      assignmentExpression.Right is ObjectCreateExpression);
+                var wrap = assignmentExpression.Operator != AssignmentOperatorType.Assign
+                    && this.Emitter.Writers.Count > initCount
+                    && !AssigmentExpressionHelper.CheckIsRightAssigmentExpression(assignmentExpression);
+
                 if (wrap)
                 {
                     this.WriteOpenParentheses();
