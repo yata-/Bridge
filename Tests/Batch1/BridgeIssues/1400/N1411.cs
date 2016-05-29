@@ -40,12 +40,13 @@ namespace Bridge.ClientTest.BridgeIssues
         {
             public int Data { get; set; }
 
-            [Template("'test_gizmo'")]
+            [Template("'test_gizmo5'")]
             public Gizmo()
             {
                 // 5
             }
 
+            [Template("'test_gizmo6'")]
             public Gizmo(int x) : this()
             {
                 // 6
@@ -79,10 +80,10 @@ namespace Bridge.ClientTest.BridgeIssues
         public static void TestTemplateCtorGizmo()
         {
             var c1 = new Gizmo();
-            Assert.AreEqual("test_gizmo", c1);
+            Assert.AreEqual("test_gizmo5", c1);
 
             var c2 = new Gizmo(1);
-            Assert.AreEqual("test_gizmo", c2);
+            Assert.AreEqual("test_gizmo6", c2);
         }
     }
 }

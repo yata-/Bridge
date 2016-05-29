@@ -8363,11 +8363,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areDeepEqual(4, c2.getData());
             },
             testTemplateCtorGizmo: function () {
-                var c1 = 'test_gizmo';
-                Bridge.Test.Assert.areEqual("test_gizmo", c1);
+                var c1 = 'test_gizmo5';
+                Bridge.Test.Assert.areEqual("test_gizmo5", c1);
     
-                var c2 = new Bridge.ClientTest.BridgeIssues.Bridge1411.Gizmo("constructor", 1);
-                Bridge.Test.Assert.areEqual("test_gizmo", c2);
+                var c2 = 'test_gizmo6';
+                Bridge.Test.Assert.areEqual("test_gizmo6", c2);
             }
         }
     });
@@ -8389,12 +8389,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             properties: {
                 Data: 0
             }
-        },
-        constructor: function (x) {
-            Bridge.ClientTest.BridgeIssues.Bridge1411.Gizmo.prototype.$constructor.call(this);
-    
-            // 6
-            this.setData(6);
         }
     });
     
