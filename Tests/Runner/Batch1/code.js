@@ -6926,6 +6926,27 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1339', {
+        statics: {
+            testAccessingConstantsFromDerivedClass: function () {
+                var s = "ing";
+    
+                Bridge.Test.Assert.areEqual("String", Bridge.ClientTest.BridgeIssues.Bridge1339.FooBase.Bar + s);
+                Bridge.Test.Assert.areEqual("String", Bridge.ClientTest.BridgeIssues.Bridge1339.FooBase.Bar + s);
+                Bridge.Test.Assert.areEqual("String", Bridge.ClientTest.BridgeIssues.Bridge1339.FooBase.Bar + s);
+    
+                Bridge.Test.Assert.areEqual("Doing", Bridge.ClientTest.BridgeIssues.Bridge1339.Foo3.Bar + s);
+                Bridge.Test.Assert.areEqual("Doing", Bridge.ClientTest.BridgeIssues.Bridge1339.Foo3.Bar + s);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1339.FooBase', {
+        statics: {
+            Bar: "Str"
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1340', {
         statics: {
             testStructGenericMembersDefaultValue: function () {
@@ -8057,6 +8078,18 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1355', {
+        statics: {
+            testLocalVariableWithNameWindow: function () {
+                var $window = "1";
+                var r = $window;
+    
+                Bridge.Test.Assert.areEqual$1("1", $window, "window");
+                Bridge.Test.Assert.areEqual$1("1", r, "r");
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1374', {
         statics: {
             config: {
@@ -8129,6 +8162,93 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1378', {
+        statics: {
+            config: {
+                properties: {
+                    x: 0
+                }
+            },
+            testAssigmentWithMinusOperator: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1378.setx(1);
+    
+                var a = 4;
+                var b = 2;
+                Bridge.ClientTest.BridgeIssues.Bridge1378.setx(Bridge.ClientTest.BridgeIssues.Bridge1378.getx()-(a - b));
+    
+                Bridge.Test.Assert.areEqual(-1, Bridge.ClientTest.BridgeIssues.Bridge1378.getx());
+            },
+            testAssigmentWithPlusOperator: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1378.setx(1);
+    
+                var a = 4;
+                var b = 2;
+                Bridge.ClientTest.BridgeIssues.Bridge1378.setx(Bridge.ClientTest.BridgeIssues.Bridge1378.getx()+(a + b));
+    
+                Bridge.Test.Assert.areEqual(7, Bridge.ClientTest.BridgeIssues.Bridge1378.getx());
+            },
+            testAssigmentWithOverloadMinusOperator: function () {
+                var $int = new Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper(1);
+                $int = Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper.op_Subtraction($int, ($int = Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper.op_Subtraction($int, new Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper(7))));
+                Bridge.Test.Assert.areEqual(7, $int.toInt());
+            },
+            testAssigmentWithOverloadPlusOperator: function () {
+                var $int = new Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper(3);
+                $int = Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper.op_Addition($int, ($int = Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper.op_Addition($int, new Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper(1))));
+                Bridge.Test.Assert.areEqual(7, $int.toInt());
+            },
+            testAssigmentWithConditionalPlusOperator: function () {
+                var tabSize = 4;
+                var tabLength1 = 0;
+                var text = "        There is two tabs.";
+    
+                for (var i = 0; i < text.length; i = (i + 1) | 0) {
+                    tabLength1 = (tabLength1 + ((text.charCodeAt(i) === 9) ? tabSize : 1)) | 0;
+                }
+    
+                Bridge.Test.Assert.areEqual(26, tabLength1);
+            },
+            testAssigmentWithConditionalMinusOperator: function () {
+                var tabSize = 5;
+                var tabLength1 = 1;
+                var text = "        There is two tabs.";
+    
+                for (var i = 0; i < text.length; i = (i + 1) | 0) {
+                    tabLength1 = (tabLength1 - ((text.charCodeAt(i) === 9) ? tabSize : 1)) | 0;
+                }
+    
+                Bridge.Test.Assert.areEqual(-25, tabLength1);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper', {
+        statics: {
+            op_Addition: function (a, b) {
+                return new Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper(((a.value + b.value) | 0));
+            },
+            op_Subtraction: function (a, b) {
+                return new Bridge.ClientTest.BridgeIssues.Bridge1378.IntWrapper(((a.value - b.value) | 0));
+            }
+        },
+        value: 0,
+        constructor: function (value) {
+            this.value = value;
+        },
+        toInt: function () {
+            return this.value;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1385', {
+        statics: {
+            testIsTypedArray: function () {
+                var value = new Uint8Array(3);
+                Bridge.Test.Assert.true(Bridge.is(value, Array));
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1389', {
         statics: {
             testParamsIndexer: function () {
@@ -8143,6 +8263,123 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         getItem: function (keys) {
             return keys;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391', {
+        statics: {
+            builder: null,
+            getBuilder: function () {
+                var $t, $t1;
+                return ($t = Bridge.ClientTest.BridgeIssues.Bridge1391.builder, $t != null ? $t : (($t1 = new System.Text.StringBuilder(), Bridge.ClientTest.BridgeIssues.Bridge1391.builder = $t1, $t1)));
+            },
+            testStaticCtorOrder: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1391.getBuilder().clear();
+    
+                // Now, types with no Ready/Autorun methods intialized on-demand (when first time accessing the type)
+                var f = new Bridge.ClientTest.BridgeIssues.Bridge1391.Foo();
+                var b = new Bridge.ClientTest.BridgeIssues.Bridge1391.Bar();
+                Bridge.Test.Assert.areEqual("FooBar", Bridge.ClientTest.BridgeIssues.Bridge1391.builder.toString());
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391.Bar', {
+        statics: {
+            i: 0,
+            config: {
+                init: function () {
+                    this.i = Bridge.ClientTest.BridgeIssues.Bridge1391.Bar.init();
+                }
+            },
+            init: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1391.getBuilder().append("Bar");
+                return 0;
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391.Foo', {
+        statics: {
+            constructor: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1391.getBuilder().append("Foo");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391Ready', {
+        statics: {
+            testStaticCtorOrderForClassHavingReady: function () {
+                // Now, types with no Ready/Autorun methods intialized on-demand (when first time accessing the type)
+                // However, classes with [Ready] initializes on Ready
+                var r = Bridge.$N1391Result;
+                Bridge.Test.Assert.areEqual$1("FooReadyBarReady", r, "Bridge.$N1391Result");
+                Bridge.Test.Assert.areEqual$1("FooReadyBarReady", Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.getBuilder().toString(), "Current builder's state");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady', {
+        statics: {
+            builder: null,
+            config: {
+                init: function () {
+                    Bridge.ready(this.runMe);
+                }
+            },
+            getBuilder: function () {
+                var $t, $t1;
+                return ($t = Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.builder, $t != null ? $t : (($t1 = new System.Text.StringBuilder(), Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.builder = $t1, $t1)));
+            },
+            runMe: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.getBuilder().clear();
+    
+                // Now, types with no Ready/Autorun methods intialized on-demand (when first time accessing the type)
+                // However, classes with [Ready] initializes on Ready
+                var f = new Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.FooReady();
+                var b = new Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.BarReady();
+    
+                var r = Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.getBuilder().toString();
+    Bridge.$N1391Result =             r;
+            }
+        },
+        $entryPoint: true
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.BarReady', {
+        statics: {
+            i: 0,
+            config: {
+                init: function () {
+                    this.i = Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.BarReady.initReady();
+                }
+            },
+            initReady: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.getBuilder().append("BarReady");
+                return 0;
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.FooReady', {
+        statics: {
+            constructor: function () {
+                Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.getBuilder().append("FooReady");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1402', {
+        statics: {
+            testLongClipping: function () {
+                var value = System.Int64.MaxValue;
+                Bridge.Test.Assert.areEqual(255, System.Int64.clipu8(value.shr(2)));
+                Bridge.Test.Assert.areEqual(-1, System.Int64.clip8(value.shr(2)));
+                Bridge.Test.Assert.areEqual(-1, System.Int64.clip16(value.shr(2)));
+                Bridge.Test.Assert.areEqual(65535, System.Int64.clipu16(value.shr(2)));
+                Bridge.Test.Assert.areEqual(-1, System.Int64.clip32(value.shr(2)));
+                Bridge.Test.Assert.areEqual(4294967295, System.Int64.clipu32(value.shr(2)));
+            }
         }
     });
     
@@ -8194,6 +8431,54 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         setItem: function (v, value) {
     
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1411', {
+        statics: {
+            testTemplateCtorThing: function () {
+                var c1 = 'test_string';
+                Bridge.Test.Assert.areEqual("test_string", c1);
+    
+                var c2 = new Bridge.ClientTest.BridgeIssues.Bridge1411.Thing("constructor", 1);
+                Bridge.Test.Assert.true(true);
+            },
+            testTemplateCtorDoodad: function () {
+                var c1 = new Bridge.ClientTest.BridgeIssues.Bridge1411.Doodad("constructor");
+                Bridge.Test.Assert.true(true);
+                Bridge.Test.Assert.areDeepEqual(3, c1.getData());
+    
+                var c2 = new Bridge.ClientTest.BridgeIssues.Bridge1411.Doodad("constructor$1", 1);
+                Bridge.Test.Assert.true(true);
+                Bridge.Test.Assert.areDeepEqual(4, c2.getData());
+            },
+            testTemplateCtorGizmo: function () {
+                var c1 = 'test_gizmo5';
+                Bridge.Test.Assert.areEqual("test_gizmo5", c1);
+    
+                var c2 = 'test_gizmo6';
+                Bridge.Test.Assert.areEqual("test_gizmo6", c2);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1411.Thing', {
+        config: {
+            properties: {
+                Data: 0
+            }
+        },
+        constructor: function (x) {
+            // 2
+            this.setData(2);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1411.Gizmo', {
+        config: {
+            properties: {
+                Data: 0
+            }
         }
     });
     
@@ -33910,6 +34195,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     }; });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1339.Foo1', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge1339.FooBase]
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1340.DataClass1$2', function (T, K) { return {
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge1340.DataClass$2(T,K)]
     }; });
@@ -33917,6 +34206,22 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass1$2', function (T, K) { return {
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge1340.StaticDataClass$2(T,K)]
     }; });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1411.Doodad', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge1411.Thing],
+        constructor: function () {
+            Bridge.ClientTest.BridgeIssues.Bridge1411.Thing.prototype.$constructor.call(this);
+    
+            // 3
+            this.setData(3);
+        },
+        constructor$1: function (x) {
+            Bridge.ClientTest.BridgeIssues.Bridge1411.Thing.prototype.$constructor.call(this, x);
+    
+            // 4
+            this.setData(4);
+        }
+    });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge240B', {
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge240A],
@@ -39113,6 +39418,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1339.Foo2', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge1339.Foo1]
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1340.DataClass2$2', function (T, K) { return {
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge1340.DataClass1$2(System.Int32,String)]
     }; });
@@ -39154,6 +39463,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge883_2]
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1339.Foo3', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge1339.Foo2],
+        statics: {
+            Bar: "Do"
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1340.DataClass3$2', function (T, K) { return {
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge1340.DataClass2$2(System.Int32,String)],
         value4: Bridge.getDefaultValue(K),
@@ -39175,6 +39491,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             }
         }
     }; });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1339.Foo4', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge1339.Foo3]
+    });
     
     Bridge.init();
 })(this);

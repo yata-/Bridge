@@ -186,6 +186,11 @@ namespace Bridge.Translator
 
         public override void VisitConstructorDeclaration(ConstructorDeclaration constructorDeclaration)
         {
+            if (this.HasInline(constructorDeclaration) || constructorDeclaration.HasModifier(Modifiers.Extern))
+            {
+                return;
+            }
+
             bool isStatic = constructorDeclaration.HasModifier(Modifiers.Static);
 
             this.FixMethodParameters(constructorDeclaration.Parameters, constructorDeclaration.Body);

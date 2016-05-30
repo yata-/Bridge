@@ -1,5 +1,6 @@
 using Bridge.Contract;
 using Bridge.Contract.Constants;
+using Bridge.Translator.Utils;
 
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
@@ -427,6 +428,10 @@ namespace Bridge.Translator
 
             if (this.ResolveOperator(assignmentExpression, orr, initCount))
             {
+                if (needReturnValue)
+                {
+                    this.Write(")");
+                }
                 return;
             }
 
@@ -589,7 +594,21 @@ namespace Bridge.Translator
             }
             else
             {
+                var wrap = assignmentExpression.Operator != AssignmentOperatorType.Assign
+                    && this.Emitter.Writers.Count > initCount
+                    && !AssigmentExpressionHelper.CheckIsRightAssigmentExpression(assignmentExpression);
+
+                if (wrap)
+                {
+                    this.WriteOpenParentheses();
+                }
+
                 assignmentExpression.Right.AcceptVisitor(this.Emitter);
+
+                if (wrap)
+                {
+                    this.WriteCloseParentheses();
+                }
             }
 
             if (!special && isBool &&

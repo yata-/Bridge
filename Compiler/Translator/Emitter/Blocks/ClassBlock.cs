@@ -36,6 +36,12 @@ namespace Bridge.Translator
             set;
         }
 
+        public bool HasEntryPoint
+        {
+            get;
+            set;
+        }
+
         protected override void DoEmit()
         {
             XmlToJsDoc.EmitComment(this, this.Emitter.Translator.EmitNode);
@@ -183,7 +189,10 @@ namespace Bridge.Translator
                 this.WriteColon();
                 this.BeginBlock();
 
-                new ConstructorBlock(this.Emitter, this.TypeInfo, true).Emit();
+                var ctorBlock = new ConstructorBlock(this.Emitter, this.TypeInfo, true);
+                ctorBlock.Emit();
+                this.HasEntryPoint = ctorBlock.HasEntryPoint;
+
                 new MethodBlock(this.Emitter, this.TypeInfo, true).Emit();
 
                 this.WriteNewLine();
@@ -208,6 +217,13 @@ namespace Bridge.Translator
                     this.Write("$flags: true");
                     this.Emitter.Comma = true;
                 }
+            }
+
+            if (HasEntryPoint)
+            {
+                this.EnsureComma();
+                this.Write("$entryPoint: true");
+                this.Emitter.Comma = true;
             }
 
             var ctorBlock = new ConstructorBlock(this.Emitter, this.TypeInfo, false);

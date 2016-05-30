@@ -29,9 +29,14 @@ namespace Bridge.Translator
                         if (method.Name == Constants.Methods.AUTO_STARTUP_METHOD_NAME && method.HasModifier(Modifiers.Static) && !method.HasModifier(Modifiers.Abstract))
                         {
                             this.Emitter.AutoStartupMethods.Add(this.TypeInfo.Name + "." + method.Name);
-
                             list.Add(string.Format(Constants.Methods.AUTO_STARTUP_METHOD_TEMPLATE, this.Emitter.GetEntityName(method)));
+                            hasReadyAttribute = true;
                         }
+                    }
+
+                    if (hasReadyAttribute)
+                    {
+                        this.HasEntryPoint = true;
                     }
                 }
             }
