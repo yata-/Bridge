@@ -757,7 +757,7 @@ namespace Bridge.Contract
 
                     if (type.DeclaringType.TypeArguments.Count > 0)
                     {
-                        name += "$" + type.TypeArguments.Count;
+                        name += Helpers.PrefixDollar(type.TypeArguments.Count);
                     }
                 }
 
@@ -772,7 +772,7 @@ namespace Bridge.Contract
 
             if (!hasTypeDef && !isCustomName && type.TypeArguments.Count > 0)
             {
-                name += "$" + type.TypeArguments.Count;
+                name += Helpers.PrefixDollar(type.TypeArguments.Count);
             }
 
             return name;

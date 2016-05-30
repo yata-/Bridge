@@ -69,7 +69,7 @@ namespace Bridge.Translator
             this.WriteSpace();
             this.BeginBlock();
             this.WriteNewLine();
-            this.Write(Variables.STEP + " = " + loopStep.Step + ";");
+            this.Write(Variables.ASYNC_STEP + " = " + loopStep.Step + ";");
             this.WriteNewLine();
             this.Write("continue;");
             this.WriteNewLine();

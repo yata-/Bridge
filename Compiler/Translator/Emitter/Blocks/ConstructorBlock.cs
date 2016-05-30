@@ -1,7 +1,10 @@
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using System.Collections.Generic;
+
 using System.Linq;
 
 namespace Bridge.Translator
@@ -60,7 +63,7 @@ namespace Bridge.Translator
             {
                 this.ResetLocals();
                 var prevNamesMap = this.BuildLocalsNamesMap();
-                this.Write("constructor");
+                this.Write(Functions.CONSTRUCTOR);
                 this.WriteColon();
                 this.WriteFunction();
                 this.WriteOpenCloseParentheses(true);
@@ -100,7 +103,7 @@ namespace Bridge.Translator
                 if (this.TypeInfo.StaticMethods.Any(m => m.Value.Any(subm => this.Emitter.GetEntityName(subm) == "config")) ||
                     this.TypeInfo.StaticConfig.Fields.Any(m => m.GetName(this.Emitter) == "config"))
                 {
-                    this.Write("$");
+                    this.Write(Variables.D);
                 }
 
                 this.Write("config");
@@ -176,7 +179,7 @@ namespace Bridge.Translator
             if (this.TypeInfo.InstanceMethods.Any(m => m.Value.Any(subm => this.Emitter.GetEntityName(subm) == "config")) ||
                 this.TypeInfo.InstanceConfig.Fields.Any(m => m.GetName(this.Emitter) == "config"))
             {
-                this.Write("$");
+                this.Write(Variables.D);
             }
 
             this.EnsureComma();
@@ -263,7 +266,7 @@ namespace Bridge.Translator
                 var prevNamesMap = this.BuildLocalsNamesMap();
                 this.AddLocals(ctor.Parameters, ctor.Body);
 
-                var ctorName = "constructor";
+                var ctorName = Functions.CONSTRUCTOR;
 
                 if (this.TypeInfo.Ctors.Count > 1 && ctor.Parameters.Count > 0)
                 {
@@ -355,7 +358,7 @@ namespace Bridge.Translator
             if (initializer.ConstructorInitializerType == ConstructorInitializerType.Base)
             {
                 var baseType = this.Emitter.GetBaseTypeDefinition();
-                var baseName = "constructor";
+                var baseName = Functions.CONSTRUCTOR;
                 if (ctor.Initializer != null && !ctor.Initializer.IsNull)
                 {
                     var member = ((InvocationResolveResult)this.Emitter.Resolver.ResolveNode(ctor.Initializer, this.Emitter)).Member;
@@ -366,9 +369,9 @@ namespace Bridge.Translator
                     }
                 }
 
-                if (baseName == "constructor")
+                if (baseName == Functions.CONSTRUCTOR)
                 {
-                    baseName = "$constructor";
+                    baseName = Functions.DCONSTRUCTOR;
                 }
 
                 string name = null;
@@ -394,7 +397,7 @@ namespace Bridge.Translator
                 this.Write(name, ".prototype");
                 this.WriteDot();
 
-                var baseName = "constructor";
+                var baseName = Functions.CONSTRUCTOR;
                 var member = ((InvocationResolveResult)this.Emitter.Resolver.ResolveNode(ctor.Initializer, this.Emitter)).Member;
                 var overloads = OverloadsCollection.Create(this.Emitter, member);
                 if (overloads.HasOverloads)
@@ -402,9 +405,9 @@ namespace Bridge.Translator
                     baseName = overloads.GetOverloadName();
                 }
 
-                if (baseName == "constructor")
+                if (baseName == Functions.CONSTRUCTOR)
                 {
-                    baseName = "$constructor";
+                    baseName = Functions.DCONSTRUCTOR;
                 }
 
                 this.Write(baseName);

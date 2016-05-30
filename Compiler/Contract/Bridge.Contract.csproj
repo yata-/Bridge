@@ -86,7 +86,7 @@
     <Compile Include="ConfigHelper.cs" />
     <Compile Include="Constants\Attributes.cs" />
     <Compile Include="Constants\Functions.cs" />
-    <Compile Include="Constants\Properties.cs" />
+    <Compile Include="Constants\Fields.cs" />
     <Compile Include="Constants\Variables.cs" />
     <Compile Include="IAnonymousType.cs" />
     <Compile Include="IWriter.cs" />

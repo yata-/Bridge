@@ -121,7 +121,7 @@ namespace Bridge.Translator
             this.Emitter.AsyncBlock.WrittenAwaitExpressions.Add(node);
 
             var index = System.Array.IndexOf(this.Emitter.AsyncBlock.AwaitExpressions, node) + 1;
-            this.Write(Variables.TASK + index + " = ");
+            this.Write(Variables.ASYNC_TASK + index + " = ");
             bool customAwaiter = false;
             var oldValue = this.Emitter.ReplaceAwaiterByVar;
             this.Emitter.ReplaceAwaiterByVar = true;
@@ -152,16 +152,16 @@ namespace Bridge.Translator
 
             this.WriteSemiColon();
             this.WriteNewLine();
-            this.Write(Variables.STEP + " = " + this.Emitter.AsyncBlock.Step + ";");
+            this.Write(Variables.ASYNC_STEP + " = " + this.Emitter.AsyncBlock.Step + ";");
             this.WriteNewLine();
 
             if (this.Emitter.AsyncBlock.IsTaskReturn)
             {
-                this.Write(Variables.TASK + index + ".continueWith($asyncBody);");
+                this.Write(Variables.ASYNC_TASK + index + ".continueWith(" + Functions.ASYNC_BODY + ");");
             }
             else
             {
-                this.Write(Variables.TASK + index + ".continueWith($asyncBody, true);");
+                this.Write(Variables.ASYNC_TASK + index + ".continueWith(" + Functions.ASYNC_BODY + ", true);");
             }
 
             this.WriteNewLine();

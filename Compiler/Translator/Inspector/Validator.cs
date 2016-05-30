@@ -399,7 +399,7 @@ namespace Bridge.Translator
             {
                 if (type.BaseType != null)
                 {
-                    string parentName = type.BaseType.FullName.LeftOf('<').Replace("`", "$");
+                    string parentName = type.BaseType.FullName.LeftOf('<').Replace('`', Variables.D);
 
                     if (!allTypes.ContainsKey(parentName))
                     {

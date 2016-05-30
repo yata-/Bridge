@@ -39,11 +39,11 @@ namespace Bridge.Translator
 
                     if (finallyNode != null)
                     {
-                        this.Write("$returnValue = ");
+                        this.Write(Variables.ASYNC_RETURN_VALUE + " = ");
                     }
                     else
                     {
-                        this.Write("$tcs.setResult(");
+                        this.Write(Variables.ASYNC_TCS + ".setResult(");
                     }
 
                     if (!returnStatement.Expression.IsNull)
@@ -70,7 +70,7 @@ namespace Bridge.Translator
                         Node = finallyNode,
                         Output = this.Emitter.Output
                     });
-                    this.Write(Variables.STEP + " = ${" + hashcode + "};");
+                    this.Write(Variables.ASYNC_STEP + " = " + Helpers.PrefixDollar("{", hashcode, "};"));
                     this.WriteNewLine();
                     this.Write("continue;");
                 }

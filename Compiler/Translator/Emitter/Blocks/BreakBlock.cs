@@ -47,16 +47,16 @@ namespace Bridge.Translator
                         Node = finallyNode,
                         Output = this.Emitter.Output
                     });
-                    this.Write(Variables.STEP + " = ${" + hashcode + "};");
+                    this.Write(Variables.ASYNC_STEP + " = " + Helpers.PrefixDollar("{", hashcode, "};"));
                     this.WriteNewLine();
-                    this.Write("$jumpFromFinally = ");
+                    this.Write(Variables.ASYNC_JUMP + " = ");
                     this.Emitter.JumpStatements.Add(new JumpInfo(this.Emitter.Output, this.Emitter.Output.Length, true));
                     this.WriteSemiColon();
                     this.WriteNewLine();
                 }
                 else
                 {
-                    this.Write(Variables.STEP + " = ");
+                    this.Write(Variables.ASYNC_STEP + " = ");
                     this.Emitter.JumpStatements.Add(new JumpInfo(this.Emitter.Output, this.Emitter.Output.Length, true));
 
                     this.WriteSemiColon();

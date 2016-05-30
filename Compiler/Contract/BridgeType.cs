@@ -1,7 +1,10 @@
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.TypeSystem;
 using Mono.Cecil;
 using Object.Net.Utilities;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -218,7 +221,7 @@ namespace Bridge.Contract
 
                 if (type.DeclaringType.TypeArguments.Count > 0)
                 {
-                    name += "$" + type.TypeArguments.Count;
+                    name += Helpers.PrefixDollar(type.TypeArguments.Count);
                 }
                 names.Add(name);
                 type = type.DeclaringType;
@@ -273,7 +276,7 @@ namespace Bridge.Contract
 
                     if (type.DeclaringType.TypeArguments.Count > 0)
                     {
-                        name += "$" + type.TypeArguments.Count;
+                        name += Helpers.PrefixDollar(type.TypeArguments.Count);
                     }
                 }
 
@@ -288,7 +291,7 @@ namespace Bridge.Contract
 
             if (!hasTypeDef && !isCustomName && type.TypeArguments.Count > 0)
             {
-                name += "$" + type.TypeArguments.Count;
+                name += Helpers.PrefixDollar(type.TypeArguments.Count);
             }
 
             if (!asDefinition && type.TypeArguments.Count > 0 && !Helpers.IsIgnoreGeneric(type, emitter))
@@ -399,7 +402,7 @@ namespace Bridge.Contract
             if (BridgeTypes.convRegex == null)
             {
                 replacements = new System.Collections.Generic.Dictionary<string, string>(4);
-                replacements.Add("`", "$");
+                replacements.Add("`", Variables.D.ToString());
                 replacements.Add("/", ".");
                 replacements.Add("+", ".");
                 replacements.Add("[", "");
@@ -565,7 +568,7 @@ namespace Bridge.Contract
 
                     if (type.DeclaringType.TypeArguments.Count > 0)
                     {
-                        name += "$" + type.TypeArguments.Count;
+                        name += Helpers.PrefixDollar(type.TypeArguments.Count);
                     }
                 }
 
@@ -596,7 +599,7 @@ namespace Bridge.Contract
 
             if (!hasTypeDef && !isCustomName && type.TypeArguments.Count > 0)
             {
-                name += "$" + type.TypeArguments.Count;
+                name += Helpers.PrefixDollar(type.TypeArguments.Count);
             }
 
             if (!asDefinition && type.TypeArguments.Count > 0 && !Helpers.IsIgnoreGeneric(type, emitter))

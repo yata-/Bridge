@@ -38,7 +38,7 @@ namespace Bridge.Translator
         {
             if (this.YieldReturnStatement != null)
             {
-                this.Write("$yield.push");
+                this.Write(Variables.YIELD + ".push");
                 this.WriteOpenParentheses();
                 this.YieldReturnStatement.Expression.AcceptVisitor(this.Emitter);
                 this.WriteCloseParentheses();
@@ -70,7 +70,7 @@ namespace Bridge.Translator
 
         public static void EmitYield(AbstractEmitterBlock block, IType returnType)
         {
-            block.Write("var $yield = []");
+            block.Write("var " + Variables.YIELD + " = []");
 
             block.WriteSemiColon();
             block.WriteNewLine();
@@ -82,11 +82,11 @@ namespace Bridge.Translator
 
             if (returnType != null && returnType.Name == "IEnumerator")
             {
-                block.Write(Types.Array + ".toEnumerator($yield)");
+                block.Write(Types.Array + ".toEnumerator(" + Variables.YIELD +")");
             }
             else
             {
-                block.Write(Types.Array + ".toEnumerable($yield)");
+                block.Write(Types.Array + ".toEnumerable(" + Variables.YIELD + ")");
             }
 
             block.WriteSemiColon();

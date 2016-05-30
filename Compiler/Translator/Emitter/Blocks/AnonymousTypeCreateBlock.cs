@@ -1,5 +1,6 @@
-using System.Text;
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
@@ -91,7 +92,7 @@ namespace Bridge.Translator
         protected virtual IAnonymousTypeConfig CreateAnonymousType(AnonymousType type)
         {
             var config = new AnonymousTypeConfig();
-            config.Name = "Bridge.$AnonymousType$" + (this.Emitter.AnonymousTypes.Count + 1);
+            config.Name = Types.Anonymous + (this.Emitter.AnonymousTypes.Count + 1);
             config.Type = type;
 
             var oldWriter = this.SaveWriter();
@@ -120,7 +121,7 @@ namespace Bridge.Translator
         private void GenereateCtor(AnonymousType type)
         {
             this.EnsureComma();
-            this.Write("constructor: function (");
+            this.Write(Functions.CONSTRUCTOR + ": function (");
             foreach (var property in type.Properties)
             {
                 this.EnsureComma(false);

@@ -77,9 +77,9 @@ namespace Bridge.Translator
                 this.WriteNewLine();
             }
 
-            if (!this.Emitter.Locals.ContainsKey("$async_e"))
+            if (!this.Emitter.Locals.ContainsKey(Variables.ASYNC_E))
             {
-                this.AddLocal("$async_e", AstType.Null);
+                this.AddLocal(Variables.ASYNC_E, AstType.Null);
             }
 
             IAsyncStep finalyStep = null;
@@ -95,7 +95,7 @@ namespace Bridge.Translator
 
                 this.WriteIf();
                 this.WriteOpenParentheses();
-                this.Write("$jumpFromFinally > -1");
+                this.Write(Variables.ASYNC_JUMP + " > -1");
                 this.WriteCloseParentheses();
                 this.WriteSpace();
                 this.BeginBlock();
@@ -107,15 +107,15 @@ namespace Bridge.Translator
                         Node = finallyNode,
                         Output = this.Emitter.Output
                     });
-                    this.Write(Variables.STEP + " = ${" + hashcode + "};");
+                    this.Write(Variables.ASYNC_STEP + " = " + Helpers.PrefixDollar("{", hashcode, "};"));
                     this.WriteNewLine();
                     this.Write("continue;");
                 }
                 else
                 {
-                    this.Write(Variables.STEP + " = $jumpFromFinally;");
+                    this.Write(Variables.ASYNC_STEP + " = " + Variables.ASYNC_JUMP + ";");
                     this.WriteNewLine();
-                    this.Write("$jumpFromFinally = null;");
+                    this.Write(Variables.ASYNC_JUMP + " = null;");
                 }
 
                 this.WriteNewLine();
@@ -125,18 +125,18 @@ namespace Bridge.Translator
                 this.WriteElse();
                 this.WriteIf();
                 this.WriteOpenParentheses();
-                this.Write("$async_e");
+                this.Write(Variables.ASYNC_E);
                 this.WriteCloseParentheses();
                 this.WriteSpace();
                 this.BeginBlock();
 
                 if (this.Emitter.AsyncBlock.IsTaskReturn)
                 {
-                    this.Write("$tcs.setException($async_e);");
+                    this.Write(Variables.ASYNC_TCS + ".setException(" + Variables.ASYNC_E + ");");
                 }
                 else
                 {
-                    this.Write("throw $async_e;");
+                    this.Write("throw " + Variables.ASYNC_E + ";");
                 }
 
                 this.WriteNewLine();
@@ -149,7 +149,7 @@ namespace Bridge.Translator
                 this.WriteElse();
                 this.WriteIf();
                 this.WriteOpenParentheses();
-                this.Write("Bridge.isDefined($returnValue)");
+                this.Write("Bridge.isDefined(" + Variables.ASYNC_RETURN_VALUE +")");
                 this.WriteCloseParentheses();
                 this.WriteSpace();
                 this.BeginBlock();
@@ -162,13 +162,13 @@ namespace Bridge.Translator
                         Node = finallyNode,
                         Output = this.Emitter.Output
                     });
-                    this.Write(Variables.STEP + " = ${" + hashcode + "};");
+                    this.Write(Variables.ASYNC_STEP + " = " + Helpers.PrefixDollar("{", hashcode, "};"));
                     this.WriteNewLine();
                     this.Write("continue;");
                 }
                 else
                 {
-                    this.Write("$tcs.setResult($returnValue);");
+                    this.Write(Variables.ASYNC_TCS + ".setResult(" + Variables.ASYNC_RETURN_VALUE +");");
                     this.WriteNewLine();
                     this.WriteReturn(false);
                     this.WriteSemiColon();
@@ -177,9 +177,9 @@ namespace Bridge.Translator
                 this.WriteNewLine();
                 this.EndBlock();
 
-                if (!this.Emitter.Locals.ContainsKey("$async_e"))
+                if (!this.Emitter.Locals.ContainsKey(Variables.ASYNC_E))
                 {
-                    this.AddLocal("$async_e", AstType.Null);
+                    this.AddLocal(Variables.ASYNC_E, AstType.Null);
                 }
             }
 
@@ -261,7 +261,7 @@ namespace Bridge.Translator
 
                 if (String.IsNullOrEmpty(varName))
                 {
-                    varName = this.AddLocal(this.GetUniqueName("$e"), AstType.Null);
+                    varName = this.AddLocal(this.GetUniqueName(Variables.E), AstType.Null);
                 }
                 else
                 {
@@ -301,7 +301,7 @@ namespace Bridge.Translator
 
             this.WriteCatch();
             this.WriteOpenParentheses();
-            var varName = this.AddLocal(this.GetUniqueName("$e"), AstType.Null);
+            var varName = this.AddLocal(this.GetUniqueName(Variables.E), AstType.Null);
 
             var oldVar = this.Emitter.CatchBlockVariable;
             this.Emitter.CatchBlockVariable = varName;

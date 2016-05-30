@@ -1,10 +1,14 @@
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
+using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
+
 using System.Collections.Generic;
 using System.Linq;
-using ICSharpCode.NRefactory.TypeSystem;
+
 
 namespace Bridge.Translator
 {
@@ -271,15 +275,15 @@ namespace Bridge.Translator
                 }
             }
 
-            string name = "$t";
+            string name = Variables.T;
             int i = 0;
 
             while (this.Emitter.TempVariables.ContainsKey(name) || (this.Emitter.ParentTempVariables != null && this.Emitter.ParentTempVariables.ContainsKey(name)))
             {
-                name = "$t" + ++i;
+                name = Variables.T + ++i;
             }
 
-            name = "$t" + (i > 0 ? i.ToString() : "");
+            name = Variables.T + (i > 0 ? i.ToString() : "");
 
             this.IntroduceTempVar(name);
 

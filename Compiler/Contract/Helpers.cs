@@ -25,7 +25,7 @@ namespace Bridge.Contract
 
         public static string ReplaceSpecialChars(string name)
         {
-            return name.Replace('`', '$').Replace('/', '.').Replace("+", ".");
+            return name.Replace('`', Variables.D).Replace('/', '.').Replace("+", ".");
         }
 
         public static bool HasGenericArgument(GenericInstanceType type, TypeDefinition searchType, IEmitter emitter, bool deep)
@@ -699,12 +699,12 @@ namespace Bridge.Contract
 
         public static string ChangeReservedWord(string name)
         {
-            if (name == "constructor")
+            if (name == Functions.CONSTRUCTOR)
             {
-                return "$constructor$";
+                return Functions.DCONSTRUCTOR + Variables.D;
             }
 
-            return "$" + name;
+            return Helpers.PrefixDollar(name);
         }
 
         public static object GetEnumValue(IEmitter emitter, IType type, object constantValue)
@@ -1050,6 +1050,26 @@ namespace Bridge.Contract
                     return "Float64Array";
             }
             return null;
+        }
+
+        public static string PrefixDollar(params object[] parts)
+        {
+            return Variables.D + string.Join("", parts);
+        }
+
+        public static string ReplaceFirstDollar(string s)
+        {
+            if (s == null)
+            {
+                return s;
+            }
+
+            if (s.StartsWith(Variables.D.ToString()))
+            {
+                return s.Substring(1);
+            }
+
+            return s;
         }
     }
 }

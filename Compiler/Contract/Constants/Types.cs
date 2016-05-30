@@ -11,5 +11,6 @@
         public const string Exception = "System.Exception";
         public const string IBridgeClass = "Bridge.IBridgeClass";
         public const string Int = "Bridge.Int";
+        public const string Anonymous = "Bridge.$AnonymousType$";
     }
 }

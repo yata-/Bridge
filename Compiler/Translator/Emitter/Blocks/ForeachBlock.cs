@@ -41,7 +41,7 @@ namespace Bridge.Translator
         protected virtual string GetNextIteratorName()
         {
             var index = this.Emitter.IteratorCount++;
-            var result = "$i";
+            var result = Variables.ITERATOR;
 
             if (index > 0)
             {
@@ -95,7 +95,7 @@ namespace Bridge.Translator
             this.WriteCloseParentheses();
             this.WriteSemiColon();
             this.WriteNewLine();
-            this.Write(Variables.STEP + " = " + this.Emitter.AsyncBlock.Step + ";");
+            this.Write(Variables.ASYNC_STEP + " = " + this.Emitter.AsyncBlock.Step + ";");
             this.WriteNewLine();
             this.Write("continue;");
             this.WriteNewLine();
@@ -125,7 +125,7 @@ namespace Bridge.Translator
             this.WriteSemiColon();
             this.WriteNewLine();
 
-            this.Write(Variables.STEP + " = " + this.Emitter.AsyncBlock.Step + ";");
+            this.Write(Variables.ASYNC_STEP + " = " + this.Emitter.AsyncBlock.Step + ";");
             this.WriteNewLine();
             this.Write("continue;");
 
@@ -157,7 +157,7 @@ namespace Bridge.Translator
 
             if (!AbstractEmitterBlock.IsJumpStatementLast(this.Emitter.Output.ToString()))
             {
-                this.Write(Variables.STEP + " = " + conditionStep.Step + ";");
+                this.Write(Variables.ASYNC_STEP + " = " + conditionStep.Step + ";");
                 this.WriteNewLine();
                 this.Write("continue;");
                 this.WriteNewLine();

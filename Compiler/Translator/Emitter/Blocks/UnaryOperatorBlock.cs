@@ -333,7 +333,7 @@ namespace Bridge.Translator
                         if (this.Emitter.ReplaceAwaiterByVar)
                         {
                             var index = System.Array.IndexOf(this.Emitter.AsyncBlock.AwaitExpressions, unaryOperatorExpression.Expression) + 1;
-                            this.Write(Variables.TASK_RESULT + index);
+                            this.Write(Variables.ASYNC_TASK_RESULT + index);
                         }
                         else
                         {

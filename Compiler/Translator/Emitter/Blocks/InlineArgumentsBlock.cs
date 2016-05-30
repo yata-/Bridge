@@ -1,14 +1,18 @@
-using System;
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.CSharp.Resolver;
+using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
+using Object.Net.Utilities;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using ICSharpCode.NRefactory.CSharp.Resolver;
-using ICSharpCode.NRefactory.Semantics;
-using Object.Net.Utilities;
+
 
 namespace Bridge.Translator
 {
@@ -293,7 +297,7 @@ namespace Bridge.Translator
                     {
                         if (isNull)
                         {
-                            this.Write("$t");
+                            this.Write(Variables.T);
                         }
                         else if (this.Method.IsExtensionMethod && this.TargetResolveResult is TypeResolveResult)
                         {
@@ -647,7 +651,7 @@ namespace Bridge.Translator
 
             if (isNull)
             {
-                this.Write("$t");
+                this.Write(Variables.T);
                 needComma = true;
             }
             else if (!(this.TargetResolveResult is TypeResolveResult))

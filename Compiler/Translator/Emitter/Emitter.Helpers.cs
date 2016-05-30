@@ -184,7 +184,7 @@ namespace Bridge.Translator
                 this.Output = new StringBuilder();
                 var mrr = new MemberResolveResult(null, member);
                 var argsInfo = new ArgumentsInfo(this, node, mrr);
-                argsInfo.ThisArgument = "$t";
+                argsInfo.ThisArgument = Variables.T;
                 new InlineArgumentsBlock(this, argsInfo, info.Item3, method, mrr).EmitNullableReference();
                 string tpl = this.Output.ToString();
                 this.Output = savedBuilder;
@@ -332,7 +332,7 @@ namespace Bridge.Translator
                 isStatic = method.IsStatic;
                 if (method.IsConstructor)
                 {
-                    name = "constructor";
+                    name = Functions.CONSTRUCTOR;
                 }
             }
             else if (member is FieldDefinition)
@@ -445,7 +445,7 @@ namespace Bridge.Translator
             string name = member.Name;
             if (member is IMethod && ((IMethod)member).IsConstructor)
             {
-                name = "constructor";
+                name = Functions.CONSTRUCTOR;
             }
 
             if (attr != null)
