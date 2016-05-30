@@ -27,5 +27,12 @@ namespace Bridge.ClientTest.BridgeIssues
             IInterface value = new Class();
             Assert.AreEqual(1, value.Function());
         }
+
+        [Test]
+        public static void TestClassNotDefaultParameter()
+        {
+            var value = new Class();
+            Assert.AreEqual(2, value.Function(2));
+        }
     }
 }

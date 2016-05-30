@@ -6641,6 +6641,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             testInterfaceDefaultParameter: function () {
                 var value = new Bridge.ClientTest.BridgeIssues.Bridge1313.Class();
                 Bridge.Test.Assert.areEqual(1, value.function(1));
+            },
+            testClassNotDefaultParameter: function () {
+                var value = new Bridge.ClientTest.BridgeIssues.Bridge1313.Class();
+                Bridge.Test.Assert.areEqual(2, value.function(2));
             }
         }
     });
