@@ -354,11 +354,15 @@ namespace Bridge.Translator
                 string[] names = new string[result.Length];
                 bool named = false;
                 int i = 0;
+                bool isInterfaceMember = false;
 
                 if (resolveResult.Member != null)
                 {
                     var inlineStr = this.Emitter.GetInline(resolveResult.Member);
                     named = !string.IsNullOrEmpty(inlineStr);
+
+                    isInterfaceMember = resolveResult.Member.DeclaringTypeDefinition != null &&
+                                        resolveResult.Member.DeclaringTypeDefinition.Kind == TypeKind.Interface;
                 }
 
                 foreach (var arg in arguments)
@@ -418,7 +422,7 @@ namespace Bridge.Translator
                         {
                             t = p.ConstantValue;
                         }
-                        if (named && !p.IsParams)
+                        if ((named || isInterfaceMember) && !p.IsParams)
                         {
                             if (t == null)
                             {
