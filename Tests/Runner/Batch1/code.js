@@ -3479,7 +3479,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 }
             },
             testPropertyOps: function () {
-                var $t;
+                var $t, $t1, $t2;
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(System.Decimal(5.0));
     
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().div(System.Decimal(2)));
@@ -3494,20 +3494,20 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().inc());
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.5), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(3.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().div(System.Decimal(2))), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1())));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(3.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().div(System.Decimal(2)), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1($t), $t)));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(3.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().add(System.Decimal(1))), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1())));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t1 = Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().add(System.Decimal(1)), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1($t1), $t1)));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1(), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1($t.inc()), $t)));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t2 = Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1(), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1($t2.inc()), $t2)));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(5.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1(), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1($t.inc()), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1())));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t2 = Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1(), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1($t2.inc()), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1())));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
             },
             testIndexerOps: function () {
-                var $t;
+                var $t, $t1, $t2;
                 var app = new Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal();
                 app.setItem(0, System.Decimal(5.0));
     
@@ -3523,20 +3523,20 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 app.setItem(0, app.getItem(0).inc());
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.5), app.getItem(0));
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(3.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((app.setItem(0, app.getItem(0).div(System.Decimal(2))), app.getItem(0))));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(3.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = app.getItem(0).div(System.Decimal(2)), app.setItem(0, $t), $t)));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(3.25), app.getItem(0));
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((app.setItem(0, app.getItem(0).add(System.Decimal(1))), app.getItem(0))));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t1 = app.getItem(0).add(System.Decimal(1)), app.setItem(0, $t1), $t1)));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), app.getItem(0));
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = app.getItem(0), app.setItem(0, $t.inc()), $t)));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t2 = app.getItem(0), app.setItem(0, $t2.inc()), $t2)));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(5.25), app.getItem(0));
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = app.getItem(0), app.setItem(0, $t.inc()), app.getItem(0))));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t2 = app.getItem(0), app.setItem(0, $t2.inc()), app.getItem(0))));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.25), app.getItem(0));
             },
             testDictOps: function () {
-                var $t;
+                var $t, $t1, $t2;
                 var dict = Bridge.merge(new System.Collections.Generic.Dictionary$2(System.Int32,System.Decimal)(), [
                     [0, System.Decimal(5.0)]
                 ] );
@@ -3553,16 +3553,16 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 dict.set(0, dict.get(0).inc());
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.5), dict.get(0));
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(3.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((dict.set(0, dict.get(0).div(System.Decimal(2))), dict.get(0))));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(3.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = dict.get(0).div(System.Decimal(2)), dict.set(0, $t), $t)));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(3.25), dict.get(0));
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method((dict.set(0, dict.get(0).add(System.Decimal(1))), dict.get(0))));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t1 = dict.get(0).add(System.Decimal(1)), dict.set(0, $t1), $t1)));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), dict.get(0));
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = dict.get(0), dict.set(0, $t.inc()), $t)));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t2 = dict.get(0), dict.set(0, $t2.inc()), $t2)));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(5.25), dict.get(0));
     
-                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = dict.get(0), dict.set(0, $t.inc()), dict.get(0))));
+                Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.25), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t2 = dict.get(0), dict.set(0, $t2.inc()), dict.get(0))));
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.25), dict.get(0));
             },
             testVariableOps: function () {
@@ -3624,6 +3624,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 }
             },
             testPropertyOps: function () {
+                var $t, $t1, $t2, $t3;
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.setProp1(5);
     
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.setProp1((Bridge.Int.div(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.getProp1(), 2)) | 0);
@@ -3638,19 +3639,20 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.setProp1((Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.getProp1() + 1) | 0);
                 Bridge.Test.Assert.areEqual(6, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.getProp1());
     
-                Bridge.Test.Assert.areEqual(3, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method((Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.setProp1((Bridge.Int.div(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.getProp1(), 2)) | 0), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.getProp1())));
+                Bridge.Test.Assert.areEqual(3, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method(($t = (Bridge.Int.div(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.getProp1(), 2)) | 0, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.setProp1($t), $t)));
                 Bridge.Test.Assert.areEqual(3, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.getProp1());
     
-                Bridge.Test.Assert.areEqual(4, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method((Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.setProp1((Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.getProp1() + 1) | 0), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.getProp1())));
+                Bridge.Test.Assert.areEqual(4, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method(($t1 = (Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.getProp1() + 1) | 0, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.setProp1($t1), $t1)));
                 Bridge.Test.Assert.areEqual(4, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.getProp1());
     
-                Bridge.Test.Assert.areEqual(4, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method(Bridge.identity(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.getProp1(), (Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.setProp1((Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.getProp1() + 1) | 0), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.getProp1()))));
+                Bridge.Test.Assert.areEqual(4, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method(Bridge.identity(Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.getProp1(), ($t2 = (Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.getProp1() + 1) | 0, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.setProp1($t2), $t2))));
                 Bridge.Test.Assert.areEqual(5, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.getProp1());
     
-                Bridge.Test.Assert.areEqual(6, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method(((Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.setProp1((Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.getProp1() + 1) | 0), Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.getProp1()))));
+                Bridge.Test.Assert.areEqual(6, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method((($t3 = (Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.getProp1() + 1) | 0, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.setProp1($t3), $t3))));
                 Bridge.Test.Assert.areEqual(6, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.getProp1());
             },
             testIndexerOps: function () {
+                var $t, $t1, $t2, $t3;
                 var app = new Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer();
                 app.setItem(0, 5);
     
@@ -3666,19 +3668,20 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 app.setItem(0, (app.getItem(0) + 1) | 0);
                 Bridge.Test.Assert.areEqual(6, app.getItem(0));
     
-                Bridge.Test.Assert.areEqual(3, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method((app.setItem(0, (Bridge.Int.div(app.getItem(0), 2)) | 0), app.getItem(0))));
+                Bridge.Test.Assert.areEqual(3, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method(($t = (Bridge.Int.div(app.getItem(0), 2)) | 0, app.setItem(0, $t), $t)));
                 Bridge.Test.Assert.areEqual(3, app.getItem(0));
     
-                Bridge.Test.Assert.areEqual(4, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method((app.setItem(0, (app.getItem(0) + 1) | 0), app.getItem(0))));
+                Bridge.Test.Assert.areEqual(4, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method(($t1 = (app.getItem(0) + 1) | 0, app.setItem(0, $t1), $t1)));
                 Bridge.Test.Assert.areEqual(4, app.getItem(0));
     
-                Bridge.Test.Assert.areEqual(4, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method(Bridge.identity(app.getItem(0), (app.setItem(0, (app.getItem(0) + 1) | 0), app.getItem(0)))));
+                Bridge.Test.Assert.areEqual(4, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method(Bridge.identity(app.getItem(0), ($t2 = (app.getItem(0) + 1) | 0, app.setItem(0, $t2), $t2))));
                 Bridge.Test.Assert.areEqual(5, app.getItem(0));
     
-                Bridge.Test.Assert.areEqual(6, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method(((app.setItem(0, (app.getItem(0) + 1) | 0), app.getItem(0)))));
+                Bridge.Test.Assert.areEqual(6, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method((($t3 = (app.getItem(0) + 1) | 0, app.setItem(0, $t3), $t3))));
                 Bridge.Test.Assert.areEqual(6, app.getItem(0));
             },
             testDictOps: function () {
+                var $t, $t1, $t2, $t3;
                 var dict = Bridge.merge(new System.Collections.Generic.Dictionary$2(System.Int32,System.Int32)(), [
                     [0, 5]
                 ] );
@@ -3695,16 +3698,16 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 dict.set(0, (dict.get(0) + 1) | 0);
                 Bridge.Test.Assert.areEqual(6, dict.get(0));
     
-                Bridge.Test.Assert.areEqual(3, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method((dict.set(0, (Bridge.Int.div(dict.get(0), 2)) | 0), dict.get(0))));
+                Bridge.Test.Assert.areEqual(3, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method(($t = (Bridge.Int.div(dict.get(0), 2)) | 0, dict.set(0, $t), $t)));
                 Bridge.Test.Assert.areEqual(3, dict.get(0));
     
-                Bridge.Test.Assert.areEqual(4, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method((dict.set(0, (dict.get(0) + 1) | 0), dict.get(0))));
+                Bridge.Test.Assert.areEqual(4, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method(($t1 = (dict.get(0) + 1) | 0, dict.set(0, $t1), $t1)));
                 Bridge.Test.Assert.areEqual(4, dict.get(0));
     
-                Bridge.Test.Assert.areEqual(4, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method(Bridge.identity(dict.get(0), (dict.set(0, (dict.get(0) + 1) | 0), dict.get(0)))));
+                Bridge.Test.Assert.areEqual(4, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method(Bridge.identity(dict.get(0), ($t2 = (dict.get(0) + 1) | 0, dict.set(0, $t2), $t2))));
                 Bridge.Test.Assert.areEqual(5, dict.get(0));
     
-                Bridge.Test.Assert.areEqual(6, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method(((dict.set(0, (dict.get(0) + 1) | 0), dict.get(0)))));
+                Bridge.Test.Assert.areEqual(6, Bridge.ClientTest.BridgeIssues.Bridge1041.Bridge1041Integer.method((($t3 = (dict.get(0) + 1) | 0, dict.set(0, $t3), $t3))));
                 Bridge.Test.Assert.areEqual(6, dict.get(0));
             },
             testVariableOps: function () {
@@ -6473,6 +6476,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     $jumpFromFinally, 
                     $tcs = new System.Threading.Tasks.TaskCompletionSource(), 
                     $returnValue, 
+                    $t, 
                     $async_e, 
                     $asyncBody = Bridge.fn.bind(this, function () {
                         try {
@@ -6487,7 +6491,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                     }
                                     case 1: {
                                         $taskResult1 = $task1.getAwaitedResult();
-                                        $tcs.setResult((Bridge.ClientTest.BridgeIssues.Bridge1305.currentInt = $taskResult1, Bridge.ClientTest.BridgeIssues.Bridge1305.currentInt));
+                                        $tcs.setResult(($t = $taskResult1, Bridge.ClientTest.BridgeIssues.Bridge1305.currentInt = $t, $t));
                                         return;
                                     }
                                     default: {
@@ -6512,6 +6516,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     $jumpFromFinally, 
                     $tcs = new System.Threading.Tasks.TaskCompletionSource(), 
                     $returnValue, 
+                    $t, 
                     $async_e, 
                     $asyncBody = Bridge.fn.bind(this, function () {
                         try {
@@ -6528,7 +6533,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                     }
                                     case 1: {
                                         $taskResult1 = $task1.getAwaitedResult();
-                                        $tcs.setResult((Bridge.ClientTest.BridgeIssues.Bridge1305.currentDataClass = $taskResult1, Bridge.ClientTest.BridgeIssues.Bridge1305.currentDataClass));
+                                        $tcs.setResult(($t = $taskResult1, Bridge.ClientTest.BridgeIssues.Bridge1305.currentDataClass = $t, $t));
                                         return;
                                     }
                                     default: {
@@ -6553,6 +6558,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     $jumpFromFinally, 
                     $tcs = new System.Threading.Tasks.TaskCompletionSource(), 
                     $returnValue, 
+                    $t, 
                     $async_e, 
                     $asyncBody = Bridge.fn.bind(this, function () {
                         try {
@@ -6569,7 +6575,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                     }
                                     case 1: {
                                         $taskResult1 = $task1.getAwaitedResult();
-                                        $tcs.setResult((Bridge.ClientTest.BridgeIssues.Bridge1305.currentDataStruct = $taskResult1, Bridge.ClientTest.BridgeIssues.Bridge1305.currentDataStruct));
+                                        $tcs.setResult(($t = $taskResult1, Bridge.ClientTest.BridgeIssues.Bridge1305.currentDataStruct = $t, $t));
                                         return;
                                     }
                                     default: {
@@ -8264,8 +8270,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         statics: {
             builder: null,
             getBuilder: function () {
-                var $t;
-                return ($t = Bridge.ClientTest.BridgeIssues.Bridge1391.builder, $t != null ? $t : ((Bridge.ClientTest.BridgeIssues.Bridge1391.builder = new System.Text.StringBuilder(), Bridge.ClientTest.BridgeIssues.Bridge1391.builder)));
+                var $t, $t1;
+                return ($t = Bridge.ClientTest.BridgeIssues.Bridge1391.builder, $t != null ? $t : (($t1 = new System.Text.StringBuilder(), Bridge.ClientTest.BridgeIssues.Bridge1391.builder = $t1, $t1)));
             },
             testStaticCtorOrder: function () {
                 Bridge.ClientTest.BridgeIssues.Bridge1391.getBuilder().clear();
@@ -8322,8 +8328,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 }
             },
             getBuilder: function () {
-                var $t;
-                return ($t = Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.builder, $t != null ? $t : ((Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.builder = new System.Text.StringBuilder(), Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.builder)));
+                var $t, $t1;
+                return ($t = Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.builder, $t != null ? $t : (($t1 = new System.Text.StringBuilder(), Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.builder = $t1, $t1)));
             },
             runMe: function () {
                 Bridge.ClientTest.BridgeIssues.Bridge1391ToRunInitializationOnReady.getBuilder().clear();
@@ -8374,6 +8380,57 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual(-1, System.Int64.clip32(value.shr(2)));
                 Bridge.Test.Assert.areEqual(4294967295, System.Int64.clipu32(value.shr(2)));
             }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1410', {
+        statics: {
+            setX: function (value) {
+            },
+            getProp1: function () {
+                return 5;
+            },
+            setProp1: function (value) {
+    
+            },
+            method1: function () {
+                return (Bridge.ClientTest.BridgeIssues.Bridge1410.setX(5.0), 5.0);
+            },
+            method2: function (i) {
+                return i;
+            },
+            testSetterOnly: function () {
+                Bridge.Test.Assert.areEqual(5, Bridge.ClientTest.BridgeIssues.Bridge1410.method1());
+            },
+            testIndexer: function () {
+                var $t, $t1;
+                var app = new Bridge.ClientTest.BridgeIssues.Bridge1410();
+                Bridge.Test.Assert.areEqual(2, (app.setItem(0, 2), 2));
+                Bridge.Test.Assert.areEqual(2, Bridge.ClientTest.BridgeIssues.Bridge1410.method2(($t = (Bridge.Int.div(app.getItem(0), 2)) | 0, app.setItem(0, $t), $t)));
+                Bridge.Test.Assert.areEqual(6, Bridge.ClientTest.BridgeIssues.Bridge1410.method2(($t1 = (app.getItem(0) + 1) | 0, app.setItem(0, $t1), $t1)));
+            },
+            testAssigmentWithOp: function () {
+                var $t, $t1;
+                var result = "test_";
+                var itm = "item";
+                var handler = function () {
+                    return (result = result + itm);
+                };
+    
+                var str = handler();
+                Bridge.Test.Assert.areEqual(str, result);
+                Bridge.Test.Assert.areEqual("test_item", str);
+    
+                Bridge.Test.Assert.areEqual(2, (Bridge.ClientTest.BridgeIssues.Bridge1410.setProp1(2), 2));
+                Bridge.Test.Assert.areEqual(2, Bridge.ClientTest.BridgeIssues.Bridge1410.method2(($t = (Bridge.Int.div(Bridge.ClientTest.BridgeIssues.Bridge1410.getProp1(), 2)) | 0, Bridge.ClientTest.BridgeIssues.Bridge1410.setProp1($t), $t)));
+                Bridge.Test.Assert.areEqual(6, Bridge.ClientTest.BridgeIssues.Bridge1410.method2(($t1 = (Bridge.ClientTest.BridgeIssues.Bridge1410.getProp1() + 1) | 0, Bridge.ClientTest.BridgeIssues.Bridge1410.setProp1($t1), $t1)));
+            }
+        },
+        getItem: function (v) {
+            return 5;
+        },
+        setItem: function (v, value) {
+    
         }
     });
     
@@ -10114,7 +10171,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 while ($t.moveNext()) {
                     (function () {
                         var itm = $t.getCurrent();
-                        handlers[Bridge.identity(i, (i = (i + 1) | 0))] = function () {
+                        handlers[((i++) | 0)] = function () {
                             result += itm;
                         };
                     }).call(this);
@@ -10135,7 +10192,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 while ($t2.moveNext()) {
                     (function () {
                         var itm1 = $t2.getCurrent();
-                        handlers[Bridge.identity(i, (i = (i + 1) | 0))] = function () {
+                        handlers[((i++) | 0)] = function () {
                             result += itm1;
                         };
                     }).call(this);
@@ -10156,10 +10213,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var i = 0;
                 var result = "";
     
-                for (var j = 0; j < keys.length; j = (j + 1) | 0) {
+                for (var j = 0; j < keys.length; ((j++) | 0)) {
                     (function () {
                         var itm = keys[j];
-                        handlers[Bridge.identity(i, (i = (i + 1) | 0))] = function () {
+                        handlers[((i++) | 0)] = function () {
                             result += itm;
                         };
                     }).call(this);
@@ -12441,27 +12498,28 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 return i;
             },
             testUseCase: function () {
+                var $t;
                 var c1 = new Bridge.ClientTest.BridgeIssues.Bridge722();
                 var asset1 = 1;
-                asset1 = (c1.setItem("path", 2), c1.getItem("path"));
+                asset1 = (c1.setItem("path", 2), 2);
     
                 Bridge.Test.Assert.areEqual$1(2, asset1, "Bridge722 asset1");
-                Bridge.Test.Assert.areEqual$1(3, Bridge.ClientTest.BridgeIssues.Bridge722.m1((c1.setItem("path", 3), c1.getItem("path"))), "Bridge722 M1 3");
-                Bridge.Test.Assert.areEqual$1(4, Bridge.ClientTest.BridgeIssues.Bridge722.m1((asset1 = (c1.setItem("path", 4), c1.getItem("path")))), "Bridge722 M1 4");
+                Bridge.Test.Assert.areEqual$1(3, Bridge.ClientTest.BridgeIssues.Bridge722.m1((c1.setItem("path", 3), 3)), "Bridge722 M1 3");
+                Bridge.Test.Assert.areEqual$1(4, Bridge.ClientTest.BridgeIssues.Bridge722.m1((asset1 = (c1.setItem("path", 4), 4))), "Bridge722 M1 4");
     
                 var c2 = new Bridge.$AnonymousType$14();
-                var asset2 = (c2.path = 5, c2.path);
+                var asset2 = (c2.path = 5, 5);
                 Bridge.Test.Assert.areEqual$1(5, asset2, "Bridge722 asset2");
                 Bridge.Test.Assert.areEqual$1(5, c2.path, "Bridge722 c2");
     
                 var c3 = new System.Collections.Generic.Dictionary$2(String,System.Int32)();
-                var asset3 = (c3.set("path", 6), c3.get("path"));
+                var asset3 = (c3.set("path", 6), 6);
                 Bridge.Test.Assert.areEqual$1(6, asset3, "Bridge722 asset3");
                 Bridge.Test.Assert.areEqual$1(6, c3.get("path"), "Bridge722 c3");
     
                 var data4 = [System.Decimal(1.0), System.Decimal(2.0), System.Decimal(3.0), System.Decimal(4.0), System.Decimal(7.0)];
                 var c4 = new System.Collections.Generic.Dictionary$2(String,System.Decimal)();
-                var asset4 = (c4.set("path", System.Linq.Enumerable.from(data4).select($_.Bridge.ClientTest.BridgeIssues.Bridge722.f1).last()), c4.get("path"));
+                var asset4 = ($t = System.Linq.Enumerable.from(data4).select($_.Bridge.ClientTest.BridgeIssues.Bridge722.f1).last(), c4.set("path", $t), $t);
                 Bridge.Test.Assert.areDeepEqual$1(System.Decimal(7.0), asset4, "Bridge722 asset4");
                 Bridge.Test.Assert.areDeepEqual$1(System.Decimal(7.0), c4.get("path"), "Bridge722 c4");
             }
@@ -12773,6 +12831,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 return null;
             },
             testUseCase: function () {
+                var $t;
                 var o = new Bridge.$AnonymousType$14();
                 o;
                 {
@@ -12780,12 +12839,12 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     Bridge.Test.Assert.areEqual$1(555, i, "Bridge777 i");
                 }
     
-                Bridge.ClientTest.BridgeIssues.Bridge777.method((Bridge.ClientTest.BridgeIssues.Bridge777.setSomeProperty(o), Bridge.ClientTest.BridgeIssues.Bridge777.getSomeProperty()));
+                Bridge.ClientTest.BridgeIssues.Bridge777.method((Bridge.ClientTest.BridgeIssues.Bridge777.setSomeProperty(o), o));
                 {
                     Bridge.Test.Assert.notNull$1(Bridge.ClientTest.BridgeIssues.Bridge777.getSomeProperty(), "Bridge777 SomeProperty");
                 }
     
-                (Bridge.ClientTest.BridgeIssues.Bridge777.setP1((Bridge.ClientTest.BridgeIssues.Bridge777.setP2(o), Bridge.ClientTest.BridgeIssues.Bridge777.getP2())), Bridge.ClientTest.BridgeIssues.Bridge777.getP1());
+                ($t = (Bridge.ClientTest.BridgeIssues.Bridge777.setP2(o), o), Bridge.ClientTest.BridgeIssues.Bridge777.setP1($t), $t);
                 {
                     Bridge.Test.Assert.notNull$1(Bridge.ClientTest.BridgeIssues.Bridge777.getP1(), "Bridge777 P1");
                     Bridge.Test.Assert.notNull$1(Bridge.ClientTest.BridgeIssues.Bridge777.getP2(), "Bridge777 P2");
@@ -13650,7 +13709,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge861, {
         f1: function (data) {
-            Bridge.identity(data.getMyId(), (data.setMyId((data.getMyId() + 1) | 0), data.getMyId()));
+            var $t;
+            Bridge.identity(data.getMyId(), ($t = (data.getMyId() + 1) | 0, data.setMyId($t), $t));
         },
         f2: function (data) {
             data.setMyId(0);
@@ -14792,27 +14852,27 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual(dict.get(0), 1);
                 Bridge.Test.Assert.areEqual(i, 1);
     
-                i = (dict.set(0, 2), dict.get(0));
+                i = (dict.set(0, 2), 2);
                 Bridge.Test.Assert.areEqual(dict.get(0), 2);
                 Bridge.Test.Assert.areEqual(i, 2);
     
-                dict.set(0, (Bridge.ClientTest.BridgeIssues.Bridge991.setProp(3), Bridge.ClientTest.BridgeIssues.Bridge991.getProp()));
+                dict.set(0, (Bridge.ClientTest.BridgeIssues.Bridge991.setProp(3), 3));
                 Bridge.Test.Assert.areEqual(dict.get(0), 3);
                 Bridge.Test.Assert.areEqual(Bridge.ClientTest.BridgeIssues.Bridge991.getProp(), 3);
     
-                Bridge.ClientTest.BridgeIssues.Bridge991.setProp((dict.set(0, 4), dict.get(0)));
+                Bridge.ClientTest.BridgeIssues.Bridge991.setProp((dict.set(0, 4), 4));
                 Bridge.Test.Assert.areEqual(dict.get(0), 4);
                 Bridge.Test.Assert.areEqual(Bridge.ClientTest.BridgeIssues.Bridge991.getProp(), 4);
     
-                dict.set(0, (Bridge.ClientTest.BridgeIssues.Bridge991.setProp(5), Bridge.ClientTest.BridgeIssues.Bridge991.getProp()));
+                dict.set(0, (Bridge.ClientTest.BridgeIssues.Bridge991.setProp(5), 5));
                 Bridge.Test.Assert.areEqual(dict.get(0), 5);
                 Bridge.Test.Assert.areEqual(Bridge.ClientTest.BridgeIssues.Bridge991.getProp(), 5);
     
-                Bridge.ClientTest.BridgeIssues.Bridge991.setProp((dict.set(0, 6), dict.get(0)));
+                Bridge.ClientTest.BridgeIssues.Bridge991.setProp((dict.set(0, 6), 6));
                 Bridge.Test.Assert.areEqual(dict.get(0), 6);
                 Bridge.Test.Assert.areEqual(Bridge.ClientTest.BridgeIssues.Bridge991.getProp(), 6);
     
-                dict.set(0, (dict.set(1, 7), dict.get(1)));
+                dict.set(0, (dict.set(1, 7), 7));
                 Bridge.Test.Assert.areEqual(dict.get(0), 7);
                 Bridge.Test.Assert.areEqual(dict.get(1), 7);
             }
