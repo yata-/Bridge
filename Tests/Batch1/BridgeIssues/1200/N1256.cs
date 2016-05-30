@@ -8,8 +8,8 @@ namespace Bridge.ClientTest.BridgeIssues
     [TestFixture(TestNameFormat = "#1256 - {0}")]
     public class Bridge1256
     {
-        // "constructor" excluded
-        static readonly string[] reservedWords = new string[] { "abstract", "arguments", "as", "boolean", "break", "byte", "case", "catch", "char", "class", "continue", "const", /*"constructor",*/ "debugger", "default", "delete", "do", "double", "else", "enum", "eval", "export", "extends", "false", "final", "finally", "float", "for", "function", "goto", "if", "implements", "import", "in", "instanceof", "int", "interface", "let", "long", "namespace", "native", "new", "null", "package", "private", "protected", "public", "return", "short", "static", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "typeof", "use", "var", "void", "volatile", "while", "with", "yield" };
+        // "constructor", "__proto__" excluded
+        static readonly string[] reservedWords = new string[] { "abstract", "arguments", "as", "boolean", "break", "byte", "case", "catch", "char", "class", "continue", "const", /*"constructor",*/ "debugger", "default", "delete", "do", "double", "else", "enum", "eval", "export", "extends", "false", "final", "finally", "float", "for", "function", "goto", "if", "implements", "import", "in", "instanceof", "int", "interface", "let", "long", "namespace", "native", "new", "null", "package", "private", "protected", "public", "return", "short", "static", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "typeof", "use", "var", "void", "volatile", "window", "while", "with", "yield" };
 
         static bool IsReservedWord(string word)
         {
@@ -40,12 +40,9 @@ namespace Bridge.ClientTest.BridgeIssues
                 return;
             }
 
-            int i = 1;
             foreach (var name in reservedWords)
             {
-                //Assert.NotNull(o[name], "Expected " + i + " for property " + name);
                 Assert.NotNull(o[name], "Member "  + name + " exists");
-                i++;
             }
         }
 
@@ -116,6 +113,7 @@ namespace Bridge.ClientTest.BridgeIssues
             private bool Var = true;
             private bool Void = true;
             private bool Volatile = true;
+            private bool Window = true;
             private bool While = true;
             private bool With = true;
             private bool Yield = true;
@@ -187,6 +185,7 @@ namespace Bridge.ClientTest.BridgeIssues
             private int Var() { return 62; }
             private int Void() { return 63; }
             private int Volatile() { return 64; }
+            private int Window() { return 65; }
             private int While() { return 65; }
             private int With() { return 66; }
             private int Yield() { return 67; }
@@ -212,7 +211,7 @@ namespace Bridge.ClientTest.BridgeIssues
             Assert.AreEqual(5, Let());
         }
 
-        [Test(ExpectedCount = 66)]
+        [Test(ExpectedCount = 67)]
         public static void TestReservedFields()
         {
             var a = new ReservedFields();
@@ -220,7 +219,7 @@ namespace Bridge.ClientTest.BridgeIssues
             TestFields(a);
         }
 
-        [Test(ExpectedCount = 66)]
+        [Test(ExpectedCount = 67)]
         public static void TestReservedMethods()
         {
             var a = new ReservedMethods();

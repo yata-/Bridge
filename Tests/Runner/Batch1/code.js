@@ -5771,7 +5771,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             is: true,
             config: {
                 init: function () {
-                    this.reservedWords = ["abstract", "arguments", "as", "boolean", "break", "byte", "case", "catch", "char", "class", "continue", "const", "debugger", "default", "delete", "do", "double", "else", "enum", "eval", "export", "extends", "false", "final", "finally", "float", "for", "function", "goto", "if", "implements", "import", "in", "instanceof", "int", "interface", "let", "long", "namespace", "native", "new", "null", "package", "private", "protected", "public", "return", "short", "static", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "typeof", "use", "var", "void", "volatile", "while", "with", "yield"];
+                    this.reservedWords = ["abstract", "arguments", "as", "boolean", "break", "byte", "case", "catch", "char", "class", "continue", "const", "debugger", "default", "delete", "do", "double", "else", "enum", "eval", "export", "extends", "false", "final", "finally", "float", "for", "function", "goto", "if", "implements", "import", "in", "instanceof", "int", "interface", "let", "long", "namespace", "native", "new", "null", "package", "private", "protected", "public", "return", "short", "static", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "typeof", "use", "var", "void", "volatile", "window", "while", "with", "yield"];
                 }
             },
             isReservedWord: function (word) {
@@ -5799,13 +5799,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     return;
                 }
     
-                var i = 1;
                 $t = Bridge.getEnumerator(Bridge.ClientTest.BridgeIssues.Bridge1256.reservedWords);
                 while ($t.moveNext()) {
                     var name = $t.getCurrent();
-                    //Assert.NotNull(o[name], "Expected " + i + " for property " + name);
                     Bridge.Test.Assert.notNull$1(o[name], "Member " + name + " exists");
-                    i = (i + 1) | 0;
                 }
             },
             let: function () {
@@ -5901,6 +5898,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         var: true,
         void: true,
         volatile: true,
+        window: true,
         while: true,
         with: true,
         yield: true
@@ -6098,6 +6096,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         volatile: function () {
             return 64;
+        },
+        window: function () {
+            return 65;
         },
         while: function () {
             return 65;
@@ -8090,6 +8091,18 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1343.M', {
         getHashCode: function () {
             return Bridge.getHashCode(System.String.format("{0} {1}", 1, 2));
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1344', {
+        statics: {
+            testLocalVariableWithNameProto: function () {
+                var $__proto__ = "1";
+                var r = $__proto__;
+    
+                Bridge.Test.Assert.areEqual$1("1", $__proto__, "$__proto__");
+                Bridge.Test.Assert.areEqual$1("1", r, "r");
+            }
         }
     });
     

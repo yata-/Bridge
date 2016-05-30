@@ -1201,6 +1201,7 @@
                 QUnit.test("#1341 - Test5AnonymousType", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.test5AnonymousType);
                 QUnit.test("#1343 - TestDoubleTemplate", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1343.testDoubleTemplate);
                 QUnit.test("#1343 - TestInlineInGetHashCode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1343.testInlineInGetHashCode);
+                QUnit.test("#1344 - TestLocalVariableWithNameProto", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1344.testLocalVariableWithNameProto);
                 QUnit.test("#1355 - TestLocalVariableWithNameWindow", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1355.testLocalVariableWithNameWindow);
                 QUnit.test("#1374 - TestConvertAllForIntListStaticMethod", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1374.testConvertAllForIntListStaticMethod);
                 QUnit.test("#1374 - TestConvertAllForIntListInstanceMethod", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1374.testConvertAllForIntListInstanceMethod);
@@ -3553,11 +3554,11 @@
                 Bridge.ClientTest.BridgeIssues.Bridge1256.testCaseBooleanIsLet();
             },
             testReservedFields: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1256).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256, 66);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1256).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256, 67);
                 Bridge.ClientTest.BridgeIssues.Bridge1256.testReservedFields();
             },
             testReservedMethods: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1256).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256, 66);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1256).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256, 67);
                 Bridge.ClientTest.BridgeIssues.Bridge1256.testReservedMethods();
             }
         }
@@ -3855,6 +3856,16 @@
             testInlineInGetHashCode: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1343).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1343);
                 Bridge.ClientTest.BridgeIssues.Bridge1343.testInlineInGetHashCode();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1344', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1344)],
+        statics: {
+            testLocalVariableWithNameProto: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1344).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1344);
+                Bridge.ClientTest.BridgeIssues.Bridge1344.testLocalVariableWithNameProto();
             }
         }
     });
