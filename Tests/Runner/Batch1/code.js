@@ -6630,6 +6630,17 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         $enum: true
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1313', {
+        statics: {
+            testInterfaceDefaultParameter: function () {
+                var value = new Bridge.ClientTest.BridgeIssues.Bridge1313.Class();
+                Bridge.Test.Assert.areEqual(1, value.function(1));
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1313.IInterface');
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1316', {
         statics: {
             testUseCase: function () {
@@ -34134,6 +34145,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return s;
         }
     }; });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1313.Class', {
+        inherits: [Bridge.ClientTest.BridgeIssues.Bridge1313.IInterface],
+        function: function (v) {
+            return v;
+        }
+    });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1339.Foo1', {
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge1339.FooBase]
