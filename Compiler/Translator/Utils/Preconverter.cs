@@ -1,19 +1,18 @@
-using System;
-using ICSharpCode.NRefactory.CSharp;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Bridge.Contract;
-using ICSharpCode.NRefactory.CSharp.Refactoring;
+using Bridge.Translator.Utils;
+
+using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
-using ICSharpCode.NRefactory.MonoCSharp;
-using ICSharpCode.NRefactory.Semantics;
-using ICSharpCode.NRefactory.TypeSystem;
-using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using Expression = ICSharpCode.NRefactory.CSharp.Expression;
 using ExpressionStatement = ICSharpCode.NRefactory.CSharp.ExpressionStatement;
 using ParenthesizedExpression = ICSharpCode.NRefactory.CSharp.ParenthesizedExpression;
 using Statement = ICSharpCode.NRefactory.CSharp.Statement;
+using ICSharpCode.NRefactory.Semantics;
+using ICSharpCode.NRefactory.TypeSystem;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Bridge.Translator
 {
@@ -59,10 +58,20 @@ namespace Bridge.Translator
             if (assignmentExpression.Operator != AssignmentOperatorType.Any && assignmentExpression.Operator != AssignmentOperatorType.Assign)
             {
                 var rr = this.Resolver.ResolveNode(assignmentExpression, null);
-
-                if (Helpers.IsIntegerType(rr.Type, this.Resolver))
+                var isInt = Helpers.IsIntegerType(rr.Type, this.Resolver);
+                if (isInt || !(assignmentExpression.Parent is ExpressionStatement))
                 {
                     this.Found = true;
+                }
+
+                if (this.Found && !isInt && assignmentExpression.Parent is ICSharpCode.NRefactory.CSharp.LambdaExpression)
+                {
+                    var lambdarr = this.Resolver.ResolveNode(assignmentExpression.Parent, null) as LambdaResolveResult;
+
+                    if (lambdarr != null && lambdarr.ReturnType.Kind == TypeKind.Void)
+                    {
+                        this.Found = false;
+                    }
                 }
             }
 
@@ -317,10 +326,26 @@ namespace Bridge.Translator
         public override AstNode VisitAssignmentExpression(AssignmentExpression assignmentExpression)
         {
             var rr = this.Resolver.ResolveNode(assignmentExpression, null);
+            bool found = false;
+            var isInt = Helpers.IsIntegerType(rr.Type, this.Resolver);
+            if (isInt || !(assignmentExpression.Parent is ExpressionStatement))
+            {
+                found = true;
+            }
+
+            if (found && !isInt && assignmentExpression.Parent is ICSharpCode.NRefactory.CSharp.LambdaExpression)
+            {
+                var lambdarr = this.Resolver.ResolveNode(assignmentExpression.Parent, null) as LambdaResolveResult;
+
+                if (lambdarr != null && lambdarr.ReturnType.Kind == TypeKind.Void)
+                {
+                    found = false;
+                }
+            }
 
             if (assignmentExpression.Operator != AssignmentOperatorType.Any &&
                 assignmentExpression.Operator != AssignmentOperatorType.Assign &&
-                (Helpers.IsIntegerType(rr.Type, this.Resolver)))
+                found)
             {
                 AssignmentExpression clonAssignmentExpression = (AssignmentExpression)base.VisitAssignmentExpression(assignmentExpression);
                 if (clonAssignmentExpression == null)
@@ -368,15 +393,14 @@ namespace Bridge.Translator
                         throw new ArgumentOutOfRangeException();
                 }
 
-                if (clonAssignmentExpression.Right is BinaryOperatorExpression)
-                {
-                    clonAssignmentExpression.Right = new BinaryOperatorExpression(clonAssignmentExpression.Left.Clone(), opType, new ParenthesizedExpression(clonAssignmentExpression.Right.Clone()));
-                }
-                else
-                {
-                    clonAssignmentExpression.Right = new BinaryOperatorExpression(clonAssignmentExpression.Left.Clone(), opType, clonAssignmentExpression.Right.Clone());
-                }
+                var wrapRightExpression = AssigmentExpressionHelper.CheckIsRightAssigmentExpression(clonAssignmentExpression)
+                    ? clonAssignmentExpression.Right.Clone()
+                    : new ParenthesizedExpression(clonAssignmentExpression.Right.Clone());
 
+                clonAssignmentExpression.Right = new BinaryOperatorExpression(
+                    clonAssignmentExpression.Left.Clone(),
+                    opType,
+                    wrapRightExpression);
 
                 return clonAssignmentExpression;
             }

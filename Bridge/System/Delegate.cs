@@ -27,10 +27,10 @@ namespace System
 
         public virtual extern object Call();
 
-        [Template("Bridge.fn.combine({0}, {1});")]
+        [Template("Bridge.fn.combine({0}, {1})")]
         public static extern Delegate Combine(Delegate a, Delegate b);
 
-        [Template("Bridge.fn.remove({0}, {1});")]
+        [Template("Bridge.fn.remove({0}, {1})")]
         public static extern Delegate Remove(Delegate source, Delegate value);
     }
 

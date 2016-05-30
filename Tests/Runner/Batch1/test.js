@@ -1166,12 +1166,15 @@
                 QUnit.test("#1305 - TestAsyncDataClassReturnWithAssigmentFromResult", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1305.testAsyncDataClassReturnWithAssigmentFromResult);
                 QUnit.test("#1305 - TestAsyncDataStructReturnWithAssigmentFromResult", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1305.testAsyncDataStructReturnWithAssigmentFromResult);
                 QUnit.test("#1311 - TestEnumNumberParsing", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1311.testEnumNumberParsing);
+                QUnit.test("#1313 - TestInterfaceDefaultParameter", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1313.testInterfaceDefaultParameter);
+                QUnit.test("#1313 - TestClassNotDefaultParameter", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1313.testClassNotDefaultParameter);
                 QUnit.test("#1316 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316.testUseCase);
                 QUnit.test("#1316 - TestStringConcatObject", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316.testStringConcatObject);
                 QUnit.test("#1316 - TestStringConcatEnumerableString", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316.testStringConcatEnumerableString);
                 QUnit.test("#1316 - TestStringConcatEnumerableGeneric", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316.testStringConcatEnumerableGeneric);
                 QUnit.test("#1328 - TestOptionalParamsForClasses", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1328.testOptionalParamsForClasses);
                 QUnit.test("#1328 - TestOptionalParamsForStructs", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1328.testOptionalParamsForStructs);
+                QUnit.test("#1339 - TestAccessingConstantsFromDerivedClass", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1339.testAccessingConstantsFromDerivedClass);
                 QUnit.test("#1340 - TestStructGenericMembersDefaultValue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340.testStructGenericMembersDefaultValue);
                 QUnit.test("#1340 - TestStructTwoGenericMembersDefaultValue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340.testStructTwoGenericMembersDefaultValue);
                 QUnit.test("#1340 - TestClassGenericMembersDefaultValue", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1340.testClassGenericMembersDefaultValue);
@@ -1198,15 +1201,30 @@
                 QUnit.test("#1341 - Test5AnonymousType", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1341.test5AnonymousType);
                 QUnit.test("#1343 - TestDoubleTemplate", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1343.testDoubleTemplate);
                 QUnit.test("#1343 - TestInlineInGetHashCode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1343.testInlineInGetHashCode);
+                QUnit.test("#1344 - TestLocalVariableWithNameProto", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1344.testLocalVariableWithNameProto);
+                QUnit.test("#1355 - TestLocalVariableWithNameWindow", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1355.testLocalVariableWithNameWindow);
                 QUnit.test("#1374 - TestConvertAllForIntListStaticMethod", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1374.testConvertAllForIntListStaticMethod);
                 QUnit.test("#1374 - TestConvertAllForIntListInstanceMethod", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1374.testConvertAllForIntListInstanceMethod);
                 QUnit.test("#1374 - TestConvertAllForIntListLambda", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1374.testConvertAllForIntListLambda);
                 QUnit.test("#1374 - TestConvertAllForNullConverter", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1374.testConvertAllForNullConverter);
                 QUnit.test("#1374 - TestConvertAllForNullArray", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1374.testConvertAllForNullArray);
+                QUnit.test("#1378 - TestAssigmentWithMinusOperator", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1378.testAssigmentWithMinusOperator);
+                QUnit.test("#1378 - TestAssigmentWithPlusOperator", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1378.testAssigmentWithPlusOperator);
+                QUnit.test("#1378 - TestAssigmentWithOverloadMinusOperator", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1378.testAssigmentWithOverloadMinusOperator);
+                QUnit.test("#1378 - TestAssigmentWithOverloadPlusOperator", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1378.testAssigmentWithOverloadPlusOperator);
+                QUnit.test("#1378 - TestAssigmentWithConditionalPlusOperator", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1378.testAssigmentWithConditionalPlusOperator);
+                QUnit.test("#1378 - TestAssigmentWithConditionalMinusOperator", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1378.testAssigmentWithConditionalMinusOperator);
                 QUnit.test("#1385 - TestIsTypedArray", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1385.testIsTypedArray);
                 QUnit.test("#1389 - TestParamsIndexer", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1389.testParamsIndexer);
                 QUnit.test("#1391 - TestStaticCtorOrder", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1391.testStaticCtorOrder);
+                QUnit.test("#1391 - TestStaticCtorOrderForClassHavingReady", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1391Ready.testStaticCtorOrderForClassHavingReady);
                 QUnit.test("#1402 - TestLongClipping", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1402.testLongClipping);
+                QUnit.test("#1410 - TestSetterOnly", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1410.testSetterOnly);
+                QUnit.test("#1410 - TestIndexer", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1410.testIndexer);
+                QUnit.test("#1410 - TestAssigmentWithOp", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1410.testAssigmentWithOp);
+                QUnit.test("#1411 - TestTemplateCtorThing", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1411.testTemplateCtorThing);
+                QUnit.test("#1411 - TestTemplateCtorDoodad", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1411.testTemplateCtorDoodad);
+                QUnit.test("#1411 - TestTemplateCtorGizmo", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1411.testTemplateCtorGizmo);
                 QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge381.testUseCase);
                 QUnit.test("#447 - CheckInlineExpression", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineExpression);
                 QUnit.test("#447 - CheckInlineCalls", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineCalls);
@@ -3536,11 +3554,11 @@
                 Bridge.ClientTest.BridgeIssues.Bridge1256.testCaseBooleanIsLet();
             },
             testReservedFields: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1256).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256, 66);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1256).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256, 67);
                 Bridge.ClientTest.BridgeIssues.Bridge1256.testReservedFields();
             },
             testReservedMethods: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1256).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256, 66);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1256).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1256, 67);
                 Bridge.ClientTest.BridgeIssues.Bridge1256.testReservedMethods();
             }
         }
@@ -3660,6 +3678,20 @@
         }
     });
     
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1313', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1313)],
+        statics: {
+            testInterfaceDefaultParameter: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1313).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1313);
+                Bridge.ClientTest.BridgeIssues.Bridge1313.testInterfaceDefaultParameter();
+            },
+            testClassNotDefaultParameter: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1313).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1313);
+                Bridge.ClientTest.BridgeIssues.Bridge1313.testClassNotDefaultParameter();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1316', {
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1316)],
         statics: {
@@ -3692,6 +3724,16 @@
             testOptionalParamsForStructs: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1328).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1328);
                 Bridge.ClientTest.BridgeIssues.Bridge1328.testOptionalParamsForStructs();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1339', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1339)],
+        statics: {
+            testAccessingConstantsFromDerivedClass: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1339).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1339);
+                Bridge.ClientTest.BridgeIssues.Bridge1339.testAccessingConstantsFromDerivedClass();
             }
         }
     });
@@ -3818,6 +3860,26 @@
         }
     });
     
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1344', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1344)],
+        statics: {
+            testLocalVariableWithNameProto: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1344).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1344);
+                Bridge.ClientTest.BridgeIssues.Bridge1344.testLocalVariableWithNameProto();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1355', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1355)],
+        statics: {
+            testLocalVariableWithNameWindow: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1355).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1355);
+                Bridge.ClientTest.BridgeIssues.Bridge1355.testLocalVariableWithNameWindow();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1374', {
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1374)],
         statics: {
@@ -3840,6 +3902,36 @@
             testConvertAllForNullArray: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1374).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1374, 1);
                 Bridge.ClientTest.BridgeIssues.Bridge1374.testConvertAllForNullArray();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1378', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1378)],
+        statics: {
+            testAssigmentWithMinusOperator: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1378).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1378);
+                Bridge.ClientTest.BridgeIssues.Bridge1378.testAssigmentWithMinusOperator();
+            },
+            testAssigmentWithPlusOperator: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1378).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1378);
+                Bridge.ClientTest.BridgeIssues.Bridge1378.testAssigmentWithPlusOperator();
+            },
+            testAssigmentWithOverloadMinusOperator: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1378).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1378);
+                Bridge.ClientTest.BridgeIssues.Bridge1378.testAssigmentWithOverloadMinusOperator();
+            },
+            testAssigmentWithOverloadPlusOperator: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1378).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1378);
+                Bridge.ClientTest.BridgeIssues.Bridge1378.testAssigmentWithOverloadPlusOperator();
+            },
+            testAssigmentWithConditionalPlusOperator: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1378).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1378);
+                Bridge.ClientTest.BridgeIssues.Bridge1378.testAssigmentWithConditionalPlusOperator();
+            },
+            testAssigmentWithConditionalMinusOperator: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1378).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1378);
+                Bridge.ClientTest.BridgeIssues.Bridge1378.testAssigmentWithConditionalMinusOperator();
             }
         }
     });
@@ -3874,12 +3966,58 @@
         }
     });
     
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1391Ready', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1391Ready)],
+        statics: {
+            testStaticCtorOrderForClassHavingReady: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1391Ready).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1391Ready);
+                Bridge.ClientTest.BridgeIssues.Bridge1391Ready.testStaticCtorOrderForClassHavingReady();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1402', {
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1402)],
         statics: {
             testLongClipping: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1402).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1402);
                 Bridge.ClientTest.BridgeIssues.Bridge1402.testLongClipping();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1410', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1410)],
+        statics: {
+            testSetterOnly: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1410).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1410);
+                Bridge.ClientTest.BridgeIssues.Bridge1410.testSetterOnly();
+            },
+            testIndexer: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1410).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1410);
+                Bridge.ClientTest.BridgeIssues.Bridge1410.testIndexer();
+            },
+            testAssigmentWithOp: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1410).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1410);
+                Bridge.ClientTest.BridgeIssues.Bridge1410.testAssigmentWithOp();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1411', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1411)],
+        statics: {
+            testTemplateCtorThing: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1411).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1411);
+                Bridge.ClientTest.BridgeIssues.Bridge1411.testTemplateCtorThing();
+            },
+            testTemplateCtorDoodad: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1411).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1411);
+                Bridge.ClientTest.BridgeIssues.Bridge1411.testTemplateCtorDoodad();
+            },
+            testTemplateCtorGizmo: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1411).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1411);
+                Bridge.ClientTest.BridgeIssues.Bridge1411.testTemplateCtorGizmo();
             }
         }
     });

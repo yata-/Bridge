@@ -260,9 +260,14 @@
     <Compile Include="BridgeIssues\1200\N1260.cs" />
     <Compile Include="BridgeIssues\1200\N1241.cs" />
     <Compile Include="BridgeIssues\1300\N1311.cs" />
+    <Compile Include="BridgeIssues\1300\N1339.cs" />
     <Compile Include="BridgeIssues\1300\N1328.cs" />
     <Compile Include="BridgeIssues\1300\N1316.cs" />
     <Compile Include="BridgeIssues\1300\N1340.cs" />
+    <Compile Include="BridgeIssues\1300\N1344.cs" />
+    <Compile Include="BridgeIssues\1300\N1355.cs" />
+    <Compile Include="BridgeIssues\1300\N1378.cs" />
+    <Compile Include="BridgeIssues\1300\N1313.cs" />
     <Compile Include="BridgeIssues\1300\N1391.cs" />
     <Compile Include="BridgeIssues\1300\N1385.cs" />
     <Compile Include="BridgeIssues\1300\N1389.cs" />
@@ -271,6 +276,8 @@
     <Compile Include="BridgeIssues\1300\N1341.cs" />
     <Compile Include="BridgeIssues\1300\N1305.cs" />
     <Compile Include="BridgeIssues\1300\N1304.cs" />
+    <Compile Include="BridgeIssues\1400\N1410.cs" />
+    <Compile Include="BridgeIssues\1400\N1411.cs" />
     <Compile Include="BridgeIssues\1400\N1402.cs" />
     <Compile Include="BridgeIssues\TestBridgeIssues.cs" />
     <Compile Include="Collections\Generic\StackTests.cs" />

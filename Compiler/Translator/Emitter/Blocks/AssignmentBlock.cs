@@ -1,5 +1,6 @@
 using Bridge.Contract;
 using Bridge.Contract.Constants;
+using Bridge.Translator.Utils;
 
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
@@ -176,11 +177,21 @@ namespace Bridge.Translator
                 }
             }
 
-            var needTempVar = needReturnValue;
-            if (assignmentExpression.Operator != AssignmentOperatorType.Any)
+            var memberTargetrr = leftResolverResult as MemberResolveResult;
+            bool isField = (memberTargetrr != null && memberTargetrr.Member is IField &&
+                           (memberTargetrr.TargetResult is ThisResolveResult ||
+                            memberTargetrr.TargetResult is LocalResolveResult)) || leftResolverResult is ThisResolveResult || leftResolverResult is LocalResolveResult;
+
+            var rightMemberTargetrr = rightResolverResult as MemberResolveResult;
+            bool isRightSimple = (rightMemberTargetrr != null && rightMemberTargetrr.Member is IField &&
+                           (rightMemberTargetrr.TargetResult is ThisResolveResult ||
+                            rightMemberTargetrr.TargetResult is LocalResolveResult)) || rightResolverResult is ThisResolveResult || rightResolverResult is LocalResolveResult || rightResolverResult is ConstantResolveResult;
+
+            var needTempVar = needReturnValue && (!isRightSimple && !isField || assignmentExpression.Operator != AssignmentOperatorType.Assign);
+            /*if (assignmentExpression.Operator == AssignmentOperatorType.Any)
             {
                 needTempVar = false;
-            }
+            }*/
 
             if (needReturnValue)
             {
@@ -201,11 +212,6 @@ namespace Bridge.Translator
                     this.Write("(");
                 }
             }
-
-            var memberTargetrr = leftResolverResult as MemberResolveResult;
-            bool isField = (memberTargetrr != null && memberTargetrr.Member is IField &&
-                           (memberTargetrr.TargetResult is ThisResolveResult ||
-                            memberTargetrr.TargetResult is LocalResolveResult)) || leftResolverResult is ThisResolveResult || leftResolverResult is LocalResolveResult;
 
             if (assignmentExpression.Operator == AssignmentOperatorType.Divide &&
                 !(this.Emitter.IsJavaScriptOverflowMode && !ConversionBlock.InsideOverflowContext(this.Emitter, assignmentExpression)) &&
@@ -250,14 +256,20 @@ namespace Bridge.Translator
                 {
                     this.PopWriter();
                 }
-
                 
                 if (needReturnValue && !isField)
                 {
-                    this.Write(", ");
-                    this.Emitter.IsAssignment = false;
-                    assignmentExpression.Left.AcceptVisitor(this.Emitter);
-                    this.Emitter.IsAssignment = oldAssigment;
+                    if (needTempVar)
+                    {
+                        this.Write(", " + variable);
+                    }
+                    else
+                    {
+                        this.Write(", ");
+                        this.Emitter.IsAssignment = false;
+                        assignmentExpression.Right.AcceptVisitor(this.Emitter);
+                        this.Emitter.IsAssignment = oldAssigment;
+                    }
                 }
 
                 if (needReturnValue)
@@ -370,7 +382,7 @@ namespace Bridge.Translator
                     {
                         this.Write(", ");
                         this.Emitter.IsAssignment = false;
-                        assignmentExpression.Left.AcceptVisitor(this.Emitter);
+                        assignmentExpression.Right.AcceptVisitor(this.Emitter);
                         this.Emitter.IsAssignment = oldAssigment;
                     }
 
@@ -404,7 +416,7 @@ namespace Bridge.Translator
                     {
                         this.Write(", ");
                         this.Emitter.IsAssignment = false;
-                        assignmentExpression.Left.AcceptVisitor(this.Emitter);
+                        assignmentExpression.Right.AcceptVisitor(this.Emitter);
                         this.Emitter.IsAssignment = oldAssigment;
                     }
 
@@ -416,6 +428,10 @@ namespace Bridge.Translator
 
             if (this.ResolveOperator(assignmentExpression, orr, initCount))
             {
+                if (needReturnValue)
+                {
+                    this.Write(")");
+                }
                 return;
             }
 
@@ -578,7 +594,21 @@ namespace Bridge.Translator
             }
             else
             {
+                var wrap = assignmentExpression.Operator != AssignmentOperatorType.Assign
+                    && this.Emitter.Writers.Count > initCount
+                    && !AssigmentExpressionHelper.CheckIsRightAssigmentExpression(assignmentExpression);
+
+                if (wrap)
+                {
+                    this.WriteOpenParentheses();
+                }
+
                 assignmentExpression.Right.AcceptVisitor(this.Emitter);
+
+                if (wrap)
+                {
+                    this.WriteCloseParentheses();
+                }
             }
 
             if (!special && isBool &&
@@ -630,10 +660,10 @@ namespace Bridge.Translator
                 {
                     this.Write(", ");
                     this.Emitter.IsAssignment = false;
-                    assignmentExpression.Left.AcceptVisitor(this.Emitter);
+                    assignmentExpression.Right.AcceptVisitor(this.Emitter);
                     this.Emitter.IsAssignment = oldAssigment;
                 }
-                
+
                 this.Write(")");
             }
         }
