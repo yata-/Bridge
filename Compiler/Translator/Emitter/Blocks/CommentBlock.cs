@@ -109,7 +109,7 @@ namespace Bridge.Translator
 
             if (comment.CommentType == CommentType.MultiLine && injection.Success)
             {
-                string code = removeStars.Replace(injection.Groups[1].Value, Variables.D + "1");
+                string code = removeStars.Replace(injection.Groups[1].Value, JS.Vars.D + "1");
 
                 if (code.EndsWith("@"))
                 {

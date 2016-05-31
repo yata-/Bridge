@@ -29,10 +29,10 @@ namespace Bridge.Translator
 
                     if (this.StaticBlock && !hasReadyAttribute)
                     {
-                        if (method.Name == Functions.AUTO_STARTUP_METHOD_NAME && method.HasModifier(Modifiers.Static) && !method.HasModifier(Modifiers.Abstract))
+                        if (method.Name == CS.Methods.AUTO_STARTUP_METHOD_NAME && method.HasModifier(Modifiers.Static) && !method.HasModifier(Modifiers.Abstract))
                         {
                             this.Emitter.AutoStartupMethods.Add(this.TypeInfo.Name + "." + method.Name);
-                            list.Add(string.Format(Functions.BRIDGE_AUTO_STARTUP_METHOD_TEMPLATE, this.Emitter.GetEntityName(method)));
+                            list.Add(string.Format(JS.Funcs.BRIDGE_AUTO_STARTUP_METHOD_TEMPLATE, this.Emitter.GetEntityName(method)));
 
                             hasReadyAttribute = true;
                         }
@@ -60,7 +60,7 @@ namespace Bridge.Translator
 
                     if (resolveresult != null)
                     {
-                        if (resolveresult.Type.FullName == Attributes.READY_ATTRIBUTE_NAME)
+                        if (resolveresult.Type.FullName == CS.Attributes.READY_ATTRIBUTE_NAME)
                         {
                             hasReadyAttribute = true;
                         }

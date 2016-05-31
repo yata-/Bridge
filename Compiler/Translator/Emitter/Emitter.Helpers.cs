@@ -184,22 +184,22 @@ namespace Bridge.Translator
                 this.Output = new StringBuilder();
                 var mrr = new MemberResolveResult(null, member);
                 var argsInfo = new ArgumentsInfo(this, node, mrr);
-                argsInfo.ThisArgument = Variables.T;
+                argsInfo.ThisArgument = JS.Vars.T;
                 new InlineArgumentsBlock(this, argsInfo, info.Item3, method, mrr).EmitNullableReference();
                 string tpl = this.Output.ToString();
                 this.Output = savedBuilder;
 
                 if (member.Name == "Equals")
                 {
-                    tpl = string.Format(Contract.Constants.Types.Nullable + ".equals({{this}}, {{{0}}}, {1})", method.Parameters.First().Name, tpl);    
+                    tpl = string.Format(Contract.Constants.JS.Types.Nullable + ".equals({{this}}, {{{0}}}, {1})", method.Parameters.First().Name, tpl);    
                 }
                 else if (member.Name == "ToString")
                 {
-                    tpl = string.Format(Contract.Constants.Types.Nullable + ".toString({{this}}, {0})", tpl);
+                    tpl = string.Format(Contract.Constants.JS.Types.Nullable + ".toString({{this}}, {0})", tpl);
                 }
                 else if (member.Name == "GetHashCode")
                 {
-                    tpl = string.Format(Contract.Constants.Types.Nullable + ".getHashCode({{this}}, {0})", tpl);
+                    tpl = string.Format(Contract.Constants.JS.Types.Nullable + ".getHashCode({{this}}, {0})", tpl);
                 }
 
                 info = new Tuple<bool, bool, string>(info.Item1, info.Item2, tpl);
@@ -332,7 +332,7 @@ namespace Bridge.Translator
                 isStatic = method.IsStatic;
                 if (method.IsConstructor)
                 {
-                    name = Functions.CONSTRUCTOR;
+                    name = JS.Funcs.CONSTRUCTOR;
                 }
             }
             else if (member is FieldDefinition)
@@ -445,7 +445,7 @@ namespace Bridge.Translator
             string name = member.Name;
             if (member is IMethod && ((IMethod)member).IsConstructor)
             {
-                name = Functions.CONSTRUCTOR;
+                name = JS.Funcs.CONSTRUCTOR;
             }
 
             if (attr != null)

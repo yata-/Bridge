@@ -53,7 +53,7 @@ namespace Bridge.Translator
                 {
                     if (orr.IsLiftedOperator)
                     {
-                        this.Write(Types.Nullable + ".");
+                        this.Write(JS.Types.Nullable + ".");
 
                         string action = "lift";
 
@@ -222,7 +222,7 @@ namespace Bridge.Translator
                     Helpers.IsIntegerType(this.Emitter.Resolver.Resolver.GetExpectedType(binaryOperatorExpression.Right), this.Emitter.Resolver))
                 ))
             {
-                this.Write(Types.Int + ".div(");
+                this.Write(JS.Types.Int + ".div(");
                 binaryOperatorExpression.Left.AcceptVisitor(this.Emitter);
                 this.Write(", ");
                 binaryOperatorExpression.Right.AcceptVisitor(this.Emitter);
@@ -238,14 +238,14 @@ namespace Bridge.Translator
                 if (this.Emitter.Validator.IsDelegateOrLambda(leftResolverResult) && this.Emitter.Validator.IsDelegateOrLambda(rightResolverResult))
                 {
                     delegateOperator = true;
-                    this.Write(add ? Functions.BRIDGE_COMBINE : Functions.BRIDGE_REMOVE);
+                    this.Write(add ? JS.Funcs.BRIDGE_COMBINE : JS.Funcs.BRIDGE_REMOVE);
                     this.WriteOpenParentheses();
                 }
             }
 
             bool nullable = orr != null && orr.IsLiftedOperator;
             bool isCoalescing = binaryOperatorExpression.Operator == BinaryOperatorType.NullCoalescing;
-            string root = Types.Nullable + ".";
+            string root = JS.Types.Nullable + ".";
             bool special = nullable;
             bool rootSpecial = nullable;
             bool isBool = NullableType.IsNullable(resolveOperator.Type) ? NullableType.GetUnderlyingType(resolveOperator.Type).IsKnownType(KnownTypeCode.Boolean) : resolveOperator.Type.IsKnownType(KnownTypeCode.Boolean);
@@ -493,7 +493,7 @@ namespace Bridge.Translator
 
                 if (orr.IsLiftedOperator)
                 {
-                    this.Write(Types.Nullable + ".");
+                    this.Write(JS.Types.Nullable + ".");
                     this.Write(action);
                     this.WriteOpenParentheses();
                     this.WriteScript(op_name);
@@ -529,7 +529,7 @@ namespace Bridge.Translator
             {
                 if (orr.IsLiftedOperator)
                 {
-                    this.Write(Types.Nullable + ".");
+                    this.Write(JS.Types.Nullable + ".");
                     this.Write(action);
                     this.WriteOpenParentheses();
                     this.WriteScript(op_name);

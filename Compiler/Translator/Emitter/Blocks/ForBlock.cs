@@ -67,7 +67,7 @@ namespace Bridge.Translator
 
             this.RemovePenultimateEmptyLines(true);
             this.WriteNewLine();
-            this.Write(Variables.ASYNC_STEP + " = " + this.Emitter.AsyncBlock.Step + ";");
+            this.Write(JS.Vars.ASYNC_STEP + " = " + this.Emitter.AsyncBlock.Step + ";");
             this.WriteNewLine();
             this.Write("continue;");
 
@@ -84,7 +84,7 @@ namespace Bridge.Translator
 
             this.WriteSpace();
             this.BeginBlock();
-            this.Write(Variables.ASYNC_STEP + " = " + this.Emitter.AsyncBlock.Step + ";");
+            this.Write(JS.Vars.ASYNC_STEP + " = " + this.Emitter.AsyncBlock.Step + ";");
             this.WriteNewLine();
             this.Write("continue;");
 
@@ -108,7 +108,7 @@ namespace Bridge.Translator
             if (!AbstractEmitterBlock.IsJumpStatementLast(this.Emitter.Output.ToString()))
             {
                 this.WriteNewLine();
-                this.Write(Variables.ASYNC_STEP + " = " + this.Emitter.AsyncBlock.Step + ";");
+                this.Write(JS.Vars.ASYNC_STEP + " = " + this.Emitter.AsyncBlock.Step + ";");
                 this.WriteNewLine();
                 this.Write("continue;");
                 this.WriteNewLine();

@@ -134,7 +134,7 @@ namespace Bridge.Translator
                     var str = moduleOutput.ToString();
                     moduleOutput.Length = 0;
 
-                    moduleOutput.Append(Functions.DEFINE + "(");
+                    moduleOutput.Append(JS.Funcs.DEFINE + "(");
 
                     if (moduleName != Bridge.Translator.AssemblyInfo.DEFAULT_FILENAME)
                     {
@@ -171,7 +171,7 @@ namespace Bridge.Translator
 
                     string indent = str.StartsWith("    ") ? "" : "    ";
                     moduleOutput.Append("    ");
-                    WriteNewLine(moduleOutput, "var " + Variables.EXPORTS + " = { };");
+                    WriteNewLine(moduleOutput, "var " + JS.Vars.EXPORTS + " = { };");
                     moduleOutput.Append(indent + str.Replace("\n", "\n" + indent));
 
                     if (!str.Trim().EndsWith("\n"))
@@ -179,7 +179,7 @@ namespace Bridge.Translator
                         WriteNewLine(moduleOutput);
                     }
 
-                    WriteNewLine(moduleOutput, "    return " + Variables.EXPORTS + ";");
+                    WriteNewLine(moduleOutput, "    return " + JS.Vars.EXPORTS + ";");
                     WriteNewLine(moduleOutput, "});");
                 }
             }

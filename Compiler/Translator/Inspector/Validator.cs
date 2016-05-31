@@ -74,7 +74,7 @@ namespace Bridge.Translator
         {
             foreach (var i in type.Interfaces)
             {
-                if (i.FullName == Types.IBridgeClass)
+                if (i.FullName == JS.Types.IBridgeClass)
                 {
                     return true;
                 }
@@ -399,7 +399,7 @@ namespace Bridge.Translator
             {
                 if (type.BaseType != null)
                 {
-                    string parentName = type.BaseType.FullName.LeftOf('<').Replace('`', Variables.D);
+                    string parentName = type.BaseType.FullName.LeftOf('<').Replace('`', JS.Vars.D);
 
                     if (!allTypes.ContainsKey(parentName))
                     {
@@ -528,7 +528,7 @@ namespace Bridge.Translator
                 return false;
             }
 
-            if (this.HasAttribute(entity.Attributes, Attributes.ACCESSORSINDEXER_ATTRIBUTE_NAME))
+            if (this.HasAttribute(entity.Attributes, CS.Attributes.ACCESSORSINDEXER_ATTRIBUTE_NAME))
             {
                 return true;
             }

@@ -133,7 +133,7 @@ namespace Bridge.Translator
             {
                 if (hasInitializer)
                 {
-                    this.Write(Functions.BRIDGE_MERGE);
+                    this.Write(JS.Funcs.BRIDGE_MERGE);
                     this.WriteOpenParentheses();
                 }
 

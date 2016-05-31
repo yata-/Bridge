@@ -41,7 +41,7 @@ namespace Bridge.Translator
         protected virtual string GetNextIteratorName()
         {
             var index = this.Emitter.IteratorCount++;
-            var result = Variables.ITERATOR;
+            var result = JS.Vars.ITERATOR;
 
             if (index > 0)
             {
@@ -85,7 +85,7 @@ namespace Bridge.Translator
             var iteratorName = this.AddLocal(this.GetTempVarName(), AstType.Null);
 
             //this.WriteVar();
-            this.Write(iteratorName, " = ", Functions.BRIDGE_GET_ENUMERATOR);
+            this.Write(iteratorName, " = ", JS.Funcs.BRIDGE_GET_ENUMERATOR);
 
             this.WriteOpenParentheses();
             foreachStatement.InExpression.AcceptVisitor(this.Emitter);
@@ -93,7 +93,7 @@ namespace Bridge.Translator
             this.WriteCloseParentheses();
             this.WriteSemiColon();
             this.WriteNewLine();
-            this.Write(Variables.ASYNC_STEP + " = " + this.Emitter.AsyncBlock.Step + ";");
+            this.Write(JS.Vars.ASYNC_STEP + " = " + this.Emitter.AsyncBlock.Step + ";");
             this.WriteNewLine();
             this.Write("continue;");
             this.WriteNewLine();
@@ -123,7 +123,7 @@ namespace Bridge.Translator
             this.WriteSemiColon();
             this.WriteNewLine();
 
-            this.Write(Variables.ASYNC_STEP + " = " + this.Emitter.AsyncBlock.Step + ";");
+            this.Write(JS.Vars.ASYNC_STEP + " = " + this.Emitter.AsyncBlock.Step + ";");
             this.WriteNewLine();
             this.Write("continue;");
 
@@ -155,7 +155,7 @@ namespace Bridge.Translator
 
             if (!AbstractEmitterBlock.IsJumpStatementLast(this.Emitter.Output.ToString()))
             {
-                this.Write(Variables.ASYNC_STEP + " = " + conditionStep.Step + ";");
+                this.Write(JS.Vars.ASYNC_STEP + " = " + conditionStep.Step + ";");
                 this.WriteNewLine();
                 this.Write("continue;");
                 this.WriteNewLine();
@@ -195,7 +195,7 @@ namespace Bridge.Translator
             var iteratorName = this.AddLocal(iteratorVar, AstType.Null);
 
             //this.WriteVar();
-            this.Write(iteratorName, " = ", Functions.BRIDGE_GET_ENUMERATOR);
+            this.Write(iteratorName, " = ", JS.Funcs.BRIDGE_GET_ENUMERATOR);
 
             this.WriteOpenParentheses();
             foreachStatement.InExpression.AcceptVisitor(this.Emitter);

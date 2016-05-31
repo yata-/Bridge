@@ -643,7 +643,7 @@ namespace Bridge.Contract
 
                     var name = this.Emitter.GetEntityName(m, false, true);
                     if ((name == this.JsName || name == this.AltJsName) && m.IsStatic == this.Static &&
-                        ((m.IsConstructor && this.JsName == Functions.DCONSTRUCTOR) || m.IsConstructor == this.Constructor))
+                        ((m.IsConstructor && this.JsName == JS.Funcs.DCONSTRUCTOR) || m.IsConstructor == this.Constructor))
                     {
                         if (m.IsConstructor != this.Constructor)
                         {
@@ -888,7 +888,7 @@ namespace Bridge.Contract
             string name = this.Emitter.GetEntityName(definition, this.CancelChangeCase);
             if (name.StartsWith(".ctor"))
             {
-                name = Functions.CONSTRUCTOR;
+                name = JS.Funcs.CONSTRUCTOR;
             }
 
             var attr = Helpers.GetInheritedAttribute(definition, "Bridge.NameAttribute");
@@ -911,7 +911,7 @@ namespace Bridge.Contract
 
             if (definition is IMethod && ((IMethod)definition).IsConstructor)
             {
-                name = Functions.CONSTRUCTOR;
+                name = JS.Funcs.CONSTRUCTOR;
             }
 
             var index = this.GetIndex(definition);

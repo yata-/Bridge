@@ -23,12 +23,12 @@ namespace Bridge.Translator
                 return 0;
             }
 
-            if (x.Key == CSharp.NS.ROOT)
+            if (x.Key == CS.NS.ROOT)
             {
                 return -1;
             }
 
-            if (y.Key == CSharp.NS.ROOT)
+            if (y.Key == CS.NS.ROOT)
             {
                 return 1;
             }
@@ -56,12 +56,12 @@ namespace Bridge.Translator
                 return 0;
             }
 
-            if (x.Key == CSharp.NS.ROOT)
+            if (x.Key == CS.NS.ROOT)
             {
                 return -1;
             }
 
-            if (y.Key == CSharp.NS.ROOT)
+            if (y.Key == CS.NS.ROOT)
             {
                 return 1;
             }

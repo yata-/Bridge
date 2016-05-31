@@ -225,7 +225,7 @@ namespace Bridge.Translator
                 }
             }
 
-            this.Write(JavaScript.NS.BRIDGE);
+            this.Write(JS.NS.BRIDGE);
             this.WriteDot();
             this.Write(method);
             this.WriteOpenParentheses();
@@ -263,15 +263,15 @@ namespace Bridge.Translator
             {
                 if (Helpers.IsDecimalType(expectedType, this.Emitter.Resolver))
                 {
-                    typeName = Types.Decimal;
+                    typeName = JS.Types.Decimal;
                 }
                 else if (Helpers.IsLongType(expectedType, this.Emitter.Resolver))
                 {
-                    typeName = Types.Int64;
+                    typeName = JS.Types.Int64;
                 }
                 else if (Helpers.IsULongType(expectedType, this.Emitter.Resolver))
                 {
-                    typeName = Types.UInt64;
+                    typeName = JS.Types.UInt64;
                 }
             }
 

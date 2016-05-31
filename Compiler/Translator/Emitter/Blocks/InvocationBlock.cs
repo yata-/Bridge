@@ -552,7 +552,7 @@ namespace Bridge.Translator
                 {
                     if (needExpand && isIgnore)
                     {
-                        this.Write("." + Functions.APPLY);
+                        this.Write("." + JS.Funcs.APPLY);
                     }
 
                     this.WriteOpenParentheses();

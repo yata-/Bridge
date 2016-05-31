@@ -198,7 +198,7 @@ namespace Bridge.Translator
                 if (isLifted)
                 {
                     level++;
-                    block.Write(Types.Nullable + ".getValue(");
+                    block.Write(JS.Types.Nullable + ".getValue(");
                 }
 
                 if (conversion.IsUserDefined)
@@ -275,7 +275,7 @@ namespace Bridge.Translator
 
                     if (Helpers.IsDecimalType(arg.Type, block.Emitter.Resolver, arg.IsParams) && !Helpers.IsDecimalType(rr.Type, block.Emitter.Resolver) && !expression.IsNull)
                     {
-                        block.Write(Types.Decimal);
+                        block.Write(JS.Types.Decimal);
                         if (NullableType.IsNullable(arg.Type) && ConversionBlock.ShouldBeLifted(expression))
                         {
                             block.Write(".lift");
@@ -292,7 +292,7 @@ namespace Bridge.Translator
                     if (Helpers.Is64Type(arg.Type, block.Emitter.Resolver, arg.IsParams) && !Helpers.Is64Type(rr.Type, block.Emitter.Resolver) && !expression.IsNull)
                     {
                         var isUint = Helpers.IsULongType(arg.Type, block.Emitter.Resolver, arg.IsParams);
-                        block.Write(isUint ? Types.UInt64 : Types.Int64);
+                        block.Write(isUint ? JS.Types.UInt64 : JS.Types.Int64);
                         if (NullableType.IsNullable(arg.Type) && ConversionBlock.ShouldBeLifted(expression))
                         {
                             block.Write(".lift");
@@ -676,7 +676,7 @@ namespace Bridge.Translator
                          && !Helpers.IsDecimalType(elementType, block.Emitter.Resolver)
                          && isType(rr.Type, block.Emitter.Resolver))
                 {
-                    block.Write(Types.Int64 + ".toNumber");
+                    block.Write(JS.Types.Int64 + ".toNumber");
                     if (expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
                     {
@@ -1005,19 +1005,19 @@ namespace Bridge.Translator
 
         private static bool CheckDecimalConversion(ConversionBlock block, Expression expression, ResolveResult rr, IType expectedType, Conversion conversion)
         {
-            return CheckTypeConversion(block, expression, rr, expectedType, conversion, Types.Decimal, Helpers.IsDecimalType);
+            return CheckTypeConversion(block, expression, rr, expectedType, conversion, JS.Types.Decimal, Helpers.IsDecimalType);
         }
 
         private static bool CheckLongConversion(ConversionBlock block, Expression expression, ResolveResult rr, IType expectedType, Conversion conversion)
         {
-            return CheckTypeConversion(block, expression, rr, expectedType, conversion, Types.Int64, Helpers.IsLongType) ||
-                   CheckTypeConversion(block, expression, rr, expectedType, conversion, Types.UInt64, Helpers.IsULongType);
+            return CheckTypeConversion(block, expression, rr, expectedType, conversion, JS.Types.Int64, Helpers.IsLongType) ||
+                   CheckTypeConversion(block, expression, rr, expectedType, conversion, JS.Types.UInt64, Helpers.IsULongType);
         }
 
         private static bool IsLongConversion(ConversionBlock block, Expression expression, ResolveResult rr, IType expectedType, Conversion conversion)
         {
-            return IsTypeConversion(block, expression, rr, expectedType, conversion, Types.Int64, Helpers.IsLongType) ||
-                   IsTypeConversion(block, expression, rr, expectedType, conversion, Types.UInt64, Helpers.IsULongType);
+            return IsTypeConversion(block, expression, rr, expectedType, conversion, JS.Types.Int64, Helpers.IsLongType) ||
+                   IsTypeConversion(block, expression, rr, expectedType, conversion, JS.Types.UInt64, Helpers.IsULongType);
         }
 
         public static bool ShouldBeLifted(Expression expr)

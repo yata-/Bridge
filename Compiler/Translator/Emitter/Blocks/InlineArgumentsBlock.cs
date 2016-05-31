@@ -237,7 +237,7 @@ namespace Bridge.Translator
                                 StringBuilder sb = new StringBuilder();
                                 sb.Append(methodName);
                                 sb.Append(".");
-                                sb.Append(Functions.APPLY);
+                                sb.Append(JS.Funcs.APPLY);
                                 sb.Append("(");
                                 sb.Append(target ?? "null");
 
@@ -299,7 +299,7 @@ namespace Bridge.Translator
                     {
                         if (isNull)
                         {
-                            this.Write(Variables.T);
+                            this.Write(JS.Vars.T);
                         }
                         else if (this.Method.IsExtensionMethod && this.TargetResolveResult is TypeResolveResult)
                         {
@@ -366,7 +366,7 @@ namespace Bridge.Translator
 
                                 if (thisValue != null)
                                 {
-                                    this.Write(Functions.BRIDGE_GET_TYPE + "(" + thisValue + ")");
+                                    this.Write(JS.Funcs.BRIDGE_GET_TYPE + "(" + thisValue + ")");
                                 } 
                             }
                         }
@@ -576,7 +576,7 @@ namespace Bridge.Translator
                     s = "null";
                 }
 
-                this.Write(this.WriteIndentToString(Functions.BRIDGE_GET_TYPE + "(" + s + ")"));
+                this.Write(this.WriteIndentToString(JS.Funcs.BRIDGE_GET_TYPE + "(" + s + ")"));
             }
         }
 
@@ -654,7 +654,7 @@ namespace Bridge.Translator
 
             if (isNull)
             {
-                this.Write(Variables.T);
+                this.Write(JS.Vars.T);
                 needComma = true;
             }
             else if (!(this.TargetResolveResult is TypeResolveResult))

@@ -47,7 +47,7 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    this.Write(Types.Array + ".init(");
+                    this.Write(JS.Types.Array + ".init(");
                     arrayCreateExpression.Arguments.First().AcceptVisitor(this.Emitter);
                     this.WriteComma();
 
@@ -83,7 +83,7 @@ namespace Bridge.Translator
 
             if (at.Dimensions > 1)
             {
-                this.Write(Types.Array + ".create(");
+                this.Write(JS.Types.Array + ".create(");
                 var defaultInitializer = new PrimitiveExpression(Inspector.GetDefaultFieldValue(at.ElementType, arrayCreateExpression.Type), "?");
 
                 if (defaultInitializer.Value is IType)

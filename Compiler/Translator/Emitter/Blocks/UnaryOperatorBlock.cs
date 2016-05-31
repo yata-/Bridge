@@ -50,7 +50,7 @@ namespace Bridge.Translator
                 {
                     if (orr.IsLiftedOperator)
                     {
-                        this.Write(Types.Nullable + ".lift(");
+                        this.Write(JS.Types.Nullable + ".lift(");
                     }
 
                     this.Write(BridgeTypes.ToJsName(method.DeclaringType, this.Emitter));
@@ -142,7 +142,7 @@ namespace Bridge.Translator
                     op != UnaryOperatorType.PostIncrement &&
                     op != UnaryOperatorType.PostDecrement)
                 {
-                    this.Write(Types.Nullable + ".");
+                    this.Write(JS.Types.Nullable + ".");
                 }
             }
 
@@ -333,7 +333,7 @@ namespace Bridge.Translator
                         if (this.Emitter.ReplaceAwaiterByVar)
                         {
                             var index = System.Array.IndexOf(this.Emitter.AsyncBlock.AwaitExpressions, unaryOperatorExpression.Expression) + 1;
-                            this.Write(Variables.ASYNC_TASK_RESULT + index);
+                            this.Write(JS.Vars.ASYNC_TASK_RESULT + index);
                         }
                         else
                         {
@@ -458,7 +458,7 @@ namespace Bridge.Translator
             {
                 if (!isOneOp)
                 {
-                    this.Write(Types.Nullable + ".");
+                    this.Write(JS.Types.Nullable + ".");
                 }
 
                 string action = "lift1";
@@ -485,7 +485,7 @@ namespace Bridge.Translator
                         this.Write(") ? ");
                         this.WriteOpenParentheses();
                         this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
-                        this.Write(" = " + Types.Nullable + ".lift1('" + (op == UnaryOperatorType.Decrement ? "dec" : "inc") + "', ");
+                        this.Write(" = " + JS.Types.Nullable + ".lift1('" + (op == UnaryOperatorType.Decrement ? "dec" : "inc") + "', ");
                         this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                         this.AddOveflowFlag(typeCode, "dec", true);
                         this.Write(")");
@@ -508,7 +508,7 @@ namespace Bridge.Translator
                         this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                         this.WriteComma();
                         this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
-                        this.Write(" = " + Types.Nullable + ".lift1('" + (op == UnaryOperatorType.PostDecrement ? "dec" : "inc") + "', ");
+                        this.Write(" = " + JS.Types.Nullable + ".lift1('" + (op == UnaryOperatorType.PostDecrement ? "dec" : "inc") + "', ");
                         this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                         this.AddOveflowFlag(typeCode, "dec", true);
                         this.Write(")");

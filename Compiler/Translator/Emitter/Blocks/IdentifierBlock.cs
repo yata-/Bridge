@@ -176,7 +176,7 @@ namespace Bridge.Translator
                 if (!isStatic)
                 {
                     var isExtensionMethod = resolvedMethod.IsExtensionMethod;
-                    this.Write(isExtensionMethod ? Functions.BRIDGE_BIND_SCOPE : Functions.BRIDGE_BIND);
+                    this.Write(isExtensionMethod ? JS.Funcs.BRIDGE_BIND_SCOPE : JS.Funcs.BRIDGE_BIND);
                     this.WriteOpenParentheses();
                     this.WriteThis();
                     this.Write(", ");
@@ -249,7 +249,7 @@ namespace Bridge.Translator
                             {
                                 if (isNullable)
                                 {
-                                    this.Write(Types.Nullable + ".lift1");
+                                    this.Write(JS.Types.Nullable + ".lift1");
                                     this.WriteOpenParentheses();
                                     if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment ||
                                         this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
@@ -329,7 +329,7 @@ namespace Bridge.Translator
                             {
                                 if (isNullable)
                                 {
-                                    this.Write(Types.Nullable + ".lift1");
+                                    this.Write(JS.Types.Nullable + ".lift1");
                                     this.WriteOpenParentheses();
                                     if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment ||
                                         this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)

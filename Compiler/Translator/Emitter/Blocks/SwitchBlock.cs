@@ -251,7 +251,7 @@ namespace Bridge.Translator
             IAsyncStep thisStep = null;
             this.WriteSpace();
             this.BeginBlock();
-            this.Write(Variables.ASYNC_STEP + " = " + this.Emitter.AsyncBlock.Step + ";");
+            this.Write(JS.Vars.ASYNC_STEP + " = " + this.Emitter.AsyncBlock.Step + ";");
             this.WriteNewLine();
             this.Write("continue;");
             var writer = this.SaveWriter();

@@ -275,15 +275,15 @@ namespace Bridge.Translator
                 }
             }
 
-            string name = Variables.T;
+            string name = JS.Vars.T;
             int i = 0;
 
             while (this.Emitter.TempVariables.ContainsKey(name) || (this.Emitter.ParentTempVariables != null && this.Emitter.ParentTempVariables.ContainsKey(name)))
             {
-                name = Variables.T + ++i;
+                name = JS.Vars.T + ++i;
             }
 
-            name = Variables.T + (i > 0 ? i.ToString() : "");
+            name = JS.Vars.T + (i > 0 ? i.ToString() : "");
 
             this.IntroduceTempVar(name);
 

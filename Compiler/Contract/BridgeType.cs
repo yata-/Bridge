@@ -402,7 +402,7 @@ namespace Bridge.Contract
             if (BridgeTypes.convRegex == null)
             {
                 replacements = new System.Collections.Generic.Dictionary<string, string>(4);
-                replacements.Add("`", Variables.D.ToString());
+                replacements.Add("`", JS.Vars.D.ToString());
                 replacements.Add("/", ".");
                 replacements.Add("+", ".");
                 replacements.Add("[", "");

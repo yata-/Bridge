@@ -81,15 +81,15 @@ namespace Bridge.Translator
             }
             else if (value is decimal)
             {
-                s = Types.Decimal + "(" + this.DecimalConstant((decimal)value) + ")";
+                s = JS.Types.Decimal + "(" + this.DecimalConstant((decimal)value) + ")";
             }
             else if (value is long)
             {
-                s = Types.Int64 + "(" + this.LongConstant((long)value) + ")";
+                s = JS.Types.Int64 + "(" + this.LongConstant((long)value) + ")";
             }
             else if (value is ulong)
             {
-                s = Types.UInt64 + "(" + this.ULongConstant((ulong)value) + ")";
+                s = JS.Types.UInt64 + "(" + this.ULongConstant((ulong)value) + ")";
             }
             else
             {
@@ -160,11 +160,11 @@ namespace Bridge.Translator
 
             if (callee == null)
             {
-                this.Write(Functions.CALL);
+                this.Write(JS.Funcs.CALL);
             }
             else
             {
-                this.Write(Functions.CALL);
+                this.Write(JS.Funcs.CALL);
                 this.WriteOpenParentheses();
                 this.Write(callee);
                 this.WriteCloseParentheses();

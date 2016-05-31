@@ -67,7 +67,7 @@ namespace Bridge.Translator
 
                     if (orr.IsLiftedOperator)
                     {
-                        this.Write(Types.Nullable + ".lift(");
+                        this.Write(JS.Types.Nullable + ".lift(");
                     }
 
                     this.Write(BridgeTypes.ToJsName(method.DeclaringType, this.Emitter));
@@ -239,7 +239,7 @@ namespace Bridge.Translator
                 this.Emitter.AssignmentType = oldAssigmentType;
                 this.Emitter.IsAssignment = oldAssigment;
 
-                this.Write(Types.Int + ".div(");
+                this.Write(JS.Types.Int + ".div(");
                 assignmentExpression.Left.AcceptVisitor(this.Emitter);
                 this.Write(", ");
                 oldValue1 = this.Emitter.ReplaceAwaiterByVar;
@@ -307,14 +307,14 @@ namespace Bridge.Translator
                             this.Write(" = ");
                         }
 
-                        this.Write(add ? Functions.BRIDGE_COMBINE : Functions.BRIDGE_REMOVE);
+                        this.Write(add ? JS.Funcs.BRIDGE_COMBINE : JS.Funcs.BRIDGE_REMOVE);
                         this.WriteOpenParentheses();
                     }
                 }
             }
 
             bool nullable = orr != null && orr.IsLiftedOperator;
-            string root = Types.Nullable + ".";
+            string root = JS.Types.Nullable + ".";
 
             bool special = nullable;
 
@@ -630,7 +630,7 @@ namespace Bridge.Translator
 
             if (thisAssignment)
             {
-                this.Write(")." + Functions.CLONE + "(this)");
+                this.Write(")." + JS.Funcs.CLONE + "(this)");
             }
 
             this.Emitter.ReplaceAwaiterByVar = oldValue;
@@ -700,7 +700,7 @@ namespace Bridge.Translator
 
                 if (orr.IsLiftedOperator)
                 {
-                    this.Write(Types.Nullable + ".");
+                    this.Write(JS.Types.Nullable + ".");
                     string action = "lift2";
                     
                     this.Write(action);
@@ -749,7 +749,7 @@ namespace Bridge.Translator
             {
                 if (orr.IsLiftedOperator)
                 {
-                    this.Write(Types.Nullable + ".");
+                    this.Write(JS.Types.Nullable + ".");
                     string action = "lift2";
 
                     this.Write(action);

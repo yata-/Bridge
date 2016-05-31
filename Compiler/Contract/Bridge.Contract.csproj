@@ -84,12 +84,8 @@
     <Compile Include="AbstractPlugin.cs" />
     <Compile Include="BridgeType.cs" />
     <Compile Include="ConfigHelper.cs" />
-    <Compile Include="Constants\Attributes.cs" />
-    <Compile Include="Constants\Functions.cs" />
-    <Compile Include="Constants\Fields.cs" />
-    <Compile Include="Constants\CSharp.cs" />
-    <Compile Include="Constants\JavaScript.cs" />
-    <Compile Include="Constants\Variables.cs" />
+    <Compile Include="Constants\CS.cs" />
+    <Compile Include="Constants\JS.cs" />
     <Compile Include="IAnonymousType.cs" />
     <Compile Include="IWriter.cs" />
     <Compile Include="OverflowMode.cs" />
@@ -128,7 +124,6 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ITypeInfo.cs" />
-    <Compile Include="Constants\Types.cs" />
     <Compile Include="XmlToJsDoc.cs" />
   </ItemGroup>
   <ItemGroup>

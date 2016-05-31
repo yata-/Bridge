@@ -92,13 +92,13 @@ namespace Bridge.Translator
         protected virtual IAnonymousTypeConfig CreateAnonymousType(AnonymousType type)
         {
             var config = new AnonymousTypeConfig();
-            config.Name = Types.Anonymous + (this.Emitter.AnonymousTypes.Count + 1);
+            config.Name = JS.Types.Anonymous + (this.Emitter.AnonymousTypes.Count + 1);
             config.Type = type;
 
             var oldWriter = this.SaveWriter();
             this.NewWriter();
 
-            this.Write(Functions.BRIDGE_DEFINE);
+            this.Write(JS.Funcs.BRIDGE_DEFINE);
             this.WriteOpenParentheses();
             this.WriteScript(config.Name);
             this.Write(", ");
@@ -122,7 +122,7 @@ namespace Bridge.Translator
         private void GenereateCtor(AnonymousType type)
         {
             this.EnsureComma();
-            this.Write(Functions.CONSTRUCTOR + ": function (");
+            this.Write(JS.Funcs.CONSTRUCTOR + ": function (");
             foreach (var property in type.Properties)
             {
                 this.EnsureComma(false);

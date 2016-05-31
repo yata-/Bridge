@@ -418,7 +418,7 @@ namespace Bridge.Translator
 
                     if (!isStatic)
                     {
-                        this.Write(isExtensionMethod ? Functions.BRIDGE_BIND_SCOPE : Functions.BRIDGE_BIND);
+                        this.Write(isExtensionMethod ? JS.Funcs.BRIDGE_BIND_SCOPE : JS.Funcs.BRIDGE_BIND);
                         this.WriteOpenParentheses();
                         this.WriteTarget(resolveResult);
                         this.Write(", ");
@@ -647,7 +647,7 @@ namespace Bridge.Translator
                                 {
                                     if (isNullable)
                                     {
-                                        this.Write(Types.Nullable + ".lift1");
+                                        this.Write(JS.Types.Nullable + ".lift1");
                                         this.WriteOpenParentheses();
                                         if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
                                         {
@@ -835,7 +835,7 @@ namespace Bridge.Translator
                                 {
                                     if (isNullable)
                                     {
-                                        this.Write(Types.Nullable + ".lift1");
+                                        this.Write(JS.Types.Nullable + ".lift1");
                                         this.WriteOpenParentheses();
                                         if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
                                         {
@@ -940,11 +940,11 @@ namespace Bridge.Translator
                         if (targetVar != null)
                         {
                             this.PushWriter(string.Concat(Helpers.GetPropertyRef(member.Member, this.Emitter, true),
-                                proto ? "." + Functions.CALL + "(this, " : "(",
+                                proto ? "." + JS.Funcs.CALL + "(this, " : "(",
                                 targetVar,
                                 ".",
                                 Helpers.GetPropertyRef(member.Member, this.Emitter, false),
-                                proto ? "." + Functions.CALL + "(this)" : "()",
+                                proto ? "." + JS.Funcs.CALL + "(this)" : "()",
                                 "{0})"), () =>
                                 {
                                     this.RemoveTempVar(targetVar);
@@ -964,11 +964,11 @@ namespace Bridge.Translator
 
                             this.RestoreWriter(oldWriter);
                             this.PushWriter(string.Concat(Helpers.GetPropertyRef(member.Member, this.Emitter, true),
-                                proto ? "." + Functions.CALL + "(this, " : "(",
+                                proto ? "." + JS.Funcs.CALL + "(this, " : "(",
                                 trg,
                                 ".",
                                 Helpers.GetPropertyRef(member.Member, this.Emitter, false),
-                                proto ? "." + Functions.CALL + "(this)" : "()",
+                                proto ? "." + JS.Funcs.CALL + "(this)" : "()",
                                 "{0})"));
                         }
                     }
@@ -976,7 +976,7 @@ namespace Bridge.Translator
                     {
                         if (proto)
                         {
-                            this.PushWriter(Helpers.GetPropertyRef(member.Member, this.Emitter, true) + "." + Functions.CALL + "(this, {0})");
+                            this.PushWriter(Helpers.GetPropertyRef(member.Member, this.Emitter, true) + "." + JS.Funcs.CALL + "(this, {0})");
                         }
                         else
                         {

@@ -25,7 +25,7 @@ namespace Bridge.Contract
 
         public static string ReplaceSpecialChars(string name)
         {
-            return name.Replace('`', Variables.D).Replace('/', '.').Replace("+", ".");
+            return name.Replace('`', JS.Vars.D).Replace('/', '.').Replace("+", ".");
         }
 
         public static bool HasGenericArgument(GenericInstanceType type, TypeDefinition searchType, IEmitter emitter, bool deep)
@@ -388,12 +388,12 @@ namespace Bridge.Contract
                 {
                     if (nullable)
                     {
-                        block.Emitter.Output.Insert(insertPosition, Types.Nullable + ".lift1(\"" + Functions.CLONE + "\", ");
+                        block.Emitter.Output.Insert(insertPosition, JS.Types.Nullable + ".lift1(\"" + JS.Funcs.CLONE + "\", ");
                         block.WriteCloseParentheses();
                     }
                     else
                     {
-                        block.Write("." + Functions.CLONE + "()");
+                        block.Write("." + JS.Funcs.CLONE + "()");
                     }
 
                     return;
@@ -419,12 +419,12 @@ namespace Bridge.Contract
 
                     if (nullable)
                     {
-                        block.Emitter.Output.Insert(insertPosition, Types.Nullable + ".lift1(\"" + Functions.CLONE + "\", ");
+                        block.Emitter.Output.Insert(insertPosition, JS.Types.Nullable + ".lift1(\"" + JS.Funcs.CLONE + "\", ");
                         block.WriteCloseParentheses();
                     }
                     else
                     {
-                        block.Write("." + Functions.CLONE + "()");
+                        block.Write("." + JS.Funcs.CLONE + "()");
                     }
                 }
             }
@@ -699,9 +699,9 @@ namespace Bridge.Contract
 
         public static string ChangeReservedWord(string name)
         {
-            if (name == Functions.CONSTRUCTOR)
+            if (name == JS.Funcs.CONSTRUCTOR)
             {
-                return Functions.DCONSTRUCTOR + Variables.D;
+                return JS.Funcs.DCONSTRUCTOR + JS.Vars.D;
             }
 
             return Helpers.PrefixDollar(name);
@@ -1054,7 +1054,7 @@ namespace Bridge.Contract
 
         public static string PrefixDollar(params object[] parts)
         {
-            return Variables.D + string.Join("", parts);
+            return JS.Vars.D + string.Join("", parts);
         }
 
         public static string ReplaceFirstDollar(string s)
@@ -1064,7 +1064,7 @@ namespace Bridge.Contract
                 return s;
             }
 
-            if (s.StartsWith(Variables.D.ToString()))
+            if (s.StartsWith(JS.Vars.D.ToString()))
             {
                 return s.Substring(1);
             }

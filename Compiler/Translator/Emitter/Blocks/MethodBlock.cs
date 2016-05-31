@@ -130,13 +130,13 @@ namespace Bridge.Translator
             list.AddRange(props);
 
             this.EnsureComma();
-            this.Write(Fields.STRUCT + ": true");
+            this.Write(JS.Fields.STRUCT + ": true");
             this.Emitter.Comma = true;
 
             if (list.Count == 0)
             {
                 this.EnsureComma();
-                this.Write(Functions.CLONE + ": function (to) { return this; }");
+                this.Write(JS.Funcs.CLONE + ": function (to) { return this; }");
                 this.Emitter.Comma = true;
                 return;
             }
@@ -216,11 +216,11 @@ namespace Bridge.Translator
 
             if (immutable)
             {
-                this.Write(Functions.CLONE + ": function (to) { return this; }");
+                this.Write(JS.Funcs.CLONE + ": function (to) { return this; }");
             }
             else
             {
-                this.Write(Functions.CLONE + ": function (to) ");
+                this.Write(JS.Funcs.CLONE + ": function (to) ");
                 this.BeginBlock();
                 this.Write("var s = to || new ");
                 this.Write(structName);
@@ -262,7 +262,7 @@ namespace Bridge.Translator
             this.WriteDot();
             this.Write(this.Emitter.GetEntityName(e));
             this.Write(" = ");
-            this.Write(add ? Functions.BRIDGE_COMBINE : Functions.BRIDGE_REMOVE);
+            this.Write(add ? JS.Funcs.BRIDGE_COMBINE : JS.Funcs.BRIDGE_REMOVE);
             this.WriteOpenParentheses();
             this.WriteThis();
             this.WriteDot();

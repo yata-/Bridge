@@ -118,7 +118,7 @@ namespace Bridge.Translator.TypeScript
 
             if (this.TypeInfo.InstanceConfig.Fields.Count == 0)
             {
-                this.Write(Functions.CLONE + "(to");
+                this.Write(JS.Funcs.CLONE + "(to");
                 this.WriteColon();
                 this.Write(structName);
                 this.WriteCloseParentheses();
@@ -150,7 +150,7 @@ namespace Bridge.Translator.TypeScript
                 this.WriteNewLine();
             }
 
-            this.Write(Functions.CLONE + "(to");
+            this.Write(JS.Funcs.CLONE + "(to");
             this.WriteColon();
             this.Write(structName);
             this.WriteCloseParentheses();

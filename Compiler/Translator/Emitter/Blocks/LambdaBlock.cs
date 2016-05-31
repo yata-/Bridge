@@ -229,13 +229,13 @@ namespace Bridge.Translator
                 }
                 
                 this.Emitter.Output.Remove(savedPos, this.Emitter.Output.Length - savedPos);
-                this.Emitter.Output.Insert(savedPos, Variables.D_ + "." + BridgeTypes.ToJsName(this.Emitter.TypeInfo.Type, this.Emitter, true) + "." + name);
+                this.Emitter.Output.Insert(savedPos, JS.Vars.D_ + "." + BridgeTypes.ToJsName(this.Emitter.TypeInfo.Type, this.Emitter, true) + "." + name);
                 this.Emitter.Level = oldLevel;
             }
 
             if (this.Emitter.ThisRefCounter > savedThisCount)
             {
-                this.Emitter.Output.Insert(savedPos, Functions.BRIDGE_BIND + "(this, ");
+                this.Emitter.Output.Insert(savedPos, JS.Funcs.BRIDGE_BIND + "(this, ");
                 this.WriteCloseParentheses();
             }
 

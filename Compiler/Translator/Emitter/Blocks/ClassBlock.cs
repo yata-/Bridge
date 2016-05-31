@@ -101,7 +101,7 @@ namespace Bridge.Translator
                 name = BridgeTypes.DefinitionToJsName(this.TypeInfo.Type, this.Emitter);
             }
 
-            this.Write(Functions.BRIDGE_DEFINE);
+            this.Write(JS.Funcs.BRIDGE_DEFINE);
 
             this.WriteOpenParentheses();
 
@@ -134,13 +134,13 @@ namespace Bridge.Translator
             {
                 var bridgeType = this.Emitter.BridgeTypes.Get(this.Emitter.TypeInfo);
 
-                if (this.TypeInfo.InstanceMethods.Any(m => m.Value.Any(subm => this.Emitter.GetEntityName(subm) == Fields.INHERITS)) ||
-                    this.TypeInfo.InstanceConfig.Fields.Any(m => m.GetName(this.Emitter) == Fields.INHERITS))
+                if (this.TypeInfo.InstanceMethods.Any(m => m.Value.Any(subm => this.Emitter.GetEntityName(subm) == JS.Fields.INHERITS)) ||
+                    this.TypeInfo.InstanceConfig.Fields.Any(m => m.GetName(this.Emitter) == JS.Fields.INHERITS))
                 {
-                    this.Write(Variables.D);
+                    this.Write(JS.Vars.D);
                 }
 
-                this.Write(Fields.INHERITS);
+                this.Write(JS.Fields.INHERITS);
                 this.WriteColon();
                 if (Helpers.IsTypeArgInSubclass(bridgeType.TypeDefinition, bridgeType.TypeDefinition, this.Emitter, false))
                 {
@@ -169,9 +169,9 @@ namespace Bridge.Translator
         protected virtual void WriteScope()
         {
             this.EnsureComma();
-            this.Write(Variables.SCOPE);
+            this.Write(JS.Vars.SCOPE);
             this.WriteColon();
-            this.Write(Variables.EXPORTS);
+            this.Write(JS.Vars.EXPORTS);
             this.Emitter.Comma = true;
         }
 
@@ -185,7 +185,7 @@ namespace Bridge.Translator
                 if (this.TypeInfo.InstanceMethods.Any(m => m.Value.Any(subm => this.Emitter.GetEntityName(subm) == "statics")) ||
                     this.TypeInfo.InstanceConfig.Fields.Any(m => m.GetName(this.Emitter) == "statics"))
                 {
-                    this.Write(Variables.D);
+                    this.Write(JS.Vars.D);
                 }
 
                 this.Write("statics");
@@ -210,14 +210,14 @@ namespace Bridge.Translator
             if (this.TypeInfo.IsEnum)
             {
                 this.EnsureComma();
-                this.Write(Fields.ENUM + ": true");
+                this.Write(JS.Fields.ENUM + ": true");
                 this.Emitter.Comma = true;
 
                 if (this.Emitter.GetTypeDefinition(this.TypeInfo.Type)
                         .CustomAttributes.Any(attr => attr.AttributeType.FullName == "System.FlagsAttribute"))
                 {
                     this.EnsureComma();
-                    this.Write(Fields.FLAGS + ": true");
+                    this.Write(JS.Fields.FLAGS + ": true");
                     this.Emitter.Comma = true;
                 }
             }
@@ -225,7 +225,7 @@ namespace Bridge.Translator
             if (HasEntryPoint)
             {
                 this.EnsureComma();
-                this.Write(Fields.ENTRY_POINT + ": true");
+                this.Write(JS.Fields.ENTRY_POINT + ": true");
                 this.Emitter.Comma = true;
             }
 
@@ -318,7 +318,7 @@ namespace Bridge.Translator
                 {
                     this.WriteNewLine();
                     this.WriteNewLine();
-                    this.Write("var " + Variables.D_ + " = {};");
+                    this.Write("var " + JS.Vars.D_ + " = {};");
                     this.Emitter.EmitterOutput.IsPrivateVarIntroduced = true;
                 }
 
@@ -327,14 +327,14 @@ namespace Bridge.Translator
 
                 this.WriteNewLine();
                 this.WriteNewLine();
-                this.Write(Functions.BRIDGE_NS);
+                this.Write(JS.Funcs.BRIDGE_NS);
                 this.WriteOpenParentheses();
                 this.WriteScript(name);
-                this.Write(", " + Variables.D_ + ")");
+                this.Write(", " + JS.Vars.D_ + ")");
                 
                 this.WriteNewLine();
                 this.WriteNewLine();
-                this.Write(Functions.BRIDGE_APPLY + "(" + Variables.D_ + ".");
+                this.Write(JS.Funcs.BRIDGE_APPLY + "(" + JS.Vars.D_ + ".");
                 this.Write(name);
                 this.Write(", ");
                 this.BeginBlock();
