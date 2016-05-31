@@ -418,7 +418,8 @@ namespace Bridge.Translator
 
                     if (!isStatic)
                     {
-                        this.Write(Bridge.Translator.Emitter.ROOT + "." + (isExtensionMethod ? Bridge.Translator.Emitter.DELEGATE_BIND_SCOPE : Bridge.Translator.Emitter.DELEGATE_BIND) + "(");
+                        this.Write(isExtensionMethod ? Functions.BRIDGE_BIND_SCOPE : Functions.BRIDGE_BIND);
+                        this.WriteOpenParentheses();
                         this.WriteTarget(resolveResult);
                         this.Write(", ");
                     }
@@ -632,7 +633,7 @@ namespace Bridge.Translator
                                 this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter, true));
                                 if (proto)
                                 {
-                                    this.Write(".call");
+                                    this.WriteCall();
                                     this.WriteOpenParentheses();
                                     this.WriteThis();
                                     this.WriteComma();
@@ -674,7 +675,7 @@ namespace Bridge.Translator
 
                                         if (proto)
                                         {
-                                            this.Write(".call");
+                                            this.WriteCall();
                                             this.WriteOpenParentheses();
                                             this.WriteThis();
                                             this.WriteCloseParentheses();
@@ -704,7 +705,7 @@ namespace Bridge.Translator
 
                                         if (proto)
                                         {
-                                            this.Write(".call");
+                                            this.WriteCall();
                                             this.WriteOpenParentheses();
                                             this.WriteThis();
                                             this.WriteCloseParentheses();
@@ -757,7 +758,7 @@ namespace Bridge.Translator
 
                                     if (proto)
                                     {
-                                        this.Write(".call");
+                                        this.WriteCall();
                                         this.WriteOpenParentheses();
                                         this.WriteThis();
                                         this.WriteCloseParentheses();
@@ -786,7 +787,7 @@ namespace Bridge.Translator
                                 this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter, false));
                                 if (proto)
                                 {
-                                    this.Write(".call");
+                                    this.WriteCall();
                                     this.WriteOpenParentheses();
                                     this.WriteThis();
                                     this.WriteCloseParentheses();
@@ -820,7 +821,7 @@ namespace Bridge.Translator
 
                                 if (proto)
                                 {
-                                    this.Write(".call");
+                                    this.WriteCall();
                                     this.WriteOpenParentheses();
                                     this.WriteThis();
                                     this.WriteComma();
@@ -922,7 +923,7 @@ namespace Bridge.Translator
                             this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter));
                             if (proto)
                             {
-                                this.Write(".call");
+                                this.WriteCall();
                                 this.WriteOpenParentheses();
                                 this.WriteThis();
                                 this.WriteCloseParentheses();
@@ -939,11 +940,11 @@ namespace Bridge.Translator
                         if (targetVar != null)
                         {
                             this.PushWriter(string.Concat(Helpers.GetPropertyRef(member.Member, this.Emitter, true),
-                                proto ? ".call(this, " : "(",
+                                proto ? "." + Functions.CALL + "(this, " : "(",
                                 targetVar,
                                 ".",
                                 Helpers.GetPropertyRef(member.Member, this.Emitter, false),
-                                proto ? ".call(this)" : "()",
+                                proto ? "." + Functions.CALL + "(this)" : "()",
                                 "{0})"), () =>
                                 {
                                     this.RemoveTempVar(targetVar);
@@ -963,11 +964,11 @@ namespace Bridge.Translator
 
                             this.RestoreWriter(oldWriter);
                             this.PushWriter(string.Concat(Helpers.GetPropertyRef(member.Member, this.Emitter, true),
-                                proto ? ".call(this, " : "(",
+                                proto ? "." + Functions.CALL + "(this, " : "(",
                                 trg,
                                 ".",
                                 Helpers.GetPropertyRef(member.Member, this.Emitter, false),
-                                proto ? ".call(this)" : "()",
+                                proto ? "." + Functions.CALL + "(this)" : "()",
                                 "{0})"));
                         }
                     }
@@ -975,7 +976,7 @@ namespace Bridge.Translator
                     {
                         if (proto)
                         {
-                            this.PushWriter(Helpers.GetPropertyRef(member.Member, this.Emitter, true) + ".call(this, {0})");
+                            this.PushWriter(Helpers.GetPropertyRef(member.Member, this.Emitter, true) + "." + Functions.CALL + "(this, {0})");
                         }
                         else
                         {

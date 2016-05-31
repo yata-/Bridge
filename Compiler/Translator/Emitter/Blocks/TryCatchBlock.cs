@@ -132,7 +132,7 @@ namespace Bridge.Translator
 
                 if (this.Emitter.AsyncBlock.IsTaskReturn)
                 {
-                    this.Write(Variables.ASYNC_TCS + ".setException(" + Variables.ASYNC_E + ");");
+                    this.Write(Variables.ASYNC_TCS + "." + Functions.SET_EXCEPTION + "(" + Variables.ASYNC_E + ");");
                 }
                 else
                 {
@@ -149,7 +149,10 @@ namespace Bridge.Translator
                 this.WriteElse();
                 this.WriteIf();
                 this.WriteOpenParentheses();
-                this.Write("Bridge.isDefined(" + Variables.ASYNC_RETURN_VALUE +")");
+                this.Write(Functions.BRIDGE_IS_DEFINED);
+                this.WriteOpenParentheses();
+                this.Write(Variables.ASYNC_RETURN_VALUE);
+                this.WriteCloseParentheses();
                 this.WriteCloseParentheses();
                 this.WriteSpace();
                 this.BeginBlock();
@@ -168,7 +171,7 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    this.Write(Variables.ASYNC_TCS + ".setResult(" + Variables.ASYNC_RETURN_VALUE +");");
+                    this.Write(Variables.ASYNC_TCS + "." + Functions.SET_RESULT + "(" + Variables.ASYNC_RETURN_VALUE +");");
                     this.WriteNewLine();
                     this.WriteReturn(false);
                     this.WriteSemiColon();

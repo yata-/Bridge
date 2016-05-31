@@ -101,7 +101,7 @@ namespace Bridge.Translator
                 name = BridgeTypes.DefinitionToJsName(this.TypeInfo.Type, this.Emitter);
             }
 
-            this.Write(Bridge.Translator.Emitter.ROOT + ".define");
+            this.Write(Functions.BRIDGE_DEFINE);
 
             this.WriteOpenParentheses();
 
@@ -327,13 +327,14 @@ namespace Bridge.Translator
 
                 this.WriteNewLine();
                 this.WriteNewLine();
-                this.Write("Bridge.ns(");
+                this.Write(Functions.BRIDGE_NS);
+                this.WriteOpenParentheses();
                 this.WriteScript(name);
                 this.Write(", " + Variables.D_ + ")");
                 
                 this.WriteNewLine();
                 this.WriteNewLine();
-                this.Write("Bridge.apply(" + Variables.D_ + ".");
+                this.Write(Functions.BRIDGE_APPLY + "(" + Variables.D_ + ".");
                 this.Write(name);
                 this.Write(", ");
                 this.BeginBlock();

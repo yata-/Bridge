@@ -324,7 +324,7 @@ namespace Bridge.Translator
             this.WriteNewLine();
 
             this.Indent();
-            this.Write(Functions.ASYNC_BODY + " = Bridge.fn.bind(this, ");
+            this.Write(Functions.ASYNC_BODY + " = " + Functions.BRIDGE_BIND + "(this, ");
             this.WriteFunction();
             this.Write("() ");
 
@@ -558,7 +558,7 @@ namespace Bridge.Translator
 
             if (this.IsTaskReturn)
             {
-                this.Write(Variables.ASYNC_TCS + ".setException(" + Variables.ASYNC_E + ");");
+                this.Write(Variables.ASYNC_TCS + "." + Functions.SET_EXCEPTION + "(" + Variables.ASYNC_E + ");");
             }
             else
             {
@@ -603,11 +603,11 @@ namespace Bridge.Translator
 
                     if (this.IsTaskResult(expression))
                     {
-                        this.Write(string.Format(Variables.ASYNC_TASK_RESULT + "{0} = " + Variables.ASYNC_TASK + "{0}.getAwaitedResult();", step.FromTaskNumber));
+                        this.Write(string.Format("{0}{1} = {2}{1}.{3}();", Variables.ASYNC_TASK_RESULT, step.FromTaskNumber, Variables.ASYNC_TASK, Functions.GET_AWAITED_RESULT));
                     }
                     else
                     {
-                        this.Write(string.Format(Variables.ASYNC_TASK + "{0}.getAwaitedResult();", step.FromTaskNumber));
+                        this.Write(string.Format("{0}{1}.{2}();", Variables.ASYNC_TASK, step.FromTaskNumber, Functions.GET_AWAITED_RESULT));
                     }
 
                     addNewLine = true;
@@ -661,7 +661,7 @@ namespace Bridge.Translator
 
                     if (this.IsTaskReturn)
                     {
-                        this.Write(Variables.ASYNC_TCS + ".setResult(null);");
+                        this.Write(Variables.ASYNC_TCS + "." + Functions.SET_RESULT + "(null);");
                         this.WriteNewLine();
                     }
 
@@ -678,7 +678,7 @@ namespace Bridge.Translator
 
             if (this.IsTaskReturn)
             {
-                this.Write(Variables.ASYNC_TCS + ".setResult(null);");
+                this.Write(Variables.ASYNC_TCS + "." + Functions.SET_RESULT + "(null);");
                 this.WriteNewLine();
             }
 

@@ -43,7 +43,7 @@ namespace Bridge.Translator
                     }
                     else
                     {
-                        this.Write(Variables.ASYNC_TCS + ".setResult(");
+                        this.Write(Variables.ASYNC_TCS + "." + Functions.SET_RESULT + "(");
                     }
 
                     if (!returnStatement.Expression.IsNull)

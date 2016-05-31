@@ -225,7 +225,7 @@ namespace Bridge.Translator
                 }
             }
 
-            this.Write(Bridge.Translator.Emitter.ROOT);
+            this.Write(JavaScript.NS.BRIDGE);
             this.WriteDot();
             this.Write(method);
             this.WriteOpenParentheses();

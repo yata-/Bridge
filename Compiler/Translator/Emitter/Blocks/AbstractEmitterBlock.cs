@@ -157,11 +157,11 @@ namespace Bridge.Translator
 
             if (this.Emitter.AsyncBlock.IsTaskReturn)
             {
-                this.Write(Variables.ASYNC_TASK + index + ".continueWith(" + Functions.ASYNC_BODY + ");");
+                this.Write(Variables.ASYNC_TASK + index + "." + Functions.CONTINUE_WITH + "(" + Functions.ASYNC_BODY + ");");
             }
             else
             {
-                this.Write(Variables.ASYNC_TASK + index + ".continueWith(" + Functions.ASYNC_BODY + ", true);");
+                this.Write(Variables.ASYNC_TASK + index + "." + Functions.CONTINUE_WITH + "(" + Functions.ASYNC_BODY + ", true);");
             }
 
             this.WriteNewLine();

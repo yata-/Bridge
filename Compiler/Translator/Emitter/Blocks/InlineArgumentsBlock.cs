@@ -236,7 +236,9 @@ namespace Bridge.Translator
 
                                 StringBuilder sb = new StringBuilder();
                                 sb.Append(methodName);
-                                sb.Append(".apply(");
+                                sb.Append(".");
+                                sb.Append(Functions.APPLY);
+                                sb.Append("(");
                                 sb.Append(target ?? "null");
 
                                 if (args.Contains(","))
@@ -321,7 +323,8 @@ namespace Bridge.Translator
                     }
                     else if (paramsName == key && !ignoreArray)
                     {
-                        this.Write("Array.prototype.slice.call(arguments, " + paramsIndex + ")");
+                        this.Write("Array.prototype.slice");
+                        this.WriteCall("(arguments, " + paramsIndex + ")");
                     }
                     else
                     {
@@ -363,7 +366,7 @@ namespace Bridge.Translator
 
                                 if (thisValue != null)
                                 {
-                                    this.Write("Bridge.getType(" + thisValue + ")");
+                                    this.Write(Functions.BRIDGE_GET_TYPE + "(" + thisValue + ")");
                                 } 
                             }
                         }
@@ -573,7 +576,7 @@ namespace Bridge.Translator
                     s = "null";
                 }
 
-                this.Write(this.WriteIndentToString("Bridge.getType(" + s + ")"));
+                this.Write(this.WriteIndentToString(Functions.BRIDGE_GET_TYPE + "(" + s + ")"));
             }
         }
 

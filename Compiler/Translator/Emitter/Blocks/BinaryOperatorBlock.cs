@@ -238,7 +238,7 @@ namespace Bridge.Translator
                 if (this.Emitter.Validator.IsDelegateOrLambda(leftResolverResult) && this.Emitter.Validator.IsDelegateOrLambda(rightResolverResult))
                 {
                     delegateOperator = true;
-                    this.Write(Bridge.Translator.Emitter.ROOT + "." + (add ? Bridge.Translator.Emitter.DELEGATE_COMBINE : Bridge.Translator.Emitter.DELEGATE_REMOVE));
+                    this.Write(add ? Functions.BRIDGE_COMBINE : Functions.BRIDGE_REMOVE);
                     this.WriteOpenParentheses();
                 }
             }

@@ -98,7 +98,8 @@ namespace Bridge.Translator
             var oldWriter = this.SaveWriter();
             this.NewWriter();
 
-            this.Write("Bridge.define(");
+            this.Write(Functions.BRIDGE_DEFINE);
+            this.WriteOpenParentheses();
             this.WriteScript(config.Name);
             this.Write(", ");
             this.BeginBlock();
@@ -106,7 +107,7 @@ namespace Bridge.Translator
             this.GenereateCtor(type);
             this.GenereateGetters(config);
             this.GenereateEquals(config);
-            this.GenereateHashCode(config);
+            this.GenerateHashCode(config);
             this.GenereateToJSON(config);
 
             this.WriteNewLine();
@@ -204,7 +205,7 @@ namespace Bridge.Translator
             this.Emitter.Comma = true;
         }
 
-        private void GenereateHashCode(IAnonymousTypeConfig config)
+        private void GenerateHashCode(IAnonymousTypeConfig config)
         {
             this.EnsureComma();
             this.Write("getHashCode: function () ");

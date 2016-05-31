@@ -262,7 +262,7 @@ namespace Bridge.Translator
             this.WriteDot();
             this.Write(this.Emitter.GetEntityName(e));
             this.Write(" = ");
-            this.Write(Bridge.Translator.Emitter.ROOT, ".", add ? Bridge.Translator.Emitter.DELEGATE_COMBINE : Bridge.Translator.Emitter.DELEGATE_REMOVE);
+            this.Write(add ? Functions.BRIDGE_COMBINE : Functions.BRIDGE_REMOVE);
             this.WriteOpenParentheses();
             this.WriteThis();
             this.WriteDot();

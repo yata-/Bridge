@@ -154,6 +154,23 @@ namespace Bridge.Translator
             return this.Emitter.ToJavaScript(value);
         }
 
+        public virtual void WriteCall(object callee = null)
+        {
+            this.WriteDot();
+
+            if (callee == null)
+            {
+                this.Write(Functions.CALL);
+            }
+            else
+            {
+                this.Write(Functions.CALL);
+                this.WriteOpenParentheses();
+                this.Write(callee);
+                this.WriteCloseParentheses();
+            }
+        }
+
         public virtual void WriteComma()
         {
             this.WriteComma(false);

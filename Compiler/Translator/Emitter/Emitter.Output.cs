@@ -134,7 +134,7 @@ namespace Bridge.Translator
                     var str = moduleOutput.ToString();
                     moduleOutput.Length = 0;
 
-                    moduleOutput.Append("define(");
+                    moduleOutput.Append(Functions.DEFINE + "(");
 
                     if (moduleName != Bridge.Translator.AssemblyInfo.DEFAULT_FILENAME)
                     {

@@ -1,12 +1,16 @@
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using Mono.Cecil;
+using TopologicalSorting;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TopologicalSorting;
+
 
 namespace Bridge.Translator
 {
@@ -19,12 +23,12 @@ namespace Bridge.Translator
                 return 0;
             }
 
-            if (x.Key == Emitter.ROOT)
+            if (x.Key == CSharp.NS.ROOT)
             {
                 return -1;
             }
 
-            if (y.Key == Emitter.ROOT)
+            if (y.Key == CSharp.NS.ROOT)
             {
                 return 1;
             }
@@ -52,12 +56,12 @@ namespace Bridge.Translator
                 return 0;
             }
 
-            if (x.Key == Emitter.ROOT)
+            if (x.Key == CSharp.NS.ROOT)
             {
                 return -1;
             }
 
-            if (y.Key == Emitter.ROOT)
+            if (y.Key == CSharp.NS.ROOT)
             {
                 return 1;
             }

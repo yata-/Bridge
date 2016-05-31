@@ -176,7 +176,8 @@ namespace Bridge.Translator
                 if (!isStatic)
                 {
                     var isExtensionMethod = resolvedMethod.IsExtensionMethod;
-                    this.Write(Bridge.Translator.Emitter.ROOT + "." + (isExtensionMethod ? Bridge.Translator.Emitter.DELEGATE_BIND_SCOPE : Bridge.Translator.Emitter.DELEGATE_BIND) + "(");
+                    this.Write(isExtensionMethod ? Functions.BRIDGE_BIND_SCOPE : Functions.BRIDGE_BIND);
+                    this.WriteOpenParentheses();
                     this.WriteThis();
                     this.Write(", ");
                     appendAdditionalCode = ")";

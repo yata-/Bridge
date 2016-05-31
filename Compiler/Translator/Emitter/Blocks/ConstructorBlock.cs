@@ -387,7 +387,7 @@ namespace Bridge.Translator
 
                 this.Write(name, ".prototype.");
                 this.Write(baseName);
-                this.Write(".call");
+                this.WriteCall();
                 appendScope = true;
             }
             else
@@ -411,7 +411,7 @@ namespace Bridge.Translator
                 }
 
                 this.Write(baseName);
-                this.Write(".call");
+                this.WriteCall();
                 appendScope = true;
             }
 
