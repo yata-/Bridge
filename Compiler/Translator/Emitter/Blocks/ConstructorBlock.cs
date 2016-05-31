@@ -28,6 +28,11 @@ namespace Bridge.Translator
             set;
         }
 
+        public bool HasEntryPoint
+        {
+            get; set;
+        }
+
         protected override void DoEmit()
         {
             if (this.StaticBlock)

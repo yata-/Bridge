@@ -1,8 +1,5 @@
 ﻿// @source random.js
 
-(function (globals) {
-    "use strict";
-
     Bridge.define('System.Random', {
         statics: {
             MBIG: 2147483647,
@@ -138,6 +135,3 @@
             }
         }
     });
-
-    Bridge.init();
-})(this);
