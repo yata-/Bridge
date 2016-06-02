@@ -387,7 +387,7 @@
 	        return obj;
         },
 
-	    merge: function (to, from) {
+	    merge: function (to, from, elemFactory) {
 	        if (to instanceof System.Decimal && Bridge.isNumber(from)) {
 	            return new System.Decimal(from);
 	        }
@@ -430,11 +430,13 @@
 	            for (i = 0; i < from.length; i++) {
 	                var item = from[i];
 
-                    if (!Bridge.isArray(item)) {
-                        item = [item];
-                    }
+	                if (!Bridge.isArray(item)) {
+	                    if (elemFactory !== null) {
+	                        item = Bridge.merge(elemFactory(), item);
+	                    }
+	                }
 
-                    fn.apply(to, item);
+                    fn.apply(to, [item]);
 	            }
 	        } else {
 	            for (key in from) {
