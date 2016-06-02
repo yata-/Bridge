@@ -88,7 +88,7 @@ namespace Bridge.Translator
         {
             this.Emitter.Locals.Add(name, type);
 
-            name = name.StartsWith(Bridge.Translator.Emitter.FIX_ARGUMENT_NAME) ? name.Substring(Bridge.Translator.Emitter.FIX_ARGUMENT_NAME.Length) : name;
+            name = name.StartsWith(JS.Vars.FIX_ARGUMENT_NAME) ? name.Substring(JS.Vars.FIX_ARGUMENT_NAME.Length) : name;
             string vName = valueName ?? name;
 
             if (Helpers.IsReservedWord(vName))

@@ -249,16 +249,16 @@ namespace Bridge.Translator
                             {
                                 if (isNullable)
                                 {
-                                    this.Write(JS.Types.Nullable + ".lift1");
+                                    this.Write(JS.Types.SYSTEM_NULLABLE + "." + JS.Funcs.Math.LIFT1);
                                     this.WriteOpenParentheses();
                                     if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment ||
                                         this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
                                     {
-                                        this.WriteScript("inc");
+                                        this.WriteScript(JS.Funcs.Math.INC);
                                     }
                                     else
                                     {
-                                        this.WriteScript("dec");
+                                        this.WriteScript(JS.Funcs.Math.DEC);
                                     }
 
                                     this.WriteComma();
@@ -281,11 +281,11 @@ namespace Bridge.Translator
                                     if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment ||
                                         this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
                                     {
-                                        this.Write("inc");
+                                        this.Write(JS.Funcs.Math.INC);
                                     }
                                     else
                                     {
-                                        this.Write("dec");
+                                        this.Write(JS.Funcs.Math.DEC);
                                     }
 
                                     this.WriteOpenParentheses();
@@ -329,16 +329,16 @@ namespace Bridge.Translator
                             {
                                 if (isNullable)
                                 {
-                                    this.Write(JS.Types.Nullable + ".lift1");
+                                    this.Write(JS.Types.SYSTEM_NULLABLE + "." + JS.Funcs.Math.LIFT1);
                                     this.WriteOpenParentheses();
                                     if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment ||
                                         this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
                                     {
-                                        this.WriteScript("inc");
+                                        this.WriteScript(JS.Funcs.Math.INC);
                                     }
                                     else
                                     {
-                                        this.WriteScript("dec");
+                                        this.WriteScript(JS.Funcs.Math.DEC);
                                     }
 
                                     this.WriteComma();
@@ -354,11 +354,11 @@ namespace Bridge.Translator
                                     if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment ||
                                         this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
                                     {
-                                        this.Write("inc");
+                                        this.Write(JS.Funcs.Math.INC);
                                     }
                                     else
                                     {
-                                        this.Write("dec");
+                                        this.Write(JS.Funcs.Math.DEC);
                                     }
 
                                     this.WriteOpenParentheses();
@@ -452,7 +452,7 @@ namespace Bridge.Translator
                     }
                     else
                     {
-                        this.Write(this.Emitter.AssignmentType == AssignmentOperatorType.Add ? "add" : "remove");
+                        this.Write(Helpers.GetAddOrRemove(this.Emitter.AssignmentType == AssignmentOperatorType.Add));
                         this.Write(
                             OverloadsCollection.Create(this.Emitter, memberResult.Member,
                                 this.Emitter.AssignmentType == AssignmentOperatorType.Subtract).GetOverloadName());

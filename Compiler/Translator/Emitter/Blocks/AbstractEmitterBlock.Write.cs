@@ -81,15 +81,15 @@ namespace Bridge.Translator
             }
             else if (value is decimal)
             {
-                s = JS.Types.Decimal + "(" + this.DecimalConstant((decimal)value) + ")";
+                s = JS.Types.SYSTEM_DECIMAL + "(" + this.DecimalConstant((decimal)value) + ")";
             }
             else if (value is long)
             {
-                s = JS.Types.Int64 + "(" + this.LongConstant((long)value) + ")";
+                s = JS.Types.SYSTEM_INT64 + "(" + this.LongConstant((long)value) + ")";
             }
             else if (value is ulong)
             {
-                s = JS.Types.UInt64 + "(" + this.ULongConstant((ulong)value) + ")";
+                s = JS.Types.SYSTEM_UInt64 + "(" + this.ULongConstant((ulong)value) + ")";
             }
             else
             {

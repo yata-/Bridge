@@ -141,10 +141,10 @@ namespace Bridge.Translator
                 return;
             }
 
-            if (!this.TypeInfo.InstanceMethods.ContainsKey("GetHashCode"))
+            if (!this.TypeInfo.InstanceMethods.ContainsKey(CS.Methods.GETHASHCODE))
             {
                 this.EnsureComma();
-                this.Write("getHashCode: function () ");
+                this.Write(JS.Funcs.GETHASHCODE + ": function () ");
                 this.BeginBlock();
                 this.Write("var hash = 17;");
 
@@ -159,7 +159,7 @@ namespace Bridge.Translator
                     this.Write("hash = hash * 23 + ");
                     this.Write("(this." + fieldName);
                     this.Write(" == null ? 0 : ");
-                    this.Write("Bridge.getHashCode(");
+                    this.Write(JS.Funcs.BRIDGE_GETHASHCODE + "(");
                     this.Write("this." + fieldName);
                     this.Write("));");
                 }
@@ -171,12 +171,12 @@ namespace Bridge.Translator
                 this.Emitter.Comma = true;
             }
 
-            if (!this.TypeInfo.InstanceMethods.ContainsKey("Equals"))
+            if (!this.TypeInfo.InstanceMethods.ContainsKey(CS.Methods.EQUALS))
             {
                 this.EnsureComma();
-                this.Write("equals: function (o) ");
+                this.Write(JS.Funcs.EQUALS + ": function (o) ");
                 this.BeginBlock();
-                this.Write("if (!Bridge.is(o,");
+                this.Write("if (!" + JS.Funcs.BRIDGE_IS + "(o,");
                 this.Write(structName);
                 this.Write(")) ");
                 this.BeginBlock();
@@ -199,7 +199,7 @@ namespace Bridge.Translator
 
                     and = true;
 
-                    this.Write("Bridge.equals(this.");
+                    this.Write(JS.Funcs.BRIDGE_EQUALS + "(this.");
                     this.Write(fieldName);
                     this.Write(", o.");
                     this.Write(fieldName);
@@ -251,7 +251,7 @@ namespace Bridge.Translator
         {
             string name = evtVar.Name;
 
-            this.Write(add ? "add" : "remove", name, " : ");
+            this.Write(Helpers.GetAddOrRemove(add), name, " : ");
             this.WriteFunction();
             this.WriteOpenParentheses();
             this.Write("value");

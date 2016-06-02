@@ -104,7 +104,7 @@ namespace Bridge.Translator
             this.WriteOpenParentheses();
             this.Write(iteratorName);
             this.WriteDot();
-            this.Write(Bridge.Translator.Emitter.MOVE_NEXT);
+            this.Write(JS.Funcs.MOVE_NEXT);
             this.WriteOpenCloseParentheses();
             this.WriteCloseParentheses();
             this.WriteSpace();
@@ -117,7 +117,7 @@ namespace Bridge.Translator
             this.Write(varName, " = ", iteratorName);
 
             this.WriteDot();
-            this.Write(Bridge.Translator.Emitter.GET_CURRENT);
+            this.Write(JS.Funcs.GET_CURRENT);
 
             this.WriteOpenCloseParentheses();
             this.WriteSemiColon();
@@ -207,7 +207,7 @@ namespace Bridge.Translator
             this.WriteOpenParentheses();
             this.Write(iteratorName);
             this.WriteDot();
-            this.Write(Bridge.Translator.Emitter.MOVE_NEXT);
+            this.Write(JS.Funcs.MOVE_NEXT);
             this.WriteOpenCloseParentheses();
             this.WriteCloseParentheses();
             this.WriteSpace();
@@ -222,7 +222,7 @@ namespace Bridge.Translator
                 this.Write(varName, " = ", iteratorName);
 
                 this.WriteDot();
-                this.Write(Bridge.Translator.Emitter.GET_CURRENT);
+                this.Write(JS.Funcs.GET_CURRENT);
 
                 this.WriteOpenCloseParentheses();
                 this.WriteSemiColon();

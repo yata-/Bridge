@@ -100,13 +100,13 @@ namespace Bridge.Translator
             {
                 this.EnsureComma();
 
-                if (this.TypeInfo.StaticMethods.Any(m => m.Value.Any(subm => this.Emitter.GetEntityName(subm) == "config")) ||
-                    this.TypeInfo.StaticConfig.Fields.Any(m => m.GetName(this.Emitter) == "config"))
+                if (this.TypeInfo.StaticMethods.Any(m => m.Value.Any(subm => this.Emitter.GetEntityName(subm) == JS.Fields.CONFIG)) ||
+                    this.TypeInfo.StaticConfig.Fields.Any(m => m.GetName(this.Emitter) == JS.Fields.CONFIG))
                 {
                     this.Write(JS.Vars.D);
                 }
 
-                this.Write("config");
+                this.Write(JS.Fields.CONFIG);
 
                 this.WriteColon();
                 this.BeginBlock();
@@ -176,14 +176,14 @@ namespace Bridge.Translator
                 return;
             }
 
-            if (this.TypeInfo.InstanceMethods.Any(m => m.Value.Any(subm => this.Emitter.GetEntityName(subm) == "config")) ||
-                this.TypeInfo.InstanceConfig.Fields.Any(m => m.GetName(this.Emitter) == "config"))
+            if (this.TypeInfo.InstanceMethods.Any(m => m.Value.Any(subm => this.Emitter.GetEntityName(subm) == JS.Fields.CONFIG)) ||
+                this.TypeInfo.InstanceConfig.Fields.Any(m => m.GetName(this.Emitter) == JS.Fields.CONFIG))
             {
                 this.Write(JS.Vars.D);
             }
 
             this.EnsureComma();
-            this.Write("config");
+            this.Write(JS.Fields.CONFIG);
 
             this.WriteColon();
             this.BeginBlock();
@@ -385,7 +385,7 @@ namespace Bridge.Translator
                     name = BridgeTypes.ToJsName(baseType, this.Emitter);
                 }
 
-                this.Write(name, ".prototype.");
+                this.Write(name, "." + JS.Fields.PROTOTYPE + ".");
                 this.Write(baseName);
                 this.WriteCall();
                 appendScope = true;
@@ -394,7 +394,7 @@ namespace Bridge.Translator
             {
                 // this.WriteThis();
                 string name = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter);
-                this.Write(name, ".prototype");
+                this.Write(name, "." + JS.Fields.PROTOTYPE);
                 this.WriteDot();
 
                 var baseName = JS.Funcs.CONSTRUCTOR;

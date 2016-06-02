@@ -82,11 +82,11 @@ namespace Bridge.Translator
 
             if (returnType != null && returnType.Name == "IEnumerator")
             {
-                block.Write(JS.Types.Array + "." + JS.Funcs.TO_ENUMERATOR + "(" + JS.Vars.YIELD +")");
+                block.Write(JS.Types.SYSTEM_ARRAY + "." + JS.Funcs.TO_ENUMERATOR + "(" + JS.Vars.YIELD +")");
             }
             else
             {
-                block.Write(JS.Types.Array + "." + JS.Funcs.TO_ENUMERABLE + "(" + JS.Vars.YIELD + ")");
+                block.Write(JS.Types.SYSTEM_ARRAY + "." + JS.Funcs.TO_ENUMERABLE + "(" + JS.Vars.YIELD + ")");
             }
 
             block.WriteSemiColon();

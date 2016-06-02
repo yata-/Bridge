@@ -235,17 +235,17 @@ namespace Bridge.Contract
         {
             if (type.Kind == TypeKind.Array)
             {
-                return "Array";
+                return JS.Types.ARRAY;
             }
 
             if (type.Kind == TypeKind.Delegate)
             {
-                return "Function";
+                return JS.Types.FUNCTION;
             }
 
             if (type.Kind == TypeKind.Dynamic)
             {
-                return "Object";
+                return JS.Types.OBJECT;
             }
 
             if (NullableType.IsNullable(type))
@@ -344,14 +344,14 @@ namespace Bridge.Contract
 
             if (composedType != null && composedType.ArraySpecifiers != null && composedType.ArraySpecifiers.Count > 0)
             {
-                return "Array";
+                return JS.Types.ARRAY;
             }
 
             var simpleType = astType as SimpleType;
 
             if (simpleType != null && simpleType.Identifier == "dynamic")
             {
-                return "Object";
+                return JS.Types.OBJECT;
             }
 
             var resolveResult = emitter.Resolver.ResolveNode(astType, emitter);

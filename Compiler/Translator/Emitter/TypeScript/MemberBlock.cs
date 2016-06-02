@@ -60,8 +60,8 @@ namespace Bridge.Translator.TypeScript
                         var name = ev.GetName(this.Emitter);
                         name = Helpers.ReplaceFirstDollar(name);
 
-                        this.WriteEvent(ev, "add" + name);
-                        this.WriteEvent(ev, "remove" + name);
+                        this.WriteEvent(ev, Helpers.GetAddOrRemove(true,  name));
+                        this.WriteEvent(ev, Helpers.GetAddOrRemove(false, name));
                     }
                 }
             }

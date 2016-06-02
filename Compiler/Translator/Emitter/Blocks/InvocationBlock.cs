@@ -436,7 +436,7 @@ namespace Bridge.Translator
                     baseMethod = this.Emitter.AssemblyInfo.PreserveMemberCase ? baseMethod : Object.Net.Utilities.StringUtils.ToLowerCamelCase(baseMethod);
                 }
 
-                this.Write(name, ".prototype.", baseMethod);
+                this.Write(name, "." + JS.Fields.PROTOTYPE + ".", baseMethod);
 
                 this.WriteCall();
                 this.WriteOpenParentheses();

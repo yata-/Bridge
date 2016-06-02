@@ -10,16 +10,6 @@ namespace Bridge.Translator
 {
     public partial class Emitter : Visitor
     {
-        //public const string ROOT = "Bridge";
-        public const string CAST = "cast";
-        public const string AS = "as";
-        public const string IS = "is";
-        public const string MOVE_NEXT = "moveNext";
-        public const string GET_CURRENT = "getCurrent";
-        public const string FIX_ARGUMENT_NAME = "__autofix__";
-
-        internal static List<string> reservedStaticNames = new List<string> { "Name", "Arguments", "Caller", "Length", "Prototype" };
-
         private Dictionary<string, OverloadsCollection> overloadsCache;
 
         public Dictionary<string, OverloadsCollection> OverloadsCache

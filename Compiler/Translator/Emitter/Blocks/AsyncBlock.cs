@@ -341,7 +341,7 @@ namespace Bridge.Translator
             }
 
             this.Emitter.Output.Append(temp);
-            this.Write(", arguments)");
+            this.Write(", " + JS.Vars.ARGUMENTS + ")");
             this.WriteSemiColon();
             this.WriteNewLine();
             this.WriteNewLine();
@@ -351,7 +351,7 @@ namespace Bridge.Translator
             if (this.IsTaskReturn)
             {
                 this.WriteNewLine();
-                this.Write("return " + JS.Vars.ASYNC_TCS + ".task;");
+                this.Write("return " + JS.Vars.ASYNC_TCS + "." + JS.Fields.ASYNC_TASK + ";");
             }
 
             this.WriteNewLine();
@@ -372,7 +372,7 @@ namespace Bridge.Translator
             {
                 if (this.IsTaskReturn)
                 {
-                    this.Emitter.AsyncVariables.Add(JS.Vars.ASYNC_TCS + " = new " + JS.Types.TaskCompletionSource + "()");
+                    this.Emitter.AsyncVariables.Add(JS.Vars.ASYNC_TCS + " = new " + JS.Types.TASK_COMPLETION_SOURCE + "()");
                 }
 
                 this.Emitter.AsyncVariables.Add(JS.Vars.ASYNC_RETURN_VALUE);
@@ -419,7 +419,7 @@ namespace Bridge.Translator
                 this.EndBlock();
                 this.Write(" catch(" + JS.Vars.ASYNC_E1 + ") ");
                 this.BeginBlock();
-                this.Write(JS.Vars.ASYNC_E + " = " + JS.Types.Exception + ".create(" + JS.Vars.ASYNC_E1 + ");");
+                this.Write(JS.Vars.ASYNC_E + " = " + JS.Types.SYSTEM_EXCEPTION + ".create(" + JS.Vars.ASYNC_E1 + ");");
                 this.WriteNewLine();
                 this.InjectCatchHandlers();
 
@@ -444,7 +444,7 @@ namespace Bridge.Translator
                 list.Add(i);
             }
 
-            this.Emitter.Output.Insert(pos, JS.Vars.ASYNC_STEP + " = " + JS.Types.Array + ".min(" + this.Emitter.ToJavaScript(list.ToArray()) + ", " + JS.Vars.ASYNC_STEP + ");");
+            this.Emitter.Output.Insert(pos, JS.Vars.ASYNC_STEP + " = " + JS.Types.SYSTEM_ARRAY + ".min(" + this.Emitter.ToJavaScript(list.ToArray()) + ", " + JS.Vars.ASYNC_STEP + ");");
         }
 
         protected void InjectCatchHandlers()
@@ -468,7 +468,7 @@ namespace Bridge.Translator
                         var varName = clause.Item1;
                         var exceptionType = clause.Item2;
                         var step = clause.Item3;
-                        var isBaseException = exceptionType == JS.Types.Exception;
+                        var isBaseException = exceptionType == JS.Types.SYSTEM_EXCEPTION;
 
                         if (info.CatchBlocks.Count == 1 && isBaseException)
                         {
@@ -497,7 +497,7 @@ namespace Bridge.Translator
                             {
                                 this.WriteIf();
                                 this.WriteOpenParentheses();
-                                this.Write("Bridge.is(" + JS.Vars.ASYNC_E + ", " + exceptionType + ")");
+                                this.Write(JS.Funcs.BRIDGE_IS + "(" + JS.Vars.ASYNC_E + ", " + exceptionType + ")");
                                 this.WriteCloseParentheses();
                                 this.WriteSpace();
                             }

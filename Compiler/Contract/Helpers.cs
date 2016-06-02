@@ -388,7 +388,7 @@ namespace Bridge.Contract
                 {
                     if (nullable)
                     {
-                        block.Emitter.Output.Insert(insertPosition, JS.Types.Nullable + ".lift1(\"" + JS.Funcs.CLONE + "\", ");
+                        block.Emitter.Output.Insert(insertPosition, JS.Types.SYSTEM_NULLABLE + "." + JS.Funcs.Math.LIFT1 + "(\"" + JS.Funcs.CLONE + "\", ");
                         block.WriteCloseParentheses();
                     }
                     else
@@ -419,7 +419,7 @@ namespace Bridge.Contract
 
                     if (nullable)
                     {
-                        block.Emitter.Output.Insert(insertPosition, JS.Types.Nullable + ".lift1(\"" + JS.Funcs.CLONE + "\", ");
+                        block.Emitter.Output.Insert(insertPosition, JS.Types.SYSTEM_NULLABLE + "." + JS.Funcs.Math.LIFT1 + "(\"" + JS.Funcs.CLONE + "\", ");
                         block.WriteCloseParentheses();
                     }
                     else
@@ -537,6 +537,11 @@ namespace Bridge.Contract
             return Helpers.IsAutoProperty(propDef);
         }
 
+        public static string GetAddOrRemove(bool isAdd, string name = null)
+        {
+            return (isAdd ? JS.Funcs.Event.ADD : JS.Funcs.Event.REMOVE) + name;
+        }
+
         public static string GetEventRef(CustomEventDeclaration property, IEmitter emitter, bool remove = false, bool noOverload = false, bool ignoreInterface = false)
         {
             ResolveResult resolveResult = emitter.Resolver.ResolveNode(property, emitter) as MemberResolveResult;
@@ -554,7 +559,7 @@ namespace Bridge.Contract
                 noOverload = !overloads.HasOverloads;
             }
 
-            return (remove ? "remove" : "add") + name;
+            return GetAddOrRemove(!remove, name);
         }
 
         public static string GetEventRef(IMember property, IEmitter emitter, bool remove = false, bool noOverload = false, bool ignoreInterface = false)
@@ -574,7 +579,8 @@ namespace Bridge.Contract
                 name = overloads.HasOverloads ? overloads.GetOverloadName() : name;
                 noOverload = !overloads.HasOverloads;
             }
-            return (remove ? "remove" : "add") + name;
+
+            return GetAddOrRemove(!remove, name);
         }
 
         public static string GetPropertyRef(PropertyDeclaration property, IEmitter emitter, bool isSetter = false, bool noOverload = false, bool ignoreInterface = false)
@@ -690,11 +696,9 @@ namespace Bridge.Contract
             return list;
         }
 
-        private static readonly string[] reservedWords = new string[] { "__proto__", "abstract", "arguments", "as", "boolean", "break", "byte", "case", "catch", "char", "class", "continue", "const", "constructor", "debugger", "default", "delete", "do", "double", "else", "enum", "eval", "export", "extends", "false", "final", "finally", "float", "for", "function", "goto", "if", "implements", "import", "in", "instanceof", "int", "interface", "let", "long", "namespace", "native", "new", "null", "package", "private", "protected", "public", "return", "short", "static", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "typeof", "use", "var", "void", "volatile", "while", "window", "with", "yield" };
-
         public static bool IsReservedWord(string word)
         {
-            return reservedWords.Contains(word);
+            return JS.Reserved.Words.Contains(word);
         }
 
         public static string ChangeReservedWord(string name)
@@ -1025,29 +1029,29 @@ namespace Bridge.Contract
         {
             switch (elementType.FullName)
             {
-                case "System.Byte":
-                    return "Uint8Array";
+                case CS.Types.System_Byte:
+                    return JS.Types.Uint8Array;
 
-                case "System.SByte":
-                    return "Int8Array";
+                case CS.Types.System_SByte:
+                    return JS.Types.Int8Array;
 
-                case "System.Int16":
-                    return "Int16Array";
+                case CS.Types.System_Int16:
+                    return JS.Types.Int16Array;
 
-                case "System.UInt16":
-                    return "Uint16Array";
+                case CS.Types.System_UInt16:
+                    return JS.Types.Uint16Array;
 
-                case "System.Int32":
-                    return "Int32Array";
+                case CS.Types.System_Int32:
+                    return JS.Types.Int32Array;
 
-                case "System.UInt32":
-                    return "Uint32Array";
+                case CS.Types.System_UInt32:
+                    return JS.Types.Uint32Array;
 
-                case "System.Single":
-                    return "Float32Array";
+                case CS.Types.System_Single:
+                    return JS.Types.Float32Array;
 
-                case "System.Double":
-                    return "Float64Array";
+                case CS.Types.System_Double:
+                    return JS.Types.Float64Array;
             }
             return null;
         }

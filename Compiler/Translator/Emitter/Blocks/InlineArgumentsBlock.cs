@@ -323,8 +323,8 @@ namespace Bridge.Translator
                     }
                     else if (paramsName == key && !ignoreArray)
                     {
-                        this.Write("Array.prototype.slice");
-                        this.WriteCall("(arguments, " + paramsIndex + ")");
+                        this.Write(JS.Types.ARRAY + "." + JS.Fields.PROTOTYPE + "." + JS.Funcs.SLICE);
+                        this.WriteCall("(" + JS.Vars.ARGUMENTS + ", " + paramsIndex + ")");
                     }
                     else
                     {

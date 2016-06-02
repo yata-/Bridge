@@ -74,7 +74,7 @@ namespace Bridge.Translator
         {
             foreach (var i in type.Interfaces)
             {
-                if (i.FullName == JS.Types.IBridgeClass)
+                if (i.FullName == JS.Types.BRIDGE_IBridgeClass)
                 {
                     return true;
                 }
@@ -299,7 +299,7 @@ namespace Bridge.Translator
 
             if (this.HasAttribute(type.CustomAttributes, Translator.Bridge_ASSEMBLY + ".ObjectLiteralAttribute"))
             {
-                return "Object";
+                return JS.Types.OBJECT;
             }
 
             return null;

@@ -438,7 +438,7 @@ namespace Bridge.Translator
                 list.Add(name);
             }
 
-            if (list.Count > 0 && list[0] == "Object")
+            if (list.Count > 0 && list[0] == JS.Types.OBJECT)
             {
                 list.RemoveAt(0);
             }
