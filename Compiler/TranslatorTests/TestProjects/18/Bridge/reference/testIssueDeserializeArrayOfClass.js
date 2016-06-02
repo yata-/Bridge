@@ -30,5 +30,7 @@
         $entryPoint: true
     });
     
+    
+    
     Bridge.init();
 })(this);
