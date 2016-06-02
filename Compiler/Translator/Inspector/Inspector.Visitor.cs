@@ -1,6 +1,9 @@
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,7 +96,7 @@ namespace Bridge.Translator
                     Type = rr.Type
                 };
 
-                if (parentTypeInfo != null && Emitter.reservedStaticNames.Any(n => String.Equals(this.CurrentType.Name, n, StringComparison.InvariantCultureIgnoreCase)))
+                if (parentTypeInfo != null && JS.Reserved.StaticNames.Any(n => String.Equals(this.CurrentType.Name, n, StringComparison.InvariantCultureIgnoreCase)))
                 {
                     throw new EmitterException(typeDeclaration, "Nested class cannot have such name: " + this.CurrentType.Name + ". Please rename it.");
                 }
@@ -624,3 +627,4 @@ namespace Bridge.Translator
         }
     }
 }
+

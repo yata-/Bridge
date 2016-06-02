@@ -1,8 +1,11 @@
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,10 +29,11 @@ namespace Bridge.Translator
 
                     if (this.StaticBlock && !hasReadyAttribute)
                     {
-                        if (method.Name == Constants.Methods.AUTO_STARTUP_METHOD_NAME && method.HasModifier(Modifiers.Static) && !method.HasModifier(Modifiers.Abstract))
+                        if (method.Name == CS.Methods.AUTO_STARTUP_METHOD_NAME && method.HasModifier(Modifiers.Static) && !method.HasModifier(Modifiers.Abstract))
                         {
                             this.Emitter.AutoStartupMethods.Add(this.TypeInfo.Name + "." + method.Name);
-                            list.Add(string.Format(Constants.Methods.AUTO_STARTUP_METHOD_TEMPLATE, this.Emitter.GetEntityName(method)));
+                            list.Add(string.Format(JS.Funcs.BRIDGE_AUTO_STARTUP_METHOD_TEMPLATE, this.Emitter.GetEntityName(method)));
+
                             hasReadyAttribute = true;
                         }
                     }
@@ -56,7 +60,7 @@ namespace Bridge.Translator
 
                     if (resolveresult != null)
                     {
-                        if (resolveresult.Type.FullName == Bridge.Translator.Constants.Attributes.READY_ATTRIBUTE_NAME)
+                        if (resolveresult.Type.FullName == CS.Attributes.READY_ATTRIBUTE_NAME)
                         {
                             hasReadyAttribute = true;
                         }
