@@ -313,7 +313,7 @@ namespace Bridge.Translator
 
         protected virtual void WriteAlias(string objectName, List<TypeConfigItem> members)
         {
-            /*if (objectName != null)
+            if (objectName != null)
             {
                 this.EnsureComma();
                 this.Write(objectName);
@@ -324,16 +324,51 @@ namespace Bridge.Translator
 
             foreach (var member in members)
             {
-                this.EnsureComma();
-                this.Write(member.Item1);
-                this.WriteColon();
+                var rr = Emitter.Resolver.ResolveNode(member.Entity, Emitter) as MemberResolveResult;
 
-                this.Write(member.Item2);
-                this.Emitter.Comma = true;
+                if (rr != null)
+                {
+                    foreach (var interfaceMember in rr.Member.ImplementedInterfaceMembers)
+                    {
+                        var template = this.Emitter.Validator.GetAttribute(interfaceMember.Attributes, "Bridge.TemplateAttribute");
+
+                        if (template != null)
+                        {
+                            continue;
+                        }
+
+                        if (rr.Member is IProperty)
+                        {
+                            var property = (IProperty)rr.Member;
+                            if (property.CanGet)
+                            {
+                                var memberName = OverloadsCollection.Create(Emitter, rr.Member, false).GetOverloadName();
+
+                                this.EnsureComma();
+                                this.Write(OverloadsCollection.Create(Emitter, interfaceMember).GetOverloadName());
+                                this.WriteColon();
+
+                                this.WriteScript(memberName);
+                            }
+                        }
+                        else
+                        {
+                            var memberName = OverloadsCollection.Create(Emitter, rr.Member).GetOverloadName();
+
+                            this.EnsureComma();
+                            this.Write(OverloadsCollection.Create(Emitter, interfaceMember).GetOverloadName());
+                            this.WriteColon();
+
+                            this.WriteScript(memberName);
+                        }
+                        
+                        this.Emitter.Comma = true;
+                    }
+                }
             }
 
             this.WriteNewLine();
-            this.EndBlock();*/
+            this.EndBlock();
         }
     }
 }

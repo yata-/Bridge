@@ -18,6 +18,14 @@
 
         identity: function (x) { return x; },
 
+        geti: function(scope, name1, name2) {
+            if (Bridge.hasValue(scope[name1])) {
+                return name1;
+            }
+
+            return name2;
+        },
+
         ref: function(o, n) {
             if (Bridge.isArray(n)) {
                 n = System.Array.toIndex(o, n);
@@ -1985,9 +1993,7 @@
 
                     if (config.alias) {
                         for (name in config.alias) {
-                            if (this[name]) {
-                                this[name] = this[config.alias[name]];
-                            }
+                            this[name] = this[config.alias[name]];
                         }
                     }
 
@@ -2131,11 +2137,6 @@
 
             if (extend && Bridge.isFunction(extend)) {
                 extend = extend();
-            }
-
-            if (extend && !extend[0])
-            {
-                var ttt = 0;
             }
 
             base = extend ? extend[0].prototype : this.prototype;

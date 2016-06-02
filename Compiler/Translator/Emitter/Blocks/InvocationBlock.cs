@@ -110,12 +110,13 @@ namespace Bridge.Translator
                 this.Emitter.AsyncExpressionHandling = true;
             }
 
+            var targetResolve = this.Emitter.Resolver.ResolveNode(invocationExpression, this.Emitter);
+
             Tuple<bool, bool, string> inlineInfo = this.Emitter.GetInlineCode(invocationExpression);
             var argsInfo = new ArgumentsInfo(this.Emitter, invocationExpression);
 
             var argsExpressions = argsInfo.ArgumentsExpressions;
             var paramsArg = argsInfo.ParamsExpression;
-            var argsCount = argsExpressions.Count();
 
             if (inlineInfo != null)
             {
@@ -192,16 +193,8 @@ namespace Bridge.Translator
                 }
             }
 
-            var targetResolve = this.Emitter.Resolver.ResolveNode(invocationExpression, this.Emitter);
-
             var csharpInvocation = targetResolve as CSharpInvocationResolveResult;
             MemberReferenceExpression targetMember = invocationExpression.Target as MemberReferenceExpression;
-
-            ResolveResult targetMemberResolveResult = null;
-            if (targetMember != null)
-            {
-                targetMemberResolveResult = this.Emitter.Resolver.ResolveNode(targetMember.Target, this.Emitter);
-            }
 
             if (targetMember != null)
             {

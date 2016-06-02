@@ -53,9 +53,7 @@
 
                     if (config.alias) {
                         for (name in config.alias) {
-                            if (this[name]) {
-                                this[name] = this[config.alias[name]];
-                            }
+                            this[name] = this[config.alias[name]];
                         }
                     }
 
@@ -199,11 +197,6 @@
 
             if (extend && Bridge.isFunction(extend)) {
                 extend = extend();
-            }
-
-            if (extend && !extend[0])
-            {
-                var ttt = 0;
             }
 
             base = extend ? extend[0].prototype : this.prototype;

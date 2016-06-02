@@ -436,6 +436,11 @@
     
     Bridge.define('Bridge.ClientTest.Batch2.BridgeIssues.N772.TestReverseComparer', {
         inherits: [System.Collections.Generic.IComparer$1(System.Int32)],
+        config: {
+            alias: {
+                System$Collections$Generic$IComparer$1(T)$compare: "compare"
+            }
+        },
         compare: function (x, y) {
             return x === y ? 0 : (x > y ? -1 : 1);
         }

@@ -15,6 +15,11 @@
         inherits: [Interfaces.Interface1],
         field: 200,
         property: 100,
+        config: {
+            alias: {
+                Interfaces$Interface1$Property: "Property"
+            }
+        },
         getProperty: function () {
             return this.property;
         },
@@ -29,6 +34,15 @@
     
     Bridge.define('Interfaces.Class4', {
         inherits: [Interfaces.Interface4],
+        config: {
+            alias: {
+                Interfaces$Interface4$method6: "method6",
+                Interfaces$Interface4$method7: "method7",
+                Interfaces$Interface4$method8: "method8",
+                Interfaces$Interface4$method9: "method9",
+                Interfaces$Interface4$method10: "method10"
+            }
+        },
         method6: function (b) {
             b.v = true;
         },
@@ -53,6 +67,12 @@
             properties: {
                 Property$3: 0,
                 MethodProperty: 0
+            },
+            alias: {
+                Interfaces$Interface6$Property$3: "Property$3",
+                Interfaces$Interface6$getProperty: "getProperty",
+                Interfaces$Interface6$setProperty$1: "setProperty$1",
+                Interfaces$Interface6$setProperty: "setProperty"
             }
         },
         getProperty: function () {
@@ -68,6 +88,14 @@
     
     Bridge.define('Interfaces.Class2', {
         inherits: [Interfaces.Class1,Interfaces.Interface2],
+        config: {
+            alias: {
+                Interfaces$Interface2$method1: "method1",
+                Interfaces$Interface2$method2: "method2",
+                Interfaces$Interface2$method3: "method3",
+                Interfaces$Interface2$method4: "method4"
+            }
+        },
         method1: function () {
             this.field = 1;
             this.setProperty(2);
@@ -91,6 +119,11 @@
     
     Bridge.define('Interfaces.Class3', {
         inherits: [Interfaces.Class2,Interfaces.Interface3],
+        config: {
+            alias: {
+                Interfaces$Interface3$method5: "method5"
+            }
+        },
         method5: function (i) {
             return i;
         }

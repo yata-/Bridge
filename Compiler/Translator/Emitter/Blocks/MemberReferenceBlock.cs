@@ -40,7 +40,32 @@ namespace Bridge.Translator
             this.VisitMemberReferenceExpression();
         }
 
-        protected void WriteTarget(ResolveResult resolveResult)
+        protected string WriteTarget(ResolveResult resolveResult, bool isInterfaceMember, MemberResolveResult memberTargetrr, ResolveResult targetrr, bool openParentheses)
+        {
+            string interfaceTempVar = null;
+            if (isInterfaceMember)
+            {
+                bool isField = memberTargetrr != null && memberTargetrr.Member is IField && (memberTargetrr.TargetResult is ThisResolveResult || memberTargetrr.TargetResult is LocalResolveResult);
+
+                if (!(targetrr is ThisResolveResult || targetrr is TypeResolveResult || targetrr is LocalResolveResult || isField))
+                {
+                    if (openParentheses)
+                    {
+                        this.WriteOpenParentheses();
+                    }
+                    
+                    interfaceTempVar = this.GetTempVarName();
+                    this.Write(interfaceTempVar);
+                    this.Write(" = ");
+                }
+            }
+
+            this.WriteSimpleTarget(resolveResult);
+
+            return interfaceTempVar;
+        }
+
+        protected void WriteSimpleTarget(ResolveResult resolveResult)
         {
             MemberResolveResult member = resolveResult as MemberResolveResult;
             if (member == null || !member.Member.IsStatic)
@@ -48,24 +73,51 @@ namespace Bridge.Translator
                 this.MemberReferenceExpression.Target.AcceptVisitor(this.Emitter);
                 return;
             }
-            
+
             var imethod = member.Member as IMethod;
-            var imember = member.Member as IMember;
-            if ((imethod != null && imethod.IsExtensionMethod) || imember == null)            
+            var imember = member.Member;
+            if ((imethod != null && imethod.IsExtensionMethod) || imember == null)
             {
                 this.MemberReferenceExpression.Target.AcceptVisitor(this.Emitter);
                 return;
             }
 
             this.Write(BridgeTypes.ToJsName(member.Member.DeclaringType, this.Emitter));
-            /*if (member.Member.DeclaringType.Kind == TypeKind.Enum || this.Emitter.Validator.IsIgnoreType(member.Member.DeclaringType.GetDefinition()) || this.Emitter.TypeInfo.Type == member.Member.DeclaringType)
+        }
+
+        private void WriteInterfaceMember(string interfaceTempVar, MemberResolveResult resolveResult)
+        {
+            if (interfaceTempVar != null)
             {
-                this.Write(BridgeTypes.ToJsName(member.Member.DeclaringType, this.Emitter));
+                this.WriteComma();
+                this.Write(interfaceTempVar);
+            }
+
+            this.WriteOpenBracket();
+            this.Write("Bridge.geti(");
+
+            if (interfaceTempVar != null)
+            {
+                this.Write(interfaceTempVar);
             }
             else
             {
-                this.Write("Bridge.get(" + BridgeTypes.ToJsName(member.Member.DeclaringType, this.Emitter) + ")");
-            }*/
+                this.WriteSimpleTarget(resolveResult);
+            }
+
+            this.WriteComma();
+
+            this.WriteScript(OverloadsCollection.Create(Emitter, resolveResult.Member).GetOverloadName());
+            this.WriteComma();
+            this.WriteScript(OverloadsCollection.Create(Emitter, resolveResult.Member).GetOverloadName(true));
+
+            this.Write(")");
+            this.WriteCloseBracket();
+
+            if (interfaceTempVar != null)
+            {
+                this.WriteCloseBracket();
+            }
         }
 
         protected void VisitMemberReferenceExpression()
@@ -228,12 +280,22 @@ namespace Bridge.Translator
             string inline = inlineInfo != null ? inlineInfo.Item3 : null;
             bool hasInline = !string.IsNullOrEmpty(inline);
             bool hasThis = hasInline && inline.Contains("{this}");
+            bool isInterfaceMember = false;
 
             if (hasInline && inline.StartsWith("<self>"))
             {
                 hasThis = true;
                 inline = inline.Substring(6);
             }
+
+            if (inline == null && member != null &&
+                member.Member.DeclaringTypeDefinition.Kind == TypeKind.Interface &&
+                this.Emitter.Validator.IsIgnoreType(member.Member.DeclaringTypeDefinition))
+            {
+                isInterfaceMember = true;
+            }
+
+            string interfaceTempVar = null;
 
             if (hasThis)
             {
@@ -246,7 +308,7 @@ namespace Bridge.Translator
                 {
                     this.Write("(");
                 }
-                this.WriteTarget(resolveResult);
+                this.WriteSimpleTarget(resolveResult);
                 if (isConstTarget)
                 {
                     this.Write(")");
@@ -292,7 +354,6 @@ namespace Bridge.Translator
 
                 if (parentExpression != null)
                 {
-                    var rr = this.Emitter.Resolver.ResolveNode(memberReferenceExpression.Parent, this.Emitter);
                     var ii = this.Emitter.GetInlineCode(parentExpression);
 
                     if (string.IsNullOrEmpty(ii.Item3))
@@ -385,16 +446,6 @@ namespace Bridge.Translator
                 {
                     TypeResolveResult typeResolveResult = (TypeResolveResult)resolveResult;
                     this.Write(BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter));
-                    /*var isNative = this.Emitter.Validator.IsIgnoreType(typeResolveResult.Type.GetDefinition()) || typeResolveResult.Type.Kind == TypeKind.Enum;
-                    if (isNative)
-                    {
-                        this.Write(BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter));
-                    }
-                    else
-                    {
-                        this.Write("Bridge.get(" + BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter) + ")");
-                    }*/                    
-
                     return;
                 }
                 else if (member != null &&
@@ -419,7 +470,7 @@ namespace Bridge.Translator
                     if (!isStatic)
                     {
                         this.Write(Bridge.Translator.Emitter.ROOT + "." + (isExtensionMethod ? Bridge.Translator.Emitter.DELEGATE_BIND_SCOPE : Bridge.Translator.Emitter.DELEGATE_BIND) + "(");
-                        this.WriteTarget(resolveResult);
+                        interfaceTempVar = this.WriteTarget(resolveResult, isInterfaceMember, memberTargetrr, targetrr, false);
                         this.Write(", ");
                     }
 
@@ -438,7 +489,16 @@ namespace Bridge.Translator
                         {
                             this.Write("(");
                         }
-                        this.WriteTarget(resolveResult);
+
+                        if (interfaceTempVar != null)
+                        {
+                            this.Write(interfaceTempVar);
+                        }
+                        else
+                        {
+                            this.WriteSimpleTarget(resolveResult);
+                        }
+                        
                         if (isConstTarget)
                         {
                             this.Write(")");
@@ -447,9 +507,15 @@ namespace Bridge.Translator
                         this.Emitter.IsUnaryAccessor = oldUnary;
                     }
 
-                    this.WriteDot();
-
-                    this.Write(OverloadsCollection.Create(this.Emitter, member.Member).GetOverloadName());
+                    if (isInterfaceMember)
+                    {
+                        this.WriteInterfaceMember(interfaceTempVar, member);
+                    }
+                    else
+                    {
+                        this.WriteDot();
+                        this.Write(OverloadsCollection.Create(this.Emitter, member.Member).GetOverloadName());
+                    }
 
                     if (!isStatic)
                     {
@@ -516,7 +582,16 @@ namespace Bridge.Translator
                     {
                         this.Write("(");
                     }
-                    this.WriteTarget(resolveResult);
+
+                    if (!isProperty && isInterfaceMember)
+                    {
+                        interfaceTempVar = this.WriteTarget(resolveResult, isInterfaceMember, memberTargetrr, targetrr, true);
+                    }
+                    else
+                    {
+                        this.WriteSimpleTarget(resolveResult);
+                    }
+                    
                     if (isConstTarget)
                     {
                         this.Write(")");
@@ -554,7 +629,7 @@ namespace Bridge.Translator
                     {
                         this.WriteComma();
                     }
-                    else
+                    else if (!isInterfaceMember)
                     {
                         this.WriteDot();    
                     }
@@ -617,7 +692,14 @@ namespace Bridge.Translator
 
                     if (isFieldProperty)
                     {
-                        this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter));
+                        if (isInterfaceMember)
+                        {
+                            this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member);
+                        }
+                        else
+                        {
+                            this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter));
+                        }
                     }
                     else if (!this.Emitter.IsAssignment)
                     {
@@ -629,7 +711,15 @@ namespace Bridge.Translator
 
                             if (isStatement)
                             {
-                                this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter, true));
+                                if (isInterfaceMember)
+                                {
+                                    this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member);
+                                }
+                                else
+                                {
+                                    this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter, true));
+                                }
+
                                 if (proto)
                                 {
                                     this.Write(".call");
@@ -663,14 +753,24 @@ namespace Bridge.Translator
                                         {
                                             this.Write(targetVar);
                                         }
+                                        else if (interfaceTempVar != null)
+                                        {
+                                            this.Write(interfaceTempVar);
+                                        }
                                         else
                                         {
-                                            this.WriteTarget(resolveResult);
+                                            this.WriteSimpleTarget(resolveResult);
                                         }
 
-                                        this.WriteDot();
-
-                                        this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter, false));
+                                        if (isInterfaceMember)
+                                        {
+                                            this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member);
+                                        }
+                                        else
+                                        {
+                                            this.WriteDot();
+                                            this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter, false));
+                                        }
 
                                         if (proto)
                                         {
@@ -689,18 +789,24 @@ namespace Bridge.Translator
                                     }
                                     else
                                     {
-                                        if (targetVar != null)
+                                        if (targetVar != null || interfaceTempVar != null)
                                         {
-                                            this.Write(targetVar);
+                                            this.Write(targetVar ?? interfaceTempVar);
                                         }
                                         else
                                         {
-                                            this.WriteTarget(resolveResult);
+                                            this.WriteSimpleTarget(resolveResult);
                                         }
 
-                                        this.WriteDot();
-
-                                        this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter, false));
+                                        if (isInterfaceMember)
+                                        {
+                                            this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member);
+                                        }
+                                        else
+                                        {
+                                            this.WriteDot();
+                                            this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter, false));
+                                        }
 
                                         if (proto)
                                         {
@@ -734,9 +840,9 @@ namespace Bridge.Translator
                                 }
                                 else
                                 {
-                                    if (targetVar != null)
+                                    if (targetVar != null || interfaceTempVar != null)
                                     {
-                                        this.Write(targetVar);
+                                        this.Write(targetVar ?? interfaceTempVar);
                                     }
                                     else
                                     {
@@ -744,16 +850,22 @@ namespace Bridge.Translator
                                         {
                                             this.Write("(");
                                         }
-                                        this.WriteTarget(resolveResult);
+                                        this.WriteSimpleTarget(resolveResult);
                                         if (isConstTarget)
                                         {
                                             this.Write(")");
                                         }
                                     }
 
-                                    this.WriteDot();
-
-                                    this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter, false));
+                                    if (isInterfaceMember)
+                                    {
+                                        this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member);
+                                    }
+                                    else
+                                    {
+                                        this.WriteDot();
+                                        this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter, false));
+                                    }
 
                                     if (proto)
                                     {
@@ -783,7 +895,15 @@ namespace Bridge.Translator
                             }
                             else
                             {
-                                this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter, false));
+                                if (isInterfaceMember)
+                                {
+                                    this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member);
+                                }
+                                else
+                                {
+                                    this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter, false));
+                                }
+
                                 if (proto)
                                 {
                                     this.Write(".call");
@@ -798,9 +918,9 @@ namespace Bridge.Translator
                                 }
                                 this.WriteComma();
 
-                                if (targetVar != null)
+                                if (targetVar != null || interfaceTempVar != null)
                                 {
-                                    this.Write(targetVar);
+                                    this.Write(targetVar ?? interfaceTempVar);
                                 }
                                 else
                                 {
@@ -808,15 +928,22 @@ namespace Bridge.Translator
                                     {
                                         this.Write("(");
                                     }
-                                    this.WriteTarget(resolveResult);
+                                    this.WriteSimpleTarget(resolveResult);
                                     if (isConstTarget)
                                     {
                                         this.Write(")");
                                     }
                                 }
 
-                                this.WriteDot();
-                                this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter, true));
+                                if (isInterfaceMember)
+                                {
+                                    this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member);
+                                }
+                                else
+                                {
+                                    this.WriteDot();
+                                    this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter, true));
+                                }
 
                                 if (proto)
                                 {
@@ -887,16 +1014,25 @@ namespace Bridge.Translator
 
                                 if (isPreOp)
                                 {
-                                    if (targetVar != null)
+                                    if (targetVar != null || interfaceTempVar != null)
                                     {
-                                        this.Write(targetVar);
+                                        this.Write(targetVar ?? interfaceTempVar);
                                     }
                                     else
                                     {
-                                        this.WriteTarget(resolveResult);
+                                        this.WriteSimpleTarget(resolveResult);
                                     }
-                                    this.WriteDot();
-                                    this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter, false));
+
+                                    if (isInterfaceMember)
+                                    {
+                                        this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member);
+                                    }
+                                    else
+                                    {
+                                        this.WriteDot();
+                                        this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter, false));
+                                    }
+                                    
                                     this.WriteOpenParentheses();
                                     this.WriteCloseParentheses();
                                 }
@@ -919,7 +1055,15 @@ namespace Bridge.Translator
                         }
                         else
                         {
-                            this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter));
+                            if (isInterfaceMember)
+                            {
+                                this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member);
+                            }
+                            else
+                            {
+                                this.Write(Helpers.GetPropertyRef(member.Member, this.Emitter));
+                            }
+                            
                             if (proto)
                             {
                                 this.Write(".call");
@@ -956,7 +1100,7 @@ namespace Bridge.Translator
 
                             this.Emitter.IsAssignment = false;
                             this.Emitter.IsUnaryAccessor = false;
-                            this.WriteTarget(resolveResult);
+                            this.WriteSimpleTarget(resolveResult);
                             this.Emitter.IsAssignment = oldIsAssignment;
                             this.Emitter.IsUnaryAccessor = oldUnary;
                             var trg = this.Emitter.Output.ToString();
@@ -1010,7 +1154,11 @@ namespace Bridge.Translator
                     CSharpInvocationResolveResult cInvocationResult = (CSharpInvocationResolveResult)resolveResult;
                     var expresssionMember = expressionResolveResult as MemberResolveResult;
 
-                    if (expresssionMember != null &&
+                    if (isInterfaceMember)
+                    {
+                        this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member);
+                    }
+                    else if (expresssionMember != null &&
                         cInvocationResult != null &&
                         cInvocationResult.IsDelegateInvocation &&
                         invocationResult.Member != expresssionMember.Member)

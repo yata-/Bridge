@@ -5,6 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ICSharpCode.NRefactory.MonoCSharp;
+using ITypeDefinition = ICSharpCode.NRefactory.TypeSystem.ITypeDefinition;
+using Modifiers = ICSharpCode.NRefactory.CSharp.Modifiers;
 
 namespace Bridge.Contract
 {
@@ -629,6 +632,11 @@ namespace Bridge.Contract
             {
                 var methods = typeDef.Methods.Where(m =>
                 {
+                    if (m.IsExplicitInterfaceImplementation)
+                    {
+                        return false;
+                    }
+
                     if (!this.IncludeInline)
                     {
                         var inline = this.Emitter.GetInline(m);
@@ -685,6 +693,11 @@ namespace Bridge.Contract
             {
                 var properties = typeDef.Properties.Where(p =>
                 {
+                    if (p.IsExplicitInterfaceImplementation)
+                    {
+                        return false;
+                    }
+
                     if (!this.IncludeInline)
                     {
                         var inline = p.Getter != null ? this.Emitter.GetInline(p.Getter) : null;
@@ -757,6 +770,11 @@ namespace Bridge.Contract
             {
                 var fields = typeDef.Fields.Where(f =>
                 {
+                    if (f.IsExplicitInterfaceImplementation)
+                    {
+                        return false;
+                    }
+
                     var inline = this.Emitter.GetInline(f);
                     if (!string.IsNullOrWhiteSpace(inline))
                     {
@@ -799,6 +817,11 @@ namespace Bridge.Contract
             {
                 var events = typeDef.Events.Where(e =>
                 {
+                    if (e.IsExplicitInterfaceImplementation)
+                    {
+                        return false;
+                    }
+
                     var inline = e.AddAccessor != null ? this.Emitter.GetInline(e.AddAccessor) : null;
                     if (!string.IsNullOrWhiteSpace(inline))
                     {
@@ -858,7 +881,7 @@ namespace Bridge.Contract
 
         private string overloadName;
 
-        public string GetOverloadName()
+        public string GetOverloadName(bool skipInterfaceName = false, string prefix = null)
         {
             if (this.Member == null)
             {
@@ -874,14 +897,32 @@ namespace Bridge.Contract
 
             if (this.overloadName == null && this.Member != null)
             {
-                this.overloadName = this.GetOverloadName(this.Member);
+                this.overloadName = this.GetOverloadName(this.Member, skipInterfaceName, prefix);
             }
 
             return this.overloadName;
         }
 
-        protected virtual string GetOverloadName(IMember definition)
+        protected virtual string GetOverloadName(IMember definition, bool skipInterfaceName = false, string prefix = null)
         {
+            IMember interfaceMember = null;
+            if (definition.IsExplicitInterfaceImplementation)
+            {
+                interfaceMember = definition.ImplementedInterfaceMembers.First();
+            }
+            else if (definition.DeclaringTypeDefinition != null && definition.DeclaringTypeDefinition.Kind == TypeKind.Interface)
+            {
+                interfaceMember = definition;
+            }
+
+            if (interfaceMember != null && !skipInterfaceName)
+            {
+                var interfaceMemberName = OverloadsCollection.Create(Emitter, interfaceMember).GetOverloadName(true, prefix);
+                var interfaceName = BridgeTypes.ToJsName(interfaceMember.DeclaringTypeDefinition, Emitter);
+
+                return interfaceName.Replace(".", "$") + "$" + interfaceMemberName;
+            }
+
             string name = this.Emitter.GetEntityName(definition, this.CancelChangeCase);
             if (name.StartsWith(".ctor"))
             {
@@ -923,7 +964,7 @@ namespace Bridge.Contract
                 }
             }
 
-            if (definition.ImplementedInterfaceMembers.Count > 0)
+            /*if (definition.ImplementedInterfaceMembers.Count > 0)
             {
                 foreach (var iMember in definition.ImplementedInterfaceMembers)
                 {
@@ -933,9 +974,9 @@ namespace Bridge.Contract
                         throw new Exception(string.Format(message, definition.ToString(), definition.DeclaringType.ToString(), iMember.DeclaringType.ToString()));
                     }
                 }
-            }
+            }*/
 
-            return name;
+            return prefix != null ? prefix + name : name;
         }
 
         protected virtual IMember FindMember(EntityDeclaration entity)

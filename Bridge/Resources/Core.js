@@ -7,6 +7,14 @@
 
         identity: function (x) { return x; },
 
+        geti: function(scope, name1, name2) {
+            if (Bridge.hasValue(scope[name1])) {
+                return name1;
+            }
+
+            return name2;
+        },
+
         ref: function(o, n) {
             if (Bridge.isArray(n)) {
                 n = System.Array.toIndex(o, n);

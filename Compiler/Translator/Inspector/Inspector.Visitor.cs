@@ -181,6 +181,14 @@ namespace Bridge.Translator
                         Initializer = initializer
                     });
                 }
+
+                if (rr != null && rr.Member.ImplementedInterfaceMembers.Count > 0 && !rr.Member.IsExplicitInterfaceImplementation)
+                {
+                    var config = isStatic
+                    ? CurrentType.StaticConfig
+                    : CurrentType.InstanceConfig;
+                    config.Alias.Add(new TypeConfigItem { Entity = fieldDeclaration, VarInitializer = item});
+                }
             }
         }
 
@@ -248,6 +256,15 @@ namespace Bridge.Translator
             {
                 dict.Add(key, new List<EntityDeclaration>(new[] { indexerDeclaration }));
             }
+
+            var rr = this.Resolver.ResolveNode(indexerDeclaration, null) as MemberResolveResult;
+            if (rr != null && rr.Member.ImplementedInterfaceMembers.Count > 0 && !rr.Member.IsExplicitInterfaceImplementation)
+            {
+                var config = rr.Member.IsStatic
+                ? CurrentType.StaticConfig
+                : CurrentType.InstanceConfig;
+                config.Alias.Add(new TypeConfigItem { Entity = indexerDeclaration });
+            }
         }
 
         public override void VisitMethodDeclaration(MethodDeclaration methodDeclaration)
@@ -275,6 +292,16 @@ namespace Bridge.Translator
             {
                 dict.Add(key, new List<MethodDeclaration>(new[] { methodDeclaration }));
             }
+
+            var memberrr = Resolver.ResolveNode(methodDeclaration, null) as MemberResolveResult;
+
+            if (memberrr != null && memberrr.Member.ImplementedInterfaceMembers.Count > 0 && !memberrr.Member.IsExplicitInterfaceImplementation)
+            {
+                var config = isStatic
+                ? CurrentType.StaticConfig
+                : CurrentType.InstanceConfig;
+                config.Alias.Add(new TypeConfigItem { Entity = methodDeclaration });
+            }
         }
 
         public override void VisitCustomEventDeclaration(CustomEventDeclaration customEventDeclaration)
@@ -300,6 +327,15 @@ namespace Bridge.Translator
             {
                 dict.Add(key, new List<EntityDeclaration>(new[] { customEventDeclaration }));
             }
+
+            var rr = this.Resolver.ResolveNode(customEventDeclaration, null) as MemberResolveResult;
+            if (rr != null && rr.Member.ImplementedInterfaceMembers.Count > 0 && !rr.Member.IsExplicitInterfaceImplementation)
+            {
+                var config = rr.Member.IsStatic
+                ? CurrentType.StaticConfig
+                : CurrentType.InstanceConfig;
+                config.Alias.Add(new TypeConfigItem { Entity = customEventDeclaration });
+            }
         }
 
         public override void VisitPropertyDeclaration(PropertyDeclaration propertyDeclaration)
@@ -324,6 +360,15 @@ namespace Bridge.Translator
             else
             {
                 dict.Add(key, new List<EntityDeclaration>(new[] { propertyDeclaration }));
+            }
+
+            var rr = this.Resolver.ResolveNode(propertyDeclaration, null) as MemberResolveResult;
+            if (rr != null && rr.Member.ImplementedInterfaceMembers.Count > 0 && !rr.Member.IsExplicitInterfaceImplementation)
+            {
+                var config = rr.Member.IsStatic
+                ? CurrentType.StaticConfig
+                : CurrentType.InstanceConfig;
+                config.Alias.Add(new TypeConfigItem { Entity = propertyDeclaration });
             }
 
             if (!propertyDeclaration.Getter.IsNull
@@ -452,6 +497,15 @@ namespace Bridge.Translator
                         Initializer = initializer,
                         VarInitializer = item
                     });
+                }
+
+                var rr = this.Resolver.ResolveNode(item, null) as MemberResolveResult;
+                if (rr != null && rr.Member.ImplementedInterfaceMembers.Count > 0 && !rr.Member.IsExplicitInterfaceImplementation)
+                {
+                    var config = rr.Member.IsStatic
+                    ? CurrentType.StaticConfig
+                    : CurrentType.InstanceConfig;
+                    config.Alias.Add(new TypeConfigItem { Entity = eventDeclaration, VarInitializer = item});
                 }
             }
         }
