@@ -1225,6 +1225,7 @@
                 QUnit.test("#1411 - TestTemplateCtorThing", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1411.testTemplateCtorThing);
                 QUnit.test("#1411 - TestTemplateCtorDoodad", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1411.testTemplateCtorDoodad);
                 QUnit.test("#1411 - TestTemplateCtorGizmo", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1411.testTemplateCtorGizmo);
+                QUnit.test("#1428 - TestEqOperatorWithNull", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1428.testEqOperatorWithNull);
                 QUnit.test("#1429 - TestEqOperatorWithNull", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1429.testEqOperatorWithNull);
                 QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge381.testUseCase);
                 QUnit.test("#447 - CheckInlineExpression", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineExpression);
@@ -4019,6 +4020,16 @@
             testTemplateCtorGizmo: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1411).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1411);
                 Bridge.ClientTest.BridgeIssues.Bridge1411.testTemplateCtorGizmo();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1428', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1428)],
+        statics: {
+            testEqOperatorWithNull: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1428).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1428);
+                Bridge.ClientTest.BridgeIssues.Bridge1428.testEqOperatorWithNull();
             }
         }
     });

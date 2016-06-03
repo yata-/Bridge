@@ -5264,7 +5264,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             }
         },
         validate: function () {
-            return this.IsNotWorking == null ? "no subscribers" : this.IsNotWorking();
+            return Bridge.staticEquals(this.IsNotWorking, null) ? "no subscribers" : this.IsNotWorking();
         }
     }; });
     
@@ -8507,6 +8507,35 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             properties: {
                 Data: 0
             }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1428', {
+        statics: {
+            testEqOperatorWithNull: function () {
+                var c = new Bridge.ClientTest.BridgeIssues.Bridge1428();
+    
+                var test = new System.Collections.Generic.List$1(Function)();
+                test.add(Bridge.fn.bind(c, c.method1));
+    
+                Bridge.Test.Assert.areEqual(1, test.getCount());
+                test.remove(Bridge.fn.bind(c, c.method1));
+                Bridge.Test.Assert.areEqual(0, test.getCount());
+    
+                var l1 = Bridge.fn.bind(c, c.method1);
+                var l2 = Bridge.fn.bind(c, c.method1);
+    
+                Bridge.Test.Assert.true(Bridge.staticEquals(l1, l2));
+    
+                l1 = Bridge.fn.bind(c, c.method1);
+                l2 = Bridge.fn.bind(c, c.method2);
+    
+                Bridge.Test.Assert.false(Bridge.staticEquals(l1, l2));
+            }
+        },
+        method1: function () {
+        },
+        method2: function () {
         }
     });
     
@@ -13779,7 +13808,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             }
         },
         invokeDelegates: function () {
-            if (this.getDelegates() != null) {
+            if (!Bridge.staticEquals(this.getDelegates(), null)) {
                 this.getDelegates()(this);
             }
         }
@@ -19244,7 +19273,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             },
             verify: function (input, action) {
                 if (action === void 0) { action = null; }
-                if (action != null) {
+                if (!Bridge.staticEquals(action, null)) {
                     action(System.Convert.fromBase64CharArray(System.String.toCharArray(input, 0, input.length), 0, input.length));
                     action(System.Convert.fromBase64String(input));
                 }
@@ -32047,7 +32076,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             while (i < this.getThens().getCount()) {
                 var aThen = this.getThens().getItem(i);
     
-                if (aThen.getProgress() != null) {
+                if (!Bridge.staticEquals(aThen.getProgress(), null)) {
                     aThen.getProgress()(args);
                 }
     
@@ -32072,17 +32101,17 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var aThen = this.getThens().getItem(i);
     
                 if (which === Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which.Resolve) {
-                    if (aThen.getFilled() != null) {
+                    if (!Bridge.staticEquals(aThen.getFilled(), null)) {
                         aThen.getFilled().apply(null, args);
                     }
                 }
                 else  {
-                    if (aThen.getError() != null) {
+                    if (!Bridge.staticEquals(aThen.getError(), null)) {
                         aThen.getError().apply(null, args);
                     }
                 }
     
-                if (aThen.getProgress() != null) {
+                if (!Bridge.staticEquals(aThen.getProgress(), null)) {
                     aThen.getProgress()([100]);
                 }
     
