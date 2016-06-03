@@ -8513,7 +8513,19 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1429', {
         statics: {
             testEqOperatorWithNull: function () {
-                Bridge.Test.Assert.true(Bridge.ClientTest.BridgeIssues.Bridge1429.op_Equality(new Bridge.ClientTest.BridgeIssues.Bridge1429(), null));
+                Bridge.Test.Assert.true$1(Bridge.ClientTest.BridgeIssues.Bridge1429.op_Equality(new Bridge.ClientTest.BridgeIssues.Bridge1429(), null), "new Bridge1429() == null");
+    
+                var a = new Bridge.ClientTest.BridgeIssues.Bridge1429();
+                var b = new Bridge.ClientTest.BridgeIssues.Bridge1429();
+                var aa = a;
+    
+                Bridge.Test.Assert.true$1(Bridge.ClientTest.BridgeIssues.Bridge1429.op_Equality(a, b), "a == b");
+                Bridge.Test.Assert.true$1(Bridge.ClientTest.BridgeIssues.Bridge1429.op_Inequality(a, aa), "a != aa");
+    
+                var c = null;
+                var d = null;
+    
+                Bridge.Test.Assert.true$1(Bridge.ClientTest.BridgeIssues.Bridge1429.op_Inequality(c, d), "c != d");
             },
             op_Equality: function (a, b) {
                 return true;

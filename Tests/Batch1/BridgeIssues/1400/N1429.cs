@@ -15,7 +15,19 @@ namespace Bridge.ClientTest.BridgeIssues
         [Test]
         public static void TestEqOperatorWithNull()
         {
-            Assert.True(new Bridge1429() == null);
+            Assert.True(new Bridge1429() == null, "new Bridge1429() == null");
+
+            var a = new Bridge1429();
+            var b = new Bridge1429();
+            var aa = a;
+
+            Assert.True(a == b, "a == b");
+            Assert.True(a != aa, "a != aa");
+
+            Bridge1429 c = null;
+            Bridge1429 d = null;
+
+            Assert.True(c != d, "c != d");
         }
     }
 }
