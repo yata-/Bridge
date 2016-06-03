@@ -2276,6 +2276,8 @@
                 QUnit.test("TimerTests - TestInstanceCallbackWithDispose", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TimerTests.testInstanceCallbackWithDispose);
                 QUnit.test("TimerTests - TestInstanceCallbackWithChange", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TimerTests.testInstanceCallbackWithChange);
                 QUnit.test("TimerTests - TestInfiniteTimer", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TimerTests.testInfiniteTimer);
+                QUnit.module("Type system");
+                QUnit.test("Type - GettingBaseTypeWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_TypeSystemTests.gettingBaseTypeWorks);
                 QUnit.module("Utilities");
                 QUnit.test("Environment - NewLineIsAStringContainingOnlyTheNewLineChar", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_EnvironmentTests.newLineIsAStringContainingOnlyTheNewLineChar);
                 QUnit.module("СultureInfo");
@@ -12781,6 +12783,16 @@
             testInfiniteTimer: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Threading.TimerTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TimerTests);
                 t.getFixture().testInfiniteTimer();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_TypeSystemTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.TypeSystemTests)],
+        statics: {
+            gettingBaseTypeWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_TypeSystemTests);
+                t.getFixture().gettingBaseTypeWorks();
             }
         }
     });

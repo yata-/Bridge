@@ -312,6 +312,22 @@
             return (results && results.length > 1) ? results[1] : "Object";
         },
 
+        getBaseType: function (obj) {
+            if (obj == null) {
+                throw new System.NullReferenceException();
+            }
+
+            if (obj.$interface) {
+                return null;
+            }
+
+            if (obj.$$inherits) {
+                return obj.$$inherits[0].$interface ? Object : obj.$$inherits[0];
+            } else {
+                return obj.$$name ? Object : null;
+            }
+        },
+
         is: function (obj, type, ignoreFn, allowNull) {
 	        if (typeof type === "string") {
                 type = Bridge.unroll(type);
@@ -2237,6 +2253,11 @@
 
             // Enforce the constructor to be what we expect
             Class.prototype.constructor = Class;
+
+            if (prop.$interface) {
+                Class.$interface = prop.$interface;
+                delete prop.$interface;
+            }
 
             if (statics) {
                 for (name in statics) {
@@ -6577,6 +6598,21 @@ var date = {
 
     Bridge.Class.addExtend(System.TimeSpan, [System.IComparable$1(System.TimeSpan), System.IEquatable$1(System.TimeSpan)]);
 
+    // @source Type.js
+
+    Function.prototype.isAssignableFrom = function (type) {
+        if (this == type) {
+            return true;
+        }
+
+        for (var i = 0; i < type.$$inherits.length; i++) {
+            if (type.$$inherits[i] == this) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 // @source Text/StringBuilder.js
 
 Bridge.define("System.Text.StringBuilder", {
