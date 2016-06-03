@@ -1663,9 +1663,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define('Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.I1');
+    Bridge.define('Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.I1', {
+        $interface: true
+    });
     
-    Bridge.define('Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.I2');
+    Bridge.define('Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.I2', {
+        $interface: true
+    });
     
     Bridge.define('Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.IntegerComparer', {
         inherits: [System.Collections.Generic.IComparer$1(System.Int32),System.Collections.IEqualityComparer],
@@ -2284,9 +2288,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BasicCSharp.TestInterfaces.ISimple');
+    Bridge.define('Bridge.ClientTest.BasicCSharp.TestInterfaces.ISimple', {
+        $interface: true
+    });
     
-    Bridge.define('Bridge.ClientTest.BasicCSharp.TestInterfaces.ISimpleAsWell');
+    Bridge.define('Bridge.ClientTest.BasicCSharp.TestInterfaces.ISimpleAsWell', {
+        $interface: true
+    });
     
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestMethodParametersClass', {
         statics: {
@@ -5602,7 +5610,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     }; });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1231.I1$1', function (T) { return {
-    
+        $interface: true
     }; });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1232', {
@@ -6650,7 +6658,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1313.IInterface');
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1313.IInterface', {
+        $interface: true
+    });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1316', {
         statics: {
@@ -8652,7 +8662,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.IBridge304');
+    Bridge.define('Bridge.ClientTest.BridgeIssues.IBridge304', {
+        $interface: true
+    });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge305', {
         inherits: [System.Collections.Generic.IEnumerable$1(String)],
@@ -12412,7 +12424,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     }; });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.IBridge693D');
+    Bridge.define('Bridge.ClientTest.BridgeIssues.IBridge693D', {
+        $interface: true
+    });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge694', {
         statics: {
@@ -13939,7 +13953,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge883_IInterface');
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge883_IInterface', {
+        $interface: true
+    });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge883_3', {
         statics: {
@@ -18997,6 +19013,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             MODULE_THREADING: "Threading",
             MODULE_DIAGNOSTICS: "Diagnostics",
             MODULE_CHECKED_UNCKECKED: "Checked/Unckecked",
+            MODULE_TYPE_SYSTEM: "Type system",
             IGNORE_DATE: null
         }
     });
@@ -33936,6 +33953,101 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.TypeSystemTests', {
+        gettingBaseTypeWorks: function () {
+            Bridge.Test.Assert.areEqual$1(null, Bridge.getBaseType(Bridge.ClientTest.TypeSystemTests.I1), "#1");
+            Bridge.Test.Assert.areEqual$1(null, Bridge.getBaseType(Bridge.ClientTest.TypeSystemTests.I2), "#2");
+            Bridge.Test.Assert.areEqual$1(Object, Bridge.getBaseType(Bridge.ClientTest.TypeSystemTests.B), "#3");
+            Bridge.Test.Assert.areEqual$1(Bridge.ClientTest.TypeSystemTests.B, Bridge.getBaseType(Bridge.ClientTest.TypeSystemTests.C), "#4");
+            Bridge.Test.Assert.areEqual$1(null, Bridge.getBaseType(Object), "#5");
+    
+            var t = null;
+            Bridge.Test.Assert.throws$7(System.NullReferenceException, function () {
+                var b = Bridge.getBaseType(t);
+            }, "NullReferenceException");
+        },
+        isAssignableFromWorks: function () {
+            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.C1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.C1), "#1");
+            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.C1, Object), "#2");
+            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Object, Bridge.ClientTest.TypeSystemTests.AssignableTypes.C1), "#3");
+            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1, Object), "#4");
+            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Object, Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1), "#5");
+            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I3, Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1), "#6");
+            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.I3), "#7");
+            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.D1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.C1), "#8");
+            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.C1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.D1), "#9");
+            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.D1), "#10");
+            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.C2$1(System.Int32), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D2$1(System.Int32)), "#11");
+            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.C2$1(String), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D2$1(System.Int32)), "#12");
+            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(System.Int32), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D2$1(System.Int32)), "#13");
+            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(String), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D2$1(System.Int32)), "#14");
+            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.D2$1(System.Int32)), "#15");
+            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.C2$1(String), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D3), "#16");
+            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.C2$1(System.Int32), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D3), "#17");
+            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(System.Int32), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D3), "#18");
+            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(String), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D3), "#19");
+            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(System.Int32), Bridge.ClientTest.TypeSystemTests.AssignableTypes.I5$1(String)), "#20");
+            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(System.Int32), Bridge.ClientTest.TypeSystemTests.AssignableTypes.I5$1(System.Int32)), "#21");
+            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I5$1(System.Int32), Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(System.Int32)), "#22");
+            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.D4), "#23");
+            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I3, Bridge.ClientTest.TypeSystemTests.AssignableTypes.D4), "#24");
+            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I4, Bridge.ClientTest.TypeSystemTests.AssignableTypes.D4), "#25");
+            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.X2), "#26");
+            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.E1, Bridge.ClientTest.TypeSystemTests.E2), "#30");
+            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(System.Int32, Bridge.ClientTest.TypeSystemTests.E1), "#31");
+            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Object, Bridge.ClientTest.TypeSystemTests.E1), "#32");
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes');
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.C1');
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.C2$1', function (T) { return {
+    
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1', {
+        $interface: true
+    });
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1', function (T1) { return {
+        $interface: true
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I4', {
+        $interface: true
+    });
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I7$1', function (T) { return {
+        $interface: true
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I6$1', function (T) { return {
+        $interface: true
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I9$2', function (T1, T2) { return {
+        $interface: true
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.I1', {
+        $interface: true
+    });
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.I3', {
+        $interface: true
+    });
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.E1', {
+        $enum: true
+    });
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.E2', {
+        $enum: true,
+        $flags: true
+    });
+    
     Bridge.define('Bridge.ClientTest.Utilities.BrowserHelper', {
         statics: {
             isPhantomJs: function () {
@@ -39500,6 +39612,47 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.D1', {
+        inherits: [Bridge.ClientTest.TypeSystemTests.AssignableTypes.C1,Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1]
+    });
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.D2$1', function (T) { return {
+        inherits: [Bridge.ClientTest.TypeSystemTests.AssignableTypes.C2$1(T),Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(T),Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1]
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.D3', {
+        inherits: [Bridge.ClientTest.TypeSystemTests.AssignableTypes.C2$1(System.Int32),Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(String)]
+    });
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I3', {
+        inherits: [Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1],
+        $interface: true
+    });
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I8$2', function (T1, T2) { return {
+        inherits: [Bridge.ClientTest.TypeSystemTests.AssignableTypes.I6$1(T1),Bridge.ClientTest.TypeSystemTests.AssignableTypes.I7$1(T2)],
+        $interface: true
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I5$1', function (T1) { return {
+        inherits: [Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(T1)],
+        $interface: true
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.X1', {
+        inherits: [Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1]
+    });
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.I2', {
+        inherits: [Bridge.ClientTest.TypeSystemTests.I1],
+        $interface: true
+    });
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.I4', {
+        inherits: [Bridge.ClientTest.TypeSystemTests.I3],
+        $interface: true
+    });
+    
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestAbstractClass.C', {
         inherits: [Bridge.ClientTest.BasicCSharp.TestAbstractClass.B],
         getString: function () {
@@ -39553,6 +39706,23 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge883_2]
     });
     
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.D4', {
+        inherits: [Bridge.ClientTest.TypeSystemTests.AssignableTypes.I3,Bridge.ClientTest.TypeSystemTests.AssignableTypes.I4]
+    });
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I10$2', function (T1, T2) { return {
+        inherits: [Bridge.ClientTest.TypeSystemTests.AssignableTypes.I8$2(T1,T2)],
+        $interface: true
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.X2', {
+        inherits: [Bridge.ClientTest.TypeSystemTests.AssignableTypes.X1]
+    });
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.B', {
+        inherits: [Bridge.ClientTest.TypeSystemTests.I2]
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1339.Foo3', {
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge1339.Foo2],
         statics: {
@@ -39581,6 +39751,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             }
         }
     }; });
+    
+    Bridge.define('Bridge.ClientTest.TypeSystemTests.C', {
+        inherits: [Bridge.ClientTest.TypeSystemTests.B,Bridge.ClientTest.TypeSystemTests.I4]
+    });
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1339.Foo4', {
         inherits: [Bridge.ClientTest.BridgeIssues.Bridge1339.Foo3]

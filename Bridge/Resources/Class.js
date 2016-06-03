@@ -306,6 +306,11 @@
             // Enforce the constructor to be what we expect
             Class.prototype.constructor = Class;
 
+            if (prop.$interface) {
+                Class.$interface = prop.$interface;
+                delete prop.$interface;
+            }
+
             if (statics) {
                 for (name in statics) {
                     Class[name] = statics[name];

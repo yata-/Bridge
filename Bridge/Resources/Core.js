@@ -301,6 +301,51 @@
             return (results && results.length > 1) ? results[1] : "Object";
         },
 
+        getBaseType: function (obj) {
+            if (obj == null) {
+                throw new System.NullReferenceException();
+            }
+
+            if (obj.$interface) {
+                return null;
+            }
+
+            if (obj.$$inherits) {
+                return obj.$$inherits[0].$interface ? Object : obj.$$inherits[0];
+            } else {
+                return obj.$$name ? Object : null;
+            }
+        },
+
+        isAssignableFrom: function (baseType, type) {
+            if (baseType === null) {
+                throw new System.NullReferenceException();
+            }
+
+            if (type === null) {
+                return false;
+            }        
+
+            if (baseType == type || baseType == Object) {
+                return true;
+            }
+
+            var inheritors = type.$$inherits,
+                i,
+                r;
+
+            if (inheritors) {
+                for (i = 0; i < inheritors.length; i++) {
+                    r = Bridge.isAssignableFrom(baseType, inheritors[i]);
+                    if (r) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        },
+
         is: function (obj, type, ignoreFn, allowNull) {
 	        if (typeof type === "string") {
                 type = Bridge.unroll(type);
