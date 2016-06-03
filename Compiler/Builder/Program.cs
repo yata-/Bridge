@@ -16,7 +16,7 @@ namespace Bridge.Builder
         {
             var logger = new Logger(null, false, LoggerLevel.Info, true, new ConsoleLoggerWriter(), new FileLoggerWriter());
 
-            var bridgeOptions = GetBridgeOptionsFromCommandLine(ref args, logger);
+            var bridgeOptions = GetBridgeOptionsFromCommandLine(args, logger);
 
             if (bridgeOptions == null)
             {
@@ -130,7 +130,7 @@ namespace Bridge.Builder
             return false; // didn't bind anywhere
         }
 
-        private static BridgeOptions GetBridgeOptionsFromCommandLine(ref string[] args, ILogger logger)
+        private static BridgeOptions GetBridgeOptionsFromCommandLine(string[] args, ILogger logger)
         {
             var bridgeOptions = new BridgeOptions();
 
@@ -269,7 +269,17 @@ namespace Bridge.Builder
             {
                 var folder = bridgeOptions.Folder ?? Environment.CurrentDirectory;
 
-                var csprojs = Directory.GetFiles(folder, "*.csproj", SearchOption.TopDirectoryOnly);
+                var csprojs = new string[] { };
+
+                try
+                {
+                    Directory.GetFiles(folder, "*.csproj", SearchOption.TopDirectoryOnly);
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex.ToString());
+                }
+
                 if (csprojs.Length > 1)
                 {
                     logger.Error("Could not default to a csproj because multiple were found:");
@@ -277,18 +287,16 @@ namespace Bridge.Builder
                     return null; // error: arguments not provided, so can't guess what to do
                 }
 
-                if (csprojs.Length == 1)
-                {
-                    var csproj = csprojs[0];
-                    bridgeOptions.ProjectLocation = csproj;
-                    logger.Info("Defaulting to " + csproj);
-                }
-                else if (csprojs.Length == 0)
+                if (csprojs.Length == 0)
                 {
                     logger.Warn("Could not default to a csproj because none were found.");
                     logger.Error("Error: Project or assembly file name must be specified.");
                     return null;
                 }
+
+                var csproj = csprojs[0];
+                bridgeOptions.ProjectLocation = csproj;
+                logger.Info("Defaulting Project Location to " + csproj);
             }
 
             if (string.IsNullOrEmpty(bridgeOptions.OutputLocation))
