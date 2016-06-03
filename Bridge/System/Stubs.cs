@@ -20,6 +20,7 @@ namespace System
 
         public static extern Type GetTypeFromHandle(RuntimeTypeHandle typeHandle);
 
+        [Template("Bridge.isAssignableFrom({this}, {type})")]
         public extern bool IsAssignableFrom(Type type);
     }
 

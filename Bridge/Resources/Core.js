@@ -317,6 +317,35 @@
             }
         },
 
+        isAssignableFrom: function (baseType, type) {
+            if (baseType === null) {
+                throw new System.NullReferenceException();
+            }
+
+            if (type === null) {
+                return false;
+            }        
+
+            if (baseType == type || baseType == Object) {
+                return true;
+            }
+
+            var inheritors = type.$$inherits,
+                i,
+                r;
+
+            if (inheritors) {
+                for (i = 0; i < inheritors.length; i++) {
+                    r = Bridge.isAssignableFrom(baseType, inheritors[i]);
+                    if (r) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        },
+
         is: function (obj, type, ignoreFn, allowNull) {
 	        if (typeof type === "string") {
                 type = Bridge.unroll(type);

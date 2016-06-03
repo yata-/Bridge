@@ -18,7 +18,6 @@
   <file name="Decimal.js" />
   <file name="Date.js" />
   <file name="TimeSpan.js" />
-  <file name="Type.js" />
   <file name="Text/StringBuilder.js" />
   <file name="Text/BridgeRegex.js" />
   <file name="Diagnostics.js" />
@@ -75,7 +74,6 @@
     <include name="Decimal.js" />
     <include name="Date.js" />
     <include name="TimeSpan.js" />
-    <include name="Type.js" />
     <include name="Text/StringBuilder.js" />
     <include name="Text/BridgeRegex.js" />
     <include name="Diagnostics.js" />
