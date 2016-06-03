@@ -8510,6 +8510,32 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1429', {
+        statics: {
+            testEqOperatorWithNull: function () {
+                Bridge.Test.Assert.true$1(Bridge.ClientTest.BridgeIssues.Bridge1429.op_Equality(new Bridge.ClientTest.BridgeIssues.Bridge1429(), null), "new Bridge1429() == null");
+    
+                var a = new Bridge.ClientTest.BridgeIssues.Bridge1429();
+                var b = new Bridge.ClientTest.BridgeIssues.Bridge1429();
+                var aa = a;
+    
+                Bridge.Test.Assert.true$1(Bridge.ClientTest.BridgeIssues.Bridge1429.op_Equality(a, b), "a == b");
+                Bridge.Test.Assert.true$1(Bridge.ClientTest.BridgeIssues.Bridge1429.op_Inequality(a, aa), "a != aa");
+    
+                var c = null;
+                var d = null;
+    
+                Bridge.Test.Assert.true$1(Bridge.ClientTest.BridgeIssues.Bridge1429.op_Inequality(c, d), "c != d");
+            },
+            op_Equality: function (a, b) {
+                return true;
+            },
+            op_Inequality: function (a, b) {
+                return true;
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
@@ -13086,7 +13112,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         statics: {
             testUseCase: function () {
                 var wrappedValue = new Bridge.ClientTest.BridgeIssues.Bridge795A("constructor$1", 1);
-                var wrappedValueIsNull = (wrappedValue == null);
+                var wrappedValueIsNull = (System.Nullable.lifteq(Bridge.ClientTest.BridgeIssues.Bridge795A.op_Equality, wrappedValue, null));
     
                 Bridge.Test.Assert.areEqual$1(false, wrappedValueIsNull, "Bridge795");
             },
@@ -27283,14 +27309,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.true$1(System.Nullable.lifteq("equals", System.Int64(5754), System.Int64.clip64(ni3)), "nullable 5754 unchecked");
             Bridge.Test.Assert.true$1(System.Nullable.lifteq("equals", System.Int64([-808,2147483647]), System.Int64.clip64(ni4)), "nullable 9223372036854775000 unchecked");
             Bridge.Test.Assert.true$1(System.Nullable.liftcmp("lt", System.Int64.clip64(ni5), System.Int64(0)), "nullable 16223372036854776000 unchecked");
-            Bridge.Test.Assert.true$1(System.Int64.lift(null) == System.Int64.clip64(ni6), "null unchecked");
+            Bridge.Test.Assert.true$1(System.Nullable.lifteq("equals", System.Int64.lift(null), System.Int64.clip64(ni6)), "null unchecked");
     
             Bridge.Test.Assert.true$1(System.Int64(5754).equals(System.Int64.check(i3, System.Int64)), "5754 checked");
             Bridge.Test.Assert.true$1(System.Int64([-808,2147483647]).equals(System.Int64.check(i4, System.Int64)), "9223372036854775000 checked");
     
             Bridge.Test.Assert.true$1(System.Nullable.lifteq("equals", System.Int64(5754), System.Int64.check(ni3, System.Int64)), "nullable 5754 checked");
             Bridge.Test.Assert.true$1(System.Nullable.lifteq("equals", System.Int64([-808,2147483647]), System.Int64.check(ni4, System.Int64)), "nullable 9223372036854775000 checked");
-            Bridge.Test.Assert.true$1(System.Int64.lift(null) == System.Int64.check(ni6, System.Int64), "null checked");
+            Bridge.Test.Assert.true$1(System.Nullable.lifteq("equals", System.Int64.lift(null), System.Int64.check(ni6, System.Int64)), "null checked");
         },
         overflowWorks: function () {
             var min = System.Int64.MinValue;
@@ -28980,7 +29006,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             testConstructors: function () {
                 var v1 = new System.Version("constructor");
     
-                Bridge.Test.Assert.true$1(v1 != null, "v1 created");
+                Bridge.Test.Assert.true$1(System.Version.op_Inequality(v1, null), "v1 created");
                 Bridge.Test.Assert.areEqual$1(0, v1.getMajor(), "v1.Major 0");
                 Bridge.Test.Assert.areEqual$1(0, v1.getMinor(), "v1.Minor 0");
                 Bridge.Test.Assert.areEqual$1(-1, v1.getBuild(), "v1.Build -1");
@@ -28989,7 +29015,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(-1, v1.getMinorRevision(), "v1.MinorRevision -1");
     
                 var v2 = new System.Version("constructor$4", "2.4.1128.2");
-                Bridge.Test.Assert.true$1(v2 != null, "v2 created");
+                Bridge.Test.Assert.true$1(System.Version.op_Inequality(v2, null), "v2 created");
                 Bridge.Test.Assert.areEqual$1(2, v2.getMajor(), "v2.Major 2");
                 Bridge.Test.Assert.areEqual$1(4, v2.getMinor(), "v2.Minor 4");
                 Bridge.Test.Assert.areEqual$1(1128, v2.getBuild(), "v2.Build 1128");
@@ -28998,7 +29024,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(2, v2.getMinorRevision(), "v2.MinorRevision 2");
     
                 var v3 = new System.Version("constructor$4", "2.4.1128.65537");
-                Bridge.Test.Assert.true$1(v3 != null, "v3 created");
+                Bridge.Test.Assert.true$1(System.Version.op_Inequality(v3, null), "v3 created");
                 Bridge.Test.Assert.areEqual$1(2, v3.getMajor(), "v3.Major 2");
                 Bridge.Test.Assert.areEqual$1(4, v3.getMinor(), "v3.Minor 4");
                 Bridge.Test.Assert.areEqual$1(1128, v3.getBuild(), "v3.Build 1128");
@@ -29007,7 +29033,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(1, v3.getMinorRevision(), "v3.MinorRevision 1");
     
                 var v4 = new System.Version("constructor$1", 20, 10);
-                Bridge.Test.Assert.true$1(v4 != null, "v4 created");
+                Bridge.Test.Assert.true$1(System.Version.op_Inequality(v4, null), "v4 created");
                 Bridge.Test.Assert.areEqual$1(20, v4.getMajor(), "v4.Major 20");
                 Bridge.Test.Assert.areEqual$1(10, v4.getMinor(), "v4.Minor 10");
                 Bridge.Test.Assert.areEqual$1(-1, v4.getBuild(), "v4.Build -1");
@@ -29016,7 +29042,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(-1, v4.getMinorRevision(), "v4.MinorRevision -1");
     
                 var v5 = new System.Version("constructor$2", 200, 100, 300);
-                Bridge.Test.Assert.true$1(v5 != null, "v5 created");
+                Bridge.Test.Assert.true$1(System.Version.op_Inequality(v5, null), "v5 created");
                 Bridge.Test.Assert.areEqual$1(200, v5.getMajor(), "v5.Major 200");
                 Bridge.Test.Assert.areEqual$1(100, v5.getMinor(), "v5.Minor 100");
                 Bridge.Test.Assert.areEqual$1(300, v5.getBuild(), "v5.Build 300");
@@ -29025,7 +29051,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual$1(-1, v5.getMinorRevision(), "v5.MinorRevision -1");
     
                 var v6 = new System.Version("constructor$3", 2000, 1000, 3000, 22613920);
-                Bridge.Test.Assert.true$1(v6 != null, "v6 created");
+                Bridge.Test.Assert.true$1(System.Version.op_Inequality(v6, null), "v6 created");
                 Bridge.Test.Assert.areEqual$1(2000, v6.getMajor(), "v6.Major 2000");
                 Bridge.Test.Assert.areEqual$1(1000, v6.getMinor(), "v6.Minor 1000");
                 Bridge.Test.Assert.areEqual$1(3000, v6.getBuild(), "v6.Build 3000");
@@ -29040,7 +29066,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.true$1(o != null, "v1 Cloned");
     
                 var v2 = Bridge.as(o, System.Version);
-                Bridge.Test.Assert.true$1(v2 != null, "v1 Cloned as Version");
+                Bridge.Test.Assert.true$1(System.Version.op_Inequality(v2, null), "v1 Cloned as Version");
     
                 Bridge.Test.Assert.areEqual$1(1, v2.getMajor(), "v2.Major 1");
                 Bridge.Test.Assert.areEqual$1(2, v2.getMinor(), "v2.Minor 2");
@@ -29139,15 +29165,15 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.true$1(System.Version.op_LessThan(v1, v3), "v1 < v3");
                 Bridge.Test.Assert.true$1(System.Version.op_LessThanOrEqual(v1, v3), "v1 <= v3");
     
-                Bridge.Test.Assert.false$1(v1 == null, "v1 == null");
-                Bridge.Test.Assert.true$1(v1 != null, "v1 != null");
+                Bridge.Test.Assert.false$1(System.Version.op_Equality(v1, null), "v1 == null");
+                Bridge.Test.Assert.true$1(System.Version.op_Inequality(v1, null), "v1 != null");
                 Bridge.Test.Assert.true$1(System.Version.op_GreaterThan(v1, null), "v1 > null");
                 Bridge.Test.Assert.true$1(System.Version.op_GreaterThanOrEqual(v1, null), "v1 >= null");
                 Bridge.Test.Assert.false$1(System.Version.op_LessThan(v1, null), "v1 < null");
                 Bridge.Test.Assert.false$1(System.Version.op_LessThanOrEqual(v1, null), "v1 <= null");
     
-                Bridge.Test.Assert.false$1(null == v3, "null == v3");
-                Bridge.Test.Assert.true$1(null != v3, "null != v3");
+                Bridge.Test.Assert.false$1(System.Version.op_Equality(null, v3), "null == v3");
+                Bridge.Test.Assert.true$1(System.Version.op_Inequality(null, v3), "null != v3");
                 Bridge.Test.Assert.false$1(System.Version.op_GreaterThan(null, v3), "null > v3");
                 Bridge.Test.Assert.false$1(System.Version.op_GreaterThanOrEqual(null, v3), "null >= v3");
                 Bridge.Test.Assert.true$1(System.Version.op_LessThan(null, v3), "null < v3");
@@ -29876,7 +29902,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.true$1(System.Nullable.lifteq("equals", System.UInt64(0), System.Int64.clipu64(ni2)), "nullable 0 unchecked");
             Bridge.Test.Assert.true$1(System.Nullable.lifteq("equals", System.UInt64(234), System.Int64.clipu64(ni3)), "nullable 234 unchecked");
             Bridge.Test.Assert.true$1(System.Nullable.lifteq("equals", System.UInt64(System.Int64([-808,2147483647])), System.Int64.clipu64(ni4)), "nullable 9223372036854775000 unchecked");
-            Bridge.Test.Assert.true$1(System.UInt64.lift(null) == System.Int64.clipu64(ni6), "null unchecked");
+            Bridge.Test.Assert.true$1(System.Nullable.lifteq("equals", System.UInt64.lift(null), System.Int64.clipu64(ni6)), "null unchecked");
     
             Bridge.Test.Assert.true$1(System.UInt64(0).equals(System.Int64.check(i2, System.UInt64)), "0 checked");
             Bridge.Test.Assert.true$1(System.UInt64(234).equals(System.Int64.check(i3, System.UInt64)), "234 checked");
@@ -29885,7 +29911,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.true$1(System.Nullable.lifteq("equals", System.UInt64(0), System.Int64.check(ni2, System.UInt64)), "nullable 0 checked");
             Bridge.Test.Assert.true$1(System.Nullable.lifteq("equals", System.UInt64(234), System.Int64.check(ni3, System.UInt64)), "nullable 234 checked");
             Bridge.Test.Assert.true$1(System.Nullable.lifteq("equals", System.UInt64(System.Int64([-808,2147483647])), System.Int64.check(ni4, System.UInt64)), "nullable 9223372036854775000 checked");
-            Bridge.Test.Assert.true$1(System.UInt64.lift(null) == System.Int64.check(ni6, System.UInt64), "null checked");
+            Bridge.Test.Assert.true$1(System.Nullable.lifteq("equals", System.UInt64.lift(null), System.Int64.check(ni6, System.UInt64)), "null checked");
         },
         overflowWorks: function () {
             var min = System.UInt64.MinValue;
