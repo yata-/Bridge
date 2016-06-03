@@ -137,26 +137,6 @@ namespace Bridge.Translator
             var rightExpected = this.Emitter.Resolver.Resolver.GetExpectedType(binaryOperatorExpression.Right);
             var strictNullChecks = this.Emitter.AssemblyInfo.StrictNullChecks;
 
-            if (binaryOperatorExpression.Operator == BinaryOperatorType.Equality || binaryOperatorExpression.Operator == BinaryOperatorType.InEquality)
-            {
-                if (leftIsNull || rightIsNull)
-                {
-                    binaryOperatorExpression.Left.AcceptVisitor(this.Emitter);
-
-                    if (binaryOperatorExpression.Operator == BinaryOperatorType.Equality)
-                    {
-                        this.Write(strictNullChecks ? " === " : " == ");
-                    }
-                    else
-                    {
-                        this.Write(strictNullChecks ? " !== " : " != ");
-                    }
-
-                    binaryOperatorExpression.Right.AcceptVisitor(this.Emitter);
-                    return;
-                }
-            }
-
             if (orr != null && orr.Type.IsKnownType(KnownTypeCode.String))
             {
                 for (int i = 0; i < orr.Operands.Count; i++)
@@ -210,6 +190,26 @@ namespace Bridge.Translator
             if (this.ResolveOperator(binaryOperatorExpression, orr))
             {
                 return;
+            }
+
+            if (binaryOperatorExpression.Operator == BinaryOperatorType.Equality || binaryOperatorExpression.Operator == BinaryOperatorType.InEquality)
+            {
+                if (leftIsNull || rightIsNull)
+                {
+                    binaryOperatorExpression.Left.AcceptVisitor(this.Emitter);
+
+                    if (binaryOperatorExpression.Operator == BinaryOperatorType.Equality)
+                    {
+                        this.Write(strictNullChecks ? " === " : " == ");
+                    }
+                    else
+                    {
+                        this.Write(strictNullChecks ? " !== " : " != ");
+                    }
+
+                    binaryOperatorExpression.Right.AcceptVisitor(this.Emitter);
+                    return;
+                }
             }
 
             if (binaryOperatorExpression.Operator == BinaryOperatorType.Divide &&
