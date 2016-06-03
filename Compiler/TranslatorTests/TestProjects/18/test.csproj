@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{306AD788-87E9-4DF9-A216-95948E024BC8}</ProjectGuid>
+    <ProjectGuid>{16777B9C-A3B6-4E0B-B5A2-AA933A2F54D3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TestProject</RootNamespace>
@@ -45,6 +45,7 @@
     <Compile Include="Issues\Issue958.cs" />
     <Compile Include="Issues\Issue921Instance.cs" />
     <Compile Include="Issues\Issue921Static.cs" />
+    <Compile Include="Issues\IssueDeserializeArrayOfClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Issues\Issue379.cs" />
     <Compile Include="Issues\Issue434.cs" />
