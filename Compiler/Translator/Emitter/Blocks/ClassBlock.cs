@@ -50,13 +50,27 @@ namespace Bridge.Translator
             XmlToJsDoc.EmitComment(this, this.Emitter.Translator.EmitNode);
 
             this.EmitClassHeader();
+
             this.Emitter.NamedFunctions = new Dictionary<string, string>();
+
             if (this.TypeInfo.TypeDeclaration.ClassType != ClassType.Interface)
             {
                 this.EmitStaticBlock();
                 this.EmitInstantiableBlock();
             }
+            else
+            {
+                this.EmitInterfaceBlock();
+            }
+
             this.EmitClassEnd();
+        }
+
+        private void EmitInterfaceBlock()
+        {
+            this.EnsureComma();
+            this.Write(JS.Fields.INTERFACE + ": true");
+            this.Emitter.Comma = true;
         }
 
         protected virtual void EmitClassHeader()
