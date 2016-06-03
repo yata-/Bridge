@@ -14,7 +14,7 @@ namespace System
 
         public extern Type BaseType
         {
-            [Template("({this}.$$inherits) ? {this}.$$inherits[0] : null")]
+            [Template("Bridge.getBaseType({this})")]
             get;
         }
 

@@ -301,6 +301,22 @@
             return (results && results.length > 1) ? results[1] : "Object";
         },
 
+        getBaseType: function (obj) {
+            if (obj == null) {
+                throw new System.NullReferenceException();
+            }
+
+            if (obj.$interface) {
+                return null;
+            }
+
+            if (obj.$$inherits) {
+                return obj.$$inherits[0].$interface ? Object : obj.$$inherits[0];
+            } else {
+                return obj.$$name ? Object : null;
+            }
+        },
+
         is: function (obj, type, ignoreFn, allowNull) {
 	        if (typeof type === "string") {
                 type = Bridge.unroll(type);
