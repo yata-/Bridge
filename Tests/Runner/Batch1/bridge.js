@@ -638,8 +638,16 @@
             return o;
         },
 
-        referenceEquals: function(a, b) {
+        referenceEquals: function (a, b) {
             return Bridge.hasValue(a) ? a === b : !Bridge.hasValue(b);
+        },
+        
+        staticEquals: function (a, b) {
+            if (!Bridge.hasValue(a)) {
+                return !Bridge.hasValue(b);
+            }
+                
+            return Bridge.hasValue(b) ? Bridge.equals(a, b) : false;
         },
 
         equals: function (a, b) {
@@ -823,6 +831,18 @@
         },
 
         fn: {
+            equals: function(fn) {
+                if (this === fn) {
+                    return true;
+                }
+
+                if (fn == null || (this.constructor !== fn.constructor)) {
+                    return false;
+                }
+
+                return this.equals === fn.equals && this.$method === fn.$method && this.$scope === fn.$scope;
+            },
+
             call: function (obj, fnName) {
                 var args = Array.prototype.slice.call(arguments, 2);
 
@@ -900,6 +920,7 @@
 
                 fn.$method = method;
                 fn.$scope = obj;
+                fn.equals = Bridge.fn.equals;
 
                 return fn;
             },
@@ -919,6 +940,7 @@
 
                 fn.$method = method;
                 fn.$scope = obj;
+                fn.equals = Bridge.fn.equals;
 
                 return fn;
             },
@@ -956,6 +978,10 @@
                     list2 = fn2.$invocationList ? fn2.$invocationList : [fn2];
 
                 return Bridge.fn.$build(list1.concat(list2));
+            },
+
+            getInvocationList: function() {
+                
             },
 
             remove: function (fn1, fn2) {

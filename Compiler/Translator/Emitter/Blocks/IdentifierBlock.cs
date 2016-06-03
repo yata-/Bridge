@@ -474,35 +474,7 @@ namespace Bridge.Translator
                 }
                 else if (isResolved)
                 {
-                    if (resolveResult is TypeResolveResult)
-                    {
-                        var typeResolveResult = (TypeResolveResult)resolveResult;
-
-                        var isNative = this.Emitter.Validator.IsIgnoreType(typeResolveResult.Type.GetDefinition());
-                        this.Write(BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter));
-                        /*if (!isNative)
-                        {
-                            this.Write("Bridge.get(" + BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter));
-                        }
-                        else
-                        {
-                            this.Write(BridgeTypes.ToJsName(typeResolveResult.Type, this.Emitter));
-                        }*/
-                        
-
-                        if (typeResolveResult.Type.TypeParameterCount > 0)
-                        {
-                            this.WriteOpenParentheses();
-                            new TypeExpressionListBlock(this.Emitter, this.IdentifierExpression.TypeArguments).Emit();
-                            this.WriteCloseParentheses();
-                        }
-
-                        if (!isNative)
-                        {
-                            this.Write(")");
-                        }                        
-                    }
-                    else if (resolveResult is LocalResolveResult)
+                    if (resolveResult is LocalResolveResult)
                     {
                         var localResolveResult = (LocalResolveResult)resolveResult;
                         this.Write(localResolveResult.Variable.Name);
@@ -544,14 +516,6 @@ namespace Bridge.Translator
             if (memberResult.Member.IsStatic)
             {
                 this.Write(BridgeTypes.ToJsName(memberResult.Member.DeclaringType, this.Emitter));
-                /*if (!this.Emitter.Validator.IsIgnoreType(memberResult.Member.DeclaringTypeDefinition) && memberResult.Member.DeclaringTypeDefinition.Kind != TypeKind.Enum)
-                {
-                    this.Write("Bridge.get(" + BridgeTypes.ToJsName(memberResult.Member.DeclaringType, this.Emitter) + ")");
-                }
-                else
-                {
-                    this.Write(BridgeTypes.ToJsName(memberResult.Member.DeclaringType, this.Emitter));
-                }*/
             }
             else
             {
