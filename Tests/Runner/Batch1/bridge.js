@@ -328,6 +328,35 @@
             }
         },
 
+        isAssignableFrom: function (baseType, type) {
+            if (baseType === null) {
+                throw new System.NullReferenceException();
+            }
+
+            if (type === null) {
+                return false;
+            }        
+
+            if (baseType == type || baseType == Object) {
+                return true;
+            }
+
+            var inheritors = type.$$inherits,
+                i,
+                r;
+
+            if (inheritors) {
+                for (i = 0; i < inheritors.length; i++) {
+                    r = Bridge.isAssignableFrom(baseType, inheritors[i]);
+                    if (r) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        },
+
         is: function (obj, type, ignoreFn, allowNull) {
 	        if (typeof type === "string") {
                 type = Bridge.unroll(type);
@@ -6598,21 +6627,6 @@ var date = {
 
     Bridge.Class.addExtend(System.TimeSpan, [System.IComparable$1(System.TimeSpan), System.IEquatable$1(System.TimeSpan)]);
 
-    // @source Type.js
-
-    Function.prototype.isAssignableFrom = function (type) {
-        if (this == type) {
-            return true;
-        }
-
-        for (var i = 0; i < type.$$inherits.length; i++) {
-            if (type.$$inherits[i] == this) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 // @source Text/StringBuilder.js
 
 Bridge.define("System.Text.StringBuilder", {

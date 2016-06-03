@@ -2278,6 +2278,7 @@
                 QUnit.test("TimerTests - TestInfiniteTimer", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Threading_TimerTests.testInfiniteTimer);
                 QUnit.module("Type system");
                 QUnit.test("Type - GettingBaseTypeWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_TypeSystemTests.gettingBaseTypeWorks);
+                QUnit.test("Type - IsAssignableFromWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_TypeSystemTests.isAssignableFromWorks);
                 QUnit.module("Utilities");
                 QUnit.test("Environment - NewLineIsAStringContainingOnlyTheNewLineChar", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_EnvironmentTests.newLineIsAStringContainingOnlyTheNewLineChar);
                 QUnit.module("СultureInfo");
@@ -12793,6 +12794,10 @@
             gettingBaseTypeWorks: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_TypeSystemTests);
                 t.getFixture().gettingBaseTypeWorks();
+            },
+            isAssignableFromWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_TypeSystemTests);
+                t.getFixture().isAssignableFromWorks();
             }
         }
     });
