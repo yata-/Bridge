@@ -35,7 +35,7 @@ namespace Bridge.Html5
         /// <param name="text">The string to parse as JSON. See the JSON object for a description of JSON syntax.</param>
         /// <returns>The Object corresponding to the given JSON text.</returns>
         [Template("Bridge.merge(new Array(), JSON.parse({text}), function(){return new {T}();})")]
-        public static extern T[] ParseAsArray<T>(string text);
+        public static extern T[] ParseAsArray<T>(string text) where T : new();
 
         /// <summary>
         /// The JSON.parse() method parses a string as JSON, optionally transforming the value produced by parsing.
