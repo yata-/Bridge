@@ -39,15 +39,23 @@
             scope[name] = v;
 
             var rs = name.charAt(0) === "$",
-                cap = rs ? name.slice(1) : name;
+                cap = rs ? name.slice(1) : name,
+                getName = "get" + cap,
+                setName = "set" + cap,
+                lastSep = name.lastIndexOf("$");
 
-            scope["get" + cap] = (function (name) {
+            if (lastSep > 0 && lastSep !== (name.length - 1)) {
+                getName = name.substring(0, lastSep) + "get" + name.substr(lastSep + 1);
+                setName = name.substring(0, lastSep) + "set" + name.substr(lastSep + 1);
+            }
+            
+            scope[getName] = (function (name) {
                 return function () {
                     return this[name];
                 };
             })(name);
 
-            scope["set" + cap] = (function (name) {
+            scope[setName] = (function (name) {
                 return function (value) {
                     this[name] = value;
                 };

@@ -18,6 +18,14 @@
 
         identity: function (x) { return x; },
 
+        geti: function(scope, name1, name2) {
+            if (Bridge.hasValue(scope[name1])) {
+                return name1;
+            }
+
+            return name2;
+        },
+
         ref: function(o, n) {
             if (Bridge.isArray(n)) {
                 n = System.Array.toIndex(o, n);
@@ -42,15 +50,23 @@
             scope[name] = v;
 
             var rs = name.charAt(0) === "$",
-                cap = rs ? name.slice(1) : name;
+                cap = rs ? name.slice(1) : name,
+                getName = "get" + cap,
+                setName = "set" + cap,
+                lastSep = name.lastIndexOf("$");
 
-            scope["get" + cap] = (function (name) {
+            if (lastSep > 0 && lastSep !== (name.length - 1)) {
+                getName = name.substring(0, lastSep) + "get" + name.substr(lastSep + 1);
+                setName = name.substring(0, lastSep) + "set" + name.substr(lastSep + 1);
+            }
+            
+            scope[getName] = (function (name) {
                 return function () {
                     return this[name];
                 };
             })(name);
 
-            scope["set" + cap] = (function (name) {
+            scope[setName] = (function (name) {
                 return function (value) {
                     this[name] = value;
                 };
@@ -1985,9 +2001,7 @@
 
                     if (config.alias) {
                         for (name in config.alias) {
-                            if (this[name]) {
-                                this[name] = this[config.alias[name]];
-                            }
+                            this[name] = this[config.alias[name]];
                         }
                     }
 
@@ -2131,11 +2145,6 @@
 
             if (extend && Bridge.isFunction(extend)) {
                 extend = extend();
-            }
-
-            if (extend && !extend[0])
-            {
-                var ttt = 0;
             }
 
             base = extend ? extend[0].prototype : this.prototype;

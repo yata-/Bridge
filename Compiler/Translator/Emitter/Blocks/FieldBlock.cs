@@ -342,24 +342,28 @@ namespace Bridge.Translator
                             var property = (IProperty)rr.Member;
                             if (property.CanGet)
                             {
-                                var memberName = OverloadsCollection.Create(Emitter, rr.Member, false).GetOverloadName();
-
                                 this.EnsureComma();
-                                this.Write(OverloadsCollection.Create(Emitter, interfaceMember).GetOverloadName());
+                                this.Write(Helpers.GetPropertyRef(interfaceMember, this.Emitter, false, false, false));
                                 this.WriteColon();
+                                this.WriteScript(Helpers.GetPropertyRef(rr.Member, this.Emitter, false, false, true));
+                                this.Emitter.Comma = true;
+                            }
 
-                                this.WriteScript(memberName);
+                            if (property.CanSet)
+                            {
+                                this.EnsureComma();
+                                this.Write(Helpers.GetPropertyRef(interfaceMember, this.Emitter, true, false, false));
+                                this.WriteColon();
+                                this.WriteScript(Helpers.GetPropertyRef(rr.Member, this.Emitter, true, false, true));
+                                this.Emitter.Comma = true;
                             }
                         }
                         else
                         {
-                            var memberName = OverloadsCollection.Create(Emitter, rr.Member).GetOverloadName();
-
                             this.EnsureComma();
                             this.Write(OverloadsCollection.Create(Emitter, interfaceMember).GetOverloadName());
                             this.WriteColon();
-
-                            this.WriteScript(memberName);
+                            this.WriteScript(OverloadsCollection.Create(Emitter, rr.Member).GetOverloadName());
                         }
                         
                         this.Emitter.Comma = true;

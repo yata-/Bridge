@@ -17,7 +17,8 @@
         property: 100,
         config: {
             alias: {
-                Interfaces$Interface1$Property: "Property"
+                Interfaces$Interface1$getProperty: "getProperty",
+                Interfaces$Interface1$setProperty: "setProperty"
             }
         },
         getProperty: function () {
@@ -69,7 +70,8 @@
                 MethodProperty: 0
             },
             alias: {
-                Interfaces$Interface6$Property$3: "Property$3",
+                Interfaces$Interface6$getProperty$3: "getProperty$3",
+                Interfaces$Interface6$setProperty$3: "setProperty$3",
                 Interfaces$Interface6$getProperty: "getProperty",
                 Interfaces$Interface6$setProperty$1: "setProperty$1",
                 Interfaces$Interface6$setProperty: "setProperty"
@@ -107,7 +109,7 @@
             return this.field;
         },
         method4: function (i) {
-            this.field = i.getProperty();
+            this.field = i.Interfaces$Interface1$getProperty();
     
             return true;
         }

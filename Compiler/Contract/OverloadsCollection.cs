@@ -918,9 +918,9 @@ namespace Bridge.Contract
             if (interfaceMember != null && !skipInterfaceName)
             {
                 var interfaceMemberName = OverloadsCollection.Create(Emitter, interfaceMember).GetOverloadName(true, prefix);
-                var interfaceName = BridgeTypes.ToJsName(interfaceMember.DeclaringTypeDefinition, Emitter);
-
-                return interfaceName.Replace(".", "$") + "$" + interfaceMemberName;
+                var interfaceName = BridgeTypes.ToJsName(interfaceMember.DeclaringType, Emitter);
+                interfaceName = interfaceName.Replace(".", "$").Replace("(", "$").Replace(")", "$");
+                return interfaceName + (interfaceName.EndsWith("$") ? "" : "$") + interfaceMemberName;
             }
 
             string name = this.Emitter.GetEntityName(definition, this.CancelChangeCase);

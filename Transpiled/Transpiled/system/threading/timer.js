@@ -24,8 +24,8 @@
             this.timerSetup(callback, state, System.Int64(dueTime), System.Int64(period));
         },
         constructor$3: function (callback, state, dueTime, period) {
-            var dueTm = Bridge.Int.clip64(dueTime.getTotalMilliseconds());
-            var periodTm = Bridge.Int.clip64(period.getTotalMilliseconds());
+            var dueTm = Bridge.Int.clip64(dueTime.TotalMilliseconds());
+            var periodTm = Bridge.Int.clip64(period.TotalMilliseconds());
     
             this.timerSetup(callback, state, dueTm, periodTm);
         },
@@ -106,7 +106,7 @@
             return this.changeTimer(System.Int64(dueTime), System.Int64(period));
         },
         change$2: function (dueTime, period) {
-            return this.changeTimer(Bridge.Int.clip64(dueTime.getTotalMilliseconds()), Bridge.Int.clip64(period.getTotalMilliseconds()));
+            return this.changeTimer(Bridge.Int.clip64(dueTime.TotalMilliseconds()), Bridge.Int.clip64(period.TotalMilliseconds()));
         },
         change$3: function (dueTime, period) {
             return this.changeTimer(System.Int64(dueTime), System.Int64(period));
