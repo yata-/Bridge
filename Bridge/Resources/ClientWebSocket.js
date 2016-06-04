@@ -1,11 +1,11 @@
     // @source ClientWebSocket.js
 
-    Bridge.define("Bridge.Net.WebSockets.ClientWebSocket", {
-        inherits: [Bridge.IDisposable],
+    Bridge.define("System.Net.WebSockets.ClientWebSocket", {
+        inherits: [System.IDisposable],
         constructor: function() {
             this.messageBuffer = [];
             this.state = "none";
-            this.options = new Bridge.Net.WebSockets.ClientWebSocketOptions();
+            this.options = new System.Net.WebSockets.ClientWebSocketOptions();
             this.disposed = false;
             this.closeStatus = null;
             this.closeStatusDescription = null;
@@ -29,11 +29,11 @@
 
         connectAsync: function(uri, cancellationToken) {
             if (this.state !== "none") {
-                throw new Bridge.InvalidOperationException("Socket is not in initial state");
+                throw new System.InvalidOperationException("Socket is not in initial state");
             }
             this.options.setToReadOnly();
             this.state = "connecting";
-            var tcs = new Bridge.TaskCompletionSource(),
+            var tcs = new System.Threading.Tasks.TaskCompletionSource(),
                 self = this;
             try {
                 this.socket = new WebSocket(uri.getAbsoluteUri(), this.options.requestedSubProtocols);
@@ -64,7 +64,7 @@
                         self.messageBuffer.push(message);
                         return;
                     }
-                    throw new Bridge.ArgumentException("Invalid message type.");
+                    throw new System.ArgumentException("Invalid message type.");
                 };
                 this.socket.onclose = function(e) {
                     self.state = "closed";
@@ -72,14 +72,14 @@
                     self.closeStatusDescription = e.reason;
                 }
             } catch (e) {
-                tcs.setException(Bridge.Exception.create(e));
+                tcs.setException(System.Exception.create(e));
             }
             return tcs.task;
         },
 
         sendAsync: function(buffer, messageType, endOfMessage, cancellationToken) {
             this.throwIfNotConnected();
-            var tcs = new Bridge.TaskCompletionSource();
+            var tcs = new System.Threading.Tasks.TaskCompletionSource();
             try {
                 var array = buffer.getArray(),
                     data;
@@ -102,7 +102,7 @@
                 }
                 tcs.setResult(null);
             } catch (e) {
-                tcs.setException(Bridge.Exception.create(e));
+                tcs.setException(System.Exception.create(e));
             }
             return tcs.task;
         },
@@ -110,16 +110,16 @@
         receiveAsync: function(buffer, cancellationToken) {
             this.throwIfNotConnected();
             var task,
-                tcs = new Bridge.TaskCompletionSource(),
+                tcs = new System.Threading.Tasks.TaskCompletionSource(),
                 self = this,
                 asyncBody = Bridge.fn.bind(this, function() {
                     try {
                         if (cancellationToken.getIsCancellationRequested()) {
-                            tcs.setException(new Bridge.TaskCanceledException("Receive has been cancelled.", tcs.task));
+                            tcs.setException(new System.Threading.Tasks.TaskCanceledException("Receive has been cancelled.", tcs.task));
                             return;
                         }
                         if (self.messageBuffer.length === 0) {
-                            task = Bridge.Task.delay(0);
+                            task = System.Threading.Tasks.Task.delay(0);
                             task.continueWith(asyncBody);
                             return;
                         }
@@ -139,10 +139,10 @@
                         for (var i = 0; i < resultBytes.length; i++) {
                             array[i] = resultBytes[i];
                         }
-                        tcs.setResult(new Bridge.Net.WebSockets.WebSocketReceiveResult(
+                        tcs.setResult(new System.Net.WebSockets.WebSocketReceiveResult(
                             resultBytes.length, message.messageType, endOfMessage));
                     } catch (e) {
-                        tcs.setException(Bridge.Exception.create(e));
+                        tcs.setException(System.Exception.create(e));
                     }
                 }, arguments);
 
@@ -153,9 +153,9 @@
         closeAsync: function(closeStatus, statusDescription, cancellationToken) {
             this.throwIfNotConnected();
             if (this.state !== "open") {
-                throw new Bridge.InvalidOperationException("Socket is not in connected state");
+                throw new System.InvalidOperationException("Socket is not in connected state");
             }
-            var tcs = new Bridge.TaskCompletionSource(),
+            var tcs = new System.Threading.Tasks.TaskCompletionSource(),
                 self = this,
                 task,
                 asyncBody = function() {
@@ -164,17 +164,17 @@
                         return;
                     }
                     if (cancellationToken.getIsCancellationRequested()) {
-                        tcs.setException(new Bridge.TaskCanceledException("Closing has been cancelled.", tcs.task));
+                        tcs.setException(new System.Threading.Tasks.TaskCanceledException("Closing has been cancelled.", tcs.task));
                         return;
                     }
-                    task = Bridge.Task.delay(0);
+                    task = System.Threading.Tasks.Task.delay(0);
                     task.continueWith(asyncBody);
                 };
             try {
                 this.state = "closesent";
                 this.socket.close(closeStatus, statusDescription);
             } catch (e) {
-                tcs.setException(Bridge.Exception.create(e));
+                tcs.setException(System.Exception.create(e));
             }
             asyncBody();
             return tcs.task;
@@ -183,15 +183,15 @@
         closeOutputAsync: function(closeStatus, statusDescription, cancellationToken) {
             this.throwIfNotConnected();
             if (this.state !== "open") {
-                throw new Bridge.InvalidOperationException("Socket is not in connected state");
+                throw new System.InvalidOperationException("Socket is not in connected state");
             }
-            var tcs = new Bridge.TaskCompletionSource();
+            var tcs = new System.Threading.Tasks.TaskCompletionSource();
             try {
                 this.state = "closesent";
                 this.socket.close(closeStatus, statusDescription);
                 tcs.setResult(null);
             } catch (e) {
-                tcs.setException(Bridge.Exception.create(e));
+                tcs.setException(System.Exception.create(e));
             }
             return tcs.task;
         },
@@ -214,15 +214,15 @@
 
         throwIfNotConnected: function() {
             if (this.disposed) {
-                throw new Bridge.InvalidOperationException("Socket is disposed.");
+                throw new System.InvalidOperationException("Socket is disposed.");
             }
             if (this.socket.readyState !== 1) {
-                throw new Bridge.InvalidOperationException("Socket is not connected.");
+                throw new System.InvalidOperationException("Socket is not connected.");
             }
         }
     });
 
-    Bridge.define("Bridge.Net.WebSockets.ClientWebSocketOptions", {
+    Bridge.define("System.Net.WebSockets.ClientWebSocketOptions", {
         constructor: function() {
             this.isReadOnly = false;
             this.requestedSubProtocols = [];
@@ -230,23 +230,23 @@
 
         setToReadOnly: function() {
             if (this.isReadOnly) {
-                throw new Bridge.InvalidOperationException("Options are already readonly.");
+                throw new System.InvalidOperationException("Options are already readonly.");
             }
             this.isReadOnly = true;
         },
 
         addSubProtocol: function(subProtocol) {
             if (this.isReadOnly) {
-                throw new Bridge.InvalidOperationException("Socket already started.");
+                throw new System.InvalidOperationException("Socket already started.");
             }
             if (this.requestedSubProtocols.indexOf(subProtocol) > -1) {
-                throw new Bridge.ArgumentException("Socket cannot have duplicate sub-protocols.", "subProtocol");
+                throw new System.ArgumentException("Socket cannot have duplicate sub-protocols.", "subProtocol");
             }
             this.requestedSubProtocols.push(subProtocol);
         }
     });
 
-    Bridge.define("Bridge.Net.WebSockets.WebSocketReceiveResult", {
+    Bridge.define("System.Net.WebSockets.WebSocketReceiveResult", {
         constructor: function(count, messageType, endOfMessage, closeStatus, closeStatusDescription) {
             this.count = count;
             this.messageType = messageType;

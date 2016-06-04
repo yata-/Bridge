@@ -6,7 +6,6 @@ namespace System.Net.WebSockets
 	/// An instance of this class represents the result of performing a single ReceiveAsync operation on a WebSocket.
 	/// </summary>
 	[External]
-	[Namespace("Bridge.Net.WebSockets")]
 	public class WebSocketReceiveResult
 	{
 		public WebSocketReceiveResult(int count, WebSocketMessageType messageType, bool endOfMessage)

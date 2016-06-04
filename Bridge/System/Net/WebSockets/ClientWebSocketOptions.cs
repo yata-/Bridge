@@ -6,7 +6,6 @@ namespace System.Net.WebSockets
 	/// Options to use with a <see cref="ClientWebSocket"/> object.
 	/// </summary>
 	[External]
-	[Namespace("Bridge.Net.WebSockets")]
 	public class ClientWebSocketOptions
 	{
 		/// <summary>
