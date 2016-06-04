@@ -1227,6 +1227,8 @@
                 QUnit.test("#1411 - TestTemplateCtorGizmo", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1411.testTemplateCtorGizmo);
                 QUnit.test("#1428 - TestEqOperatorWithNull", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1428.testEqOperatorWithNull);
                 QUnit.test("#1429 - TestEqOperatorWithNull", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1429.testEqOperatorWithNull);
+                QUnit.test("#1438 - TestJSONParse", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1438.testJSONParse);
+                QUnit.test("#1438 - TestJSONParseAsArray", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1438.testJSONParseAsArray);
                 QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge381.testUseCase);
                 QUnit.test("#447 - CheckInlineExpression", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineExpression);
                 QUnit.test("#447 - CheckInlineCalls", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineCalls);
@@ -4043,6 +4045,20 @@
             testEqOperatorWithNull: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1429).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1429);
                 Bridge.ClientTest.BridgeIssues.Bridge1429.testEqOperatorWithNull();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1438', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1438)],
+        statics: {
+            testJSONParse: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1438).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1438, 4);
+                Bridge.ClientTest.BridgeIssues.Bridge1438.testJSONParse();
+            },
+            testJSONParseAsArray: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1438).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1438, 7);
+                Bridge.ClientTest.BridgeIssues.Bridge1438.testJSONParseAsArray();
             }
         }
     });
