@@ -13,57 +13,42 @@ namespace System.Net.WebSockets
 		/// <summary>
 		/// Get the WebSocket state of the <see cref="ClientWebSocket"/> instance.
 		/// </summary>
-		public WebSocketState State
+		public extern WebSocketState State
 		{
-			get
-			{
-				return WebSocketState.None;
-			}
+            get;
 		}
 
 		/// <summary>
 		/// Gets the WebSocket options for the ClientWebSocket instance.
 		/// </summary>
-		public ClientWebSocketOptions Options
+		public extern ClientWebSocketOptions Options
 		{
-			get
-			{
-				return null;
-			}
+            get;
 		}
 
 		/// <summary>
 		/// Gets the reason why the close handshake was initiated on ClientWebSocket instance.
 		/// </summary>
-		public WebSocketCloseStatus? CloseStatus
+		public extern WebSocketCloseStatus? CloseStatus
 		{
-			get
-			{
-				return null;
-			}
+            get;
 		}
 
 		/// <summary>
 		/// Returns the optional description that describes why the close handshake
 		/// has been initiated by the remote endpoint.
 		/// </summary>
-		public string CloseStatusDescription
+		public extern string CloseStatusDescription
 		{
-			get
-			{
-				return null;
-			}
+            get;
 		}
 
 		/// <summary>
 		/// Gets the supported WebSocket sub-protocol for the ClientWebSocket instance.
 		/// </summary>
-		public string SubProtocol
+		public extern string SubProtocol
 		{
-			get
-			{
-				return null;
-			}
+            get;
 		}
 
 		/// <summary>

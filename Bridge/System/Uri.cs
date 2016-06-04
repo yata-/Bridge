@@ -8,14 +8,11 @@ namespace System
 	[External]
 	public class Uri
 	{
-		public Uri(string uriString) { }
+		public extern Uri(string uriString);
 
-		public string AbsoluteUri
+		public extern string AbsoluteUri
 		{
-			get
-			{
-				return null;
-			}
+            get;
 		}
 	}
 }

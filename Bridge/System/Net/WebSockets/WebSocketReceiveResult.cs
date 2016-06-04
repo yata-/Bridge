@@ -8,68 +8,49 @@ namespace System.Net.WebSockets
 	[External]
 	public class WebSocketReceiveResult
 	{
-		public WebSocketReceiveResult(int count, WebSocketMessageType messageType, bool endOfMessage)
-		{
-		}
+		public extern WebSocketReceiveResult(int count, WebSocketMessageType messageType, bool endOfMessage);
 
-		public WebSocketReceiveResult(int count, WebSocketMessageType messageType, bool endOfMessage,
-			WebSocketCloseStatus? closeStatus, string closeStatusDescription)
-		{
-		}
+		public extern WebSocketReceiveResult(int count, WebSocketMessageType messageType, bool endOfMessage,
+			WebSocketCloseStatus? closeStatus, string closeStatusDescription);
 
 		/// <summary>
 		/// Indicates the number of bytes that the WebSocket received.
 		/// </summary>
-		public int Count
+		public extern int Count
 		{
-			get
-			{
-				return 0;
-			}
+            get;
 		}
 
 		/// <summary>
 		/// Indicates whether the message has been received completely.
 		/// </summary>
-		public bool EndOfMessage
+		public extern bool EndOfMessage
 		{
-			get
-			{
-				return true;
-			}
+            get;
 		}
 
 		/// <summary>
 		/// Indicates whether the current message is a UTF-8 message or a binary message.
 		/// </summary>
-		public WebSocketMessageType MessageType
+		public extern WebSocketMessageType MessageType
 		{
-			get
-			{
-				return WebSocketMessageType.Close;
-			}
+            get;
 		}
 
 		/// <summary>
 		/// Indicates the reason why the remote endpoint initiated the close handshake.
 		/// </summary>
-		public WebSocketCloseStatus? CloseStatus
+		public extern WebSocketCloseStatus? CloseStatus
 		{
-			get
-			{
-				return null;
-			}
+            get;
 		}
 
 		/// <summary>
 		/// Returns the optional description that describes why the close handshake has been initiated by the remote endpoint.
 		/// </summary>
-		public string CloseStatusDescription
+		public extern string CloseStatusDescription
 		{
-			get
-			{
-				return null;
-			}
+            get;
 		}
 	}
 }

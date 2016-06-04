@@ -8,46 +8,33 @@ namespace System
 	[External]
 	public class ArraySegment<T>
 	{
-		public ArraySegment(T[] array)
-		{
-		}
+		public extern ArraySegment(T[] array);
 
-		public ArraySegment(T[] array, int offset, int count)
-		{
-		}
+        public extern ArraySegment(T[] array, int offset, int count);
 
 		/// <summary>
 		/// Gets the original array containing the range of elements that the array segment delimits.
 		/// </summary>
-		public T[] Array
+		public extern T[] Array
 		{
-			get
-			{
-				return null;
-			}
+            get;
 		}
 
 		/// <summary>
 		/// Gets the number of elements in the range delimited by the array segment.
 		/// </summary>
-		public int Count
+		public extern int Count
 		{
-			get
-			{
-				return 0;
-			}
+            get;
 		}
 
 		/// <summary>
 		/// Gets the position of the first element in the range delimited by the array segment,
 		/// relative to the start of the original array.
 		/// </summary>
-		public int Offset
+		public extern int Offset
 		{
-			get
-			{
-				return 0;
-			}
+            get;
 		}
 	}
 }
