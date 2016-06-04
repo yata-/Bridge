@@ -6,7 +6,6 @@ namespace System
 	/// Delimits a section of a one-dimensional array.
 	/// </summary>
 	[External]
-	[Namespace("Bridge")]
 	public class ArraySegment<T>
 	{
 		public ArraySegment(T[] array)

@@ -1,7 +1,7 @@
 ﻿    // @source ArraySegment.js
 
-    Bridge.Class.generic('Bridge.ArraySegment$1', function(T) {
-        var $$name = Bridge.Class.genericName('Bridge.ArraySegment$1', T);
+    Bridge.Class.generic('System.ArraySegment$1', function(T) {
+        var $$name = Bridge.Class.genericName('System.ArraySegment$1', T);
 
         return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
             constructor: function(array, offset, count) {

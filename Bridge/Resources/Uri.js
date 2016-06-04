@@ -1,6 +1,6 @@
     // @source Uri.js
 
-    Bridge.define("Bridge.Uri", {
+    Bridge.define("System.Uri", {
         constructor: function(uriString) {
             this.absoluteUri = uriString;
         },
