@@ -94,7 +94,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants\Attributes.cs" />
     <Compile Include="Emitter\ArgumentsInfo.cs" />
     <Compile Include="Emitter\Blocks\AbstractEmitterBlock.Locals.cs" />
     <Compile Include="Emitter\Blocks\AbstractCommentBlock.cs" />
@@ -183,6 +182,7 @@
     <Compile Include="Translator\Plugins.cs" />
     <Compile Include="Translator\Translator.Config.cs" />
     <Compile Include="Translator\TranslatorProcessor.cs" />
+    <Compile Include="Utils\AssigmentExpressionHelper.cs" />
     <Compile Include="Utils\CombinedAstAndResolveResultVisitor.cs" />
     <Compile Include="Utils\DependencyFinderVisitor.cs" />
     <Compile Include="Utils\AssemblyConfigHelper.cs" />

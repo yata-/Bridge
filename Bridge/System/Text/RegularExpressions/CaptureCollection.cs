@@ -6,13 +6,10 @@ namespace System.Text.RegularExpressions
     /// <summary>
     /// Represents the set of captures made by a single capturing group.
     /// </summary>
-    [Namespace("Bridge.Text.RegularExpressions")]
     [External]
     public class CaptureCollection : ICollection
     {
-        internal CaptureCollection()
-        {
-        }
+        internal extern CaptureCollection();
 
         /// <summary>
         /// Gets an object that can be used to synchronize access to the collection.

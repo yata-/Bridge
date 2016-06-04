@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("fr", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("fr", true), {
     englishName: "French",
     nativeName: "français",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "Non numérique",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dim.","lun.","mar.","mer.","jeu.","ven.","sam."],
         abbreviatedMonthGenitiveNames: ["janv.","févr.","mars","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc.",""],
         abbreviatedMonthNames: ["janv.","févr.","mars","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc.",""],

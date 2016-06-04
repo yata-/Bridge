@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("ug-CN", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("ug-CN", true), {
     englishName: "Uyghur (China)",
     nativeName: "ئۇيغۇرچە (جۇڭخۇا خەلق جۇمھۇرىيىتى)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "سان ئەمەس",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["يە","دۈ","سە","چا","پە","جۈ","شە"],
         abbreviatedMonthGenitiveNames: ["1-ئاي","2-ئاي","3-ئاي","4-ئاي","5-ئاي","6-ئاي","7-ئاي","8-ئاي","9-ئاي","10-ئاي","11-ئاي","12-ئاي",""],
         abbreviatedMonthNames: ["1-ئاي","2-ئاي","3-ئاي","4-ئاي","5-ئاي","6-ئاي","7-ئاي","8-ئاي","9-ئاي","10-ئاي","11-ئاي","12-ئاي",""],

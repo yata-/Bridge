@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("el-GR", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("el-GR", true), {
     englishName: "Greek (Greece)",
     nativeName: "Ελληνικά (Ελλάδα)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "μη αριθμός",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Κυρ","Δευ","Τρι","Τετ","Πεμ","Παρ","Σαβ"],
         abbreviatedMonthGenitiveNames: ["Ιαν","Φεβ","Μαρ","Απρ","Μαϊ","Ιουν","Ιουλ","Αυγ","Σεπ","Οκτ","Νοε","Δεκ",""],
         abbreviatedMonthNames: ["Ιαν","Φεβ","Μαρ","Απρ","Μαϊ","Ιουν","Ιουλ","Αυγ","Σεπ","Οκτ","Νοε","Δεκ",""],

@@ -5,17 +5,10 @@ namespace System.Text.RegularExpressions
     /// <summary>
     /// Represents the results from a single capturing group.
     /// </summary>
-    [Namespace("Bridge.Text.RegularExpressions")]
     [External]
     public class Group : Capture
     {
-        internal Group(string text, int[] caps, int capcount)
-            : base(
-                  text, 
-                  capcount == 0 ? 0 : caps[(capcount - 1)*2],
-                  capcount == 0 ? 0 : caps[(capcount*2) - 1])
-        {
-        }
+        internal extern Group(string text, int[] caps, int capcount);
 
         /// <summary>
         /// Gets a value indicating whether the match is successful.

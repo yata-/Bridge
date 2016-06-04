@@ -8,7 +8,6 @@ namespace System.Collections.Generic
     /// Complement and Exclusive Complement.
     /// </summary>
     [External]
-    [Namespace("Bridge")]
     public interface ISet<T> : ICollection<T>
     {
         // Add ITEM to the set, return true if added, false if duplicate

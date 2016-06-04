@@ -2,13 +2,10 @@ using Bridge;
 
 namespace System.Globalization
 {
-    [Namespace("Bridge")]
     [External]
     public sealed class CultureInfo : IFormatProvider, ICloneable, IBridgeClass
     {
-        public CultureInfo(string name)
-        {
-        }
+        public extern CultureInfo(string name);
 
         [Name("getCultureInfo")]
         public static extern CultureInfo GetCultureInfo(string name);
@@ -18,46 +15,40 @@ namespace System.Globalization
 
         public static extern CultureInfo[] GetCultures();
 
-        public static CultureInfo CurrentCulture
+        public static extern CultureInfo CurrentCulture
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public DateTimeFormatInfo DateTimeFormat
+        public extern DateTimeFormatInfo DateTimeFormat
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public static CultureInfo InvariantCulture
+        public static extern CultureInfo InvariantCulture
         {
-            get
-            {
-                return null;
-            }
+            get;
         }
 
         [FieldProperty]
-        public string Name
+        public extern string Name
         {
-            get
-            {
-                return null;
-            }
+            get;
         }
 
         [FieldProperty]
-        public string EnglishName
+        public extern string EnglishName
         {
             get;
             set;
         }
 
         [FieldProperty]
-        public string NativeName
+        public extern string NativeName
         {
             get;
             set;

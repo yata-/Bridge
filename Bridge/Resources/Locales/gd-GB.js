@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("gd-GB", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("gd-GB", true), {
     englishName: "Scottish Gaelic (United Kingdom)",
     nativeName: "Gàidhlig (An Rìoghachd Aonaichte)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["DiD","DiL","DiM","DiC","Dia","Dih","DiS"],
         abbreviatedMonthGenitiveNames: ["Faoi","Gear","Màrt","Gibl","Cèit","Ògmh","Iuch","Lùn","Sult","Dàmh","Samh","Dùbh",""],
         abbreviatedMonthNames: ["Faoi","Gear","Màrt","Gibl","Cèit","Ògmh","Iuch","Lùn","Sult","Dàmh","Samh","Dùbh",""],

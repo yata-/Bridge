@@ -1,9 +1,11 @@
 ﻿// @source Text/RegularExpressions/RegexRunner.js
 
-Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
-    statics: { },
+Bridge.define("System.Text.RegularExpressions.RegexRunner", {
+    statics: {},
 
     _runregex: null,
+    _netEngine: null,
+
     _runtext: "", // text to search
     _runtextpos: 0, // current position in text
 
@@ -13,19 +15,36 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
     _quick: false, // true value means IsMatch method call
     _prevlen: 0,
 
-    constructor: function () {
+    constructor: function (regex) {
+        if (regex == null) {
+            throw new System.ArgumentNullException("regex");
+        }
+
+        this._runregex = regex;
+
+        var options = regex.getOptions();
+        var optionsEnum = System.Text.RegularExpressions.RegexOptions;
+
+        var isCaseInsensitive = (options & optionsEnum.IgnoreCase) === optionsEnum.IgnoreCase;
+        var isMultiline = (options & optionsEnum.Multiline) === optionsEnum.Multiline;
+        var isSingleline = (options & optionsEnum.Singleline) === optionsEnum.Singleline;
+        var isIgnoreWhitespace = (options & optionsEnum.IgnorePatternWhitespace) === optionsEnum.IgnorePatternWhitespace;
+
+        var timeoutMs = regex._matchTimeout.getTotalMilliseconds();
+
+        this._netEngine = new System.Text.RegularExpressions.RegexNetEngine(regex._pattern, isCaseInsensitive, isMultiline, isSingleline, isIgnoreWhitespace, timeoutMs);
+
     },
 
-    run: function (regex, quick, prevlen, input, beginning, length, startat) {
+    run: function (quick, prevlen, input, beginning, length, startat) {
         if (startat < 0 || startat > input.Length) {
-            throw new Bridge.ArgumentOutOfRangeException("start", "Start index cannot be less than 0 or greater than input length.");
+            throw new System.ArgumentOutOfRangeException("start", "Start index cannot be less than 0 or greater than input length.");
         }
 
         if (length < 0 || length > input.Length) {
             throw new ArgumentOutOfRangeException("length", "Length cannot be less than 0 or exceed input length.");
         }
 
-        this._runregex = regex;
         this._runtext = input;
         this._runtextbeg = beginning;
         this._runtextend = beginning + length;
@@ -47,24 +66,22 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
 
         if (this._prevlen === 0) {
             if (this._runtextstart === stoppos) {
-                return Bridge.Text.RegularExpressions.Match.getEmpty();
+                return System.Text.RegularExpressions.Match.getEmpty();
             }
 
             this._runtextstart += bump;
         }
 
-        var options = regex.getOptions();
-        var optionsEnum = Bridge.Text.RegularExpressions.RegexOptions;
-        var isMultiline = (options & optionsEnum.Multiline) === optionsEnum.Multiline;
-        var isCaseInsensitive = (options & optionsEnum.IgnoreCase) === optionsEnum.IgnoreCase;
-
         // Execute Regex:
-        var timeoutMs = regex._matchTimeout.getTotalMilliseconds();
-        var netEngine = new Bridge.Text.RegularExpressions.RegexNetEngine(regex._pattern, isMultiline, isCaseInsensitive, timeoutMs);
-        var jsMatch = netEngine.match(this._runtext, this._runtextstart);
+        var jsMatch = this._netEngine.match(this._runtext, this._runtextstart, this._prevlen);
 
         // Convert the results:
         var result = this._convertNetEngineResults(jsMatch);
+        return result;
+    },
+
+    parsePattern: function () {
+        var result = this._netEngine.parsePattern();
         return result;
     },
 
@@ -76,24 +93,35 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexRunner", {
         }
 
         if (!jsMatch.success) {
-            return Bridge.Text.RegularExpressions.Match.getEmpty();
+            return System.Text.RegularExpressions.Match.getEmpty();
         }
 
-        var match = new Bridge.Text.RegularExpressions.Match(this._runregex, jsMatch.groups.length, this._runtext, 0, this._runtext.length, this._runtextstart);
+        var patternInfo = this.parsePattern();
+        var match;
 
-        for (var i = 0; i < jsMatch.groups.length; i++) {
-            var jsGroup = jsMatch.groups[i];
+        if (patternInfo.sparseSettings.isSparse) {
+            match = new System.Text.RegularExpressions.MatchSparse(this._runregex, patternInfo.sparseSettings.sparseSlotNumberMap, jsMatch.groups.length, this._runtext, 0, this._runtext.length, this._runtextstart);
+        } else {
+            match = new System.Text.RegularExpressions.Match(this._runregex, jsMatch.groups.length, this._runtext, 0, this._runtext.length, this._runtextstart);
+        }
 
-            for (var j = 0; j < jsGroup.captures.length; j++) {
-                var jsCapture = jsGroup.captures[j];
+        var jsGroup;
+        var jsCapture;
+        var grOrder;
+        var i;
+        var j;
 
-                // Paste group index/length according to group ordering:
-                var grOrder = 0;
+        for (i = 0; i < jsMatch.groups.length; i++) {
+            jsGroup = jsMatch.groups[i];
 
-                if (jsGroup.descriptor != null) {
-                    grOrder = this._runregex.groupNumberFromName(jsGroup.descriptor.name);
-                }
+            // Paste group index/length according to group ordering:
+            grOrder = 0;
+            if (jsGroup.descriptor != null) {
+                grOrder = this._runregex.groupNumberFromName(jsGroup.descriptor.name);
+            }
 
+            for (j = 0; j < jsGroup.captures.length; j++) {
+                jsCapture = jsGroup.captures[j];
                 match._addMatch(grOrder, jsCapture.capIndex, jsCapture.capLength);
             }
         }

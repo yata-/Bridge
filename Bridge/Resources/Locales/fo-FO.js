@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("fo-FO", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("fo-FO", true), {
     englishName: "Faroese (Faroe Islands)",
     nativeName: "føroyskt (Føroyar)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["sun","mán","týs","mik","hós","frí","leyg"],
         abbreviatedMonthGenitiveNames: ["jan","feb","mar","apr","mai","jun","jul","aug","sep","okt","nov","des",""],
         abbreviatedMonthNames: ["jan","feb","mar","apr","mai","jun","jul","aug","sep","okt","nov","des",""],

@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("ca-ES", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("ca-ES", true), {
     englishName: "Catalan (Catalan)",
     nativeName: "Català (Català)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dg.","dl.","dt.","dc.","dj.","dv.","ds."],
         abbreviatedMonthGenitiveNames: ["de gen.","de febr.","de març","d'abr.","de maig","de juny","de jul.","d'ag.","de set.","d'oct.","de nov.","de des.",""],
         abbreviatedMonthNames: ["gen.","febr.","març","abr.","maig","juny","jul.","ag.","set.","oct.","nov.","des.",""],

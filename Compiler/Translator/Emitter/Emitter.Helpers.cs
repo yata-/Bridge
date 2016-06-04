@@ -1,10 +1,13 @@
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using Mono.Cecil;
 using Newtonsoft.Json;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,7 +63,7 @@ namespace Bridge.Translator
 
         public static bool IsReservedStaticName(string name)
         {
-            return Emitter.reservedStaticNames.Any(n => String.Equals(name, n, StringComparison.InvariantCultureIgnoreCase));
+            return JS.Reserved.StaticNames.Any(n => String.Equals(name, n, StringComparison.InvariantCultureIgnoreCase));
         }
 
         public virtual string ToJavaScript(object value)
@@ -181,22 +184,22 @@ namespace Bridge.Translator
                 this.Output = new StringBuilder();
                 var mrr = new MemberResolveResult(null, member);
                 var argsInfo = new ArgumentsInfo(this, node, mrr);
-                argsInfo.ThisArgument = "$t";
+                argsInfo.ThisArgument = JS.Vars.T;
                 new InlineArgumentsBlock(this, argsInfo, info.Item3, method, mrr).EmitNullableReference();
                 string tpl = this.Output.ToString();
                 this.Output = savedBuilder;
 
-                if (member.Name == "Equals")
+                if (member.Name == CS.Methods.EQUALS)
                 {
-                    tpl = string.Format("Bridge.Nullable.equals({{this}}, {{{0}}}, {1})", method.Parameters.First().Name, tpl);    
+                    tpl = string.Format(JS.Types.SYSTEM_NULLABLE + "." + JS.Funcs.EQUALS + "({{this}}, {{{0}}}, {1})", method.Parameters.First().Name, tpl);    
                 }
-                else if (member.Name == "ToString")
+                else if (member.Name == CS.Methods.TOSTRING)
                 {
-                    tpl = string.Format("Bridge.Nullable.toString({{this}}, {0})", tpl);
+                    tpl = string.Format(JS.Types.SYSTEM_NULLABLE + "." + JS.Funcs.TOSTIRNG + "({{this}}, {0})", tpl);
                 }
-                else if (member.Name == "GetHashCode")
+                else if (member.Name == CS.Methods.GETHASHCODE)
                 {
-                    tpl = string.Format("Bridge.Nullable.getHashCode({{this}}, {0})", tpl);
+                    tpl = string.Format(JS.Types.SYSTEM_NULLABLE + "." + JS.Funcs.GETHASHCODE + "({{this}}, {0})", tpl);
                 }
 
                 info = new Tuple<bool, bool, string>(info.Item1, info.Item2, tpl);
@@ -213,11 +216,11 @@ namespace Bridge.Translator
                 string name = null;
                 int count = 0;
                 IType typeArg = null;
-                if (target.MemberName == "ToString" || target.MemberName == "GetHashCode")
+                if (target.MemberName == CS.Methods.TOSTRING || target.MemberName == CS.Methods.GETHASHCODE)
                 {
                     name = target.MemberName;
                 }
-                else if (target.MemberName == "Equals")
+                else if (target.MemberName == CS.Methods.EQUALS)
                 {
                     if (target.Parent is InvocationExpression)
                     {
@@ -329,7 +332,7 @@ namespace Bridge.Translator
                 isStatic = method.IsStatic;
                 if (method.IsConstructor)
                 {
-                    name = "constructor";
+                    name = JS.Funcs.CONSTRUCTOR;
                 }
             }
             else if (member is FieldDefinition)
@@ -442,7 +445,7 @@ namespace Bridge.Translator
             string name = member.Name;
             if (member is IMethod && ((IMethod)member).IsConstructor)
             {
-                name = "constructor";
+                name = JS.Funcs.CONSTRUCTOR;
             }
 
             if (attr != null)

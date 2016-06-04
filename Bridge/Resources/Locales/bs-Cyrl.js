@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("bs-Cyrl", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("bs-Cyrl", true), {
     englishName: "Bosnian (Cyrillic)",
     nativeName: "босански",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["нед","пон","уто","сре","чет","пет","суб"],
         abbreviatedMonthGenitiveNames: ["јан","феб","мар","апр","мај","јун","јул","авг","сеп","окт","нов","дец",""],
         abbreviatedMonthNames: ["јан","феб","мар","апр","мај","јун","јул","авг","сеп","окт","нов","дец",""],

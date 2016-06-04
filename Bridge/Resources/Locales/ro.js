@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("ro", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("ro", true), {
     englishName: "Romanian",
     nativeName: "română",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN (nu este un număr)",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["D","L","Ma","Mi","J","V","S"],
         abbreviatedMonthGenitiveNames: ["ian.","feb.","mar.","apr.","mai.","iun.","iul.","aug.","sep.","oct.","nov.","dec.",""],
         abbreviatedMonthNames: ["ian.","feb.","mar.","apr.","mai.","iun.","iul.","aug.","sep.","oct.","nov.","dec.",""],

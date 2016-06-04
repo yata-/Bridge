@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("lt-LT", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("lt-LT", true), {
     englishName: "Lithuanian (Lithuania)",
     nativeName: "lietuvių (Lietuva)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Sk","Pr","An","Tr","Kt","Pn","Št"],
         abbreviatedMonthGenitiveNames: ["Sau","Vas","Kov","Bal","Geg","Bir","Lie","Rgp","Rgs","Spl","Lap","Grd",""],
         abbreviatedMonthNames: ["Sau","Vas","Kov","Bal","Geg","Bir","Lie","Rgp","Rgs","Spl","Lap","Grd",""],

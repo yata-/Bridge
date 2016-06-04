@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("eu", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("eu", true), {
     englishName: "Basque",
     nativeName: "euskara",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "EdZ",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["ig.","al.","as.","az.","og.","or.","lr."],
         abbreviatedMonthGenitiveNames: ["urt.","ots.","mar.","api.","mai.","eka.","uzt.","abu.","ira.","urr.","aza.","abe.",""],
         abbreviatedMonthNames: ["urt.","ots.","mar.","api.","mai.","eka.","uzt.","abu.","ira.","urr.","aza.","abe.",""],

@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("wo", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("wo", true), {
     englishName: "Wolof",
     nativeName: "Wolof",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "Non Numérique",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Dib.","Alt.","Tal.","Àll.","Alx.","Àjj.","Gaa."],
         abbreviatedMonthGenitiveNames: ["Sam.","Few.","Maa","Awr.","Me","Suwe","Sul.","Ut","Sept.","Okt.","Noow.","Des.",""],
         abbreviatedMonthNames: ["Sam.","Few.","Maa","Awr.","Me","Suw","Sul.","Ut","Sept.","Okt.","Now.","Des.",""],

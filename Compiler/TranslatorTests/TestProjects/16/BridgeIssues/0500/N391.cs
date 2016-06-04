@@ -3,7 +3,7 @@
     // [#391]
     internal class Class391
     {
-        public static void Main()
+        public static void Main1()
         {
             var TestArray1 = new[] { "TestA", "TestB", "TestC" };
             var TestArray2 = new[] { "TestA", "TestB", "TestC" };

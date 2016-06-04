@@ -12,7 +12,7 @@
             if (this.$multipleCtors && arguments.length > 0 && typeof value == "string") {
                 value = value === "constructor" ? "$constructor" : value;
 
-                if ((value === "$constructor" || Bridge.String.startsWith(value, "constructor$")) && Bridge.isFunction(this[value])) {
+                if ((value === "$constructor" || System.String.startsWith(value, "constructor$")) && Bridge.isFunction(this[value])) {
                     this[value].apply(this, Array.prototype.slice.call(arguments, 1));
 
                     return;
@@ -131,6 +131,7 @@
 
             var extend = prop.$inherits || prop.inherits,
                 statics = prop.$statics || prop.statics,
+                isEntryPoint = prop.$entryPoint,
                 base,
                 cacheName = prop.$cacheName,
                 prototype,
@@ -146,6 +147,10 @@
                 delete prop.$inherits;
             } else {
                 delete prop.inherits;
+            }
+
+            if (isEntryPoint) {
+                delete prop.$entryPoint;
             }
 
             if (Bridge.isFunction(statics)) {
@@ -252,7 +257,7 @@
                 isCtor = name === "constructor";
                 ctorName = isCtor ? "$constructor" : name;
 
-                if (Bridge.isFunction(v) && (isCtor || Bridge.String.startsWith(name, "constructor$"))) {
+                if (Bridge.isFunction(v) && (isCtor || System.String.startsWith(name, "constructor$"))) {
                     ctorCounter++;
                     isCtor = true;
                 }
@@ -296,6 +301,11 @@
             // Enforce the constructor to be what we expect
             Class.prototype.constructor = Class;
 
+            if (prop.$interface) {
+                Class.$interface = prop.$interface;
+                delete prop.$interface;
+            }
+
             if (statics) {
                 for (name in statics) {
                     Class[name] = statics[name];
@@ -332,7 +342,10 @@
                 }
             };
 
-            Bridge.Class.$queue.push(Class);
+            if (isEntryPoint) {
+                Bridge.Class.$queue.push(Class);
+            }
+            
             Class.$staticInit = fn;
 
             return Class;

@@ -14,7 +14,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual("Bridge.DivideByZeroException", typeof(DivideByZeroException).GetClassName(), "Name");
+            Assert.AreEqual("System.DivideByZeroException", typeof(DivideByZeroException).GetClassName(), "Name");
             object d = new DivideByZeroException();
             Assert.True(d is DivideByZeroException, "is DivideByZeroException");
             Assert.True(d is Exception, "is Exception");

@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("kok-IN", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("kok-IN", true), {
     englishName: "Konkani (India)",
     nativeName: "कोंकणी (भारत)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["आय.","सोम.","मंगळ.","बुध.","बिरे.","सुक्र.","शेन."],
         abbreviatedMonthGenitiveNames: ["जाने","फेब्रु","मार्च","एप्रिल","मे","जून","जुलै","ऑग.","सप्टें.","ऑक्टो.","नोवे.","डिसें",""],
         abbreviatedMonthNames: ["जाने","फेब्रु","मार्च","एप्रिल","मे","जून","जुलै","ऑग.","सप्टें.","ऑक्टो.","नोवे.","डिसें",""],

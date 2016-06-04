@@ -1,8 +1,8 @@
 ﻿// @source Text/RegularExpressions/RegexMatchCollection.js
 
-Bridge.define("Bridge.Text.RegularExpressions.MatchCollection", {
+Bridge.define("System.Text.RegularExpressions.MatchCollection", {
     inherits: function () {
-        return [Bridge.ICollection];
+        return [System.Collections.ICollection];
     },
 
     _regex: null,
@@ -16,7 +16,7 @@ Bridge.define("Bridge.Text.RegularExpressions.MatchCollection", {
 
     constructor: function (regex, input, beginning, length, startat) {
         if (startat < 0 || startat > input.Length) {
-            throw new Bridge.ArgumentOutOfRangeException("startat");
+            throw new System.ArgumentOutOfRangeException("startat");
         }
 
         this._regex = regex;
@@ -52,7 +52,7 @@ Bridge.define("Bridge.Text.RegularExpressions.MatchCollection", {
         var match = this._getMatch(i);
 
         if (match == null) {
-            throw new Bridge.ArgumentOutOfRangeException("i");
+            throw new System.ArgumentOutOfRangeException("i");
         }
 
         return match;
@@ -60,24 +60,27 @@ Bridge.define("Bridge.Text.RegularExpressions.MatchCollection", {
 
     copyTo: function (array, arrayIndex) {
         if (array == null) {
-            throw new Bridge.ArgumentNullException("array");
+            throw new System.ArgumentNullException("array");
         }
 
         var count = this.getCount();
 
         if (array.length < arrayIndex + count) {
-            throw new Bridge.IndexOutOfRangeException();
+            throw new System.IndexOutOfRangeException();
         }
 
-        for (var i = arrayIndex, j = 0; j < count; i++, j++) {
-            var match = this._getMatch(j);
+        var match;
+        var i;
+        var j;
 
-            Bridge.Array.set(array, match, [i]);
+        for (i = arrayIndex, j = 0; j < count; i++, j++) {
+            match = this._getMatch(j);
+            System.Array.set(array, match, [i]);
         }
     },
 
     getEnumerator: function () {
-        return new Bridge.Text.RegularExpressions.MatchEnumerator(this);
+        return new System.Text.RegularExpressions.MatchEnumerator(this);
     },
 
     _getMatch: function (i) {
@@ -96,8 +99,7 @@ Bridge.define("Bridge.Text.RegularExpressions.MatchCollection", {
         var match;
 
         do {
-            match = this._regex._runner.run(this._regex, false, this._prevLen, this._input, this._beginning, this._length, this._startat);
-
+            match = this._regex._runner.run(false, this._prevLen, this._input, this._beginning, this._length, this._startat);
             if (!match.getSuccess()) {
                 this._done = true;
                 return null;
@@ -114,9 +116,9 @@ Bridge.define("Bridge.Text.RegularExpressions.MatchCollection", {
     }
 });
 
-Bridge.define("Bridge.Text.RegularExpressions.MatchEnumerator", {
+Bridge.define("System.Text.RegularExpressions.MatchEnumerator", {
     inherits: function () {
-        return [Bridge.IEnumerator];
+        return [System.Collections.IEnumerator];
     },
 
     _matchcoll: null,
@@ -132,22 +134,22 @@ Bridge.define("Bridge.Text.RegularExpressions.MatchEnumerator", {
         if (this._done) {
             return false;
         }
- 
+
         this._match = this._matchcoll._getMatch(this._curindex);
-        this._curindex ++;
- 
+        this._curindex++;
+
         if (this._match == null) {
             this._done = true;
 
             return false;
         }
- 
+
         return true;
     },
 
     getCurrent: function () {
         if (this._match == null) {
-            throw new Bridge.InvalidOperationException("Enumeration has either not started or has already finished.");
+            throw new System.InvalidOperationException("Enumeration has either not started or has already finished.");
         }
 
         return this._match;

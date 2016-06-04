@@ -1,11 +1,13 @@
 ﻿(function (globals) {
     "use strict";
 
-    Bridge.define('TestIssue958.IMessage');
+    Bridge.define('TestIssue958.IMessage', {
+        $interface: true
+    });
     
     Bridge.define('TestIssue958.Issue958', {
         statics: {
-            main: function () {
+            main1: function () {
                 var message = new TestIssue958.SetValue("Hi!");
                 TestIssue958.Issue958.processMessage(message);
             },
@@ -22,10 +24,10 @@
     
     Bridge.apply($_.TestIssue958.Issue958, {
         f1: function (action) {
-            Bridge.Console.log("Name: " + action.getName());
+            System.Console.log("Name: " + action.getName());
         },
         f2: function (action) {
-            Bridge.Console.log("Value: " + action.getValue());
+            System.Console.log("Value: " + action.getValue());
         }
     });
     

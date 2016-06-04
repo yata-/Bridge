@@ -18,17 +18,12 @@ namespace System.Linq
     [IgnoreGeneric]
     public class Grouping<TKey, TElement> : EnumerableInstance<TElement>, IGrouping<TKey, TElement>
     {
-        internal Grouping()
-        {
-        }
+        internal extern Grouping();
 
-        public TKey Key
+        public extern TKey Key
         {
             [Template("key()")]
-            get
-            {
-                return default(TKey);
-            }
+            get;
         }
     }
 }

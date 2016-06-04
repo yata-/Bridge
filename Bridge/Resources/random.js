@@ -1,9 +1,6 @@
 ﻿// @source random.js
 
-(function (globals) {
-    "use strict";
-
-    Bridge.define('Bridge.Random', {
+    Bridge.define('System.Random', {
         statics: {
             MBIG: 2147483647,
             MSEED: 161803398,
@@ -14,11 +11,11 @@
         seedArray: null,
         config: {
             init: function () {
-                this.seedArray = Bridge.Array.init(56, 0);
+                this.seedArray = System.Array.init(56, 0);
             }
         },
         constructor: function () {
-            Bridge.Random.prototype.constructor$1.call(this, Bridge.Long.clip32(Bridge.Long((new Date()).getTime()).mul(10000)));
+            System.Random.prototype.constructor$1.call(this, System.Int64.clip32(System.Int64((new Date()).getTime()).mul(10000)));
 
         },
         constructor$1: function (Seed) {
@@ -28,7 +25,7 @@
             //Initialize our Seed array.
             //This algorithm comes from Numerical Recipes in C (2nd Ed.)
             var subtraction = (Seed === -2147483648) ? 2147483647 : Math.abs(Seed);
-            mj = (Bridge.Random.MSEED - subtraction) | 0;
+            mj = (System.Random.MSEED - subtraction) | 0;
             this.seedArray[55] = mj;
             mk = 1;
             for (var i = 1; i < 55; i = (i + 1) | 0) { //Apparently the range [1..55] is special (Knuth) and so we're wasting the 0'th position.
@@ -36,7 +33,7 @@
                 this.seedArray[ii] = mk;
                 mk = (mj - mk) | 0;
                 if (mk < 0) {
-                    mk = (mk + Bridge.Random.MBIG) | 0;
+                    mk = (mk + System.Random.MBIG) | 0;
                 }
                 mj = this.seedArray[ii];
             }
@@ -44,7 +41,7 @@
                 for (var i1 = 1; i1 < 56; i1 = (i1 + 1) | 0) {
                     this.seedArray[i1] = (this.seedArray[i1] - this.seedArray[((1 + (((i1 + 30) | 0)) % 55) | 0)]) | 0;
                     if (this.seedArray[i1] < 0) {
-                        this.seedArray[i1] = (this.seedArray[i1] + Bridge.Random.MBIG) | 0;
+                        this.seedArray[i1] = (this.seedArray[i1] + System.Random.MBIG) | 0;
                     }
                 }
             }
@@ -61,7 +58,7 @@
             var retVal;
             var locINext = this.inext;
             var locINextp = this.inextp;
-
+    
             if (((locINext = (locINext + 1) | 0)) >= 56) {
                 locINext = 1;
             }
@@ -72,12 +69,12 @@
 
             retVal = (this.seedArray[locINext] - this.seedArray[locINextp]) | 0;
 
-            if (retVal === Bridge.Random.MBIG) {
+            if (retVal === System.Random.MBIG) {
                 retVal = (retVal - 1) | 0;
             }
 
             if (retVal < 0) {
-                retVal = (retVal + Bridge.Random.MBIG) | 0;
+                retVal = (retVal + System.Random.MBIG) | 0;
             }
 
             this.seedArray[locINext] = retVal;
@@ -92,20 +89,20 @@
         },
         next$2: function (minValue, maxValue) {
             if (minValue > maxValue) {
-                throw new Bridge.ArgumentOutOfRangeException("minValue", "'minValue' cannot be greater than maxValue.");
+                throw new System.ArgumentOutOfRangeException("minValue", "'minValue' cannot be greater than maxValue.");
             }
 
-            var range = Bridge.Long(maxValue).sub(Bridge.Long(minValue));
-            if (range.lte(Bridge.Long(2147483647))) {
-                return (((Bridge.Int.clip32(this.sample() * Bridge.Long.toNumber(range)) + minValue) | 0));
+            var range = System.Int64(maxValue).sub(System.Int64(minValue));
+            if (range.lte(System.Int64(2147483647))) {
+                return (((Bridge.Int.clip32(this.sample() * System.Int64.toNumber(range)) + minValue) | 0));
             }
-            else {
-                return Bridge.Long.clip32(Bridge.Int.clip64(this.getSampleForLargeRange() * Bridge.Long.toNumber(range)).add(Bridge.Long(minValue)));
+            else  {
+                return System.Int64.clip32(Bridge.Int.clip64(this.getSampleForLargeRange() * System.Int64.toNumber(range)).add(System.Int64(minValue)));
             }
         },
         next$1: function (maxValue) {
             if (maxValue < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("maxValue", "'maxValue' must be greater than zero.");
+                throw new System.ArgumentOutOfRangeException("maxValue", "'maxValue' must be greater than zero.");
             }
             return Bridge.Int.clip32(this.sample() * maxValue);
         },
@@ -131,13 +128,10 @@
         },
         nextBytes: function (buffer) {
             if (buffer == null) {
-                throw new Bridge.ArgumentNullException("buffer");
+                throw new System.ArgumentNullException("buffer");
             }
             for (var i = 0; i < buffer.length; i = (i + 1) | 0) {
                 buffer[i] = ((this.internalSample() % (256))) & 255;
             }
         }
     });
-
-    Bridge.init();
-})(this);

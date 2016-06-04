@@ -9,7 +9,7 @@
 
         ref: function(o, n) {
             if (Bridge.isArray(n)) {
-                n = Bridge.Array.toIndex(o, n);
+                n = System.Array.toIndex(o, n);
             }
 
             var proxy = {};
@@ -66,26 +66,26 @@
         },
 
         createInstance: function (type) {
-            if (type === Bridge.Decimal) {
-                return Bridge.Decimal.Zero;
+            if (type === System.Decimal) {
+                return System.Decimal.Zero;
             }
 
-            if (type === Bridge.Long) {
-                return Bridge.Long.Zero;
+            if (type === System.Int64) {
+                return System.Int64.Zero;
             }
 
-            if (type === Bridge.ULong) {
-                return Bridge.ULong.Zero;
+            if (type === System.UInt64) {
+                return System.UInt64.Zero;
             }
 
-            if (type === Bridge.Double ||
-                type === Bridge.Single ||
-                type === Bridge.Byte ||
-	            type === Bridge.SByte ||
-	            type === Bridge.Int16 ||
-	            type === Bridge.UInt16 ||
-	            type === Bridge.Int32 ||
-	            type === Bridge.UInt32 ||
+            if (type === System.Double ||
+                type === System.Single ||
+                type === System.Byte ||
+	            type === System.SByte ||
+	            type === System.Int16 ||
+	            type === System.UInt16 ||
+	            type === System.Int32 ||
+	            type === System.UInt32 ||
                 type === Bridge.Int) {
                 return 0;
             }
@@ -107,10 +107,10 @@
 
         clone: function (obj) {
             if (Bridge.isArray(obj)) {
-                return Bridge.Array.clone(obj);
+                return System.Array.clone(obj);
             }
 
-            if (Bridge.is(obj, Bridge.ICloneable)) {
+            if (Bridge.is(obj, System.ICloneable)) {
                 return obj.clone();
             }
 
@@ -126,7 +126,7 @@
                 name = keys[i];
 
                 if (toIf !== true || to[name] == undefined) {
-                    if (Bridge.is(from[name], Bridge.ICloneable)) {
+                    if (Bridge.is(from[name], System.ICloneable)) {
                         to[name] = Bridge.clone(from[name]);
                     } else {
                         to[name] = from[name];
@@ -225,7 +225,7 @@
                     return 0;
                 }
 
-                throw new Bridge.InvalidOperationException("HashCode cannot be calculated for empty value");
+                throw new System.InvalidOperationException("HashCode cannot be calculated for empty value");
             }
 
             if (value.getHashCode && Bridge.isFunction(value.getHashCode) && !value.__insideHashCode && value.getHashCode.length === 0) {
@@ -301,6 +301,51 @@
             return (results && results.length > 1) ? results[1] : "Object";
         },
 
+        getBaseType: function (obj) {
+            if (obj == null) {
+                throw new System.NullReferenceException();
+            }
+
+            if (obj.$interface) {
+                return null;
+            }
+
+            if (obj.$$inherits) {
+                return obj.$$inherits[0].$interface ? Object : obj.$$inherits[0];
+            } else {
+                return obj.$$name ? Object : null;
+            }
+        },
+
+        isAssignableFrom: function (baseType, type) {
+            if (baseType === null) {
+                throw new System.NullReferenceException();
+            }
+
+            if (type === null) {
+                return false;
+            }        
+
+            if (baseType == type || baseType == Object) {
+                return true;
+            }
+
+            var inheritors = type.$$inherits,
+                i,
+                r;
+
+            if (inheritors) {
+                for (i = 0; i < inheritors.length; i++) {
+                    r = Bridge.isAssignableFrom(baseType, inheritors[i]);
+                    if (r) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        },
+
         is: function (obj, type, ignoreFn, allowNull) {
 	        if (typeof type === "string") {
                 type = Bridge.unroll(type);
@@ -325,15 +370,15 @@
             }
 
             if (Bridge.isArray(obj) || obj instanceof Bridge.ArrayEnumerator) {
-                return Bridge.Array.is(obj, type);
+                return System.Array.is(obj, type);
             }
 
             if (Bridge.isString(obj)) {
-                return Bridge.String.is(obj, type);
+                return System.String.is(obj, type);
             }
 
             if (Bridge.isBoolean(obj)) {
-                return Bridge.Boolean.is(obj, type);
+                return System.Boolean.is(obj, type);
             }
 
             if (!type.$$inheritors) {
@@ -364,7 +409,7 @@
             var result = Bridge.as(obj, type, allowNull);
 
 	        if (result === null) {
-	            throw new Bridge.InvalidCastException("Unable to cast type " + (obj ? Bridge.getTypeName(obj) : "'null'") + " to type " + Bridge.getTypeName(type));
+	            throw new System.InvalidCastException("Unable to cast type " + (obj ? Bridge.getTypeName(obj) : "'null'") + " to type " + Bridge.getTypeName(type));
 	        }
 
 	        return result;
@@ -387,17 +432,23 @@
 	        return obj;
         },
 
-	    merge: function (to, from) {
-	        if (to instanceof Bridge.Decimal && Bridge.isNumber(from)) {
-	            return new Bridge.Decimal(from);
+	    merge: function (to, from, elemFactory) {
+	        // Maps instance of plain JS value or Object into Bridge object. 
+	        // Used for deserialization. Proper deserialization requires reflection that is currently not supported in Bridge. 
+	        // It currently is only capable to deserialize:
+	        // -instance of single class or primitive
+	        // -array of primitives 
+	        // -array of single class            
+	        if (to instanceof System.Decimal && Bridge.isNumber(from)) {
+	            return new System.Decimal(from);
 	        }
 
-	        if (to instanceof Bridge.Long && Bridge.isNumber(from)) {
-	            return new Bridge.Long(from);
+	        if (to instanceof System.Int64 && Bridge.isNumber(from)) {
+	            return new System.Int64(from);
 	        }
 
-	        if (to instanceof Bridge.ULong && Bridge.isNumber(from)) {
-	            return new Bridge.ULong(from);
+	        if (to instanceof System.UInt64 && Bridge.isNumber(from)) {
+	            return new System.UInt64(from);
 	        }
 
 	        if (to instanceof Boolean ||
@@ -405,16 +456,16 @@
                 to instanceof String ||
                 to instanceof Function ||
                 to instanceof Date ||
-                to instanceof Bridge.Double ||
-                to instanceof Bridge.Single ||
-                to instanceof Bridge.Byte ||
-	            to instanceof Bridge.SByte ||
-	            to instanceof Bridge.Int16 ||
-	            to instanceof Bridge.UInt16 ||
-	            to instanceof Bridge.Int32 ||
-	            to instanceof Bridge.UInt32 ||
+                to instanceof System.Double ||
+                to instanceof System.Single ||
+                to instanceof System.Byte ||
+	            to instanceof System.SByte ||
+	            to instanceof System.Int16 ||
+	            to instanceof System.UInt16 ||
+	            to instanceof System.Int32 ||
+	            to instanceof System.UInt32 ||
                 to instanceof Bridge.Int ||
-                to instanceof Bridge.Decimal) {
+                to instanceof System.Decimal) {
 	            return from;
 	        }
 
@@ -430,9 +481,9 @@
 	            for (i = 0; i < from.length; i++) {
 	                var item = from[i];
 
-                    if (!Bridge.isArray(item)) {
-                        item = [item];
-                    }
+	                if (!Bridge.isArray(item)) {
+	                    item = [typeof elemFactory === 'undefined' ? item : Bridge.merge(elemFactory(), item)];
+	                }
 
                     fn.apply(to, item);
 	            }
@@ -466,7 +517,7 @@
 
 	    getEnumerator: function (obj, suffix) {
 	        if (typeof obj === "string") {
-	            obj = Bridge.String.toCharArray(obj);
+	            obj = System.String.toCharArray(obj);
 	        }
 
 	        if (suffix && obj && obj["getEnumerator" + suffix]) {
@@ -482,7 +533,7 @@
 	            return new Bridge.ArrayEnumerator(obj);
 	        }
 
-	        throw new Bridge.InvalidOperationException("Cannot create enumerator");
+	        throw new System.InvalidOperationException("Cannot create enumerator");
 	    },
 
 	    getPropertyNames: function (obj, includeFunctions) {
@@ -582,8 +633,16 @@
             return o;
         },
 
-        referenceEquals: function(a, b) {
+        referenceEquals: function (a, b) {
             return Bridge.hasValue(a) ? a === b : !Bridge.hasValue(b);
+        },
+        
+        staticEquals: function (a, b) {
+            if (!Bridge.hasValue(a)) {
+                return !Bridge.hasValue(b);
+            }
+                
+            return Bridge.hasValue(b) ? Bridge.equals(a, b) : false;
         },
 
         equals: function (a, b) {
@@ -683,7 +742,7 @@
                     return 0;
                 }
 
-                throw new Bridge.NullReferenceException();
+                throw new System.NullReferenceException();
             } else if (Bridge.isNumber(a) || Bridge.isString(a) || Bridge.isBoolean(a)) {
                 if (Bridge.isString(a) && !Bridge.hasValue(b)) {
                     return 1;
@@ -705,12 +764,12 @@
                 return 0;
             }
 
-            throw new Bridge.Exception("Cannot compare items");
+            throw new System.Exception("Cannot compare items");
         },
 
         equalsT: function (a, b) {
             if (!Bridge.isDefined(a, true)) {
-                throw new Bridge.NullReferenceException();
+                throw new System.NullReferenceException();
             } else if (Bridge.isNumber(a) || Bridge.isString(a) || Bridge.isBoolean(a)) {
                 return a === b;
             } else if (Bridge.isDate(a)) {
@@ -732,14 +791,14 @@
 
         getType: function (instance) {
             if (!Bridge.isDefined(instance, true)) {
-                throw new Bridge.NullReferenceException("instance is null");
+                throw new System.NullReferenceException("instance is null");
             }
 
             if (typeof(instance) === "number") {
                 if (Math.floor(instance, 0) === instance) {
-                    return Bridge.Int32;
+                    return System.Int32;
                 } else {
-                    return Bridge.Double;
+                    return System.Double;
                 }
             }
 
@@ -767,6 +826,18 @@
         },
 
         fn: {
+            equals: function(fn) {
+                if (this === fn) {
+                    return true;
+                }
+
+                if (fn == null || (this.constructor !== fn.constructor)) {
+                    return false;
+                }
+
+                return this.equals === fn.equals && this.$method === fn.$method && this.$scope === fn.$scope;
+            },
+
             call: function (obj, fnName) {
                 var args = Array.prototype.slice.call(arguments, 2);
 
@@ -844,6 +915,7 @@
 
                 fn.$method = method;
                 fn.$scope = obj;
+                fn.equals = Bridge.fn.equals;
 
                 return fn;
             },
@@ -863,6 +935,7 @@
 
                 fn.$method = method;
                 fn.$scope = obj;
+                fn.equals = Bridge.fn.equals;
 
                 return fn;
             },
@@ -900,6 +973,10 @@
                     list2 = fn2.$invocationList ? fn2.$invocationList : [fn2];
 
                 return Bridge.fn.$build(list1.concat(list2));
+            },
+
+            getInvocationList: function() {
+                
             },
 
             remove: function (fn1, fn2) {
@@ -942,7 +1019,7 @@
             }
 
             if (isNaN(ms) || ms < -1 || ms > 2147483647) {
-                throw new Bridge.ArgumentOutOfRangeException("timeout", "Number must be either non-negative and less than or equal to Int32.MaxValue or -1");
+                throw new System.ArgumentOutOfRangeException("timeout", "Number must be either non-negative and less than or equal to Int32.MaxValue or -1");
             }
 
             if (ms == -1) {
@@ -961,3 +1038,10 @@
 
     globals.Bridge = core;
     globals.Bridge.caller = [];
+    
+    globals.System = {};
+    globals.System.Diagnostics = {};
+    globals.System.Diagnostics.Contracts = {};
+    globals.System.Threading = {};
+
+

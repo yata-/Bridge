@@ -346,7 +346,7 @@ namespace Bridge.ClientTest.BasicCSharp
             Assert.AreEqual("QWE", ClassA.StatitStringNotInitialized, "ClassA.StatitStringNotInitialized QWE");
             Assert.AreEqual(234, a.DoubleA, "DoubleA 234");
 
-            Assert.Throws(TestSet1FailureHelper.StaticMethod2Failure, "Unable to cast type String to type Bridge.Int32", "Cast exception should occur");
+            Assert.Throws<InvalidCastException>(TestSet1FailureHelper.StaticMethod2Failure, "Cast exception should occur");
         }
 
         // Check default parameters, method parameters, default values

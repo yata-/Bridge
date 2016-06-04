@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("co-FR", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("co-FR", true), {
     englishName: "Corsican (France)",
     nativeName: "Corsu (Francia)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "Micca numericu",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dum.","lun.","mar.","mer.","ghj.","ven.","sab."],
         abbreviatedMonthGenitiveNames: ["ghje","ferr","marz","apri","magh","ghju","lugl","aost","sett","otto","nuve","dice",""],
         abbreviatedMonthNames: ["ghje","ferr","marz","apri","magh","ghju","lugl","aost","sett","otto","nuve","dice",""],

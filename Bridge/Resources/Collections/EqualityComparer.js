@@ -1,8 +1,8 @@
 ﻿// @source /Collections/Comparer.js
 
-Bridge.define('Bridge.EqualityComparer$1', function (T) {
+Bridge.define('System.Collections.Generic.EqualityComparer$1', function (T) {
     return {
-        inherits: [Bridge.IEqualityComparer$1(T)],
+        inherits: [System.Collections.Generic.IEqualityComparer$1(T)],
 
         equals2: function (x, y) {
             if (!Bridge.isDefined(x, true)) {
@@ -32,4 +32,4 @@ Bridge.define('Bridge.EqualityComparer$1', function (T) {
     };
 });
 
-Bridge.EqualityComparer$1.$default = new Bridge.EqualityComparer$1(Object)();
+System.Collections.Generic.EqualityComparer$1.$default = new System.Collections.Generic.EqualityComparer$1(Object)();

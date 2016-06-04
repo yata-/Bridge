@@ -7,7 +7,9 @@
         }
     });
     
-    Bridge.define('TestIssue960.IHaveNamed');
+    Bridge.define('TestIssue960.IHaveNamed', {
+        $interface: true
+    });
     
     Bridge.define('TestIssue960.Issue960', {
         statics: {
@@ -19,9 +21,10 @@
             go: function () {
                 var x = new TestIssue960.Named("Test");
                 // Should not contain generic type parameter
-                Bridge.Console.log(new TestIssue960.Example().getName(x));
+                System.Console.log(new TestIssue960.Example().getName(x));
             }
-        }
+        },
+        $entryPoint: true
     });
     
     Bridge.define('TestIssue960.Named', {

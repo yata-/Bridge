@@ -20,7 +20,7 @@ namespace Bridge.ClientTest.Text
         public void TypePropertiesAreCorrect()
         {
             var sb = new StringBuilder();
-            Assert.AreEqual("Bridge.Text.StringBuilder", typeof(StringBuilder).GetClassName());
+            Assert.AreEqual("System.Text.StringBuilder", typeof(StringBuilder).GetClassName());
             Assert.True(sb is StringBuilder);
         }
 

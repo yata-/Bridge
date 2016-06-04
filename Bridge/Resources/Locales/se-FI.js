@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("se-FI", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("se-FI", true), {
     englishName: "Sami, Northern (Finland)",
     nativeName: "davvisámegiella (Suopma)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["sotn","vuos","maŋ","gask","duor","bear","láv"],
         abbreviatedMonthGenitiveNames: ["ođđj","guov","njuk","cuoŋ","mies","geas","suoi","borg","čakč","golg","skáb","juov",""],
         abbreviatedMonthNames: ["ođđj","guov","njuk","cuoŋ","mies","geas","suoi","borg","čakč","golg","skáb","juov",""],

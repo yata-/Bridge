@@ -20,7 +20,8 @@ namespace System.Threading
     /// The start time for a Timer is passed in the dueTime parameter of the Timer constructors, and the period is passed in the period parameter.
     /// For an example that demonstrates creating and using a TimerCallback delegate, see System.Threading.Timer.
     /// </remarks>
-    public delegate void TimerCallback(Object state);
+    [External]
+    public delegate void TimerCallback(object state);
 
     /// <summary>
     /// Provides a mechanism for executing a method at specified intervals. This class cannot be inherited.
@@ -48,7 +49,6 @@ namespace System.Threading
     /// </example>
     /// </remarks>
     [External]
-    [Namespace("Bridge.Threading")]
     public sealed class Timer : IDisposable
     {
         /// <summary>
@@ -60,7 +60,7 @@ namespace System.Threading
         /// <param name="state">An object containing information to be used by the callback method, or null.</param>
         /// <param name="dueTime">The amount of time to delay before callback is invoked, in milliseconds. Specify Timeout.Infinite to prevent the timer from starting. Specify zero (0) to start the timer immediately.</param>
         /// <param name="period">The time interval between invocations of callback, in milliseconds. Specify Timeout.Infinite to disable periodic signaling.</param>
-        [Template("new Bridge.Threading.Timer(\"constructor$1\", {callback}, {state}, {dueTime}, {period})")]
+        [Template("new System.Threading.Timer(\"constructor$1\", {callback}, {state}, {dueTime}, {period})")]
         public extern Timer(TimerCallback callback, Object state, int dueTime, int period);
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace System.Threading
         /// <param name="state">An object containing information to be used by the callback method, or null.</param>
         /// <param name="dueTime">The amount of time to delay before callback is invoked, in milliseconds. Specify Timeout.Infinite to prevent the timer from starting. Specify zero (0) to start the timer immediately.</param>
         /// <param name="period">The time interval between invocations of callback, in milliseconds. Specify Timeout.Infinite to disable periodic signaling.</param>
-        [Template("new Bridge.Threading.Timer(\"constructor$3\", {callback}, {state}, {dueTime}, {period})")]
+        [Template("new System.Threading.Timer(\"constructor$3\", {callback}, {state}, {dueTime}, {period})")]
         public extern Timer(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period);
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace System.Threading
         /// <param name="state">An object containing information to be used by the callback method, or null.</param>
         /// <param name="dueTime">The amount of time to delay before callback is invoked, in milliseconds. Specify Timeout.Infinite to prevent the timer from starting. Specify zero (0) to start the timer immediately.</param>
         /// <param name="period">The time interval between invocations of callback, in milliseconds. Specify Timeout.Infinite to disable periodic signaling.</param>
-        [Template("new Bridge.Threading.Timer(\"constructor$4\", {callback}, {state}, {dueTime}, {period})")]
+        [Template("new System.Threading.Timer(\"constructor$4\", {callback}, {state}, {dueTime}, {period})")]
         public extern Timer(TimerCallback callback, Object state, UInt32 dueTime, UInt32 period);
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace System.Threading
         /// <param name="state">An object containing information to be used by the callback method, or null.</param>
         /// <param name="dueTime">The amount of time to delay before callback is invoked, in milliseconds. Specify Timeout.Infinite to prevent the timer from starting. Specify zero (0) to start the timer immediately.</param>
         /// <param name="period">The time interval between invocations of callback, in milliseconds. Specify Timeout.Infinite to disable periodic signaling.</param>
-        [Template("new Bridge.Threading.Timer(\"constructor$2\", {callback}, {state}, {dueTime}, {period})")]
+        [Template("new System.Threading.Timer(\"constructor$2\", {callback}, {state}, {dueTime}, {period})")]
         public extern Timer(TimerCallback callback, Object state, long dueTime, long period);
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace System.Threading
         /// This constructor specifies an infinite due time before the first callback and an infinite interval between callbacks, in order to prevent the first callback from occurring before the Timer object is assigned to the state object.
         /// </summary>
         /// <param name="callback">A TimerCallback delegate representing a method to be executed.</param>
-        [Template("new Bridge.Threading.Timer(\"constructor\", {callback}, {state}, {dueTime}, {period})")]
+        [Template("new System.Threading.Timer(\"constructor\", {callback}, {state}, {dueTime}, {period})")]
         public extern Timer(TimerCallback callback);
 
         /// <summary>

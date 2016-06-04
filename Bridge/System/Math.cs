@@ -46,13 +46,13 @@ namespace System
 
         public static extern double Max(params double[] values);
 
-        [Template("Bridge.Long.max({*values})")]
+        [Template("System.Int64.max({*values})")]
         public static extern long Max(params long[] values);
 
-        [Template("Bridge.ULong.max({*values})")]
+        [Template("System.UInt64.max({*values})")]
         public static extern ulong Max(params ulong[] values);
 
-        [Template("Bridge.Decimal.max({*values})")]
+        [Template("System.Decimal.max({*values})")]
         public static extern decimal Max(params decimal[] values);
 
         public static extern int Min(params int[] values);
@@ -61,13 +61,13 @@ namespace System
 
         public static extern double Min(params double[] values);
 
-        [Template("Bridge.Long.min({*values})")]
+        [Template("System.Int64.min({*values})")]
         public static extern long Min(params long[] values);
 
-        [Template("Bridge.ULong.min({*values})")]
+        [Template("System.UInt64.min({*values})")]
         public static extern ulong Min(params ulong[] values);
 
-        [Template("Bridge.Decimal.min({*values})")]
+        [Template("System.Decimal.min({*values})")]
         public static extern decimal Min(params decimal[] values);
 
         public static extern double Random();
@@ -87,7 +87,7 @@ namespace System
         [Template("{d}.floor()")]
         public static extern decimal Floor(decimal d);
 
-        [Template("Bridge.Decimal.round({x}, 6)")]
+        [Template("System.Decimal.round({x}, 6)")]
         public static extern decimal Round(decimal x);
 
         [Template("Bridge.Math.round({d}, 0, 6)")]
@@ -96,19 +96,19 @@ namespace System
         [Template("Math.round({d})")]
         public static extern double JsRound(double d);
 
-        [Template("Bridge.Decimal.toDecimalPlaces({d}, {digits}, 6)")]
+        [Template("System.Decimal.toDecimalPlaces({d}, {digits}, 6)")]
         public static extern decimal Round(decimal d, int digits);
 
         [Template("Bridge.Math.round({d}, {digits}, 6)")]
         public static extern double Round(double d, int digits);
 
-        [Template("Bridge.Decimal.round({d}, {method})")]
+        [Template("System.Decimal.round({d}, {method})")]
         public static extern decimal Round(decimal d, MidpointRounding method);
 
         [Template("Bridge.Math.round({d}, 0, {method})")]
         public static extern double Round(double d, MidpointRounding method);
 
-        [Template("Bridge.Decimal.toDecimalPlaces({d}, {digits}, {method})")]
+        [Template("System.Decimal.toDecimalPlaces({d}, {digits}, {method})")]
         public static extern decimal Round(decimal d, int digits, MidpointRounding method);
 
         [Template("Bridge.Math.round({d}, {digits}, {method})")]
@@ -169,7 +169,7 @@ namespace System
         [Template("Bridge.Math.divRem({a}, {b}, {result})")]
         public static extern int DivRem(int a, int b, out int result);
 
-        [Template("Bridge.Long.divRem({a}, {b}, {result})")]
+        [Template("System.Int64.divRem({a}, {b}, {result})")]
         public static extern long DivRem(long a, long b, out long result);
 
         [Template("Bridge.Math.sinh({value})")]

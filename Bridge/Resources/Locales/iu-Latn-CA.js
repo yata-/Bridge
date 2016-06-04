@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("iu-Latn-CA", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("iu-Latn-CA", true), {
     englishName: "Inuktitut (Latin, Canada)",
     nativeName: "Inuktitut (Kanatami)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Nat","Nag","Aip","Pi","Sit","Tal","Siv"],
         abbreviatedMonthGenitiveNames: ["Jan","Viv","Mas","Ipu","Mai","Jun","Jul","Agi","Sii","Uut","Nuv","Tis",""],
         abbreviatedMonthNames: ["Jan","Viv","Mas","Ipu","Mai","Jun","Jul","Agi","Sii","Uut","Nuv","Tis",""],

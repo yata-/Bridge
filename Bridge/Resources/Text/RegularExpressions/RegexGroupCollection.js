@@ -1,8 +1,8 @@
 ﻿// @source Text/RegularExpressions/RegexGroupCollection.js
 
-Bridge.define("Bridge.Text.RegularExpressions.GroupCollection", {
+Bridge.define("System.Text.RegularExpressions.GroupCollection", {
     inherits: function () {
-        return [Bridge.ICollection];
+        return [System.Collections.ICollection];
     },
 
     _match: null,
@@ -36,7 +36,7 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupCollection", {
 
     getByName: function (groupname) {
         if (this._match._regex == null) {
-            return Bridge.Text.RegularExpressions.Group.getEmpty();
+            return System.Text.RegularExpressions.Group.getEmpty();
         }
 
         var groupnum = this._match._regex.groupNumberFromName(groupname);
@@ -46,24 +46,27 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupCollection", {
 
     copyTo: function (array, arrayIndex) {
         if (array == null) {
-            throw new Bridge.ArgumentNullException("array");
+            throw new System.ArgumentNullException("array");
         }
 
         var count = this.getCount();
 
         if (array.length < arrayIndex + count) {
-            throw new Bridge.IndexOutOfRangeException();
+            throw new System.IndexOutOfRangeException();
         }
 
-        for (var i = arrayIndex, j = 0; j < count; i++, j++) {
-            var group = this._getGroup(j);
+        var group;
+        var i;
+        var j;
 
-            Bridge.Array.set(array, group, [i]);
+        for (i = arrayIndex, j = 0; j < count; i++, j++) {
+            group = this._getGroup(j);
+            System.Array.set(array, group, [i]);
         }
     },
 
     getEnumerator: function () {
-        return new Bridge.Text.RegularExpressions.GroupEnumerator(this);
+        return new System.Text.RegularExpressions.GroupEnumerator(this);
     },
 
     _getGroup: function (groupnum) {
@@ -73,14 +76,13 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupCollection", {
             var num = this._captureMap[groupnum];
 
             if (num == null) {
-                group = Bridge.Text.RegularExpressions.Group.getEmpty();
+                group = System.Text.RegularExpressions.Group.getEmpty();
             } else {
                 group = this._getGroupImpl(num);
             }
-        }
-        else {
+        } else {
             if (groupnum >= this._match._matchcount.length || groupnum < 0) {
-                group = Bridge.Text.RegularExpressions.Group.getEmpty();
+                group = System.Text.RegularExpressions.Group.getEmpty();
             } else {
                 group = this._getGroupImpl(groupnum);
             }
@@ -110,12 +112,16 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupCollection", {
                 groups[0] = this._match;
             }
 
-            for (var i = 0; i < groups.length-1; i++) {
-                var matchText = this._match._text;
-                var matchCaps = this._match._matches[i + 1];
-                var matchCapcount = this._match._matchcount[i + 1];
+            var matchText;
+            var matchCaps;
+            var matchCapcount;
+            var i;
 
-                groups[i+1] = new Bridge.Text.RegularExpressions.Group(matchText, matchCaps, matchCapcount);
+            for (i = 0; i < groups.length - 1; i++) {
+                matchText = this._match._text;
+                matchCaps = this._match._matches[i + 1];
+                matchCapcount = this._match._matchcount[i + 1];
+                groups[i + 1] = new System.Text.RegularExpressions.Group(matchText, matchCaps, matchCapcount);
             }
             this._groups = groups;
         }
@@ -123,9 +129,9 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupCollection", {
 });
 
 
-Bridge.define("Bridge.Text.RegularExpressions.GroupEnumerator", {
+Bridge.define("System.Text.RegularExpressions.GroupEnumerator", {
     inherits: function () {
-        return [Bridge.IEnumerator];
+        return [System.Collections.IEnumerator];
     },
 
     _groupColl: null,
@@ -138,11 +144,11 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupEnumerator", {
 
     moveNext: function () {
         var size = this._groupColl.getCount();
- 
+
         if (this._curindex >= size) {
             return false;
         }
- 
+
         this._curindex++;
 
         return (this._curindex < size);
@@ -154,7 +160,7 @@ Bridge.define("Bridge.Text.RegularExpressions.GroupEnumerator", {
 
     getCapture: function () {
         if (this._curindex < 0 || this._curindex >= this._groupColl.getCount()) {
-            throw new Bridge.InvalidOperationException("Enumeration has either not started or has already finished.");
+            throw new System.InvalidOperationException("Enumeration has either not started or has already finished.");
         }
 
         return this._groupColl.get(this._curindex);

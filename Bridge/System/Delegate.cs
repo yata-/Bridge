@@ -7,11 +7,17 @@ namespace System
     [Name("Function")]
     public class Delegate
     {
-        public readonly int Length = 0;
-
-        protected Delegate()
+        public extern int Length
         {
+            [Template("{this}.length")]
+            get;
         }
+
+        protected extern Delegate(object target, string method);
+
+        protected extern Delegate(Type target, string method);
+
+        protected extern Delegate();
 
         public virtual extern object Apply(object thisArg);
 
@@ -25,11 +31,17 @@ namespace System
 
         public virtual extern object Call();
 
-        [Template("Bridge.fn.combine({0}, {1});")]
+        [Template("Bridge.fn.combine({0}, {1})")]
         public static extern Delegate Combine(Delegate a, Delegate b);
 
-        [Template("Bridge.fn.remove({0}, {1});")]
+        [Template("Bridge.fn.remove({0}, {1})")]
         public static extern Delegate Remove(Delegate source, Delegate value);
+
+        [Template("Bridge.staticEquals({a}, {b})")]
+        public static extern bool operator ==(Delegate a, Delegate b);
+
+        [Template("!Bridge.staticEquals({a}, {b})")]
+        public static extern bool operator !=(Delegate a, Delegate b);
     }
 
     [External]
@@ -37,8 +49,19 @@ namespace System
     [Name("Function")]
     public class MulticastDelegate : Delegate
     {
-        protected MulticastDelegate()
-        {
-        }
+        protected extern MulticastDelegate();
+
+        protected extern MulticastDelegate(object target, string method);
+
+        protected extern MulticastDelegate(Type target, string method);
+
+        [Template("Bridge.staticEquals({a}, {b})")]
+        public static extern bool operator ==(MulticastDelegate a, MulticastDelegate b);
+
+        [Template("!Bridge.staticEquals({a}, {b})")]
+        public static extern bool operator !=(MulticastDelegate a, MulticastDelegate b);
+
+        [Template("{this}.$invocationList")]
+        public extern Delegate[] GetInvocationList();
     }
 }

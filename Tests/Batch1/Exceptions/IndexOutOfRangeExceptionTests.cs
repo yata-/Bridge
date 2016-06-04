@@ -14,7 +14,7 @@ namespace Bridge.ClientTest.Exceptions
         [Test]
         public void TypePropertiesAreCorrect()
         {
-            Assert.AreEqual("Bridge.IndexOutOfRangeException", typeof(IndexOutOfRangeException).GetClassName(), "Name");
+            Assert.AreEqual("System.IndexOutOfRangeException", typeof(IndexOutOfRangeException).GetClassName(), "Name");
             object d = new IndexOutOfRangeException();
             Assert.True(d is IndexOutOfRangeException, "is IndexOutOfRangeException");
             Assert.True(d is SystemException, "is SystemException");

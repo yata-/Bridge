@@ -1,132 +1,132 @@
 ﻿// @source Text/RegularExpressions/Regex.js
 
-Bridge.define("Bridge.Text.RegularExpressions.Regex", {
+Bridge.define("System.Text.RegularExpressions.Regex", {
     statics: {
         _cacheSize: 15,
-        _defaultMatchTimeout: Bridge.TimeSpan.fromMilliseconds(-1),
+        _defaultMatchTimeout: System.TimeSpan.fromMilliseconds(-1),
 
         getCacheSize: function () {
-            return Bridge.Text.RegularExpressions.Regex._cacheSize;
+            return System.Text.RegularExpressions.Regex._cacheSize;
         },
 
         setCacheSize: function (value) {
             if (value < 0) {
-                throw new Bridge.ArgumentOutOfRangeException("value");
+                throw new System.ArgumentOutOfRangeException("value");
             }
 
-            Bridge.Text.RegularExpressions.Regex._cacheSize = value;
+            System.Text.RegularExpressions.Regex._cacheSize = value;
             //TODO: remove extra items from cache
         },
 
         escape: function (str) {
             if (str == null) {
-                throw new Bridge.ArgumentNullException("str");
+                throw new System.ArgumentNullException("str");
             }
 
-            return Bridge.Text.RegularExpressions.RegexParser.escape(str);
+            return System.Text.RegularExpressions.RegexParser.escape(str);
         },
 
         unescape: function (str) {
             if (str == null) {
-                throw new Bridge.ArgumentNullException("str");
+                throw new System.ArgumentNullException("str");
             }
 
-            return Bridge.Text.RegularExpressions.RegexParser.unescape(str);
+            return System.Text.RegularExpressions.RegexParser.unescape(str);
         },
 
         isMatch: function (input, pattern) {
-            var scope = Bridge.Text.RegularExpressions;
+            var scope = System.Text.RegularExpressions;
             return scope.Regex.isMatch$2(input, pattern, scope.RegexOptions.None, scope.Regex._defaultMatchTimeout);
         },
 
         isMatch$1: function (input, pattern, options) {
-            var scope = Bridge.Text.RegularExpressions;
+            var scope = System.Text.RegularExpressions;
             return scope.Regex.isMatch$2(input, pattern, options, scope.Regex._defaultMatchTimeout);
         },
 
         isMatch$2: function (input, pattern, options, matchTimeout) {
-            var regex = new Bridge.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
             return regex.isMatch(input);
         },
 
         match: function (input, pattern) {
-            var scope = Bridge.Text.RegularExpressions;
+            var scope = System.Text.RegularExpressions;
             return scope.Regex.match$2(input, pattern, scope.RegexOptions.None, scope.Regex._defaultMatchTimeout);
         },
 
         match$1: function (input, pattern, options) {
-            var scope = Bridge.Text.RegularExpressions;
+            var scope = System.Text.RegularExpressions;
             return scope.Regex.match$2(input, pattern, options, scope.Regex._defaultMatchTimeout);
         },
 
         match$2: function (input, pattern, options, matchTimeout) {
-            var regex = new Bridge.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
             return regex.match(input);
         },
 
         matches: function (input, pattern) {
-            var scope = Bridge.Text.RegularExpressions;
+            var scope = System.Text.RegularExpressions;
             return scope.Regex.matches$2(input, pattern, scope.RegexOptions.None, scope.Regex._defaultMatchTimeout);
         },
 
         matches$1: function (input, pattern, options) {
-            var scope = Bridge.Text.RegularExpressions;
+            var scope = System.Text.RegularExpressions;
             return scope.Regex.matches$2(input, pattern, options, scope.Regex._defaultMatchTimeout);
         },
 
         matches$2: function (input, pattern, options, matchTimeout) {
-            var regex = new Bridge.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
             return regex.matches(input);
         },
 
         replace: function (input, pattern, replacement) {
-            var scope = Bridge.Text.RegularExpressions;
+            var scope = System.Text.RegularExpressions;
             return scope.Regex.replace$2(input, pattern, replacement, scope.RegexOptions.None, scope.Regex._defaultMatchTimeout);
         },
 
         replace$1: function (input, pattern, replacement, options) {
-            var scope = Bridge.Text.RegularExpressions;
+            var scope = System.Text.RegularExpressions;
             return scope.Regex.replace$2(input, pattern, replacement, options, scope.Regex._defaultMatchTimeout);
         },
 
         replace$2: function (input, pattern, replacement, options, matchTimeout) {
-            var regex = new Bridge.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
             return regex.replace(input, replacement);
         },
 
         replace$3: function (input, pattern, evaluator) {
-            var scope = Bridge.Text.RegularExpressions;
+            var scope = System.Text.RegularExpressions;
             return scope.Regex.replace$5(input, pattern, evaluator, scope.RegexOptions.None, scope.Regex._defaultMatchTimeout);
         },
 
         replace$4: function (input, pattern, evaluator, options) {
-            var scope = Bridge.Text.RegularExpressions;
+            var scope = System.Text.RegularExpressions;
             return scope.Regex.replace$5(input, pattern, evaluator, options, scope.Regex._defaultMatchTimeout);
         },
 
         replace$5: function (input, pattern, evaluator, options, matchTimeout) {
-            var regex = new Bridge.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
             return regex.replace$3(input, evaluator);
         },
 
         split: function (input, pattern) {
-            var scope = Bridge.Text.RegularExpressions;
+            var scope = System.Text.RegularExpressions;
             return scope.Regex.split$2(input, pattern, scope.RegexOptions.None, scope.Regex._defaultMatchTimeout);
         },
 
         split$1: function (input, pattern, options) {
-            var scope = Bridge.Text.RegularExpressions;
+            var scope = System.Text.RegularExpressions;
             return scope.Regex.split$2(input, pattern, options, scope.Regex._defaultMatchTimeout);
         },
 
         split$2: function (input, pattern, options, matchTimeout) {
-            var regex = new Bridge.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
             return regex.split(input);
         }
     },
 
     _pattern: "",
-    _matchTimeout: Bridge.TimeSpan.fromMilliseconds(-1),
+    _matchTimeout: System.TimeSpan.fromMilliseconds(-1),
     _runner: null,
     _caps: null,
     _capsize: 0,
@@ -135,16 +135,16 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
     config: {
         init: function () {
-            this._options = Bridge.Text.RegularExpressions.RegexOptions.None;
+            this._options = System.Text.RegularExpressions.RegexOptions.None;
         }
     },
 
     constructor: function (pattern) {
-        this.constructor$1(pattern, Bridge.Text.RegularExpressions.RegexOptions.None);
+        this.constructor$1(pattern, System.Text.RegularExpressions.RegexOptions.None);
     },
 
     constructor$1: function (pattern, options) {
-        this.constructor$2(pattern, options, Bridge.TimeSpan.fromMilliseconds(-1));
+        this.constructor$2(pattern, options, System.TimeSpan.fromMilliseconds(-1));
     },
 
     constructor$2: function (pattern, options, matchTimeout) {
@@ -152,30 +152,34 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
     },
 
     constructor$3: function (pattern, options, matchTimeout, useCache) {
-        var scope = Bridge.Text.RegularExpressions;
+        var scope = System.Text.RegularExpressions;
 
         if (pattern == null) {
-            throw new Bridge.ArgumentNullException("pattern");
+            throw new System.ArgumentNullException("pattern");
         }
 
         if (options < scope.RegexOptions.None || ((options >> 10) !== 0)) {
-            throw new Bridge.ArgumentOutOfRangeException("options");
+            throw new System.ArgumentOutOfRangeException("options");
         }
 
-        if (((options & scope.RegexOptions.ECMAScript) !== 0)
-            && ((options & ~(scope.RegexOptions.ECMAScript |
-                    scope.RegexOptions.IgnoreCase |
-                    scope.RegexOptions.Multiline |
-                    scope.RegexOptions.CultureInvariant
+        if (((options & scope.RegexOptions.ECMAScript) !== 0) &&
+            ((options & ~(scope.RegexOptions.ECMAScript |
+                scope.RegexOptions.IgnoreCase |
+                scope.RegexOptions.Multiline |
+                scope.RegexOptions.CultureInvariant
             )) !== 0)) {
-            throw new Bridge.ArgumentOutOfRangeException("options");
+            throw new System.ArgumentOutOfRangeException("options");
         }
 
         // Check if the specified options are supported.
-        var supportedOptions = Bridge.Text.RegularExpressions.RegexOptions.IgnoreCase | Bridge.Text.RegularExpressions.RegexOptions.Multiline;
+        var supportedOptions =
+            System.Text.RegularExpressions.RegexOptions.IgnoreCase |
+            System.Text.RegularExpressions.RegexOptions.Multiline |
+            System.Text.RegularExpressions.RegexOptions.Singleline |
+            System.Text.RegularExpressions.RegexOptions.IgnorePatternWhitespace;
 
         if ((options | supportedOptions) !== supportedOptions) {
-            throw new Bridge.NotSupportedException("Specified Regex options are not supported.");
+            throw new System.NotSupportedException("Specified Regex options are not supported.");
         }
 
         this._validateMatchTimeout(matchTimeout);
@@ -183,40 +187,24 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         this._pattern = pattern;
         this._options = options;
         this._matchTimeout = matchTimeout;
-        this._runner = new scope.RegexRunner();
+        this._runner = new scope.RegexRunner(this);
 
         //TODO: cache
-        var groupInfos = Bridge.Text.RegularExpressions.RegexNetEngine.parsePatternGroups(this._pattern);
+        var patternInfo = this._runner.parsePattern();
+        var slotNames = patternInfo.sparseSettings.sparseSlotNames;
 
-        this._capsize = groupInfos.length;
+        this._capsize = slotNames.length;
         this._capslist = [];
         this._capnames = {};
 
-        this._capsize ++;
-        this._capslist.push("0");
-        this._capnames["0"] = 0;
-
         var i;
-        var groupInfo;
+        var groupName;
 
         // Add group without names first (their names are indexes)
-        for (i = 0; i < groupInfos.length; i++) {
-            groupInfo = groupInfos[i];
-
-            if (!groupInfo.hasName && !groupInfo.constructs.isNonCapturing) {
-                this._capslist.push(groupInfo.name);
-                this._capnames[groupInfo.name] = this._capslist.length - 1;
-            }
-        }
-
-        // Then add named groups:
-        for (i = 0; i < groupInfos.length; i++) {
-            groupInfo = groupInfos[i];
-
-            if (groupInfo.hasName) {
-                this._capslist.push(groupInfo.name);
-                this._capnames[groupInfo.name] = this._capslist.length - 1;
-            }
+        for (i = 0; i < slotNames.length; i++) {
+            groupName = slotNames[i];
+            this._capslist.push(groupName);
+            this._capnames[groupName] = i;
         }
     },
 
@@ -229,12 +217,12 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
     },
 
     getRightToLeft: function () {
-        return (this._options & Bridge.Text.RegularExpressions.RegexOptions.RightToLeft) !== 0;
+        return (this._options & System.Text.RegularExpressions.RegexOptions.RightToLeft) !== 0;
     },
 
     isMatch: function (input) {
         if (input == null) {
-            throw new Bridge.ArgumentNullException("input");
+            throw new System.ArgumentNullException("input");
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
@@ -244,18 +232,18 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
     isMatch$1: function (input, startat) {
         if (input == null) {
-            throw new Bridge.ArgumentNullException("input");
+            throw new System.ArgumentNullException("input");
         }
 
 
-        var match = this._runner.run(this, true, -1, input, 0, input.length, startat);
+        var match = this._runner.run(true, -1, input, 0, input.length, startat);
 
         return match == null;
     },
 
     match: function (input) {
         if (input == null) {
-            throw new Bridge.ArgumentNullException("input");
+            throw new System.ArgumentNullException("input");
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
@@ -265,25 +253,25 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
     match$1: function (input, startat) {
         if (input == null) {
-            throw new Bridge.ArgumentNullException("input");
+            throw new System.ArgumentNullException("input");
         }
 
-        return this._runner.run(this, false, -1, input, 0, input.length, startat);
+        return this._runner.run(false, -1, input, 0, input.length, startat);
     },
 
     match$2: function (input, beginning, length) {
         if (input == null) {
-            throw new Bridge.ArgumentNullException("input");
+            throw new System.ArgumentNullException("input");
         }
 
         var startat = this.getRightToLeft() ? beginning + length : beginning;
 
-        return this._runner.run(this, false, -1, input, beginning, length, startat);
+        return this._runner.run(false, -1, input, beginning, length, startat);
     },
 
     matches: function (input) {
         if (input == null) {
-            throw new Bridge.ArgumentNullException("input");
+            throw new System.ArgumentNullException("input");
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
@@ -293,21 +281,22 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
     matches$1: function (input, startat) {
         if (input == null) {
-            throw new Bridge.ArgumentNullException("input");
+            throw new System.ArgumentNullException("input");
         }
 
-        return new Bridge.Text.RegularExpressions.MatchCollection(this, input, 0, input.length, startat);
+        return new System.Text.RegularExpressions.MatchCollection(this, input, 0, input.length, startat);
     },
 
     getGroupNames: function () {
         if (this._capslist == null) {
-            var invariantCulture = Bridge.CultureInfo.invariantCulture;
+            var invariantCulture = System.Globalization.CultureInfo.invariantCulture;
 
             var result = [];
             var max = this._capsize;
+            var i;
 
-            for (var i = 0; i < max; i++) {
-                result[i] = Bridge.Convert.toString(i, invariantCulture, Bridge.Convert.typeCodes.Int32);
+            for (i = 0; i < max; i++) {
+                result[i] = System.Convert.toString(i, invariantCulture, System.Convert.typeCodes.Int32);
             }
 
             return result;
@@ -317,26 +306,27 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
     },
 
     getGroupNumbers: function () {
-        var result;
         var caps = this._caps;
- 
+        var result;
+        var key;
+        var max;
+        var i;
+
         if (caps == null) {
             result = [];
-            var max = this._capsize;
-
-            for (var i = 0; i < max; i++) {
+            max = this._capsize;
+            for (i = 0; i < max; i++) {
                 result.push(i);
             }
         } else {
             result = [];
-
-            for (var key in caps) {
+            for (key in caps) {
                 if (caps.hasOwnProperty(key)) {
                     result[caps[key]] = key;
                 }
             }
         }
- 
+
         return result;
     },
 
@@ -344,13 +334,12 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
         if (this._capslist == null) {
             if (i >= 0 && i < this._capsize) {
-                var invariantCulture = Bridge.CultureInfo.invariantCulture;
+                var invariantCulture = System.Globalization.CultureInfo.invariantCulture;
 
-                return Bridge.Convert.toString(i, invariantCulture, Bridge.Convert.typeCodes.Int32);
+                return System.Convert.toString(i, invariantCulture, System.Convert.typeCodes.Int32);
             }
 
             return "";
-
         } else {
             if (this._caps != null) {
                 var obj = this._caps[i];
@@ -372,7 +361,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
     groupNumberFromName: function (name) {
         if (name == null) {
-            throw new Bridge.ArgumentNullException("name");
+            throw new System.ArgumentNullException("name");
         }
 
         // look up name if we have a hashtable of names
@@ -388,9 +377,11 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
         // convert to an int if it looks like a number
         var result = 0;
+        var ch;
+        var i;
 
-        for (var i = 0; i < name.Length; i++) {
-            var ch = name[i];
+        for (i = 0; i < name.Length; i++) {
+            ch = name[i];
 
             if (ch > "9" || ch < "0") {
                 return -1;
@@ -410,7 +401,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
     replace: function (input, replacement) {
         if (input == null) {
-            throw new Bridge.ArgumentNullException("input");
+            throw new System.ArgumentNullException("input");
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
@@ -420,7 +411,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
     replace$1: function (input, replacement, count) {
         if (input == null) {
-            throw new Bridge.ArgumentNullException("input");
+            throw new System.ArgumentNullException("input");
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
@@ -430,14 +421,14 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
     replace$2: function (input, replacement, count, startat) {
         if (input == null) {
-            throw new Bridge.ArgumentNullException("input");
+            throw new System.ArgumentNullException("input");
         }
 
         if (replacement == null) {
-            throw new Bridge.ArgumentNullException("replacement");
+            throw new System.ArgumentNullException("replacement");
         }
 
-        var repl = Bridge.Text.RegularExpressions.RegexParser.parseReplacement(replacement, this._caps, this._capsize, this._capnames, this._options);
+        var repl = System.Text.RegularExpressions.RegexParser.parseReplacement(replacement, this._caps, this._capsize, this._capnames, this._options);
         //TODO: Cache
 
         return repl.replace(this, input, count, startat);
@@ -445,7 +436,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
     replace$3: function (input, evaluator) {
         if (input == null) {
-            throw new Bridge.ArgumentNullException("input");
+            throw new System.ArgumentNullException("input");
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
@@ -454,7 +445,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
     replace$4: function (input, evaluator, count) {
         if (input == null) {
-            throw new Bridge.ArgumentNullException("input");
+            throw new System.ArgumentNullException("input");
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
@@ -464,15 +455,15 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
     replace$5: function (input, evaluator, count, startat) {
         if (input == null) {
-            throw new Bridge.ArgumentNullException("input");
+            throw new System.ArgumentNullException("input");
         }
 
-        return Bridge.Text.RegularExpressions.RegexReplacement.replace(evaluator, this, input, count, startat);
+        return System.Text.RegularExpressions.RegexReplacement.replace(evaluator, this, input, count, startat);
     },
 
     split: function (input) {
         if (input == null) {
-            throw new Bridge.ArgumentNullException("input");
+            throw new System.ArgumentNullException("input");
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
@@ -482,7 +473,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
     split$1: function (input, count) {
         if (input == null) {
-            throw new Bridge.ArgumentNullException("input");
+            throw new System.ArgumentNullException("input");
         }
 
         var startat = this.getRightToLeft() ? input.length : 0;
@@ -492,10 +483,10 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
 
     split$2: function (input, count, startat) {
         if (input == null) {
-            throw new Bridge.ArgumentNullException("input");
+            throw new System.ArgumentNullException("input");
         }
 
-        return Bridge.Text.RegularExpressions.RegexReplacement.split(this, input, count, startat);
+        return System.Text.RegularExpressions.RegexReplacement.split(this, input, count, startat);
     },
 
     _validateMatchTimeout: function (matchTimeout) {
@@ -508,7 +499,7 @@ Bridge.define("Bridge.Text.RegularExpressions.Regex", {
         if (ms > 0 && ms <= 2147483646) {
             return;
         }
- 
-        throw new Bridge.ArgumentOutOfRangeException("matchTimeout");
+
+        throw new System.ArgumentOutOfRangeException("matchTimeout");
     }
 });

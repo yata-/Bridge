@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("ko-KR", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("ko-KR", true), {
     englishName: "Korean (Korea)",
     nativeName: "한국어(대한민국)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["일","월","화","수","목","금","토"],
         abbreviatedMonthGenitiveNames: ["1","2","3","4","5","6","7","8","9","10","11","12",""],
         abbreviatedMonthNames: ["1","2","3","4","5","6","7","8","9","10","11","12",""],

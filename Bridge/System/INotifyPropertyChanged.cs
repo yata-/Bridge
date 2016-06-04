@@ -3,7 +3,6 @@ using Bridge;
 namespace System.ComponentModel
 {
     [External]
-    [Namespace("Bridge")]
     public interface INotifyPropertyChanged : IBridgeClass
     {
         event PropertyChangedEventHandler PropertyChanged;
@@ -13,7 +12,6 @@ namespace System.ComponentModel
     public delegate void PropertyChangedEventHandler(object sender, PropertyChangedEventArgs e);
 
     [External]
-    [Namespace("Bridge")]
     public class PropertyChangedEventArgs : IBridgeClass
     {
         public PropertyChangedEventArgs(string propertyName)

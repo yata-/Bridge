@@ -1,6 +1,7 @@
 using Bridge.Contract;
 using Mono.Cecil;
 using System.Collections.Generic;
+using System.Linq;
 using ICSharpCode.NRefactory.TypeSystem;
 
 namespace Bridge.Translator
@@ -37,6 +38,7 @@ namespace Bridge.Translator
             this.UnaryOperatorType = ICSharpCode.NRefactory.CSharp.UnaryOperatorType.Any;
             this.JsDoc = new JsDoc();
             this.AnonymousTypes = new Dictionary<AnonymousType, IAnonymousTypeConfig>();
+            this.AutoStartupMethods = new List<string>();
         }
 
         public virtual Dictionary<string, string> Emit()
@@ -48,6 +50,13 @@ namespace Bridge.Translator
             {
                 this.JsDoc.Init();
                 block.Emit();
+            }
+
+            if (this.AutoStartupMethods.Count > 1)
+            {
+                var autoMethods = string.Join(", ", this.AutoStartupMethods);
+
+                throw (TranslatorException)Bridge.Translator.TranslatorException.Create("Program has more than one entry point defined - {0}", autoMethods);
             }
 
             var output = this.TransformOutputs();

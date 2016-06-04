@@ -3,19 +3,12 @@ using Bridge;
 namespace System
 {
     [External]
-    [Namespace("Bridge")]
     public class InvalidOperationException : Exception, IBridgeClass
     {
-        public InvalidOperationException()
-        {
-        }
+        public extern InvalidOperationException();
 
-        public InvalidOperationException(string message)
-        {
-        }
+        public extern InvalidOperationException(string message);
 
-        public InvalidOperationException(string message, Exception innerException)
-        {
-        }
+        public extern InvalidOperationException(string message, Exception innerException);
     }
 }

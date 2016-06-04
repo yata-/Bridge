@@ -3,24 +3,15 @@ using Bridge;
 namespace System
 {
     [External]
-    [Namespace("Bridge")]
     public class ArgumentNullException : ArgumentException, IBridgeClass
     {
-        public ArgumentNullException()
-        {
-        }
+        public extern ArgumentNullException();
 
-        public ArgumentNullException(string paramName)
-        {
-        }
+        public extern ArgumentNullException(string paramName);
 
-        public ArgumentNullException(string paramName, string message)
-        {
-        }
+        public extern ArgumentNullException(string paramName, string message);
 
-        [Template("new Bridge.ArgumentNullException(null, {message}, {innerException})")]
-        public ArgumentNullException(string message, Exception innerException)
-        {
-        }
+        [Template("new System.ArgumentNullException(null, {message}, {innerException})")]
+        public extern ArgumentNullException(string message, Exception innerException);
     }
 }

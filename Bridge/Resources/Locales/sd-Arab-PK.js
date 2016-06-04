@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("sd-Arab-PK", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("sd-Arab-PK", true), {
     englishName: "Sindhi (Pakistan)",
     nativeName: "سنڌي (پاکستان)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 3
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["سو","اڱ","ار","خم","جمعو","ڇن","آچ"],
         abbreviatedMonthGenitiveNames: ["جنوري","فروري","مارچ","اپريل","مٔي","جون","جولاءِ","آگست","ستمبر","آکتوبر","نومبر","ڊسمبر",""],
         abbreviatedMonthNames: ["جنوري","فروري","مارچ","اپريل","مٔي","جون","جولاءِ","آگست","ستمبر","آکتوبر","نومبر","ڊسمبر",""],

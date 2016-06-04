@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("sr-Latn-CS", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("sr-Latn-CS", true), {
     englishName: "Serbian (Latin, Serbia and Montenegro (Former))",
     nativeName: "srpski (Srbija i Crna Gora (Bivša))",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "nije broj",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["ned.","pon.","uto.","sre.","čet.","pet.","sub."],
         abbreviatedMonthGenitiveNames: ["jan.","feb.","mart","apr.","maj","jun","jul","avg.","sept.","okt.","nov.","dec.",""],
         abbreviatedMonthNames: ["jan.","feb.","mart","apr.","maj","jun","jul","avg.","sept.","okt.","nov.","dec.",""],

@@ -7,7 +7,7 @@ namespace Bridge.ClientTest.BridgeIssues
     [TestFixture(TestNameFormat = "#1304 - {0}")]
     public class Bridge1304
     {
-        [Template("Bridge.Console.output")]
+        [Template("System.Console.output")]
         static string Output;
 
         [Bridge.Test.SetUp]

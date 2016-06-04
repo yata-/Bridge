@@ -1,24 +1,24 @@
 // @source Char.js
 
-Bridge.define("Bridge.Char", {
-    inherits: [Bridge.IComparable, Bridge.IFormattable],
+Bridge.define("System.Char", {
+    inherits: [System.IComparable, System.IFormattable],
     statics: {
         min: 0,
         max: 65535,
 
         instanceOf: function (instance) {
-            return typeof (instance) === "number" && Math.round(instance, 0) == instance && instance >= Bridge.Char.min && instance <= Bridge.Char.max;
+            return typeof (instance) === "number" && Math.round(instance, 0) == instance && instance >= System.Char.min && instance <= System.Char.max;
         },
         getDefaultValue: function () {
             return 0;
         },
         parse: function (s) {
             if (!Bridge.hasValue(s)) {
-                throw new Bridge.ArgumentNullException("s");
+                throw new System.ArgumentNullException("s");
             }
 
             if (s.length !== 1) {
-                throw new Bridge.FormatException();
+                throw new System.FormatException();
             }
             return s.charCodeAt(0);
         },
@@ -35,11 +35,11 @@ Bridge.define("Bridge.Char", {
 
         charCodeAt: function (str, index) {
             if (str == null) {
-                throw new Bridge.ArgumentNullException();
+                throw new System.ArgumentNullException();
             }
 
             if (str.length != 1) {
-                throw new Bridge.FormatException("String must be exactly one character long");
+                throw new System.FormatException("String must be exactly one character long");
             }
 
             return str.charCodeAt(index);
@@ -123,4 +123,4 @@ Bridge.define("Bridge.Char", {
     }
 });
 
-Bridge.Class.addExtend(Bridge.Char, [Bridge.IComparable$1(Bridge.Char), Bridge.IEquatable$1(Bridge.Char)]);
+Bridge.Class.addExtend(System.Char, [System.IComparable$1(System.Char), System.IEquatable$1(System.Char)]);

@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("jv-Latn", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("jv-Latn", true), {
     englishName: "Javanese",
     nativeName: "Basa Jawa",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Min","Sen","Sel","Reb","Kem","Jem","Set"],
         abbreviatedMonthGenitiveNames: ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agust","Sep","Okt","Nov","Des",""],
         abbreviatedMonthNames: ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agust","Sep","Okt","Nov","Des",""],

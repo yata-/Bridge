@@ -1,11 +1,11 @@
 ﻿// @source Text/RegularExpressions/RegexNode.js
 
-Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
+Bridge.define("System.Text.RegularExpressions.RegexNode", {
     statics: {
-        One: 9,         // char     a
-        Multi: 12,      // string   abcdef
-        Ref: 13,        // index    \1
-        Empty: 23,      //          ()
+        One: 9, // char     a
+        Multi: 12, // string   abcdef
+        Ref: 13, // index    \1
+        Empty: 23, //          ()
         Concatenate: 25 //          ab
     },
 
@@ -17,7 +17,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
 
     config: {
         init: function () {
-            this._options = Bridge.Text.RegularExpressions.RegexOptions.None;
+            this._options = System.Text.RegularExpressions.RegexOptions.None;
         }
     },
 
@@ -25,7 +25,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
         this._type = type;
         this._options = options;
 
-        if (type === Bridge.Text.RegularExpressions.RegexNode.Ref) {
+        if (type === System.Text.RegularExpressions.RegexNode.Ref) {
             this._m = arg;
         } else {
             this._str = arg || null;
@@ -56,10 +56,10 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
         var n;
 
         switch (this._type) {
-            case Bridge.Text.RegularExpressions.RegexNode.Concatenate:
+            case System.Text.RegularExpressions.RegexNode.Concatenate:
                 n = this._reduceConcatenation();
                 break;
- 
+
             default:
                 n = this;
                 break;
@@ -72,35 +72,35 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
         var wasLastString = false;
         var optionsLast = 0;
         var optionsAt;
+        var at;
+        var prev;
         var i;
         var j;
- 
+        var k;
+
         if (this._children == null) {
-            return new Bridge.Text.RegularExpression.RegexNode(Bridge.Text.RegularExpressions.RegexNode.Empty, this._options);
+            return new System.Text.RegularExpressions.RegexNode(System.Text.RegularExpressions.RegexNode.Empty, this._options);
         }
 
         for (i = 0, j = 0; i < this._children.length; i++, j++) {
-            var at;
-            var prev;
- 
             at = this._children[i];
- 
+
             if (j < i) {
                 this._children[j] = at;
             }
 
-            if (at._type === Bridge.Text.RegularExpressions.RegexNode.Concatenate && at._isRightToLeft()) {
-                for (var k = 0; k < at._children.length; k++) {
+            if (at._type === System.Text.RegularExpressions.RegexNode.Concatenate && at._isRightToLeft()) {
+                for (k = 0; k < at._children.length; k++) {
                     at._children[k]._next = this;
                 }
 
                 this._children.splice.apply(this._children, [i + 1, 0].concat(at._children)); // _children.InsertRange(i + 1, at._children);
                 j--;
 
-            } else if (at._type === Bridge.Text.RegularExpressions.RegexNode.Multi || at._type === Bridge.Text.RegularExpressions.RegexNode.One) {
+            } else if (at._type === System.Text.RegularExpressions.RegexNode.Multi || at._type === System.Text.RegularExpressions.RegexNode.One) {
 
                 // Cannot merge strings if L or I options differ
-                optionsAt = at._options & (Bridge.Text.RegularExpression.RegexOptions.RightToLeft | Bridge.Text.RegularExpression.RegexOptions.IgnoreCase);
+                optionsAt = at._options & (System.Text.RegularExpressions.RegexOptions.RightToLeft | System.Text.RegularExpressions.RegexOptions.IgnoreCase);
 
                 if (!wasLastString || optionsLast !== optionsAt) {
                     wasLastString = true;
@@ -110,28 +110,28 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
 
                 prev = this._children[--j];
 
-                if (prev._type === Bridge.Text.RegularExpressions.RegexNode.One) {
-                    prev._type = Bridge.Text.RegularExpressions.RegexNode.Multi;
+                if (prev._type === System.Text.RegularExpressions.RegexNode.One) {
+                    prev._type = System.Text.RegularExpressions.RegexNode.Multi;
                     prev._str = prev._str;
                 }
 
-                if ((optionsAt & Bridge.Text.RegularExpression.RegexOptions.RightToLeft) === 0) {
+                if ((optionsAt & System.Text.RegularExpressions.RegexOptions.RightToLeft) === 0) {
                     prev._str += at._str;
                 } else {
                     prev._str = at._str + prev._str;
                 }
-            } else if (at._type === Bridge.Text.RegularExpressions.RegexNode.Empty) {
+            } else if (at._type === System.Text.RegularExpressions.RegexNode.Empty) {
                 j--;
             } else {
                 wasLastString = false;
             }
         }
- 
+
         if (j < i) {
             this._children.splice(j, i - j);
         }
- 
-        return this._stripEnation(Bridge.Text.RegularExpressions.RegexNode.Empty);
+
+        return this._stripEnation(System.Text.RegularExpressions.RegexNode.Empty);
     },
 
     _stripEnation: function (emptyType) {
@@ -146,7 +146,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexNode", {
     },
 
     _isRightToLeft: function () {
-        if ((this._options & Bridge.Text.RegularExpressions.RegexOptions.RightToLeft) > 0) {
+        if ((this._options & System.Text.RegularExpressions.RegexOptions.RightToLeft) > 0) {
             return true;
         }
 

@@ -1,6 +1,6 @@
     // @source Diagnostics.js
 
-    Bridge.Debug = {
+    System.Diagnostics.Debug = {
         writeln: function (text) {
             var global = Bridge.global;
 
@@ -22,7 +22,7 @@
         },
 
         _fail: function (message) {
-            Bridge.Debug.writeln(message);
+            System.Diagnostics.Debug.writeln(message);
             debugger;
         },
 
@@ -31,38 +31,38 @@
                 message = 'Assert failed: ' + message;
 
                 if (confirm(message + '\r\n\r\nBreak into debugger?')) {
-                    Bridge.Debug._fail(message);
+                    System.Diagnostics.Debug._fail(message);
                 }
             }
         },
 
         fail: function (message) {
-            Bridge.Debug._fail(message);
+            System.Diagnostics.Debug._fail(message);
         }
     }
 
-    Bridge.define("Bridge.Stopwatch", {
+    Bridge.define("System.Diagnostics.Stopwatch", {
         constructor: function () {
-            this._stopTime = Bridge.Long.Zero;
-            this._startTime = Bridge.Long.Zero;
+            this._stopTime = System.Int64.Zero;
+            this._startTime = System.Int64.Zero;
             this.isRunning = false;
         },
 
         reset: function () {
-            this._stopTime = this._startTime = Bridge.Stopwatch.getTimestamp();
+            this._stopTime = this._startTime = System.Diagnostics.Stopwatch.getTimestamp();
             this.isRunning = false;
         },
 
         ticks: function () {
-            return (this.isRunning ? Bridge.Stopwatch.getTimestamp() : this._stopTime).sub(this._startTime);
+            return (this.isRunning ? System.Diagnostics.Stopwatch.getTimestamp() : this._stopTime).sub(this._startTime);
         },
 
         milliseconds: function () {
-            return this.ticks().mul(1000).div(Bridge.Stopwatch.frequency);
+            return this.ticks().mul(1000).div(System.Diagnostics.Stopwatch.frequency);
         },
 
         timeSpan: function () {
-            return new Bridge.TimeSpan(this.milliseconds().mul(10000));
+            return new System.TimeSpan(this.milliseconds().mul(10000));
         },
 
         start: function () {
@@ -70,7 +70,7 @@
                 return;
             }
 
-            this._startTime = Bridge.Stopwatch.getTimestamp();
+            this._startTime = System.Diagnostics.Stopwatch.getTimestamp();
             this.isRunning = true;
         },
 
@@ -79,7 +79,7 @@
                 return;
             }
 
-            this._stopTime = Bridge.Stopwatch.getTimestamp();
+            this._stopTime = System.Diagnostics.Stopwatch.getTimestamp();
             this.isRunning = false;
         },
 
@@ -90,7 +90,7 @@
 
         statics: {
             startNew: function () {
-                var s = new Bridge.Stopwatch();
+                var s = new System.Diagnostics.Stopwatch();
 
                 s.start();
 
@@ -100,20 +100,20 @@
     });
 
     if (typeof (window) !== 'undefined' && window.performance && window.performance.now) {
-        Bridge.Stopwatch.frequency = new Bridge.Long(1e6);
-        Bridge.Stopwatch.isHighResolution = true;
-        Bridge.Stopwatch.getTimestamp = function () { return new Bridge.Long(Math.round(window.performance.now() * 1000)); };
+        System.Diagnostics.Stopwatch.frequency = new System.Int64(1e6);
+        System.Diagnostics.Stopwatch.isHighResolution = true;
+        System.Diagnostics.Stopwatch.getTimestamp = function () { return new System.Int64(Math.round(window.performance.now() * 1000)); };
     } else if (typeof (process) !== 'undefined' && process.hrtime) {
-        Bridge.Stopwatch.frequency = new Bridge.Long(1e9);
-        Bridge.Stopwatch.isHighResolution = true;
-        Bridge.Stopwatch.getTimestamp = function () { var hr = process.hrtime(); return new Bridge.Long(hr[0]).mul(1e9).add(hr[1]); };
+        System.Diagnostics.Stopwatch.frequency = new System.Int64(1e9);
+        System.Diagnostics.Stopwatch.isHighResolution = true;
+        System.Diagnostics.Stopwatch.getTimestamp = function () { var hr = process.hrtime(); return new System.Int64(hr[0]).mul(1e9).add(hr[1]); };
     } else {
-        Bridge.Stopwatch.frequency = new Bridge.Long(1e3);
-        Bridge.Stopwatch.isHighResolution = false;
-        Bridge.Stopwatch.getTimestamp = function () { return new Bridge.Long(new Date().valueOf()); };
+        System.Diagnostics.Stopwatch.frequency = new System.Int64(1e3);
+        System.Diagnostics.Stopwatch.isHighResolution = false;
+        System.Diagnostics.Stopwatch.getTimestamp = function () { return new System.Int64(new Date().valueOf()); };
     }
 
-    Bridge.Contract = {
+    System.Diagnostics.Contracts.Contract = {
 	    reportFailure: function (failureKind, userMessage, condition, innerException, TException) {
 	        var conditionText = condition.toString();
 
@@ -126,22 +126,22 @@
 		    if (TException) {
 			    throw new TException(conditionText, userMessage);
 		    } else {
-			    throw new Bridge.ContractException(failureKind, displayMessage, userMessage, conditionText, innerException);
+			    throw new System.Diagnostics.Contracts.ContractException(failureKind, displayMessage, userMessage, conditionText, innerException);
 		    }
 	    },
 	    assert: function (failureKind, condition, message) {
 		    if (!condition()) {
-			    Bridge.Contract.reportFailure(failureKind, message, condition, null);
+			    System.Diagnostics.Contracts.Contract.reportFailure(failureKind, message, condition, null);
 		    }
 	    },
 	    requires: function (TException, condition, message) {
 		    if (!condition()) {
-			    Bridge.Contract.reportFailure(0, message, condition, null, TException);
+			    System.Diagnostics.Contracts.Contract.reportFailure(0, message, condition, null, TException);
 		    }
 	    },
 	    forAll: function (fromInclusive, toExclusive, predicate) {
 		    if (!predicate) {
-			    throw new Bridge.ArgumentNullException("predicate");
+			    throw new System.ArgumentNullException("predicate");
 		    }
 
 		    for (; fromInclusive < toExclusive; fromInclusive++) {
@@ -154,11 +154,11 @@
 	    },
 	    forAll$1: function (collection, predicate) {
 		    if (!collection) {
-			    throw new Bridge.ArgumentNullException("collection");
+			    throw new System.ArgumentNullException("collection");
 		    }
 
 		    if (!predicate) {
-			    throw new Bridge.ArgumentNullException("predicate");
+			    throw new System.ArgumentNullException("predicate");
 		    }
 
 		    var enumerator = Bridge.getEnumerator(collection);
@@ -176,7 +176,7 @@
 	    },
 	    exists: function (fromInclusive, toExclusive, predicate) {
 		    if (!predicate) {
-			    throw new Bridge.ArgumentNullException("predicate");
+			    throw new System.ArgumentNullException("predicate");
 		    }
 
 		    for (; fromInclusive < toExclusive; fromInclusive++) {
@@ -189,11 +189,11 @@
 	    },
 	    exists$1: function (collection, predicate) {
 		    if (!collection) {
-			    throw new Bridge.ArgumentNullException("collection");
+			    throw new System.ArgumentNullException("collection");
 		    }
 
 		    if (!predicate) {
-			    throw new Bridge.ArgumentNullException("predicate");
+			    throw new System.ArgumentNullException("predicate");
 		    }
 
 		    var enumerator = Bridge.getEnumerator(collection);
@@ -211,7 +211,7 @@
 	    }
     };
 
-    Bridge.define("Bridge.ContractFailureKind", {
+    Bridge.define("System.Diagnostics.Contracts.ContractFailureKind", {
         $enum: true,
         $statics: {
             precondition: 0,
@@ -223,11 +223,11 @@
         }
     });
 
-    Bridge.define("Bridge.ContractException", {
-        inherits: [Bridge.Exception],
+    Bridge.define("System.Diagnostics.Contracts.ContractException", {
+        inherits: [System.Exception],
 
         constructor: function (failureKind, failureMessage, userMessage, condition, innerException) {
-            Bridge.Exception.prototype.$constructor.call(this, failureMessage, innerException);
+            System.Exception.prototype.$constructor.call(this, failureMessage, innerException);
             this._kind = failureKind;
             this._failureMessage = failureMessage || null;
             this._userMessage = userMessage || null;

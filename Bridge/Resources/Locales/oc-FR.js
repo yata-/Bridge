@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("oc-FR", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("oc-FR", true), {
     englishName: "Occitan (France)",
     nativeName: "Occitan (França)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "Micca numericu",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["dg.","dl.","dma.","dmc.","dj.","dv.","ds."],
         abbreviatedMonthGenitiveNames: ["gen.","feb.","març","abr.","mai","junh","julh","ag.","set.","oct.","nov.","dec.",""],
         abbreviatedMonthNames: ["gen.","feb.","març","abr.","mai","junh","julh","ag.","set.","oct.","nov.","dec.",""],

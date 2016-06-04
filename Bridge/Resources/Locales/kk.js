@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("kk", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("kk", true), {
     englishName: "Kazakh",
     nativeName: "Қазақ",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Жек","Дүй","Сей","Сәр","Бей","Жұм","Сен"],
         abbreviatedMonthGenitiveNames: ["қаң","ақп","нау","сәу","мам","мау","шіл","там","қыр","қаз","қар","жел",""],
         abbreviatedMonthNames: ["қаң","ақп","нау","сәу","мам","мау","шіл","там","қыр","қаз","қар","жел",""],

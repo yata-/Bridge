@@ -3,7 +3,6 @@ using Bridge;
 namespace System.Diagnostics
 {
     [External]
-    [Namespace("Bridge")]
     public class Stopwatch
     {
         public static readonly long Frequency = 0;

@@ -1,30 +1,35 @@
 ﻿// @source Text/RegularExpressions/RegexParser.js
 
-Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
+Bridge.define("System.Text.RegularExpressions.RegexParser", {
     statics: {
 
-        _Q : 5,     // quantifier
-        _S : 4,     // ordinary stoppper
-        _Z : 3,     // ScanBlank stopper
-        _X : 2,     // whitespace
-        _E : 1,     // should be escaped
+        _Q: 5, // quantifier
+        _S: 4, // ordinary stoppper
+        _Z: 3, // ScanBlank stopper
+        _X: 2, // whitespace
+        _E: 1, // should be escaped
 
         _category: [
-            //  0 1 2 3 4 5 6 7 8 9 A B C D E F 0 1 2 3 4 5 6 7 8 9 A B C D E F 
-                0,0,0,0,0,0,0,0,0,2,2,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-            //  ! " # $ % & ' ( ) * + , - . / 0 1 2 3 4 5 6 7 8 9 : ; < = > ? 
-                2,0,0,3,4,0,0,0,4,4,5,5,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,
-            //  @ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z [ \ ] ^ _
-                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,0,4,0,
-            //  ' a b c d e f g h i j k l m n o p q r s t u v w x y z { | } ~ 
-                0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,4,0,0,0],
+            //0 1 2  3  4  5  6  7  8  9  A  B  C  D  E  F  0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            //! " #  $  %  &  '  (  )  *  +  ,  -  .  /  0  1  2  3  4  5  6  7  8  9  :  ;  <  =  >  ?  
+            2, 0, 0, 3, 4, 0, 0, 0, 4, 4, 5, 5, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5,
+            //@ A B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U  V  W  X  Y  Z  [  \  ]  ^  _
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 4, 0,
+            //' a b  c  d  e  f  g  h  i  j  k  l  m  n  o  p  q  r  s  t  u  v  w  x  y  z  {  |  }  ~  
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 4, 0, 0, 0
+        ],
 
         escape: function (input) {
-            for (var i = 0; i < input.length; i++) {
-                if (Bridge.Text.RegularExpressions.RegexParser._isMetachar(input[i])) {
-                    var sb = "";
-                    var ch = input[i];
-                    var lastpos;
+            var sb;
+            var ch;
+            var lastpos;
+            var i;
+
+            for (i = 0; i < input.length; i++) {
+                if (System.Text.RegularExpressions.RegexParser._isMetachar(input[i])) {
+                    sb = "";
+                    ch = input[i];
 
                     sb += input.slice(0, i);
 
@@ -49,37 +54,41 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
                         sb += ch;
                         i++;
                         lastpos = i;
- 
+
                         while (i < input.length) {
                             ch = input[i];
 
-                            if (Bridge.Text.RegularExpressions.RegexParser._isMetachar(ch)) {
+                            if (System.Text.RegularExpressions.RegexParser._isMetachar(ch)) {
                                 break;
                             }
- 
+
                             i++;
                         }
- 
+
                         sb += input.slice(lastpos, i);
- 
+
                     } while (i < input.length);
- 
+
                     return sb;
                 }
             }
- 
+
             return input;
         },
 
         unescape: function (input) {
-            for (var i = 0; i < input.length; i++) {
-                if (input[i] === "\\") {
-                    var sb = "";
-                    var culture = Bridge.CultureInfo.invariantCulture;
-                    var p = new Bridge.Text.RegularExpressions.RegexParser(culture);
-                    var lastpos;
+            var culture = System.Globalization.CultureInfo.invariantCulture;
+            var sb;
+            var lastpos;
+            var i;
+            var p;
 
+            for (i = 0; i < input.length; i++) {
+                if (input[i] === "\\") {
+                    sb = "";
+                    p = new System.Text.RegularExpressions.RegexParser(culture);
                     p._setPattern(input);
+
                     sb += input.slice(0, i);
 
                     do {
@@ -99,19 +108,19 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
                         }
 
                         sb += input.slice(lastpos, i);
- 
+
                     } while (i < input.length);
- 
+
                     return sb;
                 }
             }
- 
+
             return input;
         },
 
         parseReplacement: function (rep, caps, capsize, capnames, op) {
-            var culture = Bridge.CultureInfo.getCurrentCulture(); // TODO: InvariantCulture
-            var p = new Bridge.Text.RegularExpressions.RegexParser(culture);
+            var culture = System.Globalization.CultureInfo.getCurrentCulture(); // TODO: InvariantCulture
+            var p = new System.Text.RegularExpressions.RegexParser(culture);
 
             p._options = op;
             p._noteCaptures(caps, capsize, capnames);
@@ -119,13 +128,13 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
 
             var root = p._scanReplacement();
 
-            return new Bridge.Text.RegularExpressions.RegexReplacement(rep, root, caps);
+            return new System.Text.RegularExpressions.RegexReplacement(rep, root, caps);
         },
 
         _isMetachar: function (ch) {
             var code = ch.charCodeAt(0);
 
-            return (code <= "|".charCodeAt(0) && Bridge.Text.RegularExpressions.RegexParser._category[code] >= Bridge.Text.RegularExpressions.RegexParser._E);
+            return (code <= "|".charCodeAt(0) && System.Text.RegularExpressions.RegexParser._category[code] >= System.Text.RegularExpressions.RegexParser._E);
         }
     },
 
@@ -139,7 +148,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
 
     config: {
         init: function () {
-            this._options = Bridge.Text.RegularExpressions.RegexOptions.None;
+            this._options = System.Text.RegularExpressions.RegexOptions.None;
         }
     },
 
@@ -164,17 +173,18 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
     },
 
     _scanReplacement: function () {
-        this._concatenation = new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.Concatenate, this._options);
+        this._concatenation = new System.Text.RegularExpressions.RegexNode(System.Text.RegularExpressions.RegexNode.Concatenate, this._options);
+        var c;
+        var startpos;
+        var dollarNode;
 
         while (true) {
-            var c = this._charsRight();
-
+            c = this._charsRight();
             if (c === 0) {
                 break;
             }
 
-            var startpos = this._textpos();
-
+            startpos = this._textpos();
             while (c > 0 && this._rightChar() !== "$") {
                 this._moveRight();
                 c--;
@@ -184,8 +194,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
 
             if (c > 0) {
                 if (this._moveRightGetChar() === "$") {
-                    var dollarNode = this._scanDollar();
-
+                    dollarNode = this._scanDollar();
                     this._concatenation.addChild(dollarNode);
                 }
             }
@@ -194,7 +203,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
         return this._concatenation;
     },
 
-    _addConcatenate: function (pos, cch/*, bool isReplacement*/) {
+    _addConcatenate: function (pos, cch /*, bool isReplacement*/ ) {
         if (cch === 0) {
             return;
         }
@@ -204,30 +213,30 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
         if (cch > 1) {
             var str = this._pattern.slice(pos, pos + cch);
 
-            node = new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.Multi, this._options, str);
+            node = new System.Text.RegularExpressions.RegexNode(System.Text.RegularExpressions.RegexNode.Multi, this._options, str);
         } else {
             var ch = this._pattern[pos];
 
-            node = new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.One, this._options, ch);
+            node = new System.Text.RegularExpressions.RegexNode(System.Text.RegularExpressions.RegexNode.One, this._options, ch);
         }
- 
+
         this._concatenation.addChild(node);
     },
 
-    _useOptionE: function  () {
-        return (this._options & Bridge.Text.RegularExpressions.RegexOptions.ECMAScript) !== 0;
+    _useOptionE: function () {
+        return (this._options & System.Text.RegularExpressions.RegexOptions.ECMAScript) !== 0;
     },
 
     _makeException: function (message) {
-        return new Bridge.ArgumentException("Incorrect pattern. " + message);
+        return new System.ArgumentException("Incorrect pattern. " + message);
     },
 
     _scanDollar: function () {
-        var maxValueDiv10 = 214748364;  // Int32.MaxValue / 10;
-        var maxValueMod10 = 7;          // Int32.MaxValue % 10;
+        var maxValueDiv10 = 214748364; // Int32.MaxValue / 10;
+        var maxValueMod10 = 7; // Int32.MaxValue % 10;
 
         if (this._charsRight() === 0) {
-            return new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.One, this._options, "$");
+            return new System.Text.RegularExpressions.RegexNode(System.Text.RegularExpressions.RegexNode.One, this._options, "$");
         }
 
         var ch = this._rightChar();
@@ -247,6 +256,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
         // Try to parse backreference: \1 or \{1} or \{cap}
 
         var capnum;
+        var digit;
 
         if (ch >= "0" && ch <= "9") {
 
@@ -263,8 +273,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
                 }
 
                 while (this._charsRight() > 0 && (ch = this._rightChar()) >= "0" && ch <= "9") {
-                    var digit = ch - "0";
-
+                    digit = ch - "0";
                     if (newcapnum > (maxValueDiv10) || (newcapnum === (maxValueDiv10) && digit > (maxValueMod10))) {
                         throw this._makeException("Capture group is out of range.");
                     }
@@ -281,62 +290,59 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
                 this._textto(lastEndPos);
 
                 if (capnum >= 0) {
-                    return new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.Ref, this._options, capnum);
+                    return new System.Text.RegularExpressions.RegexNode(System.Text.RegularExpressions.RegexNode.Ref, this._options, capnum);
                 }
-            }
-            else {
+            } else {
                 capnum = this._scanDecimal();
                 if (!angled || this._charsRight() > 0 && this._moveRightGetChar() === "}") {
                     if (this._isCaptureSlot(capnum)) {
-                        return new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.Ref, this._options, capnum);
+                        return new System.Text.RegularExpressions.RegexNode(System.Text.RegularExpressions.RegexNode.Ref, this._options, capnum);
                     }
                 }
             }
-        }
-        else if (angled && this._isWordChar(ch)) {
+        } else if (angled && this._isWordChar(ch)) {
             var capname = this._scanCapname();
 
             if (this._charsRight() > 0 && this._moveRightGetChar() === "}") {
                 if (this._isCaptureName(capname)) {
                     var captureSlot = this._captureSlotFromName(capname);
 
-                    return new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.Ref, this._options, captureSlot);
+                    return new System.Text.RegularExpressions.RegexNode(System.Text.RegularExpressions.RegexNode.Ref, this._options, captureSlot);
                 }
             }
-        }
-        else if (!angled) {
+        } else if (!angled) {
             capnum = 1;
 
             switch (ch) {
                 case "$":
                     this._moveRight();
-                    return new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.One, this._options, "$");
+                    return new System.Text.RegularExpressions.RegexNode(System.Text.RegularExpressions.RegexNode.One, this._options, "$");
 
                 case "&":
                     capnum = 0;
                     break;
 
                 case "`":
-                    capnum = Bridge.Text.RegularExpressions.RegexReplacement.LeftPortion;
+                    capnum = System.Text.RegularExpressions.RegexReplacement.LeftPortion;
                     break;
 
                 case "\'":
-                    capnum = Bridge.Text.RegularExpressions.RegexReplacement.RightPortion;
+                    capnum = System.Text.RegularExpressions.RegexReplacement.RightPortion;
                     break;
 
                 case "+":
-                    capnum = Bridge.Text.RegularExpressions.RegexReplacement.LastGroup;
+                    capnum = System.Text.RegularExpressions.RegexReplacement.LastGroup;
                     break;
 
                 case "_":
-                    capnum = Bridge.Text.RegularExpressions.RegexReplacement.WholeString;
+                    capnum = System.Text.RegularExpressions.RegexReplacement.WholeString;
                     break;
             }
 
             if (capnum !== 1) {
                 this._moveRight();
 
-                return new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.Ref, this._options, capnum);
+                return new System.Text.RegularExpressions.RegexNode(System.Text.RegularExpressions.RegexNode.Ref, this._options, capnum);
             }
         }
 
@@ -344,24 +350,25 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
 
         this._textto(backpos);
 
-        return new Bridge.Text.RegularExpressions.RegexNode(Bridge.Text.RegularExpressions.RegexNode.One, this._options, "$");
+        return new System.Text.RegularExpressions.RegexNode(System.Text.RegularExpressions.RegexNode.One, this._options, "$");
     },
 
     _scanDecimal: function () {
         // Scans any number of decimal digits (pegs value at 2^31-1 if too large)
 
-        var maxValueDiv10 = 214748364;  // Int32.MaxValue / 10;
-        var maxValueMod10 = 7;          // Int32.MaxValue % 10;
+        var maxValueDiv10 = 214748364; // Int32.MaxValue / 10;
+        var maxValueMod10 = 7; // Int32.MaxValue % 10;
         var i = 0;
+        var ch;
+        var d;
 
         while (this._charsRight() > 0) {
-            var ch = this._rightChar();
-
+            ch = this._rightChar();
             if (ch < "0" || ch > "9") {
                 break;
             }
 
-            var d = ch - "0";
+            d = ch - "0";
 
             this._moveRight();
 
@@ -380,18 +387,18 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
         var d;
         var i;
         var c;
- 
+
         // Consume octal chars only up to 3 digits and value 0377
- 
+
         c = 3;
- 
+
         if (c > this._charsRight()) {
             c = this._charsRight();
         }
- 
+
         for (i = 0; c > 0 && (d = this._rightChar() - "0") <= 7; c -= 1) {
             this._moveRight();
-            
+
             i *= 8;
             i += d;
 
@@ -399,31 +406,31 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
                 break;
             }
         }
- 
+
         // Octal codes only go up to 255.  Any larger and the behavior that Perl follows
         // is simply to truncate the high bits. 
         i &= 0xFF;
-            
+
         return i;
     },
 
     _scanHex: function (c) {
         var i;
         var d;
- 
+
         i = 0;
- 
+
         if (this._charsRight() >= c) {
-            for (; c > 0 && ((d = this._hexDigit(this._moveRightGetChar())) >= 0) ; c -= 1) {
+            for (; c > 0 && ((d = this._hexDigit(this._moveRightGetChar())) >= 0); c -= 1) {
                 i *= 0x10;
                 i += d;
             }
         }
- 
+
         if (c > 0) {
             throw this._makeException("Insufficient hexadecimal digits.");
         }
- 
+
         return i;
     },
 
@@ -431,31 +438,29 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
         var d;
 
         var code = ch.charCodeAt(0);
- 
+
         if ((d = code - "0".charCodeAt(0)) <= 9) {
             return d;
         }
- 
+
         if ((d = code - "a".charCodeAt(0)) <= 5) {
             return d + 0xa;
         }
- 
+
         if ((d = code - "A".charCodeAt(0)) <= 5) {
             return d + 0xa;
         }
- 
+
         return -1;
     },
 
     _scanControl: function () {
-        var ch;
- 
         if (this._charsRight() <= 0) {
             throw this._makeException("Missing control character.");
         }
- 
-        ch = this._moveRightGetChar();
- 
+
+        var ch = this._moveRightGetChar();
+
         // \ca interpreted as \cA
 
         var code = ch.charCodeAt(0);
@@ -463,17 +468,17 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
         if (code >= "a".charCodeAt(0) && code <= "z".charCodeAt(0)) {
             code = code - ("a".charCodeAt(0) - "A".charCodeAt(0));
         }
- 
+
         if ((code = (code - "@".charCodeAt(0))) < " ".charCodeAt(0)) {
             return String.fromCharCode(code);
         }
- 
+
         throw this._makeException("Unrecognized control character.");
     },
 
     _scanCapname: function () {
         var startpos = this._textpos();
- 
+
         while (this._charsRight() > 0) {
             if (!this._isWordChar(this._moveRightGetChar())) {
                 this._moveLeft();
@@ -481,19 +486,19 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
                 break;
             }
         }
- 
+
         return _pattern.slice(startpos, this._textpos());
     },
 
     _scanCharEscape: function () {
         var ch = this._moveRightGetChar();
- 
+
         if (ch >= "0" && ch <= "7") {
             this._moveLeft();
 
             return this._scanOctal();
         }
- 
+
         switch (ch) {
             case "x":
                 return this._scanHex(2);
@@ -521,7 +526,6 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
                 if (!this._useOptionE() && this._isWordChar(ch)) {
                     throw this._makeException("Unrecognized escape sequence.");
                 }
-
                 return ch;
         }
     },
@@ -549,7 +553,7 @@ Bridge.define("Bridge.Text.RegularExpressions.RegexParser", {
     _isWordChar: function (ch) {
         // Partial implementation, 
         // see the link for more details (http://referencesource.microsoft.com/#System/regex/system/text/regularexpressions/RegexParser.cs,1156)
-        return Bridge.Char.isLetter(ch);
+        return System.Char.isLetter(ch);
     },
 
     _charsRight: function () {

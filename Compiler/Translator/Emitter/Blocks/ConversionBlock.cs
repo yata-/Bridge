@@ -1,4 +1,6 @@
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
@@ -196,7 +198,7 @@ namespace Bridge.Translator
                 if (isLifted)
                 {
                     level++;
-                    block.Write("Bridge.Nullable.getValue(");
+                    block.Write(JS.Types.SYSTEM_NULLABLE + ".getValue(");
                 }
 
                 if (conversion.IsUserDefined)
@@ -273,10 +275,10 @@ namespace Bridge.Translator
 
                     if (Helpers.IsDecimalType(arg.Type, block.Emitter.Resolver, arg.IsParams) && !Helpers.IsDecimalType(rr.Type, block.Emitter.Resolver) && !expression.IsNull)
                     {
-                        block.Write("Bridge.Decimal");
+                        block.Write(JS.Types.SYSTEM_DECIMAL);
                         if (NullableType.IsNullable(arg.Type) && ConversionBlock.ShouldBeLifted(expression))
                         {
-                            block.Write(".lift");
+                            block.Write("." + JS.Funcs.Math.LIFT);
                         }
                         if (expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
@@ -290,10 +292,10 @@ namespace Bridge.Translator
                     if (Helpers.Is64Type(arg.Type, block.Emitter.Resolver, arg.IsParams) && !Helpers.Is64Type(rr.Type, block.Emitter.Resolver) && !expression.IsNull)
                     {
                         var isUint = Helpers.IsULongType(arg.Type, block.Emitter.Resolver, arg.IsParams);
-                        block.Write("Bridge." + (isUint ? "ULong" : "Long"));
+                        block.Write(isUint ? JS.Types.SYSTEM_UInt64 : JS.Types.SYSTEM_INT64);
                         if (NullableType.IsNullable(arg.Type) && ConversionBlock.ShouldBeLifted(expression))
                         {
-                            block.Write(".lift");
+                            block.Write("." + JS.Funcs.Math.LIFT);
                         }
                         if (expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
@@ -361,7 +363,7 @@ namespace Bridge.Translator
                         block.Write(typeName);
                         if (NullableType.IsNullable(arg.Type) && ConversionBlock.ShouldBeLifted(expression))
                         {
-                            block.Write(".lift");
+                            block.Write("." + JS.Funcs.Math.LIFT);
                         }
                         if (expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
@@ -395,7 +397,7 @@ namespace Bridge.Translator
                         block.Write(typeName);
                         if (NullableType.IsNullable(arg.Type) && ConversionBlock.ShouldBeLifted(expression))
                         {
-                            block.Write(".lift");
+                            block.Write("." + JS.Funcs.Math.LIFT);
                         }
                         if (expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
@@ -423,7 +425,7 @@ namespace Bridge.Translator
                     block.Write(typeName);
                     if (NullableType.IsNullable(namedArgResolveResult.Type) && ConversionBlock.ShouldBeLifted(expression))
                     {
-                        block.Write(".lift");
+                        block.Write("." + JS.Funcs.Math.LIFT);
                     }
                     if (expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
@@ -450,7 +452,7 @@ namespace Bridge.Translator
                     block.Write(typeName);
                     if (NullableType.IsNullable(namedResolveResult.Type) && ConversionBlock.ShouldBeLifted(expression))
                     {
-                        block.Write(".lift");
+                        block.Write("." + JS.Funcs.Math.LIFT);
                     }
                     if (expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
@@ -479,7 +481,7 @@ namespace Bridge.Translator
                     block.Write(typeName);
                     if (isNullable && ConversionBlock.ShouldBeLifted(expression))
                     {
-                        block.Write(".lift");
+                        block.Write("." + JS.Funcs.Math.LIFT);
                     }
                     if (expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
@@ -507,7 +509,7 @@ namespace Bridge.Translator
                     block.Write(typeName);
                     if (NullableType.IsNullable(conditionalrr.Operands[idx].Type) && ConversionBlock.ShouldBeLifted(expression))
                     {
-                        block.Write(".lift");
+                        block.Write("." + JS.Funcs.Math.LIFT);
                     }
                     if (expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
@@ -534,7 +536,7 @@ namespace Bridge.Translator
                     block.Write(typeName);
                     if (NullableType.IsNullable(assigmentRr.Operands[1].Type) && ConversionBlock.ShouldBeLifted(expression))
                     {
-                        block.Write(".lift");
+                        block.Write("." + JS.Funcs.Math.LIFT);
                     }
                     if (expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
@@ -554,26 +556,34 @@ namespace Bridge.Translator
                 if (index >= 0)
                 {
                     var invocationrr = block.Emitter.Resolver.ResolveNode(indexerExpr, block.Emitter) as InvocationResolveResult;
-
-                    if (invocationrr != null && isType(invocationrr.Member.Parameters.ElementAt(index).Type, block.Emitter.Resolver) && !isType(rr.Type, block.Emitter.Resolver))
+                    if (invocationrr != null)
                     {
-                        if (expression.IsNull)
+                        var parameters = invocationrr.Member.Parameters;
+                        if (parameters.Count <= index)
                         {
-                            return false;
+                            index = parameters.Count - 1;
                         }
 
-                        block.Write(typeName);
-                        if (NullableType.IsNullable(invocationrr.Member.Parameters.ElementAt(index).Type) && ConversionBlock.ShouldBeLifted(expression))
+                        if (isType(invocationrr.Member.Parameters.ElementAt(index).Type, block.Emitter.Resolver) && !isType(rr.Type, block.Emitter.Resolver))
                         {
-                            block.Write(".lift");
+                            if (expression.IsNull)
+                            {
+                                return false;
+                            }
+
+                            block.Write(typeName);
+                            if (NullableType.IsNullable(invocationrr.Member.Parameters.ElementAt(index).Type) && ConversionBlock.ShouldBeLifted(expression))
+                            {
+                                block.Write("." + JS.Funcs.Math.LIFT);
+                            }
+                            if (expression is CastExpression &&
+                                ((CastExpression)expression).Expression is ParenthesizedExpression)
+                            {
+                                return false;
+                            }
+                            block.WriteOpenParentheses();
+                            return true;
                         }
-                        if (expression is CastExpression &&
-                            ((CastExpression)expression).Expression is ParenthesizedExpression)
-                        {
-                            return false;
-                        }
-                        block.WriteOpenParentheses();
-                        return true;
                     }
                 }
             }
@@ -651,7 +661,7 @@ namespace Bridge.Translator
                     block.Write(typeName);
                     if (NullableType.IsNullable(elementType) && ConversionBlock.ShouldBeLifted(expression))
                     {
-                        block.Write(".lift");
+                        block.Write("." + JS.Funcs.Math.LIFT);
                     }
                     if (expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
@@ -666,7 +676,7 @@ namespace Bridge.Translator
                          && !Helpers.IsDecimalType(elementType, block.Emitter.Resolver)
                          && isType(rr.Type, block.Emitter.Resolver))
                 {
-                    block.Write("Bridge.Long.toNumber");
+                    block.Write(JS.Types.SYSTEM_INT64 + ".toNumber");
                     if (expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
                     {
@@ -697,7 +707,7 @@ namespace Bridge.Translator
                     block.Write(typeName);
                     if (NullableType.IsNullable(expectedType) && ConversionBlock.ShouldBeLifted(expression))
                     {
-                        block.Write(".lift");
+                        block.Write("." + JS.Funcs.Math.LIFT);
                     }
 
                     if (expression is CastExpression &&
@@ -995,19 +1005,19 @@ namespace Bridge.Translator
 
         private static bool CheckDecimalConversion(ConversionBlock block, Expression expression, ResolveResult rr, IType expectedType, Conversion conversion)
         {
-            return CheckTypeConversion(block, expression, rr, expectedType, conversion, "Bridge.Decimal", Helpers.IsDecimalType);
+            return CheckTypeConversion(block, expression, rr, expectedType, conversion, JS.Types.SYSTEM_DECIMAL, Helpers.IsDecimalType);
         }
 
         private static bool CheckLongConversion(ConversionBlock block, Expression expression, ResolveResult rr, IType expectedType, Conversion conversion)
         {
-            return CheckTypeConversion(block, expression, rr, expectedType, conversion, "Bridge.Long", Helpers.IsLongType) ||
-                   CheckTypeConversion(block, expression, rr, expectedType, conversion, "Bridge.ULong", Helpers.IsULongType);
+            return CheckTypeConversion(block, expression, rr, expectedType, conversion, JS.Types.SYSTEM_INT64, Helpers.IsLongType) ||
+                   CheckTypeConversion(block, expression, rr, expectedType, conversion, JS.Types.SYSTEM_UInt64, Helpers.IsULongType);
         }
 
         private static bool IsLongConversion(ConversionBlock block, Expression expression, ResolveResult rr, IType expectedType, Conversion conversion)
         {
-            return IsTypeConversion(block, expression, rr, expectedType, conversion, "Bridge.Long", Helpers.IsLongType) ||
-                   IsTypeConversion(block, expression, rr, expectedType, conversion, "Bridge.ULong", Helpers.IsULongType);
+            return IsTypeConversion(block, expression, rr, expectedType, conversion, JS.Types.SYSTEM_INT64, Helpers.IsLongType) ||
+                   IsTypeConversion(block, expression, rr, expectedType, conversion, JS.Types.SYSTEM_UInt64, Helpers.IsULongType);
         }
 
         public static bool ShouldBeLifted(Expression expr)

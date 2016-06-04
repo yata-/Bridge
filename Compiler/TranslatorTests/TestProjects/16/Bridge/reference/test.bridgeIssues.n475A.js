@@ -37,7 +37,7 @@
     
                 b.keyDown(4);
     
-                Test.BridgeIssues.N475A.Bridge475Extension2.keyDown(Bridge.Decimal, b, "5");
+                Test.BridgeIssues.N475A.Bridge475Extension2.keyDown(System.Decimal, b, "5");
             }
         }
     });

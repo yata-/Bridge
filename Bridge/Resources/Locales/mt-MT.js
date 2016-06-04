@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("mt-MT", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("mt-MT", true), {
     englishName: "Maltese (Malta)",
     nativeName: "Malti (Malta)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Ħad","Tne","Tli","Erb","Ħam","Ġim","Sib"],
         abbreviatedMonthGenitiveNames: ["Jan","Fra","Mar","Apr","Mej","Ġun","Lul","Aww","Set","Ott","Nov","Diċ",""],
         abbreviatedMonthNames: ["Jan","Fra","Mar","Apr","Mej","Ġun","Lul","Aww","Set","Ott","Nov","Diċ",""],

@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("id-ID", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("id-ID", true), {
     englishName: "Indonesian (Indonesia)",
     nativeName: "Bahasa Indonesia (Indonesia)",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["Mgg","Sen","Sel","Rab","Kam","Jum","Sab"],
         abbreviatedMonthGenitiveNames: ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des",""],
         abbreviatedMonthNames: ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des",""],

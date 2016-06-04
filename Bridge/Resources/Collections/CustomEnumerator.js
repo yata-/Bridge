@@ -1,7 +1,7 @@
 ﻿// @source /Collections/CustomEnumerator.js
 
 Bridge.define('Bridge.CustomEnumerator', {
-    inherits: [Bridge.IEnumerator],
+    inherits: [System.Collections.IEnumerator],
 
     constructor: function (moveNext, getCurrent, reset, dispose, scope) {
         this.$moveNext = moveNext;

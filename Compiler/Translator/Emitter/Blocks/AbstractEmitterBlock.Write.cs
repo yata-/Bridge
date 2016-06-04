@@ -1,4 +1,6 @@
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using System;
 using System.Globalization;
 using System.Text;
@@ -79,15 +81,15 @@ namespace Bridge.Translator
             }
             else if (value is decimal)
             {
-                s = "Bridge.Decimal(" + this.DecimalConstant((decimal)value) + ")";
+                s = JS.Types.SYSTEM_DECIMAL + "(" + this.DecimalConstant((decimal)value) + ")";
             }
             else if (value is long)
             {
-                s = "Bridge.Long(" + this.LongConstant((long)value) + ")";
+                s = JS.Types.SYSTEM_INT64 + "(" + this.LongConstant((long)value) + ")";
             }
             else if (value is ulong)
             {
-                s = "Bridge.ULong(" + this.ULongConstant((ulong)value) + ")";
+                s = JS.Types.SYSTEM_UInt64 + "(" + this.ULongConstant((ulong)value) + ")";
             }
             else
             {
@@ -150,6 +152,23 @@ namespace Bridge.Translator
             }
 
             return this.Emitter.ToJavaScript(value);
+        }
+
+        public virtual void WriteCall(object callee = null)
+        {
+            this.WriteDot();
+
+            if (callee == null)
+            {
+                this.Write(JS.Funcs.CALL);
+            }
+            else
+            {
+                this.Write(JS.Funcs.CALL);
+                this.WriteOpenParentheses();
+                this.Write(callee);
+                this.WriteCloseParentheses();
+            }
         }
 
         public virtual void WriteComma()

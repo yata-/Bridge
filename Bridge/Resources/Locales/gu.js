@@ -1,8 +1,8 @@
-﻿Bridge.merge(new Bridge.CultureInfo("gu", true), {
+﻿Bridge.merge(new System.Globalization.CultureInfo("gu", true), {
     englishName: "Gujarati",
     nativeName: "ગુજરાતી",
 
-    numberFormat: Bridge.merge(new Bridge.NumberFormatInfo(), {
+    numberFormat: Bridge.merge(new System.Globalization.NumberFormatInfo(), {
         naNSymbol: "NaN",
         negativeSign: "-",
         positiveSign: "+",
@@ -29,7 +29,7 @@
         numberNegativePattern: 1
     }),
 
-    dateTimeFormat: Bridge.merge(new Bridge.DateTimeFormatInfo(), {
+    dateTimeFormat: Bridge.merge(new System.Globalization.DateTimeFormatInfo(), {
         abbreviatedDayNames: ["રવિ","સોમ","મંગળ","બુધ","ગુરુ","શુક્ર","શનિ"],
         abbreviatedMonthGenitiveNames: ["જાન્યુ","ફેબ્રુ","માર્ચ","એપ્રિલ","મે","જૂન","જુલાઈ","ઑગ","સપ્ટે","ઑક્ટો","નવે","ડિસે",""],
         abbreviatedMonthNames: ["જાન્યુ","ફેબ્રુ","માર્ચ","એપ્રિલ","મે","જૂન","જુલાઈ","ઑગ","સપ્ટે","ઑક્ટો","નવે","ડિસે",""],

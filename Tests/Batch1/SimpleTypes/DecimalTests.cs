@@ -19,7 +19,7 @@ namespace Bridge.ClientTest.SimpleTypes
         public void TypePropertiesAreCorrect()
         {
             Assert.True((object)(decimal)0.5 is decimal);
-            Assert.AreEqual("Bridge.Decimal", typeof(decimal).GetClassName());
+            Assert.AreEqual("System.Decimal", typeof(decimal).GetClassName());
             object d = (decimal)0;
             Assert.True(d is decimal);
             Assert.True(d is IFormattable);
