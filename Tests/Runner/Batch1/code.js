@@ -8575,6 +8575,51 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1438', {
+        statics: {
+            testJSONParse: function () {
+                var serialized = JSON.stringify(Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1438.Foo(), {
+                    setValue: 100
+                } ));
+    
+                Bridge.Test.Assert.notNull$1(serialized, " serialized should not be null");
+    
+                var result = Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1438.Foo(), JSON.parse(serialized));
+    
+                Bridge.Test.Assert.notNull$1(result, " result should not be null");
+                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.BridgeIssues.Bridge1438.Foo", Bridge.getTypeName(result), "Check result type name");
+                Bridge.Test.Assert.areEqual$1(100, result.getValue(), "result.Value = 100");
+            },
+            testJSONParseAsArray: function () {
+                var serialized = JSON.stringify([Bridge.merge(new Bridge.ClientTest.BridgeIssues.Bridge1438.Foo(), {
+                    setValue: 101
+                } )]);
+    
+                Bridge.Test.Assert.notNull$1(serialized, " serialized should not be null");
+    
+                var result = Bridge.merge(new Array(), JSON.parse(serialized), function(){return new Bridge.ClientTest.BridgeIssues.Bridge1438.Foo();});
+    
+                Bridge.Test.Assert.notNull$1(result, " result should not be null");
+                Bridge.Test.Assert.areEqual$1("Array", Bridge.getTypeName(result), "Check result type name");
+                Bridge.Test.Assert.areEqual$1(1, result.length, "Check result length");
+                Bridge.Test.Assert.notNull$1(result[0], " result[0] should not be null");
+                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.BridgeIssues.Bridge1438.Foo", Bridge.getTypeName(result[0]), "Check result[0] type name");
+                Bridge.Test.Assert.areEqual$1(101, result[0].getValue(), "result[0].Value = 101");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1438.Foo', {
+        config: {
+            properties: {
+                Value: 0
+            }
+        },
+        someMethod: function () {
+            return "I'm " + Bridge.getTypeName(Bridge.getType(this)) + " and my value is " + this.getValue();
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,

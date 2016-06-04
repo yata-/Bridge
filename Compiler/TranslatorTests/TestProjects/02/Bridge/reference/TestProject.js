@@ -443,7 +443,13 @@
 	        return obj;
         },
 
-	    merge: function (to, from) {
+	    merge: function (to, from, elemFactory) {
+	        // Maps instance of plain JS value or Object into Bridge object. 
+	        // Used for deserialization. Proper deserialization requires reflection that is currently not supported in Bridge. 
+	        // It currently is only capable to deserialize:
+	        // -instance of single class or primitive
+	        // -array of primitives 
+	        // -array of single class            
 	        if (to instanceof System.Decimal && Bridge.isNumber(from)) {
 	            return new System.Decimal(from);
 	        }
@@ -486,9 +492,9 @@
 	            for (i = 0; i < from.length; i++) {
 	                var item = from[i];
 
-                    if (!Bridge.isArray(item)) {
-                        item = [item];
-                    }
+	                if (!Bridge.isArray(item)) {
+	                    item = [typeof elemFactory === 'undefined' ? item : Bridge.merge(elemFactory(), item)];
+	                }
 
                     fn.apply(to, item);
 	            }
