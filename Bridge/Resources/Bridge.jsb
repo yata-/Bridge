@@ -36,7 +36,10 @@
   <file name="Attribute.js" />
   <file name="INotifyPropertyChanged.js" />
   <file name="Convert.js" />
+  <file name="ClientWebSocket.js" />
+  <file name="Uri.js" />
   <file name="Array.js" />
+  <file name="ArraySegment.js" />
   <file name="linq.js" />
   <file name="random.js" />
   <file name="Guid.js" />
@@ -78,6 +81,7 @@
     <include name="Text/BridgeRegex.js" />
     <include name="Diagnostics.js" />
     <include name="Array.js" />
+    <include name="ArraySegment.js" />
     <include name="Collections/Interfaces.js" />
     <include name="Collections/CustomEnumerator.js" />
     <include name="Collections/ArrayEnumerator.js" />
@@ -91,6 +95,8 @@
     <include name="Attribute.js" />
     <include name="INotifyPropertyChanged.js" />
     <include name="Convert.js" />
+    <include name="ClientWebSocket.js" />
+    <include name="Uri.js" />
     <include name="linq.js" />
     <include name="random.js" />
     <include name="Guid.js" />
