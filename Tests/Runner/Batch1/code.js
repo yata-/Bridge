@@ -4,7 +4,7 @@ var SomeExternalNamespace = {
         
     }               
 };
-SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;};
+SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
 
 
 (function (globals) {
@@ -701,7 +701,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
                 // Valuetypes with embedded GC-refs
                 //----------------------------------------------------------
                 var g;
-                g = System.Array.init(5, function () {
+                g = System.Array.init(5, function (){
                     return new Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.G();
                 });
                 g[0].x = 7;
@@ -727,7 +727,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
                     Bridge.Test.Assert.areEqual(g[i].z, 0);
                 }
     
-                g = System.Array.init(5, function () {
+                g = System.Array.init(5, function (){
                     return new Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.G();
                 });
                 g[0].x = 7;
@@ -812,7 +812,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
                 // Test the Array.Copy code for value-type arrays => Object[]
                 var s;
                 var d;
-                s = System.Array.init(5, function () {
+                s = System.Array.init(5, function (){
                     return new Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.G();
                 });
                 d = System.Array.init(5, null);
@@ -851,10 +851,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
     
                 var s;
                 var d;
-                s = System.Array.init(5, function () {
+                s = System.Array.init(5, function (){
                     return new Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.G();
                 });
-                d = System.Array.init(5, function () {
+                d = System.Array.init(5, function (){
                     return new Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.G();
                 });
     
@@ -1342,7 +1342,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
                 var indices = [1];
                 {
                     // null -> default(null)
-                    var a = System.Array.init(3, function () {
+                    var a = System.Array.init(3, function (){
                         return new Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.S();
                     });
                     a[1].x = 572662306;
@@ -3412,7 +3412,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
                 Bridge.Test.Assert.areEqual(2, i.v);
                 Bridge.Test.Assert.areEqual("1", $function.v);
     
-                var res = Bridge.ClientTest.BridgeIssues.Bridge1026.function ($function.v);
+                var res = Bridge.ClientTest.BridgeIssues.Bridge1026.function($function.v);
                 Bridge.Test.Assert.areEqual("11", res);
             },
             testFunction: function (i, $function) {
@@ -3766,7 +3766,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1051', {
         statics: {
             testInlinePopertyWithValue: function () {
-                var Foo = function () {this.currentBar = false; this.setBar = function (value) {this.currentBar = value;};};
+                var Foo = function(){this.currentBar = false; this.setBar = function(value){this.currentBar = value;};};
     
                 var foo = new Foo();
                 foo.setBar(true);
@@ -3779,7 +3779,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1053', {
         statics: {
             testFieldPropertyWithInterface: function () {
-                var Foo = function () {this.bar = null;};
+                var Foo = function(){this.bar = null;};
                 var foo = new Foo();
                 var car = foo;
                 foo.bar = "1";
@@ -4722,25 +4722,25 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
                             }
                         } catch($async_e1) {
                             $async_e = System.Exception.create($async_e1);
-                            if ($step >= 1 && $step <= 2) {
+                            if ($step >= 1 && $step <= 2){
     
                                 $step = 3;
                                 $asyncBody();
                                 return;
                             }
-                            if ($step >= 5 && $step <= 6) {
+                            if ($step >= 5 && $step <= 6){
     
                                 $step = 7;
                                 $asyncBody();
                                 return;
                             }
-                            if ($step >= 10 && $step <= 11) {
+                            if ($step >= 10 && $step <= 11){
     
                                 $step = 12;
                                 $asyncBody();
                                 return;
                             }
-                            if ($step >= 9 && $step <= 13) {
+                            if ($step >= 9 && $step <= 13){
     
                                 $step = 14;
                                 $asyncBody();
@@ -4831,13 +4831,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
                             }
                         } catch($async_e1) {
                             $async_e = System.Exception.create($async_e1);
-                            if ($step >= 2 && $step <= 3) {
+                            if ($step >= 2 && $step <= 3){
     
                                 $step = 4;
                                 $asyncBody();
                                 return;
                             }
-                            if ( $step >= 1 && $step <= 5 ) {
+                            if ( $step >= 1 && $step <= 5 ){
                                 if (Bridge.is($async_e, System.InvalidOperationException)) {
                                     e = $async_e;
                                     $step = 6;
@@ -5408,7 +5408,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
         }
     });
     
-    (function () {
+    (function(){
         var Bridge1203_a2 = function () {
         };
     })();
@@ -5511,6 +5511,26 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
         config: {
             properties: {
                 DecimalProperty: System.Decimal(0.0)
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge122', {
+        statics: {
+            nx: 1,
+            breaker: null,
+            config: {
+                init: function () {
+                    this.breaker = System.Array.create(0, [[1, 2], [3, 4]], 2, 2);
+                }
+            },
+            test2DArrayConstruction: function () {
+                var x = 0;
+                var y = 1;
+    
+                var retval = (x >= 0 && x < Bridge.ClientTest.BridgeIssues.Bridge122.nx && Bridge.ClientTest.BridgeIssues.Bridge122.breaker.length > ((((((x + 1) | 0)) * Bridge.ClientTest.BridgeIssues.Bridge122.nx) | 0))) ? Bridge.ClientTest.BridgeIssues.Bridge122.breaker.get([x, y]) : 0;
+    
+                Bridge.Test.Assert.areEqual(2, retval);
             }
         }
     });
@@ -6649,11 +6669,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
         statics: {
             testInterfaceDefaultParameter: function () {
                 var value = new Bridge.ClientTest.BridgeIssues.Bridge1313.Class();
-                Bridge.Test.Assert.areEqual(1, value.function (1));
+                Bridge.Test.Assert.areEqual(1, value.function(1));
             },
             testClassNotDefaultParameter: function () {
                 var value = new Bridge.ClientTest.BridgeIssues.Bridge1313.Class();
-                Bridge.Test.Assert.areEqual(2, value.function (2));
+                Bridge.Test.Assert.areEqual(2, value.function(2));
             }
         }
     });
@@ -7238,7 +7258,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
             array: null,
             config: {
                 init: function () {
-                    this.array = System.Array.init(3, function () {
+                    this.array = System.Array.init(3, function (){
         return Bridge.getDefaultValue(T);
     });
                 }
@@ -7260,7 +7280,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
         constructor: function () {
         },
         returnArray: function () {
-            return System.Array.init(3, function () {
+            return System.Array.init(3, function (){
                 return Bridge.getDefaultValue(T);
             });
         },
@@ -8597,7 +8617,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
     
                 Bridge.Test.Assert.notNull$1(serialized, " serialized should not be null");
     
-                var result = Bridge.merge(new Array(), JSON.parse(serialized), function () {return new Bridge.ClientTest.BridgeIssues.Bridge1438.Foo();});
+                var result = Bridge.merge(new Array(), JSON.parse(serialized), function(){return new Bridge.ClientTest.BridgeIssues.Bridge1438.Foo();});
     
                 Bridge.Test.Assert.notNull$1(result, " result should not be null");
                 Bridge.Test.Assert.areEqual$1("Array", Bridge.getTypeName(result), "Check result type name");
@@ -10507,7 +10527,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
             testUseCase: function () {
                 var s = "ab|abc&ab&abc|de&ef&";
     
-                var r = System.String.split(s, [124, 38].map(function (i) {{ return String.fromCharCode(i); }}));
+                var r = System.String.split(s, [124, 38].map(function(i) {{ return String.fromCharCode(i); }}));
                 var expected = ["ab", "abc", "ab", "abc", "de", "ef", ""];
     
                 Bridge.Test.Assert.areDeepEqual$1(expected, r, "#578 Split(params char[] separator)");
@@ -12481,7 +12501,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
                 fruits[1] = "apple";
                 fruits[2] = "lemon";
     
-                var list = System.Linq.Enumerable.from(fruits).select(function (x) { return Bridge.cast(x, String); }).orderBy($_.Bridge.ClientTest.BridgeIssues.Bridge694.f1).select($_.Bridge.ClientTest.BridgeIssues.Bridge694.f1).toList(String);
+                var list = System.Linq.Enumerable.from(fruits).select(function(x) { return Bridge.cast(x, String); }).orderBy($_.Bridge.ClientTest.BridgeIssues.Bridge694.f1).select($_.Bridge.ClientTest.BridgeIssues.Bridge694.f1).toList(String);
                 Bridge.Test.Assert.areEqual$1("apple", list.getItem(0), "Bridge694 apple");
                 Bridge.Test.Assert.areEqual$1("lemon", list.getItem(1), "Bridge694 lemon");
                 Bridge.Test.Assert.areEqual$1("mango", list.getItem(2), "Bridge694 mango");
@@ -12606,7 +12626,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
                                         }
                                         i = (i + 1) | 0;
                                     }).call(this) || {};
-                                    if ($t2.jump == 3) return {jump: 3, v: $t2.v};
+                                    if($t2.jump == 3) return {jump: 3, v: $t2.v};
                                 }
     
                                 if (System.Linq.Enumerable.from(testList).any(function (x) {
@@ -12616,7 +12636,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
                                 }
                                 i = (i + 1) | 0;
                             }).call(this) || {};
-                            if ($t1.jump == 3) return {jump: 3, v: $t1.v};
+                            if($t1.jump == 3) return {jump: 3, v: $t1.v};
                         }
     
                         if (System.Linq.Enumerable.from(testList).any(function (x) {
@@ -12626,7 +12646,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
                         }
                         i = (i + 1) | 0;
                     }).call(this) || {};
-                    if ($t.jump == 3) return $t.v;
+                    if($t.jump == 3) return $t.v;
                 }
     
                 return "NoLoops";
@@ -12793,7 +12813,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
                 $t = Bridge.getEnumerator(value);
                 while ($t.moveNext()) {
                     var item = $t.getCurrent();
-                    result.add($function (item));
+                    result.add($function(item));
                 }
                 return result;
             }
@@ -13630,7 +13650,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
                             }
                         } catch($async_e1) {
                             $async_e = System.Exception.create($async_e1);
-                            if ( $step >= 1 && $step <= 2 ) {
+                            if ( $step >= 1 && $step <= 2 ){
                                 exception = $async_e;
                                 $step = 3;
                                 $asyncBody();
@@ -14589,7 +14609,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
                             }
                         } catch($async_e1) {
                             $async_e = System.Exception.create($async_e1);
-                            if ($step >= 1 && $step <= 2) {
+                            if ($step >= 1 && $step <= 2){
     
                                 $step = 3;
                                 $asyncBody();
@@ -14654,7 +14674,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
                             }
                         } catch($async_e1) {
                             $async_e = System.Exception.create($async_e1);
-                            if ( $step >= 1 && $step <= 2 ) {
+                            if ( $step >= 1 && $step <= 2 ){
                                 e = $async_e;
                                 $step = 3;
                                 $asyncBody();
@@ -14716,7 +14736,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
                             }
                         } catch($async_e1) {
                             $async_e = System.Exception.create($async_e1);
-                            if ( $step >= 1 && $step <= 2 ) {
+                            if ( $step >= 1 && $step <= 2 ){
                                 $step = 3;
                                 $asyncBody();
                                 return;
@@ -14891,7 +14911,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
                             }
                         } catch($async_e1) {
                             $async_e = System.Exception.create($async_e1);
-                            if ( $step >= 1 && $step <= 2 ) {
+                            if ( $step >= 1 && $step <= 2 ){
                                 e = $async_e;
                                 $step = 3;
                                 $asyncBody();
@@ -15931,7 +15951,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
     
                         count = (count + 1) | 0;
                     }).call(this) || {};
-                    if ($t.jump == 1) continue;
+                    if($t.jump == 1) continue;
                 }
     
                 Bridge.Test.Assert.areEqual$1(1, count, "\"continue\" generated correctly");
@@ -19702,7 +19722,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
             validOffsetIn: function () {
                 var input = "test";
                 var inputBytes = System.Convert.fromBase64String(input);
-                var resultChars = System.Array.init(4, function () {
+                var resultChars = System.Array.init(4, function (){
                     return new System.Char();
                 });
                 var fillCharCount = System.Convert.toBase64CharArray(inputBytes, 0, ((inputBytes.length - 1) | 0), resultChars, 0, null);
@@ -19711,7 +19731,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
             shortInputArray: function () {
                 // Regression test for bug where a short input array caused an exception to be thrown
                 var inputBuffer = [97, 98, 99];
-                var ouputBuffer = System.Array.init(4, function () {
+                var ouputBuffer = System.Array.init(4, function (){
                     return new System.Char();
                 });
                 var c1 = System.Convert.toBase64CharArray(inputBuffer, 0, 3, ouputBuffer, 0, null);
@@ -19752,7 +19772,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
             invalidOffsetIn: function () {
                 var inputChars = System.String.toCharArray(("test"), 0, ("test").length);
                 var inputBytes = System.Convert.fromBase64CharArray(inputChars, 0, inputChars.length);
-                var outputBuffer = System.Array.init(4, function () {
+                var outputBuffer = System.Array.init(4, function (){
                     return new System.Char();
                 });
     
@@ -19766,7 +19786,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
             invalidOffsetOut: function () {
                 var inputChars = System.String.toCharArray(("test"), 0, ("test").length);
                 var inputBytes = System.Convert.fromBase64CharArray(inputChars, 0, inputChars.length);
-                var outputBuffer = System.Array.init(4, function () {
+                var outputBuffer = System.Array.init(4, function (){
                     return new System.Char();
                 });
     
@@ -19780,7 +19800,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
             invalidInputLength: function () {
                 var inputChars = System.String.toCharArray(("test"), 0, ("test").length);
                 var inputBytes = System.Convert.fromBase64CharArray(inputChars, 0, inputChars.length);
-                var outputBuffer = System.Array.init(4, function () {
+                var outputBuffer = System.Array.init(4, function (){
                     return new System.Char();
                 });
     
@@ -19801,7 +19821,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
     
     Bridge.apply($_.Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests, {
         f1: function () {
-            System.Convert.toBase64CharArray(null, 0, 1, System.Array.init(1, function () {
+            System.Convert.toBase64CharArray(null, 0, 1, System.Array.init(1, function (){
                 return new System.Char();
             }), 0, null);
         },
@@ -21274,7 +21294,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
         },
         canCatchStringAsException: function () {
             try {
-                (function () {{ throw 'The message'; }})();
+                (function() {{ throw 'The message'; }})();
                 Bridge.Test.Assert.fail$1("Should not get to statement after throw");
             }
             catch ($e1) {
@@ -21293,7 +21313,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
         },
         canCatchStringAsCatchAll: function () {
             try {
-                (function () {{ throw 'The message'; }})();
+                (function() {{ throw 'The message'; }})();
                 Bridge.Test.Assert.fail$1("Should not get to statement after throw");
             }
             catch ($e1) {
@@ -28493,7 +28513,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
                 var $t;
                 var a;
                 var i = 0;
-                var result = System.Array.init(5, function () {
+                var result = System.Array.init(5, function (){
                     return new System.Char();
                 });
                 $t = Bridge.getEnumerator("danny");
@@ -28811,10 +28831,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
             Bridge.Test.Assert.areDeepEqual(["a", "ca"], ("abcabcabc").split(String.fromCharCode(98), 2));
         },
         splitWithCharsAndLimitWorks: function () {
-            Bridge.Test.Assert.areDeepEqual(["a", "cabcabc"], System.String.split(("abcabcabc"), [98].map(function (i) {{ return String.fromCharCode(i); }}), 2));
+            Bridge.Test.Assert.areDeepEqual(["a", "cabcabc"], System.String.split(("abcabcabc"), [98].map(function(i) {{ return String.fromCharCode(i); }}), 2));
         },
         splitWithCharsAndStringSplitOptionsAndLimitWorks: function () {
-            Bridge.Test.Assert.areDeepEqual(["a", "cabcabc"], System.String.split(("abxcabcabc"), [98, 120].map(function (i) {{ return String.fromCharCode(i); }}), 2, 1));
+            Bridge.Test.Assert.areDeepEqual(["a", "cabcabc"], System.String.split(("abxcabcabc"), [98, 120].map(function(i) {{ return String.fromCharCode(i); }}), 2, 1));
         },
         splitWithRegexWorks: function () {
             Bridge.Test.Assert.areDeepEqual(["a", "ca", "ca", "c"], ("abcaxcaxc").split(new RegExp("b|x", "g")));
@@ -28849,9 +28869,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
             Bridge.Test.Assert.areDeepEqual(["a", "bcxzdexz"], System.String.split(("xzaxyxzbcxzdexz"), ["xy", "xz"], 2, 1));
         },
         splitWithCharsWorks: function () {
-            Bridge.Test.Assert.areDeepEqual(["Lorem", "Ipsum", "", "dolor", "sit", "amet"], System.String.split(("Lorem Ipsum, dolor[sit amet"), [44, 32, 91].map(function (i) {{ return String.fromCharCode(i); }})));
-            Bridge.Test.Assert.areDeepEqual(["Lorem", "Ipsum", "", "dolor", "sit", "amet"], System.String.split(("Lorem Ipsum, dolor[sit amet"), [44, 32, 91].map(function (i) {{ return String.fromCharCode(i); }}), null, 0));
-            Bridge.Test.Assert.areDeepEqual(["Lorem", "Ipsum", "dolor", "sit", "amet"], System.String.split(("Lorem Ipsum, dolor[sit amet"), [44, 32, 91].map(function (i) {{ return String.fromCharCode(i); }}), null, 1));
+            Bridge.Test.Assert.areDeepEqual(["Lorem", "Ipsum", "", "dolor", "sit", "amet"], System.String.split(("Lorem Ipsum, dolor[sit amet"), [44, 32, 91].map(function(i) {{ return String.fromCharCode(i); }})));
+            Bridge.Test.Assert.areDeepEqual(["Lorem", "Ipsum", "", "dolor", "sit", "amet"], System.String.split(("Lorem Ipsum, dolor[sit amet"), [44, 32, 91].map(function(i) {{ return String.fromCharCode(i); }}), null, 0));
+            Bridge.Test.Assert.areDeepEqual(["Lorem", "Ipsum", "dolor", "sit", "amet"], System.String.split(("Lorem Ipsum, dolor[sit amet"), [44, 32, 91].map(function(i) {{ return String.fromCharCode(i); }}), null, 1));
         },
         splitWithStringsWorks: function () {
             Bridge.Test.Assert.areDeepEqual(["a ", " b ", " b ", " c and c ", "", "", " d ", " d ", " e"], System.String.split(("a is b if b is c and c isifis d if d is e"), ["is", "if"], null, 0));
@@ -30393,7 +30413,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
             }
         },
         isMatchTest: function () {
-            var rgx = new System.Text.RegularExpressions.Regex("constructor", "^[a-zA-Z0-9]\\d{2}[a-zA-Z0-9](-\\d{3}) {2}[A-Za-z0-9]$");
+            var rgx = new System.Text.RegularExpressions.Regex("constructor", "^[a-zA-Z0-9]\\d{2}[a-zA-Z0-9](-\\d{3}){2}[A-Za-z0-9]$");
             for (var i = 0; i < this._isMatchTestData.getCount(); i = (i + 1) | 0) {
                 var testValue = this._isMatchTestData.getItem(i).item1;
                 var exptected = this._isMatchTestData.getItem(i).item2;
@@ -30403,7 +30423,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
             }
         },
         isMatchWithOffsetTest: function () {
-            var rgx = new System.Text.RegularExpressions.Regex("constructor", "[a-zA-Z0-9]\\d{2}[a-zA-Z0-9](-\\d{3}) {2}[A-Za-z0-9]");
+            var rgx = new System.Text.RegularExpressions.Regex("constructor", "[a-zA-Z0-9]\\d{2}[a-zA-Z0-9](-\\d{3}){2}[A-Za-z0-9]");
             for (var i = 0; i < this._isMatchWithOffsetTestData.getCount(); i = (i + 1) | 0) {
                 var testValue = this._isMatchWithOffsetTestData.getItem(i).item1;
                 var exptected = this._isMatchWithOffsetTestData.getItem(i).item2;
@@ -30414,7 +30434,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
             }
         },
         isMatchStaticTest: function () {
-            var pattern = "^[a-zA-Z0-9]\\d{2}[a-zA-Z0-9](-\\d{3}) {2}[A-Za-z0-9]$";
+            var pattern = "^[a-zA-Z0-9]\\d{2}[a-zA-Z0-9](-\\d{3}){2}[A-Za-z0-9]$";
             for (var i = 0; i < this._isMatchTestData.getCount(); i = (i + 1) | 0) {
                 var testValue = this._isMatchTestData.getItem(i).item1;
                 var exptected = this._isMatchTestData.getItem(i).item2;
@@ -30424,7 +30444,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
             }
         },
         isMatchStaticWithOptionsTest: function () {
-            var pattern = "^[a-zA-Z0-9]\\d{2}[a-zA-Z0-9](-\\d{3}) {2}[A-Za-z0-9]$";
+            var pattern = "^[a-zA-Z0-9]\\d{2}[a-zA-Z0-9](-\\d{3}){2}[A-Za-z0-9]$";
             for (var i = 0; i < this._isMatchTestData.getCount(); i = (i + 1) | 0) {
                 var testValue = this._isMatchTestData.getItem(i).item1;
                 var exptected = this._isMatchTestData.getItem(i).item2;
@@ -30434,7 +30454,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
             }
         },
         isMatchStaticWithOptionsAndTimeoutTest: function () {
-            var pattern = "^[a-zA-Z0-9]\\d{2}[a-zA-Z0-9](-\\d{3}) {2}[A-Za-z0-9]$";
+            var pattern = "^[a-zA-Z0-9]\\d{2}[a-zA-Z0-9](-\\d{3}){2}[A-Za-z0-9]$";
             for (var i = 0; i < this._isMatchTestData.getCount(); i = (i + 1) | 0) {
                 var testValue = this._isMatchTestData.getItem(i).item1;
                 var exptected = this._isMatchTestData.getItem(i).item2;
@@ -30464,7 +30484,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
                 // Adjusted logic here. Will just reverse the value string.
     
                 var value = match.getValue();
-                var letters = System.Array.init(value.length, function () {
+                var letters = System.Array.init(value.length, function (){
                     return new System.Char();
                 });
                 for (var i = 0; i < value.length; i = (i + 1) | 0) {
@@ -31299,7 +31319,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
                             }
                         } catch($async_e1) {
                             $async_e = System.Exception.create($async_e1);
-                            if ( $step >= 1 && $step <= 2 ) {
+                            if ( $step >= 1 && $step <= 2 ){
                                 ex2 = $async_e;
                                 $step = 3;
                                 $asyncBody();
@@ -32033,7 +32053,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
                         }
                     } catch($async_e1) {
                         $async_e = System.Exception.create($async_e1);
-                        if ( $step >= 1 && $step <= 2 ) {
+                        if ( $step >= 1 && $step <= 2 ){
                             if (Bridge.is($async_e, Bridge.PromiseException)) {
                                 ex = $async_e;
                                 $step = 3;
@@ -32449,7 +32469,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
                             }
                         } catch($async_e1) {
                             $async_e = System.Exception.create($async_e1);
-                            if ( $step >= 1 && $step <= 2 ) {
+                            if ( $step >= 1 && $step <= 2 ){
                                 if (Bridge.is($async_e, System.Threading.Tasks.TaskCanceledException)) {
                                     ex = $async_e;
                                     $step = 3;
@@ -36409,7 +36429,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
             var $t;
             var startPos = 0, endPos = 70;
             var input = "Brooklyn Dodgers, National League, 1911, 1912, 1932-1957\nChicago Cubs, National League, 1903-present\nDetroit Tigers, American League, 1901-present\nNew York Giants, National League, 1885-1957\nWashington Senators, American League, 1901-1960\n";
-            var pattern = "^((\\w+(\\s?)) {2,}),\\s(\\w+\\s\\w+),(\\s\\d{4}(-(\\d{4}|present))?,?)+";
+            var pattern = "^((\\w+(\\s?)){2,}),\\s(\\w+\\s\\w+),(\\s\\d{4}(-(\\d{4}|present))?,?)+";
     
             var actuals = new System.Collections.Generic.List$1(String)();
             var expecteds = ["The Brooklyn Dodgers played in the National League in 1911, 1912, 1932-1957."];
@@ -36441,7 +36461,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
             var $t;
             var startPos = 0, endPos = 70;
             var input = "Brooklyn Dodgers, National League, 1911, 1912, 1932-1957\nChicago Cubs, National League, 1903-present\nDetroit Tigers, American League, 1901-present\nNew York Giants, National League, 1885-1957\nWashington Senators, American League, 1901-1960\n";
-            var pattern = "^((\\w+(\\s?)) {2,}),\\s(\\w+\\s\\w+),(\\s\\d{4}(-(\\d{4}|present))?,?)+";
+            var pattern = "^((\\w+(\\s?)){2,}),\\s(\\w+\\s\\w+),(\\s\\d{4}(-(\\d{4}|present))?,?)+";
     
             var actuals = new System.Collections.Generic.List$1(String)();
             var expecteds = ["The Brooklyn Dodgers played in the National League in 1911, 1912, 1932-1957.", "The Chicago Cubs played in the National League in 1903-present.", "The Detroit Tigers played in the American League in 1901-present.", "The New York Giants played in the National League in 1885-1957.", "The Washington Senators played in the American League in 1901-1960."];
@@ -36477,7 +36497,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
             var cr = '\n';
             var input = "Brooklyn Dodgers, National League, 1911, 1912, 1932-1957" + cr + "Chicago Cubs, National League, 1903-present" + cr + "Detroit Tigers, American League, 1901-present" + cr + "New York Giants, National League, 1885-1957" + cr + "Washington Senators, American League, 1901-1960" + cr;
     
-            var basePattern = "^((\\w+(\\s?)) {2,}),\\s(\\w+\\s\\w+),(\\s\\d{4}(-(\\d{4}|present))?,?)+";
+            var basePattern = "^((\\w+(\\s?)){2,}),\\s(\\w+\\s\\w+),(\\s\\d{4}(-(\\d{4}|present))?,?)+";
             var pattern = basePattern + "$";
     
             var actuals = new System.Collections.Generic.List$1(String)();
@@ -36513,7 +36533,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
             var cr = '\n';
             var input = "Brooklyn Dodgers, National League, 1911, 1912, 1932-1957" + cr + "Chicago Cubs, National League, 1903-present" + cr + "Detroit Tigers, American League, 1901-present" + cr + "New York Giants, National League, 1885-1957" + cr + "Washington Senators, American League, 1901-1960" + cr;
     
-            var basePattern = "^((\\w+(\\s?)) {2,}),\\s(\\w+\\s\\w+),(\\s\\d{4}(-(\\d{4}|present))?,?)+";
+            var basePattern = "^((\\w+(\\s?)){2,}),\\s(\\w+\\s\\w+),(\\s\\d{4}(-(\\d{4}|present))?,?)+";
             var pattern = basePattern + "$";
     
             var actuals = new System.Collections.Generic.List$1(String)();
@@ -36549,7 +36569,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
             var cr = "\r\n";
             var input = "Brooklyn Dodgers, National League, 1911, 1912, 1932-1957" + cr + "Chicago Cubs, National League, 1903-present" + cr + "Detroit Tigers, American League, 1901-present" + cr + "New York Giants, National League, 1885-1957" + cr + "Washington Senators, American League, 1901-1960" + cr;
     
-            var basePattern = "^((\\w+(\\s?)) {2,}),\\s(\\w+\\s\\w+),(\\s\\d{4}(-(\\d{4}|present))?,?)+";
+            var basePattern = "^((\\w+(\\s?)){2,}),\\s(\\w+\\s\\w+),(\\s\\d{4}(-(\\d{4}|present))?,?)+";
             var pattern = basePattern + "$";
     
             var actuals = new System.Collections.Generic.List$1(String)();
@@ -36587,7 +36607,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
             var cr = '\n';
             var input = "Brooklyn Dodgers, National League, 1911, 1912, 1932-1957" + cr + "Chicago Cubs, National League, 1903-present" + cr + "Detroit Tigers, American League, 1901-present" + cr + "New York Giants, National League, 1885-1957" + cr + "Washington Senators, American League, 1901-1960" + cr;
     
-            var basePattern = "^((\\w+(\\s?)) {2,}),\\s(\\w+\\s\\w+),(\\s\\d{4}(-(\\d{4}|present))?,?)+";
+            var basePattern = "^((\\w+(\\s?)){2,}),\\s(\\w+\\s\\w+),(\\s\\d{4}(-(\\d{4}|present))?,?)+";
             var pattern;
     
             var actuals = new System.Collections.Generic.List$1(String)();
@@ -36624,7 +36644,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
             var startPos = 0, endPos = 70;
             var input = "Brooklyn Dodgers, National League, 1911, 1912, 1932-1957\nChicago Cubs, National League, 1903-present\nDetroit Tigers, American League, 1901-present\nNew York Giants, National League, 1885-1957\nWashington Senators, American League, 1901-1960\n";
     
-            var pattern = "\\A((\\w+(\\s?)) {2,}),\\s(\\w+\\s\\w+),(\\s\\d{4}(-(\\d{4}|present))?,?)+";
+            var pattern = "\\A((\\w+(\\s?)){2,}),\\s(\\w+\\s\\w+),(\\s\\d{4}(-(\\d{4}|present))?,?)+";
     
             var actuals = new System.Collections.Generic.List$1(String)();
             var expecteds = ["The Brooklyn Dodgers played in the National League in 1911, 1912, 1932-1957."];
@@ -36655,7 +36675,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
         endOfStringOrNewlineTest: function () {
             var $t;
             var inputs = ["Brooklyn Dodgers, National League, 1911, 1912, 1932-1957", "Chicago Cubs, National League, 1903-present" + '\n', "Detroit Tigers, American League, 1901-present" + System.Text.RegularExpressions.Regex.unescape("\\n"), "New York Giants, National League, 1885-1957", "Washington Senators, American League, 1901-1960" + '\n'];
-            var pattern = "^((\\w+(\\s?)) {2,}),\\s(\\w+\\s\\w+),(\\s\\d{4}(-(\\d{4}|present))?,?)+\\r?\\Z";
+            var pattern = "^((\\w+(\\s?)){2,}),\\s(\\w+\\s\\w+),(\\s\\d{4}(-(\\d{4}|present))?,?)+\\r?\\Z";
     
             var actuals = new System.Collections.Generic.List$1(Boolean)();
             var expecteds = [true, true, true, true, true];
@@ -36675,7 +36695,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
         endOfStringOnlyTest: function () {
             var $t;
             var inputs = ["Brooklyn Dodgers, National League, 1911, 1912, 1932-1957", "Chicago Cubs, National League, 1903-present\r\n", "Detroit Tigers, American League, 1901-present" + System.Text.RegularExpressions.Regex.unescape("\\n"), "New York Giants, National League, 1885-1957", "Washington Senators, American League, 1901-1960\r\n"];
-            var pattern = "^((\\w+(\\s?)) {2,}),\\s(\\w+\\s\\w+),(\\s\\d{4}(-(\\d{4}|present))?,?)+\\r?\\z";
+            var pattern = "^((\\w+(\\s?)){2,}),\\s(\\w+\\s\\w+),(\\s\\d{4}(-(\\d{4}|present))?,?)+\\r?\\z";
     
             var actuals = new System.Collections.Generic.List$1(Boolean)();
             var expecteds = [true, false, false, true, false];
@@ -37297,7 +37317,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function () {return 1;}
     
         },
         unescapeTest: function () {
-            var pattern = "\n\r\t\f[]() {}!123abc \\, *, +, ?, |, {, [, (,), ^, $,., #,  \u0007, \b, \t, and \u000b";
+            var pattern = "\n\r\t\f[](){}!123abc \\, *, +, ?, |, {, [, (,), ^, $,., #,  \u0007, \b, \t, and \u000b";
             var escaped = System.Text.RegularExpressions.Regex.escape(pattern);
             var unescaped = System.Text.RegularExpressions.Regex.unescape(escaped);
     

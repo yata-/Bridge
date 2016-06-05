@@ -1140,6 +1140,7 @@
                 QUnit.test("#1206 - TestDocumentURLProperty", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1206.testDocumentURLProperty);
                 QUnit.test("#1217 - TestTypeInferenceWithNamedArguments", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1217.testTypeInferenceWithNamedArguments);
                 QUnit.test("#1219 - TestLongJSON", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1219.testLongJSON);
+                QUnit.test("#122 - Test2DArrayConstruction", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge122.test2DArrayConstruction);
                 QUnit.test("#1220 - TestConstInGenericClass", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1220.testConstInGenericClass);
                 QUnit.test("#1226 - TestSinh", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1226.testSinh);
                 QUnit.test("#1226 - TestCosh", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1226.testCosh);
@@ -3477,6 +3478,16 @@
             testLongJSON: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1219).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1219);
                 Bridge.ClientTest.BridgeIssues.Bridge1219.testLongJSON();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge122', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge122)],
+        statics: {
+            test2DArrayConstruction: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge122).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge122, 1);
+                Bridge.ClientTest.BridgeIssues.Bridge122.test2DArrayConstruction();
             }
         }
     });
