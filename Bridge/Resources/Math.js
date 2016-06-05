@@ -25,15 +25,15 @@
             return Math.round(n) / m;
         },
 
-        sinh: function(x) {
+        sinh: function (x) {
             return (Math.exp(x) - Math.exp(-x)) / 2;
         },
 
-        cosh: function(x) {
+        cosh: function (x) {
             return (Math.exp(x) + Math.exp(-x)) / 2;
         },
 
-        tanh: function(x) {
+        tanh: function (x) {
             if (x === Infinity) {
                 return 1;
             } else if (x === -Infinity) {

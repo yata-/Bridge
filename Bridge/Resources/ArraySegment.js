@@ -1,24 +1,24 @@
 ﻿    // @source ArraySegment.js
 
-    Bridge.Class.generic('System.ArraySegment$1', function(T) {
+    Bridge.Class.generic('System.ArraySegment$1', function (T) {
         var $$name = Bridge.Class.genericName('System.ArraySegment$1', T);
 
         return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-            constructor: function(array, offset, count) {
+            constructor: function (array, offset, count) {
                 this.array = array;
                 this.offset = offset || 0;
                 this.count = count || array.length;
             },
 
-            getArray: function() {
+            getArray: function () {
                 return this.array;
             },
 
-            getCount: function() {
+            getCount: function () {
                 return this.count;
             },
 
-            getOffset: function() {
+            getOffset: function () {
                 return this.offset;
             }
         }));

@@ -1,11 +1,11 @@
     // @source Uri.js
 
     Bridge.define("System.Uri", {
-        constructor: function(uriString) {
+        constructor: function (uriString) {
             this.absoluteUri = uriString;
         },
 
-        getAbsoluteUri: function() {
+        getAbsoluteUri: function () {
             return this.absoluteUri;
         }
     });

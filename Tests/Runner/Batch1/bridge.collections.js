@@ -398,7 +398,7 @@
                 try {
                     if (en.moveNext()) {
                         var DefaultCapacity = 4;
-                        var arr = { v : System.Array.init(DefaultCapacity, function (){
+                        var arr = { v : System.Array.init(DefaultCapacity, function () {
                             return Bridge.getDefaultValue(T);
                         }) };
                         arr.v[0] = en.getCurrent$1();
@@ -445,7 +445,7 @@
                 }
     
                 length.v = 0;
-                return System.Array.init(0, function (){
+                return System.Array.init(0, function () {
                     return Bridge.getDefaultValue(T);
                 });
             }
@@ -868,7 +868,7 @@
             }
             else  {
                 var newSize = System.Collections.HashHelpers.getPrime(this._count);
-                var newSlots = System.Array.init(newSize, function (){
+                var newSlots = System.Array.init(newSize, function () {
                     return new System.Collections.Generic.HashSet$1.Slot(T)();
                 });
                 var newBuckets = System.Array.init(newSize, 0);
@@ -891,7 +891,7 @@
         initialize: function (capacity) {
             var size = System.Collections.HashHelpers.getPrime(capacity);
             this._buckets = System.Array.init(size, 0);
-            this._slots = System.Array.init(size, function (){
+            this._slots = System.Array.init(size, function () {
                 return new System.Collections.Generic.HashSet$1.Slot(T)();
             });
         },
@@ -903,7 +903,7 @@
             this.setCapacity(newSize, false);
         },
         setCapacity: function (newSize, forceNewHashCodes) {
-            var newSlots = System.Array.init(newSize, function (){
+            var newSlots = System.Array.init(newSize, function () {
                 return new System.Collections.Generic.HashSet$1.Slot(T)();
             });
             if (this._slots != null) {
@@ -1136,7 +1136,7 @@
             return result.$clone();
         },
         toArray: function () {
-            var newArray = System.Array.init(this.getCount(), function (){
+            var newArray = System.Array.init(this.getCount(), function () {
                 return Bridge.getDefaultValue(T);
             });
             this.copyTo(newArray);
@@ -1303,7 +1303,7 @@
         _size: 0,
         _version: 0,
         constructor: function () {
-            this._array = System.Array.init(0, function (){
+            this._array = System.Array.init(0, function () {
                 return Bridge.getDefaultValue(T);
             });
         },
@@ -1311,7 +1311,7 @@
             if (capacity < 0) {
                 throw new System.ArgumentOutOfRangeException("capacity", "Non-negative number required.");
             }
-            this._array = System.Array.init(capacity, function (){
+            this._array = System.Array.init(capacity, function () {
                 return Bridge.getDefaultValue(T);
             });
         },
@@ -1320,7 +1320,7 @@
                 throw new System.ArgumentNullException("collection");
             }
     
-            this._array = System.Array.init(System.Collections.Generic.Queue$1(T).DefaultCapacity, function (){
+            this._array = System.Array.init(System.Collections.Generic.Queue$1(T).DefaultCapacity, function () {
                 return Bridge.getDefaultValue(T);
             });
     
@@ -1446,7 +1446,7 @@
             return this._array[(((this._head + i) | 0)) % this._array.length];
         },
         toArray: function () {
-            var arr = System.Array.init(this._size, function (){
+            var arr = System.Array.init(this._size, function () {
                 return Bridge.getDefaultValue(T);
             });
             if (this._size === 0) {
@@ -1464,7 +1464,7 @@
             return arr;
         },
         setCapacity: function (capacity) {
-            var newarray = System.Array.init(capacity, function (){
+            var newarray = System.Array.init(capacity, function () {
                 return Bridge.getDefaultValue(T);
             });
             if (this._size > 0) {
@@ -1593,7 +1593,7 @@
         _size: 0,
         _version: 0,
         constructor: function () {
-            this._array = System.Array.init(0, function (){
+            this._array = System.Array.init(0, function () {
                 return Bridge.getDefaultValue(T);
             });
         },
@@ -1601,7 +1601,7 @@
             if (capacity < 0) {
                 throw new System.ArgumentOutOfRangeException("capacity", "Non-negative number required.");
             }
-            this._array = System.Array.init(capacity, function (){
+            this._array = System.Array.init(capacity, function () {
                 return Bridge.getDefaultValue(T);
             });
         },
@@ -1738,7 +1738,7 @@
             this._version = (this._version + 1) | 0;
         },
         toArray: function () {
-            var objArray = System.Array.init(this._size, function (){
+            var objArray = System.Array.init(this._size, function () {
                 return Bridge.getDefaultValue(T);
             });
             var i = 0;

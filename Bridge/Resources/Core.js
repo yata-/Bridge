@@ -7,7 +7,7 @@
 
         identity: function (x) { return x; },
 
-        ref: function(o, n) {
+        ref: function (o, n) {
             if (Bridge.isArray(n)) {
                 n = System.Array.toIndex(o, n);
             }
@@ -252,7 +252,7 @@
 
             if (Bridge.isString(value)) {
                 var hash = 0,
-                i;
+                    i;
 
                 for (i = 0; i < value.length; i++) {
                     hash = (((hash << 5) - hash) + value.charCodeAt(i)) & 0xFFFFFFFF;
@@ -298,6 +298,7 @@
             }
 
             var results = (/function (.{1,})\(/).exec(str);
+
             return (results && results.length > 1) ? results[1] : "Object";
         },
 
@@ -337,6 +338,7 @@
             if (inheritors) {
                 for (i = 0; i < inheritors.length; i++) {
                     r = Bridge.isAssignableFrom(baseType, inheritors[i]);
+
                     if (r) {
                         return true;
                     }
@@ -653,6 +655,7 @@
             if (a && Bridge.isFunction(a.equals) && a.equals.length === 1) {
                 return a.equals(b);
             }
+
             if (b && Bridge.isFunction(b.equals) && b.equals.length === 1) {
                 return b.equals(a);
             } else if (Bridge.isDate(a) && Bridge.isDate(b)) {
@@ -664,6 +667,7 @@
             }
 
             var eq = a === b;
+
             if (!eq && typeof a === "object" && typeof b === "object" && a !== null && b !== null && a.$struct && b.$struct && a.$$name === b.$$name) {
                 return Bridge.getHashCode(a) === Bridge.getHashCode(b) && Bridge.objectEquals(a, b);
             }
@@ -712,8 +716,7 @@
 
                     if (a[p] === b[p]) {
                         continue;
-                    }
-                    else if (typeof (a[p]) === "object") {
+                    } else if (typeof (a[p]) === "object") {
                         Bridge.$$leftChain.push(a);
                         Bridge.$$rightChain.push(b);
 
@@ -747,6 +750,7 @@
                 if (Bridge.isString(a) && !Bridge.hasValue(b)) {
                     return 1;
                 }
+
                 return a < b ? -1 : (a > b ? 1 : 0);
             } else if (Bridge.isDate(a)) {
                 return Bridge.compare(a.valueOf(), b.valueOf());
@@ -826,7 +830,7 @@
         },
 
         fn: {
-            equals: function(fn) {
+            equals: function (fn) {
                 if (this === fn) {
                     return true;
                 }
@@ -975,7 +979,7 @@
                 return Bridge.fn.$build(list1.concat(list2));
             },
 
-            getInvocationList: function() {
+            getInvocationList: function () {
                 
             },
 
@@ -1043,5 +1047,3 @@
     globals.System.Diagnostics = {};
     globals.System.Diagnostics.Contracts = {};
     globals.System.Threading = {};
-
-

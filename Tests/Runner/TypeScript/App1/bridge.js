@@ -18,7 +18,7 @@
 
         identity: function (x) { return x; },
 
-        ref: function(o, n) {
+        ref: function (o, n) {
             if (Bridge.isArray(n)) {
                 n = System.Array.toIndex(o, n);
             }
@@ -837,7 +837,7 @@
         },
 
         fn: {
-            equals: function(fn) {
+            equals: function (fn) {
                 if (this === fn) {
                     return true;
                 }
@@ -986,7 +986,7 @@
                 return Bridge.fn.$build(list1.concat(list2));
             },
 
-            getInvocationList: function() {
+            getInvocationList: function () {
                 
             },
 
@@ -3468,15 +3468,15 @@ Bridge.Class.addExtend(System.Char, [System.IComparable$1(System.Char), System.I
             return Math.round(n) / m;
         },
 
-        sinh: function(x) {
+        sinh: function (x) {
             return (Math.exp(x) - Math.exp(-x)) / 2;
         },
 
-        cosh: function(x) {
+        cosh: function (x) {
             return (Math.exp(x) + Math.exp(-x)) / 2;
         },
 
-        tanh: function(x) {
+        tanh: function (x) {
             if (x === Infinity) {
                 return 1;
             } else if (x === -Infinity) {
@@ -7934,25 +7934,25 @@ System.Array = array;
 
     // @source ArraySegment.js
 
-    Bridge.Class.generic('System.ArraySegment$1', function(T) {
+    Bridge.Class.generic('System.ArraySegment$1', function (T) {
         var $$name = Bridge.Class.genericName('System.ArraySegment$1', T);
 
         return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-            constructor: function(array, offset, count) {
+            constructor: function (array, offset, count) {
                 this.array = array;
                 this.offset = offset || 0;
                 this.count = count || array.length;
             },
 
-            getArray: function() {
+            getArray: function () {
                 return this.array;
             },
 
-            getCount: function() {
+            getCount: function () {
                 return this.count;
             },
 
-            getOffset: function() {
+            getOffset: function () {
                 return this.offset;
             }
         }));
@@ -9343,13 +9343,13 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
         },
 
         email: function (value) {
-            var re = /^(")?(?:[^\."])(?:(?:[\.])?(?:[\w\-!#$%&'*+/=?^_`{|}~]))*\1@(\w[\-\w]*\.){1,5}([A-Za-z]){2,6}$/;
+            var re = /^(")?(?:[^\."])(?:(?:[\.])?(?:[\w\-!#$%&'*+/=?^_`{|}~]))*\1@(\w[\-\w]*\.) {1,5}([A-Za-z]) {2,6}$/;
 
             return re.test(value);
         },
 
         url: function (value) {
-            var re = /(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:\.\d{1,3}){3})(?!(?:\.\d{1,3}){2})(?!\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$/;
+            var re = /(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:\.\d{1,3}) {3})(?!(?:\.\d{1,3}) {2})(?!\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}) {2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])) {2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$/;
             return re.test(value);
         },
 
@@ -11518,7 +11518,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
     Bridge.define("System.Net.WebSockets.ClientWebSocket", {
         inherits: [System.IDisposable],
-        constructor: function() {
+        constructor: function () {
             this.messageBuffer = [];
             this.state = "none";
             this.options = new System.Net.WebSockets.ClientWebSocketOptions();
@@ -11527,23 +11527,23 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             this.closeStatusDescription = null;
         },
 
-        getCloseStatus: function() {
+        getCloseStatus: function () {
             return this.closeStatus;
         },
 
-        getState: function() {
+        getState: function () {
             return this.state;
         },
 
-        getCloseStatusDescription: function() {
+        getCloseStatusDescription: function () {
             return this.closeStatusDescription;
         },
 
-        getSubProtocol: function() {
+        getSubProtocol: function () {
             return this.socket ? this.socket.protocol : null;
         },
 
-        connectAsync: function(uri, cancellationToken) {
+        connectAsync: function (uri, cancellationToken) {
             if (this.state !== "none") {
                 throw new System.InvalidOperationException("Socket is not in initial state");
             }
@@ -11554,11 +11554,11 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             try {
                 this.socket = new WebSocket(uri.getAbsoluteUri(), this.options.requestedSubProtocols);
                 this.socket.binaryType = "arraybuffer";
-                this.socket.onopen = function() {
+                this.socket.onopen = function () {
                     self.state = "open";
                     tcs.setResult(null);
                 };
-                this.socket.onmessage = function(e) {
+                this.socket.onmessage = function (e) {
                     var data = e.data,
                         message = {},
                         i;
@@ -11582,7 +11582,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                     }
                     throw new System.ArgumentException("Invalid message type.");
                 };
-                this.socket.onclose = function(e) {
+                this.socket.onclose = function (e) {
                     self.state = "closed";
                     self.closeStatus = e.code;
                     self.closeStatusDescription = e.reason;
@@ -11593,7 +11593,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             return tcs.task;
         },
 
-        sendAsync: function(buffer, messageType, endOfMessage, cancellationToken) {
+        sendAsync: function (buffer, messageType, endOfMessage, cancellationToken) {
             this.throwIfNotConnected();
             var tcs = new System.Threading.Tasks.TaskCompletionSource();
             try {
@@ -11623,12 +11623,12 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             return tcs.task;
         },
 
-        receiveAsync: function(buffer, cancellationToken) {
+        receiveAsync: function (buffer, cancellationToken) {
             this.throwIfNotConnected();
             var task,
                 tcs = new System.Threading.Tasks.TaskCompletionSource(),
                 self = this,
-                asyncBody = Bridge.fn.bind(this, function() {
+                asyncBody = Bridge.fn.bind(this, function () {
                     try {
                         if (cancellationToken.getIsCancellationRequested()) {
                             tcs.setException(new System.Threading.Tasks.TaskCanceledException("Receive has been cancelled.", tcs.task));
@@ -11666,7 +11666,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             return tcs.task;
         },
 
-        closeAsync: function(closeStatus, statusDescription, cancellationToken) {
+        closeAsync: function (closeStatus, statusDescription, cancellationToken) {
             this.throwIfNotConnected();
             if (this.state !== "open") {
                 throw new System.InvalidOperationException("Socket is not in connected state");
@@ -11674,7 +11674,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             var tcs = new System.Threading.Tasks.TaskCompletionSource(),
                 self = this,
                 task,
-                asyncBody = function() {
+                asyncBody = function () {
                     if (self.state === "closed") {
                         tcs.setResult(null);
                         return;
@@ -11696,7 +11696,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             return tcs.task;
         },
 
-        closeOutputAsync: function(closeStatus, statusDescription, cancellationToken) {
+        closeOutputAsync: function (closeStatus, statusDescription, cancellationToken) {
             this.throwIfNotConnected();
             if (this.state !== "open") {
                 throw new System.InvalidOperationException("Socket is not in connected state");
@@ -11712,11 +11712,11 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             return tcs.task;
         },
 
-        abort: function() {
+        abort: function () {
             this.dispose();
         },
 
-        dispose: function() {
+        dispose: function () {
             if (this.disposed) {
                 return;
             }
@@ -11728,7 +11728,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             }
         },
 
-        throwIfNotConnected: function() {
+        throwIfNotConnected: function () {
             if (this.disposed) {
                 throw new System.InvalidOperationException("Socket is disposed.");
             }
@@ -11739,19 +11739,19 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
     });
 
     Bridge.define("System.Net.WebSockets.ClientWebSocketOptions", {
-        constructor: function() {
+        constructor: function () {
             this.isReadOnly = false;
             this.requestedSubProtocols = [];
         },
 
-        setToReadOnly: function() {
+        setToReadOnly: function () {
             if (this.isReadOnly) {
                 throw new System.InvalidOperationException("Options are already readonly.");
             }
             this.isReadOnly = true;
         },
 
-        addSubProtocol: function(subProtocol) {
+        addSubProtocol: function (subProtocol) {
             if (this.isReadOnly) {
                 throw new System.InvalidOperationException("Socket already started.");
             }
@@ -11763,7 +11763,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
     });
 
     Bridge.define("System.Net.WebSockets.WebSocketReceiveResult", {
-        constructor: function(count, messageType, endOfMessage, closeStatus, closeStatusDescription) {
+        constructor: function (count, messageType, endOfMessage, closeStatus, closeStatusDescription) {
             this.count = count;
             this.messageType = messageType;
             this.endOfMessage = endOfMessage;
@@ -11771,23 +11771,23 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             this.closeStatusDescription = closeStatusDescription;
         },
 
-        getCount: function() {
+        getCount: function () {
             return this.count;
         },
 
-        getMessageType: function() {
+        getMessageType: function () {
             return this.messageType;
         },
 
-        getEndOfMessage: function() {
+        getEndOfMessage: function () {
             return this.endOfMessage;
         },
 
-        getCloseStatus: function() {
+        getCloseStatus: function () {
             return this.closeStatus;
         },
 
-        getCloseStatusDescription: function() {
+        getCloseStatusDescription: function () {
             return this.closeStatusDescription;
         }
     });
@@ -11795,11 +11795,11 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
     // @source Uri.js
 
     Bridge.define("System.Uri", {
-        constructor: function(uriString) {
+        constructor: function (uriString) {
             this.absoluteUri = uriString;
         },
 
-        getAbsoluteUri: function() {
+        getAbsoluteUri: function () {
             return this.absoluteUri;
         }
     });
@@ -14888,10 +14888,10 @@ Bridge.define("System.Guid", {
 		instanceOf: function (instance) {
 			return typeof(instance) === 'string' && instance.match(System.Guid.$valid);
 		},
-		getDefaultValue: function() {
+		getDefaultValue: function () {
 			return System.Guid.empty;
 		},
-		parse: function(uuid, format) {
+		parse: function (uuid, format) {
 			var r = {};
 			if (System.Guid.tryParse(uuid, format, r)) {
 			    return r.v;
@@ -14936,7 +14936,7 @@ Bridge.define("System.Guid", {
 			}
 			return false;
 		},
-		format: function(uuid, format) {
+		format: function (uuid, format) {
 		    switch (format) {
 		        case 'n': 
 			    case 'N': 
@@ -14951,12 +14951,12 @@ Bridge.define("System.Guid", {
 		            return uuid;
 			}
 		},
-		fromBytes: function(b) {
+		fromBytes: function (b) {
 			if (!b || b.length !== 16) {
 			    throw new System.ArgumentException('b', 'Must be 16 bytes');
 			}
 				
-			var s = b.map(function(x) { return Bridge.Int.format(x & 0xff, 'x2'); }).join('');
+			var s = b.map(function (x) { return Bridge.Int.format(x & 0xff, 'x2'); }).join('');
 			return System.Guid.$split.exec(s).slice(1).join('-');
 		},
 		newGuid: function () {
@@ -14966,7 +14966,7 @@ Bridge.define("System.Guid", {
 			a[8] = a[8] & 0xbf | 0x80;
 			return System.Guid.fromBytes(a);
 		},
-		getBytes: function(uuid) {
+		getBytes: function (uuid) {
 			var a = Array(16);
 			var s = uuid.replace(/-/g, '');
 			for (var i = 0; i < 16; i++) {
