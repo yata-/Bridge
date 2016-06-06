@@ -1649,7 +1649,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.G)) {
+            if (!Bridge.is(o, Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.G)) {
                 return false;
             }
             return Bridge.equals(this.x, o.x) && Bridge.equals(this.s, o.s) && Bridge.equals(this.z, o.z);
@@ -1706,7 +1706,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.S)) {
+            if (!Bridge.is(o, Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.S)) {
                 return false;
             }
             return Bridge.equals(this.x, o.x);
@@ -1943,7 +1943,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BasicCSharp.Point)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BasicCSharp.Point)) {
                 return false;
             }
             return Bridge.equals(this.x, o.x) && Bridge.equals(this.y, o.y);
@@ -1990,7 +1990,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BasicCSharp.Rectangle)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BasicCSharp.Rectangle)) {
                 return false;
             }
             return Bridge.equals(this.l, o.l) && Bridge.equals(this.t, o.t);
@@ -3198,7 +3198,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge069.Point69)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge069.Point69)) {
                 return false;
             }
             return Bridge.equals(this.x, o.x) && Bridge.equals(this.y, o.y);
@@ -4337,7 +4337,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1128.Foo.Item)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge1128.Foo.Item)) {
                 return false;
             }
             return Bridge.equals(this.value, o.value);
@@ -4385,7 +4385,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1128.Foo1.Item)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge1128.Foo1.Item)) {
                 return false;
             }
             return Bridge.equals(this.value, o.value);
@@ -5018,7 +5018,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1180.Vector2)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge1180.Vector2)) {
                 return false;
             }
             return Bridge.equals(this.x, o.x) && Bridge.equals(this.y, o.y);
@@ -6303,7 +6303,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1296.MessageId)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge1296.MessageId)) {
                 return false;
             }
             return Bridge.equals(this.Value, o.Value);
@@ -6840,7 +6840,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1328.Optional3$1(T))) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge1328.Optional3$1(T))) {
                 return false;
             }
             return Bridge.equals(this.Value, o.Value);
@@ -6874,7 +6874,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink)) {
                 return false;
             }
             return Bridge.equals(this.name, o.name);
@@ -6912,7 +6912,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink2)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink2)) {
                 return false;
             }
             return Bridge.equals(this.name, o.name);
@@ -6958,7 +6958,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink3)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge1328.StructLink3)) {
                 return false;
             }
             return Bridge.equals(this.name, o.name) && Bridge.equals(this.Url, o.Url) && Bridge.equals(this.Text, o.Text);
@@ -7293,7 +7293,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(T))) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge1340.Data$1(T))) {
                 return false;
             }
             return Bridge.equals(this.value2, o.value2) && Bridge.equals(this.Value1, o.Value1);
@@ -7327,7 +7327,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1340.Data$2(T,K))) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge1340.Data$2(T,K))) {
                 return false;
             }
             return Bridge.equals(this.value2, o.value2) && Bridge.equals(this.Value1, o.Value1);
@@ -7636,7 +7636,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.a;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$1)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$1)) {
                 return false;
             }
             return Bridge.equals(this.a, o.a);
@@ -7666,7 +7666,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.b;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$2)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$2)) {
                 return false;
             }
             return Bridge.equals(this.a, o.a) && Bridge.equals(this.b, o.b);
@@ -7698,7 +7698,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.b;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$3)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$3)) {
                 return false;
             }
             return Bridge.equals(this.a, o.a) && Bridge.equals(this.b, o.b);
@@ -7730,7 +7730,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.b;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$4)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$4)) {
                 return false;
             }
             return Bridge.equals(this.a, o.a) && Bridge.equals(this.b, o.b);
@@ -7758,7 +7758,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.value1;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$5)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$5)) {
                 return false;
             }
             return Bridge.equals(this.value1, o.value1);
@@ -7784,7 +7784,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.value2;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$6)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$6)) {
                 return false;
             }
             return Bridge.equals(this.value2, o.value2);
@@ -7810,7 +7810,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.b;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$7)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$7)) {
                 return false;
             }
             return Bridge.equals(this.b, o.b);
@@ -7840,7 +7840,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.c;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$8)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$8)) {
                 return false;
             }
             return Bridge.equals(this.b, o.b) && Bridge.equals(this.c, o.c);
@@ -7872,7 +7872,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.b;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$9)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$9)) {
                 return false;
             }
             return Bridge.equals(this.a, o.a) && Bridge.equals(this.b, o.b);
@@ -7904,7 +7904,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.c;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$10)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$10)) {
                 return false;
             }
             return Bridge.equals(this.b, o.b) && Bridge.equals(this.c, o.c);
@@ -7936,7 +7936,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.a;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$11)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$11)) {
                 return false;
             }
             return Bridge.equals(this.b, o.b) && Bridge.equals(this.a, o.a);
@@ -7968,7 +7968,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.c;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$12)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$12)) {
                 return false;
             }
             return Bridge.equals(this.b, o.b) && Bridge.equals(this.c, o.c);
@@ -8027,7 +8027,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1341.SomeStructA)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge1341.SomeStructA)) {
                 return false;
             }
             return Bridge.equals(this.Value1, o.Value1);
@@ -8058,7 +8058,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1341.SomeStructA1)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge1341.SomeStructA1)) {
                 return false;
             }
             return Bridge.equals(this.Value1, o.Value1);
@@ -8089,7 +8089,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge1341.SomeStructA2)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge1341.SomeStructA2)) {
                 return false;
             }
             return Bridge.equals(this.Value2, o.Value2);
@@ -8936,7 +8936,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge407)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge407)) {
                 return false;
             }
             return Bridge.equals(this.A, o.A);
@@ -9150,7 +9150,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.firstName;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$13)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$13)) {
                 return false;
             }
             return Bridge.equals(this.lastName, o.lastName) && Bridge.equals(this.firstName, o.firstName);
@@ -9558,7 +9558,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$14)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$14)) {
                 return false;
             }
             return ;
@@ -10510,7 +10510,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge577.Bridge577UnitB)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge577.Bridge577UnitB)) {
                 return false;
             }
             return Bridge.equals(this.Number, o.Number);
@@ -11018,7 +11018,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge603A)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge603A)) {
                 return false;
             }
             return Bridge.equals(this.value, o.value);
@@ -11074,7 +11074,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge603B)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge603B)) {
                 return false;
             }
             return Bridge.equals(this.value, o.value) && Bridge.equals(this.intValue, o.intValue);
@@ -11773,7 +11773,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge660Optional$1(T))) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge660Optional$1(T))) {
                 return false;
             }
             return Bridge.equals(this.value, o.value) && Bridge.equals(this.isDefined, o.isDefined);
@@ -12325,7 +12325,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge692.B1)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge692.B1)) {
                 return false;
             }
             return Bridge.equals(this.field1, o.field1);
@@ -12354,7 +12354,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge692.B2)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge692.B2)) {
                 return false;
             }
             return Bridge.equals(this.field1, o.field1);
@@ -12396,7 +12396,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge692.C1)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge692.C1)) {
                 return false;
             }
             return Bridge.equals(this.field1, o.field1);
@@ -12432,7 +12432,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge692.C2)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge692.C2)) {
                 return false;
             }
             return Bridge.equals(this.field1, o.field1);
@@ -12463,7 +12463,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge692.C3)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge692.C3)) {
                 return false;
             }
             return Bridge.equals(this.Prop1, o.Prop1);
@@ -12924,7 +12924,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge762B)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge762B)) {
                 return false;
             }
             return Bridge.equals(this.Data, o.Data);
@@ -13113,7 +13113,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge785.DataStruct)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge785.DataStruct)) {
                 return false;
             }
             return Bridge.equals(this.Value, o.Value);
@@ -13179,7 +13179,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge789A)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge789A)) {
                 return false;
             }
             return Bridge.equals(this.field1, o.field1);
@@ -13424,7 +13424,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.ClientTest.BridgeIssues.Bridge815.B)) {
+            if (!Bridge.is(o, Bridge.ClientTest.BridgeIssues.Bridge815.B)) {
                 return false;
             }
             return Bridge.equals(this.field, o.field);
@@ -14316,7 +14316,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.value;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$15)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$15)) {
                 return false;
             }
             return Bridge.equals(this.value, o.value);
@@ -16025,7 +16025,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.i;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$16)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$16)) {
                 return false;
             }
             return Bridge.equals(this.i, o.i);
@@ -22906,7 +22906,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.personCount;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$17)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$17)) {
                 return false;
             }
             return Bridge.equals(this.group, o.group) && Bridge.equals(this.personCount, o.personCount);
@@ -22938,7 +22938,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.sum;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$18)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$18)) {
                 return false;
             }
             return Bridge.equals(this.group, o.group) && Bridge.equals(this.sum, o.sum);
@@ -22970,7 +22970,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.min;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$19)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$19)) {
                 return false;
             }
             return Bridge.equals(this.group, o.group) && Bridge.equals(this.min, o.min);
@@ -23002,7 +23002,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.minCount;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$20)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$20)) {
                 return false;
             }
             return Bridge.equals(this.g, o.g) && Bridge.equals(this.minCount, o.minCount);
@@ -23034,7 +23034,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.name;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$21)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$21)) {
                 return false;
             }
             return Bridge.equals(this.group, o.group) && Bridge.equals(this.name, o.name);
@@ -23066,7 +23066,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.max;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$22)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$22)) {
                 return false;
             }
             return Bridge.equals(this.group, o.group) && Bridge.equals(this.max, o.max);
@@ -23098,7 +23098,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.maxCount;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$23)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$23)) {
                 return false;
             }
             return Bridge.equals(this.g, o.g) && Bridge.equals(this.maxCount, o.maxCount);
@@ -23463,7 +23463,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.isOdd;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$24)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$24)) {
                 return false;
             }
             return Bridge.equals(this.number, o.number) && Bridge.equals(this.isOdd, o.isOdd);
@@ -23568,7 +23568,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.numbers;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$25)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$25)) {
                 return false;
             }
             return Bridge.equals(this.remainder, o.remainder) && Bridge.equals(this.numbers, o.numbers);
@@ -23600,7 +23600,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.words;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$26)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$26)) {
                 return false;
             }
             return Bridge.equals(this.firstLetter, o.firstLetter) && Bridge.equals(this.words, o.words);
@@ -23632,7 +23632,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.persons;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$27)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$27)) {
                 return false;
             }
             return Bridge.equals(this.group, o.group) && Bridge.equals(this.persons, o.persons);
@@ -23664,7 +23664,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.words;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$28)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$28)) {
                 return false;
             }
             return Bridge.equals(this.key, o.key) && Bridge.equals(this.words, o.words);
@@ -23781,7 +23781,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.limit;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$29)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$29)) {
                 return false;
             }
             return Bridge.equals(this.name, o.name) && Bridge.equals(this.limit, o.limit);
@@ -23813,7 +23813,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.pg;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$30)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$30)) {
                 return false;
             }
             return Bridge.equals(this.g, o.g) && Bridge.equals(this.pg, o.pg);
@@ -23845,7 +23845,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.personName;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$31)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$31)) {
                 return false;
             }
             return Bridge.equals(this.groupName, o.groupName) && Bridge.equals(this.personName, o.personName);
@@ -23877,7 +23877,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.digit;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$32)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$32)) {
                 return false;
             }
             return Bridge.equals(this.name, o.name) && Bridge.equals(this.digit, o.digit);
@@ -23909,7 +23909,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.ep;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$33)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$33)) {
                 return false;
             }
             return Bridge.equals(this.x3, o.x3) && Bridge.equals(this.ep, o.ep);
@@ -24232,7 +24232,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.name;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$34)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$34)) {
                 return false;
             }
             return Bridge.equals(this.name, o.name);
@@ -24262,7 +24262,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.isIndex;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$35)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$35)) {
                 return false;
             }
             return Bridge.equals(this.number, o.number) && Bridge.equals(this.isIndex, o.isIndex);
@@ -24294,7 +24294,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.b;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$36)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$36)) {
                 return false;
             }
             return Bridge.equals(this.a, o.a) && Bridge.equals(this.b, o.b);
@@ -24326,7 +24326,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.b;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$37)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$37)) {
                 return false;
             }
             return Bridge.equals(this.a, o.a) && Bridge.equals(this.b, o.b);
@@ -24354,7 +24354,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.sum;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$38)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$38)) {
                 return false;
             }
             return Bridge.equals(this.sum, o.sum);
@@ -24388,7 +24388,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.i;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$39)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$39)) {
                 return false;
             }
             return Bridge.equals(this.a, o.a) && Bridge.equals(this.b, o.b) && Bridge.equals(this.i, o.i);
@@ -24485,7 +24485,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return this.names;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Bridge.$AnonymousType$40)) {
+            if (!Bridge.is(o, Bridge.$AnonymousType$40)) {
                 return false;
             }
             return Bridge.equals(this.group, o.group) && Bridge.equals(this.names, o.names);
@@ -34443,7 +34443,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             return hash;
         },
         equals: function (o) {
-            if (!Bridge.is(o,Demo.Bridge1231.Class1$1.MyStruct(T))) {
+            if (!Bridge.is(o, Demo.Bridge1231.Class1$1.MyStruct(T))) {
                 return false;
             }
             return Bridge.equals(this.field, o.field);
