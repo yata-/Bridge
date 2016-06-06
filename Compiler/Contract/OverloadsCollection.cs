@@ -919,7 +919,7 @@ namespace Bridge.Contract
             {
                 var interfaceMemberName = OverloadsCollection.Create(Emitter, interfaceMember).GetOverloadName(true, prefix);
                 var interfaceName = BridgeTypes.ToJsName(interfaceMember.DeclaringType, Emitter);
-                interfaceName = interfaceName.Replace(".", "$").Replace("(", "$").Replace(")", "$");
+                interfaceName = OverloadsCollection.GetInterfaceName(interfaceName);
                 return interfaceName + (interfaceName.EndsWith("$") ? "" : "$") + interfaceMemberName;
             }
 
@@ -977,6 +977,11 @@ namespace Bridge.Contract
             }*/
 
             return prefix != null ? prefix + name : name;
+        }
+
+        internal static string GetInterfaceName(string interfaceName)
+        {
+            return interfaceName.Replace(".", "$").Replace("(", "$").Replace(")", "$").Replace(",", "$");
         }
 
         protected virtual IMember FindMember(EntityDeclaration entity)
