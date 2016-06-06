@@ -19828,6 +19828,20 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
 (function (globals) {
     "use strict";
 
+    Bridge.define('Test.BridgeIssues.N1424.A');
+    
+    Bridge.define('Test.BridgeIssues.N1424.Alpha', {
+        data: 0
+    });
+    
+    Bridge.define('Test.BridgeIssues.N1424.B', {
+        getData: function () {
+            return 8;
+        },
+        setData: function (value) {
+        }
+    });
+    
     Bridge.define('Test.BridgeIssues.N770.IBase', {
         $interface: true
     });
