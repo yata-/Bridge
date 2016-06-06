@@ -121,6 +121,48 @@ namespace Bridge.Translator
             Helpers.CheckValueTypeClone(resolveResult, indexerExpression, this, pos);
         }
 
+        private void WriteInterfaceMember(string interfaceTempVar, MemberResolveResult resolveResult, bool isSetter, string prefix = null)
+        {
+            if (interfaceTempVar != null)
+            {
+                this.WriteComma();
+                this.Write(interfaceTempVar);
+            }
+
+            this.WriteOpenBracket();
+            this.Write("Bridge.geti(");
+
+            if (interfaceTempVar != null)
+            {
+                this.Write(interfaceTempVar);
+            }
+            else
+            {
+                var oldIsAssignment = this.Emitter.IsAssignment;
+                var oldUnary = this.Emitter.IsUnaryAccessor;
+
+                this.Emitter.IsAssignment = false;
+                this.Emitter.IsUnaryAccessor = false;
+                this.IndexerExpression.Target.AcceptVisitor(this.Emitter);
+                this.Emitter.IsAssignment = oldIsAssignment;
+                this.Emitter.IsUnaryAccessor = oldUnary;
+            }
+
+            this.WriteComma();
+
+            this.WriteScript(OverloadsCollection.Create(Emitter, resolveResult.Member, isSetter).GetOverloadName(false, prefix));
+            this.WriteComma();
+            this.WriteScript(OverloadsCollection.Create(Emitter, resolveResult.Member, isSetter).GetOverloadName(true, prefix));
+
+            this.Write(")");
+            this.WriteCloseBracket();
+
+            if (interfaceTempVar != null)
+            {
+                this.WriteCloseBracket();
+            }
+        }
+
         protected virtual IndexerAccessor GetIndexerAccessor(IProperty member, bool setter)
         {
             string inlineCode = null;
@@ -242,6 +284,14 @@ namespace Bridge.Translator
             bool isStatement = false;
             var oldIsAssignment = this.Emitter.IsAssignment;
             var oldUnary = this.Emitter.IsUnaryAccessor;
+            var isInterfaceMember = false;
+
+            if (memberResolveResult != null && memberResolveResult.Member.DeclaringTypeDefinition != null &&
+                memberResolveResult.Member.DeclaringTypeDefinition.Kind == TypeKind.Interface &&
+                this.Emitter.Validator.IsIgnoreType(memberResolveResult.Member.DeclaringTypeDefinition))
+            {
+                isInterfaceMember = true;
+            }
 
             if (this.Emitter.IsAssignment && this.Emitter.AssignmentType != AssignmentOperatorType.Assign)
             {
