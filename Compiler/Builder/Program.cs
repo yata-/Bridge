@@ -273,7 +273,7 @@ namespace Bridge.Builder
 
                 try
                 {
-                    Directory.GetFiles(folder, "*.csproj", SearchOption.TopDirectoryOnly);
+                    csprojs = Directory.GetFiles(folder, "*.csproj", SearchOption.TopDirectoryOnly);
                 }
                 catch (Exception ex)
                 {
