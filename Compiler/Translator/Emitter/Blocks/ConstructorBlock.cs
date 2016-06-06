@@ -440,5 +440,15 @@ namespace Bridge.Translator
             this.WriteSemiColon();
             this.WriteNewLine();
         }
+
+        protected virtual bool IsGenericType()
+        {
+            return this.TypeInfo.Type.TypeParameterCount > 0;
+        }
+
+        private bool IsGenericMethod(MethodDeclaration methodDeclaration)
+        {
+            return methodDeclaration.TypeParameters.Any();
+        }
     }
 }
