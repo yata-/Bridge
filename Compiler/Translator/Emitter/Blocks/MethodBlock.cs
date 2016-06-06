@@ -176,7 +176,7 @@ namespace Bridge.Translator
                 this.EnsureComma();
                 this.Write(JS.Funcs.EQUALS + ": function (o) ");
                 this.BeginBlock();
-                this.Write("if (!" + JS.Funcs.BRIDGE_IS + "(o,");
+                this.Write("if (!" + JS.Funcs.BRIDGE_IS + "(o, ");
                 this.Write(structName);
                 this.Write(")) ");
                 this.BeginBlock();
@@ -243,7 +243,7 @@ namespace Bridge.Translator
                 this.WriteNewLine();
                 this.EndBlock();
             }
-           
+
             this.Emitter.Comma = true;
         }
 

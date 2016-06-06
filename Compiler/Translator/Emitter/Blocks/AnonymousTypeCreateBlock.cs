@@ -36,14 +36,14 @@ namespace Bridge.Translator
             }
             else
             {
-                this.VisitAnonymousTypeCreateExpression();    
+                this.VisitAnonymousTypeCreateExpression();
             }
         }
 
         protected void VisitPlainAnonymousTypeCreateExpression()
         {
             AnonymousTypeCreateExpression anonymousTypeCreateExpression = this.AnonymousTypeCreateExpression;
-           
+
             this.WriteOpenBrace();
             this.WriteSpace();
 
@@ -168,7 +168,7 @@ namespace Bridge.Translator
             this.Write(JS.Funcs.EQUALS + ": function (o) ");
             this.BeginBlock();
 
-            this.Write("if (!" + JS.Funcs.BRIDGE_IS + "(o,");
+            this.Write("if (!" + JS.Funcs.BRIDGE_IS + "(o, ");
             this.Write(config.Name);
             this.Write(")) ");
             this.BeginBlock();
