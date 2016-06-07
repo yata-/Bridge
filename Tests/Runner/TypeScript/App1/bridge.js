@@ -48,10 +48,14 @@
                 return arr;
             }
 
-            var newo = {};
+            var newo = {},
+                m;
 
             for (var key in o) {
-                newo[key] = o[key];
+                m = o[key];
+                if (!Bridge.isFunction(m)) {
+                    newo[key] = m;
+                }
             }
 
             return newo;
