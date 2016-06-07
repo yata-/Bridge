@@ -1,13 +1,10 @@
-﻿using System;
-
-namespace Bridge
+﻿namespace Bridge
 {
     [External]
+    [Name("Object")]
     public sealed class ObjectLiteral
     {
         [Template("{o:plain}")]
-        public ObjectLiteral(object o)
-        {
-        }
+        public extern ObjectLiteral(object o);
     }
 }
