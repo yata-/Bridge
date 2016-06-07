@@ -8673,6 +8673,17 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.null$1(plainee.toJSON, "plainee has no toJSON");
                 Bridge.Test.Assert.null$1(plainee.$constructor, "plainee has no $constructor");
                 Bridge.Test.Assert.null$1(plainee.equals, "plainee has no equals");
+            },
+            testToObjectLiteralAlias: function () {
+                var o1 = { a: 1 };
+                Bridge.Test.Assert.notNull$1(o1, "o1 not null");
+                Bridge.Test.Assert.areEqual$1(1, o1.a, "o1.A == 1");
+    
+                Bridge.Test.Assert.null$1(o1.getHashCode, "o1 has no getHashCode");
+                Bridge.Test.Assert.null$1(o1.toJSON, "o1 has no toJSON");
+                Bridge.Test.Assert.null$1(o1.$constructor, "o1 has no $constructor");
+                Bridge.Test.Assert.null$1(o1.equals, "o1 has no equals");
+                Bridge.Test.Assert.notNull$1(o1.a, "o1 has a");
             }
         }
     });

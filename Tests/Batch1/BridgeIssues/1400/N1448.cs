@@ -49,7 +49,7 @@ namespace Bridge.ClientTest.BridgeIssues
         {
             var a = new A() { Data = 5 };
 
-            var l = new Literal() { V =  new { Data = 5 } };
+            var l = new Literal() { V = new { Data = 5 } };
 
             var plainee = l.V;
 
@@ -60,6 +60,20 @@ namespace Bridge.ClientTest.BridgeIssues
             Assert.Null(plainee["toJSON"], "plainee has no toJSON");
             Assert.Null(plainee["$constructor"], "plainee has no $constructor");
             Assert.Null(plainee["equals"], "plainee has no equals");
+        }
+
+        [Test(ExpectedCount = 7)]
+        public static void TestToObjectLiteralAlias()
+        {
+            var o1 = Script.ToObjectLiteral(new { A = 1 });
+            Assert.NotNull(o1, "o1 not null");
+            Assert.AreEqual(1, o1.A, "o1.A == 1");
+
+            Assert.Null(o1["getHashCode"], "o1 has no getHashCode");
+            Assert.Null(o1["toJSON"], "o1 has no toJSON");
+            Assert.Null(o1["$constructor"], "o1 has no $constructor");
+            Assert.Null(o1["equals"], "o1 has no equals");
+            Assert.NotNull(o1["a"], "o1 has a");
         }
     }
 }
