@@ -18,49 +18,6 @@
 
         identity: function (x) { return x; },
 
-        isPlainObject: function (obj) {
-            if (typeof obj == 'object' && obj !== null) {
-                if (typeof Object.getPrototypeOf == 'function') {
-                    var proto = Object.getPrototypeOf(obj);
-                    return proto === Object.prototype || proto === null;
-                }
-    
-                return Object.prototype.toString.call(obj) === '[object Object]';
-            }
-  
-            return false;
-        },
-
-        toPlain: function (o) {
-            if (!o || Bridge.isPlainObject(o) || typeof o != "object") {
-                return o;
-            }
-
-            if (typeof o.toJSON == 'function') {
-                return o.toJSON();
-            }
-
-            if (Bridge.isArray(o)) {
-                var arr = [];
-                for (var i = 0; i < o.length; i++) {
-                    arr.push(Bridge.toPlain(o[i]));
-                }
-                return arr;
-            }
-
-            var newo = {},
-                m;
-
-            for (var key in o) {
-                m = o[key];
-                if (!Bridge.isFunction(m)) {
-                    newo[key] = m;
-                }
-            }
-
-            return newo;
-        },
-
         ref: function (o, n) {
             if (Bridge.isArray(n)) {
                 n = System.Array.toIndex(o, n);
@@ -3488,7 +3445,7 @@
 
     // @source Math.js
 
-    Bridge.Math = {
+    var math = {
         divRem: function (a, b, result) {
             var remainder = a % b;
 
@@ -3513,15 +3470,15 @@
             return Math.round(n) / m;
         },
 
-        sinh: Math.sinh || function (x) {
+        sinh: function (x) {
             return (Math.exp(x) - Math.exp(-x)) / 2;
         },
 
-        cosh: Math.cosh || function (x) {
+        cosh: function (x) {
             return (Math.exp(x) + Math.exp(-x)) / 2;
         },
 
-        tanh: Math.tanh|| function (x) {
+        tanh: function (x) {
             if (x === Infinity) {
                 return 1;
             } else if (x === -Infinity) {
@@ -3532,6 +3489,12 @@
             }
         }
     };
+
+    math.sinh = Math.sinh || math.sinh;
+    math.cosh = Math.cosh || math.cosh;
+    math.tanh = Math.tanh || math.tanh;
+    Bridge.Math = math;    
+
     // @source Bool.js
 
     var _boolean = {
