@@ -382,7 +382,7 @@
         },
 
         remove: function (s, index, count) {
-            if (!count || ((index + count) > this.length)) {
+            if (!Bridge.hasValue(count) || ((index + count) > s.length)) {
                 return s.substr(0, index);
             }
 
