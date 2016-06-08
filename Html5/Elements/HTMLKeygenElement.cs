@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [External]
     [Name("HTMLKeygenElement")]
-    public class HTMLKeygenElement : Element<HTMLKeygenElement>
+    public class HTMLKeygenElement : HTMLElement<HTMLKeygenElement>
     {
         [Template("document.createElement('keygen')")]
         public HTMLKeygenElement()

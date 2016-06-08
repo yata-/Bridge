@@ -7,7 +7,7 @@ namespace Bridge.Html5
     /// <typeparam name="TCurrentTarget">The CurrentTarget type of all TableCellElement's events</typeparam>
     [External]
     [Name("HTMLTableCellElement")]
-    public abstract class HTMLTableCellElement<TCurrentTarget> : Element<TCurrentTarget> where TCurrentTarget : Element<TCurrentTarget>
+    public abstract class HTMLTableCellElement<TCurrentTarget> : HTMLElement<TCurrentTarget> where TCurrentTarget : HTMLElement<TCurrentTarget>
     {
         /// <summary>
         /// Is an unsigned long that represents the number of columns this cell must span. It reflects the colspan attribute.
@@ -37,7 +37,7 @@ namespace Bridge.Html5
     /// </summary>
     [External]
     [Name("HTMLTableCellElement")]
-    public abstract class TableCellElement : Element<TableCellElement>
+    public abstract class TableCellElement : HTMLElement<TableCellElement>
     {
     }
 }

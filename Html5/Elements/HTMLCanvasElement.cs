@@ -6,7 +6,7 @@ namespace Bridge.Html5
     /// </summary>
     [External]
     [Name("HTMLCanvasElement")]
-    public class HTMLCanvasElement : Element<HTMLCanvasElement>
+    public class HTMLCanvasElement : HTMLElement<HTMLCanvasElement>
     {
         [Template("document.createElement('canvas')")]
         public HTMLCanvasElement()

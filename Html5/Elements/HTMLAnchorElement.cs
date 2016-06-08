@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [External]
     [Name("HTMLAnchorElement")]
-    public class HTMLAnchorElement : Element<HTMLAnchorElement>
+    public class HTMLAnchorElement : HTMLElement<HTMLAnchorElement>
     {
         [Template("document.createElement('a')")]
         public HTMLAnchorElement()

@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [External]
     [Name("HTMLIFrameElement")]
-    public class HTMLIFrameElement : Element<HTMLIFrameElement>
+    public class HTMLIFrameElement : HTMLElement<HTMLIFrameElement>
     {
         [Template("document.createElement('iframe')")]
         public HTMLIFrameElement()

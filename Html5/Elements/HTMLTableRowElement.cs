@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [External]
     [Name("HTMLTableRowElement")]
-    public class HTMLTableRowElement : Element<HTMLTableRowElement>
+    public class HTMLTableRowElement : HTMLElement<HTMLTableRowElement>
     {
         [Template("document.createElement('tr')")]
         public HTMLTableRowElement()

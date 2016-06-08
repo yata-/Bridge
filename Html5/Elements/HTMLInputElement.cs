@@ -7,7 +7,7 @@ namespace Bridge.Html5
     /// </summary>
     [External]
     [Name("HTMLInputElement")]
-    public class HTMLInputElement : Element<HTMLInputElement>
+    public class HTMLInputElement : HTMLElement<HTMLInputElement>
     {
         [Template("document.createElement('input')")]
         public HTMLInputElement()

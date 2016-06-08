@@ -8,7 +8,7 @@ namespace Bridge.Html5
     /// </summary>
     [External]
     [Name("HTMLFormElement")]
-    public class HTMLFormElement : Element<HTMLFormElement>, IEnumerable<HTMLElement>
+    public class HTMLFormElement : HTMLElement<HTMLFormElement>, IEnumerable<HTMLElement>
     {
         [Template("document.createElement('form')")]
         public HTMLFormElement()

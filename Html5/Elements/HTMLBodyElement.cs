@@ -7,7 +7,7 @@ namespace Bridge.Html5
     /// </summary>
     [External]
     [Name("HTMLBodyElement")]
-    public class HTMLBodyElement : Element<HTMLBodyElement>
+    public class HTMLBodyElement : HTMLElement<HTMLBodyElement>
     {
         [Template("document.createElement('body')")]
         public HTMLBodyElement()

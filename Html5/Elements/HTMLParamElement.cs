@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [External]
     [Name("HTMLParamElement")]
-    public class HTMLParamElement : Element<HTMLParamElement>
+    public class HTMLParamElement : HTMLElement<HTMLParamElement>
     {
         [Template("document.createElement('param')")]
         public HTMLParamElement()

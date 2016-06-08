@@ -8,7 +8,7 @@ namespace Bridge.Html5
     /// </summary>
     [External]
     [Name("HTMLTableSectionElement")]
-    public class HTMLTableSectionElement : Element<HTMLTableSectionElement>
+    public class HTMLTableSectionElement : HTMLElement<HTMLTableSectionElement>
     {
         [Template("document.createElement('tbody')")]
         public HTMLTableSectionElement()

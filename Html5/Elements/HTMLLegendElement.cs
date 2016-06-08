@@ -5,7 +5,7 @@ namespace Bridge.Html5
     /// </summary>
     [External]
     [Name("HTMLLegendElement")]
-    public class HTMLLegendElement : Element<HTMLLegendElement>
+    public class HTMLLegendElement : HTMLElement<HTMLLegendElement>
     {
         [Template("document.createElement('legend')")]
         public HTMLLegendElement()

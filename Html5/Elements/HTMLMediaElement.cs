@@ -7,7 +7,7 @@ namespace Bridge.Html5
     /// <typeparam name="TCurrentTarget">The CurrentTarget type of all MediaElement's events</typeparam>
     [External]
     [Name("HTMLMediaElement")]
-    public abstract class HTMLMediaElement<TCurrentTarget> : Element<TCurrentTarget> where TCurrentTarget : Element<TCurrentTarget>
+    public abstract class HTMLMediaElement<TCurrentTarget> : HTMLElement<TCurrentTarget> where TCurrentTarget : HTMLElement<TCurrentTarget>
     {
         /// <summary>
         /// Reflects the autoplay HTML attribute, indicating whether playback should automatically begin as soon as enough media is available to do so without interruption.
@@ -191,7 +191,7 @@ namespace Bridge.Html5
     /// </summary>
     [External]
     [Name("HTMLMediaElement")]
-    public abstract class MediaElement : Element<MediaElement>
+    public abstract class MediaElement : HTMLElement<MediaElement>
     {
     }
 
