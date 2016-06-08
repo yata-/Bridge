@@ -301,7 +301,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     var $_ = {};
     
-    Bridge.ns("Bridge.ClientTest.ArrayTests1.ArrayTestsSet1", $_)
+    Bridge.ns("Bridge.ClientTest.ArrayTests1.ArrayTestsSet1", $_);
     
     Bridge.apply($_.Bridge.ClientTest.ArrayTests1.ArrayTestsSet1, {
         f1: function (x) {
@@ -1557,7 +1557,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.ArrayTests1.ArrayTestsSet2", $_)
+    Bridge.ns("Bridge.ClientTest.ArrayTests1.ArrayTestsSet2", $_);
     
     Bridge.apply($_.Bridge.ClientTest.ArrayTests1.ArrayTestsSet2, {
         f1: function (i) {
@@ -2147,7 +2147,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BasicCSharp.TestEnum", $_)
+    Bridge.ns("Bridge.ClientTest.BasicCSharp.TestEnum", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BasicCSharp.TestEnum, {
         f1: function () {
@@ -2843,7 +2843,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BasicCSharp.TestTryCatchBlocks", $_)
+    Bridge.ns("Bridge.ClientTest.BasicCSharp.TestTryCatchBlocks", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BasicCSharp.TestTryCatchBlocks, {
         f1: function (error) {
@@ -3068,7 +3068,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks", $_)
+    Bridge.ns("Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks, {
         f1: function (error) {
@@ -3343,7 +3343,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1012", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1012", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1012, {
         f1: function () {
@@ -3898,7 +3898,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1061", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1061", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1061, {
         f1: function (c) {
@@ -4537,7 +4537,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1160A", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1160A", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1160A, {
         f1: function (message) {
@@ -4896,7 +4896,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1171", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1171", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1171, {
         f1: function (x) {
@@ -5086,7 +5086,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1186", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1186", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1186, {
         f1: function (value) {
@@ -5257,7 +5257,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1199", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1199", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1199, {
         f1: function () {
@@ -5463,7 +5463,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1217", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1217", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1217, {
         f1: function () {
@@ -8198,7 +8198,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1374", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge1374", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1374, {
         f1: function (x) {
@@ -8731,7 +8731,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge169", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge169", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge169, {
         f1: function () {
@@ -9167,7 +9167,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge472", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge472", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge472, {
         f1: function () {
@@ -9249,7 +9249,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge485", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge485", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge485, {
         f1: function (p) {
@@ -9702,7 +9702,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge520.Source", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge520.Source", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge520.Source, {
         f1: function (s) {
@@ -10815,7 +10815,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge586", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge586", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge586, {
         f1: function () {
@@ -11032,7 +11032,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge597A", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge597A", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge597A, {
         f1: function (value, index) {
@@ -11356,7 +11356,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge623", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge623", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge623, {
         f1: function () {
@@ -11403,7 +11403,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge625", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge625", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge625, {
         f1: function (x) {
@@ -11747,7 +11747,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge655", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge655", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge655, {
         f1: function () {
@@ -11915,7 +11915,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge664", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge664", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge664, {
         f1: function (s) {
@@ -12340,7 +12340,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge691", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge691", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge691, {
         f1: function (p) {
@@ -12587,7 +12587,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge694", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge694", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge694, {
         f1: function (fruit) {
@@ -12608,7 +12608,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge696", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge696", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge696, {
         f1: function (message) {
@@ -12773,7 +12773,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge722", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge722", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge722, {
         f1: function (x) {
@@ -12869,7 +12869,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge743", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge743", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge743, {
         f1: function () {
@@ -12916,7 +12916,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge751", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge751", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge751, {
         f1: function (el1) {
@@ -13839,7 +13839,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge841", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge841", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge841, {
         f1: function () {
@@ -13945,7 +13945,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge861", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge861", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge861, {
         f1: function (data) {
@@ -15148,7 +15148,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge997", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge997", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge997, {
         f1: function (x) {
@@ -15198,7 +15198,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge999", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge999", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge999, {
         f1: function (value) {
@@ -15247,7 +15247,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge999_1", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.Bridge999_1", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge999_1, {
         f1: function (x) {
@@ -16121,7 +16121,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.BridgeIssues.TestBridgeIssues", $_)
+    Bridge.ns("Bridge.ClientTest.BridgeIssues.TestBridgeIssues", $_);
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.TestBridgeIssues, {
         f1: function (i) {
@@ -17240,7 +17240,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Collections.Generic.ComparerTests", $_)
+    Bridge.ns("Bridge.ClientTest.Collections.Generic.ComparerTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Collections.Generic.ComparerTests, {
         f1: function (x, y) {
@@ -18924,7 +18924,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Collections.Generic.ListTests", $_)
+    Bridge.ns("Bridge.ClientTest.Collections.Generic.ListTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Collections.Generic.ListTests, {
         f1: function (x, y) {
@@ -19441,7 +19441,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests", $_)
+    Bridge.ns("Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests, {
         f1: function (result) {
@@ -19895,7 +19895,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests", $_)
+    Bridge.ns("Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests, {
         f1: function () {
@@ -19964,7 +19964,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests", $_)
+    Bridge.ns("Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.ConvertTests.ConvertToBase64StringTests, {
         f1: function () {
@@ -20325,7 +20325,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.ConvertTests.ConvertToStringTests", $_)
+    Bridge.ns("Bridge.ClientTest.ConvertTests.ConvertToStringTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.ConvertTests.ConvertToStringTests, {
         f1: function () {
@@ -20556,7 +20556,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.DecimalMathTests", $_)
+    Bridge.ns("Bridge.ClientTest.DecimalMathTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.DecimalMathTests, {
         f1: function (a, b) {
@@ -20844,7 +20844,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Diagnostics.Contracts.ContractTests", $_)
+    Bridge.ns("Bridge.ClientTest.Diagnostics.Contracts.ContractTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Diagnostics.Contracts.ContractTests, {
         f1: function (error) {
@@ -22734,7 +22734,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.GuidTests", $_)
+    Bridge.ns("Bridge.ClientTest.GuidTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.GuidTests, {
         f1: function () {
@@ -23196,7 +23196,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Linq.TestLinqAggregateOperators", $_)
+    Bridge.ns("Bridge.ClientTest.Linq.TestLinqAggregateOperators", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators, {
         f1: function (n) {
@@ -23356,7 +23356,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Linq.TestLinqConversionOperators", $_)
+    Bridge.ns("Bridge.ClientTest.Linq.TestLinqConversionOperators", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Linq.TestLinqConversionOperators, {
         f1: function (d) {
@@ -23476,7 +23476,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Linq.TestLinqElementOperators", $_)
+    Bridge.ns("Bridge.ClientTest.Linq.TestLinqElementOperators", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Linq.TestLinqElementOperators, {
         f1: function (p) {
@@ -23561,7 +23561,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Linq.TestLinqGenerationOperators", $_)
+    Bridge.ns("Bridge.ClientTest.Linq.TestLinqGenerationOperators", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Linq.TestLinqGenerationOperators, {
         f1: function (n) {
@@ -23762,7 +23762,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Linq.TestLinqGroupingOperators", $_)
+    Bridge.ns("Bridge.ClientTest.Linq.TestLinqGroupingOperators", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators, {
         f1: function (n) {
@@ -24007,7 +24007,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Linq.TestLinqJoinOperators", $_)
+    Bridge.ns("Bridge.ClientTest.Linq.TestLinqJoinOperators", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Linq.TestLinqJoinOperators, {
         f1: function (p) {
@@ -24086,7 +24086,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Linq.TestLinqMiscellaneousOperators", $_)
+    Bridge.ns("Bridge.ClientTest.Linq.TestLinqMiscellaneousOperators", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Linq.TestLinqMiscellaneousOperators, {
         f1: function (p) {
@@ -24141,7 +24141,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Linq.TestLinqOrderingOperators", $_)
+    Bridge.ns("Bridge.ClientTest.Linq.TestLinqOrderingOperators", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Linq.TestLinqOrderingOperators, {
         f1: function (word) {
@@ -24206,7 +24206,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Linq.TestLinqPartitioningOperators", $_)
+    Bridge.ns("Bridge.ClientTest.Linq.TestLinqPartitioningOperators", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Linq.TestLinqPartitioningOperators, {
         f1: function (number) {
@@ -24488,7 +24488,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Linq.TestLinqProjectionOperators", $_)
+    Bridge.ns("Bridge.ClientTest.Linq.TestLinqProjectionOperators", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Linq.TestLinqProjectionOperators, {
         f1: function (n) {
@@ -24583,7 +24583,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Linq.TestLinqQuantifiers", $_)
+    Bridge.ns("Bridge.ClientTest.Linq.TestLinqQuantifiers", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Linq.TestLinqQuantifiers, {
         f1: function (w) {
@@ -24650,7 +24650,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Linq.TestLinqQueryExecution", $_)
+    Bridge.ns("Bridge.ClientTest.Linq.TestLinqQueryExecution", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Linq.TestLinqQueryExecution, {
         f1: function (n) {
@@ -24691,7 +24691,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Linq.TestLinqRestrictionOperators", $_)
+    Bridge.ns("Bridge.ClientTest.Linq.TestLinqRestrictionOperators", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Linq.TestLinqRestrictionOperators, {
         f1: function (n) {
@@ -24766,7 +24766,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Linq.TestLinqSetOperators", $_)
+    Bridge.ns("Bridge.ClientTest.Linq.TestLinqSetOperators", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Linq.TestLinqSetOperators, {
         f1: function (p) {
@@ -25688,7 +25688,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.NullableTests", $_)
+    Bridge.ns("Bridge.ClientTest.NullableTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.NullableTests, {
         f1: function () {
@@ -26192,7 +26192,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.SimpleTypes.BooleanTests", $_)
+    Bridge.ns("Bridge.ClientTest.SimpleTypes.BooleanTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.SimpleTypes.BooleanTests, {
         f1: function () {
@@ -26403,7 +26403,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.SimpleTypes.ByteTests", $_)
+    Bridge.ns("Bridge.ClientTest.SimpleTypes.ByteTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.SimpleTypes.ByteTests, {
         f1: function (err) {
@@ -26588,7 +26588,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.SimpleTypes.CharTests", $_)
+    Bridge.ns("Bridge.ClientTest.SimpleTypes.CharTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.SimpleTypes.CharTests, {
         f1: function (err) {
@@ -27192,7 +27192,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.SimpleTypes.Int16Tests", $_)
+    Bridge.ns("Bridge.ClientTest.SimpleTypes.Int16Tests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.SimpleTypes.Int16Tests, {
         f1: function (err) {
@@ -27432,7 +27432,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.SimpleTypes.Int32Tests", $_)
+    Bridge.ns("Bridge.ClientTest.SimpleTypes.Int32Tests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.SimpleTypes.Int32Tests, {
         f1: function (err) {
@@ -27723,7 +27723,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.SimpleTypes.Int64Tests", $_)
+    Bridge.ns("Bridge.ClientTest.SimpleTypes.Int64Tests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.SimpleTypes.Int64Tests, {
         f1: function (err) {
@@ -28303,7 +28303,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.SimpleTypes.SByteTests", $_)
+    Bridge.ns("Bridge.ClientTest.SimpleTypes.SByteTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.SimpleTypes.SByteTests, {
         f1: function (err) {
@@ -29211,7 +29211,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.SimpleTypes.StringTests", $_)
+    Bridge.ns("Bridge.ClientTest.SimpleTypes.StringTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.SimpleTypes.StringTests, {
         f1: function (s) {
@@ -29424,7 +29424,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.SimpleTypes.TestVersion", $_)
+    Bridge.ns("Bridge.ClientTest.SimpleTypes.TestVersion", $_);
     
     Bridge.apply($_.Bridge.ClientTest.SimpleTypes.TestVersion, {
         f1: function () {
@@ -29895,7 +29895,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.SimpleTypes.UInt16Tests", $_)
+    Bridge.ns("Bridge.ClientTest.SimpleTypes.UInt16Tests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.SimpleTypes.UInt16Tests, {
         f1: function (err) {
@@ -30070,7 +30070,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.SimpleTypes.UInt32Tests", $_)
+    Bridge.ns("Bridge.ClientTest.SimpleTypes.UInt32Tests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.SimpleTypes.UInt32Tests, {
         f1: function (err) {
@@ -30307,7 +30307,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.SimpleTypes.UInt64Tests", $_)
+    Bridge.ns("Bridge.ClientTest.SimpleTypes.UInt64Tests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.SimpleTypes.UInt64Tests, {
         f1: function (err) {
@@ -31947,7 +31947,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Threading.CancellationTokenTests", $_)
+    Bridge.ns("Bridge.ClientTest.Threading.CancellationTokenTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Threading.CancellationTokenTests, {
         f1: function () {
@@ -32235,7 +32235,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Threading.PromiseTests", $_)
+    Bridge.ns("Bridge.ClientTest.Threading.PromiseTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Threading.PromiseTests, {
         f1: function (i, s, j) {
@@ -32324,7 +32324,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Threading.PromiseTests.SimplePromise", $_)
+    Bridge.ns("Bridge.ClientTest.Threading.PromiseTests.SimplePromise", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Threading.PromiseTests.SimplePromise, {
         f1: function (f, e, p) {
@@ -33748,7 +33748,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Threading.TaskTests", $_)
+    Bridge.ns("Bridge.ClientTest.Threading.TaskTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Threading.TaskTests, {
         f1: function (t) {
@@ -34118,7 +34118,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Threading.TimerTests", $_)
+    Bridge.ns("Bridge.ClientTest.Threading.TimerTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Threading.TimerTests, {
         f1: function () {
@@ -35239,7 +35239,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests", $_)
+    Bridge.ns("Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests, {
         f1: function () {
@@ -35997,7 +35997,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.ConvertTests.ConvertToSByteTests", $_)
+    Bridge.ns("Bridge.ClientTest.ConvertTests.ConvertToSByteTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.ConvertTests.ConvertToSByteTests, {
         f1: function (input) {
@@ -37385,7 +37385,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests", $_)
+    Bridge.ns("Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests, {
         f1: function () {
@@ -37906,7 +37906,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests", $_)
+    Bridge.ns("Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests, {
         f1: function (err) {
@@ -38459,7 +38459,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests", $_)
+    Bridge.ns("Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests, {
         f1: function (err) {
@@ -39061,7 +39061,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests", $_)
+    Bridge.ns("Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests, {
         f1: function (err) {
@@ -39778,7 +39778,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.ns("Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests", $_)
+    Bridge.ns("Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests", $_);
     
     Bridge.apply($_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests, {
         f1: function () {

@@ -342,6 +342,7 @@ namespace Bridge.Translator
                 this.WriteOpenParentheses();
                 this.WriteScript(name);
                 this.Write(", " + JS.Vars.D_ + ")");
+                this.WriteSemiColon();
                 
                 this.WriteNewLine();
                 this.WriteNewLine();
