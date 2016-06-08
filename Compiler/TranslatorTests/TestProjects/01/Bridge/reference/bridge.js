@@ -1672,20 +1672,20 @@
             }
 
             if (index < 0) {
-                throw new System.ArgumentOutOfRangeException("StartIndex cannot be less than zero", "startIndex");
+                throw new System.ArgumentOutOfRangeException("startIndex", "StartIndex cannot be less than zero");
             }
 
             if (count != null) {
                 if (count < 0) {
-                    throw new System.ArgumentOutOfRangeException("Count cannot be less than zero", "count");
+                    throw new System.ArgumentOutOfRangeException("count", "Count cannot be less than zero");
                 }
 
                 if (count > s.length - index) {
-                    throw new System.ArgumentOutOfRangeException("Index and count must refer to a location within the string", "count");
+                    throw new System.ArgumentOutOfRangeException("count", "Index and count must refer to a location within the string");
                 }
             } else {
                 if (index >= s.length) {
-                    throw new System.ArgumentOutOfRangeException("startIndex must be less than length of string", "startIndex");
+                    throw new System.ArgumentOutOfRangeException("startIndex", "startIndex must be less than length of string");
                 }
             }
 
