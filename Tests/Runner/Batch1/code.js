@@ -10278,9 +10278,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var s = "0123456789";
     
                 Bridge.Test.Assert.areEqual$1("01234", System.String.remove(s, 5), "Remove(5)");
-                Bridge.Test.Assert.areEqual$1("0123456789", System.String.remove(s, 10), "Remove(10)");
+                Bridge.Test.Assert.areEqual$1("012345678", System.String.remove(s, 9), "Remove(9)");
                 Bridge.Test.Assert.areEqual$1("03456789", System.String.remove(s, 1, 2), "Remove(1, 2)");
-                Bridge.Test.Assert.areEqual$1("0", System.String.remove(s, 1, 10), "Remove(1, 10)");
+                Bridge.Test.Assert.areEqual$1("0", System.String.remove(s, 1, 9), "Remove(1, 9)");
             }
         }
     });
@@ -28854,6 +28854,19 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         removeWorks: function () {
             Bridge.Test.Assert.areEqual("ab", System.String.remove(("abcde"), 2));
+    
+            var val = "Hello";
+            Bridge.Test.Assert.throws$6(System.ArgumentOutOfRangeException, function () {
+                System.String.remove(val, -2);
+            });
+            Bridge.Test.Assert.throws$6(System.ArgumentOutOfRangeException, function () {
+                System.String.remove(val, 5);
+            });
+    
+            var s = null;
+            Bridge.Test.Assert.throws$6(System.NullReferenceException, function () {
+                System.String.remove(s, 2);
+            });
         },
         removeWithCountWorks: function () {
             Bridge.Test.Assert.areEqual("abe", System.String.remove(("abcde"), 2, 2));
@@ -28872,6 +28885,21 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areEqual("Hello", System.String.remove(val, 3, 0));
             Bridge.Test.Assert.areEqual("Hello", System.String.remove(val, 4, 0));
             Bridge.Test.Assert.areEqual("Hello", System.String.remove(val, 5, 0));
+    
+            Bridge.Test.Assert.throws$6(System.ArgumentOutOfRangeException, function () {
+                System.String.remove(val, -2, 2);
+            });
+            Bridge.Test.Assert.throws$6(System.ArgumentOutOfRangeException, function () {
+                System.String.remove(val, 2, -2);
+            });
+            Bridge.Test.Assert.throws$6(System.ArgumentOutOfRangeException, function () {
+                System.String.remove(val, 2, 4);
+            });
+    
+            var s = null;
+            Bridge.Test.Assert.throws$6(System.NullReferenceException, function () {
+                System.String.remove(s, 0, 0);
+            });
         },
         replaceWorks: function () {
             Bridge.Test.Assert.areEqual("xbcxbcxbc", System.String.replaceAll(("abcabcabc"), "a", "x"));

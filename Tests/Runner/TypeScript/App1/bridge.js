@@ -1667,7 +1667,29 @@
         },
 
         remove: function (s, index, count) {
-            if (!Bridge.hasValue(count) || ((index + count) > s.length)) {
+            if (s == null) {
+                throw new System.NullReferenceException();
+            }
+
+            if (index < 0) {
+                throw new System.ArgumentOutOfRangeException("StartIndex cannot be less than zero", "startIndex");
+            }
+
+            if (count != null) {
+                if (count < 0) {
+                    throw new System.ArgumentOutOfRangeException("Count cannot be less than zero", "count");
+                }
+
+                if (count > s.length - index) {
+                    throw new System.ArgumentOutOfRangeException("Index and count must refer to a location within the string", "count");
+                }
+            } else {
+                if (index >= s.length) {
+                    throw new System.ArgumentOutOfRangeException("startIndex must be less than length of string", "startIndex");
+                }
+            }
+
+            if (count == null || ((index + count) > s.length)) {
                 return s.substr(0, index);
             }
 

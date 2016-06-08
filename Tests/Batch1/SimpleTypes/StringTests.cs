@@ -434,6 +434,13 @@ namespace Bridge.ClientTest.SimpleTypes
         public void RemoveWorks()
         {
             Assert.AreEqual("ab", "abcde".Remove(2));
+
+            var val = "Hello";
+            Assert.Throws<ArgumentOutOfRangeException>(() => { val.Remove(-2); });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { val.Remove(5); });
+
+            string s = null;
+            Assert.Throws<NullReferenceException>(() => { s.Remove(2); });
         }
 
         [Test]
@@ -455,6 +462,13 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.AreEqual("Hello", val.Remove(3, 0));
             Assert.AreEqual("Hello", val.Remove(4, 0));
             Assert.AreEqual("Hello", val.Remove(5, 0));
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => { val.Remove(-2, 2); });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { val.Remove(2, -2); });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { val.Remove(2, 4); });
+
+            string s = null;
+            Assert.Throws<NullReferenceException>(() => { s.Remove(0, 0); });
         }
 
         [Test]
