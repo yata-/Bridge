@@ -1667,7 +1667,7 @@
         },
 
         remove: function (s, index, count) {
-            if (!count || ((index + count) > this.length)) {
+            if (!Bridge.hasValue(count) || ((index + count) > s.length)) {
                 return s.substr(0, index);
             }
 
@@ -2189,7 +2189,7 @@
                 base,
                 cacheName = prop.$cacheName,
                 prototype,
-                scope = prop.$scope || Bridge.global,
+                scope = prop.$scope || gscope || Bridge.global,
                 i,
                 v,
                 ctorCounter,
