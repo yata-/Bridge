@@ -8697,6 +8697,28 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1448.Plainer');
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1459', {
+        statics: {
+            testHtmlElements: function () {
+                var root = document.getElementById("qunit-fixture");
+    
+                var button = document.createElement('button');
+                root.appendChild(button);
+    
+                Bridge.Test.Assert.notNull$1(button, "HTMLButtonElement created");
+    
+                var n = Bridge.as(button, Node);
+                Bridge.Test.Assert.notNull$1(n, "Node");
+    
+                var el = Bridge.as(n, Element);
+                Bridge.Test.Assert.notNull$1(el, "Element");
+    
+                var he = Bridge.as(el, HTMLElement);
+                Bridge.Test.Assert.notNull$1(el, "HTMLElement");
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
@@ -9273,7 +9295,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 var div1 = document.getElementById("div1");
                 Bridge.Test.Assert.areEqual$1("rgb(255, 238, 170)", div1.style.color, "div1.Style.Color " + hexColor);
-    
             }
         }
     });
