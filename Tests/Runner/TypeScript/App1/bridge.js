@@ -2189,7 +2189,7 @@
                 base,
                 cacheName = prop.$cacheName,
                 prototype,
-                scope = prop.$scope || Bridge.global,
+                scope = prop.$scope || gscope || Bridge.global,
                 i,
                 v,
                 ctorCounter,
