@@ -17,7 +17,7 @@
         disposed: false,
         config: {
             alias: {
-                System$IDisposable$dispose: "dispose"
+                dispose: "System$IDisposable$dispose"
             }
         },
         constructor$1: function (callback, state, dueTime, period) {

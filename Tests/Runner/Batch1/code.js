@@ -335,7 +335,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         inherits: [System.Collections.Generic.IComparer$1(System.Int32)],
         config: {
             alias: {
-                System$Collections$Generic$IComparer$1$System$Int32$compare: "compare"
+                compare: "System$Collections$Generic$IComparer$1$System$Int32$compare"
             }
         },
         compare: function (x, y) {
@@ -1676,7 +1676,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         inherits: [System.Collections.Generic.IComparer$1(System.Int32),System.Collections.IEqualityComparer],
         config: {
             alias: {
-                System$Collections$Generic$IComparer$1$System$Int32$compare: "compare"
+                compare: "System$Collections$Generic$IComparer$1$System$Int32$compare"
             }
         },
         compare: function (x, y) {
@@ -1733,7 +1733,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         inherits: [System.Collections.Generic.IComparer$1(String)],
         config: {
             alias: {
-                System$Collections$Generic$IComparer$1$String$compare: "compare"
+                compare: "System$Collections$Generic$IComparer$1$String$compare"
             }
         },
         compare: function (x, y) {
@@ -3951,8 +3951,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         inherits: [System.Collections.Generic.Dictionary$2(System.Int32,System.Int32)],
         config: {
             alias: {
-                System$Collections$Generic$IDictionary$2$System$Int32,System$Int32$getItem: "getAccessor",
-                System$Collections$Generic$IDictionary$2$System$Int32,System$Int32$setItem: "setAccessor"
+                getAccessor: "System$Collections$Generic$IDictionary$2$System$Int32$System$Int32$getItem",
+                setAccessor: "System$Collections$Generic$IDictionary$2$System$Int32$System$Int32$setItem"
             }
         },
         getAccessor: function (key) {
@@ -3980,8 +3980,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         inherits: [System.Collections.Generic.Dictionary$2(System.Int32,System.Int32)],
         config: {
             alias: {
-                System$Collections$Generic$IDictionary$2$System$Int32,System$Int32$getItem: "getAccessor",
-                System$Collections$Generic$IDictionary$2$System$Int32,System$Int32$setItem: "setAccessor"
+                getAccessor: "System$Collections$Generic$IDictionary$2$System$Int32$System$Int32$getItem",
+                setAccessor: "System$Collections$Generic$IDictionary$2$System$Int32$System$Int32$setItem"
             }
         }
     });
@@ -3990,8 +3990,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         inherits: [System.Collections.Generic.Dictionary$2(System.Int32,System.Int32)],
         config: {
             alias: {
-                System$Collections$Generic$IDictionary$2$System$Int32,System$Int32$getItem: "getAccessor",
-                System$Collections$Generic$IDictionary$2$System$Int32,System$Int32$setItem: "setAccessor"
+                getAccessor: "System$Collections$Generic$IDictionary$2$System$Int32$System$Int32$getItem",
+                setAccessor: "System$Collections$Generic$IDictionary$2$System$Int32$System$Int32$setItem"
             }
         }
     });
@@ -4896,7 +4896,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         parent: null,
         config: {
             alias: {
-                System$IDisposable$dispose: "dispose"
+                dispose: "System$IDisposable$dispose"
             }
         },
         constructor: function () {
@@ -8642,15 +8642,15 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         _backingDictionary: null,
         config: {
             alias: {
-                System$Collections$Generic$IDictionary$2$System$Int32,String$getItem: "getItem",
-                System$Collections$Generic$IDictionary$2$System$Int32,String$setItem: "setItem",
-                System$Collections$Generic$IDictionary$2$System$Int32,String$getKeys: "getKeys",
-                System$Collections$Generic$IDictionary$2$System$Int32,String$getValues: "getValues",
-                System$Collections$Generic$IDictionary$2$System$Int32,String$getCount: "getCount",
-                System$Collections$Generic$IDictionary$2$System$Int32,String$add: "add",
-                System$Collections$Generic$IDictionary$2$System$Int32,String$remove: "remove",
-                System$Collections$Generic$IDictionary$2$System$Int32,String$containsKey: "containsKey",
-                System$Collections$Generic$IDictionary$2$System$Int32,String$tryGetValue: "tryGetValue"
+                getItem: "System$Collections$Generic$IDictionary$2$System$Int32$String$getItem",
+                setItem: "System$Collections$Generic$IDictionary$2$System$Int32$String$setItem",
+                getKeys: "System$Collections$Generic$IDictionary$2$System$Int32$String$getKeys",
+                getValues: "System$Collections$Generic$IDictionary$2$System$Int32$String$getValues",
+                getCount: "System$Collections$Generic$IDictionary$2$System$Int32$String$getCount",
+                add: "System$Collections$Generic$IDictionary$2$System$Int32$String$add",
+                remove: "System$Collections$Generic$IDictionary$2$System$Int32$String$remove",
+                containsKey: "System$Collections$Generic$IDictionary$2$System$Int32$String$containsKey",
+                tryGetValue: "System$Collections$Generic$IDictionary$2$System$Int32$String$tryGetValue"
             }
         },
         constructor: function () {
@@ -8903,8 +8903,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Data: 0
             },
             alias: {
-                System$Collections$Generic$IEqualityComparer$1$Bridge$ClientTest$BridgeIssues$Bridge470$equals2: "equals2",
-                System$Collections$Generic$IEqualityComparer$1$Bridge$ClientTest$BridgeIssues$Bridge470$getHashCode2: "getHashCode2"
+                equals2: "System$Collections$Generic$IEqualityComparer$1$Bridge$ClientTest$BridgeIssues$Bridge470$equals2",
+                getHashCode2: "System$Collections$Generic$IEqualityComparer$1$Bridge$ClientTest$BridgeIssues$Bridge470$getHashCode2"
             }
         },
         equals2: function (x, y) {
@@ -10304,17 +10304,17 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 var d = Bridge.as(d1, System.Collections.Generic.IDictionary$2(System.Int32,String));
     
-                d[Bridge.geti(d, "System$Collections$Generic$IDictionary$2$System$Int32,String$add", "add")](1, "One");
-                d[Bridge.geti(d, "System$Collections$Generic$IDictionary$2$System$Int32,String$add", "add")](2, "Two");
+                d[Bridge.geti(d, "System$Collections$Generic$IDictionary$2$System$Int32$String$add", "add")](1, "One");
+                d[Bridge.geti(d, "System$Collections$Generic$IDictionary$2$System$Int32$String$add", "add")](2, "Two");
     
-                Bridge.Test.Assert.areEqual$1("One", d.System$Collections$Generic$IDictionary$2$System$Int32,String$getItem(1), "#572 getItem One");
-                Bridge.Test.Assert.areEqual$1("Two", d.System$Collections$Generic$IDictionary$2$System$Int32,String$getItem(2), "#572 getItem Two");
+                Bridge.Test.Assert.areEqual$1("One", d.System$Collections$Generic$IDictionary$2$System$Int32$String$getItem(1), "#572 getItem One");
+                Bridge.Test.Assert.areEqual$1("Two", d.System$Collections$Generic$IDictionary$2$System$Int32$String$getItem(2), "#572 getItem Two");
     
-                d.System$Collections$Generic$IDictionary$2$System$Int32,String$setItem(1, "New one");
-                d.System$Collections$Generic$IDictionary$2$System$Int32,String$setItem(2, "New two");
+                d.System$Collections$Generic$IDictionary$2$System$Int32$String$setItem(1, "New one");
+                d.System$Collections$Generic$IDictionary$2$System$Int32$String$setItem(2, "New two");
     
-                Bridge.Test.Assert.areEqual$1("New one", d.System$Collections$Generic$IDictionary$2$System$Int32,String$getItem(1), "#572 setItem New one");
-                Bridge.Test.Assert.areEqual$1("New two", d.System$Collections$Generic$IDictionary$2$System$Int32,String$getItem(2), "#572 setItem New two");
+                Bridge.Test.Assert.areEqual$1("New one", d.System$Collections$Generic$IDictionary$2$System$Int32$String$getItem(1), "#572 setItem New one");
+                Bridge.Test.Assert.areEqual$1("New two", d.System$Collections$Generic$IDictionary$2$System$Int32$String$getItem(2), "#572 setItem New two");
             }
         }
     });
@@ -11216,8 +11216,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         inherits: [System.Collections.Generic.IEqualityComparer$1(System.Int32)],
         config: {
             alias: {
-                System$Collections$Generic$IEqualityComparer$1$System$Int32$equals2: "equals2",
-                System$Collections$Generic$IEqualityComparer$1$System$Int32$getHashCode2: "getHashCode2"
+                equals2: "System$Collections$Generic$IEqualityComparer$1$System$Int32$equals2",
+                getHashCode2: "System$Collections$Generic$IEqualityComparer$1$System$Int32$getHashCode2"
             }
         },
         equals2: function (x, y) {
@@ -15431,9 +15431,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 var interfacedDictionary = Bridge.cast(dictionary, System.Collections.Generic.IDictionary$2(System.Int32,String));
     
-                Bridge.Test.Assert.areEqual$1("z", interfacedDictionary.System$Collections$Generic$IDictionary$2$System$Int32,String$getItem(6), "IDictionary getter works");
+                Bridge.Test.Assert.areEqual$1("z", interfacedDictionary.System$Collections$Generic$IDictionary$2$System$Int32$String$getItem(6), "IDictionary getter works");
                 Bridge.Test.Assert.throws$5(function () {
-                    var r = interfacedDictionary.System$Collections$Generic$IDictionary$2$System$Int32,String$getItem(1);
+                    var r = interfacedDictionary.System$Collections$Generic$IDictionary$2$System$Int32$String$getItem(1);
                 }, "IDictionary getter throws exception when incorrect key used");
             },
             n349: function () {
@@ -17365,8 +17365,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         inherits: [System.Collections.Generic.EqualityComparer$1(String)],
         config: {
             alias: {
-                System$Collections$Generic$IEqualityComparer$1$String$equals2: "equals2",
-                System$Collections$Generic$IEqualityComparer$1$String$getHashCode2: "getHashCode2"
+                equals2: "System$Collections$Generic$IEqualityComparer$1$String$equals2",
+                getHashCode2: "System$Collections$Generic$IEqualityComparer$1$String$getHashCode2"
             }
         },
         equals2: function (x, y) {
@@ -17466,7 +17466,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Items: null
             },
             alias: {
-                System$Collections$Generic$ICollection$1$String$getCount: "getCount"
+                getCount: "System$Collections$Generic$ICollection$1$String$getCount"
             }
         },
         constructor: function (items) {
@@ -17545,7 +17545,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var di2 = Bridge.cast(d, System.Collections.Generic.IDictionary$2(System.Int32,String));
     
             Bridge.Test.Assert.areEqual("x", d.getItem(9));
-            Bridge.Test.Assert.areEqual("z", di2.System$Collections$Generic$IDictionary$2$System$Int32,String$getItem(6));
+            Bridge.Test.Assert.areEqual("z", di2.System$Collections$Generic$IDictionary$2$System$Int32$String$getItem(6));
     
             try {
                 var x = d.getItem(1);
@@ -17556,7 +17556,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             }
     
             try {
-                var x1 = di2.System$Collections$Generic$IDictionary$2$System$Int32,String$getItem(1);
+                var x1 = di2.System$Collections$Generic$IDictionary$2$System$Int32$String$getItem(1);
                 Bridge.Test.Assert.fail$1("Should throw");
             }
             catch ($e2) {
@@ -17593,10 +17593,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             var di2 = Bridge.cast(d, System.Collections.Generic.IDictionary$2(System.Int32,String));
     
             Bridge.Test.Assert.true(d.containsKey(9));
-            Bridge.Test.Assert.true(di2[Bridge.geti(di2, "System$Collections$Generic$IDictionary$2$System$Int32,String$containsKey", "containsKey")](3));
+            Bridge.Test.Assert.true(di2[Bridge.geti(di2, "System$Collections$Generic$IDictionary$2$System$Int32$String$containsKey", "containsKey")](3));
     
             Bridge.Test.Assert.false(d.containsKey(923));
-            Bridge.Test.Assert.false(di2[Bridge.geti(di2, "System$Collections$Generic$IDictionary$2$System$Int32,String$containsKey", "containsKey")](353));
+            Bridge.Test.Assert.false(di2[Bridge.geti(di2, "System$Collections$Generic$IDictionary$2$System$Int32$String$containsKey", "containsKey")](353));
         },
         tryGetValueWorks: function () {
             var d = new Bridge.ClientTest.Collections.Generic.IDictionaryTests.MyDictionary("constructor$1", Bridge.merge(new System.Collections.Generic.Dictionary$2(System.Int32,String)(), [
@@ -17611,7 +17611,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.true(d.tryGetValue(9, outVal));
             Bridge.Test.Assert.areEqual("x", outVal.v);
     
-            Bridge.Test.Assert.true(di2[Bridge.geti(di2, "System$Collections$Generic$IDictionary$2$System$Int32,String$tryGetValue", "tryGetValue")](3, outVal));
+            Bridge.Test.Assert.true(di2[Bridge.geti(di2, "System$Collections$Generic$IDictionary$2$System$Int32$String$tryGetValue", "tryGetValue")](3, outVal));
             Bridge.Test.Assert.areEqual("b", outVal.v);
     
             outVal.v = "!!!";
@@ -17619,7 +17619,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areEqual(null, outVal.v);
     
             outVal.v = "!!!";
-            Bridge.Test.Assert.false(di2[Bridge.geti(di2, "System$Collections$Generic$IDictionary$2$System$Int32,String$tryGetValue", "tryGetValue")](353, outVal));
+            Bridge.Test.Assert.false(di2[Bridge.geti(di2, "System$Collections$Generic$IDictionary$2$System$Int32$String$tryGetValue", "tryGetValue")](353, outVal));
             Bridge.Test.Assert.areEqual(null, outVal.v);
         },
         addWorks: function () {
@@ -17630,13 +17630,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areEqual("aa", d.getItem(5));
             Bridge.Test.Assert.areEqual(1, d.getCount());
     
-            di[Bridge.geti(di, "System$Collections$Generic$IDictionary$2$System$Int32,String$add", "add")](3, "bb");
-            Bridge.Test.Assert.areEqual(di.System$Collections$Generic$IDictionary$2$System$Int32,String$getItem(3), "bb");
+            di[Bridge.geti(di, "System$Collections$Generic$IDictionary$2$System$Int32$String$add", "add")](3, "bb");
+            Bridge.Test.Assert.areEqual(di.System$Collections$Generic$IDictionary$2$System$Int32$String$getItem(3), "bb");
     
             var s = { };
-            di[Bridge.geti(di, "System$Collections$Generic$IDictionary$2$System$Int32,String$tryGetValue", "tryGetValue")](3, s);
+            di[Bridge.geti(di, "System$Collections$Generic$IDictionary$2$System$Int32$String$tryGetValue", "tryGetValue")](3, s);
             Bridge.Test.Assert.areEqual("bb", s.v);
-            Bridge.Test.Assert.areEqual(2, di[Bridge.geti(di, "System$Collections$Generic$IDictionary$2$System$Int32,String$getCount", "getCount")]());
+            Bridge.Test.Assert.areEqual(2, di[Bridge.geti(di, "System$Collections$Generic$IDictionary$2$System$Int32$String$getCount", "getCount")]());
     
             try {
                 d.add(5, "zz");
@@ -17670,11 +17670,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areEqual(3, d.getCount());
             Bridge.Test.Assert.false(d.containsKey(6));
     
-            Bridge.Test.Assert.areStrictEqual(true, di[Bridge.geti(di, "System$Collections$Generic$IDictionary$2$System$Int32,String$remove", "remove")](3));
-            Bridge.Test.Assert.areEqual(2, di[Bridge.geti(di, "System$Collections$Generic$IDictionary$2$System$Int32,String$getCount", "getCount")]());
-            Bridge.Test.Assert.false(di[Bridge.geti(di, "System$Collections$Generic$IDictionary$2$System$Int32,String$containsKey", "containsKey")](3));
+            Bridge.Test.Assert.areStrictEqual(true, di[Bridge.geti(di, "System$Collections$Generic$IDictionary$2$System$Int32$String$remove", "remove")](3));
+            Bridge.Test.Assert.areEqual(2, di[Bridge.geti(di, "System$Collections$Generic$IDictionary$2$System$Int32$String$getCount", "getCount")]());
+            Bridge.Test.Assert.false(di[Bridge.geti(di, "System$Collections$Generic$IDictionary$2$System$Int32$String$containsKey", "containsKey")](3));
     
-            Bridge.Test.Assert.true(di[Bridge.geti(di, "System$Collections$Generic$IDictionary$2$System$Int32,String$containsKey", "containsKey")](13));
+            Bridge.Test.Assert.true(di[Bridge.geti(di, "System$Collections$Generic$IDictionary$2$System$Int32$String$containsKey", "containsKey")](13));
         },
         setItemWorks: function () {
             var d = new Bridge.ClientTest.Collections.Generic.IDictionaryTests.MyDictionary("constructor$1", Bridge.merge(new System.Collections.Generic.Dictionary$2(System.Int32,String)(), [
@@ -17689,9 +17689,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.areEqual("check", d.getItem(3));
             Bridge.Test.Assert.false(d.containsKey(10));
     
-            di.System$Collections$Generic$IDictionary$2$System$Int32,String$setItem(10, "stuff");
-            Bridge.Test.Assert.areEqual("stuff", di.System$Collections$Generic$IDictionary$2$System$Int32,String$getItem(10));
-            Bridge.Test.Assert.true(di[Bridge.geti(di, "System$Collections$Generic$IDictionary$2$System$Int32,String$containsKey", "containsKey")](10));
+            di.System$Collections$Generic$IDictionary$2$System$Int32$String$setItem(10, "stuff");
+            Bridge.Test.Assert.areEqual("stuff", di.System$Collections$Generic$IDictionary$2$System$Int32$String$getItem(10));
+            Bridge.Test.Assert.true(di[Bridge.geti(di, "System$Collections$Generic$IDictionary$2$System$Int32$String$containsKey", "containsKey")](10));
         }
     });
     
@@ -17700,15 +17700,15 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         _backingDictionary: null,
         config: {
             alias: {
-                System$Collections$Generic$IDictionary$2$System$Int32,String$getItem: "getItem",
-                System$Collections$Generic$IDictionary$2$System$Int32,String$setItem: "setItem",
-                System$Collections$Generic$IDictionary$2$System$Int32,String$getKeys: "getKeys",
-                System$Collections$Generic$IDictionary$2$System$Int32,String$getValues: "getValues",
-                System$Collections$Generic$IDictionary$2$System$Int32,String$getCount: "getCount",
-                System$Collections$Generic$IDictionary$2$System$Int32,String$add: "add",
-                System$Collections$Generic$IDictionary$2$System$Int32,String$remove: "remove",
-                System$Collections$Generic$IDictionary$2$System$Int32,String$containsKey: "containsKey",
-                System$Collections$Generic$IDictionary$2$System$Int32,String$tryGetValue: "tryGetValue"
+                getItem: "System$Collections$Generic$IDictionary$2$System$Int32$String$getItem",
+                setItem: "System$Collections$Generic$IDictionary$2$System$Int32$String$setItem",
+                getKeys: "System$Collections$Generic$IDictionary$2$System$Int32$String$getKeys",
+                getValues: "System$Collections$Generic$IDictionary$2$System$Int32$String$getValues",
+                getCount: "System$Collections$Generic$IDictionary$2$System$Int32$String$getCount",
+                add: "System$Collections$Generic$IDictionary$2$System$Int32$String$add",
+                remove: "System$Collections$Generic$IDictionary$2$System$Int32$String$remove",
+                containsKey: "System$Collections$Generic$IDictionary$2$System$Int32$String$containsKey",
+                tryGetValue: "System$Collections$Generic$IDictionary$2$System$Int32$String$tryGetValue"
             }
         },
         constructor: function () {
@@ -17926,9 +17926,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Items: null
             },
             alias: {
-                System$Collections$Generic$ICollection$1$String$getCount: "getCount",
-                System$Collections$Generic$IList$1$String$getItem: "getItem",
-                System$Collections$Generic$IList$1$String$setItem: "setItem"
+                getCount: "System$Collections$Generic$ICollection$1$String$getCount",
+                getItem: "System$Collections$Generic$IList$1$String$getItem",
+                setItem: "System$Collections$Generic$IList$1$String$setItem"
             }
         },
         constructor: function (items) {
@@ -18779,7 +18779,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         inherits: [System.Collections.Generic.IComparer$1(System.Int32)],
         config: {
             alias: {
-                System$Collections$Generic$IComparer$1$System$Int32$compare: "compare"
+                compare: "System$Collections$Generic$IComparer$1$System$Int32$compare"
             }
         },
         compare: function (x, y) {
@@ -19618,7 +19618,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         config: {
             alias: {
-                System$IFormatProvider$getFormat: "getFormat"
+                getFormat: "System$IFormatProvider$getFormat"
             }
         },
         constructor: function () {
@@ -22685,8 +22685,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         inherits: [System.Collections.Generic.EqualityComparer$1(String)],
         config: {
             alias: {
-                System$Collections$Generic$IEqualityComparer$1$String$equals2: "equals2",
-                System$Collections$Generic$IEqualityComparer$1$String$getHashCode2: "getHashCode2"
+                equals2: "System$Collections$Generic$IEqualityComparer$1$String$equals2",
+                getHashCode2: "System$Collections$Generic$IEqualityComparer$1$String$getHashCode2"
             }
         },
         equals2: function (x, y) {
@@ -23237,8 +23237,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         inherits: [System.Collections.Generic.EqualityComparer$1(String)],
         config: {
             alias: {
-                System$Collections$Generic$IEqualityComparer$1$String$equals2: "equals2",
-                System$Collections$Generic$IEqualityComparer$1$String$getHashCode2: "getHashCode2"
+                equals2: "System$Collections$Generic$IEqualityComparer$1$String$equals2",
+                getHashCode2: "System$Collections$Generic$IEqualityComparer$1$String$getHashCode2"
             }
         },
         equals2: function (x, y) {
@@ -32083,7 +32083,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Thens: null
             },
             alias: {
-                Bridge$IPromise$then: "then"
+                then: "Bridge$IPromise$then"
             }
         },
         constructor: function () {
@@ -34165,9 +34165,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Data: 0
             },
             alias: {
-                Bridge$ClientTest$BasicCSharp$TestInterfaces$ISimple$getData: "getData",
-                Bridge$ClientTest$BasicCSharp$TestInterfaces$ISimple$setData: "setData",
-                Bridge$ClientTest$BasicCSharp$TestInterfaces$ISimple$getString: "getString"
+                getData: "Bridge$ClientTest$BasicCSharp$TestInterfaces$ISimple$getData",
+                setData: "Bridge$ClientTest$BasicCSharp$TestInterfaces$ISimple$setData",
+                getString: "Bridge$ClientTest$BasicCSharp$TestInterfaces$ISimple$getString"
             }
         },
         constructor: function () {
@@ -34201,9 +34201,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         dataAsWell: 0,
         config: {
             alias: {
-                Bridge$ClientTest$BasicCSharp$TestInterfaces$ISimpleAsWell$getDataAsWell: "getDataAsWell",
-                Bridge$ClientTest$BasicCSharp$TestInterfaces$ISimpleAsWell$setDataAsWell: "setDataAsWell",
-                Bridge$ClientTest$BasicCSharp$TestInterfaces$ISimpleAsWell$getStringAsWell: "getStringAsWell"
+                getDataAsWell: "Bridge$ClientTest$BasicCSharp$TestInterfaces$ISimpleAsWell$getDataAsWell",
+                setDataAsWell: "Bridge$ClientTest$BasicCSharp$TestInterfaces$ISimpleAsWell$setDataAsWell",
+                getStringAsWell: "Bridge$ClientTest$BasicCSharp$TestInterfaces$ISimpleAsWell$getStringAsWell"
             }
         },
         constructor: function () {
@@ -34286,7 +34286,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         inherits: [System.Collections.Generic.IComparer$1(Bridge.ClientTest.BridgeIssues.Bridge1128.Foo1.Item)],
         config: {
             alias: {
-                System$Collections$Generic$IComparer$1$Bridge$ClientTest$BridgeIssues$Bridge1128$Foo1$Item$compare: "compare"
+                compare: "System$Collections$Generic$IComparer$1$Bridge$ClientTest$BridgeIssues$Bridge1128$Foo1$Item$compare"
             }
         },
         compare: function (x, y) {
@@ -34372,7 +34372,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 X: null
             },
             alias: {
-                Bridge$ClientTest$BridgeIssues$IBridge304$f: "f"
+                f: "Bridge$ClientTest$BridgeIssues$IBridge304$f"
             }
         },
         f: function (x) {

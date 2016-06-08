@@ -2001,7 +2001,7 @@
 
                     if (config.alias) {
                         for (name in config.alias) {
-                            this[name] = this[config.alias[name]];
+                            this[config.alias[name]] = this[name];
                         }
                     }
 

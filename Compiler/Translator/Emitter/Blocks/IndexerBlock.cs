@@ -284,14 +284,14 @@ namespace Bridge.Translator
             bool isStatement = false;
             var oldIsAssignment = this.Emitter.IsAssignment;
             var oldUnary = this.Emitter.IsUnaryAccessor;
-            var isInterfaceMember = false;
+            /*var isInterfaceMember = false;
 
             if (memberResolveResult != null && memberResolveResult.Member.DeclaringTypeDefinition != null &&
                 memberResolveResult.Member.DeclaringTypeDefinition.Kind == TypeKind.Interface &&
                 this.Emitter.Validator.IsIgnoreType(memberResolveResult.Member.DeclaringTypeDefinition))
             {
                 isInterfaceMember = true;
-            }
+            }*/
 
             if (this.Emitter.IsAssignment && this.Emitter.AssignmentType != AssignmentOperatorType.Assign)
             {

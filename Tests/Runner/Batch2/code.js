@@ -438,7 +438,7 @@
         inherits: [System.Collections.Generic.IComparer$1(System.Int32)],
         config: {
             alias: {
-                System$Collections$Generic$IComparer$1$System$Int32$compare: "compare"
+                compare: "System$Collections$Generic$IComparer$1$System$Int32$compare"
             }
         },
         compare: function (x, y) {

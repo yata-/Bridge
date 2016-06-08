@@ -678,9 +678,7 @@ namespace Bridge.Contract
 
             if (interfaceMember != null && !ignoreInterface)
             {
-                var interfaceName = BridgeTypes.ToJsName(interfaceMember.DeclaringType, emitter);
-                interfaceName = OverloadsCollection.GetInterfaceName(interfaceName);
-                return interfaceName + (interfaceName.EndsWith("$") ? "" : "$") + attrName;
+                return OverloadsCollection.GetInterfaceMemberName(emitter, interfaceMember, attrName, null);
             }
 
             return attrName;

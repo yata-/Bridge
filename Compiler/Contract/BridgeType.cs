@@ -228,7 +228,7 @@ namespace Bridge.Contract
             return names.Join(".");
         }
 
-        public static string ToJsName(IType type, IEmitter emitter, bool asDefinition = false, bool excludens = false)
+        public static string ToJsName(IType type, IEmitter emitter, bool asDefinition = false, bool excludens = false, bool isAlias = false)
         {
             if (type.Kind == TypeKind.Array)
             {
@@ -291,23 +291,47 @@ namespace Bridge.Contract
                 name += "$" + type.TypeArguments.Count;
             }
 
+            if (isAlias)
+            {
+                name = OverloadsCollection.NormalizeInterfaceName(name);
+            }
+
             if (!asDefinition && type.TypeArguments.Count > 0 && !Helpers.IsIgnoreGeneric(type, emitter))
             {
                 StringBuilder sb = new StringBuilder(name);
                 bool needComma = false;
-                sb.Append("(");
+                bool startStr = false;
+                bool wrap = false;
+                sb.Append(isAlias ? "$" : "(");
                 foreach (var typeArg in type.TypeArguments)
                 {
+                    if (startStr)
+                    {
+                        sb.Append(" + \"");
+                        startStr = false;
+                    }
+
                     if (needComma)
                     {
-                        sb.Append(",");
+                        sb.Append(isAlias ? "$" : ",");
                     }
 
                     needComma = true;
+
+                    if (isAlias && typeArg.Kind == TypeKind.TypeParameter)
+                    {
+                        sb.Append("\" + Bridge.getTypeName(");
+                    }
                     sb.Append(BridgeTypes.ToJsName(typeArg, emitter));
+                    if (isAlias && typeArg.Kind == TypeKind.TypeParameter)
+                    {
+                        sb.Append(")");
+                        startStr = true;
+                        wrap = true;
+                    }
                 }
-                sb.Append(")");
-                name = sb.ToString();
+                sb.Append(!isAlias ? ")" : "");
+                name = (wrap ? "\"" : "") + sb.ToString() + (wrap ? (startStr ? " + \"$" : "\"$") : "");
             }
 
             return name;

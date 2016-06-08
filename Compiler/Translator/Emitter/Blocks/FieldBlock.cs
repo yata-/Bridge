@@ -343,27 +343,56 @@ namespace Bridge.Translator
                             if (property.CanGet)
                             {
                                 this.EnsureComma();
-                                this.Write(Helpers.GetPropertyRef(interfaceMember, this.Emitter, false, false, false));
+                                this.Write(Helpers.GetPropertyRef(rr.Member, this.Emitter, false, false, true));
                                 this.WriteColon();
-                                this.WriteScript(Helpers.GetPropertyRef(rr.Member, this.Emitter, false, false, true));
+                                var alias = Helpers.GetPropertyRef(interfaceMember, this.Emitter, false, false, false);
+
+                                if (alias.StartsWith("\""))
+                                {
+                                    this.Write(alias);
+                                }
+                                else
+                                {
+                                    this.WriteScript(alias);
+                                }
+                                
                                 this.Emitter.Comma = true;
                             }
 
                             if (property.CanSet)
                             {
                                 this.EnsureComma();
-                                this.Write(Helpers.GetPropertyRef(interfaceMember, this.Emitter, true, false, false));
+                                this.Write(Helpers.GetPropertyRef(rr.Member, this.Emitter, true, false, true));
                                 this.WriteColon();
-                                this.WriteScript(Helpers.GetPropertyRef(rr.Member, this.Emitter, true, false, true));
+                                var alias = Helpers.GetPropertyRef(interfaceMember, this.Emitter, true, false, false);
+
+                                if (alias.StartsWith("\""))
+                                {
+                                    this.Write(alias);
+                                }
+                                else
+                                {
+                                    this.WriteScript(alias);
+                                }
+
                                 this.Emitter.Comma = true;
                             }
                         }
                         else
                         {
                             this.EnsureComma();
-                            this.Write(OverloadsCollection.Create(Emitter, interfaceMember).GetOverloadName());
+                            this.Write(OverloadsCollection.Create(Emitter, rr.Member).GetOverloadName());
                             this.WriteColon();
-                            this.WriteScript(OverloadsCollection.Create(Emitter, rr.Member).GetOverloadName());
+                            var alias = OverloadsCollection.Create(Emitter, interfaceMember).GetOverloadName();
+
+                            if (alias.StartsWith("\""))
+                            {
+                                this.Write(alias);
+                            }
+                            else
+                            {
+                                this.WriteScript(alias);
+                            }
                         }
                         
                         this.Emitter.Comma = true;

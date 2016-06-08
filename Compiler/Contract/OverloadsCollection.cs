@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using ICSharpCode.NRefactory.MonoCSharp;
 using ITypeDefinition = ICSharpCode.NRefactory.TypeSystem.ITypeDefinition;
 using Modifiers = ICSharpCode.NRefactory.CSharp.Modifiers;
@@ -903,6 +904,30 @@ namespace Bridge.Contract
             return this.overloadName;
         }
 
+        public static string NormalizeInterfaceName(string interfaceName)
+        {
+            return Regex.Replace(interfaceName, @"[\.\(\)\,]", "$");
+        }
+
+        public static string GetInterfaceMemberName(IEmitter emitter, IMember interfaceMember, string name, string prefix)
+        {
+            var interfaceMemberName = name ?? OverloadsCollection.Create(emitter, interfaceMember).GetOverloadName(true, prefix);
+            var interfaceName = BridgeTypes.ToJsName(interfaceMember.DeclaringType, emitter, false, false, true);
+
+            if (interfaceName.StartsWith("\""))
+            {
+                return interfaceName  + interfaceMemberName + "\"";
+            }
+
+            return interfaceName + (interfaceName.EndsWith("$") ? "" : "$") + interfaceMemberName;
+        }
+
+        public static bool IsUndeterminedInterface(IEmitter emitter, IMember member)
+        {
+            return member.DeclaringTypeDefinition != null && member.DeclaringTypeDefinition.Kind == TypeKind.Interface &&
+                   emitter.Validator.IsIgnoreType(member.DeclaringTypeDefinition);
+        }
+
         protected virtual string GetOverloadName(IMember definition, bool skipInterfaceName = false, string prefix = null)
         {
             IMember interfaceMember = null;
@@ -917,10 +942,7 @@ namespace Bridge.Contract
 
             if (interfaceMember != null && !skipInterfaceName)
             {
-                var interfaceMemberName = OverloadsCollection.Create(Emitter, interfaceMember).GetOverloadName(true, prefix);
-                var interfaceName = BridgeTypes.ToJsName(interfaceMember.DeclaringType, Emitter);
-                interfaceName = OverloadsCollection.GetInterfaceName(interfaceName);
-                return interfaceName + (interfaceName.EndsWith("$") ? "" : "$") + interfaceMemberName;
+                return OverloadsCollection.GetInterfaceMemberName(this.Emitter, interfaceMember, null, prefix);
             }
 
             string name = this.Emitter.GetEntityName(definition, this.CancelChangeCase);
@@ -964,24 +986,7 @@ namespace Bridge.Contract
                 }
             }
 
-            /*if (definition.ImplementedInterfaceMembers.Count > 0)
-            {
-                foreach (var iMember in definition.ImplementedInterfaceMembers)
-                {
-                    if (OverloadsCollection.Create(this.Emitter, iMember, false, true).GetOverloadName() != name)
-                    {
-                        string message = "Cannot translate interface ({2}) member '{0}' in '{1}' due name conflicts. Please rename methods or refactor your code";
-                        throw new Exception(string.Format(message, definition.ToString(), definition.DeclaringType.ToString(), iMember.DeclaringType.ToString()));
-                    }
-                }
-            }*/
-
             return prefix != null ? prefix + name : name;
-        }
-
-        internal static string GetInterfaceName(string interfaceName)
-        {
-            return interfaceName.Replace(".", "$").Replace("(", "$").Replace(")", "$").Replace(",", "$");
         }
 
         protected virtual IMember FindMember(EntityDeclaration entity)

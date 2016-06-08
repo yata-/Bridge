@@ -17,8 +17,8 @@
         property: 100,
         config: {
             alias: {
-                Interfaces$Interface1$getProperty: "getProperty",
-                Interfaces$Interface1$setProperty: "setProperty"
+                getProperty: "Interfaces$Interface1$getProperty",
+                setProperty: "Interfaces$Interface1$setProperty"
             }
         },
         getProperty: function () {
@@ -37,11 +37,11 @@
         inherits: [Interfaces.Interface4],
         config: {
             alias: {
-                Interfaces$Interface4$method6: "method6",
-                Interfaces$Interface4$method7: "method7",
-                Interfaces$Interface4$method8: "method8",
-                Interfaces$Interface4$method9: "method9",
-                Interfaces$Interface4$method10: "method10"
+                method6: "Interfaces$Interface4$method6",
+                method7: "Interfaces$Interface4$method7",
+                method8: "Interfaces$Interface4$method8",
+                method9: "Interfaces$Interface4$method9",
+                method10: "Interfaces$Interface4$method10"
             }
         },
         method6: function (b) {
@@ -70,11 +70,11 @@
                 MethodProperty: 0
             },
             alias: {
-                Interfaces$Interface6$getProperty$3: "getProperty$3",
-                Interfaces$Interface6$setProperty$3: "setProperty$3",
-                Interfaces$Interface6$getProperty: "getProperty",
-                Interfaces$Interface6$setProperty$1: "setProperty$1",
-                Interfaces$Interface6$setProperty: "setProperty"
+                getProperty$3: "Interfaces$Interface6$getProperty$3",
+                setProperty$3: "Interfaces$Interface6$setProperty$3",
+                getProperty: "Interfaces$Interface6$getProperty",
+                setProperty$1: "Interfaces$Interface6$setProperty$1",
+                setProperty: "Interfaces$Interface6$setProperty"
             }
         },
         getProperty: function () {
@@ -92,10 +92,10 @@
         inherits: [Interfaces.Class1,Interfaces.Interface2],
         config: {
             alias: {
-                Interfaces$Interface2$method1: "method1",
-                Interfaces$Interface2$method2: "method2",
-                Interfaces$Interface2$method3: "method3",
-                Interfaces$Interface2$method4: "method4"
+                method1: "Interfaces$Interface2$method1",
+                method2: "Interfaces$Interface2$method2",
+                method3: "Interfaces$Interface2$method3",
+                method4: "Interfaces$Interface2$method4"
             }
         },
         method1: function () {
@@ -123,7 +123,7 @@
         inherits: [Interfaces.Class2,Interfaces.Interface3],
         config: {
             alias: {
-                Interfaces$Interface3$method5: "method5"
+                method5: "Interfaces$Interface3$method5"
             }
         },
         method5: function (i) {
