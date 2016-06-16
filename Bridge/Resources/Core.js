@@ -42,7 +42,12 @@
                 cap = rs ? name.slice(1) : name,
                 getName = "get" + cap,
                 setName = "set" + cap,
-                lastSep = name.lastIndexOf("$");
+                lastSep = name.lastIndexOf("$"),
+                endsNum = lastSep > 0 && ((name.length - lastSep - 1) > 0) && !isNaN(parseInt(name.substr(lastSep + 1)));
+
+            if (endsNum) {
+                lastSep = name.substring(0, lastSep - 1).lastIndexOf("$");
+            }
 
             if (lastSep > 0 && lastSep !== (name.length - 1)) {
                 getName = name.substring(0, lastSep) + "get" + name.substr(lastSep + 1);
@@ -66,15 +71,28 @@
             scope[name] = v;
 
             var rs = name.charAt(0) === "$",
-                cap = rs ? name.slice(1) : name;
+                cap = rs ? name.slice(1) : name,
+                addName = "add" + cap,
+                removeName = "remove" + cap,
+                lastSep = name.lastIndexOf("$"),
+                endsNum = lastSep > 0 && ((name.length - lastSep - 1) > 0) && !isNaN(parseInt(name.substr(lastSep + 1)));
 
-            scope["add" + cap] = (function (name) {
+            if (endsNum) {
+                lastSep = name.substring(0, lastSep - 1).lastIndexOf("$");
+            }
+
+            if (lastSep > 0 && lastSep !== (name.length - 1)) {
+                addName = name.substring(0, lastSep) + "add" + name.substr(lastSep + 1);
+                removeName = name.substring(0, lastSep) + "remove" + name.substr(lastSep + 1);
+            }
+
+            scope[addName] = (function (name) {
                 return function (value) {
                     this[name] = Bridge.fn.combine(this[name], value);
                 };
             })(name);
 
-            scope["remove" + cap] = (function (name) {
+            scope[removeName] = (function (name) {
                 return function (value) {
                     this[name] = Bridge.fn.remove(this[name], value);
                 };
@@ -124,6 +142,11 @@
         clone: function (obj) {
             if (Bridge.isArray(obj)) {
                 return System.Array.clone(obj);
+            }
+
+            var name;
+            if (Bridge.isFunction(obj[name = "System$ICloneable$clone"])) {
+                return obj[name]();
             }
 
             if (Bridge.is(obj, System.ICloneable)) {
@@ -298,6 +321,11 @@
             }
 
             return null;
+        },
+
+        getTypeAlias: function(obj) {
+            var name = Bridge.getTypeName(obj);
+            return name.replace(/[\.\(\)\,]/g, "$");
         },
 
         getTypeName: function (obj) {
@@ -480,7 +508,7 @@
 	        return to;
 	    },
 
-	    getEnumerator: function (obj, suffix) {
+	    getEnumerator: function (obj, suffix, T) {
 	        if (typeof obj === "string") {
 	            obj = System.String.toCharArray(obj);
 	        }
@@ -493,9 +521,18 @@
 	            return obj.getEnumerator();
 	        }
 
+	        var name;
+	        if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$IEnumerable$1$" + Bridge.getTypeAlias(T) + "$getEnumerator"])) {
+	            return obj[name]();
+	        }
+
+	        if (Bridge.isFunction(obj[name = "System$Collections$IEnumerable$getEnumerator"])) {
+	            return obj[name]();
+	        }
+
 	        if ((Object.prototype.toString.call(obj) === "[object Array]") ||
                 (obj && Bridge.isDefined(obj.length))) {
-	            return new Bridge.ArrayEnumerator(obj);
+	            return new Bridge.ArrayEnumerator(obj, T);
 	        }
 
 	        throw new System.InvalidOperationException("Cannot create enumerator");
@@ -693,7 +730,7 @@
             }
         },
 
-        compare: function (a, b, safe) {
+        compare: function (a, b, safe, T) {
             if (!Bridge.isDefined(a, true)) {
                 if (safe) {
                     return 0;
@@ -709,8 +746,25 @@
                 return Bridge.compare(a.valueOf(), b.valueOf());
             }
 
+            var name;
+            if (T && Bridge.isFunction(a[name = "System$IComparable$1$" + Bridge.getTypeAlias(T) + "$compareTo"])) {
+                return a[name](b);
+            }
+
+            if (Bridge.isFunction(a[name = "System$IComparable$compareTo"])) {
+                return a[name](b);
+            }
+
             if (Bridge.isFunction(a.compareTo)) {
                 return a.compareTo(b);
+            }
+
+            if (T && Bridge.isFunction(b[name = "System$IComparable$1$" + Bridge.getTypeAlias(T) + "$compareTo"])) {
+                return -b[name](a);
+            }
+
+            if (Bridge.isFunction(b[name = "System$IComparable$compareTo"])) {
+                return -b[name](a);
             }
 
             if (Bridge.isFunction(b.compareTo)) {
@@ -724,7 +778,7 @@
             throw new System.Exception("Cannot compare items");
         },
 
-        equalsT: function (a, b) {
+        equalsT: function (a, b, T) {
             if (!Bridge.isDefined(a, true)) {
                 throw new System.NullReferenceException();
             } else if (Bridge.isNumber(a) || Bridge.isString(a) || Bridge.isBoolean(a)) {
@@ -733,17 +787,31 @@
                 return a.valueOf() === b.valueOf();
             }
 
+            var name;
+            if (T && a != null && Bridge.isFunction(a[name = "System$IEquatable$1$" + Bridge.getTypeAlias(T) + "$equalsT"])) {
+                return a[name](b);
+            }
+
+            if (T && b != null && Bridge.isFunction(b[name = "System$IEquatable$1$" + Bridge.getTypeAlias(T) + "$equalsT"])) {
+                return b[name](a);
+            }
+
             return a.equalsT ? a.equalsT(b) : b.equalsT(a);
         },
 
-        format: function (obj, formatString) {
+        format: function (obj, formatString, provider) {
             if (Bridge.isNumber(obj)) {
-                return Bridge.Int.format(obj, formatString);
+                return Bridge.Int.format(obj, formatString, provider);
             } else if (Bridge.isDate(obj)) {
-                return Bridge.Date.format(obj, formatString);
+                return Bridge.Date.format(obj, formatString, provider);
             }
 
-            return obj.format(formatString);
+            var name;
+            if (Bridge.isFunction(obj[name = "System$IFormattable$format"])) {
+                return obj[name](formatString, provider);
+            }
+
+            return obj.format(formatString, provider);
         },
 
         getType: function (instance) {

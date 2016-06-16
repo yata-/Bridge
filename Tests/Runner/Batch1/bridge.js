@@ -53,7 +53,12 @@
                 cap = rs ? name.slice(1) : name,
                 getName = "get" + cap,
                 setName = "set" + cap,
-                lastSep = name.lastIndexOf("$");
+                lastSep = name.lastIndexOf("$"),
+                endsNum = lastSep > 0 && ((name.length - lastSep - 1) > 0) && !isNaN(parseInt(name.substr(lastSep + 1)));
+
+            if (endsNum) {
+                lastSep = name.substring(0, lastSep - 1).lastIndexOf("$");
+            }
 
             if (lastSep > 0 && lastSep !== (name.length - 1)) {
                 getName = name.substring(0, lastSep) + "get" + name.substr(lastSep + 1);
@@ -77,15 +82,28 @@
             scope[name] = v;
 
             var rs = name.charAt(0) === "$",
-                cap = rs ? name.slice(1) : name;
+                cap = rs ? name.slice(1) : name,
+                addName = "add" + cap,
+                removeName = "remove" + cap,
+                lastSep = name.lastIndexOf("$"),
+                endsNum = lastSep > 0 && ((name.length - lastSep - 1) > 0) && !isNaN(parseInt(name.substr(lastSep + 1)));
 
-            scope["add" + cap] = (function (name) {
+            if (endsNum) {
+                lastSep = name.substring(0, lastSep - 1).lastIndexOf("$");
+            }
+
+            if (lastSep > 0 && lastSep !== (name.length - 1)) {
+                addName = name.substring(0, lastSep) + "add" + name.substr(lastSep + 1);
+                removeName = name.substring(0, lastSep) + "remove" + name.substr(lastSep + 1);
+            }
+
+            scope[addName] = (function (name) {
                 return function (value) {
                     this[name] = Bridge.fn.combine(this[name], value);
                 };
             })(name);
 
-            scope["remove" + cap] = (function (name) {
+            scope[removeName] = (function (name) {
                 return function (value) {
                     this[name] = Bridge.fn.remove(this[name], value);
                 };
@@ -135,6 +153,11 @@
         clone: function (obj) {
             if (Bridge.isArray(obj)) {
                 return System.Array.clone(obj);
+            }
+
+            var name;
+            if (Bridge.isFunction(obj[name = "System$ICloneable$clone"])) {
+                return obj[name]();
             }
 
             if (Bridge.is(obj, System.ICloneable)) {
@@ -309,6 +332,11 @@
             }
 
             return null;
+        },
+
+        getTypeAlias: function(obj) {
+            var name = Bridge.getTypeName(obj);
+            return name.replace(/[\.\(\)\,]/g, "$");
         },
 
         getTypeName: function (obj) {
@@ -491,7 +519,7 @@
 	        return to;
 	    },
 
-	    getEnumerator: function (obj, suffix) {
+	    getEnumerator: function (obj, suffix, T) {
 	        if (typeof obj === "string") {
 	            obj = System.String.toCharArray(obj);
 	        }
@@ -504,9 +532,18 @@
 	            return obj.getEnumerator();
 	        }
 
+	        var name;
+	        if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$IEnumerable$1$" + Bridge.getTypeAlias(T) + "$getEnumerator"])) {
+	            return obj[name]();
+	        }
+
+	        if (Bridge.isFunction(obj[name = "System$Collections$IEnumerable$getEnumerator"])) {
+	            return obj[name]();
+	        }
+
 	        if ((Object.prototype.toString.call(obj) === "[object Array]") ||
                 (obj && Bridge.isDefined(obj.length))) {
-	            return new Bridge.ArrayEnumerator(obj);
+	            return new Bridge.ArrayEnumerator(obj, T);
 	        }
 
 	        throw new System.InvalidOperationException("Cannot create enumerator");
@@ -704,7 +741,7 @@
             }
         },
 
-        compare: function (a, b, safe) {
+        compare: function (a, b, safe, T) {
             if (!Bridge.isDefined(a, true)) {
                 if (safe) {
                     return 0;
@@ -720,8 +757,25 @@
                 return Bridge.compare(a.valueOf(), b.valueOf());
             }
 
+            var name;
+            if (T && Bridge.isFunction(a[name = "System$IComparable$1$" + Bridge.getTypeAlias(T) + "$compareTo"])) {
+                return a[name](b);
+            }
+
+            if (Bridge.isFunction(a[name = "System$IComparable$compareTo"])) {
+                return a[name](b);
+            }
+
             if (Bridge.isFunction(a.compareTo)) {
                 return a.compareTo(b);
+            }
+
+            if (T && Bridge.isFunction(b[name = "System$IComparable$1$" + Bridge.getTypeAlias(T) + "$compareTo"])) {
+                return -b[name](a);
+            }
+
+            if (Bridge.isFunction(b[name = "System$IComparable$compareTo"])) {
+                return -b[name](a);
             }
 
             if (Bridge.isFunction(b.compareTo)) {
@@ -735,7 +789,7 @@
             throw new System.Exception("Cannot compare items");
         },
 
-        equalsT: function (a, b) {
+        equalsT: function (a, b, T) {
             if (!Bridge.isDefined(a, true)) {
                 throw new System.NullReferenceException();
             } else if (Bridge.isNumber(a) || Bridge.isString(a) || Bridge.isBoolean(a)) {
@@ -744,17 +798,31 @@
                 return a.valueOf() === b.valueOf();
             }
 
+            var name;
+            if (T && a != null && Bridge.isFunction(a[name = "System$IEquatable$1$" + Bridge.getTypeAlias(T) + "$equalsT"])) {
+                return a[name](b);
+            }
+
+            if (T && b != null && Bridge.isFunction(b[name = "System$IEquatable$1$" + Bridge.getTypeAlias(T) + "$equalsT"])) {
+                return b[name](a);
+            }
+
             return a.equalsT ? a.equalsT(b) : b.equalsT(a);
         },
 
-        format: function (obj, formatString) {
+        format: function (obj, formatString, provider) {
             if (Bridge.isNumber(obj)) {
-                return Bridge.Int.format(obj, formatString);
+                return Bridge.Int.format(obj, formatString, provider);
             } else if (Bridge.isDate(obj)) {
-                return Bridge.Date.format(obj, formatString);
+                return Bridge.Date.format(obj, formatString, provider);
             }
 
-            return obj.format(formatString);
+            var name;
+            if (Bridge.isFunction(obj[name = "System$IFormattable$format"])) {
+                return obj[name](formatString, provider);
+            }
+
+            return obj.format(formatString, provider);
         },
 
         getType: function (instance) {
@@ -1972,7 +2040,7 @@
             }
         },
 
-        initConfig: function (extend, base, cfg, statics, scope) {
+        initConfig: function (extend, base, cfg, statics, scope, prototype) {
             var initFn,
                 isFn = Bridge.isFunction(cfg),
                 fn = function () {
@@ -2000,8 +2068,15 @@
                     }
 
                     if (config.alias) {
-                        for (name in config.alias) {
-                            this[config.alias[name]] = this[name];
+                        for (var i = 0; i < config.alias.length; i++) {
+                            var m = this[config.alias[i]];
+
+                            if (m === undefined && prototype) {
+                                m = prototype[config.alias[i]];
+                            }
+
+                            this[config.alias[i + 1]] = m;
+                            i++;
                         }
                     }
 
@@ -2172,7 +2247,7 @@
             var instanceConfig = prop.$config || prop.config;
 
             if (instanceConfig && !Bridge.isFunction(instanceConfig)) {
-                Bridge.Class.initConfig(extend, base, instanceConfig, false, prop);                
+                Bridge.Class.initConfig(extend, base, instanceConfig, false, prop, prototype);
 
                 if (prop.$config) {
                     delete prop.$config;
@@ -3034,6 +3109,12 @@ Bridge.Class.addExtend(System.Char, [System.IComparable$1(System.Char), System.I
     Bridge.define("System.Globalization.DateTimeFormatInfo", {
         inherits: [System.IFormatProvider, System.ICloneable],
 
+        config: {
+            alias: {
+                getFormat: "System$IFormatProvider$getFormat"
+            }
+        },
+
         statics: {
             $allStandardFormats: {
                 "d": "shortDatePattern",
@@ -3206,6 +3287,12 @@ Bridge.Class.addExtend(System.Char, [System.IComparable$1(System.Char), System.I
     Bridge.define("System.Globalization.NumberFormatInfo", {
         inherits: [System.IFormatProvider, System.ICloneable],
 
+        config: {
+            alias: {
+                getFormat: "System$IFormatProvider$getFormat"
+            }
+        },
+
         statics: {
             constructor: function () {
                 this.numberNegativePatterns =  ["(n)", "-n", "- n", "n-", "n -"];
@@ -3287,6 +3374,12 @@ Bridge.Class.addExtend(System.Char, [System.IComparable$1(System.Char), System.I
 
     Bridge.define("System.Globalization.CultureInfo", {
         inherits: [System.IFormatProvider, System.ICloneable],
+
+        config: {
+            alias: {
+                getFormat: "System$IFormatProvider$getFormat"
+            }
+        },
 
         statics: {
             constructor: function () {
@@ -6347,6 +6440,13 @@ var date = {
 
     Bridge.define("System.TimeSpan", {
         inherits: [System.IComparable],
+
+        config: {
+            alias: [
+            "compareTo", "System$IComparable$compareTo"
+            ]
+        },
+
         $struct: true,
         statics: {
             fromDays: function (value) {
@@ -7226,8 +7326,8 @@ var array = {
         return new Bridge.ArrayEnumerable(array);
     },
 
-    toEnumerator: function (array) {
-        return new Bridge.ArrayEnumerator(array);
+    toEnumerator: function (array, T) {
+        return new Bridge.ArrayEnumerator(array, T);
     },
 
     _typedArrays : {
@@ -7283,9 +7383,14 @@ var array = {
         }
     },
 
-    getCount: function (obj) {
+    getCount: function (obj, T) {
+        var name;
         if (Bridge.isArray(obj)) {
             return obj.length;
+        } else if (Bridge.isFunction(obj[name = "System$Collections$ICollection$getCount"])) {
+            return obj[name]();
+        } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$getCount"])) {
+            return obj[name]();
         } else if (Bridge.isFunction(obj.getCount)) {
             return obj.getCount();
         }
@@ -7293,17 +7398,23 @@ var array = {
         return 0;
     },
 
-    add: function (obj, item) {
+    add: function (obj, item, T) {
+        var name;
         if (Bridge.isArray(obj)) {
             obj.push(item);
+        } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$add"])) {
+            obj[name](item);
         } else if (Bridge.isFunction(obj.add)) {
             obj.add(item);
         }
     },
 
     clear: function (obj, T) {
+        var name;
         if (Bridge.isArray(obj)) {
             System.Array.fill(obj, T ? (T.getDefaultValue || Bridge.getDefaultValue(T)) : null, 0, obj.length);
+        } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$clear"])) {
+            obj[name]();
         } else if (Bridge.isFunction(obj.clear)) {
             obj.clear();
         }
@@ -7345,7 +7456,8 @@ var array = {
         }
     },
 
-    indexOf: function (arr, item, startIndex, count) {
+    indexOf: function (arr, item, startIndex, count, T) {
+        var name;
         if (Bridge.isArray(arr)) {
             var i,
                 el,
@@ -7362,6 +7474,8 @@ var array = {
                     return i;
                 }
             }
+        } else if (T && Bridge.isFunction(arr[name = "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$indexOf"])) {
+            return arr[name](item);
         } else if (Bridge.isFunction(arr.indexOf)) {
             return arr.indexOf(item);
         }
@@ -7369,9 +7483,12 @@ var array = {
         return -1;
     },
 
-    contains: function (obj, item) {
+    contains: function (obj, item, T) {
+        var name;
         if (Bridge.isArray(obj)) {
             return System.Array.indexOf(obj, item) > -1;
+        } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$contains"])) {
+            return obj[name](item);
         } else if (Bridge.isFunction(obj.contains)) {
             return obj.contains(item);
         }
@@ -7379,7 +7496,8 @@ var array = {
         return false;
     },
 
-    remove: function (obj, item) {
+    remove: function (obj, item, T) {
+        var name;
         if (Bridge.isArray(obj)) {
             var index = System.Array.indexOf(obj, item);
 
@@ -7388,6 +7506,8 @@ var array = {
 
                 return true;
             }
+        } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$remove"])) {
+            return obj[name](item);
         } else if (Bridge.isFunction(obj.remove)) {
             return obj.remove(item);
         }
@@ -7395,41 +7515,53 @@ var array = {
         return false;
     },
 
-    insert: function (obj, index, item) {
+    insert: function (obj, index, item, T) {
+        var name;
         if (Bridge.isArray(obj)) {
             obj.splice(index, 0, item);
+        } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$insert"])) {
+            obj[name](index, item);
         } else if (Bridge.isFunction(obj.insert)) {
             obj.insert(index, item);
         }
     },
 
-    removeAt: function (obj, index) {
+    removeAt: function (obj, index, T) {
+        var name;
         if (Bridge.isArray(obj)) {
             obj.splice(index, 1);
+        } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$removeAt"])) {
+            obj[name](index);
         } else if (Bridge.isFunction(obj.removeAt)) {
             obj.removeAt(index);
         }
     },
 
-    getItem: function (obj, idx) {
+    getItem: function (obj, idx, T) {
+        var name;
         if (Bridge.isArray(obj)) {
             return obj[idx];
         } else if (Bridge.isFunction(obj.get)) {
             return obj.get(idx);
         } else if (Bridge.isFunction(obj.getItem)) {
             return obj.getItem(idx);
+        } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$getItem"])) {
+            return obj[name](idx);
         } else if (Bridge.isFunction(obj.get_Item)) {
             return obj.get_Item(idx);
         }
     },
 
-    setItem: function (obj, idx, value) {
+    setItem: function (obj, idx, value, T) {
+        var name;
         if (Bridge.isArray(obj)) {
             obj[idx] = value;
         } else if (Bridge.isFunction(obj.set)) {
             obj.set(idx, value);
         } else if (Bridge.isFunction(obj.setItem)) {
             obj.setItem(idx, value);
+        } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$setItem"])) {
+            return obj[name](idx, value);
         } else if (Bridge.isFunction(obj.set_Item)) {
             obj.set_Item(idx, value);
         }
@@ -7920,6 +8052,14 @@ Bridge.define('System.Collections.Generic.ISet$1', function (T) {
 Bridge.define('Bridge.CustomEnumerator', {
     inherits: [System.Collections.IEnumerator],
 
+    config: {
+        alias: [
+            "getCurrent", "System$Collections$IEnumerator$getCurrent",
+            "moveNext", "System$Collections$IEnumerator$moveNext",
+            "reset", "System$Collections$IEnumerator$reset"
+        ]
+    },
+
     constructor: function (moveNext, getCurrent, reset, dispose, scope) {
         this.$moveNext = moveNext;
         this.$getCurrent = getCurrent;
@@ -7963,11 +8103,24 @@ Bridge.define('Bridge.CustomEnumerator', {
 // @source /Collections/ArrayEnumerator.js
 
 Bridge.define('Bridge.ArrayEnumerator', {
-    inherits: [System.Collections.IEnumerator],
+    inherits: [System.Collections.IEnumerator, System.IDisposable],
 
-    constructor: function (array) {
+    config: {
+        alias: [
+            "getCurrent", "System$Collections$IEnumerator$getCurrent",
+            "moveNext", "System$Collections$IEnumerator$moveNext",
+            "reset", "System$Collections$IEnumerator$reset",
+            "dispose", "System$IDisposable$dispose"
+        ]
+    },
+
+    constructor: function (array, T) {
         this.array = array;
         this.reset();
+
+        if (T) {
+            this["System$Collections$Generic$IEnumerator$1$" + Bridge.getTypeAlias(T) + "$getCurrent$1"] = this.getCurrent;
+        }
     },
     
     moveNext: function () {
@@ -7993,6 +8146,13 @@ Bridge.define('Bridge.ArrayEnumerator', {
 
 Bridge.define('Bridge.ArrayEnumerable', {
     inherits: [System.Collections.IEnumerable],
+
+    config: {
+        alias: [
+            "getEnumerator", "System$Collections$IEnumerable$getEnumerator"
+        ]
+    },
+
     constructor: function (array) {
         this.array = array;
     },
@@ -8006,6 +8166,13 @@ Bridge.define('Bridge.ArrayEnumerable', {
 Bridge.define('System.Collections.Generic.EqualityComparer$1', function (T) {
     return {
         inherits: [System.Collections.Generic.IEqualityComparer$1(T)],
+
+        config: {
+            alias: [
+                "equals2", "System$Collections$Generic$IEqualityComparer$1$" + Bridge.getTypeAlias(T) + "$equals2",
+                "getHashCode2", "System$Collections$Generic$IEqualityComparer$1$" + Bridge.getTypeAlias(T) + "$getHashCode2"
+            ]
+        },
 
         equals2: function (x, y) {
             if (!Bridge.isDefined(x, true)) {
@@ -8040,6 +8207,12 @@ System.Collections.Generic.EqualityComparer$1.$default = new System.Collections.
 Bridge.define('System.Collections.Generic.Comparer$1', function (T) {
     return {
         inherits: [System.Collections.Generic.IComparer$1(T)],
+
+        config: {
+            alias: [
+                "compare", "System$Collections$Generic$IComparer$1$" + Bridge.getTypeAlias(T) + "$compare"
+            ]
+        },
 
         constructor: function (fn) {
             this.fn = fn;
@@ -8089,6 +8262,21 @@ Bridge.define('System.Collections.Generic.KeyValuePair$2', function (TKey, TValu
 Bridge.define('System.Collections.Generic.Dictionary$2', function (TKey, TValue) {
     return {
         inherits: [System.Collections.Generic.IDictionary$2(TKey, TValue)],
+
+        config: {
+            alias: [
+                "getCount", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$getCount",
+                "getKeys", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$getKeys",
+                "getValues", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$getValues",
+                "get", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$getItem",
+                "set", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$setItem",
+                "add", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$add",
+                "containsKey", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$containsKey",
+                "getEnumerator", "System$Collections$Generic$IEnumerable$1$System$Collections$Generic$KeyValuePair$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$getEnumerator",
+                "remove", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$remove",
+                "tryGetValue", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$tryGetValue"
+            ]
+        },
 
         constructor: function (obj, comparer) {
             this.comparer = comparer || System.Collections.Generic.EqualityComparer$1.$default;
@@ -8292,6 +8480,17 @@ Bridge.define('System.Collections.Generic.DictionaryCollection$1', function (T) 
     return {
         inherits: [System.Collections.Generic.ICollection$1(T)],
 
+        config: {
+            alias: [
+              "getEnumerator", "System$Collections$Generic$IEnumerable$1$" + Bridge.getTypeAlias(T) + "$getEnumerator",
+              "getCount", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$getCount",
+              "add", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$add",
+              "clear", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$clear",
+              "contains", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$contains",
+              "remove", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$remove"
+            ]
+        },
+
         constructor: function (dictionary, keys) {
             this.dictionary = dictionary;
             this.keys = keys;
@@ -8332,6 +8531,23 @@ Bridge.define('System.Collections.Generic.DictionaryCollection$1', function (T) 
 Bridge.define('System.Collections.Generic.List$1', function (T) {
     return {
         inherits: [System.Collections.Generic.ICollection$1(T), System.Collections.ICollection, System.Collections.Generic.IList$1(T)],
+
+        config: {
+            alias: [
+            "getItem", "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$getItem",
+            "setItem", "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$setItem",
+            "getCount", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$getCount",
+            "add", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$add",
+            "clear", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$clear",
+            "contains", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$contains",
+            "getEnumerator", "System$Collections$Generic$IEnumerable$1$" + Bridge.getTypeAlias(T) + "$getEnumerator",
+            "indexOf", "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$indexOf",
+            "insert", "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$insert",
+            "remove", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$remove",
+            "removeAt", "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$removeAt"
+            ]
+        },
+
         constructor: function (obj) {
             if (Object.prototype.toString.call(obj) === '[object Array]') {
                 this.items = System.Array.clone(obj);
@@ -8435,7 +8651,7 @@ Bridge.define('System.Collections.Generic.List$1', function (T) {
         },
 
         getEnumerator: function () {
-            return new Bridge.ArrayEnumerator(this.items);
+            return new Bridge.ArrayEnumerator(this.items, T);
         },
 
         getRange: function (index, count) {
@@ -8625,6 +8841,13 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
     Bridge.define("System.Threading.Tasks.Task", {
         inherits: [System.IDisposable],
+
+        config: {
+            alias: [
+                "dispose", "System$IDisposable$dispose"
+            ]
+        },
+
         constructor: function (action, state) {
             this.action = action;
             this.state = state;
@@ -9089,6 +9312,13 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
         inherits: function () {
             return [System.IDisposable, System.IEquatable$1(System.Threading.CancellationTokenRegistration)];
         },
+
+        config: {
+            alias: [
+                "dispose", "System$IDisposable$dispose"
+            ]
+        },
+
         constructor: function (cts, o) {
             this.cts = cts;
             this.o = o;
@@ -9118,6 +9348,12 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
     Bridge.define("System.Threading.CancellationTokenSource", {
         inherits: [System.IDisposable],
+
+        config: {
+            alias: [
+                "dispose", "System$IDisposable$dispose"
+            ]
+        },
 
         constructor: function (delay) {
             this.timeout = typeof delay === "number" && delay >= 0 ? setTimeout(Bridge.fn.bind(this, this.cancel), delay, -1) : null;
@@ -9506,6 +9742,12 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
         _Minor: 0,
 
         config: {
+            alias: [
+            "clone", "System$ICloneable$clone",
+            "compareTo", "System$IComparable$1$System$Version$compareTo",
+            "equalsT", "System$IEquatable$1$System$Version$equalsT"
+            ],
+
             init: function () {
                 this._Build = -1;
                 this._Revision = -1;
@@ -11582,10 +11824,18 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                 state = State.After;
             }
         };
+
+        this.getCurrent$1 = this.getCurrent;
+        this.System$Collections$IEnumerator$getCurrent = this.getCurrent;
+        this.System$Collections$IEnumerator$moveNext = this.moveNext;
+        this.System$Collections$IEnumerator$reset = this.reset;
     };
     
     System.IDisposable.$$inheritors = System.IDisposable.$$inheritors || [];
     System.IDisposable.$$inheritors.push(IEnumerator);
+
+    System.Collections.IEnumerator.$$inheritors = System.Collections.IEnumerator.$$inheritors || [];
+    System.Collections.IEnumerator.$$inheritors.push(IEnumerator);
 
     // for tryGetNext
     var Yielder = function () {
@@ -11603,6 +11853,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
     // Enumerable constuctor
     var Enumerable = function (getEnumerator) {
         this.getEnumerator = getEnumerator;
+
     };
     System.Collections.IEnumerable.$$inheritors = System.Collections.IEnumerable.$$inheritors || [];
     System.Collections.IEnumerable.$$inheritors.push(Enumerable);
@@ -14496,6 +14747,12 @@ Bridge.define("System.Guid", {
 		empty: '00000000-0000-0000-0000-000000000000',
 
 		config: {
+		    alias: [
+            "equalsT", "System$IEquatable$1$System$Guid$equalsT",
+            "compareTo", "System$IComparable$1$System$Guid$compareTo",
+            "format", "System$IFormattable$format"
+		    ],
+
 		    init: function () {
 		        this.$rng = new System.Random();
 		    }
@@ -15146,6 +15403,13 @@ Bridge.define("System.Text.RegularExpressions.CaptureCollection", {
         return [System.Collections.ICollection];
     },
 
+    config: {
+        alias: [
+        "getEnumerator", "System$Collections$IEnumerable$getEnumerator",
+        "getCount", "System$Collections$ICollection$getCount"
+        ]
+    },
+
     _group: null,
     _capcount: 0,
     _captures: null,
@@ -15234,6 +15498,14 @@ Bridge.define("System.Text.RegularExpressions.CaptureCollection", {
 Bridge.define("System.Text.RegularExpressions.CaptureEnumerator", {
     inherits: function () {
         return [System.Collections.IEnumerator];
+    },
+
+    config: {
+        alias: [
+            "getCurrent", "System$Collections$IEnumerator$getCurrent",
+            "moveNext", "System$Collections$IEnumerator$moveNext",
+            "reset", "System$Collections$IEnumerator$reset"
+        ]
     },
 
     _captureColl: null,
@@ -15337,6 +15609,13 @@ Bridge.define("System.Text.RegularExpressions.Group", {
 Bridge.define("System.Text.RegularExpressions.GroupCollection", {
     inherits: function () {
         return [System.Collections.ICollection];
+    },
+
+    config: {
+        alias: [
+        "getEnumerator", "System$Collections$IEnumerable$getEnumerator",
+        "getCount", "System$Collections$ICollection$getCount"
+        ]
     },
 
     _match: null,
@@ -15466,6 +15745,14 @@ Bridge.define("System.Text.RegularExpressions.GroupCollection", {
 Bridge.define("System.Text.RegularExpressions.GroupEnumerator", {
     inherits: function () {
         return [System.Collections.IEnumerator];
+    },
+
+    config: {
+        alias: [
+            "getCurrent", "System$Collections$IEnumerator$getCurrent",
+            "moveNext", "System$Collections$IEnumerator$moveNext",
+            "reset", "System$Collections$IEnumerator$reset"
+        ]
     },
 
     _groupColl: null,
@@ -15738,6 +16025,13 @@ Bridge.define("System.Text.RegularExpressions.MatchCollection", {
         return [System.Collections.ICollection];
     },
 
+    config: {
+        alias: [
+        "getEnumerator", "System$Collections$IEnumerable$getEnumerator",
+        "getCount", "System$Collections$ICollection$getCount"
+        ]
+    },
+
     _regex: null,
     _input: null,
     _beginning: 0,
@@ -15852,6 +16146,14 @@ Bridge.define("System.Text.RegularExpressions.MatchCollection", {
 Bridge.define("System.Text.RegularExpressions.MatchEnumerator", {
     inherits: function () {
         return [System.Collections.IEnumerator];
+    },
+
+    config: {
+        alias: [
+            "getCurrent", "System$Collections$IEnumerator$getCurrent",
+            "moveNext", "System$Collections$IEnumerator$moveNext",
+            "reset", "System$Collections$IEnumerator$reset"
+        ]
     },
 
     _matchcoll: null,
@@ -19234,6 +19536,13 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
 
     Bridge.define('System.Threading.Timer', {
         inherits: [System.IDisposable],
+
+        config: {
+            alias: [
+                "dispose", "System$IDisposable$dispose"
+            ]
+        },
+
         statics: {
             MAX_SUPPORTED_TIMEOUT: 4294967294,
             EXC_LESS: "Number must be either non-negative and less than or equal to Int32.MaxValue or -1.",

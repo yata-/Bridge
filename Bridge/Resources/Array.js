@@ -136,8 +136,8 @@ var array = {
         return new Bridge.ArrayEnumerable(array);
     },
 
-    toEnumerator: function (array) {
-        return new Bridge.ArrayEnumerator(array);
+    toEnumerator: function (array, T) {
+        return new Bridge.ArrayEnumerator(array, T);
     },
 
     _typedArrays : {
@@ -193,9 +193,14 @@ var array = {
         }
     },
 
-    getCount: function (obj) {
+    getCount: function (obj, T) {
+        var name;
         if (Bridge.isArray(obj)) {
             return obj.length;
+        } else if (Bridge.isFunction(obj[name = "System$Collections$ICollection$getCount"])) {
+            return obj[name]();
+        } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$getCount"])) {
+            return obj[name]();
         } else if (Bridge.isFunction(obj.getCount)) {
             return obj.getCount();
         }
@@ -203,17 +208,23 @@ var array = {
         return 0;
     },
 
-    add: function (obj, item) {
+    add: function (obj, item, T) {
+        var name;
         if (Bridge.isArray(obj)) {
             obj.push(item);
+        } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$add"])) {
+            obj[name](item);
         } else if (Bridge.isFunction(obj.add)) {
             obj.add(item);
         }
     },
 
     clear: function (obj, T) {
+        var name;
         if (Bridge.isArray(obj)) {
             System.Array.fill(obj, T ? (T.getDefaultValue || Bridge.getDefaultValue(T)) : null, 0, obj.length);
+        } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$clear"])) {
+            obj[name]();
         } else if (Bridge.isFunction(obj.clear)) {
             obj.clear();
         }
@@ -255,7 +266,8 @@ var array = {
         }
     },
 
-    indexOf: function (arr, item, startIndex, count) {
+    indexOf: function (arr, item, startIndex, count, T) {
+        var name;
         if (Bridge.isArray(arr)) {
             var i,
                 el,
@@ -272,6 +284,8 @@ var array = {
                     return i;
                 }
             }
+        } else if (T && Bridge.isFunction(arr[name = "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$indexOf"])) {
+            return arr[name](item);
         } else if (Bridge.isFunction(arr.indexOf)) {
             return arr.indexOf(item);
         }
@@ -279,9 +293,12 @@ var array = {
         return -1;
     },
 
-    contains: function (obj, item) {
+    contains: function (obj, item, T) {
+        var name;
         if (Bridge.isArray(obj)) {
             return System.Array.indexOf(obj, item) > -1;
+        } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$contains"])) {
+            return obj[name](item);
         } else if (Bridge.isFunction(obj.contains)) {
             return obj.contains(item);
         }
@@ -289,7 +306,8 @@ var array = {
         return false;
     },
 
-    remove: function (obj, item) {
+    remove: function (obj, item, T) {
+        var name;
         if (Bridge.isArray(obj)) {
             var index = System.Array.indexOf(obj, item);
 
@@ -298,6 +316,8 @@ var array = {
 
                 return true;
             }
+        } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$remove"])) {
+            return obj[name](item);
         } else if (Bridge.isFunction(obj.remove)) {
             return obj.remove(item);
         }
@@ -305,41 +325,53 @@ var array = {
         return false;
     },
 
-    insert: function (obj, index, item) {
+    insert: function (obj, index, item, T) {
+        var name;
         if (Bridge.isArray(obj)) {
             obj.splice(index, 0, item);
+        } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$insert"])) {
+            obj[name](index, item);
         } else if (Bridge.isFunction(obj.insert)) {
             obj.insert(index, item);
         }
     },
 
-    removeAt: function (obj, index) {
+    removeAt: function (obj, index, T) {
+        var name;
         if (Bridge.isArray(obj)) {
             obj.splice(index, 1);
+        } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$removeAt"])) {
+            obj[name](index);
         } else if (Bridge.isFunction(obj.removeAt)) {
             obj.removeAt(index);
         }
     },
 
-    getItem: function (obj, idx) {
+    getItem: function (obj, idx, T) {
+        var name;
         if (Bridge.isArray(obj)) {
             return obj[idx];
         } else if (Bridge.isFunction(obj.get)) {
             return obj.get(idx);
         } else if (Bridge.isFunction(obj.getItem)) {
             return obj.getItem(idx);
+        } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$getItem"])) {
+            return obj[name](idx);
         } else if (Bridge.isFunction(obj.get_Item)) {
             return obj.get_Item(idx);
         }
     },
 
-    setItem: function (obj, idx, value) {
+    setItem: function (obj, idx, value, T) {
+        var name;
         if (Bridge.isArray(obj)) {
             obj[idx] = value;
         } else if (Bridge.isFunction(obj.set)) {
             obj.set(idx, value);
         } else if (Bridge.isFunction(obj.setItem)) {
             obj.setItem(idx, value);
+        } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$setItem"])) {
+            return obj[name](idx, value);
         } else if (Bridge.isFunction(obj.set_Item)) {
             obj.set_Item(idx, value);
         }

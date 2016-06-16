@@ -882,7 +882,7 @@ namespace Bridge.Contract
 
         private string overloadName;
 
-        public string GetOverloadName(bool skipInterfaceName = false, string prefix = null)
+        public string GetOverloadName(bool skipInterfaceName = false, string prefix = null, bool withoutTypeParams = false)
         {
             if (this.Member == null)
             {
@@ -898,7 +898,7 @@ namespace Bridge.Contract
 
             if (this.overloadName == null && this.Member != null)
             {
-                this.overloadName = this.GetOverloadName(this.Member, skipInterfaceName, prefix);
+                this.overloadName = this.GetOverloadName(this.Member, skipInterfaceName, prefix, withoutTypeParams);
             }
 
             return this.overloadName;
@@ -909,26 +909,49 @@ namespace Bridge.Contract
             return Regex.Replace(interfaceName, @"[\.\(\)\,]", "$");
         }
 
-        public static string GetInterfaceMemberName(IEmitter emitter, IMember interfaceMember, string name, string prefix)
+        public static string GetInterfaceMemberName(IEmitter emitter, IMember interfaceMember, string name, string prefix, bool withoutTypeParams = false, bool isSetter = false)
         {
-            var interfaceMemberName = name ?? OverloadsCollection.Create(emitter, interfaceMember).GetOverloadName(true, prefix);
-            var interfaceName = BridgeTypes.ToJsName(interfaceMember.DeclaringType, emitter, false, false, true);
+            var interfaceMemberName = name ?? OverloadsCollection.Create(emitter, interfaceMember, isSetter).GetOverloadName(true, prefix);
+            var interfaceName = BridgeTypes.ToJsName(interfaceMember.DeclaringType, emitter, withoutTypeParams, false, true);
 
             if (interfaceName.StartsWith("\""))
             {
-                return interfaceName  + interfaceMemberName + "\"";
+                if (interfaceName.EndsWith(")"))
+                {
+                    return interfaceName + " + \"$" + interfaceMemberName + "\"";
+                }
+
+                if (interfaceName.EndsWith("\""))
+                {
+                    interfaceName = interfaceName.Substring(0, interfaceName.Length - 1);
+                }
+
+                return interfaceName  + "$" + interfaceMemberName + "\"";
             }
 
             return interfaceName + (interfaceName.EndsWith("$") ? "" : "$") + interfaceMemberName;
         }
 
-        public static bool IsUndeterminedInterface(IEmitter emitter, IMember member)
+        public static bool NeedCreateAlias(MemberResolveResult rr)
         {
-            return member.DeclaringTypeDefinition != null && member.DeclaringTypeDefinition.Kind == TypeKind.Interface &&
-                   emitter.Validator.IsIgnoreType(member.DeclaringTypeDefinition);
+            if (rr == null || rr.Member.ImplementedInterfaceMembers.Count == 0)
+            {
+                return false;
+            }
+
+            if (rr.Member.IsExplicitInterfaceImplementation)
+            {
+                var explicitInterfaceMember = rr.Member.ImplementedInterfaceMembers.First();
+                var typeDef = explicitInterfaceMember.DeclaringTypeDefinition;
+                var type = explicitInterfaceMember.DeclaringType;
+
+                return typeDef != null && !Helpers.IsIgnoreGeneric(typeDef) && type != null && type.TypeArguments.Count > 0 && type.TypeArguments.Any(p => p.Kind == TypeKind.TypeParameter);
+            }
+
+            return true;
         }
 
-        protected virtual string GetOverloadName(IMember definition, bool skipInterfaceName = false, string prefix = null)
+        protected virtual string GetOverloadName(IMember definition, bool skipInterfaceName = false, string prefix = null, bool withoutTypeParams = false)
         {
             IMember interfaceMember = null;
             if (definition.IsExplicitInterfaceImplementation)
@@ -942,7 +965,7 @@ namespace Bridge.Contract
 
             if (interfaceMember != null && !skipInterfaceName)
             {
-                return OverloadsCollection.GetInterfaceMemberName(this.Emitter, interfaceMember, null, prefix);
+                return OverloadsCollection.GetInterfaceMemberName(this.Emitter, interfaceMember, null, prefix, withoutTypeParams, this.IsSetter);
             }
 
             string name = this.Emitter.GetEntityName(definition, this.CancelChangeCase);
@@ -964,9 +987,20 @@ namespace Bridge.Contract
                 }
             }
 
-            if (attr != null || (definition.DeclaringTypeDefinition != null && definition.DeclaringTypeDefinition.Kind != TypeKind.Interface && this.Emitter.Validator.IsIgnoreType(definition.DeclaringTypeDefinition)))
+            if (attr != null)
             {
-                return name;
+                var value = attr.PositionalArguments.First().ConstantValue;
+                if (value is string)
+                {
+                    name = value.ToString();
+                }
+
+                prefix = null;
+            }
+
+            if (/*attr != null || */(definition.DeclaringTypeDefinition != null && definition.DeclaringTypeDefinition.Kind != TypeKind.Interface && this.Emitter.Validator.IsIgnoreType(definition.DeclaringTypeDefinition)))
+            {
+                return prefix != null ? prefix + name : name;
             }
 
             if (definition is IMethod && ((IMethod)definition).IsConstructor)

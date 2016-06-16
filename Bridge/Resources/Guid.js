@@ -10,6 +10,12 @@ Bridge.define("System.Guid", {
 		empty: '00000000-0000-0000-0000-000000000000',
 
 		config: {
+		    alias: [
+            "equalsT", "System$IEquatable$1$System$Guid$equalsT",
+            "compareTo", "System$IComparable$1$System$Guid$compareTo",
+            "format", "System$IFormattable$format"
+		    ],
+
 		    init: function () {
 		        this.$rng = new System.Random();
 		    }

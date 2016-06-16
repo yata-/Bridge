@@ -1,3 +1,4 @@
+using System.Linq;
 using Bridge.Contract;
 using Bridge.Contract.Constants;
 
@@ -82,7 +83,14 @@ namespace Bridge.Translator
 
             if (returnType != null && returnType.Name == "IEnumerator")
             {
-                block.Write(TypeNames.Array + ".toEnumerator($yield)");
+                if (returnType.TypeArguments.Count > 0)
+                {
+                    block.Write(TypeNames.Array + ".toEnumerator($yield, " + BridgeTypes.ToJsName(returnType.TypeArguments.First(), block.Emitter) + ")");
+                }
+                else
+                {
+                    block.Write(TypeNames.Array + ".toEnumerator($yield)");
+                }
             }
             else
             {
