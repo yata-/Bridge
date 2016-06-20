@@ -1,10 +1,8 @@
 using System;
-using Bridge.Html5;
 using Bridge.Test;
 
 namespace Bridge.ClientTest.BridgeIssues
 {
-    // Bridge[#1024]
     [Category(Constants.MODULE_ISSUES)]
     [TestFixture(TestNameFormat = "#1025 - {0}")]
     public class Bridge1025
@@ -534,7 +532,7 @@ namespace Bridge.ClientTest.BridgeIssues
 
         private static I11 GetI11()
         {
-            var externalInstance = Script.PlainObject(new
+            var externalInstance = Script.ToPlainObject(new
             {
                 get = (Func<int>)(() => 1),
                 set = (Action<string>)(s => { }),

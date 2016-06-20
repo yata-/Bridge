@@ -140,7 +140,7 @@
                 base,
                 cacheName = prop.$cacheName,
                 prototype,
-                scope = prop.$scope || Bridge.global,
+                scope = prop.$scope || gscope || Bridge.global,
                 i,
                 v,
                 ctorCounter,
@@ -305,6 +305,11 @@
 
             // Enforce the constructor to be what we expect
             Class.prototype.constructor = Class;
+
+            if (prop.$interface) {
+                Class.$interface = prop.$interface;
+                delete prop.$interface;
+            }
 
             if (statics) {
                 for (name in statics) {

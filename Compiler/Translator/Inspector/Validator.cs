@@ -1,6 +1,5 @@
 ﻿using Bridge.Contract;
 using Bridge.Contract.Constants;
-using Bridge.Translator.Constants;
 
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
@@ -75,7 +74,7 @@ namespace Bridge.Translator
         {
             foreach (var i in type.Interfaces)
             {
-                if (i.FullName == TypeNames.IBridgeClass)
+                if (i.FullName == JS.Types.BRIDGE_IBridgeClass)
                 {
                     return true;
                 }
@@ -307,7 +306,7 @@ namespace Bridge.Translator
 
             if (this.HasAttribute(type.CustomAttributes, Translator.Bridge_ASSEMBLY + ".ObjectLiteralAttribute"))
             {
-                return "Object";
+                return JS.Types.OBJECT;
             }
 
             return null;
@@ -407,7 +406,7 @@ namespace Bridge.Translator
             {
                 if (type.BaseType != null)
                 {
-                    string parentName = type.BaseType.FullName.LeftOf('<').Replace("`", "$");
+                    string parentName = type.BaseType.FullName.LeftOf('<').Replace('`', JS.Vars.D);
 
                     if (!allTypes.ContainsKey(parentName))
                     {
@@ -536,7 +535,7 @@ namespace Bridge.Translator
                 return false;
             }
 
-            if (this.HasAttribute(entity.Attributes, Attributes.ACCESSORSINDEXER_ATTRIBUTE_NAME))
+            if (this.HasAttribute(entity.Attributes, CS.Attributes.ACCESSORSINDEXER_ATTRIBUTE_NAME))
             {
                 return true;
             }

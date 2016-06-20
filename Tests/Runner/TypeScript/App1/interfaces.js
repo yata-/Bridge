@@ -1,15 +1,25 @@
 ﻿(function (globals) {
     "use strict";
 
-    Bridge.define('Interfaces.Interface1');
+    Bridge.define('Interfaces.Interface1', {
+        $interface: true
+    });
     
-    Bridge.define('Interfaces.Interface4');
+    Bridge.define('Interfaces.Interface4', {
+        $interface: true
+    });
     
-    Bridge.define('Interfaces.Interface6');
+    Bridge.define('Interfaces.Interface6', {
+        $interface: true
+    });
     
-    Bridge.define('Interfaces.Interface61');
+    Bridge.define('Interfaces.Interface61', {
+        $interface: true
+    });
     
-    Bridge.define('Interfaces.Interface62');
+    Bridge.define('Interfaces.Interface62', {
+        $interface: true
+    });
     
     Bridge.define('Interfaces.Class1', {
         inherits: [Interfaces.Interface1],
@@ -30,7 +40,8 @@
     });
     
     Bridge.define('Interfaces.Interface2', {
-        inherits: [Interfaces.Interface1]
+        inherits: [Interfaces.Interface1],
+        $interface: true
     });
     
     Bridge.define('Interfaces.Class4', {
@@ -116,7 +127,8 @@
     });
     
     Bridge.define('Interfaces.Interface3', {
-        inherits: [Interfaces.Interface2]
+        inherits: [Interfaces.Interface2],
+        $interface: true
     });
     
     Bridge.define('Interfaces.Class3', {

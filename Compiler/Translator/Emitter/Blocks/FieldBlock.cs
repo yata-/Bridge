@@ -1,7 +1,10 @@
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
+
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,8 +12,6 @@ namespace Bridge.Translator
 {
     public class FieldBlock : AbstractEmitterBlock
     {
-        public const string PropertiesName = "properties";
-
         public FieldBlock(IEmitter emitter, ITypeInfo typeInfo, bool staticBlock, bool fieldsOnly)
             : base(emitter, typeInfo.TypeDeclaration)
         {
@@ -74,7 +75,7 @@ namespace Bridge.Translator
 
             if (info.Events.Count > 0)
             {
-                var hasProperties = this.WriteObject("events", info.Events, "Bridge.event(this, \"{0}\", {1});", "Bridge.event(this, {0}, {1});");
+                var hasProperties = this.WriteObject(JS.Fields.EVENTS, info.Events, JS.Funcs.BRIDGE_EVENT + "(this, \"{0}\", {1});", JS.Funcs.BRIDGE_EVENT + "(this, {0}, {1});");
                 if (hasProperties)
                 {
                     this.Emitter.Comma = true;
@@ -84,7 +85,7 @@ namespace Bridge.Translator
 
             if (info.Properties.Count > 0)
             {
-                var hasProperties = this.WriteObject(FieldBlock.PropertiesName, info.Properties, "Bridge.property(this, \"{0}\", {1});", "Bridge.property(this, {0}, {1});");
+                var hasProperties = this.WriteObject(JS.Fields.PROPERTIES, info.Properties, JS.Funcs.BRIDGE_PROPERTY + "(this, \"{0}\", {1});", JS.Funcs.BRIDGE_PROPERTY + "(this, {0}, {1});");
                 if (hasProperties)
                 {
                     this.Emitter.Comma = true;
@@ -112,7 +113,7 @@ namespace Bridge.Translator
                 this.BeginBlock();
             }
 
-            bool isProperty = FieldBlock.PropertiesName == objectName;
+            bool isProperty = JS.Fields.PROPERTIES == objectName;
             foreach (var member in members)
             {
                 object constValue = null;
@@ -302,7 +303,7 @@ namespace Bridge.Translator
                     return true;
                 }
 
-                if (!isPrimitive || (constValue is AstType && objectName != FieldBlock.PropertiesName))
+                if (!isPrimitive || (constValue is AstType && objectName != JS.Fields.PROPERTIES))
                 {
                     continue;
                 }

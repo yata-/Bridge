@@ -49,7 +49,7 @@
                 throw new System.InvalidOperationException(System.Threading.Timer.EXC_DISPOSED);
             }
 
-            if (callback == null) {
+            if (Bridge.staticEquals(callback, null)) {
                 throw new System.ArgumentNullException("TimerCallback");
             }
 
@@ -79,7 +79,7 @@
                 return;
             }
 
-            if (this.timerCallback != null) {
+            if (!Bridge.staticEquals(this.timerCallback, null)) {
                 var myId = this.id;
                 this.timerCallback(this.state);
     

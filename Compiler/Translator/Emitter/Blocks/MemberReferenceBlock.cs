@@ -491,7 +491,8 @@ namespace Bridge.Translator
 
                     if (!isStatic)
                     {
-                        this.Write(Bridge.Translator.Emitter.ROOT + "." + (isExtensionMethod ? Bridge.Translator.Emitter.DELEGATE_BIND_SCOPE : Bridge.Translator.Emitter.DELEGATE_BIND) + "(");
+                        this.Write(isExtensionMethod ? JS.Funcs.BRIDGE_BIND_SCOPE : JS.Funcs.BRIDGE_BIND);
+                        this.WriteOpenParentheses();
                         interfaceTempVar = this.WriteTarget(resolveResult, isInterfaceMember, memberTargetrr, targetrr, false);
                         this.Write(", ");
                     }
@@ -744,7 +745,7 @@ namespace Bridge.Translator
 
                                 if (proto)
                                 {
-                                    this.Write(".call");
+                                    this.WriteCall();
                                     this.WriteOpenParentheses();
                                     this.WriteThis();
                                     this.WriteComma();
@@ -758,15 +759,15 @@ namespace Bridge.Translator
                                 {
                                     if (isNullable)
                                     {
-                                        this.Write(TypeNames.Nullable + ".lift1");
+                                        this.Write(JS.Types.SYSTEM_NULLABLE + "." + JS.Funcs.Math.LIFT1);
                                         this.WriteOpenParentheses();
                                         if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
                                         {
-                                            this.WriteScript("inc");
+                                            this.WriteScript(JS.Funcs.Math.INC);
                                         }
                                         else
                                         {
-                                            this.WriteScript("dec");
+                                            this.WriteScript(JS.Funcs.Math.DEC);
                                         }
 
                                         this.WriteComma();
@@ -796,7 +797,7 @@ namespace Bridge.Translator
 
                                         if (proto)
                                         {
-                                            this.Write(".call");
+                                            this.WriteCall();
                                             this.WriteOpenParentheses();
                                             this.WriteThis();
                                             this.WriteCloseParentheses();
@@ -832,7 +833,7 @@ namespace Bridge.Translator
 
                                         if (proto)
                                         {
-                                            this.Write(".call");
+                                            this.WriteCall();
                                             this.WriteOpenParentheses();
                                             this.WriteThis();
                                             this.WriteCloseParentheses();
@@ -847,11 +848,11 @@ namespace Bridge.Translator
 
                                         if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
                                         {
-                                            this.Write("inc");
+                                            this.Write(JS.Funcs.Math.INC);
                                         }
                                         else
                                         {
-                                            this.Write("dec");
+                                            this.Write(JS.Funcs.Math.DEC);
                                         }
 
                                         this.WriteOpenParentheses();
@@ -891,7 +892,7 @@ namespace Bridge.Translator
 
                                     if (proto)
                                     {
-                                        this.Write(".call");
+                                        this.WriteCall();
                                         this.WriteOpenParentheses();
                                         this.WriteThis();
                                         this.WriteCloseParentheses();
@@ -928,7 +929,7 @@ namespace Bridge.Translator
 
                                 if (proto)
                                 {
-                                    this.Write(".call");
+                                    this.WriteCall();
                                     this.WriteOpenParentheses();
                                     this.WriteThis();
                                     this.WriteCloseParentheses();
@@ -969,7 +970,7 @@ namespace Bridge.Translator
 
                                 if (proto)
                                 {
-                                    this.Write(".call");
+                                    this.WriteCall();
                                     this.WriteOpenParentheses();
                                     this.WriteThis();
                                     this.WriteComma();
@@ -983,15 +984,15 @@ namespace Bridge.Translator
                                 {
                                     if (isNullable)
                                     {
-                                        this.Write(TypeNames.Nullable + ".lift1");
+                                        this.Write(JS.Types.SYSTEM_NULLABLE + "." + JS.Funcs.Math.LIFT1);
                                         this.WriteOpenParentheses();
                                         if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
                                         {
-                                            this.WriteScript("inc");
+                                            this.WriteScript(JS.Funcs.Math.INC);
                                         }
                                         else
                                         {
-                                            this.WriteScript("dec");
+                                            this.WriteScript(JS.Funcs.Math.DEC);
                                         }
                                         this.WriteComma();
                                         this.Write(valueVar);
@@ -1003,11 +1004,11 @@ namespace Bridge.Translator
                                         this.WriteDot();
                                         if (this.Emitter.UnaryOperatorType == UnaryOperatorType.Increment || this.Emitter.UnaryOperatorType == UnaryOperatorType.PostIncrement)
                                         {
-                                            this.Write("inc");
+                                            this.Write(JS.Funcs.Math.INC);
                                         }
                                         else
                                         {
-                                            this.Write("dec");
+                                            this.Write(JS.Funcs.Math.DEC);
                                         }
                                         this.WriteOpenParentheses();
                                         this.WriteCloseParentheses();
@@ -1088,7 +1089,7 @@ namespace Bridge.Translator
                             
                             if (proto)
                             {
-                                this.Write(".call");
+                                this.WriteCall();
                                 this.WriteOpenParentheses();
                                 this.WriteThis();
                                 this.WriteCloseParentheses();
@@ -1143,10 +1144,10 @@ namespace Bridge.Translator
                         if (targetVar != null)
                         {
                             this.PushWriter(string.Concat(memberStr,
-                                proto ? ".call(this, " : "(",
+                                proto ? "." + JS.Funcs.CALL + "(this, " : "(",
                                 targetVar,
                                 getterMember,
-                                proto ? ".call(this)" : "()",
+                                proto ? "." + JS.Funcs.CALL + "(this)" : "()",
                                 "{0})"), () =>
                                 {
                                     this.RemoveTempVar(targetVar);
@@ -1166,10 +1167,10 @@ namespace Bridge.Translator
 
                             this.RestoreWriter(oldWriter);
                             this.PushWriter(string.Concat(memberStr,
-                                proto ? ".call(this, " : "(",
+                                proto ? "." + JS.Funcs.CALL + "(this, " : "(",
                                 trg,
                                 getterMember,
-                                proto ? ".call(this)" : "()",
+                                proto ? "." + JS.Funcs.CALL + "(this)" : "()",
                                 "{0})"));
                         }
                     }
@@ -1255,7 +1256,7 @@ namespace Bridge.Translator
                     {
                         if (isInterfaceMember)
                         {
-                            this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, this.Emitter.AssignmentType == AssignmentOperatorType.Subtract, this.Emitter.AssignmentType == AssignmentOperatorType.Add ? "add" : "remove");
+                            this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, this.Emitter.AssignmentType == AssignmentOperatorType.Subtract, Helpers.GetAddOrRemove(this.Emitter.AssignmentType == AssignmentOperatorType.Add));
                         }
                         else
                         {
