@@ -20,7 +20,7 @@ namespace Bridge
     }
 
     /// <summary>
-    /// Apply to interface if it's implementation is made outside Bridge type system (if class implementation doesn't provide aliases for interface members implementations)
+    /// Applies to interface if it's implementation is done outside Bridge type system (class implementation doesn't provide aliases for interface members implementations)
     /// </summary>
     [External]
     [AttributeUsage(AttributeTargets.Interface)]
