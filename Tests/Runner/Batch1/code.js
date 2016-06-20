@@ -8719,6 +8719,15 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1476', {
+        testEscapedBrackets: function () {
+            var r = new System.Text.RegularExpressions.Regex("constructor", "(?<leftSet>(\\[|\\())(?<left>[^,]+)?,(?<right>[^\\]\\)]+)?(?<rightSet>(\\]|\\)))");
+            var m = r.match("[0,1)]");
+    
+            Bridge.Test.Assert.areEqual(true, m.getSuccess());
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
@@ -37473,6 +37482,48 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     }, "Char must not be escapable: " + String.fromCharCode(ch));
                 }).call(this);
             }
+        },
+        bracketEscapeTest: function () {
+            var pattern = "\\)\\s+\\(";
+            var text = ") (";
+            var rgx = new System.Text.RegularExpressions.Regex("constructor", pattern);
+            var m = rgx.match(text);
+    
+            this.validateMatch(m, 0, 3, ") (", 1, true);
+    
+            this.validateGroup(m, 0, 0, 3, true, ") (", 1);
+            this.validateCapture(m, 0, 0, 0, 3, ") (");
+        },
+        bracketEscapeInGroupTest: function () {
+            var pattern = "(\\))\\s+(\\()";
+            var text = ") (";
+            var rgx = new System.Text.RegularExpressions.Regex("constructor", pattern);
+            var m = rgx.match(text);
+    
+            this.validateMatch(m, 0, 3, ") (", 3, true);
+    
+            this.validateGroup(m, 0, 0, 3, true, ") (", 1);
+            this.validateCapture(m, 0, 0, 0, 3, ") (");
+    
+            this.validateGroup(m, 1, 0, 1, true, ")", 1);
+            this.validateCapture(m, 1, 0, 0, 1, ")");
+    
+            this.validateGroup(m, 2, 2, 1, true, "(", 1);
+            this.validateCapture(m, 2, 0, 2, 1, "(");
+        },
+        bracketEscapeInCharGroupTest: function () {
+            var pattern = "[\\)\\(]\\s+([\\)\\(])";
+            var text = ") (";
+            var rgx = new System.Text.RegularExpressions.Regex("constructor", pattern);
+            var m = rgx.match(text);
+    
+            this.validateMatch(m, 0, 3, ") (", 2, true);
+    
+            this.validateGroup(m, 0, 0, 3, true, ") (", 1);
+            this.validateCapture(m, 0, 0, 0, 3, ") (");
+    
+            this.validateGroup(m, 1, 2, 1, true, "(", 1);
+            this.validateCapture(m, 1, 0, 2, 1, "(");
         }
     });
     

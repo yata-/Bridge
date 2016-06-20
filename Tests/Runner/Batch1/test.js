@@ -175,10 +175,10 @@
         statics: {
             config: {
                 init: function () {
-                    Bridge.ready(this.runTests);
+                    Bridge.ready(this.main);
                 }
             },
-            runTests: function () {
+            main: function () {
                 QUnit.module("C#");
                 QUnit.test("Abstract types - TestB", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BasicCSharp_TestAbstractClass.testB);
                 QUnit.test("Abstract types - TestC", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BasicCSharp_TestAbstractClass.testC);
@@ -1234,6 +1234,7 @@
                 QUnit.test("#1448 - TestObjectLiteralProperty", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1448.testObjectLiteralProperty);
                 QUnit.test("#1448 - TestToObjectLiteralAlias", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1448.testToObjectLiteralAlias);
                 QUnit.test("#1459 - TestHtmlElements", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1459.testHtmlElements);
+                QUnit.test("#1476 - TestEscapedBrackets", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1476.testEscapedBrackets);
                 QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge381.testUseCase);
                 QUnit.test("#447 - CheckInlineExpression", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineExpression);
                 QUnit.test("#447 - CheckInlineCalls", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge447.checkInlineCalls);
@@ -1650,6 +1651,9 @@
                 QUnit.test("Regex.Escape - UnescapeTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests.unescapeTest);
                 QUnit.test("Regex.Escape - EscapeCharSetTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests.escapeCharSetTest);
                 QUnit.test("Regex.Escape - NonEscapeCharSetTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests.nonEscapeCharSetTest);
+                QUnit.test("Regex.Escape - BracketEscapeTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests.bracketEscapeTest);
+                QUnit.test("Regex.Escape - BracketEscapeInGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests.bracketEscapeInGroupTest);
+                QUnit.test("Regex.Escape - BracketEscapeInCharGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests.bracketEscapeInCharGroupTest);
                 QUnit.test("Regex.Matches - MatchesTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchesTests.matchesTest);
                 QUnit.test("Regex.Matches - MatchesAtPositionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchesTests.matchesAtPositionTest);
                 QUnit.test("Regex.Matches - MatchesStaticTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchesTests.matchesStaticTest);
@@ -4102,6 +4106,16 @@
             testHtmlElements: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1459).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1459);
                 Bridge.ClientTest.BridgeIssues.Bridge1459.testHtmlElements();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1476', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1476)],
+        statics: {
+            testEscapedBrackets: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BridgeIssues.Bridge1476).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BridgeIssues_Bridge1476);
+                t.getFixture().testEscapedBrackets();
             }
         }
     });
@@ -11722,6 +11736,18 @@
             nonEscapeCharSetTest: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexEscapeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests);
                 t.getFixture().nonEscapeCharSetTest();
+            },
+            bracketEscapeTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexEscapeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests);
+                t.getFixture().bracketEscapeTest();
+            },
+            bracketEscapeInGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexEscapeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests);
+                t.getFixture().bracketEscapeInGroupTest();
+            },
+            bracketEscapeInCharGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexEscapeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests);
+                t.getFixture().bracketEscapeInCharGroupTest();
             }
         }
     });

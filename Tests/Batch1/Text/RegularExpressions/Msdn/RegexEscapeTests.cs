@@ -136,13 +136,5 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
             ValidateGroup(m, 1, 2, 1, true, "(", 1);
             ValidateCapture(m, 1, 0, 2, 1, "(");
         }
-
-        [Test]
-        public void Issue1476Test()
-        {
-            Regex r = new Regex(@"(?<leftSet>(\[|\())(?<left>[^,]+)?,(?<right>[^\]\)]+)?(?<rightSet>(\]|\)))");
-            var m = r.Match("[0,1)]");
-            Assert.AreEqual(true, m.Success);
-        }
     }
 }
