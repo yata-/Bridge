@@ -909,7 +909,7 @@ namespace Bridge.Contract
 
         public static string NormalizeInterfaceName(string interfaceName)
         {
-            return Regex.Replace(interfaceName, @"[\.\(\)\,]", "$");
+            return Regex.Replace(interfaceName, @"[\.\(\)\,]", JS.Vars.D.ToString());
         }
 
         public static string GetInterfaceMemberName(IEmitter emitter, IMember interfaceMember, string name, string prefix, bool withoutTypeParams = false, bool isSetter = false)
@@ -921,7 +921,7 @@ namespace Bridge.Contract
             {
                 if (interfaceName.EndsWith(")"))
                 {
-                    return interfaceName + " + \"$" + interfaceMemberName + "\"";
+                    return interfaceName + " + \"" + JS.Vars.D + interfaceMemberName + "\"";
                 }
 
                 if (interfaceName.EndsWith("\""))
@@ -929,10 +929,10 @@ namespace Bridge.Contract
                     interfaceName = interfaceName.Substring(0, interfaceName.Length - 1);
                 }
 
-                return interfaceName  + "$" + interfaceMemberName + "\"";
+                return interfaceName  + JS.Vars.D + interfaceMemberName + "\"";
             }
 
-            return interfaceName + (interfaceName.EndsWith("$") ? "" : "$") + interfaceMemberName;
+            return interfaceName + (interfaceName.EndsWith(JS.Vars.D.ToString()) ? "" : JS.Vars.D.ToString()) + interfaceMemberName;
         }
 
         public static bool NeedCreateAlias(MemberResolveResult rr)

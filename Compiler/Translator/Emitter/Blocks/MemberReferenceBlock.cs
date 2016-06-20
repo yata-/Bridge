@@ -99,7 +99,8 @@ namespace Bridge.Translator
 
             if (externalInterface)
             {
-                this.Write("Bridge.geti(");
+                this.Write(JS.Funcs.BRIDGE_GET_I);
+                this.WriteOpenParentheses();
 
                 if (interfaceTempVar != null)
                 {
@@ -717,7 +718,7 @@ namespace Bridge.Translator
                     {
                         if (isInterfaceMember)
                         {
-                            this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, false, "get");
+                            this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, false, JS.Funcs.Property.GET);
                         }
                         else
                         {
@@ -736,7 +737,7 @@ namespace Bridge.Translator
                             {
                                 if (isInterfaceMember)
                                 {
-                                    this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, true, "set");
+                                    this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, true, JS.Funcs.Property.SET);
                                 }
                                 else
                                 {
@@ -787,7 +788,7 @@ namespace Bridge.Translator
 
                                         if (isInterfaceMember)
                                         {
-                                            this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, false, "get");
+                                            this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, false, JS.Funcs.Property.GET);
                                         }
                                         else
                                         {
@@ -823,7 +824,7 @@ namespace Bridge.Translator
 
                                         if (isInterfaceMember)
                                         {
-                                            this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, false, "get");
+                                            this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, false, JS.Funcs.Property.GET);
                                         }
                                         else
                                         {
@@ -882,7 +883,7 @@ namespace Bridge.Translator
 
                                     if (isInterfaceMember)
                                     {
-                                        this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, false, "get");
+                                        this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, false, JS.Funcs.Property.GET);
                                     }
                                     else
                                     {
@@ -920,7 +921,7 @@ namespace Bridge.Translator
                             {
                                 if (isInterfaceMember)
                                 {
-                                    this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, false, "get");
+                                    this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, false, JS.Funcs.Property.GET);
                                 }
                                 else
                                 {
@@ -960,7 +961,7 @@ namespace Bridge.Translator
 
                                 if (isInterfaceMember)
                                 {
-                                    this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, true, "set");
+                                    this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, true, JS.Funcs.Property.SET);
                                 }
                                 else
                                 {
@@ -1048,7 +1049,7 @@ namespace Bridge.Translator
 
                                     if (isInterfaceMember)
                                     {
-                                        this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, false, "get");
+                                        this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, false, JS.Funcs.Property.GET);
                                     }
                                     else
                                     {
@@ -1080,7 +1081,7 @@ namespace Bridge.Translator
                         {
                             if (isInterfaceMember)
                             {
-                                this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, false, "get");
+                                this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, false, JS.Funcs.Property.GET);
                             }
                             else
                             {
@@ -1111,7 +1112,7 @@ namespace Bridge.Translator
 
                             this.Emitter.IsAssignment = false;
                             this.Emitter.IsUnaryAccessor = false;
-                            this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, true, "set");
+                            this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, true, JS.Funcs.Property.SET);
                             this.Emitter.IsAssignment = oldIsAssignment;
                             this.Emitter.IsUnaryAccessor = oldUnary;
                             memberStr = this.Emitter.Output.ToString();
@@ -1130,7 +1131,7 @@ namespace Bridge.Translator
 
                             this.Emitter.IsAssignment = false;
                             this.Emitter.IsUnaryAccessor = false;
-                            this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, false, "get");
+                            this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, false, JS.Funcs.Property.GET);
                             this.Emitter.IsAssignment = oldIsAssignment;
                             this.Emitter.IsUnaryAccessor = oldUnary;
                             getterMember = this.Emitter.Output.ToString();
@@ -1184,7 +1185,7 @@ namespace Bridge.Translator
 
                             this.Emitter.IsAssignment = false;
                             this.Emitter.IsUnaryAccessor = false;
-                            this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, true, "set");
+                            this.WriteInterfaceMember(interfaceTempVar ?? targetVar, member, true, JS.Funcs.Property.SET);
                             this.Emitter.IsAssignment = oldIsAssignment;
                             this.Emitter.IsUnaryAccessor = oldUnary;
                             trg = this.Emitter.Output.ToString();

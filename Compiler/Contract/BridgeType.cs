@@ -305,7 +305,7 @@ namespace Bridge.Contract
                 {
                     StringBuilder sb = new StringBuilder(name);
                     bool needComma = false;
-                    sb.Append("$");
+                    sb.Append(JS.Vars.D);
                     bool isStr = false;
                     foreach (var typeArg in type.TypeArguments)
                     {
@@ -314,9 +314,9 @@ namespace Bridge.Contract
                             sb.Append(" + \"");
                         }
 
-                        if (needComma && !sb.ToString().EndsWith("$"))
+                        if (needComma && !sb.ToString().EndsWith(JS.Vars.D.ToString()))
                         {
-                            sb.Append("$");
+                            sb.Append(JS.Vars.D);
                         }
 
                         needComma = true;
