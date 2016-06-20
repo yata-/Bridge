@@ -1001,7 +1001,16 @@ namespace Bridge.Contract
                 prefix = null;
             }
 
-            if (/*attr != null || */(definition.DeclaringTypeDefinition != null && definition.DeclaringTypeDefinition.Kind != TypeKind.Interface && this.Emitter.Validator.IsIgnoreType(definition.DeclaringTypeDefinition)))
+            if (attr != null && definition.ImplementedInterfaceMembers.Count > 0)
+            {
+                if (this.Members.Where(member => member.ImplementedInterfaceMembers.Count > 0)
+                        .Any(member => definition.ImplementedInterfaceMembers.Any(implementedInterfaceMember => member.ImplementedInterfaceMembers.Any(m => m.DeclaringTypeDefinition == implementedInterfaceMember.DeclaringTypeDefinition))))
+                {
+                    attr = null;
+                }
+            }
+
+            if (attr != null || (definition.DeclaringTypeDefinition != null && definition.DeclaringTypeDefinition.Kind != TypeKind.Interface && this.Emitter.Validator.IsIgnoreType(definition.DeclaringTypeDefinition)))
             {
                 return prefix != null ? prefix + name : name;
             }

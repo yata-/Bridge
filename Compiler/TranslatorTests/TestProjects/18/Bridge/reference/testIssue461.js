@@ -6,11 +6,11 @@
             test: function () {
                 var input = document.createElement('input');
     
-                input.onchange$1 = Bridge.fn.combine(input.onchange$1, $_.TestIssue461.Issue461.f1);
+                input.onchange = Bridge.fn.combine(input.onchange, $_.TestIssue461.Issue461.f1);
     
                 var anchor = document.createElement('a');
     
-                anchor.onclick$1 = Bridge.fn.combine(anchor.onclick$1, $_.TestIssue461.Issue461.f2);
+                anchor.onclick = Bridge.fn.combine(anchor.onclick, $_.TestIssue461.Issue461.f2);
     
                 // Test if Document.GetElementById<>() compiles
                 var div = document.getElementById("div1");
