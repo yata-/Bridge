@@ -25,7 +25,7 @@ namespace System
             set;
         }
 
-        [Template("new System.Collections.ObjectModel.ReadOnlyCollection$1({T})({array})")]
+        [Template("new (System.Collections.ObjectModel.ReadOnlyCollection$1({T}))({array})")]
         public extern static ReadOnlyCollection<T> AsReadOnly<T>(T[] array);
 
         [Template("System.Array.convertAll({array}, {converter})")]

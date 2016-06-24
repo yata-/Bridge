@@ -69,6 +69,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngine", {
     _timeoutTime: -1,
 
     constructor: function (pattern, isCaseInsensitive, isMultiLine, isSingleline, isIgnoreWhitespace, timeoutMs) {
+		this.$initialize();
         if (pattern == null) {
             throw new System.ArgumentNullException("pattern");
         }

@@ -424,6 +424,7 @@
     Bridge.define('Bridge.ClientTest.Batch2.BridgeIssues.N772.C', {
         i: 0,
         constructor: function (i) {
+            this.$initialize();
             this.i = i;
         },
         equals: function (o) {

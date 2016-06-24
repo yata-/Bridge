@@ -87,6 +87,7 @@
         },
 
         constructor: function () {
+			this.$initialize();
             this.ticks = System.Int64.Zero;
 
             if (arguments.length === 1) {

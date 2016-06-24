@@ -7,13 +7,13 @@ namespace System.Collections.Generic
     {
         public static extern Comparer<T> Default
         {
-            [Template("new System.Collections.Generic.Comparer$1({T})(System.Collections.Generic.Comparer$1.$default.fn)")]
+            [Template("new (System.Collections.Generic.Comparer$1({T}))(System.Collections.Generic.Comparer$1.$default.fn)")]
             get;
         }
 
         public abstract int Compare(T x, T y);
 
-        [Template("new System.Collections.Generic.Comparer$1({T})({comparison})")]
+        [Template("new (System.Collections.Generic.Comparer$1({T}))({comparison})")]
         public static extern Comparer<T> Create(Comparison<T> comparison);
     }
 }

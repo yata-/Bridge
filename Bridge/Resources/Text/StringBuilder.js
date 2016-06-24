@@ -2,6 +2,7 @@
 
 Bridge.define("System.Text.StringBuilder", {
     constructor: function () {
+		this.$initialize();
         this.buffer = [],
         this.capacity = 16;
 

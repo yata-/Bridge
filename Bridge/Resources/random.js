@@ -15,10 +15,12 @@
             }
         },
         constructor: function () {
-            System.Random.prototype.constructor$1.call(this, System.Int64.clip32(System.Int64((new Date()).getTime()).mul(10000)));
+			this.$initialize();
+            System.Random.constructor$1.call(this, System.Int64.clip32(System.Int64((new Date()).getTime()).mul(10000)));
 
         },
         constructor$1: function (Seed) {
+			this.$initialize();
             var ii;
             var mj, mk;
 

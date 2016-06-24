@@ -13,6 +13,7 @@ Bridge.define('Bridge.ArrayEnumerator', {
     },
 
     constructor: function (array, T) {
+		this.$initialize();
         this.array = array;
         this.reset();
 
@@ -52,6 +53,7 @@ Bridge.define('Bridge.ArrayEnumerable', {
     },
 
     constructor: function (array) {
+		this.$initialize();
         this.array = array;
     },
 

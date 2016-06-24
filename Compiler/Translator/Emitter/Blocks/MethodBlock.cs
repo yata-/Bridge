@@ -95,6 +95,10 @@ namespace Bridge.Translator
                 else
                 {
                     string structName = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter);
+                    if (this.TypeInfo.Type.TypeArguments.Count > 0 && !Helpers.IsIgnoreGeneric(this.TypeInfo.Type, this.Emitter))
+                    {
+                        structName = "(" + structName + ")";
+                    }
 
                     this.EnsureComma();
                     this.Write(JS.Funcs.GETDEFAULTVALUE + ": function () { return new " + structName + "(); }");
@@ -223,6 +227,10 @@ namespace Bridge.Translator
                 this.Write(JS.Funcs.CLONE + ": function (to) ");
                 this.BeginBlock();
                 this.Write("var s = to || new ");
+                if (this.TypeInfo.Type.TypeArguments.Count > 0 && !Helpers.IsIgnoreGeneric(this.TypeInfo.Type, this.Emitter))
+                {
+                    structName = "(" + structName + ")";
+                }
                 this.Write(structName);
                 this.Write("();");
 

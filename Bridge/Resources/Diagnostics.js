@@ -43,6 +43,7 @@
 
     Bridge.define("System.Diagnostics.Stopwatch", {
         constructor: function () {
+			this.$initialize();
             this._stopTime = System.Int64.Zero;
             this._startTime = System.Int64.Zero;
             this.isRunning = false;
@@ -227,7 +228,8 @@
         inherits: [System.Exception],
 
         constructor: function (failureKind, failureMessage, userMessage, condition, innerException) {
-            System.Exception.prototype.$constructor.call(this, failureMessage, innerException);
+			this.$initialize();
+            System.Exception.$constructor.call(this, failureMessage, innerException);
             this._kind = failureKind;
             this._failureMessage = failureMessage || null;
             this._userMessage = userMessage || null;

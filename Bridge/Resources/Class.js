@@ -1,91 +1,74 @@
 ﻿    // @source Class.js
-
-    var initializing = false;
-
     // The base Class implementation
     var base = {
-        cache: { },
+        cache: {},
 
-        initCtor: function () {
-            var value = arguments[0];
-
-            if (this.$multipleCtors && arguments.length > 0 && typeof value == "string") {
-                value = value === "constructor" ? "$constructor" : value;
-
-                if ((value === "$constructor" || System.String.startsWith(value, "constructor$")) && Bridge.isFunction(this[value])) {
-                    this[value].apply(this, Array.prototype.slice.call(arguments, 1));
-
-                    return;
-                }
+        initialize: function () {
+            if (this.$initialized) {
+                return;
             }
 
-            if (this.$constructor) {
-                this.$constructor.apply(this, arguments);
+            this.$initialized = Bridge.emptyFn;
+
+            if (this.$staticInit) {
+                this.$staticInit();
+            }
+
+            if (this.$initMembers) {
+                this.$initMembers();
             }
         },
 
-        initConfig: function (extend, base, cfg, statics, scope, prototype) {
+        initConfig: function (extend, base, config, statics, scope, prototype) {
             var initFn,
-                isFn = Bridge.isFunction(cfg),
-                fn = function () {
-                    var name,
-                        config;
+                name;
 
-                    config = Bridge.isFunction(cfg) ? cfg() : cfg;
-
-                    if (config.fields) {
-                        for (name in config.fields) {
-                            this[name] = config.fields[name];
-                        }
-                    }
-
-                    if (config.properties) {
-                        for (name in config.properties) {
-                            Bridge.property(this, name, config.properties[name]);
-                        }
-                    }
-
-                    if (config.events) {
-                        for (name in config.events) {
-                            Bridge.event(this, name, config.events[name]);
-                        }
-                    }
-
-                    if (config.alias) {
-                        for (var i = 0; i < config.alias.length; i++) {
-                            var m = this[config.alias[i]];
-
-                            if (m === undefined && prototype) {
-                                m = prototype[config.alias[i]];
-                            }
-
-                            this[config.alias[i + 1]] = m;
-                            i++;
-                        }
-                    }
-
-                    if (config.init) {
-                        initFn = config.init;
-                    }
-                };
-
-            if (!isFn) {
-                fn.apply(scope);
+            if (config.fields) {
+                for (name in config.fields) {
+                    scope[name] = config.fields[name];
+                }
             }
 
-            scope.$initMembers = function () {
-                if (extend && !statics && base.$initMembers) {
-                    base.$initMembers.apply(this, arguments);
+            if (config.properties) {
+                for (name in config.properties) {
+                    Bridge.property(scope, name, config.properties[name]);
                 }
+            }
 
-                if (isFn) {
-                    fn.apply(this);
+            if (config.events) {
+                for (name in config.events) {
+                    Bridge.event(scope, name, config.events[name]);
                 }
+            }
 
-                if (initFn) {
-                    initFn.apply(this, arguments);
+            if (config.alias) {
+                for (var i = 0; i < config.alias.length; i++) {
+                    var m = scope[config.alias[i]];
+
+                    if (m === undefined && prototype) {
+                        m = prototype[config.alias[i]];
+                    }
+
+                    scope[config.alias[i + 1]] = m;
+                    i++;
                 }
-            };
+            }
+
+            if (config.init) {
+                initFn = config.init;
+            }
+
+            if (initFn || (extend && !statics && base.$initMembers)) {
+                scope.$initMembers = function () {
+                    if (extend && !statics && base.$initMembers) {
+                        base.$initMembers.call(this);
+                    }
+
+                    if (initFn) {
+                        initFn.call(this);
+                    }
+                };
+            }
         },
 
         // Create a new Class that inherits from this class
@@ -143,7 +126,6 @@
                 scope = prop.$scope || gscope || Bridge.global,
                 i,
                 v,
-                ctorCounter,
                 isCtor,
                 ctorName,
                 name;
@@ -170,30 +152,21 @@
                 delete prop.$cacheName;
             }
 
-            // The dummy class constructor
-            function Class() {
-                if (!(this instanceof Class)) {
-                    var args = Array.prototype.slice.call(arguments, 0),
-                        object = Object.create(Class.prototype),
-                        result = Class.apply(object, args);
+            var Class,
+                cls = prop.hasOwnProperty("constructor") && prop.constructor || prop.$constructor;
 
-                    return typeof result === "object" ? result : object;
-                }
-
-                // All construction is actually done in the init method
-                if (!initializing) {
-                    if (this.$staticInit) {
-                        this.$staticInit();
+            if (!cls) {
+                Class = function() {
+                    this.$initialize();
+                    if (Class.$base) {
+                        Class.$base.$constructor.call(this);
                     }
-
-                    if (this.$initMembers) {
-                        this.$initMembers.apply(this, arguments);
-                    }
-
-                    this.$$initCtor.apply(this, arguments);
-                }
-            };
-
+                };
+                prop.constructor = Class;
+            } else {
+                Class = cls;
+            }
+            
             scope = Bridge.Class.set(scope, className, Class);
 
             if (cacheName) {
@@ -207,12 +180,12 @@
             }
 
             base = extend ? extend[0].prototype : this.prototype;
+            Class.$base = base;
+            prototype = extend ? (extend[0].$$initCtor ? new extend[0].$$initCtor() : new extend[0]()) : new Object();
 
-            // Instantiate a base class (but only create the instance,
-            // don't run the init constructor)
-            initializing = true;
-            prototype = extend ? new extend[0]() : new Object();
-            initializing = false;
+            Class.$$initCtor = function () { };
+            Class.$$initCtor.prototype = prototype;
+            Class.$$initCtor.prototype.constructor = Class;
 
             if (statics) {
                 var staticsConfig = statics.$config || statics.config;
@@ -238,16 +211,13 @@
                 } else {
                     delete prop.config;
                 }
-            } else {
-                prop.$initMembers = extend && base.$initMembers ? function () {
-                    base.$initMembers.apply(this, arguments);
-                } : function () { };
+            } else if (extend && base.$initMembers) {
+                prop.$initMembers = function () {
+                    base.$initMembers.call(this);
+                };
             }
 
-            prop.$$initCtor = Bridge.Class.initCtor;
-
-            // Copy the properties over onto the new prototype
-            ctorCounter = 0;
+            prop.$initialize = Bridge.Class.initialize;
 
             var keys = [];
 
@@ -262,49 +232,21 @@
                 isCtor = name === "constructor";
                 ctorName = isCtor ? "$constructor" : name;
 
-                if (Bridge.isFunction(v) && (isCtor || System.String.startsWith(name, "constructor$"))) {
-                    ctorCounter++;
+                if (Bridge.isFunction(v) && (isCtor || name.match("^constructor\\$") !== null)) {
                     isCtor = true;
                 }
 
-                prototype[ctorName] = prop[name];
-
                 if (isCtor) {
-                    (function (ctorName) {
-                        Class[ctorName] = function () {
-                            var args = Array.prototype.slice.call(arguments);
-
-                            if (this.$initMembers) {
-                                this.$initMembers.apply(this, args);
-                            }
-
-                            args.unshift(ctorName);
-                            this.$$initCtor.apply(this, args);
-                        };
-                    })(ctorName);
-
+                    Class[ctorName] = prop[name];
                     Class[ctorName].prototype = prototype;
                     Class[ctorName].prototype.constructor = Class;
+                    prototype[ctorName] = prop[name];
+                } else {
+                    prototype[ctorName] = prop[name];
                 }
             }
 
-            if (ctorCounter === 0) {
-                prototype.$constructor = extend ? function () {
-                    base.$constructor.apply(this, arguments);
-                } : function () { };
-            }
-
-            if (ctorCounter > 1) {
-                prototype.$multipleCtors = true;
-            }
-
             prototype.$$name = className;
-
-            // Populate our constructed prototype object
-            Class.prototype = prototype;
-
-            // Enforce the constructor to be what we expect
-            Class.prototype.constructor = Class;
 
             if (prop.$interface) {
                 Class.$interface = prop.$interface;
@@ -338,11 +280,11 @@
                     Class.$staticInit = null;
 
                     if (Class.$initMembers) {
-                        Class.$initMembers.call(Class);
+                        Class.$initMembers();
                     }
 
                     if (Class.constructor) {
-                        Class.constructor.call(Class);
+                        Class.constructor();
                     }
                 }
             };

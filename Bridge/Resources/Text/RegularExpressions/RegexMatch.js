@@ -47,10 +47,11 @@ Bridge.define("System.Text.RegularExpressions.Match", {
     _textpos: 0,
 
     constructor: function (regex, capcount, text, begpos, len, startpos) {
+		this.$initialize();
         var scope = System.Text.RegularExpressions;
         var caps = [0, 0];
 
-        scope.Group.prototype.$constructor.call(this, text, caps, 0);
+        scope.Group.$constructor.call(this, text, caps, 0);
 
         this._regex = regex;
 
@@ -211,8 +212,9 @@ Bridge.define("System.Text.RegularExpressions.MatchSparse", {
     _caps: null,
 
     constructor: function (regex, caps, capcount, text, begpos, len, startpos) {
+		this.$initialize();
         var scope = System.Text.RegularExpressions;
-        scope.Match.prototype.$constructor.call(this, regex, capcount, text, begpos, len, startpos);
+        scope.Match.$constructor.call(this, regex, capcount, text, begpos, len, startpos);
 
         this._caps = caps;
     },

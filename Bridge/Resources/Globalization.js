@@ -323,6 +323,7 @@
         },
 
         constructor: function (name, create) {
+			this.$initialize();
             this.name = name;
 
             if (!System.Globalization.CultureInfo.cultures) {

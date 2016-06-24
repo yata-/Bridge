@@ -34,11 +34,19 @@
         m_array: null,
         m_length: 0,
         _version: 0,
+        config: {
+            alias: [
+            "getCount", "System$Collections$ICollection$getCount",
+            "clone", "System$ICloneable$clone",
+            "getEnumerator", "System$Collections$IEnumerable$getEnumerator"
+            ]
+        },
         constructor$3: function (length) {
-            System.Collections.BitArray.prototype.constructor$4.call(this, length, false);
+            System.Collections.BitArray.constructor$4.call(this, length, false);
     
         },
         constructor$4: function (length, defaultValue) {
+            this.$initialize();
             if (length < 0) {
                 throw new System.ArgumentOutOfRangeException("length", "Index is less than zero.");
             }
@@ -54,6 +62,7 @@
             this._version = 0;
         },
         constructor$1: function (bytes) {
+            this.$initialize();
             if (bytes == null) {
                 throw new System.ArgumentNullException("bytes");
             }
@@ -92,6 +101,7 @@
             this._version = 0;
         },
         constructor: function (values) {
+            this.$initialize();
             if (values == null) {
                 throw new System.ArgumentNullException("values");
             }
@@ -108,6 +118,7 @@
             this._version = 0;
         },
         constructor$5: function (values) {
+            this.$initialize();
             if (values == null) {
                 throw new System.ArgumentNullException("values");
             }
@@ -124,6 +135,7 @@
             this._version = 0;
         },
         constructor$2: function (bits) {
+            this.$initialize();
             if (bits == null) {
                 throw new System.ArgumentNullException("bits");
             }
@@ -270,7 +282,7 @@
             return this;
         },
         clone: function () {
-            var bitArray = new System.Collections.BitArray("constructor$5", this.m_array);
+            var bitArray = new System.Collections.BitArray.constructor$5(this.m_array);
             bitArray._version = this._version;
             bitArray.m_length = this.m_length;
             return bitArray;
@@ -286,7 +298,15 @@
         index: 0,
         version: 0,
         currentElement: false,
+        config: {
+            alias: [
+            "moveNext", "System$Collections$IEnumerator$moveNext",
+            "getCurrent", "System$Collections$IEnumerator$getCurrent",
+            "reset", "System$Collections$IEnumerator$reset"
+            ]
+        },
         constructor: function (bitarray) {
+            this.$initialize();
             this.bitarray = bitarray;
             this.index = -1;
             this.version = bitarray._version;
@@ -334,6 +354,7 @@
         _length: 0,
         _array: null,
         constructor: function (bitArray, length) {
+            this.$initialize();
             this._array = bitArray;
             this._length = length;
         },
@@ -394,17 +415,17 @@
              which is the actual number of elements in the array.
              */
             toArray$1: function (T, source, length) {
-                var en = Bridge.getEnumerator(source, "$1");
+                var en = Bridge.getEnumerator(source, "$1", T);
                 try {
-                    if (en.moveNext()) {
+                    if (en.System$Collections$IEnumerator$moveNext()) {
                         var DefaultCapacity = 4;
                         var arr = { v : System.Array.init(DefaultCapacity, function (){
                             return Bridge.getDefaultValue(T);
                         }) };
-                        arr.v[0] = en.getCurrent$1();
+                        arr.v[0] = en[Bridge.geti(en, "System$Collections$Generic$IEnumerator$1$" + Bridge.getTypeAlias(T) + "$getCurrent$1", "getCurrent$1")]();
                         var count = 1;
     
-                        while (en.moveNext()) {
+                        while (en.System$Collections$IEnumerator$moveNext()) {
                             if (count === arr.v.length) {
                                 // MaxArrayLength is defined in Array.MaxArrayLength and in gchelpers in CoreCLR.
                                 // It represents the maximum number of elements that can be in an array where
@@ -431,7 +452,7 @@
                                 System.Array.resize(arr, newLength, null);
                             }
     
-                            arr.v[Bridge.identity(count, (count = (count + 1) | 0))] = en.getCurrent$1();
+                            arr.v[Bridge.identity(count, (count = (count + 1) | 0))] = en[Bridge.geti(en, "System$Collections$Generic$IEnumerator$1$" + Bridge.getTypeAlias(T) + "$getCurrent$1", "getCurrent$1")]();
                         }
     
                         length.v = count;
@@ -488,7 +509,7 @@
                         $t2 = Bridge.getEnumerator(set1);
                         while ($t2.moveNext()) {
                             var set1Item = $t2.getCurrent();
-                            if (comparer.equals2(set2Item, set1Item)) {
+                            if (comparer["System$Collections$Generic$IEqualityComparer$1$" + Bridge.getTypeAlias(T) + "$equals2"](set2Item, set1Item)) {
                                 found = true;
                                 break;
                             }
@@ -511,13 +532,35 @@
         _freeList: 0,
         _comparer: null,
         _version: 0,
+        config: {
+            alias: [
+            "System$Collections$Generic$ICollection$1$T$add", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$add",
+            "clear", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$clear",
+            "contains", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$contains",
+            "remove", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$remove",
+            "getCount", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$getCount",
+            "System$Collections$Generic$IEnumerable$1$T$getEnumerator", "System$Collections$Generic$IEnumerable$1$" + Bridge.getTypeAlias(T) + "$getEnumerator",
+            "add", "System$Collections$Generic$ISet$1$" + Bridge.getTypeAlias(T) + "$add",
+            "unionWith", "System$Collections$Generic$ISet$1$" + Bridge.getTypeAlias(T) + "$unionWith",
+            "intersectWith", "System$Collections$Generic$ISet$1$" + Bridge.getTypeAlias(T) + "$intersectWith",
+            "exceptWith", "System$Collections$Generic$ISet$1$" + Bridge.getTypeAlias(T) + "$exceptWith",
+            "symmetricExceptWith", "System$Collections$Generic$ISet$1$" + Bridge.getTypeAlias(T) + "$symmetricExceptWith",
+            "isSubsetOf", "System$Collections$Generic$ISet$1$" + Bridge.getTypeAlias(T) + "$isSubsetOf",
+            "isProperSubsetOf", "System$Collections$Generic$ISet$1$" + Bridge.getTypeAlias(T) + "$isProperSubsetOf",
+            "isSupersetOf", "System$Collections$Generic$ISet$1$" + Bridge.getTypeAlias(T) + "$isSupersetOf",
+            "isProperSupersetOf", "System$Collections$Generic$ISet$1$" + Bridge.getTypeAlias(T) + "$isProperSupersetOf",
+            "overlaps", "System$Collections$Generic$ISet$1$" + Bridge.getTypeAlias(T) + "$overlaps",
+            "setEquals", "System$Collections$Generic$ISet$1$" + Bridge.getTypeAlias(T) + "$setEquals"
+            ]
+        },
         constructor: function () {
-            System.Collections.Generic.HashSet$1(T).prototype.constructor$3.call(this, new System.Collections.Generic.EqualityComparer$1(T)());
+            System.Collections.Generic.HashSet$1(T).constructor$3.call(this, new (System.Collections.Generic.EqualityComparer$1(T))());
     
         },
         constructor$3: function (comparer) {
+            this.$initialize();
             if (comparer == null) {
-                comparer = new System.Collections.Generic.EqualityComparer$1(T)();
+                comparer = new (System.Collections.Generic.EqualityComparer$1(T))();
             }
             this._comparer = comparer;
             this._lastIndex = 0;
@@ -526,11 +569,11 @@
             this._version = 0;
         },
         constructor$1: function (collection) {
-            System.Collections.Generic.HashSet$1(T).prototype.constructor$2.call(this, collection, new System.Collections.Generic.EqualityComparer$1(T)());
+            System.Collections.Generic.HashSet$1(T).constructor$2.call(this, collection, new (System.Collections.Generic.EqualityComparer$1(T))());
     
         },
         constructor$2: function (collection, comparer) {
-            System.Collections.Generic.HashSet$1(T).prototype.constructor$3.call(this, comparer);
+            System.Collections.Generic.HashSet$1(T).constructor$3.call(this, comparer);
     
             if (collection == null) {
                 throw new System.ArgumentNullException("collection");
@@ -538,7 +581,7 @@
             var suggestedCapacity = 0;
             var coll = Bridge.as(collection, System.Collections.Generic.ICollection$1(T));
             if (coll != null) {
-                suggestedCapacity = System.Array.getCount(coll);
+                suggestedCapacity = System.Array.getCount(coll, T);
             }
             this.initialize(suggestedCapacity);
             this.unionWith(collection);
@@ -552,16 +595,16 @@
         getComparer: function () {
             return this._comparer;
         },
-        add: function (item) {
+        System$Collections$Generic$ICollection$1$T$add: function (item) {
             this.addIfNotPresent(item);
         },
-        add$1: function (item) {
+        add: function (item) {
             return this.addIfNotPresent(item);
         },
         clear: function () {
             if (this._lastIndex > 0) {
                 for (var i = 0; i < this._lastIndex; i = (i + 1) | 0) {
-                    this._slots[i] = new System.Collections.Generic.HashSet$1.Slot(T)();
+                    this._slots[i] = new (System.Collections.Generic.HashSet$1.Slot(T))();
                 }
     
                 for (var i1 = 0; i1 < this._buckets.length; i1 = (i1 + 1) | 0) {
@@ -580,7 +623,7 @@
             if (this._buckets != null) {
                 var hashCode = this.internalGetHashCode(item);
                 for (var i = (this._buckets[hashCode % this._buckets.length] - 1) | 0; i >= 0; i = this._slots[i].next) {
-                    if (this._slots[i].hashCode === hashCode && this._comparer.equals2(this._slots[i].value, item)) {
+                    if (this._slots[i].hashCode === hashCode && this._comparer["System$Collections$Generic$IEqualityComparer$1$" + Bridge.getTypeAlias(T) + "$equals2"](this._slots[i].value, item)) {
                         return true;
                     }
                 }
@@ -620,7 +663,7 @@
                 var bucket = hashCode % this._buckets.length;
                 var last = -1;
                 for (var i = (this._buckets[bucket] - 1) | 0; i >= 0; last = i, i = this._slots[i].next) {
-                    if (this._slots[i].hashCode === hashCode && this._comparer.equals2(this._slots[i].value, item)) {
+                    if (this._slots[i].hashCode === hashCode && this._comparer["System$Collections$Generic$IEqualityComparer$1$" + Bridge.getTypeAlias(T) + "$equals2"](this._slots[i].value, item)) {
                         if (last < 0) {
                             this._buckets[bucket] = (this._slots[i].next + 1) | 0;
                         }
@@ -645,14 +688,14 @@
             }
             return false;
         },
-        getEnumerator$2: function () {
-            return new System.Collections.Generic.HashSet$1.Enumerator(T)("constructor$1", this);
-        },
-        getEnumerator$1: function () {
-            return new System.Collections.Generic.HashSet$1.Enumerator(T)("constructor$1", this);
-        },
         getEnumerator: function () {
-            return new System.Collections.Generic.HashSet$1.Enumerator(T)("constructor$1", this);
+            return new (System.Collections.Generic.HashSet$1.Enumerator(T)).constructor$1(this);
+        },
+        System$Collections$Generic$IEnumerable$1$T$getEnumerator: function () {
+            return new (System.Collections.Generic.HashSet$1.Enumerator(T)).constructor$1(this);
+        },
+        System$Collections$IEnumerable$getEnumerator: function () {
+            return new (System.Collections.Generic.HashSet$1.Enumerator(T)).constructor$1(this);
         },
         unionWith: function (other) {
             var $t;
@@ -674,7 +717,7 @@
             }
             var otherAsCollection = Bridge.as(other, System.Collections.Generic.ICollection$1(T));
             if (otherAsCollection != null) {
-                if (System.Array.getCount(otherAsCollection) === 0) {
+                if (System.Array.getCount(otherAsCollection, T) === 0) {
                     this.clear();
                     return;
                 }
@@ -750,7 +793,7 @@
             var otherAsCollection = Bridge.as(other, System.Collections.Generic.ICollection$1(T));
             if (otherAsCollection != null) {
                 if (this._count === 0) {
-                    return System.Array.getCount(otherAsCollection) > 0;
+                    return System.Array.getCount(otherAsCollection, T) > 0;
                 }
                 var otherAsSet = Bridge.as(other, System.Collections.Generic.HashSet$1(T));
                 if (otherAsSet != null && System.Collections.Generic.HashSet$1(T).areEqualityComparersEqual(this, otherAsSet)) {
@@ -769,7 +812,7 @@
             }
             var otherAsCollection = Bridge.as(other, System.Collections.Generic.ICollection$1(T));
             if (otherAsCollection != null) {
-                if (System.Array.getCount(otherAsCollection) === 0) {
+                if (System.Array.getCount(otherAsCollection, T) === 0) {
                     return true;
                 }
                 var otherAsSet = Bridge.as(other, System.Collections.Generic.HashSet$1(T));
@@ -790,7 +833,7 @@
             }
             var otherAsCollection = Bridge.as(other, System.Collections.Generic.ICollection$1(T));
             if (otherAsCollection != null) {
-                if (System.Array.getCount(otherAsCollection) === 0) {
+                if (System.Array.getCount(otherAsCollection, T) === 0) {
                     return true;
                 }
                 var otherAsSet = Bridge.as(other, System.Collections.Generic.HashSet$1(T));
@@ -835,7 +878,7 @@
             else  {
                 var otherAsCollection = Bridge.as(other, System.Collections.Generic.ICollection$1(T));
                 if (otherAsCollection != null) {
-                    if (this._count === 0 && System.Array.getCount(otherAsCollection) > 0) {
+                    if (this._count === 0 && System.Array.getCount(otherAsCollection, T) > 0) {
                         return false;
                     }
                 }
@@ -869,7 +912,7 @@
             else  {
                 var newSize = System.Collections.HashHelpers.getPrime(this._count);
                 var newSlots = System.Array.init(newSize, function (){
-                    return new System.Collections.Generic.HashSet$1.Slot(T)();
+                    return new (System.Collections.Generic.HashSet$1.Slot(T))();
                 });
                 var newBuckets = System.Array.init(newSize, 0);
                 var newIndex = 0;
@@ -892,7 +935,7 @@
             var size = System.Collections.HashHelpers.getPrime(capacity);
             this._buckets = System.Array.init(size, 0);
             this._slots = System.Array.init(size, function (){
-                return new System.Collections.Generic.HashSet$1.Slot(T)();
+                return new (System.Collections.Generic.HashSet$1.Slot(T))();
             });
         },
         increaseCapacity: function () {
@@ -904,7 +947,7 @@
         },
         setCapacity: function (newSize, forceNewHashCodes) {
             var newSlots = System.Array.init(newSize, function (){
-                return new System.Collections.Generic.HashSet$1.Slot(T)();
+                return new (System.Collections.Generic.HashSet$1.Slot(T))();
             });
             if (this._slots != null) {
                 for (var i = 0; i < this._lastIndex; i = (i + 1) | 0) {
@@ -934,7 +977,7 @@
             var hashCode = this.internalGetHashCode(value);
             var bucket = hashCode % this._buckets.length;
             for (var i = (this._buckets[bucket] - 1) | 0; i >= 0; i = this._slots[i].next) {
-                if (this._slots[i].hashCode === hashCode && this._comparer.equals2(this._slots[i].value, value)) {
+                if (this._slots[i].hashCode === hashCode && this._comparer["System$Collections$Generic$IEqualityComparer$1$" + Bridge.getTypeAlias(T) + "$equals2"](this._slots[i].value, value)) {
                     return false;
                 }
             }
@@ -1015,7 +1058,7 @@
         internalIndexOf: function (item) {
             var hashCode = this.internalGetHashCode(item);
             for (var i = (this._buckets[hashCode % this._buckets.length] - 1) | 0; i >= 0; i = this._slots[i].next) {
-                if ((this._slots[i].hashCode) === hashCode && this._comparer.equals2(this._slots[i].value, item)) {
+                if ((this._slots[i].hashCode) === hashCode && this._comparer["System$Collections$Generic$IEqualityComparer$1$" + Bridge.getTypeAlias(T) + "$equals2"](this._slots[i].value, item)) {
                     return i;
                 }
             }
@@ -1065,7 +1108,7 @@
             var hashCode = this.internalGetHashCode(value);
             var bucket = hashCode % this._buckets.length;
             for (var i = (this._buckets[bucket] - 1) | 0; i >= 0; i = this._slots[i].next) {
-                if (this._slots[i].hashCode === hashCode && this._comparer.equals2(this._slots[i].value, value)) {
+                if (this._slots[i].hashCode === hashCode && this._comparer["System$Collections$Generic$IEqualityComparer$1$" + Bridge.getTypeAlias(T) + "$equals2"](this._slots[i].value, value)) {
                     location.v = i;
                     return false;
                 }
@@ -1094,7 +1137,7 @@
         },
         checkUniqueAndUnfoundElements: function (other, returnIfUnfound) {
             var $t, $t1;
-            var result = new System.Collections.Generic.HashSet$1.ElementCount(T)();
+            var result = new (System.Collections.Generic.HashSet$1.ElementCount(T))();
             if (this._count === 0) {
                 var numElementsInOther = 0;
                 $t = Bridge.getEnumerator(other);
@@ -1146,17 +1189,18 @@
             if (item == null) {
                 return 0;
             }
-            return this._comparer.getHashCode2(item) & System.Collections.Generic.HashSet$1(T).Lower31BitMask;
+            return this._comparer["System$Collections$Generic$IEqualityComparer$1$" + Bridge.getTypeAlias(T) + "$getHashCode2"](item) & System.Collections.Generic.HashSet$1(T).Lower31BitMask;
         }
     }; });
     
     Bridge.define('System.Collections.Generic.HashSet$1.ElementCount', function (T) { return {
         statics: {
-            getDefaultValue: function () { return new System.Collections.Generic.HashSet$1.ElementCount(T)(); }
+            getDefaultValue: function () { return new (System.Collections.Generic.HashSet$1.ElementCount(T))(); }
         },
         uniqueCount: 0,
         unfoundCount: 0,
         constructor: function () {
+            this.$initialize();
         },
         $struct: true,
         getHashCode: function () {
@@ -1173,7 +1217,7 @@
             return Bridge.equals(this.uniqueCount, o.uniqueCount) && Bridge.equals(this.unfoundCount, o.unfoundCount);
         },
         $clone: function (to) {
-            var s = to || new System.Collections.Generic.HashSet$1.ElementCount(T)();
+            var s = to || new (System.Collections.Generic.HashSet$1.ElementCount(T))();
             s.uniqueCount = this.uniqueCount;
             s.unfoundCount = this.unfoundCount;
             return s;
@@ -1183,28 +1227,37 @@
     Bridge.define('System.Collections.Generic.HashSet$1.Enumerator', function (T) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(T)],
         statics: {
-            getDefaultValue: function () { return new System.Collections.Generic.HashSet$1.Enumerator(T)(); }
+            getDefaultValue: function () { return new (System.Collections.Generic.HashSet$1.Enumerator(T))(); }
         },
         _set: null,
         _index: 0,
         _version: 0,
         _current: Bridge.getDefaultValue(T),
+        config: {
+            alias: [
+            "dispose", "System$IDisposable$dispose",
+            "moveNext", "System$Collections$IEnumerator$moveNext",
+            "getCurrent", "System$Collections$Generic$IEnumerator$1$" + Bridge.getTypeAlias(T) + "$getCurrent$1"
+            ]
+        },
         constructor$1: function (set) {
+            this.$initialize();
             this._set = set;
             this._index = 0;
             this._version = set._version;
             this._current = Bridge.getDefaultValue(T);
         },
         constructor: function () {
-        },
-        getCurrent$1: function () {
-            return this._current;
+            this.$initialize();
         },
         getCurrent: function () {
+            return this._current;
+        },
+        System$Collections$IEnumerator$getCurrent: function () {
             if (this._index === 0 || this._index === ((this._set._lastIndex + 1) | 0)) {
                 throw new System.InvalidOperationException("Enumeration has either not started or has already finished.");
             }
-            return this.getCurrent$1();
+            return this.getCurrent();
         },
         dispose: function () {
         },
@@ -1224,7 +1277,7 @@
             this._current = Bridge.getDefaultValue(T);
             return false;
         },
-        reset: function () {
+        System$Collections$IEnumerator$reset: function () {
             if (this._version !== this._set._version) {
                 throw new System.InvalidOperationException("Collection was modified; enumeration operation may not execute.");
             }
@@ -1248,7 +1301,7 @@
             return Bridge.equals(this._set, o._set) && Bridge.equals(this._index, o._index) && Bridge.equals(this._version, o._version) && Bridge.equals(this._current, o._current);
         },
         $clone: function (to) {
-            var s = to || new System.Collections.Generic.HashSet$1.Enumerator(T)();
+            var s = to || new (System.Collections.Generic.HashSet$1.Enumerator(T))();
             s._set = this._set;
             s._index = this._index;
             s._version = this._version;
@@ -1259,12 +1312,13 @@
     
     Bridge.define('System.Collections.Generic.HashSet$1.Slot', function (T) { return {
         statics: {
-            getDefaultValue: function () { return new System.Collections.Generic.HashSet$1.Slot(T)(); }
+            getDefaultValue: function () { return new (System.Collections.Generic.HashSet$1.Slot(T))(); }
         },
         hashCode: 0,
         value: Bridge.getDefaultValue(T),
         next: 0,
         constructor: function () {
+            this.$initialize();
         },
         $struct: true,
         getHashCode: function () {
@@ -1282,7 +1336,7 @@
             return Bridge.equals(this.hashCode, o.hashCode) && Bridge.equals(this.value, o.value) && Bridge.equals(this.next, o.next);
         },
         $clone: function (to) {
-            var s = to || new System.Collections.Generic.HashSet$1.Slot(T)();
+            var s = to || new (System.Collections.Generic.HashSet$1.Slot(T))();
             s.hashCode = this.hashCode;
             s.value = this.value;
             s.next = this.next;
@@ -1302,12 +1356,20 @@
         _tail: 0,
         _size: 0,
         _version: 0,
+        config: {
+            alias: [
+            "getCount", "System$Collections$ICollection$getCount",
+            "System$Collections$Generic$IEnumerable$1$T$getEnumerator", "System$Collections$Generic$IEnumerable$1$" + Bridge.getTypeAlias(T) + "$getEnumerator"
+            ]
+        },
         constructor: function () {
+            this.$initialize();
             this._array = System.Array.init(0, function (){
                 return Bridge.getDefaultValue(T);
             });
         },
         constructor$2: function (capacity) {
+            this.$initialize();
             if (capacity < 0) {
                 throw new System.ArgumentOutOfRangeException("capacity", "Non-negative number required.");
             }
@@ -1316,6 +1378,7 @@
             });
         },
         constructor$1: function (collection) {
+            this.$initialize();
             if (collection == null) {
                 throw new System.ArgumentNullException("collection");
             }
@@ -1324,10 +1387,10 @@
                 return Bridge.getDefaultValue(T);
             });
     
-            var en = Bridge.getEnumerator(collection, "$1");
+            var en = Bridge.getEnumerator(collection, "$1", T);
             try {
-                while (en.moveNext()) {
-                    this.enqueue(en.getCurrent$1());
+                while (en.System$Collections$IEnumerator$moveNext()) {
+                    this.enqueue(en[Bridge.geti(en, "System$Collections$Generic$IEnumerator$1$" + Bridge.getTypeAlias(T) + "$getCurrent$1", "getCurrent$1")]());
                 }
             }
             finally {
@@ -1393,14 +1456,14 @@
             this._size = (this._size + 1) | 0;
             this._version = (this._version + 1) | 0;
         },
-        getEnumerator$2: function () {
-            return new System.Collections.Generic.Queue$1.Enumerator(T)("constructor$1", this);
-        },
-        getEnumerator$1: function () {
-            return new System.Collections.Generic.Queue$1.Enumerator(T)("constructor$1", this);
-        },
         getEnumerator: function () {
-            return new System.Collections.Generic.Queue$1.Enumerator(T)("constructor$1", this);
+            return new (System.Collections.Generic.Queue$1.Enumerator(T)).constructor$1(this);
+        },
+        System$Collections$Generic$IEnumerable$1$T$getEnumerator: function () {
+            return new (System.Collections.Generic.Queue$1.Enumerator(T)).constructor$1(this);
+        },
+        System$Collections$IEnumerable$getEnumerator: function () {
+            return new (System.Collections.Generic.Queue$1.Enumerator(T)).constructor$1(this);
         },
         dequeue: function () {
             if (this._size === 0) {
@@ -1425,7 +1488,7 @@
             var index = this._head;
             var count = this._size;
     
-            var c = new System.Collections.Generic.EqualityComparer$1(T)();
+            var c = new (System.Collections.Generic.EqualityComparer$1(T))();
             while (Bridge.identity(count, (count = (count - 1) | 0)) > 0) {
                 if (item == null) {
                     if (this._array[index] == null) {
@@ -1499,21 +1562,30 @@
     Bridge.define('System.Collections.Generic.Queue$1.Enumerator', function (T) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(T),System.Collections.IEnumerator],
         statics: {
-            getDefaultValue: function () { return new System.Collections.Generic.Queue$1.Enumerator(T)(); }
+            getDefaultValue: function () { return new (System.Collections.Generic.Queue$1.Enumerator(T))(); }
         },
         _q: null,
         _index: 0,
         _version: 0,
         _currentElement: Bridge.getDefaultValue(T),
+        config: {
+            alias: [
+            "dispose", "System$IDisposable$dispose",
+            "moveNext", "System$Collections$IEnumerator$moveNext",
+            "getCurrent", "System$Collections$Generic$IEnumerator$1$" + Bridge.getTypeAlias(T) + "$getCurrent$1"
+            ]
+        },
         constructor$1: function (q) {
+            this.$initialize();
             this._q = q;
             this._version = this._q._version;
             this._index = -1;
             this._currentElement = Bridge.getDefaultValue(T);
         },
         constructor: function () {
+            this.$initialize();
         },
-        getCurrent$1: function () {
+        getCurrent: function () {
             if (this._index < 0) {
                 if (this._index === -1) {
                     throw new System.InvalidOperationException("Enumeration has not started. Call MoveNext.");
@@ -1524,8 +1596,8 @@
             }
             return this._currentElement;
         },
-        getCurrent: function () {
-            return this.getCurrent$1();
+        System$Collections$IEnumerator$getCurrent: function () {
+            return this.getCurrent();
         },
         dispose: function () {
             this._index = -2;
@@ -1551,7 +1623,7 @@
             this._currentElement = this._q.getElement(this._index);
             return true;
         },
-        reset: function () {
+        System$Collections$IEnumerator$reset: function () {
             if (this._version !== this._q._version) {
                 throw new System.InvalidOperationException("Collection was modified; enumeration operation may not execute.");
             }
@@ -1575,7 +1647,7 @@
             return Bridge.equals(this._q, o._q) && Bridge.equals(this._index, o._index) && Bridge.equals(this._version, o._version) && Bridge.equals(this._currentElement, o._currentElement);
         },
         $clone: function (to) {
-            var s = to || new System.Collections.Generic.Queue$1.Enumerator(T)();
+            var s = to || new (System.Collections.Generic.Queue$1.Enumerator(T))();
             s._q = this._q;
             s._index = this._index;
             s._version = this._version;
@@ -1592,12 +1664,20 @@
         _array: null,
         _size: 0,
         _version: 0,
+        config: {
+            alias: [
+            "getCount", "System$Collections$ICollection$getCount",
+            "System$Collections$Generic$IEnumerable$1$T$getEnumerator", "System$Collections$Generic$IEnumerable$1$" + Bridge.getTypeAlias(T) + "$getEnumerator"
+            ]
+        },
         constructor: function () {
+            this.$initialize();
             this._array = System.Array.init(0, function (){
                 return Bridge.getDefaultValue(T);
             });
         },
         constructor$2: function (capacity) {
+            this.$initialize();
             if (capacity < 0) {
                 throw new System.ArgumentOutOfRangeException("capacity", "Non-negative number required.");
             }
@@ -1606,6 +1686,7 @@
             });
         },
         constructor$1: function (collection) {
+            this.$initialize();
             if (collection == null) {
                 throw new System.ArgumentNullException("collection");
             }
@@ -1624,7 +1705,7 @@
         contains: function (item) {
             var count = this._size;
     
-            var c = new System.Collections.Generic.EqualityComparer$1(T)();
+            var c = new (System.Collections.Generic.EqualityComparer$1(T))();
             while (Bridge.identity(count, (count = (count - 1) | 0)) > 0) {
                 if (item == null) {
                     if (this._array[count] == null) {
@@ -1695,14 +1776,14 @@
                 throw new System.ArgumentException("Target array type is not compatible with the type of items in the collection.");
             }
         },
-        getEnumerator$2: function () {
-            return new System.Collections.Generic.Stack$1.Enumerator(T)("constructor$1", this);
-        },
-        getEnumerator$1: function () {
-            return new System.Collections.Generic.Stack$1.Enumerator(T)("constructor$1", this);
-        },
         getEnumerator: function () {
-            return new System.Collections.Generic.Stack$1.Enumerator(T)("constructor$1", this);
+            return new (System.Collections.Generic.Stack$1.Enumerator(T)).constructor$1(this);
+        },
+        System$Collections$Generic$IEnumerable$1$T$getEnumerator: function () {
+            return new (System.Collections.Generic.Stack$1.Enumerator(T)).constructor$1(this);
+        },
+        System$Collections$IEnumerable$getEnumerator: function () {
+            return new (System.Collections.Generic.Stack$1.Enumerator(T)).constructor$1(this);
         },
         trimExcess: function () {
             var threshold = Bridge.Int.clip32(this._array.length * 0.9);
@@ -1753,21 +1834,30 @@
     Bridge.define('System.Collections.Generic.Stack$1.Enumerator', function (T) { return {
         inherits: [System.Collections.Generic.IEnumerator$1(T),System.Collections.IEnumerator],
         statics: {
-            getDefaultValue: function () { return new System.Collections.Generic.Stack$1.Enumerator(T)(); }
+            getDefaultValue: function () { return new (System.Collections.Generic.Stack$1.Enumerator(T))(); }
         },
         _stack: null,
         _index: 0,
         _version: 0,
         _currentElement: Bridge.getDefaultValue(T),
+        config: {
+            alias: [
+            "dispose", "System$IDisposable$dispose",
+            "moveNext", "System$Collections$IEnumerator$moveNext",
+            "getCurrent", "System$Collections$Generic$IEnumerator$1$" + Bridge.getTypeAlias(T) + "$getCurrent$1"
+            ]
+        },
         constructor$1: function (stack) {
+            this.$initialize();
             this._stack = stack;
             this._version = this._stack._version;
             this._index = -2;
             this._currentElement = Bridge.getDefaultValue(T);
         },
         constructor: function () {
+            this.$initialize();
         },
-        getCurrent$1: function () {
+        getCurrent: function () {
             if (this._index === -2) {
                 throw new System.InvalidOperationException("Enumeration has not started. Call MoveNext.");
             }
@@ -1776,7 +1866,7 @@
             }
             return this._currentElement;
         },
-        getCurrent: function () {
+        System$Collections$IEnumerator$getCurrent: function () {
             if (this._index === -2) {
                 throw new System.InvalidOperationException("Enumeration has not started. Call MoveNext.");
             }
@@ -1814,7 +1904,7 @@
             }
             return retval;
         },
-        reset: function () {
+        System$Collections$IEnumerator$reset: function () {
             if (this._version !== this._stack._version) {
                 throw new System.InvalidOperationException("Collection was modified; enumeration operation may not execute.");
             }
@@ -1838,7 +1928,7 @@
             return Bridge.equals(this._stack, o._stack) && Bridge.equals(this._index, o._index) && Bridge.equals(this._version, o._version) && Bridge.equals(this._currentElement, o._currentElement);
         },
         $clone: function (to) {
-            var s = to || new System.Collections.Generic.Stack$1.Enumerator(T)();
+            var s = to || new (System.Collections.Generic.Stack$1.Enumerator(T))();
             s._stack = this._stack;
             s._index = this._index;
             s._version = this._version;
