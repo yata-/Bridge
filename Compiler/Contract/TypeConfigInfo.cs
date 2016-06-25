@@ -102,6 +102,7 @@ namespace Bridge.Contract
             this.Events = new List<TypeConfigItem>();
             this.Properties = new List<TypeConfigItem>();
             this.Alias = new List<TypeConfigItem>();
+            this.AutoPropertyInitializers = new List<TypeConfigItem>();
         }
 
         public bool HasMembers
@@ -139,6 +140,12 @@ namespace Bridge.Contract
         }
 
         public List<TypeConfigItem> Alias
+        {
+            get;
+            set;
+        }
+
+        public List<TypeConfigItem> AutoPropertyInitializers
         {
             get;
             set;

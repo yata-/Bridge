@@ -233,6 +233,18 @@ namespace Bridge
         [Template("({a} === {b})")]
         public static extern bool StrictEquals(object a, object b);
 
+		[Template("{init}({t})")]
+        public static extern T CallFor<T>(T t, Func<T, T> init);
+
+        [Template("({name:tmp} = {t})")]
+        public static extern T ToTemp<T>(string name, T t);
+
+        [Template("{name:gettmp}")]
+        public static extern T FromTemp<T>(string name);
+
+        [Template("{action:body}")]
+        public static extern object FromLambda(Action action);
+		
         [Template("{o:plain}")]
         public static extern T ToPlainObject<T>(T o);
 

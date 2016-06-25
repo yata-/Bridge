@@ -631,6 +631,15 @@ namespace Bridge.Translator
                     {
                         this.WriteSimpleTarget(resolveResult);
                     }
+					
+					if (member != null && targetrr != null && targetrr.Type.Kind == TypeKind.Delegate && (member.Member.Name == "Invoke"))
+                    {
+                        var method = member.Member as IMethod;
+                        if (!(method != null && method.IsExtensionMethod))
+                        {
+                            return;
+                        }
+                    }
                     
                     if (isConstTarget)
                     {

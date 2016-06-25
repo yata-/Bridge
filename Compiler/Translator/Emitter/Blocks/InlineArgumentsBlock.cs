@@ -403,6 +403,54 @@ namespace Bridge.Translator
                             bool needName = this.NeedName(type);
                             this.WriteGetType(needName, type, exprs[0], modifier);
                         }
+                        else if (modifier == "tmp")
+                        {
+                            var tmpVarName = this.GetTempVarName();
+                            var nameExpr = exprs[0] as PrimitiveExpression;
+
+                            if (nameExpr == null)
+                            {
+                                throw new EmitterException(exprs[0], "Primitive expression is required");
+                            }
+
+                            Emitter.NamedTempVariables[nameExpr.LiteralValue] = tmpVarName;
+                            Write(tmpVarName);
+                        }
+                        else if (modifier == "gettmp")
+                        {
+                            var nameExpr = exprs[0] as PrimitiveExpression;
+
+                            if (nameExpr == null)
+                            {
+                                throw new EmitterException(exprs[0], "Primitive expression is required");
+                            }
+
+                            if (!Emitter.NamedTempVariables.ContainsKey(nameExpr.LiteralValue))
+                            {
+                                throw new EmitterException(exprs[0], "Primitive expression is required");
+                            }
+
+                            var tmpVarName = Emitter.NamedTempVariables[nameExpr.LiteralValue];
+                            Write(tmpVarName);
+                        }
+                        else if (modifier == "body")
+                        {
+                            var lambdaExpr = exprs[0] as LambdaExpression;
+
+                            if (lambdaExpr == null)
+                            {
+                                throw new EmitterException(exprs[0], "Lambda expression is required");
+                            }
+
+                            var writer = this.SaveWriter();
+                            this.NewWriter();
+
+                            lambdaExpr.Body.AcceptVisitor(this.Emitter);
+
+                            var s = this.Emitter.Output.ToString();
+                            this.RestoreWriter(writer);
+                            this.Write(this.WriteIndentToString(s));
+                        }
                         else if (exprs.Count > 1 || paramsName == key)
                         {
                             if (needExpand)

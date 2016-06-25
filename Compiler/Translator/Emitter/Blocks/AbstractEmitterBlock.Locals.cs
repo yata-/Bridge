@@ -41,6 +41,7 @@ namespace Bridge.Translator
 
         public virtual void ResetLocals()
         {
+            this.Emitter.NamedTempVariables = new Dictionary<string, string>();
             this.Emitter.TempVariables = new Dictionary<string, bool>();
             this.Emitter.Locals = new Dictionary<string, AstType>();
             this.Emitter.IteratorCount = 0;
@@ -266,6 +267,11 @@ namespace Bridge.Translator
 
         protected virtual string GetTempVarName()
         {
+            if (this.Emitter.TempVariables == null)
+            {
+                this.ResetLocals();
+            }
+
             foreach (var pair in this.Emitter.TempVariables)
             {
                 if (!pair.Value)

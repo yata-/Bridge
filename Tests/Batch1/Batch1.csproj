@@ -309,6 +309,15 @@
     <Compile Include="Convert\ConvertToUInt32Tests.cs" />
     <Compile Include="Convert\ConvertToUInt64Tests.cs" />
     <Compile Include="CheckedUncheckedTests.cs" />
+    <Compile Include="CSharp6\TestConditionalAccess.cs" />
+    <Compile Include="CSharp6\TestAutoProps.cs" />
+    <Compile Include="CSharp6\TestExpressionBodyFunction.cs" />
+    <Compile Include="CSharp6\TestInterpolatedStrings.cs" />
+    <Compile Include="CSharp6\TestIndexInitializer.cs" />
+    <Compile Include="CSharp6\TestExceptionFilter.cs" />
+    <Compile Include="CSharp6\TestNameof.cs" />
+    <Compile Include="CSharp6\TestUsingStatic.cs" />
+    <Compile Include="CSharp6\TestAwaitInCatchFinally.cs" />
     <Compile Include="Diagnostics\Contracts\ContractTests.cs" />
     <Compile Include="Diagnostics\StopwatchTests.cs" />
     <Compile Include="Exceptions\AggregateExceptionTests.cs" />

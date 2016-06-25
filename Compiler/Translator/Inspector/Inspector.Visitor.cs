@@ -225,11 +225,26 @@ namespace Bridge.Translator
 
                 this.CurrentType.FieldsDeclarations.Add(item.Name, fieldDeclaration);
 
+                string prefix = SharpSixRewriter.AutoInitFieldPrefix;
+                bool autoInitializer = item.Name.StartsWith(prefix);
+                string name = autoInitializer ? item.Name.Substring(prefix.Length) : item.Name;
+
                 if (isStatic)
                 {
-                    this.CurrentType.StaticConfig.Fields.Add(new TypeConfigItem
+                    var collection = this.CurrentType.StaticConfig.Fields;
+                    if (autoInitializer)
                     {
-                        Name = item.Name,
+                        collection = this.CurrentType.StaticConfig.AutoPropertyInitializers;
+                        var prop = this.CurrentType.StaticConfig.Properties.FirstOrDefault(p => p.Name == name);
+                        if (prop != null)
+                        {
+                            prop.Initializer = initializer;
+                        }
+                    }
+
+                    collection.Add(new TypeConfigItem
+                    {
+                        Name = name,
                         Entity = fieldDeclaration,
                         IsConst = fieldDeclaration.HasModifier(Modifiers.Const),
                         VarInitializer = item,
@@ -238,9 +253,20 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    this.CurrentType.InstanceConfig.Fields.Add(new TypeConfigItem
+                    var collection = this.CurrentType.InstanceConfig.Fields;
+                    if (autoInitializer)
                     {
-                        Name = item.Name,
+                        collection = this.CurrentType.InstanceConfig.AutoPropertyInitializers;
+                        var prop = this.CurrentType.InstanceConfig.Properties.FirstOrDefault(p => p.Name == name);
+                        if (prop != null)
+                        {
+                            prop.Initializer = initializer;
+                        }
+                    }
+
+                    collection.Add(new TypeConfigItem
+                    {
+                        Name = name,
                         Entity = fieldDeclaration,
                         VarInitializer = item,
                         Initializer = initializer
@@ -464,6 +490,13 @@ namespace Bridge.Translator
                 else
                 {
                     autoPropertyToField = AssemblyInfo.AutoPropertyToField;
+                }
+
+                var autoInitializer = info.AutoPropertyInitializers.FirstOrDefault(f => f.Name == key);
+
+                if(autoInitializer != null)
+                {
+                    initializer = autoInitializer.Initializer;
                 }
 
                 if (!autoPropertyToField)

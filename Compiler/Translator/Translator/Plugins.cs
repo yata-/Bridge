@@ -76,7 +76,7 @@ namespace Bridge.Translator
                     }
                 }
 
-                this.Logger.Trace("Did not resolve assembly " + args.Name + " in " + args.RequestingAssembly.FullName + " resources");
+                this.Logger.Trace("Did not resolve assembly " + args.Name + " in " + (args.RequestingAssembly != null ? args.RequestingAssembly.FullName : "[null]") + " resources");
 
                 return null;
             }

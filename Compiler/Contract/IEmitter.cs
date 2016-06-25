@@ -349,6 +349,12 @@ namespace Bridge.Contract
             set;
         }
 
+        Dictionary<string, string> NamedTempVariables
+        {
+            get;
+            set;
+        }
+
         Dictionary<string, bool> ParentTempVariables
         {
             get;

@@ -2644,7 +2644,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestSet1FailureHelper', {
         statics: {
             testConstructor1Failure: function () {
-                new Bridge.ClientTest.BasicCSharp.ClassA("constructor$1", Bridge.cast(null, Bridge.ClientTest.BasicCSharp.ClassA.Aux1));
+                new Bridge.ClientTest.BasicCSharp.ClassA("constructor$1", null);
             },
             testConstructor2Failure: function () {
                 var t = new Bridge.ClientTest.BasicCSharp.ClassA("constructor$2", System.Array.init(2, null));
@@ -4913,13 +4913,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                         continue;
                                     }
                                     case 1: {
-                                        $task3 = System.Threading.Tasks.Task.delay(1);
+                                        $task1 = System.Threading.Tasks.Task.delay(1);
                                         $step = 2;
-                                        $task3.continueWith($asyncBody, true);
+                                        $task1.continueWith($asyncBody, true);
                                         return;
                                     }
                                     case 2: {
-                                        $task3.getAwaitedResult();
+                                        $task1.getAwaitedResult();
                                         Bridge.Test.Assert.false(parent.isDisposed);
                                         $step = 3;
                                         continue;
@@ -4993,13 +4993,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                         continue;
                                     }
                                     case 10: {
-                                        $task1 = System.Threading.Tasks.Task.delay(1);
+                                        $task3 = System.Threading.Tasks.Task.delay(1);
                                         $step = 11;
-                                        $task1.continueWith($asyncBody, true);
+                                        $task3.continueWith($asyncBody, true);
                                         return;
                                     }
                                     case 11: {
-                                        $task1.getAwaitedResult();
+                                        $task3.getAwaitedResult();
                                         Bridge.Test.Assert.false(c11.isDisposed);
                                         Bridge.Test.Assert.false(c2.isDisposed);
                                         $step = 12;
@@ -5146,6 +5146,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                     }
                                     case 6: {
                                         Bridge.Test.Assert.areEqual("Bridge1170 test", e.getMessage());
+                                        $async_e = null;
                                         $step = 7;
                                         continue;
                                     }
@@ -5452,24 +5453,24 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                             switch ($step) {
                                 case 0: {
                                     done = Bridge.Test.Assert.async();
-                                    $task2 = Bridge.ClientTest.BridgeIssues.Bridge1189.fooLong();
+                                    $task1 = Bridge.ClientTest.BridgeIssues.Bridge1189.fooLong();
                                     $step = 1;
-                                    $task2.continueWith($asyncBody, true);
-                                    return;
-                                }
-                                case 1: {
-                                    $taskResult2 = $task2.getAwaitedResult();
-                                    resultLong = $taskResult2;
-                                    Bridge.Test.Assert.true$1(System.Int64(-5).equals(resultLong), "Task<long>");
-                                    
-                                    $task1 = Bridge.ClientTest.BridgeIssues.Bridge1189.fooDecimal();
-                                    $step = 2;
                                     $task1.continueWith($asyncBody, true);
                                     return;
                                 }
-                                case 2: {
+                                case 1: {
                                     $taskResult1 = $task1.getAwaitedResult();
-                                    resultDecimal = $taskResult1;
+                                    resultLong = $taskResult1;
+                                    Bridge.Test.Assert.true$1(System.Int64(-5).equals(resultLong), "Task<long>");
+                                    
+                                    $task2 = Bridge.ClientTest.BridgeIssues.Bridge1189.fooDecimal();
+                                    $step = 2;
+                                    $task2.continueWith($asyncBody, true);
+                                    return;
+                                }
+                                case 2: {
+                                    $taskResult2 = $task2.getAwaitedResult();
+                                    resultDecimal = $taskResult2;
                                     Bridge.Test.Assert.true$1(System.Decimal(-7).equalsT(resultDecimal), "Task<decimal>");
                                     
                                     done();
@@ -5785,10 +5786,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var r2 = Bridge.ClientTest.BridgeIssues.Bridge1217.getNavigatorToTest1(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator, "", "", $_.Bridge.ClientTest.BridgeIssues.Bridge1217.f1);
                 Bridge.Test.Assert.areEqual(Bridge.getTypeName(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator), r2);
     
-                var r3 = Bridge.ClientTest.BridgeIssues.Bridge1217.getNavigatorToTest2(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator, "", "", Bridge.cast(null, Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator));
+                var r3 = Bridge.ClientTest.BridgeIssues.Bridge1217.getNavigatorToTest2(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator, "", "", null);
                 Bridge.Test.Assert.areEqual(Bridge.getTypeName(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator), r3);
     
-                var r4 = Bridge.ClientTest.BridgeIssues.Bridge1217.getNavigatorToTest2(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator, "", "", Bridge.cast(null, Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator));
+                var r4 = Bridge.ClientTest.BridgeIssues.Bridge1217.getNavigatorToTest2(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator, "", "", null);
                 Bridge.Test.Assert.areEqual(Bridge.getTypeName(Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator), r4);
             },
             getNavigatorToTest1: function (TNavigator, initialUrl, assert, navigatorGenerator) {
@@ -5804,7 +5805,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.apply($_.Bridge.ClientTest.BridgeIssues.Bridge1217, {
         f1: function () {
-            return Bridge.cast(null, Bridge.ClientTest.BridgeIssues.Bridge1217.DemoNavigator);
+            return null;
         }
     });
     
@@ -9832,14 +9833,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                         result = "";
                                         
                                         i = 0;
-                                        $task3 = Bridge.ClientTest.BridgeIssues.Bridge508.initPage();
+                                        $task1 = Bridge.ClientTest.BridgeIssues.Bridge508.initPage();
                                         $step = 1;
-                                        $task3.continueWith($asyncBody);
+                                        $task1.continueWith($asyncBody);
                                         return;
                                     }
                                     case 1: {
-                                        $taskResult3 = $task3.getAwaitedResult();
-                                        np = $taskResult3;
+                                        $taskResult1 = $task1.getAwaitedResult();
+                                        np = $taskResult1;
                                         $step = 2;
                                         continue;
                                     }
@@ -9870,14 +9871,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                         
                                         Bridge.ClientTest.BridgeIssues.Bridge508.count = 0;
                                         i = 0;
-                                        $task1 = Bridge.ClientTest.BridgeIssues.Bridge508.initPage();
+                                        $task3 = Bridge.ClientTest.BridgeIssues.Bridge508.initPage();
                                         $step = 7;
-                                        $task1.continueWith($asyncBody);
+                                        $task3.continueWith($asyncBody);
                                         return;
                                     }
                                     case 7: {
-                                        $taskResult1 = $task1.getAwaitedResult();
-                                        np1 = $taskResult1;
+                                        $taskResult3 = $task3.getAwaitedResult();
+                                        np1 = $taskResult3;
                                         $step = 8;
                                         continue;
                                     }
@@ -14106,6 +14107,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                     case 3: {
                                         $tcs.setResult(new System.Exception("Fail: " + exception.getMessage()));
                                         return;
+                                        $async_e = null;
+                                        $step = 4;
+                                        continue;
                                     }
                                     case 4: {
                                         $tcs.setResult(null);
@@ -14148,24 +14152,24 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                 case 0: {
                                     done = Bridge.Test.Assert.async();
                                     
-                                    $task2 = Bridge.ClientTest.BridgeIssues.Bridge830.testMethod("", false);
+                                    $task1 = Bridge.ClientTest.BridgeIssues.Bridge830.testMethod("", false);
                                     $step = 1;
-                                    $task2.continueWith($asyncBody, true);
-                                    return;
-                                }
-                                case 1: {
-                                    $taskResult2 = $task2.getAwaitedResult();
-                                    res = $taskResult2;
-                                    Bridge.Test.Assert.areEqual("Success", res.getMessage());
-                                    
-                                    $task1 = Bridge.ClientTest.BridgeIssues.Bridge830.testMethod("", true);
-                                    $step = 2;
                                     $task1.continueWith($asyncBody, true);
                                     return;
                                 }
-                                case 2: {
+                                case 1: {
                                     $taskResult1 = $task1.getAwaitedResult();
                                     res = $taskResult1;
+                                    Bridge.Test.Assert.areEqual("Success", res.getMessage());
+                                    
+                                    $task2 = Bridge.ClientTest.BridgeIssues.Bridge830.testMethod("", true);
+                                    $step = 2;
+                                    $task2.continueWith($asyncBody, true);
+                                    return;
+                                }
+                                case 2: {
+                                    $taskResult2 = $task2.getAwaitedResult();
+                                    res = $taskResult2;
                                     Bridge.Test.Assert.areEqual("Fail: test", res.getMessage());
                                     
                                     done();
@@ -14676,13 +14680,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                     
                                     myvar = [new $_.$AnonymousType$15(1), new $_.$AnonymousType$15(2)];
                                     sum = 0;
-                                    $task2 = Bridge.ClientTest.BridgeIssues.Bridge906.myfunc();
+                                    $task1 = Bridge.ClientTest.BridgeIssues.Bridge906.myfunc();
                                     $step = 1;
-                                    $task2.continueWith($asyncBody, true);
+                                    $task1.continueWith($asyncBody, true);
                                     return;
                                 }
                                 case 1: {
-                                    $task2.getAwaitedResult();
+                                    $task1.getAwaitedResult();
                                     
                                     $t = Bridge.getEnumerator(myvar);
                                     while ($t.moveNext()) {
@@ -14692,13 +14696,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                         }
                                     }
                                     
-                                    $task1 = Bridge.ClientTest.BridgeIssues.Bridge906.myfunc();
+                                    $task2 = Bridge.ClientTest.BridgeIssues.Bridge906.myfunc();
                                     $step = 2;
-                                    $task1.continueWith($asyncBody, true);
+                                    $task2.continueWith($asyncBody, true);
                                     return;
                                 }
                                 case 2: {
-                                    $task1.getAwaitedResult();
+                                    $task2.getAwaitedResult();
                                     
                                     Bridge.Test.Assert.areEqual(3, sum);
                                     
@@ -14733,13 +14737,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                     
                                     myvar = [new $_.$AnonymousType$15(-3), new $_.$AnonymousType$15(2)];
                                     sum = 0;
-                                    $task2 = Bridge.ClientTest.BridgeIssues.Bridge906.myfunc();
+                                    $task1 = Bridge.ClientTest.BridgeIssues.Bridge906.myfunc();
                                     $step = 1;
-                                    $task2.continueWith($asyncBody, true);
+                                    $task1.continueWith($asyncBody, true);
                                     return;
                                 }
                                 case 1: {
-                                    $task2.getAwaitedResult();
+                                    $task1.getAwaitedResult();
                                     
                                     $t = Bridge.getEnumerator(myvar);
                                     while ($t.moveNext()) {
@@ -14752,13 +14756,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                         }
                                     }
                                     
-                                    $task1 = Bridge.ClientTest.BridgeIssues.Bridge906.myfunc();
+                                    $task2 = Bridge.ClientTest.BridgeIssues.Bridge906.myfunc();
                                     $step = 2;
-                                    $task1.continueWith($asyncBody, true);
+                                    $task2.continueWith($asyncBody, true);
                                     return;
                                 }
                                 case 2: {
-                                    $task1.getAwaitedResult();
+                                    $task2.getAwaitedResult();
                                     
                                     Bridge.Test.Assert.areEqual(5, sum);
                                     
@@ -14807,14 +14811,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         statics: {
             testStringSpitWithNullParameterFixed: function () {
                 var s = "Hello World!";
-                var res = System.String.split(s, Bridge.cast(null, Array), null, 1);
+                var res = System.String.split(s, null, null, 1);
     
                 Bridge.Test.Assert.areEqual$1(2, res.length, "Bridge907 instance Length");
                 Bridge.Test.Assert.areEqual$1("Hello", res[0], "Bridge907 instance [0]");
                 Bridge.Test.Assert.areEqual$1("World!", res[1], "Bridge907 instance [1]");
     
                 var s1 = "Hi Man!";
-                var res1 = System.String.split(s1, Bridge.cast(null, Array), null, 1);
+                var res1 = System.String.split(s1, null, null, 1);
     
                 Bridge.Test.Assert.areEqual$1(2, res1.length, "Bridge907 static Length");
                 Bridge.Test.Assert.areEqual$1("Hi", res1[0], "Bridge907 static [0]");
@@ -15128,6 +15132,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                     }
                                     case 3: {
                                         Bridge.Test.Assert.areEqual("test", e.getMessage());
+                                        $async_e = null;
                                         $step = 4;
                                         continue;
                                     }
@@ -15190,6 +15195,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                             $e1 = System.Exception.create($e1);
                                         }
                                         throw $async_e;
+                                        $async_e = null;
                                         $step = 4;
                                         continue;
                                     }
@@ -15279,13 +15285,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                 switch ($step) {
                                     case 0: {
                                         res = true;
-                                        $task3 = System.Threading.Tasks.Task.delay(1);
+                                        $task1 = System.Threading.Tasks.Task.delay(1);
                                         $step = 1;
-                                        $task3.continueWith($asyncBody);
+                                        $task1.continueWith($asyncBody);
                                         return;
                                     }
                                     case 1: {
-                                        $task3.getAwaitedResult();
+                                        $task1.getAwaitedResult();
                                         
                                         if (res) {
                                             $step = 2;
@@ -15307,13 +15313,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                     }
                                     case 4: {
                                         
-                                        $task1 = System.Threading.Tasks.Task.delay(1);
+                                        $task3 = System.Threading.Tasks.Task.delay(1);
                                         $step = 5;
-                                        $task1.continueWith($asyncBody);
+                                        $task3.continueWith($asyncBody);
                                         return;
                                     }
                                     case 5: {
-                                        $task1.getAwaitedResult();
+                                        $task3.getAwaitedResult();
                                         $tcs.setResult(null);
                                         return;
                                     }
@@ -15365,6 +15371,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                     }
                                     case 3: {
                                         Bridge.Test.Assert.areEqual("test", e.getMessage());
+                                        $async_e = null;
                                         $step = 4;
                                         continue;
                                     }
@@ -20836,6 +20843,572 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.CSharp6.TestAutoProps', {
+        statics: {
+            testBasic: function () {
+                var c = new Bridge.ClientTest.CSharp6.TestAutoProps.Customer("A", "B");
+    
+                Bridge.Test.Assert.areEqual("A B", c.getName());
+                Bridge.Test.Assert.areEqual("Jane", c.getFirst());
+                Bridge.Test.Assert.areEqual("Doe", c.getLast());
+                Bridge.Test.Assert.areEqual("test1", c.getProp1());
+                Bridge.Test.Assert.areEqual("test12", c.getProp2());
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.CSharp6.TestAutoProps.Customer', {
+        statics: {
+            staticField: "test1"
+        },
+        config: {
+            properties: {
+                First: "Jane",
+                Last: "Doe",
+                Name: null,
+                Prop1: null,
+                Prop2: null
+            },
+            init: function () {
+                Bridge.property(this, "Prop1", Bridge.ClientTest.CSharp6.TestAutoProps.Customer.staticField);
+                Bridge.property(this, "Prop2", Bridge.ClientTest.CSharp6.TestAutoProps.Customer.staticField + "2");
+            }
+        },
+        constructor: function (first, last) {
+            this.setName(first + " " + last);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.CSharp6.TestAwaitInCatchFinally', {
+        statics: {
+            testBasic: function () {
+                var $step = 0,
+                    $task1, 
+                    $task2, 
+                    $jumpFromFinally, 
+                    $returnValue, 
+                    done, 
+                    sb, 
+                    $async_e, 
+                    $async_e1, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        try {
+                            for (;;) {
+                                $step = System.Array.min([0,1,2,3,4,5,6], $step);
+                                switch ($step) {
+                                    case 0: {
+                                        done = Bridge.Test.Assert.async();
+                                        sb = new System.Text.StringBuilder();
+                                        
+                                        sb.append("1");
+                                        $step = 1;
+                                        continue;
+                                    }
+                                    case 1: {
+                                        sb.append("2");
+                                        throw new System.Exception();
+                                        $step = 4;
+                                        continue;
+                                    }
+                                    case 2: {
+                                        sb.append("3");
+                                        $task1 = System.Threading.Tasks.Task.delay(1);
+                                        $step = 3;
+                                        $task1.continueWith($asyncBody, true);
+                                        return;
+                                    }
+                                    case 3: {
+                                        $task1.getAwaitedResult();
+                                        sb.append("4");
+                                        $async_e = null;
+                                        $step = 4;
+                                        continue;
+                                    }
+                                    case 4: {
+                                        sb.append("5");
+                                        $task2 = System.Threading.Tasks.Task.delay(1);
+                                        $step = 5;
+                                        $task2.continueWith($asyncBody, true);
+                                        return;
+                                    }
+                                    case 5: {
+                                        $task2.getAwaitedResult();
+                                        sb.append("6");
+                                        
+                                        if ($jumpFromFinally > -1) {
+                                            $step = $jumpFromFinally;
+                                            $jumpFromFinally = null;
+                                        } else if ($async_e) {
+                                            throw $async_e;
+                                            return;
+                                        } else if (Bridge.isDefined($returnValue)) {
+                                            $tcs.setResult($returnValue);
+                                            return;
+                                        }
+                                        $step = 6;
+                                        continue;
+                                    }
+                                    case 6: {
+                                        sb.append("7");
+                                        
+                                        Bridge.Test.Assert.areEqual("1234567", sb.toString());
+                                        done();
+                                        return;
+                                    }
+                                    default: {
+                                        return;
+                                    }
+                                }
+                            }
+                        } catch($async_e1) {
+                            $async_e = System.Exception.create($async_e1);
+                            if ( $step >= 1 && $step <= 1 ){
+                                $step = 2;
+                                $asyncBody();
+                                return;
+                            }
+                            if ($step >= 1 && $step <= 3){
+    
+                                $step = 4;
+                                $asyncBody();
+                                return;
+                            }
+                            throw $async_e;
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.CSharp6.TestConditionAccess', {
+        statics: {
+            testBasic: function () {
+                var $t, $t1, $t2, $t3, $t4, $t5, $t6, $t7, $t8, $t9, $t10, $t11, $t12, $t13, $t14, $t15, $t16, $t17, $t18, $t19, $t20, $t21, $t22, $t23, $t24, $t25, $t26, $t27, $t28, $t29, $t30, $t31, $t32, $t33, $t34, $t35, $t36, $t37, $t38, $t39, $t40, $t41, $t42, $t43, $t44, $t45, $t46, $t47, $t48, $t49, $t50, $t51, $t52, $t53, $t54, $t55, $t56, $t57, $t58, $t59, $t60;
+                var customers1 = null;
+                var customers2 = [new Bridge.ClientTest.CSharp6.TestConditionAccess.Customer(null), new Bridge.ClientTest.CSharp6.TestConditionAccess.Customer(["1", "2"]), null];
+    
+                Bridge.Test.Assert.null(customers1 != null && ($t = customers1[0].method1(customers1 != null ? System.Linq.Enumerable.from(customers1[0].getOrders()).count() : null)) != null ? $t.length : null);
+                Bridge.Test.Assert.null(($t1 = customers2[2]) != null && ($t2 = $t1.method1(customers2 != null ? System.Linq.Enumerable.from(customers2[0].getOrders()).count() : null)) != null ? $t2.length : null);
+                Bridge.Test.Assert.areEqual(1, customers2 != null && ($t3 = customers2[1].method1(customers2 != null ? System.Linq.Enumerable.from(customers2[1].getOrders()).count() : null)) != null ? $t3.length : null);
+    
+                Bridge.Test.Assert.null(($t4 = Bridge.ClientTest.CSharp6.TestConditionAccess.getCustomers(customers1)) != null && ($t5 = $t4[0].method1(customers1 != null ? System.Linq.Enumerable.from(customers1[0].getOrders()).count() : null)) != null ? $t5.length : null);
+                Bridge.Test.Assert.null(($t6 = Bridge.ClientTest.CSharp6.TestConditionAccess.getCustomers(customers2)[2]) != null && ($t7 = $t6.method1(customers2 != null ? System.Linq.Enumerable.from(customers2[0].getOrders()).count() : null)) != null ? $t7.length : null);
+                Bridge.Test.Assert.areEqual(1, ($t8 = Bridge.ClientTest.CSharp6.TestConditionAccess.getCustomers(customers2)) != null && ($t9 = $t8[1].method1(($t10 = Bridge.ClientTest.CSharp6.TestConditionAccess.getCustomers(customers2)) != null ? System.Linq.Enumerable.from($t10[1].getOrders()).count() : null)) != null ? $t9.length : null);
+    
+                Bridge.Test.Assert.null(customers1 != null && ($t11 = customers1[0].getOrders()) != null && ($t12 = $t11.concat.apply($t11, null)) != null ? $t12.length : null);
+                Bridge.Test.Assert.null(($t13 = customers2[2]) != null && ($t14 = $t13.getOrders()) != null && ($t15 = $t14.concat.apply($t14, null)) != null ? $t15.length : null);
+                Bridge.Test.Assert.null(($t16 = customers2[0]) != null && ($t17 = $t16.getOrders()) != null && ($t18 = $t17.concat.apply($t17, null)) != null ? $t18.length : null);
+                Bridge.Test.Assert.areEqual(2, ($t19 = customers2[1]) != null && ($t20 = $t19.getOrders()) != null && ($t21 = $t20.concat.apply($t20, null)) != null ? $t21.length : null);
+    
+                Bridge.Test.Assert.null(customers1 != null && ($t22 = customers1[0].getOrders()) != null ? $t22.length : null);
+                Bridge.Test.Assert.null(($t23 = customers2[2]) != null && ($t24 = $t23.getOrders()) != null ? $t24.length : null);
+                Bridge.Test.Assert.null(($t25 = customers2[0]) != null && ($t26 = $t25.getOrders()) != null ? $t26.length : null);
+                Bridge.Test.Assert.areEqual(2, customers2 != null && customers2[1] != null && ($t27 = customers2[1].getOrders()) != null ? $t27.length : null);
+    
+                Bridge.Test.Assert.null(customers1 != null && ($t28 = customers1[0].getOrders()) != null ? System.Linq.Enumerable.from($t28).count() : null);
+                Bridge.Test.Assert.null(($t29 = customers2[2]) != null && ($t30 = $t29.getOrders()) != null ? System.Linq.Enumerable.from($t30).count() : null);
+                Bridge.Test.Assert.null(($t31 = customers2[0].getOrders()) != null ? System.Linq.Enumerable.from($t31).count() : null);
+                Bridge.Test.Assert.areEqual(2, customers2 != null && ($t32 = customers2[1].getOrders()) != null ? System.Linq.Enumerable.from($t32).count() : null);
+    
+                Bridge.Test.Assert.null(customers1 != null && ($t33 = customers1[0].getOrders()) != null && ($t34 = $t33.concat.apply($t33, null).concat.apply($t33.concat.apply($t33, null), null)) != null ? $t34.length : null);
+                Bridge.Test.Assert.null(($t35 = customers2[2]) != null && ($t36 = $t35.getOrders()) != null && ($t37 = $t36.concat.apply($t36, null).concat.apply($t36.concat.apply($t36, null), null)) != null ? $t37.length : null);
+                Bridge.Test.Assert.null(customers2 != null && ($t38 = customers2[0].getOrders()) != null && ($t39 = $t38.concat.apply($t38, null).concat.apply($t38.concat.apply($t38, null), null)) != null ? $t39.length : null);
+                Bridge.Test.Assert.areEqual(2, customers2 != null && ($t40 = customers2[1].getOrders()) != null && ($t41 = $t40.concat.apply($t40, null).concat.apply($t40.concat.apply($t40, null), null)) != null ? $t41.length : null);
+    
+                Bridge.Test.Assert.null(customers1 != null ? customers1[0].method1("getStrings") : null);
+                Bridge.Test.Assert.null(($t42 = customers2[2]) != null ? $t42.method1("getStrings") : null);
+                Bridge.Test.Assert.areEqual("getStrings", customers2 != null ? customers2[1].method1("getStrings") : null);
+    
+                Bridge.Test.Assert.null(($t43 = Bridge.ClientTest.CSharp6.TestConditionAccess.getCustomers(customers1)) != null && ($t44 = System.Linq.Enumerable.from($t43).select($_.Bridge.ClientTest.CSharp6.TestConditionAccess.f1)) != null && ($t45 = $t44.select($_.Bridge.ClientTest.CSharp6.TestConditionAccess.f2)) != null ? $t45.count() : null);
+                Bridge.Test.Assert.areEqual(3, ($t46 = Bridge.ClientTest.CSharp6.TestConditionAccess.getCustomers(customers2)) != null && ($t47 = System.Linq.Enumerable.from($t46).select($_.Bridge.ClientTest.CSharp6.TestConditionAccess.f1)) != null && ($t48 = $t47.select($_.Bridge.ClientTest.CSharp6.TestConditionAccess.f2)) != null ? $t48.count() : null);
+    
+                Bridge.Test.Assert.null(($t49 = Bridge.ClientTest.CSharp6.TestConditionAccess.getCustomers(customers1)) != null && $t49[0].fields != null ? $t49[0].fields.length : null);
+                Bridge.Test.Assert.null(($t50 = Bridge.ClientTest.CSharp6.TestConditionAccess.getCustomers(customers1)) != null && $t50[0] != null ? System.Linq.Enumerable.from($t50[0].getOrders()).count() : null);
+                Bridge.Test.Assert.null(($t51 = Bridge.ClientTest.CSharp6.TestConditionAccess.getCustomers(customers1)) != null && $t51[0] != null && ($t52 = $t51[0].getOrders()) != null ? System.Linq.Enumerable.from($t52).count() : null);
+                Bridge.Test.Assert.null(customers1 != null ? System.Linq.Enumerable.from(customers1[0].getOrders()).count() : null);
+                Bridge.Test.Assert.null(customers1 != null && customers1[0] != null && ($t53 = customers1[0].getOrders()) != null ? System.Linq.Enumerable.from($t53).count() : null);
+                Bridge.Test.Assert.null(customers1 != null && customers1[0] != null && customers1[0].fields != null ? customers1[0].fields.length : null);
+                Bridge.Test.Assert.null(($t54 = Bridge.ClientTest.CSharp6.TestConditionAccess.getCustomers(customers1)) != null && ($t55 = $t54[0].getOrders()) != null ? System.Linq.Enumerable.from($t55).count() : null);
+    
+                Bridge.Test.Assert.null(customers1 != null && customers1[0] != null && customers1[0].fields != null ? customers1[0].fields.length : null);
+                Bridge.Test.Assert.null(customers1 != null && customers1[0] != null && ($t56 = customers1[0].getOrders()) != null ? System.Linq.Enumerable.from($t56).count() : null);
+                customers1 != null ? customers1[0].method2() : null;
+                customers1 != null && customers1[0] != null ? customers1[0].method2() : null;
+    
+                var strings = System.Array.init(1, null);
+                Bridge.Test.Assert.null(($t57 = Bridge.ClientTest.CSharp6.TestConditionAccess.getStrings(null)) != null ? $t57.length : null);
+                Bridge.Test.Assert.areEqual(1, strings != null ? strings.length : ($t58 = null, $t58 != null ? $t58 : 0));
+                Bridge.Test.Assert.null(strings != null ? strings[0] : null);
+    
+                var action1 = $_.Bridge.ClientTest.CSharp6.TestConditionAccess.f3;
+                var action2 = null;
+                Bridge.Test.Assert.areEqual("test", !Bridge.staticEquals(action1, null) ? action1() : null);
+                Bridge.Test.Assert.null(!Bridge.staticEquals(action2, null) ? action2() : null);
+    
+                var o1 = "test";
+                var o2 = null;
+                Bridge.Test.Assert.areEqual(4, ($t59 = (Bridge.as(o1, String))) != null ? $t59.length : null);
+                Bridge.Test.Assert.null(($t60 = (Bridge.as(o2, String))) != null ? $t60.length : null);
+            },
+            getStrings: function (strings) {
+                return strings;
+            },
+            getCustomers: function (customers) {
+                return customers;
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.CSharp6.TestConditionAccess", $_);
+    
+    Bridge.apply($_.Bridge.ClientTest.CSharp6.TestConditionAccess, {
+        f1: function (c) {
+            return c;
+        },
+        f2: function (c2) {
+            return c2;
+        },
+        f3: function () {
+            return "test";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.CSharp6.TestConditionAccess.Customer', {
+        fields: null,
+        config: {
+            properties: {
+                Orders: null
+            }
+        },
+        constructor: function (values) {
+            this.fields = values;
+            this.setOrders(values);
+        },
+        method1: function (s) {
+            return s.toString();
+        },
+        method2: function () {
+    
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.CSharp6.TestExceptionFilter', {
+        statics: {
+            testBasic: function () {
+                var isCaught = false;
+                try {
+                    try {
+                        throw new Bridge.ClientTest.CSharp6.TestExceptionFilter.MyException();
+                    }
+                    catch ($e1) {
+                        $e1 = System.Exception.create($e1);
+                        if (Bridge.is($e1, Bridge.ClientTest.CSharp6.TestExceptionFilter.MyException)) {
+                            if (Bridge.ClientTest.CSharp6.TestExceptionFilter.log(null, false)) {
+                                Bridge.Test.Assert.fail$1("Flow should not be in catch block");
+                            }
+                            else  {
+                                throw $e1;
+                            }
+                        }
+                        else {
+                            throw $e1;
+                        }
+                    }
+                }
+                catch ($e2) {
+                    $e2 = System.Exception.create($e2);
+                    if (Bridge.is($e2, Bridge.ClientTest.CSharp6.TestExceptionFilter.MyException)) {
+                        isCaught = true;
+                    }
+                    else {
+                        throw $e2;
+                    }
+                }
+                Bridge.Test.Assert.true(isCaught);
+    
+    
+                isCaught = false;
+                try {
+                    throw new Bridge.ClientTest.CSharp6.TestExceptionFilter.MyException();
+                }
+                catch ($e3) {
+                    $e3 = System.Exception.create($e3);
+                    var e;
+                    if (Bridge.is($e3, Bridge.ClientTest.CSharp6.TestExceptionFilter.MyException)) {
+                        e = $e3;
+                        if (Bridge.ClientTest.CSharp6.TestExceptionFilter.log(e, true)) {
+                            isCaught = true;
+                        }
+                        else  {
+                            throw $e3;
+                        }
+                    }
+                    else {
+                        throw $e3;
+                    }
+                }
+                Bridge.Test.Assert.true(isCaught);
+            },
+            log: function (e, result) {
+                return result;
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.CSharp6.TestExceptionFilter.MyException', {
+        inherits: [System.Exception]
+    });
+    
+    Bridge.define('Bridge.ClientTest.CSharp6.TestExpressionBodyFunction', {
+        statics: {
+            testBasic: function () {
+                var point = new Bridge.ClientTest.CSharp6.TestExpressionBodyFunction.Point(1, 2);
+                point = point.move(3, 4);
+                Bridge.Test.Assert.areEqual(4, point.v1);
+                Bridge.Test.Assert.areEqual(6, point.v2);
+    
+                var person = new Bridge.ClientTest.CSharp6.TestExpressionBodyFunction.Person();
+                var s = Bridge.ClientTest.CSharp6.TestExpressionBodyFunction.Person.op_Implicit(person);
+                Bridge.Test.Assert.areEqual("Jane Doe", s);
+                Bridge.Test.Assert.areEqual("Jane Doe", person.getName());
+                Bridge.Test.Assert.null(person.getItem(0));
+                Bridge.Test.Assert.notNull(person.getItem(1));
+    
+                var complex1 = new Bridge.ClientTest.CSharp6.TestExpressionBodyFunction.Complex(1);
+                var complex2 = new Bridge.ClientTest.CSharp6.TestExpressionBodyFunction.Complex(2);
+    
+                Bridge.Test.Assert.areEqual(2, (Bridge.ClientTest.CSharp6.TestExpressionBodyFunction.Complex.op_Addition(complex1, complex2)).v);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.CSharp6.TestExpressionBodyFunction.Complex', {
+        statics: {
+            op_Addition: function (a, b) {
+                return a.add(b);
+            }
+        },
+        v: 0,
+        constructor: function (v) {
+            this.v = v;
+        },
+        add: function (b) {
+            return b;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.CSharp6.TestExpressionBodyFunction.Person', {
+        statics: {
+            op_Implicit: function (p) {
+                return p.getFirst() + " " + p.getLast();
+            }
+        },
+        config: {
+            properties: {
+                First: "Jane",
+                Last: "Doe"
+            }
+        },
+        getName: function () {
+            return this.getFirst() + " " + this.getLast();
+        },
+        getItem: function (id) {
+            return id > 0 ? new Bridge.ClientTest.CSharp6.TestExpressionBodyFunction.Person() : null;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.CSharp6.TestExpressionBodyFunction.Point', {
+        v1: 0,
+        v2: 0,
+        constructor: function (v1, v2) {
+            this.v1 = v1;
+            this.v2 = v2;
+        },
+        move: function (dx, dy) {
+            return new Bridge.ClientTest.CSharp6.TestExpressionBodyFunction.Point(((this.v1 + dx) | 0), ((this.v2 + dy) | 0));
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.CSharp6.TestIndexInitializer', {
+        statics: {
+            testBasic: function () {
+                var bitinator = $_.Bridge.ClientTest.CSharp6.TestIndexInitializer.f1(new Bridge.ClientTest.CSharp6.TestIndexInitializer.BitFlipinator());
+    
+                Bridge.Test.Assert.areEqual(239, bitinator.getValue());
+    
+                var numbers = $_.Bridge.ClientTest.CSharp6.TestIndexInitializer.f2(new System.Collections.Generic.Dictionary$2(System.Int32,String)());
+                Bridge.Test.Assert.areEqual("seven", numbers.get(7));
+                Bridge.Test.Assert.areEqual("nine", numbers.get(9));
+                Bridge.Test.Assert.areEqual("thirteen", numbers.get(13));
+    
+                numbers = $_.Bridge.ClientTest.CSharp6.TestIndexInitializer.f2(new System.Collections.Generic.Dictionary$2(System.Int32, String)());
+                Bridge.Test.Assert.areEqual("seven", numbers.get(7));
+                Bridge.Test.Assert.areEqual("nine", numbers.get(9));
+                Bridge.Test.Assert.areEqual("thirteen", numbers.get(13));
+    
+                numbers = $_.Bridge.ClientTest.CSharp6.TestIndexInitializer.f2(new System.Collections.Generic.Dictionary$2(System.Int32,String)());
+                Bridge.Test.Assert.areEqual("seven", numbers.get(7));
+                Bridge.Test.Assert.areEqual("nine", numbers.get(9));
+                Bridge.Test.Assert.areEqual("thirteen", numbers.get(13));
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.CSharp6.TestIndexInitializer", $_);
+    
+    Bridge.apply($_.Bridge.ClientTest.CSharp6.TestIndexInitializer, {
+        f1: function (o) {
+            o.setValue(255);
+            o.setItem(4, 0);
+            return o;
+        },
+        f2: function (o) {
+            o.set(7, "seven");
+            o.set(9, "nine");
+            o.set(13, "thirteen");
+            return o;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.CSharp6.TestIndexInitializer.BitFlipinator', {
+        config: {
+            properties: {
+                Value: 0
+            }
+        },
+        setItem: function (bit, value) {
+            this.set(bit, value);
+        },
+        set: function (bit, value) {
+            if (value < 0 || value > 1) {
+                throw new System.ArgumentOutOfRangeException();
+            }
+            if (bit < 1 || bit > 32) {
+                throw new System.ArgumentOutOfRangeException();
+            }
+    
+            var filterBit = 1 << bit;
+            this.setValue((value === 1) ? this.getValue() | filterBit : this.getValue() & ~filterBit);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.CSharp6.TestInterpolatedStrings', {
+        statics: {
+            config: {
+                properties: {
+                    P: 0
+                }
+            },
+            f1: function () {
+                return 0;
+            },
+            f2: function () {
+                return 0;
+            },
+            f3: function () {
+                return 0;
+            },
+            testBasic: function () {
+                var $t;
+                var p = new Bridge.ClientTest.CSharp6.TestInterpolatedStrings.Person();
+    
+                Bridge.Test.Assert.areEqual("Jane is 10 year{s} old", System.String.format("{0} is {1} year{{s}} old", p.getName(), p.getAge()));
+                Bridge.Test.Assert.areEqual("                Jane is 010 year{s} old", System.String.format("{0,20} is {1:D3} year{{s}} old", p.getName(), p.getAge()));
+    
+                Bridge.Test.Assert.areEqual("Jane is 10 years old", System.String.format("{0} is {1} year{2} old", p.getName(), p.getAge(), (p.getAge() === 1 ? "" : "s")));
+                p.setAge(1);
+                Bridge.Test.Assert.areEqual("Jane is 1 year old", System.String.format("{0} is {1} year{2} old", p.getName(), p.getAge(), (p.getAge() === 1 ? "" : "s")));
+    
+                var i = 0, j = 1, k = 2;
+                Bridge.Test.Assert.areEqual("i = 0, j = 1", System.String.format("i = {0}, j = {1}", i, j));
+                Bridge.Test.Assert.areEqual("{0, 1}", System.String.format("{{{0}, {1}}}", i, j));
+                Bridge.Test.Assert.areEqual("i = 00, j = 1, k =            2", System.String.format("i = {0:00}, j = {1:##}, k = {2,12:#0}", i, j, k));
+                Bridge.Test.Assert.areEqual("0, 0, 0", System.String.format("{0}, {1}, {2}", Bridge.ClientTest.CSharp6.TestInterpolatedStrings.f1(), ($t = Bridge.ClientTest.CSharp6.TestInterpolatedStrings.f2(), Bridge.ClientTest.CSharp6.TestInterpolatedStrings.setP($t), $t), Bridge.ClientTest.CSharp6.TestInterpolatedStrings.f3()));
+    
+                var f1 = System.FormattableStringFactory.create("i = {0}, j = {1}", [i, j]);
+                var f2 = System.FormattableStringFactory.create("i = {0}, j = {1}", [i, j]);
+                Bridge.Test.Assert.areEqual(2, f2.getArgumentCount());
+                Bridge.Test.Assert.areEqual("i = {0}, j = {1}", f2.getFormat());
+                Bridge.Test.Assert.areEqual(0, f2.getArgument(0));
+                Bridge.Test.Assert.areEqual(1, f2.getArgument(1));
+                Bridge.Test.Assert.areEqual(2, f2.getArguments().length);
+                Bridge.Test.Assert.areEqual("i = 0, j = 1", f2.toString());
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.CSharp6.TestInterpolatedStrings.Person', {
+        config: {
+            properties: {
+                Name: "Jane",
+                Age: 10
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.CSharp6.TestNameOf', {
+        statics: {
+            testBasic: function () {
+                var c = new Bridge.ClientTest.CSharp6.TestNameOf.C();
+    
+                Bridge.Test.Assert.areEqual("C", "C");
+                Bridge.Test.Assert.areEqual("method1", "method1");
+                Bridge.Test.Assert.areEqual("method2", "method2");
+                Bridge.Test.Assert.areEqual("method1", "method1");
+                Bridge.Test.Assert.areEqual("method2", "method2");
+                Bridge.Test.Assert.areEqual("x", Bridge.ClientTest.CSharp6.TestNameOf.C.method1("", 0));
+                Bridge.Test.Assert.areEqual("Y", Bridge.ClientTest.CSharp6.TestNameOf.C.method1$1("", ""));
+                Bridge.Test.Assert.areEqual("z", c.method2(0));
+                Bridge.Test.Assert.areEqual("Stuff", "Stuff");
+                Bridge.Test.Assert.areEqual("f", "f");
+                Bridge.Test.Assert.areEqual("T", c.f(System.Int32));
+                Bridge.Test.Assert.areEqual("CSharp6", "CSharp6");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.CSharp6.TestNameOf.C', {
+        statics: {
+            method1: function (x, y) {
+                return "x";
+            },
+            method1$1: function (x, Y) {
+                return "Y";
+            }
+        },
+        method2: function (z) {
+            return "z";
+        },
+        f: function (T) {
+            return "T";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.CSharp6.TestUsingStatic', {
+        statics: {
+            testBasic: function () {
+                Bridge.Test.Assert.areEqual(5, Math.sqrt(25));
+                Bridge.Test.Assert.areEqual(4, 4);
+    
+                var range = System.Linq.Enumerable.range(5, 17);
+                var even = range.where($_.Bridge.ClientTest.CSharp6.TestUsingStatic.f1);
+                Bridge.Test.Assert.areEqual(8, even.count());
+                Bridge.Test.Assert.areEqual(6, even.first());
+                Bridge.Test.Assert.areEqual(20, even.last());
+            }
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.CSharp6.TestUsingStatic", $_);
+    
+    Bridge.apply($_.Bridge.ClientTest.CSharp6.TestUsingStatic, {
+        f1: function (i) {
+            return i % 2 === 0;
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.CultureInfoTests', {
         typePropertiesAreCorrect: function () {
             var culture = System.Globalization.CultureInfo.invariantCulture;
@@ -23345,7 +23918,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 // TEST
                 var grouped = (System.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f3).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f5)).toArray();
     
-                var groupedExpected = [new $_.$AnonymousType$17("A", 1), new $_.$AnonymousType$17("C", 2), new $_.$AnonymousType$17("B", 4), new $_.$AnonymousType$17(Bridge.cast(null, String), 1)];
+                var groupedExpected = [new $_.$AnonymousType$17("A", 1), new $_.$AnonymousType$17("C", 2), new $_.$AnonymousType$17("B", 4), new $_.$AnonymousType$17(null, 1)];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupedExpected, grouped, "Count() within group");
     
@@ -23360,7 +23933,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 // TEST
                 var groupedSum = (System.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f3).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f8)).toArray();
     
-                var groupedSumExpected = [new $_.$AnonymousType$18("A", 300), new $_.$AnonymousType$18("C", 600), new $_.$AnonymousType$18("B", 2000), new $_.$AnonymousType$18(Bridge.cast(null, String), 3000)];
+                var groupedSumExpected = [new $_.$AnonymousType$18("A", 300), new $_.$AnonymousType$18("C", 600), new $_.$AnonymousType$18("B", 2000), new $_.$AnonymousType$18(null, 3000)];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupedSumExpected, groupedSum, "Sum() within group");
     
@@ -23375,14 +23948,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 // TEST
                 var groupedMin = (System.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f3).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f9)).toArray();
     
-                var groupedMinExpected = [new $_.$AnonymousType$19("A", 300), new $_.$AnonymousType$19("C", 100), new $_.$AnonymousType$19("B", 50), new $_.$AnonymousType$19(Bridge.cast(null, String), 3000)];
+                var groupedMinExpected = [new $_.$AnonymousType$19("A", 300), new $_.$AnonymousType$19("C", 100), new $_.$AnonymousType$19("B", 50), new $_.$AnonymousType$19(null, 3000)];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupedMinExpected, groupedMin, "Min() within group");
     
                 // TEST
                 var groupedMinWithLet = (System.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f3).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f10).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f12)).toArray();
     
-                var groupedMinWithLetExpected = [new $_.$AnonymousType$21("A", ["Frank"]), new $_.$AnonymousType$21("C", ["Zeppa"]), new $_.$AnonymousType$21("B", ["Dora"]), new $_.$AnonymousType$21(Bridge.cast(null, String), ["Nemo"])];
+                var groupedMinWithLetExpected = [new $_.$AnonymousType$21("A", ["Frank"]), new $_.$AnonymousType$21("C", ["Zeppa"]), new $_.$AnonymousType$21("B", ["Dora"]), new $_.$AnonymousType$21(null, ["Nemo"])];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupedMinWithLetExpected, groupedMinWithLet, "Min() within group with let");
     
@@ -23397,14 +23970,14 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 // TEST
                 var groupedMax = (System.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f3).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f13)).toArray();
     
-                var groupedMaxExpected = [new $_.$AnonymousType$22("A", 300), new $_.$AnonymousType$22("C", 500), new $_.$AnonymousType$22("B", 700), new $_.$AnonymousType$22(Bridge.cast(null, String), 3000)];
+                var groupedMaxExpected = [new $_.$AnonymousType$22("A", 300), new $_.$AnonymousType$22("C", 500), new $_.$AnonymousType$22("B", 700), new $_.$AnonymousType$22(null, 3000)];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupedMaxExpected, groupedMax, "Max() within group");
     
                 // TEST
                 var groupedMaxWithLet = (System.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f3).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f14).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f15)).toArray();
     
-                var groupedMaxWithLetExpected = [new $_.$AnonymousType$21("A", ["Frank"]), new $_.$AnonymousType$21("C", ["Billy"]), new $_.$AnonymousType$21("B", ["John", "Mary"]), new $_.$AnonymousType$21(Bridge.cast(null, String), ["Nemo"])];
+                var groupedMaxWithLetExpected = [new $_.$AnonymousType$21("A", ["Frank"]), new $_.$AnonymousType$21("C", ["Billy"]), new $_.$AnonymousType$21("B", ["John", "Mary"]), new $_.$AnonymousType$21(null, ["Nemo"])];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupedMaxWithLetExpected, groupedMaxWithLet, "Max() within group with let");
     
@@ -23420,7 +23993,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 // TEST
                 var groupedAverage = (System.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f3).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f16)).toArray();
     
-                var groupedAverageExpected = [{ group: "A", average: 300 }, { group: "C", average: 300 }, { group: "B", average: 500 }, { group: Bridge.cast(null, String), average: 3000 }];
+                var groupedAverageExpected = [{ group: "A", average: 300 }, { group: "C", average: 300 }, { group: "B", average: 500 }, { group: null, average: 3000 }];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupedAverageExpected, groupedAverage, "Average() within group");
     
@@ -24071,7 +24644,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 // TEST
                 var personGroups = (System.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f5).select($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f7)).toArray();
     
-                var personGroupsExpected = [new $_.$AnonymousType$27("A", ["Frank"]), new $_.$AnonymousType$27("C", ["Zeppa", "Billy"]), new $_.$AnonymousType$27("B", ["John", "Dora", "Ian", "Mary"]), new $_.$AnonymousType$27(Bridge.cast(null, String), ["Nemo"])];
+                var personGroupsExpected = [new $_.$AnonymousType$27("A", ["Frank"]), new $_.$AnonymousType$27("C", ["Zeppa", "Billy"]), new $_.$AnonymousType$27("B", ["John", "Dora", "Ian", "Mary"]), new $_.$AnonymousType$27(null, ["Nemo"])];
     
                 Bridge.Test.Assert.areDeepEqual$1(personGroupsExpected, personGroups, "Person group by Group field");
             },
@@ -24319,7 +24892,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 // TEST
                 var groupJoinWithDefaultAndComplexEquals = (System.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Group.getGroups()).groupJoin(Bridge.ClientTest.Utilities.Person.getPersons(), $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f9, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f10, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f6).selectMany($_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f11, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f12).orderByDescending($_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f13).select($_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f14)).toArray();
     
-                var groupJoinWithDefaultAndComplexEqualsExpected = [new $_.$AnonymousType$31("C", "Zeppa"), new $_.$AnonymousType$31("B", "Mary"), new $_.$AnonymousType$31("B", "John"), new $_.$AnonymousType$31("B", "Ian"), new $_.$AnonymousType$31("A", "Frank"), new $_.$AnonymousType$31("B", "Dora"), new $_.$AnonymousType$31("C", "Billy"), new $_.$AnonymousType$31("D", Bridge.cast(null, String))];
+                var groupJoinWithDefaultAndComplexEqualsExpected = [new $_.$AnonymousType$31("C", "Zeppa"), new $_.$AnonymousType$31("B", "Mary"), new $_.$AnonymousType$31("B", "John"), new $_.$AnonymousType$31("B", "Ian"), new $_.$AnonymousType$31("A", "Frank"), new $_.$AnonymousType$31("B", "Dora"), new $_.$AnonymousType$31("C", "Billy"), new $_.$AnonymousType$31("D", null)];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupJoinWithDefaultAndComplexEqualsExpected, groupJoinWithDefaultAndComplexEquals, "Issue #209. Grouped join Persons and Groups with DefaultIfEmpty, complex equals and ordering");
             }
@@ -25023,7 +25596,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 // TEST
                 var productGroups = (System.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqQuantifiers.f3).where($_.Bridge.ClientTest.Linq.TestLinqQuantifiers.f5).select($_.Bridge.ClientTest.Linq.TestLinqQuantifiers.f7)).toArray();
     
-                var productGroupsExpected = [new $_.$AnonymousType$40("C", ["Zeppa", "Billy"]), new $_.$AnonymousType$40("B", ["John", "Dora", "Ian", "Mary"]), new $_.$AnonymousType$40(Bridge.cast(null, String), ["Nemo"])];
+                var productGroupsExpected = [new $_.$AnonymousType$40("C", ["Zeppa", "Billy"]), new $_.$AnonymousType$40("B", ["John", "Dora", "Ian", "Mary"]), new $_.$AnonymousType$40(null, ["Nemo"])];
     
                 Bridge.Test.Assert.areDeepEqual$1(productGroupsExpected, productGroups, "Any() to return a grouped array of names only for groups having any item with Count > 500");
             }
@@ -27756,7 +28329,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             Bridge.Test.Assert.true(Bridge.is(1, System.Int32));
         },
         typeAsWorksForInt32: function () {
-            Bridge.Test.Assert.false((Bridge.as(null, System.Int32, true)) != null);
+            Bridge.Test.Assert.false((null) != null);
             Bridge.Test.Assert.false((Bridge.as({ }, System.Int32, true)) != null);
             Bridge.Test.Assert.false((Bridge.as(1.5, System.Int32, true)) != null);
             Bridge.Test.Assert.true((Bridge.as(1, System.Int32, true)) != null);
@@ -31908,6 +32481,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                     }
                                     case 3: {
                                         Bridge.Test.Assert.true$1(Bridge.referenceEquals(ex, ex2), "The exception should be correct");
+                                        $async_e = null;
                                         $step = 4;
                                         continue;
                                     }
@@ -32636,11 +33210,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                 case 3: {
                                     continuationRun = true;
                                     Bridge.Test.Assert.areEqual$1([42, "result 123", 101], ex.arguments, "The PromiseException arguments should be correct");
+                                    $async_e = null;
                                     $step = 5;
                                     continue;
                                 }
                                 case 4: {
                                     Bridge.Test.Assert.fail$1("Thrown exception should have been an AggregateException, was " + Bridge.getTypeName(ex1));
+                                    $async_e = null;
                                     $step = 5;
                                     continue;
                                 }
@@ -33064,6 +33640,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                     }
                                     case 3: {
                                         caughtException = ex;
+                                        $async_e = null;
                                         $step = 4;
                                         continue;
                                     }
@@ -34275,13 +34852,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                     
                                     timer = new System.Threading.Timer("constructor$1", Bridge.ClientTest.Threading.TimerTests.staticHandleTimer, "SomeState", 1, 1);
                                     
-                                    $task2 = System.Threading.Tasks.Task.delay(200);
+                                    $task1 = System.Threading.Tasks.Task.delay(200);
                                     $step = 1;
-                                    $task2.continueWith($asyncBody, true);
+                                    $task1.continueWith($asyncBody, true);
                                     return;
                                 }
                                 case 1: {
-                                    $task2.getAwaitedResult();
+                                    $task1.getAwaitedResult();
                                     
                                     count = Bridge.ClientTest.Threading.TimerTests.getStaticCounter();
                                     timer.dispose();
@@ -34292,13 +34869,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                     Bridge.Test.Assert.true$1(count > 0, "Ticks: " + count);
                                     Bridge.Test.Assert.areEqual$1("SomeState", Bridge.ClientTest.Threading.TimerTests.getStaticData(), "State works");
                                     
-                                    $task1 = System.Threading.Tasks.Task.delay(200);
+                                    $task2 = System.Threading.Tasks.Task.delay(200);
                                     $step = 2;
-                                    $task1.continueWith($asyncBody, true);
+                                    $task2.continueWith($asyncBody, true);
                                     return;
                                 }
                                 case 2: {
-                                    $task1.getAwaitedResult();
+                                    $task2.getAwaitedResult();
                                     
                                     Bridge.Test.Assert.areEqual$1(count, Bridge.ClientTest.Threading.TimerTests.getStaticCounter(), "Timer disposed - no more ticks");
                                     
@@ -34333,13 +34910,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                     ts = new Bridge.ClientTest.Threading.TimerTests.TimerState();
                                     timer = new System.Threading.Timer("constructor$1", Bridge.fn.bind(ts, ts.handleTimer), "SomeState", 1, 1);
                                     
-                                    $task2 = System.Threading.Tasks.Task.delay(200);
+                                    $task1 = System.Threading.Tasks.Task.delay(200);
                                     $step = 1;
-                                    $task2.continueWith($asyncBody, true);
+                                    $task1.continueWith($asyncBody, true);
                                     return;
                                 }
                                 case 1: {
-                                    $task2.getAwaitedResult();
+                                    $task1.getAwaitedResult();
                                     
                                     count = ts.getCounter();
                                     timer.dispose();
@@ -34350,13 +34927,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                     Bridge.Test.Assert.true$1(count > 0, "Ticks: " + count);
                                     Bridge.Test.Assert.areEqual$1("SomeState", ts.getData(), "State works");
                                     
-                                    $task1 = System.Threading.Tasks.Task.delay(200);
+                                    $task2 = System.Threading.Tasks.Task.delay(200);
                                     $step = 2;
-                                    $task1.continueWith($asyncBody, true);
+                                    $task2.continueWith($asyncBody, true);
                                     return;
                                 }
                                 case 2: {
-                                    $task1.getAwaitedResult();
+                                    $task2.getAwaitedResult();
                                     
                                     Bridge.Test.Assert.areEqual$1(count, ts.getCounter(), "Timer disposed - no more ticks");
                                     
@@ -34444,13 +35021,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                 
                                 copy = timer;
                                 
-                                $task2 = System.Threading.Tasks.Task.delay(200);
+                                $task1 = System.Threading.Tasks.Task.delay(200);
                                 $step = 1;
-                                $task2.continueWith($asyncBody, true);
+                                $task1.continueWith($asyncBody, true);
                                 return;
                             }
                             case 1: {
-                                $task2.getAwaitedResult();
+                                $task1.getAwaitedResult();
                                 
                                 count = Bridge.ClientTest.Threading.TimerTests.getStaticCounter();
                                 timer.change(-1, 0);
@@ -34458,13 +35035,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                 Bridge.Test.Assert.true$1(count > 0, "Ticks: " + count);
                                 Bridge.Test.Assert.areEqual$1("SomeState", Bridge.ClientTest.Threading.TimerTests.getStaticData(), "State works");
                                 
-                                $task1 = System.Threading.Tasks.Task.delay(200);
+                                $task2 = System.Threading.Tasks.Task.delay(200);
                                 $step = 2;
-                                $task1.continueWith($asyncBody, true);
+                                $task2.continueWith($asyncBody, true);
                                 return;
                             }
                             case 2: {
-                                $task1.getAwaitedResult();
+                                $task2.getAwaitedResult();
                                 
                                 Bridge.Test.Assert.areEqual$1(count, Bridge.ClientTest.Threading.TimerTests.getStaticCounter(), "Timer disposed");
                                 
@@ -34511,13 +35088,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                 
                                 copy = timer;
                                 
-                                $task2 = System.Threading.Tasks.Task.delay(200);
+                                $task1 = System.Threading.Tasks.Task.delay(200);
                                 $step = 1;
-                                $task2.continueWith($asyncBody, true);
+                                $task1.continueWith($asyncBody, true);
                                 return;
                             }
                             case 1: {
-                                $task2.getAwaitedResult();
+                                $task1.getAwaitedResult();
                                 
                                 count = ts.getCounter();
                                 timer.change(-1, 0);
@@ -34525,13 +35102,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                 Bridge.Test.Assert.true$1(count > 0, "Ticks: " + count);
                                 Bridge.Test.Assert.areEqual$1("SomeState", ts.getData(), "State works");
                                 
-                                $task1 = System.Threading.Tasks.Task.delay(200);
+                                $task2 = System.Threading.Tasks.Task.delay(200);
                                 $step = 2;
-                                $task1.continueWith($asyncBody, true);
+                                $task2.continueWith($asyncBody, true);
                                 return;
                             }
                             case 2: {
-                                $task1.getAwaitedResult();
+                                $task2.getAwaitedResult();
                                 
                                 timer.dispose();
                                 
@@ -34572,23 +35149,23 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                                 ts = new Bridge.ClientTest.Threading.TimerTests.TimerState();
                                 
                                 timer = new System.Threading.Timer("constructor$1", Bridge.fn.bind(ts, ts.handleTimer), null, -1, 1);
-                                $task2 = System.Threading.Tasks.Task.delay(200);
-                                $step = 1;
-                                $task2.continueWith($asyncBody, true);
-                                return;
-                            }
-                            case 1: {
-                                $task2.getAwaitedResult();
-                                Bridge.Test.Assert.areEqual$1(ts.getCounter(), 0, "new -1, 1");
-                                
-                                timer.change(-1, -1);
                                 $task1 = System.Threading.Tasks.Task.delay(200);
-                                $step = 2;
+                                $step = 1;
                                 $task1.continueWith($asyncBody, true);
                                 return;
                             }
-                            case 2: {
+                            case 1: {
                                 $task1.getAwaitedResult();
+                                Bridge.Test.Assert.areEqual$1(ts.getCounter(), 0, "new -1, 1");
+                                
+                                timer.change(-1, -1);
+                                $task2 = System.Threading.Tasks.Task.delay(200);
+                                $step = 2;
+                                $task2.continueWith($asyncBody, true);
+                                return;
+                            }
+                            case 2: {
+                                $task2.getAwaitedResult();
                                 Bridge.Test.Assert.areEqual$1(ts.getCounter(), 0, "Change -1, -1");
                                 
                                 done();

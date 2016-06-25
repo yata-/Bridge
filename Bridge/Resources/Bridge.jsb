@@ -9,6 +9,7 @@
   <file name="Class.js" />
   <file name="Interfaces.js" />
   <file name="Char.js" />
+  <file name="FormattableString.js" />
   <file name="Exception.js" />
   <file name="Globalization.js" />
   <file name="Math.js" />
@@ -68,6 +69,7 @@
     <include name="Class.js" />
     <include name="Interfaces.js" />
     <include name="Char.js" />
+    <include name="FormattableString.js" />
     <include name="Exception.js" />
     <include name="Globalization.js" />
     <include name="Math.js" />

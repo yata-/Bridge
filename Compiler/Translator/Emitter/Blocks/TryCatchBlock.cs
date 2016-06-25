@@ -59,7 +59,6 @@ namespace Bridge.Translator
             foreach (var clause in tryCatchStatement.CatchClauses)
             {
                 var catchStep = this.Emitter.AsyncBlock.AddAsyncStep();
-                catchSteps.Add(catchStep);
 
                 this.PushLocals();
                 var varName = clause.VariableName;
@@ -69,12 +68,14 @@ namespace Bridge.Translator
                     varName = this.AddLocal(varName, clause.Type);
                 }
 
-                tryInfo.CatchBlocks.Add(new Tuple<string, string, int>(varName, clause.Type.IsNull ? JS.Types.SYSTEM_EXCEPTION : BridgeTypes.ToJsName(clause.Type, this.Emitter), catchStep.Step));
-
                 this.Emitter.IgnoreBlock = clause.Body;
                 clause.Body.AcceptVisitor(this.Emitter);
+				Write(JS.Vars.ASYNC_E + " = null;");
                 this.PopLocals();
                 this.WriteNewLine();
+
+                tryInfo.CatchBlocks.Add(new Tuple<string, string, int, int>(varName, clause.Type.IsNull ? JS.Types.SYSTEM_EXCEPTION : BridgeTypes.ToJsName(clause.Type, this.Emitter), catchStep.Step, Emitter.AsyncBlock.Steps.Last().Step));
+                catchSteps.Add(Emitter.AsyncBlock.Steps.Last());
             }
 
             if (!this.Emitter.Locals.ContainsKey(JS.Vars.ASYNC_E))
@@ -186,15 +187,13 @@ namespace Bridge.Translator
                 }
             }
 
+            var lastFinallyStep = Emitter.AsyncBlock.Steps.Last();
+
             var nextStep = this.Emitter.AsyncBlock.AddAsyncStep();
             if (finalyStep != null)
             {
                 tryInfo.FinallyStep = finalyStep.Step;
-            }
-
-            if (finalyStep != null)
-            {
-                finalyStep.JumpToStep = nextStep.Step;
+                lastFinallyStep.JumpToStep = nextStep.Step;
             }
 
             tryStep.JumpToStep = finalyStep != null ? finalyStep.Step : nextStep.Step;
@@ -426,15 +425,15 @@ namespace Bridge.Translator
             set;
         }
 
-        private List<Tuple<string, string, int>> catchBlocks;
+        private List<Tuple<string, string, int, int>> catchBlocks;
 
-        public List<Tuple<string, string, int>> CatchBlocks
+        public List<Tuple<string, string, int, int>> CatchBlocks
         {
             get
             {
                 if (this.catchBlocks == null)
                 {
-                    this.catchBlocks = new List<Tuple<string, string, int>>();
+                    this.catchBlocks = new List<Tuple<string, string, int, int>>();
                 }
                 return this.catchBlocks;
             }

@@ -175,10 +175,10 @@
         statics: {
             config: {
                 init: function () {
-                    Bridge.ready(this.main);
+                    Bridge.ready(this.runTests);
                 }
             },
-            main: function () {
+            runTests: function () {
                 QUnit.module("C#");
                 QUnit.test("Abstract types - TestB", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BasicCSharp_TestAbstractClass.testB);
                 QUnit.test("Abstract types - TestC", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BasicCSharp_TestAbstractClass.testC);
@@ -217,6 +217,15 @@
                 QUnit.test("Value types - TestInstanceConstructorsAndMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BasicCSharp_TestValueTypes.testInstanceConstructorsAndMethods);
                 QUnit.test("Value types - TestStaticConstructorsAndMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BasicCSharp_TestValueTypes.testStaticConstructorsAndMethods);
                 QUnit.test("Virtual methods - TestB", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BasicCSharp_TestVirtualMethods.testB);
+                QUnit.test("Auto properties - TestBasic", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestAutoProps.testBasic);
+                QUnit.test("Await in catch and finally - TestBasic", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestAwaitInCatchFinally.testBasic);
+                QUnit.test("ConditionAccess - TestBasic", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestConditionAccess.testBasic);
+                QUnit.test("Exception filter - TestBasic", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestExceptionFilter.testBasic);
+                QUnit.test("Expression-bodied function members - TestBasic", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestExpressionBodyFunction.testBasic);
+                QUnit.test("Index initializer - TestBasic", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestIndexInitializer.testBasic);
+                QUnit.test("Interpolated Strings - TestBasic", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestInterpolatedStrings.testBasic);
+                QUnit.test("NameOf - TestBasic", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestNameOf.testBasic);
+                QUnit.test("Using static - TestBasic", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestUsingStatic.testBasic);
                 QUnit.module("Checked/Unckecked");
                 QUnit.test("CheckedInsideUnchecked - TestInt32", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CheckedInsideUncheckedTests.testInt32);
                 QUnit.test("CheckedInsideUnchecked - TestUInt32", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CheckedInsideUncheckedTests.testUInt32);
@@ -7834,6 +7843,96 @@
             fromUInt64: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToUInt64Tests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ConvertTests_ConvertToUInt64Tests);
                 t.getFixture().fromUInt64();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestAutoProps', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestAutoProps)],
+        statics: {
+            testBasic: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestAutoProps).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestAutoProps);
+                Bridge.ClientTest.CSharp6.TestAutoProps.testBasic();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestAwaitInCatchFinally', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestAwaitInCatchFinally)],
+        statics: {
+            testBasic: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestAwaitInCatchFinally).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestAwaitInCatchFinally);
+                Bridge.ClientTest.CSharp6.TestAwaitInCatchFinally.testBasic();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestConditionAccess', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestConditionAccess)],
+        statics: {
+            testBasic: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestConditionAccess).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestConditionAccess);
+                Bridge.ClientTest.CSharp6.TestConditionAccess.testBasic();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestExceptionFilter', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestExceptionFilter)],
+        statics: {
+            testBasic: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestExceptionFilter).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestExceptionFilter);
+                Bridge.ClientTest.CSharp6.TestExceptionFilter.testBasic();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestExpressionBodyFunction', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestExpressionBodyFunction)],
+        statics: {
+            testBasic: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestExpressionBodyFunction).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestExpressionBodyFunction);
+                Bridge.ClientTest.CSharp6.TestExpressionBodyFunction.testBasic();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestIndexInitializer', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestIndexInitializer)],
+        statics: {
+            testBasic: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestIndexInitializer).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestIndexInitializer);
+                Bridge.ClientTest.CSharp6.TestIndexInitializer.testBasic();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestInterpolatedStrings', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestInterpolatedStrings)],
+        statics: {
+            testBasic: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestInterpolatedStrings).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestInterpolatedStrings);
+                Bridge.ClientTest.CSharp6.TestInterpolatedStrings.testBasic();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestNameOf', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestNameOf)],
+        statics: {
+            testBasic: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestNameOf).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestNameOf);
+                Bridge.ClientTest.CSharp6.TestNameOf.testBasic();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestUsingStatic', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestUsingStatic)],
+        statics: {
+            testBasic: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestUsingStatic).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestUsingStatic);
+                Bridge.ClientTest.CSharp6.TestUsingStatic.testBasic();
             }
         }
     });

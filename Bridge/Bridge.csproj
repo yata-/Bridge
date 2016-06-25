@@ -85,6 +85,10 @@
     <Compile Include="Bridge\Script.cs" />
     <Compile Include="System\Action.cs" />
     <Compile Include="System\Activator.cs" />
+    <Compile Include="System\CompilerServices\CallerInformationAttributes.cs" />
+    <Compile Include="System\CompilerServices\FormattableStringFactory.cs" />
+    <Compile Include="System\CompilerServices\RuntimeHelpers.cs" />
+    <Compile Include="System\FormattableString.cs" />
     <Compile Include="System\Guid.cs" />
     <Compile Include="System\Random.cs" />
     <Compile Include="System\IndexOutOfRangeException.cs" />
@@ -682,6 +686,7 @@
     <Content Include="Resources\Math.js" />
     <Content Include="Resources\Console.js" />
     <Content Include="Resources\random.js" />
+    <Content Include="Resources\FormattableString.js" />
     <Content Include="Resources\Text\RegularExpressions\Regex.js" />
     <Content Include="Resources\Text\RegularExpressions\RegexCapture.js" />
     <Content Include="Resources\Text\RegularExpressions\RegexCaptureCollection.js" />

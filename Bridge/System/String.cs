@@ -742,7 +742,7 @@ namespace System
         /// Returns:
         ///     A copy of format in which the format items have been replaced by the string representation
         ///     of the corresponding objects in args.
-        [Template("System.String.format({format}, {args})")]
+        [Template("System.String.formatProvider({provider}, {format}, {args})")]
         public static extern String Format(IFormatProvider provider, String format, params object[] args);
 
         ///

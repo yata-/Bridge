@@ -360,18 +360,6 @@ namespace System.Runtime.CompilerServices
         }
     }
 
-    [External]
-    public static class RuntimeHelpers
-    {
-        public static extern void InitializeArray(Array array, RuntimeFieldHandle handle);
-
-        public static extern int OffsetToStringData
-        {
-            get;
-        }
-
-        public static extern int GetHashCode(object obj);
-    }
 
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class | AttributeTargets.Method)]
     [External]

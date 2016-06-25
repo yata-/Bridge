@@ -122,7 +122,7 @@ namespace Bridge.Translator
         {
             var castToEnum = this.Emitter.BridgeTypes.ToType(type).Kind == TypeKind.Enum;
 
-            if (method != CS.Ops.IS && (Helpers.IsIgnoreCast(type, this.Emitter) || castToEnum))
+            if (expression is NullReferenceExpression || (method != CS.Ops.IS && (Helpers.IsIgnoreCast(type, this.Emitter) || castToEnum)))
             {
                 expression.AcceptVisitor(this.Emitter);
                 return;
