@@ -2,11 +2,11 @@
 
     Bridge.define("System.Exception", {
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             this.message = message ? message : null;
             this.innerException = innerException ? innerException : null;
             this.errorStack = new Error();
-            this.data = new (System.Collections.Generic.Dictionary$2(Object, Object))();
+            this.data = new(System.Collections.Generic.Dictionary$2(Object, Object))();
         },
 
         getMessage: function () {
@@ -52,7 +52,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "System error.", innerException);
         }
     });
@@ -61,7 +61,7 @@
         inherits: [System.SystemException],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             if (!message) {
                 message = "Insufficient memory to continue the execution of the program.";
             }
@@ -74,7 +74,7 @@
         inherits: [System.SystemException],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             if (!message) {
                 message = "Index was outside the bounds of the array.";
             }
@@ -87,7 +87,7 @@
         inherits: [System.SystemException],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             if (!message) {
                 message = "The operation has timed out.";
             }
@@ -109,22 +109,22 @@
         },
 
         constructor: function () {
-			this.$initialize();
+            this.$initialize();
             System.TimeoutException.$constructor.call(this);
         },
 
         constructor$1: function (message) {
-			this.$initialize();
+            this.$initialize();
             System.TimeoutException.$constructor.call(this, message);
         },
 
         constructor$2: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.TimeoutException.$constructor.call(this, message, innerException);
         },
 
         constructor$3: function (regexInput, regexPattern, matchTimeout) {
-			this.$initialize();
+            this.$initialize();
             this._regexInput = regexInput;
             this._regexPattern = regexPattern;
             this._matchTimeout = matchTimeout;
@@ -150,7 +150,7 @@
         inherits: [System.Exception],
 
         constructor: function (error) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, error.message);
             this.errorStack = error;
             this.error = error;
@@ -165,7 +165,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, paramName, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "Value does not fall within the expected range.", innerException);
             this.paramName = paramName ? paramName : null;
         },
@@ -179,7 +179,7 @@
         inherits: [System.ArgumentException],
 
         constructor: function (paramName, message, innerException) {
-			this.$initialize();
+            this.$initialize();
             if (!message) {
                 message = "Value cannot be null.";
 
@@ -196,7 +196,7 @@
         inherits: [System.ArgumentException],
 
         constructor: function (paramName, message, innerException, actualValue) {
-			this.$initialize();
+            this.$initialize();
             if (!message) {
                 message = "Value is out of range.";
 
@@ -219,7 +219,7 @@
         inherits: [System.ArgumentException],
 
         constructor: function (paramName, invalidCultureName, message, innerException, invalidCultureId) {
-			this.$initialize();
+            this.$initialize();
             if (!message) {
                 message = "Culture is not supported.";
 
@@ -251,7 +251,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "Key not found.", innerException);
         }
     });
@@ -260,7 +260,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "Overflow or underflow in the arithmetic operation.", innerException);
         }
     });
@@ -269,7 +269,7 @@
         inherits: [System.ArithmeticException],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.ArithmeticException.$constructor.call(this, message || "Division by 0.", innerException);
         }
     });
@@ -278,7 +278,7 @@
         inherits: [System.ArithmeticException],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.ArithmeticException.$constructor.call(this, message || "Arithmetic operation resulted in an overflow.", innerException);
         }
     });
@@ -287,7 +287,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "Invalid format.", innerException);
         }
     });
@@ -296,7 +296,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "The cast is not valid.", innerException);
         }
     });
@@ -305,7 +305,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "Operation is not valid due to the current state of the object.", innerException);
         }
     });
@@ -314,7 +314,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "The method or operation is not implemented.", innerException);
         }
     });
@@ -323,7 +323,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "Specified method is not supported.", innerException);
         }
     });
@@ -332,7 +332,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "Object is null.", innerException);
         }
     });
@@ -341,7 +341,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "Attempted to operate on an array with the incorrect number of dimensions.", innerException);
         }
     });
@@ -350,7 +350,7 @@
         inherits: [System.Exception],
 
         constructor: function (args, message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || (args.length && args[0] ? args[0].toString() : "An error occurred"), innerException);
             this.arguments = System.Array.clone(args);
         },
@@ -364,7 +364,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, token, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "Operation was canceled.", innerException);
             this.cancellationToken = token || System.Threading.CancellationToken.none;
         }
@@ -374,7 +374,7 @@
         inherits: [System.OperationCanceledException],
 
         constructor: function (message, task, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.OperationCanceledException.$constructor.call(this, message || "A task was canceled.", null, innerException);
             this.task = task || null;
         }
@@ -384,8 +384,8 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerExceptions) {
-			this.$initialize();
-            this.innerExceptions = new (System.Collections.ObjectModel.ReadOnlyCollection$1(System.Exception))(Bridge.hasValue(innerExceptions) ? Bridge.toArray(innerExceptions) : []);
+            this.$initialize();
+            this.innerExceptions = new(System.Collections.ObjectModel.ReadOnlyCollection$1(System.Exception))(Bridge.hasValue(innerExceptions) ? Bridge.toArray(innerExceptions) : []);
             System.Exception.$constructor.call(this, message || 'One or more errors occurred.', this.innerExceptions.items.length ? this.innerExceptions.items[0] : null);
         },
 
@@ -410,10 +410,10 @@
 
         flatten: function () {
             // Initialize a collection to contain the flattened exceptions.
-            var flattenedExceptions = new (System.Collections.Generic.List$1(System.Exception))();
+            var flattenedExceptions = new(System.Collections.Generic.List$1(System.Exception))();
 
             // Create a list to remember all aggregates to be flattened, this will be accessed like a FIFO queue
-            var exceptionsToFlatten = new (System.Collections.Generic.List$1(System.AggregateException))();
+            var exceptionsToFlatten = new(System.Collections.Generic.List$1(System.AggregateException))();
             exceptionsToFlatten.add(this);
             var nDequeueIndex = 0;
 
@@ -422,7 +422,7 @@
                 // dequeue one from exceptionsToFlatten
                 var currentInnerExceptions = exceptionsToFlatten.getItem(nDequeueIndex++).innerExceptions;
 
-                for (var i = 0; i < currentInnerExceptions.getCount() ; i++) {
+                for (var i = 0; i < currentInnerExceptions.getCount(); i++) {
                     var currentInnerException = currentInnerExceptions.get(i);
 
                     if (!Bridge.hasValue(currentInnerException)) {
@@ -449,7 +449,7 @@
         inherits: [System.SystemException],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             if (!message) {
                 message = "Index was outside the bounds of the array.";
             }

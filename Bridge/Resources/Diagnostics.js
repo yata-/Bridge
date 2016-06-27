@@ -43,7 +43,7 @@
 
     Bridge.define("System.Diagnostics.Stopwatch", {
         constructor: function () {
-			this.$initialize();
+            this.$initialize();
             this._stopTime = System.Int64.Zero;
             this._startTime = System.Int64.Zero;
             this.isRunning = false;
@@ -103,113 +103,120 @@
     if (typeof (window) !== 'undefined' && window.performance && window.performance.now) {
         System.Diagnostics.Stopwatch.frequency = new System.Int64(1e6);
         System.Diagnostics.Stopwatch.isHighResolution = true;
-        System.Diagnostics.Stopwatch.getTimestamp = function () { return new System.Int64(Math.round(window.performance.now() * 1000)); };
+        System.Diagnostics.Stopwatch.getTimestamp = function () {
+            return new System.Int64(Math.round(window.performance.now() * 1000));
+        };
     } else if (typeof (process) !== 'undefined' && process.hrtime) {
         System.Diagnostics.Stopwatch.frequency = new System.Int64(1e9);
         System.Diagnostics.Stopwatch.isHighResolution = true;
-        System.Diagnostics.Stopwatch.getTimestamp = function () { var hr = process.hrtime(); return new System.Int64(hr[0]).mul(1e9).add(hr[1]); };
+        System.Diagnostics.Stopwatch.getTimestamp = function () {
+            var hr = process.hrtime();
+            return new System.Int64(hr[0]).mul(1e9).add(hr[1]);
+        };
     } else {
         System.Diagnostics.Stopwatch.frequency = new System.Int64(1e3);
         System.Diagnostics.Stopwatch.isHighResolution = false;
-        System.Diagnostics.Stopwatch.getTimestamp = function () { return new System.Int64(new Date().valueOf()); };
+        System.Diagnostics.Stopwatch.getTimestamp = function () {
+            return new System.Int64(new Date().valueOf());
+        };
     }
 
     System.Diagnostics.Contracts.Contract = {
-	    reportFailure: function (failureKind, userMessage, condition, innerException, TException) {
-	        var conditionText = condition.toString();
+        reportFailure: function (failureKind, userMessage, condition, innerException, TException) {
+            var conditionText = condition.toString();
 
-		    conditionText = conditionText.substring(conditionText.indexOf("return") + 7);
-		    conditionText = conditionText.substr(0, conditionText.lastIndexOf(";"));
+            conditionText = conditionText.substring(conditionText.indexOf("return") + 7);
+            conditionText = conditionText.substr(0, conditionText.lastIndexOf(";"));
 
-		    var failureMessage = (conditionText) ? "Contract '" + conditionText + "' failed" : "Contract failed";
-		    var displayMessage = (userMessage) ? failureMessage + ": " + userMessage : failureMessage;
+            var failureMessage = (conditionText) ? "Contract '" + conditionText + "' failed" : "Contract failed";
+            var displayMessage = (userMessage) ? failureMessage + ": " + userMessage : failureMessage;
 
-		    if (TException) {
-			    throw new TException(conditionText, userMessage);
-		    } else {
-			    throw new System.Diagnostics.Contracts.ContractException(failureKind, displayMessage, userMessage, conditionText, innerException);
-		    }
-	    },
-	    assert: function (failureKind, condition, message) {
-		    if (!condition()) {
-			    System.Diagnostics.Contracts.Contract.reportFailure(failureKind, message, condition, null);
-		    }
-	    },
-	    requires: function (TException, condition, message) {
-		    if (!condition()) {
-			    System.Diagnostics.Contracts.Contract.reportFailure(0, message, condition, null, TException);
-		    }
-	    },
-	    forAll: function (fromInclusive, toExclusive, predicate) {
-		    if (!predicate) {
-			    throw new System.ArgumentNullException("predicate");
-		    }
+            if (TException) {
+                throw new TException(conditionText, userMessage);
+            } else {
+                throw new System.Diagnostics.Contracts.ContractException(failureKind, displayMessage, userMessage, conditionText, innerException);
+            }
+        },
+        assert: function (failureKind, condition, message) {
+            if (!condition()) {
+                System.Diagnostics.Contracts.Contract.reportFailure(failureKind, message, condition, null);
+            }
+        },
+        requires: function (TException, condition, message) {
+            if (!condition()) {
+                System.Diagnostics.Contracts.Contract.reportFailure(0, message, condition, null, TException);
+            }
+        },
+        forAll: function (fromInclusive, toExclusive, predicate) {
+            if (!predicate) {
+                throw new System.ArgumentNullException("predicate");
+            }
 
-		    for (; fromInclusive < toExclusive; fromInclusive++) {
-			    if (!predicate(fromInclusive)) {
-				    return false;
-			    }
-		    }
+            for (; fromInclusive < toExclusive; fromInclusive++) {
+                if (!predicate(fromInclusive)) {
+                    return false;
+                }
+            }
 
-		    return true;
-	    },
-	    forAll$1: function (collection, predicate) {
-		    if (!collection) {
-			    throw new System.ArgumentNullException("collection");
-		    }
+            return true;
+        },
+        forAll$1: function (collection, predicate) {
+            if (!collection) {
+                throw new System.ArgumentNullException("collection");
+            }
 
-		    if (!predicate) {
-			    throw new System.ArgumentNullException("predicate");
-		    }
+            if (!predicate) {
+                throw new System.ArgumentNullException("predicate");
+            }
 
-		    var enumerator = Bridge.getEnumerator(collection);
+            var enumerator = Bridge.getEnumerator(collection);
 
-	        try {
-			    while (enumerator.moveNext()) {
-				    if (!predicate(enumerator.getCurrent())) {
-					    return false;
-				    }
-			    }
-			    return true;
-		    } finally {
-			    enumerator.dispose();
-		    }
-	    },
-	    exists: function (fromInclusive, toExclusive, predicate) {
-		    if (!predicate) {
-			    throw new System.ArgumentNullException("predicate");
-		    }
+            try {
+                while (enumerator.moveNext()) {
+                    if (!predicate(enumerator.getCurrent())) {
+                        return false;
+                    }
+                }
+                return true;
+            } finally {
+                enumerator.dispose();
+            }
+        },
+        exists: function (fromInclusive, toExclusive, predicate) {
+            if (!predicate) {
+                throw new System.ArgumentNullException("predicate");
+            }
 
-		    for (; fromInclusive < toExclusive; fromInclusive++) {
-			    if (predicate(fromInclusive)) {
-				    return true;
-			    }
-		    }
+            for (; fromInclusive < toExclusive; fromInclusive++) {
+                if (predicate(fromInclusive)) {
+                    return true;
+                }
+            }
 
-		    return false;
-	    },
-	    exists$1: function (collection, predicate) {
-		    if (!collection) {
-			    throw new System.ArgumentNullException("collection");
-		    }
+            return false;
+        },
+        exists$1: function (collection, predicate) {
+            if (!collection) {
+                throw new System.ArgumentNullException("collection");
+            }
 
-		    if (!predicate) {
-			    throw new System.ArgumentNullException("predicate");
-		    }
+            if (!predicate) {
+                throw new System.ArgumentNullException("predicate");
+            }
 
-		    var enumerator = Bridge.getEnumerator(collection);
+            var enumerator = Bridge.getEnumerator(collection);
 
-	        try {
-			    while (enumerator.moveNext()) {
-				    if (predicate(enumerator.getCurrent())) {
-					    return true;
-				    }
-			    }
-			    return false;
-		    } finally {
-			    enumerator.dispose();
-		    }
-	    }
+            try {
+                while (enumerator.moveNext()) {
+                    if (predicate(enumerator.getCurrent())) {
+                        return true;
+                    }
+                }
+                return false;
+            } finally {
+                enumerator.dispose();
+            }
+        }
     };
 
     Bridge.define("System.Diagnostics.Contracts.ContractFailureKind", {
@@ -228,7 +235,7 @@
         inherits: [System.Exception],
 
         constructor: function (failureKind, failureMessage, userMessage, condition, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, failureMessage, innerException);
             this._kind = failureKind;
             this._failureMessage = failureMessage || null;
@@ -237,15 +244,15 @@
         },
 
         getKind: function () {
-		    return this._kind;
-	    },
-	    getFailure: function () {
-		    return this._failureMessage;
-	    },
-	    getUserMessage: function () {
-		    return this._userMessage;
-	    },
-	    getCondition: function () {
-		    return this._condition;
-	    }
+            return this._kind;
+        },
+        getFailure: function () {
+            return this._failureMessage;
+        },
+        getUserMessage: function () {
+            return this._userMessage;
+        },
+        getCondition: function () {
+            return this._condition;
+        }
     });

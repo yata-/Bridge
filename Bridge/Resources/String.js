@@ -311,11 +311,15 @@
                     // StringComparison
                     switch (arguments[2]) {
                         case 1: // CurrentCultureIgnoreCase
-                            return strA.localeCompare(strB, System.Globalization.CultureInfo.getCurrentCulture().name, { sensitivity: "accent" });
+                            return strA.localeCompare(strB, System.Globalization.CultureInfo.getCurrentCulture().name, {
+                                sensitivity: "accent"
+                            });
                         case 2: // InvariantCulture
                             return strA.localeCompare(strB, System.Globalization.CultureInfo.invariantCulture.name);
                         case 3: // InvariantCultureIgnoreCase
-                            return strA.localeCompare(strB, System.Globalization.CultureInfo.invariantCulture.name, { sensitivity: "accent" });
+                            return strA.localeCompare(strB, System.Globalization.CultureInfo.invariantCulture.name, {
+                                sensitivity: "accent"
+                            });
                         case 4: // Ordinal
                             return (strA === strB) ? 0 : ((strA > strB) ? 1 : -1);
                         case 5: // OrdinalIgnoreCase

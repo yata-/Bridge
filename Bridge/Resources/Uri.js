@@ -2,7 +2,7 @@
 
     Bridge.define("System.Uri", {
         constructor: function (uriString) {
-			this.$initialize();
+            this.$initialize();
             this.absoluteUri = uriString;
         },
 

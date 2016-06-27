@@ -114,7 +114,7 @@
             if (!preventClear) {
                 Bridge.Class.staticInitAllow = false;
             }
-            
+
             prop = prop || {};
 
             var extend = prop.$inherits || prop.inherits,
@@ -156,7 +156,7 @@
                 cls = prop.hasOwnProperty("constructor") && prop.constructor || prop.$constructor;
 
             if (!cls) {
-                Class = function() {
+                Class = function () {
                     this.$initialize();
                     if (Class.$base) {
                         Class.$base.$constructor.call(this);
@@ -166,7 +166,7 @@
             } else {
                 Class = cls;
             }
-            
+
             scope = Bridge.Class.set(scope, className, Class);
 
             if (cacheName) {
@@ -183,7 +183,7 @@
             Class.$base = base;
             prototype = extend ? (extend[0].$$initCtor ? new extend[0].$$initCtor() : new extend[0]()) : new Object();
 
-            Class.$$initCtor = function () { };
+            Class.$$initCtor = function () {};
             Class.$$initCtor.prototype = prototype;
             Class.$$initCtor.prototype.constructor = Class;
 
@@ -223,7 +223,7 @@
 
             for (name in prop) {
                 keys.push(name);
-            }          
+            }
 
             for (i = 0; i < keys.length; i++) {
                 name = keys[i];
@@ -292,7 +292,7 @@
             if (isEntryPoint) {
                 Bridge.Class.$queue.push(Class);
             }
-            
+
             Class.$staticInit = fn;
 
             return Class;
@@ -323,9 +323,9 @@
                 exists,
                 i;
 
-            for (i = 0; i < (nameParts.length - 1) ; i++) {
+            for (i = 0; i < (nameParts.length - 1); i++) {
                 if (typeof scope[nameParts[i]] == "undefined") {
-                    scope[nameParts[i]] = { };
+                    scope[nameParts[i]] = {};
                 }
 
                 scope = scope[nameParts[i]];
@@ -340,25 +340,25 @@
 
                     if (typeof o === "function" && o.$$name) {
                         (function (cls, key, o) {
-							Object.defineProperty(cls, key, {
-								get: function () {
-									if (Bridge.Class.staticInitAllow) {
-										if (o.$staticInit) {
-											o.$staticInit();
-										}
+                            Object.defineProperty(cls, key, {
+                                get: function () {
+                                    if (Bridge.Class.staticInitAllow) {
+                                        if (o.$staticInit) {
+                                            o.$staticInit();
+                                        }
 
-										Bridge.Class.defineProperty(cls, key, o);
-									}
+                                        Bridge.Class.defineProperty(cls, key, o);
+                                    }
 
-									return o;
-								},
-								set: function (newValue) {
-									o = newValue;
-								},
-								enumerable: true,
-								configurable: true
-							});
-						})(cls, key, o);
+                                    return o;
+                                },
+                                set: function (newValue) {
+                                    o = newValue;
+                                },
+                                enumerable: true,
+                                configurable: true
+                            });
+                        })(cls, key, o);
                     }
                 }
             }
@@ -374,7 +374,7 @@
 
                                 Bridge.Class.defineProperty(scope, name, cls);
                             }
-                            
+
                             return cls;
                         },
                         set: function (newValue) {
@@ -384,7 +384,7 @@
                         configurable: true
                     });
                 })(scope, name, cls);
-                
+
             } else {
                 scope[name] = cls;
             }

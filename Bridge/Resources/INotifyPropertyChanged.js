@@ -4,7 +4,7 @@
 
     Bridge.define("System.ComponentModel.PropertyChangedEventArgs", {
         constructor: function (propertyName) {
-			this.$initialize();
+            this.$initialize();
             this.propertyName = propertyName;
         }
     });

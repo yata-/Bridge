@@ -158,12 +158,12 @@
 
         toInt64: function (value, formatProvider) {
             var result = scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.Int64);
-	    return new System.Int64(result);
+            return new System.Int64(result);
         },
 
         toUInt64: function (value, formatProvider) {
             var result = scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.UInt64);
-	    return new System.UInt64(result);
+            return new System.UInt64(result);
         },
 
         toSingle: function (value, formatProvider) {
@@ -465,8 +465,7 @@
                 } else {
                     return value.value.toUnsigned().toString(toBase);
                 }
-            }
-            else if (value < 0) {
+            } else if (value < 0) {
                 if (toBase === 10) {
                     isNegative = true;
                     value *= -1;
@@ -602,7 +601,7 @@
                 throw new System.ArgumentOutOfRangeException("offsetOut", "Value must be positive.");
             }
 
-            options = options || 0;     // 0 - means "None", 1 - stands for "InsertLineBreaks"
+            options = options || 0; // 0 - means "None", 1 - stands for "InsertLineBreaks"
 
             if (options < 0 || options > 1) {
                 throw new System.ArgumentException("Illegal enum value.");
@@ -618,7 +617,7 @@
             }
 
             var insertLineBreaks = options === 1;
-            var outArrayLength = outArray.length;   //This is the maximally required length that must be available in the char array
+            var outArrayLength = outArray.length; //This is the maximally required length that must be available in the char array
 
             // Length of the char buffer required
             var numElementsToCopy = scope.internal.toBase64_CalculateAndValidateOutputLength(length, insertLineBreaks);
@@ -904,8 +903,7 @@
 
                     if (System.Int64.is64Bit(value)) {
                         value = value.toNumber();
-                    }
-                    else if (value instanceof System.Decimal) {
+                    } else if (value instanceof System.Decimal) {
                         value = value.toFloat();
                     }
 
@@ -1026,8 +1024,7 @@
                     }
 
                     value = new System.Decimal(value);
-                }
-                else if (typeCode === typeCodes.Int64) {
+                } else if (typeCode === typeCodes.Int64) {
                     if (value instanceof System.UInt64) {
                         if (value.gt(System.Int64.MaxValue)) {
                             this.throwOverflow(typeName);
@@ -1043,8 +1040,7 @@
                     }
 
                     value = new System.Int64(value);
-                }
-                else if (typeCode === typeCodes.UInt64) {
+                } else if (typeCode === typeCodes.UInt64) {
                     if (value instanceof System.Int64) {
                         if (value.isNegative()) {
                             this.throwOverflow(typeName);
@@ -1112,8 +1108,8 @@
         toBase64_CalculateAndValidateOutputLength: function (inputLength, insertLineBreaks) {
             var base64LineBreakPosition = scope.internal.base64LineBreakPosition;
 
-            var outlen = ~~(inputLength / 3) * 4;           // the base length - we want integer division here. 
-            outlen += ((inputLength % 3) !== 0) ? 4 : 0;    // at most 4 more chars for the remainder
+            var outlen = ~~(inputLength / 3) * 4; // the base length - we want integer division here. 
+            outlen += ((inputLength % 3) !== 0) ? 4 : 0; // at most 4 more chars for the remainder
 
             if (outlen === 0) {
                 return 0;
@@ -1126,7 +1122,7 @@
                     --newLines;
                 }
 
-                outlen += newLines * 2;                     // the number of line break chars we'll add, "\r\n"
+                outlen += newLines * 2; // the number of line break chars we'll add, "\r\n"
             }
 
             // If we overflow an int then we cannot allocate enough
@@ -1254,7 +1250,7 @@
             var intTab = "\t".charCodeAt(0);
             var intNLn = "\n".charCodeAt(0);
             var intCRt = "\r".charCodeAt(0);
-            var intAtoZ = ("Z".charCodeAt(0) - "A".charCodeAt(0));  // = ('z' - 'a')
+            var intAtoZ = ("Z".charCodeAt(0) - "A".charCodeAt(0)); // = ('z' - 'a')
             var int0To9 = ("9".charCodeAt(0) - "0".charCodeAt(0));
 
             var endInputIndex = inputIndex + inputLength;

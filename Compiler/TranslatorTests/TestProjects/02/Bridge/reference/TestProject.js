@@ -1365,7 +1365,7 @@
         },
 
         sub: function (a, b) {
-	        return Bridge.hasValue(a) && Bridge.hasValue(b) ? a - b : null;
+            return Bridge.hasValue(a) && Bridge.hasValue(b) ? a - b : null;
         },
 
         bnot: function (a) {
@@ -1377,29 +1377,29 @@
         },
 
         not: function (a) {
-	        return Bridge.hasValue(a) ? !a : null;
+            return Bridge.hasValue(a) ? !a : null;
         },
 
         pos: function (a) {
-	        return Bridge.hasValue(a) ? +a : null;
+            return Bridge.hasValue(a) ? +a : null;
         },
 
         lift: function () {
-	        for (var i = 1; i < arguments.length; i++) {
-	            if (!Bridge.hasValue(arguments[i])) {
-	                return null;
-	            }
-	        }
+            for (var i = 1; i < arguments.length; i++) {
+                if (!Bridge.hasValue(arguments[i])) {
+                    return null;
+                }
+            }
 
-	        if (arguments[0] == null) {
-	            return null;
-	        }
+            if (arguments[0] == null) {
+                return null;
+            }
 
-	        if (arguments[0].apply == undefined) {
-	            return arguments[0];
-	        }
+            if (arguments[0].apply == undefined) {
+                return arguments[0];
+            }
 
-	        return arguments[0].apply(null, Array.prototype.slice.call(arguments, 1));
+            return arguments[0].apply(null, Array.prototype.slice.call(arguments, 1));
         },
 
         lift1: function (f, o) {
@@ -1415,13 +1415,15 @@
         },
 
         lifteq: function (f, a, b) {
-            var va = Bridge.hasValue(a), vb = Bridge.hasValue(b);
+            var va = Bridge.hasValue(a),
+                vb = Bridge.hasValue(b);
 
             return (!va && !vb) || (va && vb && (typeof f === "function" ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))));
         },
 
         liftne: function (f, a, b) {
-            var va = Bridge.hasValue(a), vb = Bridge.hasValue(b);
+            var va = Bridge.hasValue(a),
+                vb = Bridge.hasValue(b);
 
             return (va !== vb) || (va && (typeof f === "function" ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))));
         }
@@ -1743,11 +1745,15 @@
                     // StringComparison
                     switch (arguments[2]) {
                         case 1: // CurrentCultureIgnoreCase
-                            return strA.localeCompare(strB, System.Globalization.CultureInfo.getCurrentCulture().name, { sensitivity: "accent" });
+                            return strA.localeCompare(strB, System.Globalization.CultureInfo.getCurrentCulture().name, {
+                                sensitivity: "accent"
+                            });
                         case 2: // InvariantCulture
                             return strA.localeCompare(strB, System.Globalization.CultureInfo.invariantCulture.name);
                         case 3: // InvariantCultureIgnoreCase
-                            return strA.localeCompare(strB, System.Globalization.CultureInfo.invariantCulture.name, { sensitivity: "accent" });
+                            return strA.localeCompare(strB, System.Globalization.CultureInfo.invariantCulture.name, {
+                                sensitivity: "accent"
+                            });
                         case 4: // Ordinal
                             return (strA === strB) ? 0 : ((strA > strB) ? 1 : -1);
                         case 5: // OrdinalIgnoreCase
@@ -2098,128 +2104,128 @@
 
     // @source Browser.js
 
-	var check = function (regex) {
-	    return regex.test(navigator.userAgent.toLowerCase());
-	},
+    var check = function (regex) {
+            return regex.test(navigator.userAgent.toLowerCase());
+        },
 
-    isStrict = Bridge.global.document && Bridge.global.document.compatMode === "CSS1Compat",
+        isStrict = Bridge.global.document && Bridge.global.document.compatMode === "CSS1Compat",
 
-    version = function (is, regex) {
-        var m;
+        version = function (is, regex) {
+            var m;
 
-        return (is && (m = regex.exec(navigator.userAgent.toLowerCase()))) ? parseFloat(m[1]) : 0;
-    },
+            return (is && (m = regex.exec(navigator.userAgent.toLowerCase()))) ? parseFloat(m[1]) : 0;
+        },
 
-    docMode = Bridge.global.document ? Bridge.global.document.documentMode : null,
-    isOpera = check(/opera/),
-    isOpera10_5 = isOpera && check(/version\/10\.5/),
-    isChrome = check(/\bchrome\b/),
-    isWebKit = check(/webkit/),
-    isSafari = !isChrome && check(/safari/),
-    isSafari2 = isSafari && check(/applewebkit\/4/),
-    isSafari3 = isSafari && check(/version\/3/),
-    isSafari4 = isSafari && check(/version\/4/),
-    isSafari5_0 = isSafari && check(/version\/5\.0/),
-    isSafari5 = isSafari && check(/version\/5/),
-    isIE = !isOpera && (check(/msie/) || check(/trident/)),
-    isIE7 = isIE && ((check(/msie 7/) && docMode !== 8 && docMode !== 9 && docMode !== 10) || docMode === 7),
-    isIE8 = isIE && ((check(/msie 8/) && docMode !== 7 && docMode !== 9 && docMode !== 10) || docMode === 8),
-    isIE9 = isIE && ((check(/msie 9/) && docMode !== 7 && docMode !== 8 && docMode !== 10) || docMode === 9),
-    isIE10 = isIE && ((check(/msie 10/) && docMode !== 7 && docMode !== 8 && docMode !== 9) || docMode === 10),
-    isIE11 = isIE && ((check(/trident\/7\.0/) && docMode !== 7 && docMode !== 8 && docMode !== 9 && docMode !== 10) || docMode === 11),
-    isIE6 = isIE && check(/msie 6/),
-    isGecko = !isWebKit && !isIE && check(/gecko/),
-    isGecko3 = isGecko && check(/rv:1\.9/),
-    isGecko4 = isGecko && check(/rv:2\.0/),
-    isGecko5 = isGecko && check(/rv:5\./),
-    isGecko10 = isGecko && check(/rv:10\./),
-    isFF3_0 = isGecko3 && check(/rv:1\.9\.0/),
-    isFF3_5 = isGecko3 && check(/rv:1\.9\.1/),
-    isFF3_6 = isGecko3 && check(/rv:1\.9\.2/),
-    isWindows = check(/windows|win32/),
-    isMac = check(/macintosh|mac os x/),
-    isLinux = check(/linux/),
-    scrollbarSize = null,
-    chromeVersion = version(true, /\bchrome\/(\d+\.\d+)/),
-    firefoxVersion = version(true, /\bfirefox\/(\d+\.\d+)/),
-    ieVersion = version(isIE, /msie (\d+\.\d+)/),
-    operaVersion = version(isOpera, /version\/(\d+\.\d+)/),
-    safariVersion = version(isSafari, /version\/(\d+\.\d+)/),
-    webKitVersion = version(isWebKit, /webkit\/(\d+\.\d+)/),
-    isSecure = Bridge.global.location ? /^https/i.test(Bridge.global.location.protocol) : false,
-    isiPhone = /iPhone/i.test(navigator.platform),
-    isiPod = /iPod/i.test(navigator.platform),
-    isiPad = /iPad/i.test(navigator.userAgent),
-    isBlackberry = /Blackberry/i.test(navigator.userAgent),
-    isAndroid = /Android/i.test(navigator.userAgent),
-    isDesktop = isMac || isWindows || (isLinux && !isAndroid),
-    isTablet = isiPad,
-    isPhone = !isDesktop && !isTablet;
+        docMode = Bridge.global.document ? Bridge.global.document.documentMode : null,
+        isOpera = check(/opera/),
+        isOpera10_5 = isOpera && check(/version\/10\.5/),
+        isChrome = check(/\bchrome\b/),
+        isWebKit = check(/webkit/),
+        isSafari = !isChrome && check(/safari/),
+        isSafari2 = isSafari && check(/applewebkit\/4/),
+        isSafari3 = isSafari && check(/version\/3/),
+        isSafari4 = isSafari && check(/version\/4/),
+        isSafari5_0 = isSafari && check(/version\/5\.0/),
+        isSafari5 = isSafari && check(/version\/5/),
+        isIE = !isOpera && (check(/msie/) || check(/trident/)),
+        isIE7 = isIE && ((check(/msie 7/) && docMode !== 8 && docMode !== 9 && docMode !== 10) || docMode === 7),
+        isIE8 = isIE && ((check(/msie 8/) && docMode !== 7 && docMode !== 9 && docMode !== 10) || docMode === 8),
+        isIE9 = isIE && ((check(/msie 9/) && docMode !== 7 && docMode !== 8 && docMode !== 10) || docMode === 9),
+        isIE10 = isIE && ((check(/msie 10/) && docMode !== 7 && docMode !== 8 && docMode !== 9) || docMode === 10),
+        isIE11 = isIE && ((check(/trident\/7\.0/) && docMode !== 7 && docMode !== 8 && docMode !== 9 && docMode !== 10) || docMode === 11),
+        isIE6 = isIE && check(/msie 6/),
+        isGecko = !isWebKit && !isIE && check(/gecko/),
+        isGecko3 = isGecko && check(/rv:1\.9/),
+        isGecko4 = isGecko && check(/rv:2\.0/),
+        isGecko5 = isGecko && check(/rv:5\./),
+        isGecko10 = isGecko && check(/rv:10\./),
+        isFF3_0 = isGecko3 && check(/rv:1\.9\.0/),
+        isFF3_5 = isGecko3 && check(/rv:1\.9\.1/),
+        isFF3_6 = isGecko3 && check(/rv:1\.9\.2/),
+        isWindows = check(/windows|win32/),
+        isMac = check(/macintosh|mac os x/),
+        isLinux = check(/linux/),
+        scrollbarSize = null,
+        chromeVersion = version(true, /\bchrome\/(\d+\.\d+)/),
+        firefoxVersion = version(true, /\bfirefox\/(\d+\.\d+)/),
+        ieVersion = version(isIE, /msie (\d+\.\d+)/),
+        operaVersion = version(isOpera, /version\/(\d+\.\d+)/),
+        safariVersion = version(isSafari, /version\/(\d+\.\d+)/),
+        webKitVersion = version(isWebKit, /webkit\/(\d+\.\d+)/),
+        isSecure = Bridge.global.location ? /^https/i.test(Bridge.global.location.protocol) : false,
+        isiPhone = /iPhone/i.test(navigator.platform),
+        isiPod = /iPod/i.test(navigator.platform),
+        isiPad = /iPad/i.test(navigator.userAgent),
+        isBlackberry = /Blackberry/i.test(navigator.userAgent),
+        isAndroid = /Android/i.test(navigator.userAgent),
+        isDesktop = isMac || isWindows || (isLinux && !isAndroid),
+        isTablet = isiPad,
+        isPhone = !isDesktop && !isTablet;
 
-	var browser = {
-	    isStrict: isStrict,
-	    isIEQuirks: isIE && (!isStrict && (isIE6 || isIE7 || isIE8 || isIE9)),
-	    isOpera: isOpera,
-	    isOpera10_5: isOpera10_5,
-	    isWebKit: isWebKit,
-	    isChrome: isChrome,
-	    isSafari: isSafari,
-	    isSafari3: isSafari3,
-	    isSafari4: isSafari4,
-	    isSafari5: isSafari5,
-	    isSafari5_0: isSafari5_0,
-	    isSafari2: isSafari2,
-	    isIE: isIE,
-	    isIE6: isIE6,
-	    isIE7: isIE7,
-	    isIE7m: isIE6 || isIE7,
-	    isIE7p: isIE && !isIE6,
-	    isIE8: isIE8,
-	    isIE8m: isIE6 || isIE7 || isIE8,
-	    isIE8p: isIE && !(isIE6 || isIE7),
-	    isIE9: isIE9,
-	    isIE9m: isIE6 || isIE7 || isIE8 || isIE9,
-	    isIE9p: isIE && !(isIE6 || isIE7 || isIE8),
-	    isIE10: isIE10,
-	    isIE10m: isIE6 || isIE7 || isIE8 || isIE9 || isIE10,
-	    isIE10p: isIE && !(isIE6 || isIE7 || isIE8 || isIE9),
-	    isIE11: isIE11,
-	    isIE11m: isIE6 || isIE7 || isIE8 || isIE9 || isIE10 || isIE11,
-	    isIE11p: isIE && !(isIE6 || isIE7 || isIE8 || isIE9 || isIE10),
-	    isGecko: isGecko,
-	    isGecko3: isGecko3,
-	    isGecko4: isGecko4,
-	    isGecko5: isGecko5,
-	    isGecko10: isGecko10,
-	    isFF3_0: isFF3_0,
-	    isFF3_5: isFF3_5,
-	    isFF3_6: isFF3_6,
-	    isFF4: 4 <= firefoxVersion && firefoxVersion < 5,
-	    isFF5: 5 <= firefoxVersion && firefoxVersion < 6,
-	    isFF10: 10 <= firefoxVersion && firefoxVersion < 11,
-	    isLinux: isLinux,
-	    isWindows: isWindows,
-	    isMac: isMac,
-	    chromeVersion: chromeVersion,
-	    firefoxVersion: firefoxVersion,
-	    ieVersion: ieVersion,
-	    operaVersion: operaVersion,
-	    safariVersion: safariVersion,
-	    webKitVersion: webKitVersion,
-	    isSecure: isSecure,
-	    isiPhone: isiPhone,
-	    isiPod: isiPod,
-	    isiPad: isiPad,
-	    isBlackberry: isBlackberry,
-	    isAndroid: isAndroid,
-	    isDesktop: isDesktop,
-	    isTablet: isTablet,
-	    isPhone: isPhone,
-	    iOS: isiPhone || isiPad || isiPod,
-	    standalone: Bridge.global.navigator ? !!Bridge.global.navigator.standalone : false
-	};
+    var browser = {
+        isStrict: isStrict,
+        isIEQuirks: isIE && (!isStrict && (isIE6 || isIE7 || isIE8 || isIE9)),
+        isOpera: isOpera,
+        isOpera10_5: isOpera10_5,
+        isWebKit: isWebKit,
+        isChrome: isChrome,
+        isSafari: isSafari,
+        isSafari3: isSafari3,
+        isSafari4: isSafari4,
+        isSafari5: isSafari5,
+        isSafari5_0: isSafari5_0,
+        isSafari2: isSafari2,
+        isIE: isIE,
+        isIE6: isIE6,
+        isIE7: isIE7,
+        isIE7m: isIE6 || isIE7,
+        isIE7p: isIE && !isIE6,
+        isIE8: isIE8,
+        isIE8m: isIE6 || isIE7 || isIE8,
+        isIE8p: isIE && !(isIE6 || isIE7),
+        isIE9: isIE9,
+        isIE9m: isIE6 || isIE7 || isIE8 || isIE9,
+        isIE9p: isIE && !(isIE6 || isIE7 || isIE8),
+        isIE10: isIE10,
+        isIE10m: isIE6 || isIE7 || isIE8 || isIE9 || isIE10,
+        isIE10p: isIE && !(isIE6 || isIE7 || isIE8 || isIE9),
+        isIE11: isIE11,
+        isIE11m: isIE6 || isIE7 || isIE8 || isIE9 || isIE10 || isIE11,
+        isIE11p: isIE && !(isIE6 || isIE7 || isIE8 || isIE9 || isIE10),
+        isGecko: isGecko,
+        isGecko3: isGecko3,
+        isGecko4: isGecko4,
+        isGecko5: isGecko5,
+        isGecko10: isGecko10,
+        isFF3_0: isFF3_0,
+        isFF3_5: isFF3_5,
+        isFF3_6: isFF3_6,
+        isFF4: 4 <= firefoxVersion && firefoxVersion < 5,
+        isFF5: 5 <= firefoxVersion && firefoxVersion < 6,
+        isFF10: 10 <= firefoxVersion && firefoxVersion < 11,
+        isLinux: isLinux,
+        isWindows: isWindows,
+        isMac: isMac,
+        chromeVersion: chromeVersion,
+        firefoxVersion: firefoxVersion,
+        ieVersion: ieVersion,
+        operaVersion: operaVersion,
+        safariVersion: safariVersion,
+        webKitVersion: webKitVersion,
+        isSecure: isSecure,
+        isiPhone: isiPhone,
+        isiPod: isiPod,
+        isiPad: isiPad,
+        isBlackberry: isBlackberry,
+        isAndroid: isAndroid,
+        isDesktop: isDesktop,
+        isTablet: isTablet,
+        isPhone: isPhone,
+        iOS: isiPhone || isiPad || isiPod,
+        standalone: Bridge.global.navigator ? !!Bridge.global.navigator.standalone : false
+    };
 
-	Bridge.Browser = browser;
+    Bridge.Browser = browser;
 
     // @source Class.js
     // The base Class implementation
@@ -2337,7 +2343,7 @@
             if (!preventClear) {
                 Bridge.Class.staticInitAllow = false;
             }
-            
+
             prop = prop || {};
 
             var extend = prop.$inherits || prop.inherits,
@@ -2379,7 +2385,7 @@
                 cls = prop.hasOwnProperty("constructor") && prop.constructor || prop.$constructor;
 
             if (!cls) {
-                Class = function() {
+                Class = function () {
                     this.$initialize();
                     if (Class.$base) {
                         Class.$base.$constructor.call(this);
@@ -2389,7 +2395,7 @@
             } else {
                 Class = cls;
             }
-            
+
             scope = Bridge.Class.set(scope, className, Class);
 
             if (cacheName) {
@@ -2406,7 +2412,7 @@
             Class.$base = base;
             prototype = extend ? (extend[0].$$initCtor ? new extend[0].$$initCtor() : new extend[0]()) : new Object();
 
-            Class.$$initCtor = function () { };
+            Class.$$initCtor = function () {};
             Class.$$initCtor.prototype = prototype;
             Class.$$initCtor.prototype.constructor = Class;
 
@@ -2446,7 +2452,7 @@
 
             for (name in prop) {
                 keys.push(name);
-            }          
+            }
 
             for (i = 0; i < keys.length; i++) {
                 name = keys[i];
@@ -2515,7 +2521,7 @@
             if (isEntryPoint) {
                 Bridge.Class.$queue.push(Class);
             }
-            
+
             Class.$staticInit = fn;
 
             return Class;
@@ -2546,9 +2552,9 @@
                 exists,
                 i;
 
-            for (i = 0; i < (nameParts.length - 1) ; i++) {
+            for (i = 0; i < (nameParts.length - 1); i++) {
                 if (typeof scope[nameParts[i]] == "undefined") {
-                    scope[nameParts[i]] = { };
+                    scope[nameParts[i]] = {};
                 }
 
                 scope = scope[nameParts[i]];
@@ -2563,25 +2569,25 @@
 
                     if (typeof o === "function" && o.$$name) {
                         (function (cls, key, o) {
-							Object.defineProperty(cls, key, {
-								get: function () {
-									if (Bridge.Class.staticInitAllow) {
-										if (o.$staticInit) {
-											o.$staticInit();
-										}
+                            Object.defineProperty(cls, key, {
+                                get: function () {
+                                    if (Bridge.Class.staticInitAllow) {
+                                        if (o.$staticInit) {
+                                            o.$staticInit();
+                                        }
 
-										Bridge.Class.defineProperty(cls, key, o);
-									}
+                                        Bridge.Class.defineProperty(cls, key, o);
+                                    }
 
-									return o;
-								},
-								set: function (newValue) {
-									o = newValue;
-								},
-								enumerable: true,
-								configurable: true
-							});
-						})(cls, key, o);
+                                    return o;
+                                },
+                                set: function (newValue) {
+                                    o = newValue;
+                                },
+                                enumerable: true,
+                                configurable: true
+                            });
+                        })(cls, key, o);
                     }
                 }
             }
@@ -2597,7 +2603,7 @@
 
                                 Bridge.Class.defineProperty(scope, name, cls);
                             }
-                            
+
                             return cls;
                         },
                         set: function (newValue) {
@@ -2607,7 +2613,7 @@
                         configurable: true
                     });
                 })(scope, name, cls);
-                
+
             } else {
                 scope[name] = cls;
             }
@@ -2692,9 +2698,13 @@
 
     Bridge.define("System.ICloneable");
 
-    Bridge.define('System.IComparable$1', function (T) { return {}; });
+    Bridge.define('System.IComparable$1', function (T) {
+        return {};
+    });
 
-    Bridge.define('System.IEquatable$1', function (T) { return {}; });
+    Bridge.define('System.IEquatable$1', function (T) {
+        return {};
+    });
 
     Bridge.define("Bridge.IPromise");
 
@@ -2831,11 +2841,11 @@
 
     Bridge.define("System.Exception", {
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             this.message = message ? message : null;
             this.innerException = innerException ? innerException : null;
             this.errorStack = new Error();
-            this.data = new (System.Collections.Generic.Dictionary$2(Object, Object))();
+            this.data = new(System.Collections.Generic.Dictionary$2(Object, Object))();
         },
 
         getMessage: function () {
@@ -2881,7 +2891,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "System error.", innerException);
         }
     });
@@ -2890,7 +2900,7 @@
         inherits: [System.SystemException],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             if (!message) {
                 message = "Insufficient memory to continue the execution of the program.";
             }
@@ -2903,7 +2913,7 @@
         inherits: [System.SystemException],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             if (!message) {
                 message = "Index was outside the bounds of the array.";
             }
@@ -2916,7 +2926,7 @@
         inherits: [System.SystemException],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             if (!message) {
                 message = "The operation has timed out.";
             }
@@ -2938,22 +2948,22 @@
         },
 
         constructor: function () {
-			this.$initialize();
+            this.$initialize();
             System.TimeoutException.$constructor.call(this);
         },
 
         constructor$1: function (message) {
-			this.$initialize();
+            this.$initialize();
             System.TimeoutException.$constructor.call(this, message);
         },
 
         constructor$2: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.TimeoutException.$constructor.call(this, message, innerException);
         },
 
         constructor$3: function (regexInput, regexPattern, matchTimeout) {
-			this.$initialize();
+            this.$initialize();
             this._regexInput = regexInput;
             this._regexPattern = regexPattern;
             this._matchTimeout = matchTimeout;
@@ -2979,7 +2989,7 @@
         inherits: [System.Exception],
 
         constructor: function (error) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, error.message);
             this.errorStack = error;
             this.error = error;
@@ -2994,7 +3004,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, paramName, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "Value does not fall within the expected range.", innerException);
             this.paramName = paramName ? paramName : null;
         },
@@ -3008,7 +3018,7 @@
         inherits: [System.ArgumentException],
 
         constructor: function (paramName, message, innerException) {
-			this.$initialize();
+            this.$initialize();
             if (!message) {
                 message = "Value cannot be null.";
 
@@ -3025,7 +3035,7 @@
         inherits: [System.ArgumentException],
 
         constructor: function (paramName, message, innerException, actualValue) {
-			this.$initialize();
+            this.$initialize();
             if (!message) {
                 message = "Value is out of range.";
 
@@ -3048,7 +3058,7 @@
         inherits: [System.ArgumentException],
 
         constructor: function (paramName, invalidCultureName, message, innerException, invalidCultureId) {
-			this.$initialize();
+            this.$initialize();
             if (!message) {
                 message = "Culture is not supported.";
 
@@ -3080,7 +3090,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "Key not found.", innerException);
         }
     });
@@ -3089,7 +3099,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "Overflow or underflow in the arithmetic operation.", innerException);
         }
     });
@@ -3098,7 +3108,7 @@
         inherits: [System.ArithmeticException],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.ArithmeticException.$constructor.call(this, message || "Division by 0.", innerException);
         }
     });
@@ -3107,7 +3117,7 @@
         inherits: [System.ArithmeticException],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.ArithmeticException.$constructor.call(this, message || "Arithmetic operation resulted in an overflow.", innerException);
         }
     });
@@ -3116,7 +3126,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "Invalid format.", innerException);
         }
     });
@@ -3125,7 +3135,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "The cast is not valid.", innerException);
         }
     });
@@ -3134,7 +3144,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "Operation is not valid due to the current state of the object.", innerException);
         }
     });
@@ -3143,7 +3153,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "The method or operation is not implemented.", innerException);
         }
     });
@@ -3152,7 +3162,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "Specified method is not supported.", innerException);
         }
     });
@@ -3161,7 +3171,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "Object is null.", innerException);
         }
     });
@@ -3170,7 +3180,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "Attempted to operate on an array with the incorrect number of dimensions.", innerException);
         }
     });
@@ -3179,7 +3189,7 @@
         inherits: [System.Exception],
 
         constructor: function (args, message, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || (args.length && args[0] ? args[0].toString() : "An error occurred"), innerException);
             this.arguments = System.Array.clone(args);
         },
@@ -3193,7 +3203,7 @@
         inherits: [System.Exception],
 
         constructor: function (message, token, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, message || "Operation was canceled.", innerException);
             this.cancellationToken = token || System.Threading.CancellationToken.none;
         }
@@ -3203,7 +3213,7 @@
         inherits: [System.OperationCanceledException],
 
         constructor: function (message, task, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.OperationCanceledException.$constructor.call(this, message || "A task was canceled.", null, innerException);
             this.task = task || null;
         }
@@ -3213,8 +3223,8 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerExceptions) {
-			this.$initialize();
-            this.innerExceptions = new (System.Collections.ObjectModel.ReadOnlyCollection$1(System.Exception))(Bridge.hasValue(innerExceptions) ? Bridge.toArray(innerExceptions) : []);
+            this.$initialize();
+            this.innerExceptions = new(System.Collections.ObjectModel.ReadOnlyCollection$1(System.Exception))(Bridge.hasValue(innerExceptions) ? Bridge.toArray(innerExceptions) : []);
             System.Exception.$constructor.call(this, message || 'One or more errors occurred.', this.innerExceptions.items.length ? this.innerExceptions.items[0] : null);
         },
 
@@ -3239,10 +3249,10 @@
 
         flatten: function () {
             // Initialize a collection to contain the flattened exceptions.
-            var flattenedExceptions = new (System.Collections.Generic.List$1(System.Exception))();
+            var flattenedExceptions = new(System.Collections.Generic.List$1(System.Exception))();
 
             // Create a list to remember all aggregates to be flattened, this will be accessed like a FIFO queue
-            var exceptionsToFlatten = new (System.Collections.Generic.List$1(System.AggregateException))();
+            var exceptionsToFlatten = new(System.Collections.Generic.List$1(System.AggregateException))();
             exceptionsToFlatten.add(this);
             var nDequeueIndex = 0;
 
@@ -3251,7 +3261,7 @@
                 // dequeue one from exceptionsToFlatten
                 var currentInnerExceptions = exceptionsToFlatten.getItem(nDequeueIndex++).innerExceptions;
 
-                for (var i = 0; i < currentInnerExceptions.getCount() ; i++) {
+                for (var i = 0; i < currentInnerExceptions.getCount(); i++) {
                     var currentInnerException = currentInnerExceptions.get(i);
 
                     if (!Bridge.hasValue(currentInnerException)) {
@@ -3278,7 +3288,7 @@
         inherits: [System.SystemException],
 
         constructor: function (message, innerException) {
-			this.$initialize();
+            this.$initialize();
             if (!message) {
                 message = "Index was outside the bounds of the array.";
             }
@@ -3395,7 +3405,7 @@
                     throw new System.ArgumentException(null, "format");
                 }
 
-                formats = { };
+                formats = {};
                 formats[format] = f[format];
             } else {
                 formats = f;
@@ -3428,7 +3438,7 @@
                 throw new System.ArgumentOutOfRangeException("month");
             }
 
-            return this.monthNames[month-1];
+            return this.monthNames[month - 1];
         },
 
         getShortestDayName: function (dayOfWeek) {
@@ -3479,7 +3489,7 @@
 
         statics: {
             constructor: function () {
-                this.numberNegativePatterns =  ["(n)", "-n", "- n", "n-", "n -"];
+                this.numberNegativePatterns = ["(n)", "-n", "- n", "n-", "n -"];
                 this.currencyNegativePatterns = ["($n)", "-$n", "$-n", "$n-", "(n$)", "-n$", "n-$", "n$-", "-n $", "-$ n", "n $-", "$ n-", "$ -n", "n- $", "($ n)", "(n $)"];
                 this.currencyPositivePatterns = ["$n", "n$", "$ n", "n $"];
                 this.percentNegativePatterns = ["-n %", "-n%", "-%n", "%-n", "%n-", "n-%", "n%-", "-% n", "n %-", "% n-", "% -n", "n- %"];
@@ -3612,7 +3622,7 @@
         },
 
         constructor: function (name, create) {
-			this.$initialize();
+            this.$initialize();
             this.name = name;
 
             if (!System.Globalization.CultureInfo.cultures) {
@@ -3635,7 +3645,7 @@
             }
         },
 
-        getFormat:  function (type) {
+        getFormat: function (type) {
             switch (type) {
                 case System.Globalization.NumberFormatInfo:
                     return this.numberFormat;
@@ -3686,7 +3696,7 @@
             return (Math.exp(x) + Math.exp(-x)) / 2;
         },
 
-        tanh: Math.tanh|| function (x) {
+        tanh: Math.tanh || function (x) {
             if (x === Infinity) {
                 return 1;
             } else if (x === -Infinity) {
@@ -3730,7 +3740,9 @@
                 throw new System.ArgumentNullException("value");
             }
 
-            var result = { v: false };
+            var result = {
+                v: false
+            };
 
             if (!System.Boolean.tryParse(value, result)) {
                 throw new System.FormatException("Bad format for Boolean value");
@@ -3757,8 +3769,8 @@
             }
 
             var start = 0,
-                end = value.length-1;
- 
+                end = value.length - 1;
+
             while (start < value.length) {
                 if (!System.Char.isWhiteSpace(value[start]) && !System.Char.isNull(value.charCodeAt(start))) {
                     break;
@@ -3766,15 +3778,15 @@
 
                 start++;
             }
- 
+
             while (end >= start) {
                 if (!System.Char.isWhiteSpace(value[end]) && !System.Char.isNull(value.charCodeAt(end))) {
                     break;
                 }
 
-                end--;            
+                end--;
             }
- 
+
             value = value.substr(start, end - start + 1);
 
             if (System.String.equals(System.Boolean.trueString, value, 5)) {
@@ -3805,7 +3817,7 @@
                     max: max,
 
                     instanceOf: function (instance) {
-                        return typeof(instance) === "number" && Math.floor(instance, 0) == instance && instance >= min && instance <= max;
+                        return typeof (instance) === "number" && Math.floor(instance, 0) == instance && instance >= min && instance <= max;
                     },
                     getDefaultValue: function () {
                         return 0;
@@ -3837,7 +3849,7 @@
         inherits: [System.IComparable, System.IFormattable],
         statics: {
             instanceOf: function (instance) {
-                return typeof(instance) === "number" && isFinite(instance) && Math.floor(instance, 0) === instance;
+                return typeof (instance) === "number" && isFinite(instance) && Math.floor(instance, 0) === instance;
             },
 
             getDefaultValue: function () {
@@ -3895,7 +3907,7 @@
                                 } else {
                                     coefficient /= 10;
                                 }
-                                
+
                                 exponent++;
                             }
 
@@ -4019,7 +4031,7 @@
                     } else {
                         number *= -1;
                     }
-                    
+
                     format = groups[1];
                 } else {
                     format = groups[(isDecimal || isLong ? number.ne(0) : !number) && groups.length > 2 ? 2 : 0];
@@ -4219,7 +4231,8 @@
 
                 if (isDecimal) {
                     number = number.abs().mul(roundingFactor).round().div(roundingFactor).toString();
-                } if (isLong) {
+                }
+                if (isLong) {
                     number = number.abs().mul(roundingFactor).div(roundingFactor).toString();
                 } else {
                     number = "" + (Math.round(Math.abs(number) * roundingFactor) / roundingFactor);
@@ -4461,7 +4474,7 @@
 
                     return type.min;
                 }
-                
+
                 return x;
             },
 
@@ -5824,7 +5837,7 @@ System.UInt64.MaxValue = System.UInt64(Bridge.$Long.MAX_UNSIGNED_VALUE);
             return new Date(-864e13);
         },
 
-        utcNow:  function () {
+        utcNow: function () {
             var d = new Date();
 
             return new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds(), d.getUTCMilliseconds());
@@ -5841,10 +5854,10 @@ System.UInt64.MaxValue = System.UInt64(Bridge.$Long.MAX_UNSIGNED_VALUE);
         },
 
         isUseGenitiveForm: function (format, index, tokenLen, patternToMatch) {
-	        var i,
+            var i,
                 repeat = 0;
 
-	        for (i = index - 1; i >= 0 && format[i] !== patternToMatch; i--) { }
+            for (i = index - 1; i >= 0 && format[i] !== patternToMatch; i--) {}
 
             if (i >= 0) {
                 while (--i >= 0 && format[i] === patternToMatch) {
@@ -5856,7 +5869,7 @@ System.UInt64.MaxValue = System.UInt64(Bridge.$Long.MAX_UNSIGNED_VALUE);
                 }
             }
 
-            for (i = index + tokenLen; i < format.length && format[i] !== patternToMatch; i++) { }
+            for (i = index + tokenLen; i < format.length && format[i] !== patternToMatch; i++) {}
 
             if (i < format.length) {
                 repeat = 0;
@@ -5897,167 +5910,167 @@ System.UInt64.MaxValue = System.UInt64(Bridge.$Long.MAX_UNSIGNED_VALUE);
             }
 
             return format.replace(/(\\.|'[^']*'|"[^"]*"|d{1,4}|M{1,4}|yyyy|yy|y|HH?|hh?|mm?|ss?|tt?|f{1,3}|z{1,3}|\:|\/)/g,
-			    function (match, group, index) {
-			        var part = match;
+                function (match, group, index) {
+                    var part = match;
 
-			        switch (match) {
-			            case "dddd":
-			                part = df.dayNames[dayOfWeek];
+                    switch (match) {
+                        case "dddd":
+                            part = df.dayNames[dayOfWeek];
 
-			                break;
-			            case "ddd":
-			                part = df.abbreviatedDayNames[dayOfWeek];
+                            break;
+                        case "ddd":
+                            part = df.abbreviatedDayNames[dayOfWeek];
 
-			                break;
-			            case "dd":
-			                part = dayOfMonth < 10 ? "0" + dayOfMonth : dayOfMonth;
+                            break;
+                        case "dd":
+                            part = dayOfMonth < 10 ? "0" + dayOfMonth : dayOfMonth;
 
-			                break;
-			            case "d":
-			                part = dayOfMonth;
+                            break;
+                        case "d":
+                            part = dayOfMonth;
 
-			                break;
-			            case "MMMM":
-			                if (me.isUseGenitiveForm(format, index, 4, "d")) {
-			                    part = df.monthGenitiveNames[month];
-			                } else {
-			                    part = df.monthNames[month];
-			                }
+                            break;
+                        case "MMMM":
+                            if (me.isUseGenitiveForm(format, index, 4, "d")) {
+                                part = df.monthGenitiveNames[month];
+                            } else {
+                                part = df.monthNames[month];
+                            }
 
-			                break;
-			            case "MMM":
-			                if (me.isUseGenitiveForm(format, index, 3, "d")) {
-			                    part = df.abbreviatedMonthGenitiveNames[month];
-			                } else {
-			                    part = df.abbreviatedMonthNames[month];
-			                }
+                            break;
+                        case "MMM":
+                            if (me.isUseGenitiveForm(format, index, 3, "d")) {
+                                part = df.abbreviatedMonthGenitiveNames[month];
+                            } else {
+                                part = df.abbreviatedMonthNames[month];
+                            }
 
-			                break;
-			            case "MM":
-			                part = (month + 1) < 10 ? "0" + (month + 1) : (month + 1);
+                            break;
+                        case "MM":
+                            part = (month + 1) < 10 ? "0" + (month + 1) : (month + 1);
 
-			                break;
-			            case "M":
-			                part = month + 1;
+                            break;
+                        case "M":
+                            part = month + 1;
 
-			                break;
-			            case "yyyy":
-			                part = year;
+                            break;
+                        case "yyyy":
+                            part = year;
 
-			                break;
-			            case "yy":
-			                part = (year % 100).toString();
+                            break;
+                        case "yy":
+                            part = (year % 100).toString();
 
-			                if (part.length === 1) {
-			                    part = "0" + part;
-			                }
+                            if (part.length === 1) {
+                                part = "0" + part;
+                            }
 
-			                break;
-			            case "y":
-			                part = year % 100;
+                            break;
+                        case "y":
+                            part = year % 100;
 
-			                break;
-			            case "h":
-			            case "hh":
-			                part = hour % 12;
+                            break;
+                        case "h":
+                        case "hh":
+                            part = hour % 12;
 
-			                if (!part) {
-			                    part = "12";
-			                } else if (match === "hh" && part.length === 1) {
-			                    part = "0" + part;
-			                }
+                            if (!part) {
+                                part = "12";
+                            } else if (match === "hh" && part.length === 1) {
+                                part = "0" + part;
+                            }
 
-			                break;
-			            case "HH":
-			                part = hour.toString();
+                            break;
+                        case "HH":
+                            part = hour.toString();
 
-			                if (part.length === 1) {
-			                    part = "0" + part;
-			                }
+                            if (part.length === 1) {
+                                part = "0" + part;
+                            }
 
-			                break;
-			            case "H":
-			                part = hour;
-			                break;
-			            case "mm":
-			                part = minute.toString();
+                            break;
+                        case "H":
+                            part = hour;
+                            break;
+                        case "mm":
+                            part = minute.toString();
 
-			                if (part.length === 1) {
-			                    part = "0" + part;
-			                }
+                            if (part.length === 1) {
+                                part = "0" + part;
+                            }
 
-			                break;
-			            case "m":
-			                part = minute;
+                            break;
+                        case "m":
+                            part = minute;
 
-			                break;
-			            case "ss":
-			                part = second.toString();
+                            break;
+                        case "ss":
+                            part = second.toString();
 
-			                if (part.length === 1) {
-			                    part = "0" + part;
-			                }
+                            if (part.length === 1) {
+                                part = "0" + part;
+                            }
 
-			                break;
-			            case "s":
-			                part = second;
-			                break;
-			            case "t":
-			            case "tt":
-			                part = (hour < 12) ? df.amDesignator : df.pmDesignator;
+                            break;
+                        case "s":
+                            part = second;
+                            break;
+                        case "t":
+                        case "tt":
+                            part = (hour < 12) ? df.amDesignator : df.pmDesignator;
 
-			                if (match === "t") {
-			                    part = part.charAt(0);
-			                }
+                            if (match === "t") {
+                                part = part.charAt(0);
+                            }
 
-			                break;
-			            case "f":
-			            case "ff":
-			            case "fff":
-			                part = millisecond.toString();
+                            break;
+                        case "f":
+                        case "ff":
+                        case "fff":
+                            part = millisecond.toString();
 
-			                if (part.length < 3) {
-			                    part = Array(3 - part.length).join("0") + part;
-			                }
+                            if (part.length < 3) {
+                                part = Array(3 - part.length).join("0") + part;
+                            }
 
-			                if (match === "ff") {
-			                    part = part.substr(0, 2);
-			                } else if (match === "f") {
-			                    part = part.charAt(0);
-			                }
+                            if (match === "ff") {
+                                part = part.substr(0, 2);
+                            } else if (match === "f") {
+                                part = part.charAt(0);
+                            }
 
-			                break;
-			            case "z":
-			                part = timezoneOffset / 60;
-			                part = ((part >= 0) ? "-" : "+") + Math.floor(Math.abs(part));
+                            break;
+                        case "z":
+                            part = timezoneOffset / 60;
+                            part = ((part >= 0) ? "-" : "+") + Math.floor(Math.abs(part));
 
-			                break;
-			            case "zz":
-			            case "zzz":
-			                part = timezoneOffset / 60;
-			                part = ((part >= 0) ? "-" : "+") + System.String.alignString(Math.floor(Math.abs(part)).toString(), 2, "0", 2);
+                            break;
+                        case "zz":
+                        case "zzz":
+                            part = timezoneOffset / 60;
+                            part = ((part >= 0) ? "-" : "+") + System.String.alignString(Math.floor(Math.abs(part)).toString(), 2, "0", 2);
 
-			                if (match === "zzz") {
-			                    part += df.timeSeparator + System.String.alignString(Math.floor(Math.abs(timezoneOffset % 60)).toString(), 2, "0", 2);
-			                }
+                            if (match === "zzz") {
+                                part += df.timeSeparator + System.String.alignString(Math.floor(Math.abs(timezoneOffset % 60)).toString(), 2, "0", 2);
+                            }
 
-			                break;
-			            case ":":
-			                part = df.timeSeparator;
+                            break;
+                        case ":":
+                            part = df.timeSeparator;
 
-			                break;
-			            case "/":
-			                part = df.dateSeparator;
+                            break;
+                        case "/":
+                            part = df.dateSeparator;
 
-			                break;
-			            default:
-			                part = match.substr(1, match.length - 1 - (match.charAt(0) !== "\\"));
+                            break;
+                        default:
+                            part = match.substr(1, match.length - 1 - (match.charAt(0) !== "\\"));
 
-			                break;
-			        }
+                            break;
+                    }
 
-			        return part;
-			    });
+                    return part;
+                });
         },
 
         parse: function (value, provider, utc, silent) {
@@ -6547,22 +6560,22 @@ System.UInt64.MaxValue = System.UInt64(Bridge.$Long.MAX_UNSIGNED_VALUE);
 
         toUTC: function (date) {
             return new Date(date.getUTCFullYear(),
-                            date.getUTCMonth(),
-                            date.getUTCDate(),
-                            date.getUTCHours(),
-                            date.getUTCMinutes(),
-                            date.getUTCSeconds(),
-                            date.getUTCMilliseconds());
+                date.getUTCMonth(),
+                date.getUTCDate(),
+                date.getUTCHours(),
+                date.getUTCMinutes(),
+                date.getUTCSeconds(),
+                date.getUTCMilliseconds());
         },
 
         toLocal: function (date) {
             return new Date(Date.UTC(date.getFullYear(),
-                                     date.getMonth(),
-                                     date.getDate(),
-                                     date.getHours(),
-                                     date.getMinutes(),
-                                     date.getSeconds(),
-                                     date.getMilliseconds()));
+                date.getMonth(),
+                date.getDate(),
+                date.getHours(),
+                date.getMinutes(),
+                date.getSeconds(),
+                date.getMilliseconds()));
         },
 
         dateDiff: function (a, b) {
@@ -6622,7 +6635,7 @@ System.UInt64.MaxValue = System.UInt64(Bridge.$Long.MAX_UNSIGNED_VALUE);
 
         config: {
             alias: [
-            "compareTo", "System$IComparable$compareTo"
+                "compareTo", "System$IComparable$compareTo"
             ]
         },
 
@@ -6704,7 +6717,7 @@ System.UInt64.MaxValue = System.UInt64(Bridge.$Long.MAX_UNSIGNED_VALUE);
         },
 
         constructor: function () {
-			this.$initialize();
+            this.$initialize();
             this.ticks = System.Int64.Zero;
 
             if (arguments.length === 1) {
@@ -7164,7 +7177,7 @@ Bridge.define("System.Text.StringBuilder", {
 
     Bridge.define("System.Diagnostics.Stopwatch", {
         constructor: function () {
-			this.$initialize();
+            this.$initialize();
             this._stopTime = System.Int64.Zero;
             this._startTime = System.Int64.Zero;
             this.isRunning = false;
@@ -7224,113 +7237,120 @@ Bridge.define("System.Text.StringBuilder", {
     if (typeof (window) !== 'undefined' && window.performance && window.performance.now) {
         System.Diagnostics.Stopwatch.frequency = new System.Int64(1e6);
         System.Diagnostics.Stopwatch.isHighResolution = true;
-        System.Diagnostics.Stopwatch.getTimestamp = function () { return new System.Int64(Math.round(window.performance.now() * 1000)); };
+        System.Diagnostics.Stopwatch.getTimestamp = function () {
+            return new System.Int64(Math.round(window.performance.now() * 1000));
+        };
     } else if (typeof (process) !== 'undefined' && process.hrtime) {
         System.Diagnostics.Stopwatch.frequency = new System.Int64(1e9);
         System.Diagnostics.Stopwatch.isHighResolution = true;
-        System.Diagnostics.Stopwatch.getTimestamp = function () { var hr = process.hrtime(); return new System.Int64(hr[0]).mul(1e9).add(hr[1]); };
+        System.Diagnostics.Stopwatch.getTimestamp = function () {
+            var hr = process.hrtime();
+            return new System.Int64(hr[0]).mul(1e9).add(hr[1]);
+        };
     } else {
         System.Diagnostics.Stopwatch.frequency = new System.Int64(1e3);
         System.Diagnostics.Stopwatch.isHighResolution = false;
-        System.Diagnostics.Stopwatch.getTimestamp = function () { return new System.Int64(new Date().valueOf()); };
+        System.Diagnostics.Stopwatch.getTimestamp = function () {
+            return new System.Int64(new Date().valueOf());
+        };
     }
 
     System.Diagnostics.Contracts.Contract = {
-	    reportFailure: function (failureKind, userMessage, condition, innerException, TException) {
-	        var conditionText = condition.toString();
+        reportFailure: function (failureKind, userMessage, condition, innerException, TException) {
+            var conditionText = condition.toString();
 
-		    conditionText = conditionText.substring(conditionText.indexOf("return") + 7);
-		    conditionText = conditionText.substr(0, conditionText.lastIndexOf(";"));
+            conditionText = conditionText.substring(conditionText.indexOf("return") + 7);
+            conditionText = conditionText.substr(0, conditionText.lastIndexOf(";"));
 
-		    var failureMessage = (conditionText) ? "Contract '" + conditionText + "' failed" : "Contract failed";
-		    var displayMessage = (userMessage) ? failureMessage + ": " + userMessage : failureMessage;
+            var failureMessage = (conditionText) ? "Contract '" + conditionText + "' failed" : "Contract failed";
+            var displayMessage = (userMessage) ? failureMessage + ": " + userMessage : failureMessage;
 
-		    if (TException) {
-			    throw new TException(conditionText, userMessage);
-		    } else {
-			    throw new System.Diagnostics.Contracts.ContractException(failureKind, displayMessage, userMessage, conditionText, innerException);
-		    }
-	    },
-	    assert: function (failureKind, condition, message) {
-		    if (!condition()) {
-			    System.Diagnostics.Contracts.Contract.reportFailure(failureKind, message, condition, null);
-		    }
-	    },
-	    requires: function (TException, condition, message) {
-		    if (!condition()) {
-			    System.Diagnostics.Contracts.Contract.reportFailure(0, message, condition, null, TException);
-		    }
-	    },
-	    forAll: function (fromInclusive, toExclusive, predicate) {
-		    if (!predicate) {
-			    throw new System.ArgumentNullException("predicate");
-		    }
+            if (TException) {
+                throw new TException(conditionText, userMessage);
+            } else {
+                throw new System.Diagnostics.Contracts.ContractException(failureKind, displayMessage, userMessage, conditionText, innerException);
+            }
+        },
+        assert: function (failureKind, condition, message) {
+            if (!condition()) {
+                System.Diagnostics.Contracts.Contract.reportFailure(failureKind, message, condition, null);
+            }
+        },
+        requires: function (TException, condition, message) {
+            if (!condition()) {
+                System.Diagnostics.Contracts.Contract.reportFailure(0, message, condition, null, TException);
+            }
+        },
+        forAll: function (fromInclusive, toExclusive, predicate) {
+            if (!predicate) {
+                throw new System.ArgumentNullException("predicate");
+            }
 
-		    for (; fromInclusive < toExclusive; fromInclusive++) {
-			    if (!predicate(fromInclusive)) {
-				    return false;
-			    }
-		    }
+            for (; fromInclusive < toExclusive; fromInclusive++) {
+                if (!predicate(fromInclusive)) {
+                    return false;
+                }
+            }
 
-		    return true;
-	    },
-	    forAll$1: function (collection, predicate) {
-		    if (!collection) {
-			    throw new System.ArgumentNullException("collection");
-		    }
+            return true;
+        },
+        forAll$1: function (collection, predicate) {
+            if (!collection) {
+                throw new System.ArgumentNullException("collection");
+            }
 
-		    if (!predicate) {
-			    throw new System.ArgumentNullException("predicate");
-		    }
+            if (!predicate) {
+                throw new System.ArgumentNullException("predicate");
+            }
 
-		    var enumerator = Bridge.getEnumerator(collection);
+            var enumerator = Bridge.getEnumerator(collection);
 
-	        try {
-			    while (enumerator.moveNext()) {
-				    if (!predicate(enumerator.getCurrent())) {
-					    return false;
-				    }
-			    }
-			    return true;
-		    } finally {
-			    enumerator.dispose();
-		    }
-	    },
-	    exists: function (fromInclusive, toExclusive, predicate) {
-		    if (!predicate) {
-			    throw new System.ArgumentNullException("predicate");
-		    }
+            try {
+                while (enumerator.moveNext()) {
+                    if (!predicate(enumerator.getCurrent())) {
+                        return false;
+                    }
+                }
+                return true;
+            } finally {
+                enumerator.dispose();
+            }
+        },
+        exists: function (fromInclusive, toExclusive, predicate) {
+            if (!predicate) {
+                throw new System.ArgumentNullException("predicate");
+            }
 
-		    for (; fromInclusive < toExclusive; fromInclusive++) {
-			    if (predicate(fromInclusive)) {
-				    return true;
-			    }
-		    }
+            for (; fromInclusive < toExclusive; fromInclusive++) {
+                if (predicate(fromInclusive)) {
+                    return true;
+                }
+            }
 
-		    return false;
-	    },
-	    exists$1: function (collection, predicate) {
-		    if (!collection) {
-			    throw new System.ArgumentNullException("collection");
-		    }
+            return false;
+        },
+        exists$1: function (collection, predicate) {
+            if (!collection) {
+                throw new System.ArgumentNullException("collection");
+            }
 
-		    if (!predicate) {
-			    throw new System.ArgumentNullException("predicate");
-		    }
+            if (!predicate) {
+                throw new System.ArgumentNullException("predicate");
+            }
 
-		    var enumerator = Bridge.getEnumerator(collection);
+            var enumerator = Bridge.getEnumerator(collection);
 
-	        try {
-			    while (enumerator.moveNext()) {
-				    if (predicate(enumerator.getCurrent())) {
-					    return true;
-				    }
-			    }
-			    return false;
-		    } finally {
-			    enumerator.dispose();
-		    }
-	    }
+            try {
+                while (enumerator.moveNext()) {
+                    if (predicate(enumerator.getCurrent())) {
+                        return true;
+                    }
+                }
+                return false;
+            } finally {
+                enumerator.dispose();
+            }
+        }
     };
 
     Bridge.define("System.Diagnostics.Contracts.ContractFailureKind", {
@@ -7349,7 +7369,7 @@ Bridge.define("System.Text.StringBuilder", {
         inherits: [System.Exception],
 
         constructor: function (failureKind, failureMessage, userMessage, condition, innerException) {
-			this.$initialize();
+            this.$initialize();
             System.Exception.$constructor.call(this, failureMessage, innerException);
             this._kind = failureKind;
             this._failureMessage = failureMessage || null;
@@ -7358,17 +7378,17 @@ Bridge.define("System.Text.StringBuilder", {
         },
 
         getKind: function () {
-		    return this._kind;
-	    },
-	    getFailure: function () {
-		    return this._failureMessage;
-	    },
-	    getUserMessage: function () {
-		    return this._userMessage;
-	    },
-	    getCondition: function () {
-		    return this._condition;
-	    }
+            return this._kind;
+        },
+        getFailure: function () {
+            return this._failureMessage;
+        },
+        getUserMessage: function () {
+            return this._userMessage;
+        },
+        getCondition: function () {
+            return this._condition;
+        }
     });
 
     // @source Array.js
@@ -8182,7 +8202,7 @@ Bridge.define("System.Text.StringBuilder", {
 
         return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
             constructor: function (array, offset, count) {
-				this.$initialize();
+                this.$initialize();
                 this.array = array;
                 this.offset = offset || 0;
                 this.count = count || array.length;
@@ -9064,7 +9084,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
         },
 
         constructor: function (action, state) {
-			this.$initialize();
+            this.$initialize();
             this.action = action;
             this.state = state;
             this.exception = null;
@@ -9239,7 +9259,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                     tcs.setResult(value);
                 };
 
-                args[0] = args[0] || { };
+                args[0] = args[0] || {};
                 args[0][name] = callback;
 
                 target[method].apply(target, args);
@@ -9255,9 +9275,15 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                 }
 
                 if (typeof (handler) === 'number') {
-                    handler = (function (i) { return function () { return arguments[i >= 0 ? i : (arguments.length + i)]; }; })(handler);
+                    handler = (function (i) {
+                        return function () {
+                            return arguments[i >= 0 ? i : (arguments.length + i)];
+                        };
+                    })(handler);
                 } else if (typeof (handler) !== 'function') {
-                    handler = function () { return Array.prototype.slice.call(arguments, 0); };
+                    handler = function () {
+                        return Array.prototype.slice.call(arguments, 0);
+                    };
                 }
 
                 promise.then(function () {
@@ -9278,8 +9304,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                 } : function () {
                     try {
                         tcs.setResult(continuationAction(me));
-                    }
-                    catch (e) {
+                    } catch (e) {
                         tcs.setException(System.Exception.create(e));
                     }
                 };
@@ -9391,8 +9416,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             return this._getResult(false);
         },
 
-        dispose: function () {
-        },
+        dispose: function () {},
 
         getAwaiter: function () {
             return this;
@@ -9420,7 +9444,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
     Bridge.define("System.Threading.Tasks.TaskCompletionSource", {
         constructor: function () {
-			this.$initialize();
+            this.$initialize();
             this.task = new System.Threading.Tasks.Task();
             this.task.status = System.Threading.Tasks.TaskStatus.running;
         },
@@ -9455,20 +9479,20 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             if (Bridge.is(exception, System.Exception)) {
                 exception = [exception];
             }
-                
+
             return this.task.fail(new System.AggregateException(null, exception));
         }
     });
 
     Bridge.define("System.Threading.CancellationToken", {
-         $struct: true,
+        $struct: true,
 
-         constructor: function (source) {
-			this.$initialize();
+        constructor: function (source) {
+            this.$initialize();
             if (!Bridge.is(source, System.Threading.CancellationTokenSource)) {
                 source = source ? System.Threading.CancellationToken.sourceTrue : System.Threading.CancellationToken.sourceFalse;
             }
-                
+
             this.source = source;
         },
 
@@ -9504,18 +9528,18 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
         statics: {
             sourceTrue: {
-                isCancellationRequested: true, 
+                isCancellationRequested: true,
                 register: function (f, s) {
                     f(s);
 
                     return new System.Threading.CancellationTokenRegistration();
-                } 
+                }
             },
             sourceFalse: {
-                uncancellable: true, 
-                isCancellationRequested: false, 
+                uncancellable: true,
+                isCancellationRequested: false,
                 register: function () {
-                     return new System.Threading.CancellationTokenRegistration();
+                    return new System.Threading.CancellationTokenRegistration();
                 }
             },
             getDefaultValue: function () {
@@ -9538,7 +9562,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
         },
 
         constructor: function (cts, o) {
-			this.$initialize();
+            this.$initialize();
             this.cts = cts;
             this.o = o;
         },
@@ -9575,7 +9599,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
         },
 
         constructor: function (delay) {
-			this.$initialize();
+            this.$initialize();
             this.timeout = typeof delay === "number" && delay >= 0 ? setTimeout(Bridge.fn.bind(this, this.cancel), delay, -1) : null;
             this.isCancellationRequested = false;
             this.token = new System.Threading.CancellationToken(this);
@@ -9584,7 +9608,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
         cancel: function (throwFirst) {
             if (this.isCancellationRequested) {
-                return ;
+                return;
             }
 
             this.isCancellationRequested = true;
@@ -9600,7 +9624,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                     if (throwFirst && throwFirst !== -1) {
                         throw ex;
                     }
-                        
+
                     x.push(ex);
                 }
             }
@@ -9608,18 +9632,18 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             if (x.length > 0 && throwFirst !== -1) {
                 throw new System.AggregateException(null, x);
             }
-                
+
         },
 
         cancelAfter: function (delay) {
             if (this.isCancellationRequested) {
                 return;
             }
-                
+
             if (this.timeout) {
                 clearTimeout(this.timeout);
             }
-                
+
             this.timeout = setTimeout(Bridge.fn.bind(this, this.cancel), delay, -1);
         },
 
@@ -9629,7 +9653,10 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
                 return new System.Threading.CancellationTokenRegistration();
             } else {
-                var o = {f: f, s: s };
+                var o = {
+                    f: f,
+                    s: s
+                };
                 this.handlers.push(o);
 
                 return new System.Threading.CancellationTokenRegistration(this, o);
@@ -9652,7 +9679,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             if (this.timeout) {
                 clearTimeout(this.timeout);
             }
-                
+
             this.timeout = null;
             this.handlers = [];
 
@@ -9660,7 +9687,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                 for (var i = 0; i < this.links.length; i++) {
                     this.links[i].dispose();
                 }
-                    
+
                 this.links = null;
             }
         },
@@ -9733,7 +9760,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                 checksum,
                 i,
                 digit,
-                notype= false;
+                notype = false;
 
             if (type === "Visa") {
                 // Visa: length 16, prefix 4, dashes optional.
@@ -9772,7 +9799,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             // Add even digits in even length strings or odd digits in odd length strings.
             checksum = 0;
 
-            for (i = (2 - (value.length % 2)) ; i <= value.length; i += 2) {
+            for (i = (2 - (value.length % 2)); i <= value.length; i += 2) {
                 checksum += parseInt(value.charAt(i - 1));
             }
 
@@ -9825,7 +9852,9 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                     throw new System.ArgumentNullException("input");
                 }
 
-                var r = { v: new System.Version.VersionResult() };
+                var r = {
+                    v: new System.Version.VersionResult()
+                };
 
                 r.v.init("input", true);
 
@@ -9837,7 +9866,9 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             },
 
             tryParse: function (input, result) {
-                var r = { v: new System.Version.VersionResult() };
+                var r = {
+                    v: new System.Version.VersionResult()
+                };
 
                 r.v.init("input", false);
 
@@ -9849,7 +9880,10 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             },
 
             tryParseVersion: function (version, result) {
-                var major = {}, minor = {}, build = {}, revision = {};
+                var major = {},
+                    minor = {},
+                    build = {},
+                    revision = {};
 
                 if (version === null) {
                     result.v.setFailure(System.Version.ParseFailureKind.argumentNullException);
@@ -9964,9 +9998,9 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
         config: {
             alias: [
-            "clone", "System$ICloneable$clone",
-            "compareTo", "System$IComparable$1$System$Version$compareTo",
-            "equalsT", "System$IEquatable$1$System$Version$equalsT"
+                "clone", "System$ICloneable$clone",
+                "compareTo", "System$IComparable$1$System$Version$compareTo",
+                "equalsT", "System$IEquatable$1$System$Version$equalsT"
             ],
 
             init: function () {
@@ -9976,7 +10010,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
         },
 
         constructor$3: function (major, minor, build, revision) {
-			this.$initialize();
+            this.$initialize();
             if (major < 0) {
                 throw new System.ArgumentOutOfRangeException("major", "Cannot be < 0");
             }
@@ -10000,7 +10034,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
         },
 
         constructor$2: function (major, minor, build) {
-			this.$initialize();
+            this.$initialize();
             if (major < 0) {
                 throw new System.ArgumentOutOfRangeException("major", "Cannot be < 0");
             }
@@ -10019,7 +10053,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
         },
 
         constructor$1: function (major, minor) {
-			this.$initialize();
+            this.$initialize();
             if (major < 0) {
                 throw new System.ArgumentOutOfRangeException("major", "Cannot be < 0");
             }
@@ -10033,7 +10067,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
         },
 
         constructor$4: function (version) {
-			this.$initialize();
+            this.$initialize();
             var v = System.Version.parse(version);
 
             this._Major = v.getMajor();
@@ -10043,7 +10077,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
         },
 
         constructor: function () {
-			this.$initialize();
+            this.$initialize();
             this._Major = 0;
             this._Minor = 0;
         },
@@ -10257,7 +10291,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
         m_argumentName: null,
         m_canThrow: false,
         constructor: function () {
-			this.$initialize();
+            this.$initialize();
         },
 
         init: function (argumentName, canThrow) {
@@ -10289,8 +10323,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                 case System.Version.ParseFailureKind.formatException:
                     try {
                         Bridge.Int.parseInt(this.m_exceptionArgument, -2147483648, 2147483647);
-                    }
-                    catch ($e) {
+                    } catch ($e) {
                         $e = System.Exception.create($e);
                         var e;
 
@@ -10355,7 +10388,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
     Bridge.define("System.ComponentModel.PropertyChangedEventArgs", {
         constructor: function (propertyName) {
-			this.$initialize();
+            this.$initialize();
             this.propertyName = propertyName;
         }
     });
@@ -10520,12 +10553,12 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
         toInt64: function (value, formatProvider) {
             var result = scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.Int64);
-	    return new System.Int64(result);
+            return new System.Int64(result);
         },
 
         toUInt64: function (value, formatProvider) {
             var result = scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.UInt64);
-	    return new System.UInt64(result);
+            return new System.UInt64(result);
         },
 
         toSingle: function (value, formatProvider) {
@@ -10827,8 +10860,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                 } else {
                     return value.value.toUnsigned().toString(toBase);
                 }
-            }
-            else if (value < 0) {
+            } else if (value < 0) {
                 if (toBase === 10) {
                     isNegative = true;
                     value *= -1;
@@ -10964,7 +10996,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                 throw new System.ArgumentOutOfRangeException("offsetOut", "Value must be positive.");
             }
 
-            options = options || 0;     // 0 - means "None", 1 - stands for "InsertLineBreaks"
+            options = options || 0; // 0 - means "None", 1 - stands for "InsertLineBreaks"
 
             if (options < 0 || options > 1) {
                 throw new System.ArgumentException("Illegal enum value.");
@@ -10980,7 +11012,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             }
 
             var insertLineBreaks = options === 1;
-            var outArrayLength = outArray.length;   //This is the maximally required length that must be available in the char array
+            var outArrayLength = outArray.length; //This is the maximally required length that must be available in the char array
 
             // Length of the char buffer required
             var numElementsToCopy = scope.internal.toBase64_CalculateAndValidateOutputLength(length, insertLineBreaks);
@@ -11266,8 +11298,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
                     if (System.Int64.is64Bit(value)) {
                         value = value.toNumber();
-                    }
-                    else if (value instanceof System.Decimal) {
+                    } else if (value instanceof System.Decimal) {
                         value = value.toFloat();
                     }
 
@@ -11388,8 +11419,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                     }
 
                     value = new System.Decimal(value);
-                }
-                else if (typeCode === typeCodes.Int64) {
+                } else if (typeCode === typeCodes.Int64) {
                     if (value instanceof System.UInt64) {
                         if (value.gt(System.Int64.MaxValue)) {
                             this.throwOverflow(typeName);
@@ -11405,8 +11435,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                     }
 
                     value = new System.Int64(value);
-                }
-                else if (typeCode === typeCodes.UInt64) {
+                } else if (typeCode === typeCodes.UInt64) {
                     if (value instanceof System.Int64) {
                         if (value.isNegative()) {
                             this.throwOverflow(typeName);
@@ -11474,8 +11503,8 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
         toBase64_CalculateAndValidateOutputLength: function (inputLength, insertLineBreaks) {
             var base64LineBreakPosition = scope.internal.base64LineBreakPosition;
 
-            var outlen = ~~(inputLength / 3) * 4;           // the base length - we want integer division here. 
-            outlen += ((inputLength % 3) !== 0) ? 4 : 0;    // at most 4 more chars for the remainder
+            var outlen = ~~(inputLength / 3) * 4; // the base length - we want integer division here. 
+            outlen += ((inputLength % 3) !== 0) ? 4 : 0; // at most 4 more chars for the remainder
 
             if (outlen === 0) {
                 return 0;
@@ -11488,7 +11517,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                     --newLines;
                 }
 
-                outlen += newLines * 2;                     // the number of line break chars we'll add, "\r\n"
+                outlen += newLines * 2; // the number of line break chars we'll add, "\r\n"
             }
 
             // If we overflow an int then we cannot allocate enough
@@ -11616,7 +11645,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             var intTab = "\t".charCodeAt(0);
             var intNLn = "\n".charCodeAt(0);
             var intCRt = "\r".charCodeAt(0);
-            var intAtoZ = ("Z".charCodeAt(0) - "A".charCodeAt(0));  // = ('z' - 'a')
+            var intAtoZ = ("Z".charCodeAt(0) - "A".charCodeAt(0)); // = ('z' - 'a')
             var int0To9 = ("9".charCodeAt(0) - "0".charCodeAt(0));
 
             var endInputIndex = inputIndex + inputLength;
@@ -11896,7 +11925,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
     Bridge.define("System.Net.WebSockets.ClientWebSocket", {
         inherits: [System.IDisposable],
         constructor: function () {
-			this.$initialize();
+            this.$initialize();
             this.messageBuffer = [];
             this.state = "none";
             this.options = new System.Net.WebSockets.ClientWebSocketOptions();
@@ -12158,7 +12187,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
     Bridge.define("System.Net.WebSockets.ClientWebSocketOptions", {
         constructor: function () {
-			this.$initialize();
+            this.$initialize();
             this.isReadOnly = false;
             this.requestedSubProtocols = [];
         },
@@ -12186,7 +12215,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
     Bridge.define("System.Net.WebSockets.WebSocketReceiveResult", {
         constructor: function (count, messageType, endOfMessage, closeStatus, closeStatusDescription) {
-			this.$initialize();
+            this.$initialize();
             this.count = count;
             this.messageType = messageType;
             this.endOfMessage = endOfMessage;
@@ -12219,7 +12248,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
     Bridge.define("System.Uri", {
         constructor: function (uriString) {
-			this.$initialize();
+            this.$initialize();
             this.absoluteUri = uriString;
         },
 
@@ -15181,12 +15210,12 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             }
         },
         constructor: function () {
-			this.$initialize();
+            this.$initialize();
             System.Random.constructor$1.call(this, System.Int64.clip32(System.Int64((new Date()).getTime()).mul(10000)));
 
         },
         constructor$1: function (Seed) {
-			this.$initialize();
+            this.$initialize();
             var ii;
             var mj, mk;
 
@@ -15226,7 +15255,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             var retVal;
             var locINext = this.inext;
             var locINextp = this.inextp;
-    
+
             if (((locINext = (locINext + 1) | 0)) >= 56) {
                 locINext = 1;
             }
@@ -15263,8 +15292,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             var range = System.Int64(maxValue).sub(System.Int64(minValue));
             if (range.lte(System.Int64(2147483647))) {
                 return (((Bridge.Int.clip32(this.sample() * System.Int64.toNumber(range)) + minValue) | 0));
-            }
-            else  {
+            } else {
                 return System.Int64.clip32(Bridge.Int.clip64(this.getSampleForLargeRange() * System.Int64.toNumber(range)).add(System.Int64(minValue)));
             }
         },
@@ -20143,7 +20171,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             console.log(obj);
         }
     };
-// @source timer.js
+    // @source timer.js
 
     Bridge.define('System.Threading.Timer', {
         inherits: [System.IDisposable],
@@ -20167,26 +20195,26 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         id: null,
         disposed: false,
         constructor$1: function (callback, state, dueTime, period) {
-			this.$initialize();
+            this.$initialize();
             this.timerSetup(callback, state, System.Int64(dueTime), System.Int64(period));
         },
         constructor$3: function (callback, state, dueTime, period) {
-			this.$initialize();
+            this.$initialize();
             var dueTm = Bridge.Int.clip64(dueTime.getTotalMilliseconds());
             var periodTm = Bridge.Int.clip64(period.getTotalMilliseconds());
 
             this.timerSetup(callback, state, dueTm, periodTm);
         },
         constructor$4: function (callback, state, dueTime, period) {
-			this.$initialize();
+            this.$initialize();
             this.timerSetup(callback, state, System.Int64(dueTime), System.Int64(period));
         },
         constructor$2: function (callback, state, dueTime, period) {
-			this.$initialize();
+            this.$initialize();
             this.timerSetup(callback, state, dueTime, period);
         },
         constructor: function (callback) {
-			this.$initialize();
+            this.$initialize();
             var dueTime = -1; // we want timer to be registered, but not activated.  Requires caller to call
             var period = -1; // Change after a timer instance is created.  This is to avoid the potential
             // for a timer to be fired before the returned value is assigned to the variable,
@@ -20232,7 +20260,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             if (!Bridge.staticEquals(this.timerCallback, null)) {
                 var myId = this.id;
                 this.timerCallback(this.state);
-    
+
                 // timerCallback may call Change(). To prevent double call we can check if timer changed
                 if (System.Nullable.eq(this.id, myId)) {
                     this.runTimer(this.period, false);
@@ -20240,7 +20268,9 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             }
         },
         runTimer: function (period, checkDispose) {
-            if (checkDispose === void 0) { checkDispose = true; }
+            if (checkDispose === void 0) {
+                checkDispose = true;
+            }
             if (checkDispose && this.disposed) {
                 throw new System.InvalidOperationException(System.Threading.Timer.EXC_DISPOSED);
             }

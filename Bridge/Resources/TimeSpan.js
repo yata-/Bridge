@@ -5,7 +5,7 @@
 
         config: {
             alias: [
-            "compareTo", "System$IComparable$compareTo"
+                "compareTo", "System$IComparable$compareTo"
             ]
         },
 
@@ -87,7 +87,7 @@
         },
 
         constructor: function () {
-			this.$initialize();
+            this.$initialize();
             this.ticks = System.Int64.Zero;
 
             if (arguments.length === 1) {

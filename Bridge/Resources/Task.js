@@ -10,7 +10,7 @@
         },
 
         constructor: function (action, state) {
-			this.$initialize();
+            this.$initialize();
             this.action = action;
             this.state = state;
             this.exception = null;
@@ -185,7 +185,7 @@
                     tcs.setResult(value);
                 };
 
-                args[0] = args[0] || { };
+                args[0] = args[0] || {};
                 args[0][name] = callback;
 
                 target[method].apply(target, args);
@@ -201,9 +201,15 @@
                 }
 
                 if (typeof (handler) === 'number') {
-                    handler = (function (i) { return function () { return arguments[i >= 0 ? i : (arguments.length + i)]; }; })(handler);
+                    handler = (function (i) {
+                        return function () {
+                            return arguments[i >= 0 ? i : (arguments.length + i)];
+                        };
+                    })(handler);
                 } else if (typeof (handler) !== 'function') {
-                    handler = function () { return Array.prototype.slice.call(arguments, 0); };
+                    handler = function () {
+                        return Array.prototype.slice.call(arguments, 0);
+                    };
                 }
 
                 promise.then(function () {
@@ -224,8 +230,7 @@
                 } : function () {
                     try {
                         tcs.setResult(continuationAction(me));
-                    }
-                    catch (e) {
+                    } catch (e) {
                         tcs.setException(System.Exception.create(e));
                     }
                 };
@@ -337,8 +342,7 @@
             return this._getResult(false);
         },
 
-        dispose: function () {
-        },
+        dispose: function () {},
 
         getAwaiter: function () {
             return this;
@@ -366,7 +370,7 @@
 
     Bridge.define("System.Threading.Tasks.TaskCompletionSource", {
         constructor: function () {
-			this.$initialize();
+            this.$initialize();
             this.task = new System.Threading.Tasks.Task();
             this.task.status = System.Threading.Tasks.TaskStatus.running;
         },
@@ -401,20 +405,20 @@
             if (Bridge.is(exception, System.Exception)) {
                 exception = [exception];
             }
-                
+
             return this.task.fail(new System.AggregateException(null, exception));
         }
     });
 
     Bridge.define("System.Threading.CancellationToken", {
-         $struct: true,
+        $struct: true,
 
-         constructor: function (source) {
-			this.$initialize();
+        constructor: function (source) {
+            this.$initialize();
             if (!Bridge.is(source, System.Threading.CancellationTokenSource)) {
                 source = source ? System.Threading.CancellationToken.sourceTrue : System.Threading.CancellationToken.sourceFalse;
             }
-                
+
             this.source = source;
         },
 
@@ -450,18 +454,18 @@
 
         statics: {
             sourceTrue: {
-                isCancellationRequested: true, 
+                isCancellationRequested: true,
                 register: function (f, s) {
                     f(s);
 
                     return new System.Threading.CancellationTokenRegistration();
-                } 
+                }
             },
             sourceFalse: {
-                uncancellable: true, 
-                isCancellationRequested: false, 
+                uncancellable: true,
+                isCancellationRequested: false,
                 register: function () {
-                     return new System.Threading.CancellationTokenRegistration();
+                    return new System.Threading.CancellationTokenRegistration();
                 }
             },
             getDefaultValue: function () {
@@ -484,7 +488,7 @@
         },
 
         constructor: function (cts, o) {
-			this.$initialize();
+            this.$initialize();
             this.cts = cts;
             this.o = o;
         },
@@ -521,7 +525,7 @@
         },
 
         constructor: function (delay) {
-			this.$initialize();
+            this.$initialize();
             this.timeout = typeof delay === "number" && delay >= 0 ? setTimeout(Bridge.fn.bind(this, this.cancel), delay, -1) : null;
             this.isCancellationRequested = false;
             this.token = new System.Threading.CancellationToken(this);
@@ -530,7 +534,7 @@
 
         cancel: function (throwFirst) {
             if (this.isCancellationRequested) {
-                return ;
+                return;
             }
 
             this.isCancellationRequested = true;
@@ -546,7 +550,7 @@
                     if (throwFirst && throwFirst !== -1) {
                         throw ex;
                     }
-                        
+
                     x.push(ex);
                 }
             }
@@ -554,18 +558,18 @@
             if (x.length > 0 && throwFirst !== -1) {
                 throw new System.AggregateException(null, x);
             }
-                
+
         },
 
         cancelAfter: function (delay) {
             if (this.isCancellationRequested) {
                 return;
             }
-                
+
             if (this.timeout) {
                 clearTimeout(this.timeout);
             }
-                
+
             this.timeout = setTimeout(Bridge.fn.bind(this, this.cancel), delay, -1);
         },
 
@@ -575,7 +579,10 @@
 
                 return new System.Threading.CancellationTokenRegistration();
             } else {
-                var o = {f: f, s: s };
+                var o = {
+                    f: f,
+                    s: s
+                };
                 this.handlers.push(o);
 
                 return new System.Threading.CancellationTokenRegistration(this, o);
@@ -598,7 +605,7 @@
             if (this.timeout) {
                 clearTimeout(this.timeout);
             }
-                
+
             this.timeout = null;
             this.handlers = [];
 
@@ -606,7 +613,7 @@
                 for (var i = 0; i < this.links.length; i++) {
                     this.links[i].dispose();
                 }
-                    
+
                 this.links = null;
             }
         },
