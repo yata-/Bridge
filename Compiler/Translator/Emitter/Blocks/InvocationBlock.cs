@@ -112,13 +112,33 @@ namespace Bridge.Translator
                 this.Emitter.AsyncExpressionHandling = true;
             }
 
-            var targetResolve = this.Emitter.Resolver.ResolveNode(invocationExpression, this.Emitter);
-
             Tuple<bool, bool, string> inlineInfo = this.Emitter.GetInlineCode(invocationExpression);
             var argsInfo = new ArgumentsInfo(this.Emitter, invocationExpression);
 
             var argsExpressions = argsInfo.ArgumentsExpressions;
             var paramsArg = argsInfo.ParamsExpression;
+
+            var targetResolve = this.Emitter.Resolver.ResolveNode(invocationExpression, this.Emitter);
+            var csharpInvocation = targetResolve as CSharpInvocationResolveResult;
+            MemberReferenceExpression targetMember = invocationExpression.Target as MemberReferenceExpression;
+
+            var interceptor = this.Emitter.Plugins.OnInvocation(this, this.InvocationExpression, targetResolve as InvocationResolveResult);
+
+            if (interceptor.Cancel)
+            {
+                this.Emitter.SkipSemiColon = true;
+                this.Emitter.ReplaceAwaiterByVar = oldValue;
+                this.Emitter.AsyncExpressionHandling = oldAsyncExpressionHandling;
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(interceptor.Replacement))
+            {
+                this.Write(interceptor.Replacement);
+                this.Emitter.ReplaceAwaiterByVar = oldValue;
+                this.Emitter.AsyncExpressionHandling = oldAsyncExpressionHandling;
+                return;
+            }
 
             if (inlineInfo != null)
             {
@@ -194,9 +214,6 @@ namespace Bridge.Translator
                     }
                 }
             }
-
-            var csharpInvocation = targetResolve as CSharpInvocationResolveResult;
-            MemberReferenceExpression targetMember = invocationExpression.Target as MemberReferenceExpression;
 
             if (targetMember != null)
             {
