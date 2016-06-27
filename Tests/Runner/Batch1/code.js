@@ -9065,6 +9065,25 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1501', {
+        testPropertyChangedEventArgs: function () {
+            var ea1 = new System.ComponentModel.PropertyChangedEventArgs("prop1");
+            Bridge.Test.Assert.areEqual$1("prop1", ea1.propertyName, "prop1 PropertyName");
+            Bridge.Test.Assert.null$1(ea1.oldValue, "prop1 OldValue");
+            Bridge.Test.Assert.null$1(ea1.newValue, "prop1 NewValue");
+    
+            var ea2 = new System.ComponentModel.PropertyChangedEventArgs("prop2", 77);
+            Bridge.Test.Assert.areEqual$1("prop2", ea2.propertyName, "prop2 PropertyName");
+            Bridge.Test.Assert.null$1(ea2.oldValue, "prop2 OldValue");
+            Bridge.Test.Assert.areEqual$1(77, ea2.newValue, "prop2 NewValue");
+    
+            var ea3 = new System.ComponentModel.PropertyChangedEventArgs("prop3", 120, 270);
+            Bridge.Test.Assert.areEqual$1("prop3", ea3.propertyName, "prop3 PropertyName");
+            Bridge.Test.Assert.areEqual$1(270, ea3.oldValue, "prop3 OldValue");
+            Bridge.Test.Assert.areEqual$1(120, ea3.newValue, "prop3 NewValue");
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
