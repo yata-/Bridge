@@ -1015,7 +1015,8 @@ namespace Bridge.Contract
                 return prefix != null ? prefix + name : name;
             }
 
-            if (definition is IMethod && ((IMethod)definition).IsConstructor)
+            var isCtor = definition is IMethod && ((IMethod) definition).IsConstructor;
+            if (isCtor)
             {
                 name = JS.Funcs.CONSTRUCTOR;
             }
@@ -1024,9 +1025,15 @@ namespace Bridge.Contract
 
             if (index > 0)
             {
-                name += Helpers.PrefixDollar(index);
-
-                name = Helpers.ReplaceFirstDollar(name);
+                if (isCtor)
+                {
+                    name = JS.Vars.D + name + index;
+                }
+                else
+                {
+                    name += Helpers.PrefixDollar(index);
+                    name = Helpers.ReplaceFirstDollar(name);
+                }
             }
 
             return prefix != null ? prefix + name : name;

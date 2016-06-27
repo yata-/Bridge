@@ -175,10 +175,10 @@
         statics: {
             config: {
                 init: function () {
-                    Bridge.ready(this.main);
+                    Bridge.ready(this.runTests);
                 }
             },
-            main: function () {
+            runTests: function () {
                 QUnit.module("C#");
                 QUnit.test("Abstract types - TestB", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BasicCSharp_TestAbstractClass.testB);
                 QUnit.test("Abstract types - TestC", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BasicCSharp_TestAbstractClass.testC);

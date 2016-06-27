@@ -21,22 +21,22 @@
         state: null,
         id: null,
         disposed: false,
-        constructor$1: function (callback, state, dueTime, period) {
+        $constructor1: function (callback, state, dueTime, period) {
             this.$initialize();
             this.timerSetup(callback, state, System.Int64(dueTime), System.Int64(period));
         },
-        constructor$3: function (callback, state, dueTime, period) {
+        $constructor3: function (callback, state, dueTime, period) {
             this.$initialize();
             var dueTm = Bridge.Int.clip64(dueTime.getTotalMilliseconds());
             var periodTm = Bridge.Int.clip64(period.getTotalMilliseconds());
 
             this.timerSetup(callback, state, dueTm, periodTm);
         },
-        constructor$4: function (callback, state, dueTime, period) {
+        $constructor4: function (callback, state, dueTime, period) {
             this.$initialize();
             this.timerSetup(callback, state, System.Int64(dueTime), System.Int64(period));
         },
-        constructor$2: function (callback, state, dueTime, period) {
+        $constructor2: function (callback, state, dueTime, period) {
             this.$initialize();
             this.timerSetup(callback, state, dueTime, period);
         },

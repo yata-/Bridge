@@ -2461,7 +2461,7 @@
                 isCtor = name === "constructor";
                 ctorName = isCtor ? "$constructor" : name;
 
-                if (Bridge.isFunction(v) && (isCtor || name.match("^constructor\\$") !== null)) {
+                if (Bridge.isFunction(v) && (isCtor || name.match("^\\$constructor") !== null)) {
                     isCtor = true;
                 }
 
@@ -2952,24 +2952,24 @@
             System.TimeoutException.$constructor.call(this);
         },
 
-        constructor$1: function (message) {
+        $constructor1: function (message) {
             this.$initialize();
             System.TimeoutException.$constructor.call(this, message);
         },
 
-        constructor$2: function (message, innerException) {
+        $constructor2: function (message, innerException) {
             this.$initialize();
             System.TimeoutException.$constructor.call(this, message, innerException);
         },
 
-        constructor$3: function (regexInput, regexPattern, matchTimeout) {
+        $constructor3: function (regexInput, regexPattern, matchTimeout) {
             this.$initialize();
             this._regexInput = regexInput;
             this._regexPattern = regexPattern;
             this._matchTimeout = matchTimeout;
 
             var message = "The RegEx engine has timed out while trying to match a pattern to an input string. This can occur for many reasons, including very large inputs or excessive backtracking caused by nested quantifiers, back-references and other factors.";
-            this.constructor$1(message);
+            this.$constructor1(message);
         },
 
         getPattern: function () {
@@ -9920,13 +9920,13 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                         if (!System.Version.tryParseComponent(parsedComponents[3], "revision", result, revision)) {
                             return false;
                         } else {
-                            result.v.m_parsedVersion = new System.Version.constructor$3(major.v, minor.v, build.v, revision.v);
+                            result.v.m_parsedVersion = new System.Version.$constructor3(major.v, minor.v, build.v, revision.v);
                         }
                     } else {
-                        result.v.m_parsedVersion = new System.Version.constructor$2(major.v, minor.v, build.v);
+                        result.v.m_parsedVersion = new System.Version.$constructor2(major.v, minor.v, build.v);
                     }
                 } else {
-                    result.v.m_parsedVersion = new System.Version.constructor$1(major.v, minor.v);
+                    result.v.m_parsedVersion = new System.Version.$constructor1(major.v, minor.v);
                 }
 
                 return true;
@@ -10009,7 +10009,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             }
         },
 
-        constructor$3: function (major, minor, build, revision) {
+        $constructor3: function (major, minor, build, revision) {
             this.$initialize();
             if (major < 0) {
                 throw new System.ArgumentOutOfRangeException("major", "Cannot be < 0");
@@ -10033,7 +10033,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             this._Revision = revision;
         },
 
-        constructor$2: function (major, minor, build) {
+        $constructor2: function (major, minor, build) {
             this.$initialize();
             if (major < 0) {
                 throw new System.ArgumentOutOfRangeException("major", "Cannot be < 0");
@@ -10052,7 +10052,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             this._Build = build;
         },
 
-        constructor$1: function (major, minor) {
+        $constructor1: function (major, minor) {
             this.$initialize();
             if (major < 0) {
                 throw new System.ArgumentOutOfRangeException("major", "Cannot be < 0");
@@ -10066,7 +10066,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             this._Minor = minor;
         },
 
-        constructor$4: function (version) {
+        $constructor4: function (version) {
             this.$initialize();
             var v = System.Version.parse(version);
 
@@ -15211,10 +15211,10 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
         },
         constructor: function () {
             this.$initialize();
-            System.Random.constructor$1.call(this, System.Int64.clip32(System.Int64((new Date()).getTime()).mul(10000)));
+            System.Random.$constructor1.call(this, System.Int64.clip32(System.Int64((new Date()).getTime()).mul(10000)));
 
         },
-        constructor$1: function (Seed) {
+        $constructor1: function (Seed) {
             this.$initialize();
             var ii;
             var mj, mk;
@@ -15514,7 +15514,7 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
         },
 
         isMatch$2: function (input, pattern, options, matchTimeout) {
-            var regex = new System.Text.RegularExpressions.Regex.constructor$3(pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex.$constructor3(pattern, options, matchTimeout, true);
             return regex.isMatch(input);
         },
 
@@ -15529,7 +15529,7 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
         },
 
         match$2: function (input, pattern, options, matchTimeout) {
-            var regex = new System.Text.RegularExpressions.Regex.constructor$3(pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex.$constructor3(pattern, options, matchTimeout, true);
             return regex.match(input);
         },
 
@@ -15544,7 +15544,7 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
         },
 
         matches$2: function (input, pattern, options, matchTimeout) {
-            var regex = new System.Text.RegularExpressions.Regex.constructor$3(pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex.$constructor3(pattern, options, matchTimeout, true);
             return regex.matches(input);
         },
 
@@ -15559,7 +15559,7 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
         },
 
         replace$2: function (input, pattern, replacement, options, matchTimeout) {
-            var regex = new System.Text.RegularExpressions.Regex.constructor$3(pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex.$constructor3(pattern, options, matchTimeout, true);
             return regex.replace(input, replacement);
         },
 
@@ -15574,7 +15574,7 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
         },
 
         replace$5: function (input, pattern, evaluator, options, matchTimeout) {
-            var regex = new System.Text.RegularExpressions.Regex.constructor$3(pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex.$constructor3(pattern, options, matchTimeout, true);
             return regex.replace$3(input, evaluator);
         },
 
@@ -15589,7 +15589,7 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
         },
 
         split$2: function (input, pattern, options, matchTimeout) {
-            var regex = new System.Text.RegularExpressions.Regex.constructor$3(pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex.$constructor3(pattern, options, matchTimeout, true);
             return regex.split(input);
         }
     },
@@ -15609,18 +15609,18 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
     },
 
     constructor: function (pattern) {
-        this.constructor$1(pattern, System.Text.RegularExpressions.RegexOptions.None);
+        this.$constructor1(pattern, System.Text.RegularExpressions.RegexOptions.None);
     },
 
-    constructor$1: function (pattern, options) {
-        this.constructor$2(pattern, options, System.TimeSpan.fromMilliseconds(-1));
+    $constructor1: function (pattern, options) {
+        this.$constructor2(pattern, options, System.TimeSpan.fromMilliseconds(-1));
     },
 
-    constructor$2: function (pattern, options, matchTimeout) {
-        this.constructor$3(pattern, options, matchTimeout, false);
+    $constructor2: function (pattern, options, matchTimeout) {
+        this.$constructor3(pattern, options, matchTimeout, false);
     },
 
-    constructor$3: function (pattern, options, matchTimeout, useCache) {
+    $constructor3: function (pattern, options, matchTimeout, useCache) {
 		this.$initialize();
         var scope = System.Text.RegularExpressions;
 
@@ -20194,22 +20194,22 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         state: null,
         id: null,
         disposed: false,
-        constructor$1: function (callback, state, dueTime, period) {
+        $constructor1: function (callback, state, dueTime, period) {
             this.$initialize();
             this.timerSetup(callback, state, System.Int64(dueTime), System.Int64(period));
         },
-        constructor$3: function (callback, state, dueTime, period) {
+        $constructor3: function (callback, state, dueTime, period) {
             this.$initialize();
             var dueTm = Bridge.Int.clip64(dueTime.getTotalMilliseconds());
             var periodTm = Bridge.Int.clip64(period.getTotalMilliseconds());
 
             this.timerSetup(callback, state, dueTm, periodTm);
         },
-        constructor$4: function (callback, state, dueTime, period) {
+        $constructor4: function (callback, state, dueTime, period) {
             this.$initialize();
             this.timerSetup(callback, state, System.Int64(dueTime), System.Int64(period));
         },
-        constructor$2: function (callback, state, dueTime, period) {
+        $constructor2: function (callback, state, dueTime, period) {
             this.$initialize();
             this.timerSetup(callback, state, dueTime, period);
         },

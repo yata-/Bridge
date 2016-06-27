@@ -98,13 +98,13 @@
                         if (!System.Version.tryParseComponent(parsedComponents[3], "revision", result, revision)) {
                             return false;
                         } else {
-                            result.v.m_parsedVersion = new System.Version.constructor$3(major.v, minor.v, build.v, revision.v);
+                            result.v.m_parsedVersion = new System.Version.$constructor3(major.v, minor.v, build.v, revision.v);
                         }
                     } else {
-                        result.v.m_parsedVersion = new System.Version.constructor$2(major.v, minor.v, build.v);
+                        result.v.m_parsedVersion = new System.Version.$constructor2(major.v, minor.v, build.v);
                     }
                 } else {
-                    result.v.m_parsedVersion = new System.Version.constructor$1(major.v, minor.v);
+                    result.v.m_parsedVersion = new System.Version.$constructor1(major.v, minor.v);
                 }
 
                 return true;
@@ -187,7 +187,7 @@
             }
         },
 
-        constructor$3: function (major, minor, build, revision) {
+        $constructor3: function (major, minor, build, revision) {
             this.$initialize();
             if (major < 0) {
                 throw new System.ArgumentOutOfRangeException("major", "Cannot be < 0");
@@ -211,7 +211,7 @@
             this._Revision = revision;
         },
 
-        constructor$2: function (major, minor, build) {
+        $constructor2: function (major, minor, build) {
             this.$initialize();
             if (major < 0) {
                 throw new System.ArgumentOutOfRangeException("major", "Cannot be < 0");
@@ -230,7 +230,7 @@
             this._Build = build;
         },
 
-        constructor$1: function (major, minor) {
+        $constructor1: function (major, minor) {
             this.$initialize();
             if (major < 0) {
                 throw new System.ArgumentOutOfRangeException("major", "Cannot be < 0");
@@ -244,7 +244,7 @@
             this._Minor = minor;
         },
 
-        constructor$4: function (version) {
+        $constructor4: function (version) {
             this.$initialize();
             var v = System.Version.parse(version);
 

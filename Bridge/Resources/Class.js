@@ -232,7 +232,7 @@
                 isCtor = name === "constructor";
                 ctorName = isCtor ? "$constructor" : name;
 
-                if (Bridge.isFunction(v) && (isCtor || name.match("^constructor\\$") !== null)) {
+                if (Bridge.isFunction(v) && (isCtor || name.match("^\\$constructor") !== null)) {
                     isCtor = true;
                 }
 

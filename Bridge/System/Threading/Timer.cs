@@ -60,7 +60,7 @@ namespace System.Threading
         /// <param name="state">An object containing information to be used by the callback method, or null.</param>
         /// <param name="dueTime">The amount of time to delay before callback is invoked, in milliseconds. Specify Timeout.Infinite to prevent the timer from starting. Specify zero (0) to start the timer immediately.</param>
         /// <param name="period">The time interval between invocations of callback, in milliseconds. Specify Timeout.Infinite to disable periodic signaling.</param>
-        [Template("new System.Threading.Timer.constructor$1({callback}, {state}, {dueTime}, {period})")]
+        [Template("new System.Threading.Timer.$constructor1({callback}, {state}, {dueTime}, {period})")]
         public extern Timer(TimerCallback callback, Object state, int dueTime, int period);
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace System.Threading
         /// <param name="state">An object containing information to be used by the callback method, or null.</param>
         /// <param name="dueTime">The amount of time to delay before callback is invoked, in milliseconds. Specify Timeout.Infinite to prevent the timer from starting. Specify zero (0) to start the timer immediately.</param>
         /// <param name="period">The time interval between invocations of callback, in milliseconds. Specify Timeout.Infinite to disable periodic signaling.</param>
-        [Template("new System.Threading.Timer.constructor$3({callback}, {state}, {dueTime}, {period})")]
+        [Template("new System.Threading.Timer.$constructor3({callback}, {state}, {dueTime}, {period})")]
         public extern Timer(TimerCallback callback, Object state, TimeSpan dueTime, TimeSpan period);
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace System.Threading
         /// <param name="state">An object containing information to be used by the callback method, or null.</param>
         /// <param name="dueTime">The amount of time to delay before callback is invoked, in milliseconds. Specify Timeout.Infinite to prevent the timer from starting. Specify zero (0) to start the timer immediately.</param>
         /// <param name="period">The time interval between invocations of callback, in milliseconds. Specify Timeout.Infinite to disable periodic signaling.</param>
-        [Template("new System.Threading.Timer.constructor$4({callback}, {state}, {dueTime}, {period})")]
+        [Template("new System.Threading.Timer.$constructor4({callback}, {state}, {dueTime}, {period})")]
         public extern Timer(TimerCallback callback, Object state, UInt32 dueTime, UInt32 period);
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace System.Threading
         /// <param name="state">An object containing information to be used by the callback method, or null.</param>
         /// <param name="dueTime">The amount of time to delay before callback is invoked, in milliseconds. Specify Timeout.Infinite to prevent the timer from starting. Specify zero (0) to start the timer immediately.</param>
         /// <param name="period">The time interval between invocations of callback, in milliseconds. Specify Timeout.Infinite to disable periodic signaling.</param>
-        [Template("new System.Threading.Timer.constructor$2({callback}, {state}, {dueTime}, {period})")]
+        [Template("new System.Threading.Timer.$constructor2({callback}, {state}, {dueTime}, {period})")]
         public extern Timer(TimerCallback callback, Object state, long dueTime, long period);
 
         /// <summary>

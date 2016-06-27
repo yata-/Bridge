@@ -45,7 +45,7 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
         },
 
         isMatch$2: function (input, pattern, options, matchTimeout) {
-            var regex = new System.Text.RegularExpressions.Regex.constructor$3(pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex.$constructor3(pattern, options, matchTimeout, true);
             return regex.isMatch(input);
         },
 
@@ -60,7 +60,7 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
         },
 
         match$2: function (input, pattern, options, matchTimeout) {
-            var regex = new System.Text.RegularExpressions.Regex.constructor$3(pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex.$constructor3(pattern, options, matchTimeout, true);
             return regex.match(input);
         },
 
@@ -75,7 +75,7 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
         },
 
         matches$2: function (input, pattern, options, matchTimeout) {
-            var regex = new System.Text.RegularExpressions.Regex.constructor$3(pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex.$constructor3(pattern, options, matchTimeout, true);
             return regex.matches(input);
         },
 
@@ -90,7 +90,7 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
         },
 
         replace$2: function (input, pattern, replacement, options, matchTimeout) {
-            var regex = new System.Text.RegularExpressions.Regex.constructor$3(pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex.$constructor3(pattern, options, matchTimeout, true);
             return regex.replace(input, replacement);
         },
 
@@ -105,7 +105,7 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
         },
 
         replace$5: function (input, pattern, evaluator, options, matchTimeout) {
-            var regex = new System.Text.RegularExpressions.Regex.constructor$3(pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex.$constructor3(pattern, options, matchTimeout, true);
             return regex.replace$3(input, evaluator);
         },
 
@@ -120,7 +120,7 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
         },
 
         split$2: function (input, pattern, options, matchTimeout) {
-            var regex = new System.Text.RegularExpressions.Regex.constructor$3(pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex.$constructor3(pattern, options, matchTimeout, true);
             return regex.split(input);
         }
     },
@@ -140,18 +140,18 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
     },
 
     constructor: function (pattern) {
-        this.constructor$1(pattern, System.Text.RegularExpressions.RegexOptions.None);
+        this.$constructor1(pattern, System.Text.RegularExpressions.RegexOptions.None);
     },
 
-    constructor$1: function (pattern, options) {
-        this.constructor$2(pattern, options, System.TimeSpan.fromMilliseconds(-1));
+    $constructor1: function (pattern, options) {
+        this.$constructor2(pattern, options, System.TimeSpan.fromMilliseconds(-1));
     },
 
-    constructor$2: function (pattern, options, matchTimeout) {
-        this.constructor$3(pattern, options, matchTimeout, false);
+    $constructor2: function (pattern, options, matchTimeout) {
+        this.$constructor3(pattern, options, matchTimeout, false);
     },
 
-    constructor$3: function (pattern, options, matchTimeout, useCache) {
+    $constructor3: function (pattern, options, matchTimeout, useCache) {
 		this.$initialize();
         var scope = System.Text.RegularExpressions;
 

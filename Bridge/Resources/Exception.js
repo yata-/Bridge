@@ -113,24 +113,24 @@
             System.TimeoutException.$constructor.call(this);
         },
 
-        constructor$1: function (message) {
+        $constructor1: function (message) {
             this.$initialize();
             System.TimeoutException.$constructor.call(this, message);
         },
 
-        constructor$2: function (message, innerException) {
+        $constructor2: function (message, innerException) {
             this.$initialize();
             System.TimeoutException.$constructor.call(this, message, innerException);
         },
 
-        constructor$3: function (regexInput, regexPattern, matchTimeout) {
+        $constructor3: function (regexInput, regexPattern, matchTimeout) {
             this.$initialize();
             this._regexInput = regexInput;
             this._regexPattern = regexPattern;
             this._matchTimeout = matchTimeout;
 
             var message = "The RegEx engine has timed out while trying to match a pattern to an input string. This can occur for many reasons, including very large inputs or excessive backtracking caused by nested quantifiers, back-references and other factors.";
-            this.constructor$1(message);
+            this.$constructor1(message);
         },
 
         getPattern: function () {

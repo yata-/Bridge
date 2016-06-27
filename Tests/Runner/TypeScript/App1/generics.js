@@ -92,7 +92,7 @@
         constructor: function () {
             this.$initialize();
         },
-        constructor$1: function (instanceT, instanceK) {
+        $constructor1: function (instanceT, instanceK) {
             this.$initialize();
             this.instanceT = instanceT;
             this.instanceK = instanceK;
