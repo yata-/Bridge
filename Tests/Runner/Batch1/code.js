@@ -9106,6 +9106,45 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1485', {
+        testConstructorName: function () {
+            var t1 = new Bridge.ClientTest.BridgeIssues.Bridge1485.TestName.$constructor();
+    
+            Bridge.Test.Assert.areEqual(-1, t1.constructor$1());
+            Bridge.Test.Assert.areEqual("Init s", t1.initialize$1("Init s"));
+            Bridge.Test.Assert.areEqual(7, t1.initialize(7));
+    
+            var t2 = new Bridge.ClientTest.BridgeIssues.Bridge1485.TestName.constructor$1(5);
+    
+            Bridge.Test.Assert.areEqual(5, t2.constructor$1());
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge1485.TestName', {
+        config: {
+            properties: {
+                Data: 0
+            }
+        },
+        constructor: function () {
+            this.$initialize();
+            this.setData(-1);
+        },
+        constructor$1: function (i) {
+            this.$initialize();
+            this.setData(i);
+        },
+        constructor$1: function () {
+            return this.getData();
+        },
+        initialize$1: function (s) {
+            return s;
+        },
+        initialize: function (i) {
+            return i;
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
