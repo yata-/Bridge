@@ -3,7 +3,7 @@
 
     Bridge.define('Test.BridgeIssues.N1023.Optional$1', function (T) { return {
         statics: {
-            getDefaultValue: function () { return new Test.BridgeIssues.N1023.Optional$1(T)(); }
+            getDefaultValue: function () { return new (Test.BridgeIssues.N1023.Optional$1(T))(); }
         },
         config: {
             properties: {
@@ -11,11 +11,12 @@
             }
         },
         constructor$1: function (value) {
-            Test.BridgeIssues.N1023.Optional$1(T).prototype.$constructor.call(this);
+            Test.BridgeIssues.N1023.Optional$1(T).$constructor.call(this);
     
             this.setValue(value);
         },
         constructor: function () {
+            this.$initialize();
         },
         $struct: true,
         getHashCode: function () {
@@ -31,7 +32,7 @@
             return Bridge.equals(this.Value, o.Value);
         },
         $clone: function (to) {
-            var s = to || new Test.BridgeIssues.N1023.Optional$1(T)();
+            var s = to || new (Test.BridgeIssues.N1023.Optional$1(T))();
             s.Value = this.Value;
             return s;
         }
@@ -43,10 +44,11 @@
                 Name: null
             },
             init: function () {
-                this.Name = new Test.BridgeIssues.N1023.Optional$1(String)();
+                this.Name = new (Test.BridgeIssues.N1023.Optional$1(String))();
             }
         },
         constructor: function (name) {
+            this.$initialize();
             this.setName(name.$clone());
         }
     });

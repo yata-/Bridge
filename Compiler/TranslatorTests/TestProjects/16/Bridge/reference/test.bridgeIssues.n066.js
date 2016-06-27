@@ -6,11 +6,14 @@
             getDefaultValue: function () { return new Test.BridgeIssues.N066.Rectangle66(); }
         },
         constructor$1: function (x1) {
-            (new Test.BridgeIssues.N066.Rectangle66("constructor")).$clone(this);
+            this.$initialize();
+            (new Test.BridgeIssues.N066.Rectangle66.$constructor()).$clone(this);
         },
         constructor$2: function (x1, x2) {
+            this.$initialize();
         },
         constructor: function () {
+            this.$initialize();
         },
         $struct: true,
         $clone: function (to) { return this; }

@@ -3,6 +3,7 @@
 
     Bridge.define('Test.BridgeIssues.N1151.renderTarget', {
         constructor: function (gl, w, h, nCmp) {
+            this.$initialize();
             /* **************************************************************************/
             /*  ACCORDING TO SOME EXAMPLES, WE DONT NEED RENDERBUFFER STORAGE FOR RENDER
                 /* TO TEXTURE ON THE COLOR CHANNEL * gl.bindRenderBuffer(gl.RENDERBUFFER,
