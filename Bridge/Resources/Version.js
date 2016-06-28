@@ -30,7 +30,9 @@
                     throw new System.ArgumentNullException("input");
                 }
 
-                var r = { v: new System.Version.VersionResult() };
+                var r = {
+                    v: new System.Version.VersionResult()
+                };
 
                 r.v.init("input", true);
 
@@ -42,7 +44,9 @@
             },
 
             tryParse: function (input, result) {
-                var r = { v: new System.Version.VersionResult() };
+                var r = {
+                    v: new System.Version.VersionResult()
+                };
 
                 r.v.init("input", false);
 
@@ -54,7 +58,10 @@
             },
 
             tryParseVersion: function (version, result) {
-                var major = {}, minor = {}, build = {}, revision = {};
+                var major = {},
+                    minor = {},
+                    build = {},
+                    revision = {};
 
                 if (version === null) {
                     result.v.setFailure(System.Version.ParseFailureKind.argumentNullException);
@@ -91,13 +98,13 @@
                         if (!System.Version.tryParseComponent(parsedComponents[3], "revision", result, revision)) {
                             return false;
                         } else {
-                            result.v.m_parsedVersion = new System.Version("constructor$3", major.v, minor.v, build.v, revision.v);
+                            result.v.m_parsedVersion = new System.Version.$constructor3(major.v, minor.v, build.v, revision.v);
                         }
                     } else {
-                        result.v.m_parsedVersion = new System.Version("constructor$2", major.v, minor.v, build.v);
+                        result.v.m_parsedVersion = new System.Version.$constructor2(major.v, minor.v, build.v);
                     }
                 } else {
-                    result.v.m_parsedVersion = new System.Version("constructor$1", major.v, minor.v);
+                    result.v.m_parsedVersion = new System.Version.$constructor1(major.v, minor.v);
                 }
 
                 return true;
@@ -169,9 +176,9 @@
 
         config: {
             alias: [
-            "clone", "System$ICloneable$clone",
-            "compareTo", "System$IComparable$1$System$Version$compareTo",
-            "equalsT", "System$IEquatable$1$System$Version$equalsT"
+                "clone", "System$ICloneable$clone",
+                "compareTo", "System$IComparable$1$System$Version$compareTo",
+                "equalsT", "System$IEquatable$1$System$Version$equalsT"
             ],
 
             init: function () {
@@ -180,7 +187,8 @@
             }
         },
 
-        constructor$3: function (major, minor, build, revision) {
+        $constructor3: function (major, minor, build, revision) {
+            this.$initialize();
             if (major < 0) {
                 throw new System.ArgumentOutOfRangeException("major", "Cannot be < 0");
             }
@@ -203,7 +211,8 @@
             this._Revision = revision;
         },
 
-        constructor$2: function (major, minor, build) {
+        $constructor2: function (major, minor, build) {
+            this.$initialize();
             if (major < 0) {
                 throw new System.ArgumentOutOfRangeException("major", "Cannot be < 0");
             }
@@ -221,7 +230,8 @@
             this._Build = build;
         },
 
-        constructor$1: function (major, minor) {
+        $constructor1: function (major, minor) {
+            this.$initialize();
             if (major < 0) {
                 throw new System.ArgumentOutOfRangeException("major", "Cannot be < 0");
             }
@@ -234,7 +244,8 @@
             this._Minor = minor;
         },
 
-        constructor$4: function (version) {
+        $constructor4: function (version) {
+            this.$initialize();
             var v = System.Version.parse(version);
 
             this._Major = v.getMajor();
@@ -244,6 +255,7 @@
         },
 
         constructor: function () {
+            this.$initialize();
             this._Major = 0;
             this._Minor = 0;
         },
@@ -279,7 +291,7 @@
         },
 
         clone: function () {
-            var v = new System.Version("constructor");
+            var v = new System.Version.$constructor();
 
             v._Major = this._Major;
             v._Minor = this._Minor;
@@ -457,6 +469,7 @@
         m_argumentName: null,
         m_canThrow: false,
         constructor: function () {
+            this.$initialize();
         },
 
         init: function (argumentName, canThrow) {
@@ -488,8 +501,7 @@
                 case System.Version.ParseFailureKind.formatException:
                     try {
                         Bridge.Int.parseInt(this.m_exceptionArgument, -2147483648, 2147483647);
-                    }
-                    catch ($e) {
+                    } catch ($e) {
                         $e = System.Exception.create($e);
                         var e;
 

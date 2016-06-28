@@ -113,7 +113,17 @@ namespace Bridge.Translator
 
                 this.WriteComma();
 
-                this.WriteScript(OverloadsCollection.Create(Emitter, resolveResult.Member, isSetter).GetOverloadName(false, prefix));
+                var interfaceName = OverloadsCollection.Create(Emitter, resolveResult.Member, isSetter).GetOverloadName(false, prefix);
+
+                if (interfaceName.StartsWith("\""))
+                {
+                    this.Write(interfaceName);
+                }
+                else
+                {
+                    this.WriteScript(interfaceName);
+                }
+                
                 this.WriteComma();
                 this.WriteScript(OverloadsCollection.Create(Emitter, resolveResult.Member, isSetter).GetOverloadName(true, prefix));
 

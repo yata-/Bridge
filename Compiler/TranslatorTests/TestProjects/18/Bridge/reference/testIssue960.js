@@ -39,6 +39,7 @@
             ]
         },
         constructor: function (name) {
+            this.$initialize();
             this.setName(name);
         }
     });

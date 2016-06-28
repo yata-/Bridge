@@ -17,6 +17,7 @@ Bridge.define("System.Text.RegularExpressions.GroupCollection", {
     _groups: null,
 
     constructor: function (match, caps) {
+		this.$initialize();
         this._match = match;
         this._captureMap = caps;
     },
@@ -153,6 +154,7 @@ Bridge.define("System.Text.RegularExpressions.GroupEnumerator", {
     _curindex: 0,
 
     constructor: function (groupColl) {
+		this.$initialize();
         this._curindex = -1;
         this._groupColl = groupColl;
     },

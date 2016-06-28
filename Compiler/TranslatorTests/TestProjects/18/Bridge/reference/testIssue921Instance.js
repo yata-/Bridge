@@ -16,6 +16,7 @@
             }
         },
         constructor: function (offset) {
+            this.$initialize();
             this._offset = offset;
             TestIssue921Instance.Issue921Instance.setNameStatic("Static");
         },

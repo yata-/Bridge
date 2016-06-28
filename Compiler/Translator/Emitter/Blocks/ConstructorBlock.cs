@@ -193,8 +193,6 @@ namespace Bridge.Translator
             this.WriteColon();
             this.BeginBlock();
 
-            var baseType = this.Emitter.GetBaseTypeDefinition();
-
             if (this.TypeInfo.InstanceConfig.HasConfigMembers)
             {
                 var configBlock = new FieldBlock(this.Emitter, this.TypeInfo, false, false);
@@ -308,6 +306,16 @@ namespace Bridge.Translator
                     requireNewLine = true;
                 }
 
+                if (ctor.Initializer == null || ctor.Initializer.IsNull || ctor.Initializer.ConstructorInitializerType == ConstructorInitializerType.Base)
+                {
+                    if (requireNewLine)
+                    {
+                        this.WriteNewLine();
+                    }
+                    this.Write("this.$initialize();");
+                    requireNewLine = true;
+                }
+
                 if (baseType != null && (!this.Emitter.Validator.IsIgnoreType(baseType) || this.Emitter.Validator.IsBridgeClass(baseType)) ||
                     (ctor.Initializer != null && ctor.Initializer.ConstructorInitializerType == ConstructorInitializerType.This))
                 {
@@ -330,13 +338,17 @@ namespace Bridge.Translator
                         {
                             this.WriteNewLine();
                         }
-                        
+
                         ctor.Body.AcceptChildren(this.Emitter);
 
                         if (!this.Emitter.IsAsync)
                         {
                             this.EmitTempVars(beginPosition, true);
                         }
+                    }
+                    else if (requireNewLine)
+                    {
+                        this.WriteNewLine();
                     }
                 }
                 else
@@ -399,7 +411,7 @@ namespace Bridge.Translator
                     name = BridgeTypes.ToJsName(baseType, this.Emitter);
                 }
 
-                this.Write(name, "." + JS.Fields.PROTOTYPE + ".");
+                this.Write(name, ".");
                 this.Write(baseName);
                 this.WriteCall();
                 appendScope = true;
@@ -408,7 +420,7 @@ namespace Bridge.Translator
             {
                 // this.WriteThis();
                 string name = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter);
-                this.Write(name, "." + JS.Fields.PROTOTYPE);
+                this.Write(name);
                 this.WriteDot();
 
                 var baseName = JS.Funcs.CONSTRUCTOR;

@@ -215,7 +215,9 @@ namespace Bridge.Translator
                 return "new Date(-864e13)";
             }
 
-            return "new " + BridgeTypes.ToJsName(type, emitter) + "()";
+            var isGeneric = type.TypeArguments.Count > 0 && !Helpers.IsIgnoreGeneric(type, emitter);
+
+            return string.Concat("new ", isGeneric ? "(" : "", BridgeTypes.ToJsName(type, emitter), isGeneric ? ")" : "", "()");
         }
 
         protected virtual bool IsValidStaticInitializer(Expression expr)

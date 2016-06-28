@@ -39,4 +39,4 @@ Bridge.define('System.Collections.Generic.EqualityComparer$1', function (T) {
     };
 });
 
-System.Collections.Generic.EqualityComparer$1.$default = new System.Collections.Generic.EqualityComparer$1(Object)();
+System.Collections.Generic.EqualityComparer$1.$default = new (System.Collections.Generic.EqualityComparer$1(Object))();

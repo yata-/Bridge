@@ -11,14 +11,14 @@ namespace System
         /// <summary>
         /// Initializes a new instance of the Random class, using a time-dependent default seed value.
         /// </summary>
-        [Template("new System.Random(\"constructor\")")]
+        [Template("new System.Random.$constructor()")]
         public extern Random();
 
         /// <summary>
         /// nitializes a new instance of the Random class, using the specified seed value.
         /// </summary>
         /// <param name="seed">A number used to calculate a starting value for the pseudo-random number sequence. If a negative number is specified, the absolute value of the number is used.</param>
-        [Template("new System.Random(\"constructor$1\", {seed})")]
+        [Template("new System.Random.$constructor1({seed})")]
         public extern Random(int seed);
 
         /// <summary>

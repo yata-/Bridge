@@ -22,9 +22,13 @@
 
     Bridge.define("System.ICloneable");
 
-    Bridge.define('System.IComparable$1', function (T) { return {}; });
+    Bridge.define('System.IComparable$1', function (T) {
+        return {};
+    });
 
-    Bridge.define('System.IEquatable$1', function (T) { return {}; });
+    Bridge.define('System.IEquatable$1', function (T) {
+        return {};
+    });
 
     Bridge.define("Bridge.IPromise");
 

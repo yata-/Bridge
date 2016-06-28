@@ -106,7 +106,7 @@
                     throw new System.ArgumentException(null, "format");
                 }
 
-                formats = { };
+                formats = {};
                 formats[format] = f[format];
             } else {
                 formats = f;
@@ -139,7 +139,7 @@
                 throw new System.ArgumentOutOfRangeException("month");
             }
 
-            return this.monthNames[month-1];
+            return this.monthNames[month - 1];
         },
 
         getShortestDayName: function (dayOfWeek) {
@@ -190,7 +190,7 @@
 
         statics: {
             constructor: function () {
-                this.numberNegativePatterns =  ["(n)", "-n", "- n", "n-", "n -"];
+                this.numberNegativePatterns = ["(n)", "-n", "- n", "n-", "n -"];
                 this.currencyNegativePatterns = ["($n)", "-$n", "$-n", "$n-", "(n$)", "-n$", "n-$", "n$-", "-n $", "-$ n", "n $-", "$ n-", "$ -n", "n- $", "($ n)", "(n $)"];
                 this.currencyPositivePatterns = ["$n", "n$", "$ n", "n $"];
                 this.percentNegativePatterns = ["-n %", "-n%", "-%n", "%-n", "%n-", "n-%", "n%-", "-% n", "n %-", "% n-", "% -n", "n- %"];
@@ -323,6 +323,7 @@
         },
 
         constructor: function (name, create) {
+            this.$initialize();
             this.name = name;
 
             if (!System.Globalization.CultureInfo.cultures) {
@@ -345,7 +346,7 @@
             }
         },
 
-        getFormat:  function (type) {
+        getFormat: function (type) {
             switch (type) {
                 case System.Globalization.NumberFormatInfo:
                     return this.numberFormat;

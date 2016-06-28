@@ -3,7 +3,8 @@
 
     Bridge.define('Test.BridgeIssues.N882.Bridge882_Instance', {
         constructor: function () {
-            var $t;
+            this.$initialize();        var $t;
+    
             var a = [1, 2, 3];
     
             $t = Bridge.getEnumerator(a);
@@ -16,7 +17,8 @@
     
     Bridge.define('Test.BridgeIssues.N882.Bridge882_Instance.Bridge882_A_Instance', {
         constructor: function () {
-            var $t;
+            this.$initialize();        var $t;
+    
             var a = [5, 6, 7];
     
             $t = Bridge.getEnumerator(a);

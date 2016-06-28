@@ -10,7 +10,7 @@
                     max: max,
 
                     instanceOf: function (instance) {
-                        return typeof(instance) === "number" && Math.floor(instance, 0) == instance && instance >= min && instance <= max;
+                        return typeof (instance) === "number" && Math.floor(instance, 0) == instance && instance >= min && instance <= max;
                     },
                     getDefaultValue: function () {
                         return 0;
@@ -42,7 +42,7 @@
         inherits: [System.IComparable, System.IFormattable],
         statics: {
             instanceOf: function (instance) {
-                return typeof(instance) === "number" && isFinite(instance) && Math.floor(instance, 0) === instance;
+                return typeof (instance) === "number" && isFinite(instance) && Math.floor(instance, 0) === instance;
             },
 
             getDefaultValue: function () {
@@ -100,7 +100,7 @@
                                 } else {
                                     coefficient /= 10;
                                 }
-                                
+
                                 exponent++;
                             }
 
@@ -224,7 +224,7 @@
                     } else {
                         number *= -1;
                     }
-                    
+
                     format = groups[1];
                 } else {
                     format = groups[(isDecimal || isLong ? number.ne(0) : !number) && groups.length > 2 ? 2 : 0];
@@ -424,7 +424,8 @@
 
                 if (isDecimal) {
                     number = number.abs().mul(roundingFactor).round().div(roundingFactor).toString();
-                } if (isLong) {
+                }
+                if (isLong) {
                     number = number.abs().mul(roundingFactor).div(roundingFactor).toString();
                 } else {
                     number = "" + (Math.round(Math.abs(number) * roundingFactor) / roundingFactor);
@@ -666,7 +667,7 @@
 
                     return type.min;
                 }
-                
+
                 return x;
             },
 

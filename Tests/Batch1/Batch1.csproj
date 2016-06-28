@@ -280,6 +280,7 @@
     <Compile Include="BridgeIssues\1300\N1304.cs" />
     <Compile Include="BridgeIssues\1400\N1410.cs" />
     <Compile Include="BridgeIssues\1400\N1428.cs" />
+    <Compile Include="BridgeIssues\1400\N1485.cs" />
     <Compile Include="BridgeIssues\1400\N1476.cs" />
     <Compile Include="BridgeIssues\1400\N1459.cs" />
     <Compile Include="BridgeIssues\1400\N1448.cs" />
@@ -453,7 +454,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Bridge.Collections, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Bridge.Collections.Dev.1.3.0\lib\net40\Bridge.Collections.dll</HintPath>
+      <HintPath>..\..\packages\Bridge.Collections.Dev.1.3.1\lib\net40\Bridge.Collections.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Bridge.Test, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

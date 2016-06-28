@@ -4,6 +4,7 @@
     Bridge.define('Generics.GenericClass$1', function (T) { return {
         instance: Bridge.getDefaultValue(T),
         constructor: function (instance) {
+            this.$initialize();
             this.instance = instance;
         },
         getSomething: function (input) {
@@ -22,6 +23,7 @@
     Bridge.define('Generics.GenericNew$1', function (T) { return {
         instance: Bridge.getDefaultValue(T),
         constructor: function (instance) {
+            this.$initialize();
             this.instance = instance;
         },
         getSomething: function (input) {
@@ -32,6 +34,7 @@
     Bridge.define('Generics.GenericNewAndClass$1', function (T) { return {
         instance: Bridge.getDefaultValue(T),
         constructor: function (instance) {
+            this.$initialize();
             this.instance = instance;
         },
         getSomething: function (input) {
@@ -42,6 +45,7 @@
     Bridge.define('Generics.GenericStruct$1', function (T) { return {
         instance: Bridge.getDefaultValue(T),
         constructor: function (instance) {
+            this.$initialize();
             this.instance = instance;
         },
         getSomething: function (input) {
@@ -61,14 +65,14 @@
             genericNewAndClass: null,
             config: {
                 init: function () {
-                    this.simpleGenericInt = new Generics.SimpleGeneric$1(System.Int32)(1);
-                    this.simpleDoubleGenericIntString = new Generics.SimpleDoubleGeneric$2(System.Int32,String)("constructor");
-                    this.genericINamedEntity = new Generics.GenericINamedEntity$1(Generics.INamedEntity)(new Generics.NamedEntity());
-                    this.genericNamedEntity = new Generics.GenericNamedEntity$1(Generics.NamedEntity)(new Generics.NamedEntity());
-                    this.genericClassObject = new Generics.GenericClass$1(Object)(2);
-                    this.genericClassNamedEntity = new Generics.GenericClass$1(Generics.NamedEntity)(new Generics.NamedEntity());
-                    this.genericNew = new Generics.GenericNew$1(Generics.NewClass)(new Generics.NewClass());
-                    this.genericNewAndClass = new Generics.GenericNewAndClass$1(Generics.NewClass)(new Generics.NewClass());
+                    this.simpleGenericInt = new (Generics.SimpleGeneric$1(System.Int32))(1);
+                    this.simpleDoubleGenericIntString = new (Generics.SimpleDoubleGeneric$2(System.Int32,String)).$constructor();
+                    this.genericINamedEntity = new (Generics.GenericINamedEntity$1(Generics.INamedEntity))(new Generics.NamedEntity());
+                    this.genericNamedEntity = new (Generics.GenericNamedEntity$1(Generics.NamedEntity))(new Generics.NamedEntity());
+                    this.genericClassObject = new (Generics.GenericClass$1(Object))(2);
+                    this.genericClassNamedEntity = new (Generics.GenericClass$1(Generics.NamedEntity))(new Generics.NamedEntity());
+                    this.genericNew = new (Generics.GenericNew$1(Generics.NewClass))(new Generics.NewClass());
+                    this.genericNewAndClass = new (Generics.GenericNewAndClass$1(Generics.NewClass))(new Generics.NewClass());
                 }
             }
         }
@@ -77,6 +81,7 @@
     Bridge.define('Generics.NewClass', {
         data: 0,
         constructor: function () {
+            this.$initialize();
             this.data = 30;
         }
     });
@@ -85,8 +90,10 @@
         instanceT: Bridge.getDefaultValue(T),
         instanceK: Bridge.getDefaultValue(K),
         constructor: function () {
+            this.$initialize();
         },
-        constructor$1: function (instanceT, instanceK) {
+        $constructor1: function (instanceT, instanceK) {
+            this.$initialize();
             this.instanceT = instanceT;
             this.instanceK = instanceK;
         },
@@ -101,6 +108,7 @@
     Bridge.define('Generics.SimpleGeneric$1', function (T) { return {
         instance: Bridge.getDefaultValue(T),
         constructor: function (instance) {
+            this.$initialize();
             this.instance = instance;
         },
         getSomething: function (input) {
@@ -111,6 +119,7 @@
     Bridge.define('Generics.GenericINamedEntity$1', function (T) { return {
         instance: Bridge.getDefaultValue(T),
         constructor: function (instance) {
+            this.$initialize();
             this.instance = instance;
         },
         getSomething: function (input) {
@@ -130,6 +139,7 @@
     Bridge.define('Generics.GenericNamedEntity$1', function (T) { return {
         instance: Bridge.getDefaultValue(T),
         constructor: function (instance) {
+            this.$initialize();
             this.instance = instance;
         },
         getSomething: function (input) {

@@ -9,13 +9,14 @@ Bridge.define('System.Collections.Generic.Comparer$1', function (T) {
         },
 
         constructor: function (fn) {
+			this.$initialize();
             this.fn = fn;
             this.compare = fn;
         }
     }
 });
 
-System.Collections.Generic.Comparer$1.$default = new System.Collections.Generic.Comparer$1(Object)(function (x, y) {
+System.Collections.Generic.Comparer$1.$default = new (System.Collections.Generic.Comparer$1(Object))(function (x, y) {
     if (!Bridge.hasValue(x)) {
         return !Bridge.hasValue(y) ? 0 : -1;
     } else if (!Bridge.hasValue(y)) {

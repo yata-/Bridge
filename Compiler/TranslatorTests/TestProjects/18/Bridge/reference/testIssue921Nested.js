@@ -84,6 +84,7 @@
             }
         },
         constructor: function (offset) {
+            this.$initialize();
             this._offset = offset;
             TestIssue921Nested.Issue921NestedOuter.Issue921Nested.setNameStatic("Static");
         },

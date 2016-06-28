@@ -11,6 +11,7 @@
             }
         },
         constructor: function () {
+            this.$initialize();
         },
         $struct: true,
         getHashCode: function () {

@@ -5,6 +5,7 @@
 
         return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
             constructor: function (array, offset, count) {
+                this.$initialize();
                 this.array = array;
                 this.offset = offset || 0;
                 this.count = count || array.length;
