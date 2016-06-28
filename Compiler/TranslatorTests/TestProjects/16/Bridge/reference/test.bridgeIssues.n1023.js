@@ -10,7 +10,7 @@
                 Value: Bridge.getDefaultValue(T)
             }
         },
-        constructor$1: function (value) {
+        $constructor1: function (value) {
             Test.BridgeIssues.N1023.Optional$1(T).$constructor.call(this);
     
             this.setValue(value);
