@@ -1,3 +1,4 @@
+using System;
 using Bridge.Contract;
 using Bridge.Contract.Constants;
 
@@ -6,6 +7,7 @@ using ICSharpCode.NRefactory.Semantics;
 using System.Collections.Generic;
 
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Bridge.Translator
@@ -52,8 +54,8 @@ namespace Bridge.Translator
         protected virtual IEnumerable<string> GetInjectors()
         {
             var handlers = this.GetEventsAndAutoStartupMethods();
-            var aspects = this.Emitter.Plugins.GetConstructorInjectors(this);
-            return aspects.Concat(handlers);
+            var injectors = this.Emitter.Plugins.GetConstructorInjectors(this);
+            return injectors.Concat(handlers);
         }
 
         protected virtual void EmitCtorForStaticClass()
@@ -157,9 +159,12 @@ namespace Bridge.Translator
             }
         }
 
-        protected virtual void EmitInitMembers()
+        protected virtual IEnumerable<string> EmitInitMembers()
         {
             var injectors = this.GetInjectors();
+            IEnumerable<string> ctorWrappers = injectors.Where(i => i.StartsWith("$ctorWrapper:")).Select(i => i.Substring(13));
+            injectors = injectors.Where(i => !i.StartsWith("$ctorWrapper:"));
+
             IEnumerable<string> fieldsInjectors = null;
 
             var fieldBlock = new FieldBlock(this.Emitter, this.TypeInfo, false, true);
@@ -174,7 +179,7 @@ namespace Bridge.Translator
 
             if (!this.TypeInfo.InstanceConfig.HasConfigMembers && !injectors.Any() && !fieldsInjectors.Any())
             {
-                return;
+                return ctorWrappers;
             }
 
             int pos = this.Emitter.Output.Length;
@@ -247,13 +252,15 @@ namespace Bridge.Translator
                 this.Emitter.Comma = oldComma;
                 this.Emitter.IsNewLine = oldNewLine;
             }
+
+            return ctorWrappers;
         }
 
         protected virtual void EmitCtorForInstantiableClass()
         {
-            this.EmitInitMembers();
+            var ctorWrappers = this.EmitInitMembers().ToArray();
 
-            if (!this.TypeInfo.HasInstantiable || this.Emitter.Plugins.HasConstructorInjectors(this))
+            if (!this.TypeInfo.HasInstantiable && ctorWrappers.Length == 0)
             {
                 return;
             }
@@ -261,7 +268,7 @@ namespace Bridge.Translator
             var baseType = this.Emitter.GetBaseTypeDefinition();
             var typeDef = this.Emitter.GetTypeDefinition();
 
-            if (typeDef.IsValueType)
+            if (typeDef.IsValueType || (this.TypeInfo.Ctors.Count == 0 && ctorWrappers.Length > 0))
             {
                 this.TypeInfo.Ctors.Add(new ConstructorDeclaration
                 {
@@ -292,12 +299,22 @@ namespace Bridge.Translator
                 this.WriteColon();
                 this.WriteFunction();
 
+                int pos = this.Emitter.Output.Length;
                 this.EmitMethodParameters(ctor.Parameters, null, ctor);
+                var ctorParams = this.Emitter.Output.ToString().Substring(pos);
 
                 this.WriteSpace();
                 this.BeginBlock();
                 var len = this.Emitter.Output.Length;
                 var requireNewLine = false;
+
+                var noThisInvocation = ctor.Initializer == null || ctor.Initializer.IsNull || ctor.Initializer.ConstructorInitializerType == ConstructorInitializerType.Base;
+                IWriterInfo oldWriter = null;
+                if (ctorWrappers.Length > 0 && noThisInvocation)
+                {
+                    oldWriter = this.SaveWriter();
+                    this.NewWriter();
+                }
 
                 this.ConvertParamsToReferences(ctor.Parameters);
 
@@ -306,7 +323,7 @@ namespace Bridge.Translator
                     requireNewLine = true;
                 }
 
-                if (ctor.Initializer == null || ctor.Initializer.IsNull || ctor.Initializer.ConstructorInitializerType == ConstructorInitializerType.Base)
+                if (noThisInvocation)
                 {
                     if (requireNewLine)
                     {
@@ -365,11 +382,80 @@ namespace Bridge.Translator
                     }
                 }
 
+                if (oldWriter != null)
+                {
+                    this.WrapBody(oldWriter, ctorWrappers, ctorParams);
+                }
+
                 this.EndBlock();
                 this.Emitter.Comma = true;
                 this.ClearLocalsMap(prevMap);
                 this.ClearLocalsNamesMap(prevNamesMap);
             }
+        }
+
+        protected virtual void WrapBody(IWriterInfo oldWriter, string[] ctorWrappers, string ctorParams)
+        {
+            var body = this.Emitter.Output.ToString();
+            this.RestoreWriter(oldWriter);
+
+            List<string> endParts = new List<string>();
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < ctorWrappers.Length; i++)
+            {
+                var isLast = i == (ctorWrappers.Length - 1);
+                var ctorWrapper = ctorWrappers[i];
+                var parts = ctorWrapper.Split(new[] {"{body}"}, StringSplitOptions.RemoveEmptyEntries);
+                endParts.Add(parts[1]);
+
+                sb.Append(parts[0]);
+                sb.Append("function ");
+                sb.Append(ctorParams);
+                sb.Append(" {");
+
+                if (!isLast)
+                {
+                    sb.Append("\n");
+                }
+
+                ++this.Emitter.Level;
+                for (var j = 0; j < this.Emitter.Level; j++)
+                {
+                    sb.Append("    ");
+                }
+
+                if (isLast)
+                {
+                    sb.Append(this.WriteIndentToString(body));
+                }
+            }
+
+            endParts.Reverse();
+
+            var newLine = false;
+            foreach (var endPart in endParts)
+            {
+                --this.Emitter.Level;
+                if (newLine)
+                {
+                    sb.Append("\n");
+                    for (var j = 0; j < this.Emitter.Level; j++)
+                    {
+                        sb.Append("    ");
+                    }
+                }
+                else if(sb.ToString().Substring(sb.Length - 4) == "    ")
+                {
+                    sb.Length -= 4;
+                }
+                newLine = true;
+
+                sb.Append("}");
+                sb.Append(endPart);
+            }
+
+            this.Write(sb.ToString());
+            this.WriteNewLine();
         }
 
         protected virtual void EmitBaseConstructor(ConstructorDeclaration ctor, string ctorName)
