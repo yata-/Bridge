@@ -52,6 +52,8 @@
             public const string BRIDGE_TOPLAIN = "Bridge.toPlain";
 
             public const string DCONSTRUCTOR = "$constructor";
+            public const string INITIALIZE = "$initialize";
+            public const string INIT = "init";
             public const string CLONE = "$clone";
             public const string TO_ENUMERATOR = "toEnumerator";
             public const string TO_ENUMERABLE = "toEnumerable";
