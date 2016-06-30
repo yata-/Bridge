@@ -139,7 +139,7 @@ namespace Bridge.Translator
                 {
                     this.EnsureComma();
 
-                    this.Write("init");
+                    this.Write(JS.Funcs.INIT);
                     this.WriteColon();
                     this.WriteFunction();
                     this.WriteOpenParentheses();
@@ -162,8 +162,11 @@ namespace Bridge.Translator
         protected virtual IEnumerable<string> EmitInitMembers()
         {
             var injectors = this.GetInjectors();
-            IEnumerable<string> ctorWrappers = injectors.Where(i => i.StartsWith("$ctorWrapper:")).Select(i => i.Substring(13));
-            injectors = injectors.Where(i => !i.StartsWith("$ctorWrapper:"));
+
+            var constructorWrapperString = CS.Wrappers.CONSTRUCTORWRAPPER + ":";
+
+            IEnumerable<string> ctorWrappers = injectors.Where(i => i.StartsWith(constructorWrapperString)).Select(i => i.Substring(constructorWrapperString.Length));
+            injectors = injectors.Where(i => !i.StartsWith(constructorWrapperString));
 
             IEnumerable<string> fieldsInjectors = null;
 
@@ -222,7 +225,7 @@ namespace Bridge.Translator
             if (injectors.Count() > 0)
             {
                 this.EnsureComma();
-                this.Write("init");
+                this.Write(JS.Funcs.INIT);
                 this.WriteColon();
                 this.WriteFunction();
                 this.WriteOpenParentheses();
@@ -246,7 +249,7 @@ namespace Bridge.Translator
 
             var str = this.Emitter.Output.ToString().Substring(pos);
 
-            if (Regex.IsMatch(str, "^\\s*\\$?config\\s*:\\s*\\{\\s*\\}\\s*$", RegexOptions.Multiline))
+            if (Regex.IsMatch(str, "^\\s*\\$?" + JS.Fields.CONFIG + "\\s*:\\s*\\{\\s*\\}\\s*$", RegexOptions.Multiline))
             {
                 this.Emitter.Output.Length = pos;
                 this.Emitter.Comma = oldComma;
@@ -329,7 +332,7 @@ namespace Bridge.Translator
                     {
                         this.WriteNewLine();
                     }
-                    this.Write("this.$initialize();");
+                    this.Write("this." + JS.Funcs.INITIALIZE + "();");
                     requireNewLine = true;
                 }
 
@@ -405,7 +408,7 @@ namespace Bridge.Translator
             {
                 var isLast = i == (ctorWrappers.Length - 1);
                 var ctorWrapper = ctorWrappers[i];
-                var parts = ctorWrapper.Split(new[] {"{body}"}, StringSplitOptions.RemoveEmptyEntries);
+                var parts = ctorWrapper.Split(new[] { CS.Wrappers.Params.BODY }, StringSplitOptions.RemoveEmptyEntries);
                 endParts.Add(parts[1]);
 
                 sb.Append(parts[0]);
