@@ -2524,11 +2524,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 // TEST
                 // Check constructor with parameter
-                Bridge.Test.Assert.throws$4(Bridge.ClientTest.BasicCSharp.TestSet1FailureHelper.testConstructor1Failure, "Related should not be null", "Related should not be null");
+                Bridge.Test.Assert.throws$7(System.Exception, Bridge.ClientTest.BasicCSharp.TestSet1FailureHelper.testConstructor1Failure, "Related should not be null");
     
                 // TEST
                 // Check constructor with parameter
-                Bridge.Test.Assert.throws$4(Bridge.ClientTest.BasicCSharp.TestSet1FailureHelper.testConstructor2Failure, "Should pass six parameters", "Should pass six parameters");
+                Bridge.Test.Assert.throws$7(System.Exception, Bridge.ClientTest.BasicCSharp.TestSet1FailureHelper.testConstructor2Failure, "Should pass six parameters");
     
                 a = new Bridge.ClientTest.BasicCSharp.ClassA.$constructor2([150, "151", true, 1.53, System.Decimal(1.54), Bridge.merge(new Bridge.ClientTest.BasicCSharp.ClassA.Aux1(), {
                     setNumber: 155
@@ -2695,17 +2695,17 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             },
             thrownExceptions: function () {
                 // #230
-                Bridge.Test.Assert.throws$4(Bridge.ClientTest.BasicCSharp.TestTryCatchBlocks.tryCatchWithNotCaughtTypedException, "catch me", "A.Typed exception is not Caught");
+                Bridge.Test.Assert.throws$7(System.Exception, Bridge.ClientTest.BasicCSharp.TestTryCatchBlocks.tryCatchWithNotCaughtTypedException, "A.Typed exception is not Caught");
                 Bridge.Test.Assert.true$1(Bridge.ClientTest.BasicCSharp.TestTryCatchBlocks.getIsATry(), "A. exception not caught - try section called");
                 Bridge.Test.Assert.true$1(!Bridge.ClientTest.BasicCSharp.TestTryCatchBlocks.getIsACatch(), "A. exception not caught - catch section not called");
     
                 // #229
-                Bridge.Test.Assert.throws$4(Bridge.ClientTest.BasicCSharp.TestTryCatchBlocks.tryCatchWithNotCaughtTypedExceptionAndArgument, "catch me", "[#229] B. Typed exception is not Caught; and argument");
+                Bridge.Test.Assert.throws$7(System.Exception, Bridge.ClientTest.BasicCSharp.TestTryCatchBlocks.tryCatchWithNotCaughtTypedExceptionAndArgument, "[#229] B. Typed exception is not Caught; and argument");
                 Bridge.Test.Assert.true$1(Bridge.ClientTest.BasicCSharp.TestTryCatchBlocks.getIsBTry(), "[#229] B. exception not caught - try section called");
                 Bridge.Test.Assert.true$1(!Bridge.ClientTest.BasicCSharp.TestTryCatchBlocks.getIsBCatch(), "B. exception not caught - catch section not called");
     
                 // #231
-                Bridge.Test.Assert.throws$4(Bridge.ClientTest.BasicCSharp.TestTryCatchBlocks.tryCatchWithRethrow, "catch me", "[#231] C. Rethrow");
+                Bridge.Test.Assert.throws$7(System.InvalidOperationException, Bridge.ClientTest.BasicCSharp.TestTryCatchBlocks.tryCatchWithRethrow, "[#231] C. Rethrow");
                 Bridge.Test.Assert.true$1(Bridge.ClientTest.BasicCSharp.TestTryCatchBlocks.getIsCTry(), "C. exception caught and re-thrown - try section called");
                 Bridge.Test.Assert.true$1(Bridge.ClientTest.BasicCSharp.TestTryCatchBlocks.getIsCCatch(), "C. exception caught and re-thrown - catch section called");
     
@@ -2924,19 +2924,19 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             },
             thrownExceptions: function () {
                 //#230
-                Bridge.Test.Assert.throws$4(Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks.tryCatchFinallyWithNotCaughtTypedException, "catch me", "A. Typed exception is not caught");
+                Bridge.Test.Assert.throws$7(System.Exception, Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks.tryCatchFinallyWithNotCaughtTypedException, "A. Typed exception is not caught");
                 Bridge.Test.Assert.true$1(Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks.getIsATry(), "A. exception not caught - try section called");
                 Bridge.Test.Assert.true$1(!Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks.getIsACatch(), "A. exception not caught - catch section not called");
                 Bridge.Test.Assert.true$1(Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks.getIsAFinally(), "A. exception not caught - finally section called");
     
                 //#229
-                Bridge.Test.Assert.throws$4(Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks.tryCatchWithNotCaughtTypedExceptionAndArgument, "catch me", "[#229] B. Typed exception is not caught; and argument");
+                Bridge.Test.Assert.throws$7(System.Exception, Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks.tryCatchWithNotCaughtTypedExceptionAndArgument, "[#229] B. Typed exception is not caught; and argument");
                 Bridge.Test.Assert.true$1(Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks.getIsBTry(), "B. exception not caught - try section called");
                 Bridge.Test.Assert.true$1(!Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks.getIsBCatch(), "B. exception not caught - catch section not called");
                 Bridge.Test.Assert.true$1(Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks.getIsBFinally(), "B. exception not caught - finally section called");
     
                 //#231
-                Bridge.Test.Assert.throws$4(Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks.tryCatchWithRethrow, "catch me", "[#231] C. Rethrow");
+                Bridge.Test.Assert.throws$7(System.InvalidOperationException, Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks.tryCatchWithRethrow, "[#231] C. Rethrow");
                 Bridge.Test.Assert.true$1(Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks.getIsCTry(), "C. exception caught and re-thrown  - try section called");
                 Bridge.Test.Assert.true$1(Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks.getIsCCatch(), "C. exception caught and re-thrown  - catch section called");
                 Bridge.Test.Assert.true$1(Bridge.ClientTest.BasicCSharp.TestTryCatchFinallyBlocks.getIsCFinally(), "C. exception caught and re-thrown  - finally section called");
