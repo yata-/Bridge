@@ -16,6 +16,8 @@ namespace Bridge.Builder
         {
             var logger = new Logger(null, false, LoggerLevel.Info, true, new ConsoleLoggerWriter(), new FileLoggerWriter());
 
+            logger.Info("Executing Bridge.Builder.Console...");
+
             var bridgeOptions = GetBridgeOptionsFromCommandLine(args, logger);
 
             if (bridgeOptions == null)
@@ -134,7 +136,7 @@ namespace Bridge.Builder
         {
             var bridgeOptions = new BridgeOptions();
 
-            bridgeOptions.Name = "Bridge.Builder.Console";
+            bridgeOptions.Name = "";
 
             int i = 0;
 

@@ -141,18 +141,14 @@ namespace Bridge.Translator.Logging
                 return message;
             }
 
-            string wrappedMessage = string.Empty;
+            var d = DateTime.Now.ToString("s") + ":" + DateTime.Now.Millisecond.ToString("D3") + " ";
 
-            if (!string.IsNullOrEmpty(this.Name))
-            {
-                wrappedMessage += this.Name + ": ";
-            }
-
-            wrappedMessage += logLevel + " ";
-
-            wrappedMessage += DateTime.Now.ToString("s") + ":" + DateTime.Now.Millisecond + " ";
-
-            wrappedMessage += message;
+            string wrappedMessage = string.Format(
+                "{0}\t{1}\t{2}\t{3}",
+                d,
+                loggerLevel,
+                this.Name,
+                message);
 
             return wrappedMessage;
         }

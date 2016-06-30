@@ -1,6 +1,6 @@
 ﻿{
   "logging": {
-    "level": "Info",
+    "level": "None",
     "maxSize": 1048576,
     "folder": "bin/Release"
   }
