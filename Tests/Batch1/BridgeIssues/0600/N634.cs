@@ -91,25 +91,6 @@ namespace Bridge.ClientTest.BridgeIssues
     [TestFixture(TestNameFormat = "#634 - {0}")]
     public class Bridge634
     {
-       [Test(ExpectedCount = 1)]
-       public static void TestUseCase1()
-        {
-            var hashSet = new HashSet<string>();
-
-            hashSet.Add("a");
-            hashSet.Add("b");
-            hashSet.Add("c");
-
-            var text = "";
-
-            foreach (string s in hashSet)
-            {
-                text += s;
-            }
-
-            Assert.AreEqual("abc", text, "Bridge634: foreach works for HashSet");
-        }
-
         [Test(ExpectedCount = 21)]
         public static void TestUseCase2()
         {
@@ -160,16 +141,6 @@ namespace Bridge.ClientTest.BridgeIssues
             Assert.AreEqual("Bridge.ClientTest.BridgeIssues.Bridge634C.Nested.SubNested$1$System.Int32", c4.GetClassName(), "Bridge634 C c4");
             Assert.AreEqual("Bridge.ClientTest.BridgeIssues.Bridge634C.Nested$1.SubNested$System.Int32", c5.GetClassName(), "Bridge634 C c5");
             Assert.AreEqual("Bridge.ClientTest.BridgeIssues.Bridge634C.Nested$1.SubNested$1$System.Int32$System.Int32", c6.GetClassName(), "Bridge634 C c6");
-        }
-
-        [Test(ExpectedCount = 2)]
-        public static void TestUseCaseFor658()
-        {
-            var d = new Bridge634D();
-            var d1 = new Bridge634D.Nested();
-
-            Assert.AreEqual("Bridge634D", d.GetClassName(), "Bridge634 D d");
-            Assert.AreEqual("Bridge634D.Nested", d1.GetClassName(), "Bridge634 D d1");
         }
     }
 }

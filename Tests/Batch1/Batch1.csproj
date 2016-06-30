@@ -67,6 +67,7 @@
     <Compile Include="BridgeIssues\0500\N550.cs" />
     <Compile Include="BridgeIssues\0500\N578.cs" />
     <Compile Include="BridgeIssues\0500\N577.cs" />
+    <Compile Include="BridgeIssues\0600\N658.cs" />
     <Compile Include="BridgeIssues\0600\N637.cs" />
     <Compile Include="BridgeIssues\0700\N772.cs" />
     <Compile Include="BridgeIssues\0700\N777.cs" />
@@ -290,7 +291,6 @@
     <Compile Include="BridgeIssues\1400\N1402.cs" />
     <Compile Include="BridgeIssues\1500\N1501.cs" />
     <Compile Include="BridgeIssues\TestBridgeIssues.cs" />
-    <Compile Include="Collections\Generic\StackTests.cs" />
     <Compile Include="Convert\ConvertFromBase64Tests.cs" />
     <Compile Include="Convert\ConvertTestBase.cs" />
     <Compile Include="Convert\ConvertToBase64CharArrayTests.cs" />
@@ -453,10 +453,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Bridge.Collections, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Bridge.Collections.Dev.1.3.1\lib\net40\Bridge.Collections.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Bridge.Test, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Bridge.Testing.1.0.0\lib\net40\Bridge.Test.dll</HintPath>
       <Private>True</Private>
