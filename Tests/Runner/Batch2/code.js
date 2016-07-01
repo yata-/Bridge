@@ -1528,7 +1528,7 @@
     Bridge.define('Bridge.ClientTest.Batch2.Constants', {
         statics: {
             BATCH_NAME: "Batch2",
-            MODULE_ISSUES: "Issues",
+            MODULE_ISSUES: "Issues2",
             MODULE_CHECKED_UNCKECKED: "Checked/Unckecked"
         }
     });
