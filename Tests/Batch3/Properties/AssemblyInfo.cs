@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Bridge client tests")]
 [assembly: AssemblyProduct("Bridge client tests")]
-[assembly: AssemblyDescription("Bridge Test library - test github issues till number 1000")]
+[assembly: AssemblyDescription("Bridge Test library - test github issues up to #1999")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
