@@ -10,38 +10,37 @@ namespace Bridge.ClientTest.Text.RegularExpressions
     {
         #region Msdn
 
-        //TODO: uncomment when inline IgnoreCase option is supported
-        //[Test]
-        //public void MsdnIgnoreCaseTest()
-        //{
-        //    const string pattern = @"\b(?i:t)he\w*\b";
-        //    const string text = @"The man then told them about that event.";
-        //    var rgx = new Regex(pattern, RegexOptions.IgnoreCase);
-        //    var ms = rgx.Matches(text);
+        [Test]
+        public void MsdnIgnoreCaseTest()
+        {
+            const string pattern = @"\b(?i:t)he\w*\b";
+            const string text = @"The man then told them about that event.";
+            var rgx = new Regex(pattern, RegexOptions.IgnoreCase);
+            var ms = rgx.Matches(text);
 
-        //    Assert.AreEqual(3, ms.Count, "Matches count is correct.");
+            Assert.AreEqual(3, ms.Count, "Matches count is correct.");
 
-        //    // Match #0:
-        //    Assert.NotNull(ms[0], "Match[0] is not null.");
-        //    ValidateMatch(ms[0], 0, 3, "The", 1, true);
+            // Match #0:
+            Assert.NotNull(ms[0], "Match[0] is not null.");
+            ValidateMatch(ms[0], 0, 3, "The", 1, true);
 
-        //    ValidateGroup(ms[0], 0, 0, 3, true, "The", 1);
-        //    ValidateCapture(ms[0], 0, 0, 0, 3, "The");
+            ValidateGroup(ms[0], 0, 0, 3, true, "The", 1);
+            ValidateCapture(ms[0], 0, 0, 0, 3, "The");
 
-        //    // Match #1:
-        //    Assert.NotNull(ms[1], "Match[1] is not null.");
-        //    ValidateMatch(ms[1], 8, 4, "then", 1, true);
+            // Match #1:
+            Assert.NotNull(ms[1], "Match[1] is not null.");
+            ValidateMatch(ms[1], 8, 4, "then", 1, true);
 
-        //    ValidateGroup(ms[1], 0, 8, 4, true, "then", 1);
-        //    ValidateCapture(ms[1], 0, 0, 8, 4, "then");
+            ValidateGroup(ms[1], 0, 8, 4, true, "then", 1);
+            ValidateCapture(ms[1], 0, 0, 8, 4, "then");
 
-        //    // Match #2:
-        //    Assert.NotNull(ms[2], "Match[2] is not null.");
-        //    ValidateMatch(ms[2], 18, 4, "them", 1, true);
+            // Match #2:
+            Assert.NotNull(ms[2], "Match[2] is not null.");
+            ValidateMatch(ms[2], 18, 4, "them", 1, true);
 
-        //    ValidateGroup(ms[2], 0, 18, 4, true, "them", 1);
-        //    ValidateCapture(ms[2], 0, 0, 18, 4, "them");
-        //}
+            ValidateGroup(ms[2], 0, 18, 4, true, "them", 1);
+            ValidateCapture(ms[2], 0, 0, 18, 4, "them");
+        }
 
         [Test]
         public void MsdnMultilineInlineOptionTest()
@@ -237,45 +236,45 @@ namespace Bridge.ClientTest.Text.RegularExpressions
 
         #endregion
 
-        // TODO: remove/modify this TEST when IgnoreCase inline option is supported
-        //[Test]
-        //public void IgnoreCaseIsNotSupported()
-        //{
-        //    Assert.Throws<NotSupportedException>(() =>
-        //    {
-        //        var rgx = new Regex("(?i)Case Is Ignored");
-        //        var res = rgx.IsMatch("case is ignored");
-        //        Assert.True(res);
-        //    });
+        [Test]
+        public void IgnoreCaseInlineOptionTest1()
+        {
+            var rgx = new Regex("(?i)Case Is Ignored");
+            var res = rgx.IsMatch("case is ignored");
+            Assert.True(res);
+        }
 
-        //    Assert.Throws<NotSupportedException>(() =>
-        //    {
-        //        var rgx = new Regex("Case Is (?i)Ignored Partially");
-        //        var res = rgx.IsMatch("Case Is ignored partially");
-        //        Assert.True(res);
-        //    });
+        [Test]
+        public void IgnoreCaseInlineOptionTest2()
+        {
+            var rgx = new Regex("Case Is (?i)Ignored Partially");
+            var res = rgx.IsMatch("Case Is ignored partially");
+            Assert.True(res);
+        }
 
-        //    Assert.Throws<NotSupportedException>(() =>
-        //    {
-        //        var rgx = new Regex("(?-i)Case Sensitive", RegexOptions.IgnoreCase);
-        //        var res = rgx.IsMatch("case sensitive");
-        //        Assert.False(res);
-        //    });
+        [Test]
+        public void IgnoreCaseInlineOptionTest3()
+        {
+            var rgx = new Regex("(?-i)Case Sensitive", RegexOptions.IgnoreCase);
+            var res = rgx.IsMatch("case sensitive");
+            Assert.False(res);
+        }
 
-        //    Assert.Throws<NotSupportedException>(() =>
-        //    {
-        //        var rgx = new Regex("Case Sensitive (-?)Partially", RegexOptions.IgnoreCase);
-        //        var res = rgx.IsMatch("case sensitive Partially");
-        //        Assert.True(res);
-        //    });
+        [Test]
+        public void IgnoreCaseInlineOptionTest4()
+        {
+            var rgx = new Regex("Case Sensitive (?-i)Partially", RegexOptions.IgnoreCase);
+            var res = rgx.IsMatch("case sensitive Partially");
+            Assert.True(res);
+        }
 
-        //    Assert.Throws<NotSupportedException>(() =>
-        //    {
-        //        var rgx = new Regex("Case Sensitive (-?)Partially", RegexOptions.IgnoreCase);
-        //        var res = rgx.IsMatch("case sensitive partially");
-        //        Assert.False(res);
-        //    });
-        //}
+        [Test]
+        public void IgnoreCaseInlineOptionTest5()
+        {
+            var rgx = new Regex("Case Sensitive (?-i)Partially", RegexOptions.IgnoreCase);
+            var res = rgx.IsMatch("case sensitive partially");
+            Assert.False(res);
+        }
 
         [Test]
         public void MultilineInlineOptionTest1()
