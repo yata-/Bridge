@@ -55,8 +55,12 @@
   <file name="Text/RegularExpressions/RegexParser.js" />
   <file name="Text/RegularExpressions/RegexNode.js" />
   <file name="Text/RegularExpressions/RegexReplacement.js" />
-  <file name="Text/RegularExpressions/RegexNetEngine.js" />
-  <file name="Text/RegularExpressions/RegexNetEngineParser.js" />
+  <file name="Text/RegularExpressions/RegexEngine.js" />
+  <file name="Text/RegularExpressions/RegexEngineBranch.js" />
+  <file name="Text/RegularExpressions/RegexEngineState.js" />
+  <file name="Text/RegularExpressions/RegexEnginePass.js" />
+  <file name="Text/RegularExpressions/RegexEngineProbe.js" />
+  <file name="Text/RegularExpressions/RegexEngineParser.js" />
   <file name="timer.js" />
   <target name="Bridge.NET" file="$output\bridge.js" debug="True">
     <include name="Init.js" />
@@ -112,8 +116,12 @@
     <include name="Text/RegularExpressions/RegexParser.js" />
     <include name="Text/RegularExpressions/RegexNode.js" />
     <include name="Text/RegularExpressions/RegexReplacement.js" />
-    <include name="Text/RegularExpressions/RegexNetEngine.js" />
-    <include name="Text/RegularExpressions/RegexNetEngineParser.js" />
+    <include name="Text/RegularExpressions/RegexEngine.js" />
+    <include name="Text/RegularExpressions/RegexEngineBranch.js" />
+    <include name="Text/RegularExpressions/RegexEngineState.js" />
+    <include name="Text/RegularExpressions/RegexEnginePass.js" />
+    <include name="Text/RegularExpressions/RegexEngineProbe.js" />
+    <include name="Text/RegularExpressions/RegexEngineParser.js" />
     <include name="Console.js" />
     <include name="timer.js" />
     <include name="End.js" />

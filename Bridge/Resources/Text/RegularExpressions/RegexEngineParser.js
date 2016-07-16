@@ -1,6 +1,6 @@
-﻿// @source Text/RegularExpressions/RegexNetEngineParser.js
+﻿// @source Text/RegularExpressions/RegexEngineParser.js
 
-Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
+Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
     statics: {
         _hexSymbols: "0123456789abcdefABCDEF",
         _octSymbols: "01234567",
@@ -40,10 +40,13 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             anchor: 300,
 
             group: 400,
-            groupConstruct: 401,
-            groupConstructName: 402,
-            groupConstructImnsx: 403,
-            groupConstructImnsxMisc: 404,
+            groupImnsx: 401,
+            groupImnsxMisc: 402,
+
+            groupConstruct: 403,
+            groupConstructName: 404,
+            groupConstructImnsx: 405,
+            groupConstructImnsxMisc: 406,
 
             quantifier: 500,
             quantifierN: 501,
@@ -54,20 +57,11 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             alternationGroupExpr: 602,
 
             commentInline: 700,
-            commentXMode: 701,
-
-            toBeSkipped: 900,
-            tmpGroup: 901
+            commentXMode: 701
         },
 
-        parsePattern: function (pattern, isIgnoreCaseMode, isMultilineMode, isSinglelineMode, isIgnoreWhitespaceMode) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
-            var settings = {
-                ignoreCase: isIgnoreCaseMode,
-                multiline: isMultilineMode,
-                singleline: isSinglelineMode,
-                ignoreWhitespace: isIgnoreWhitespaceMode
-            };
+        parsePattern: function (pattern, settings) {
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
 
             // Parse tokens in the original pattern:
             var tokens = scope._parsePatternImpl(pattern, settings, 0, pattern.length);
@@ -82,30 +76,143 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
 
             // Transform tokens for usage in JS RegExp:
             scope._preTransformBackrefTokens(pattern, tokens, sparseSettings);
-            scope._transformTokensForJsPattern(settings, tokens, sparseSettings, [], [], 0);
+            scope._transformRawTokens(settings, tokens, sparseSettings, [], [], 0);
 
             // Update group descriptors as tokens have been transformed (at least indexes were changed):
             scope._updateGroupDescriptors(tokens);
 
-            // Create pattern supported by JS RegExp:
-            var jsPattern = scope._constructPattern(tokens);
-
             var result = {
-                originalPattern: pattern,
-                jsPattern: jsPattern,
                 groups: groups,
                 sparseSettings: sparseSettings,
                 isContiguous: settings.isContiguous || false,
-                mustCaptureFirstCh: settings.mustCaptureFirstCh || false,
                 shouldFail: settings.shouldFail || false,
-                hasEndOfMultiline: settings.hasEndOfMultiline || false,
+                tokens: tokens
             };
 
             return result;
         },
 
+        _transformRawTokens: function (settings, tokens, sparseSettings, allowedBackrefRawIds, nestedGroupIds, nestingLevel) {
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
+            var tokenTypes = scope.tokenTypes;
+            var token;
+            var value;
+            var group;
+            var groupNumber;
+            var matchRes;
+            var localNestedGroupIds;
+            var localSettings;
+            var qtoken;
+            var i;
+
+
+            // Transform/adjust tokens collection to work with JS RegExp:
+            for (i = 0; i < tokens.length; i++) {
+                token = tokens[i];
+
+                if (i < tokens.length - 1) {
+                    qtoken = tokens[i + 1];
+                    switch (qtoken.type) {
+                        case tokenTypes.quantifier:
+                        case tokenTypes.quantifierN:
+                        case tokenTypes.quantifierNM:
+                            token.qtoken = qtoken;
+                            tokens.splice(i + 1, 1);
+                            --i;
+                    }
+                }
+
+                if (token.type === tokenTypes.escBackrefNumber) {
+
+                    if (nestingLevel > 0) {
+                        throw new System.NotSupportedException("Backreferences inside groups are not supported."); //TODO: support references inside groups
+                    }
+
+                    value = token.value.slice(1);
+                    groupNumber = parseInt(value, 10);
+                    group = sparseSettings.getSingleGroupByNumber(groupNumber);
+                    if (group == null) {
+                        throw new System.ArgumentException("Reference to undefined group number " + value + ".");
+                    }
+
+                    if (allowedBackrefRawIds.indexOf(group.rawIndex) < 0) {
+                        throw new System.NotSupportedException("Reference to unreachable group number " + value + "."); //TODO: [Intentional Variation] .Net returns "Success=false". However, it has no sense.
+                    }
+                    if (nestedGroupIds.indexOf(group.rawIndex) >= 0) {
+                        throw new System.NotSupportedException("References to self/parent group number " + value + " are not supported."); //TODO: [Intentional Variation] This require pattern change with every capture. Not supported.
+                    }
+
+                } else if (token.type === tokenTypes.escBackrefName) {
+
+                    if (nestingLevel > 0) {
+                        throw new System.NotSupportedException("Backreferences inside groups are not supported."); //TODO: support references inside groups
+                    }
+
+                    value = token.value.slice(3, token.length - 1);
+                    group = sparseSettings.getSingleGroupByName(value);
+                    if (group == null) {
+                        // TODO: Move this code to earlier stages
+                        // If the name is number, treat the backreference as a numbered:
+                        matchRes = scope._matchChars(value, 0, value.length, scope._decSymbols);
+                        if (matchRes.matchLength === value.length) {
+                            value = "\\" + value;
+                            scope._updatePatternToken(token, tokenTypes.escBackrefNumber, token.index, value.length, value);
+                            --i; // process the token again
+                            continue;
+                        }
+                        throw new System.ArgumentException("Reference to undefined group name '" + value + "'.");
+                    }
+
+                    if (allowedBackrefRawIds.indexOf(group.rawIndex) < 0) {
+                        throw new System.NotSupportedException("Reference to unreachable group name '" + value + "'."); //TODO: [Intentional Variation] .Net returns "Success=false". However, it has no sense.
+                    }
+                    if (nestedGroupIds.indexOf(group.rawIndex) >= 0) {
+                        throw new System.NotSupportedException("References to self/parent group name '" + value + "' are not supported."); //TODO: [Intentional Variation] This require pattern change with every capture. Not supported.
+                    }
+
+                } else if (token.type === tokenTypes.anchor || token.type === tokenTypes.escAnchor) {
+
+                    if (token.value === "\\G") {
+                        if (nestingLevel === 0 && i === 0) {
+                            settings.isContiguous = true;
+                        } else {
+                            settings.shouldFail = true;
+                        }
+
+                        tokens.splice(i, 1);
+                        --i;
+                        continue;
+                    }
+
+                } else if (token.type === tokenTypes.commentInline || token.type === tokenTypes.commentXMode) {
+
+                    // We can safely remove comments from the pattern
+                    tokens.splice(i, 1);
+                    --i;
+                    continue;
+
+                } 
+
+                // Update children tokens:
+                if (token.children && token.children.length) {
+                    localNestedGroupIds = token.type === tokenTypes.group ? [token.group.rawIndex] : [];
+                    localNestedGroupIds = localNestedGroupIds.concat(nestedGroupIds);
+
+                    localSettings = token.localSettings || settings;
+                    scope._transformRawTokens(localSettings, token.children, sparseSettings, allowedBackrefRawIds, localNestedGroupIds, nestingLevel + 1);
+                    settings.shouldFail = settings.shouldFail || localSettings.shouldFail;
+                    settings.isContiguous = settings.isContiguous || localSettings.isContiguous;
+                }
+
+                // Group is processed. Now it can be referenced with Backref:
+                if (token.type === tokenTypes.group) {
+                    allowedBackrefRawIds.push(token.group.rawIndex);
+                }
+            }
+        },
+
         _fillGroupDescriptors: function (tokens, groups) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var group;
             var i;
 
@@ -129,21 +236,19 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _fillGroupStructure: function (groups, tokens, parentGroup) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
             var group;
             var token;
             var constructCandidateToken;
             var hasChildren;
-            var isImnsxGroup;
             var i;
 
             for (i = 0; i < tokens.length; i++) {
                 token = tokens[i];
                 hasChildren = token.children && token.children.length;
-                isImnsxGroup = hasChildren && token.children[0].type === tokenTypes.groupConstructImnsx;
 
-                if (token.type === tokenTypes.group && !isImnsxGroup) {
+                if (token.type === tokenTypes.group || token.type === tokenTypes.groupImnsx || token.type === tokenTypes.groupImnsxMisc) {
                     group = {
                         rawIndex: groups.length + 1,
                         number: -1,
@@ -164,11 +269,14 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
                     };
 
                     token.group = group;
-                    groups.push(group);
 
-                    if (parentGroup != null) {
-                        token.group.parentGroup = parentGroup;
-                        parentGroup.innerGroups.push(group);
+                    if (token.type === tokenTypes.group) {
+                        groups.push(group);
+
+                        if (parentGroup != null) {
+                            token.group.parentGroup = parentGroup;
+                            parentGroup.innerGroups.push(group);
+                        }
                     }
 
                     // fill group constructs:
@@ -184,7 +292,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _getGroupSparseInfo: function (groups) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
 
             var sparseSlotNames = ["0"];
             var sparseSlotNumbers = [0];
@@ -351,7 +459,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _addSparseSlotForSameNamedGroups: function (groups, slotNumber, sparseSlotNames, sparseSlotNumbers) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var i;
 
             scope._addSparseSlot(groups[0], slotNumber, sparseSlotNames, sparseSlotNumbers);
@@ -366,7 +474,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _fillGroupConstructs: function (childToken) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
             var constructs = {
                 name1: null,
@@ -491,7 +599,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
 
             var isDigit = name[0] >= "0" && name[0] <= "9";
             if (isDigit) {
-                var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+                var scope = System.Text.RegularExpressions.RegexEngineParser;
                 var res = scope._matchChars(name, 0, name.length, scope._decSymbols);
                 if (res.matchLength !== name.length) {
                     throw new System.ArgumentException("Invalid group name: Group names must begin with a word character.");
@@ -504,7 +612,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _preTransformBackrefTokens: function (pattern, tokens, sparseSettings) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var groupNumberStr;
@@ -554,216 +662,8 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             }
         },
 
-        _transformTokensForJsPattern: function (settings, tokens, sparseSettings, allowedBackrefRawIds, nestedGroupIds, nestingLevel) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
-            var tokenTypes = scope.tokenTypes;
-            var extraTokenStr;
-            var extraToken;
-            var token;
-            var value;
-            var group;
-            var groupNumber;
-            var matchRes;
-            var localNestedGroupIds;
-            var localSettings;
-            var nestingLevelInc;
-            var i;
-
-            // Transform/adjust tokens collection to work with JS RegExp:
-            for (i = 0; i < tokens.length; i++) {
-                token = tokens[i];
-
-                if (token.type === tokenTypes.group) {
-
-                    if (token.children && token.children.length > 0 && token.children[0].type === tokenTypes.groupConstructImnsx) {
-                        // Replace (?m:Text$) with tmpGroup: (Text$)
-                        token.children.splice(0, 1);
-                        extraToken = scope._createPatternToken("", tokenTypes.tmpGroup, 0, 0, token.children, "", "");
-                        extraToken.localSettings = token.localSettings;
-                        tokens.splice(i, 1, extraToken);
-                        --i; // Process new token once again;
-                        continue;
-                    }
-
-                } else if (token.type === tokenTypes.groupConstructName) {
-
-                    tokens.splice(i, 1);
-                    --i;
-                    continue;
-
-                } else if (token.type === tokenTypes.escBackrefNumber) {
-
-                    if (nestingLevel > 0) {
-                        throw new System.NotSupportedException("Backreferences inside groups are not supported."); //TODO: support references inside groups
-                    }
-
-                    value = token.value.slice(1);
-                    groupNumber = parseInt(value, 10);
-                    group = sparseSettings.getSingleGroupByNumber(groupNumber);
-                    if (group == null) {
-                        throw new System.ArgumentException("Reference to undefined group number " + value + ".");
-                    }
-
-                    // Replace the group number with RawIndex as JavaScript does not change the ordering
-                    if (allowedBackrefRawIds.indexOf(group.rawIndex) < 0) {
-                        throw new System.NotSupportedException("Reference to unreachable group number " + value + "."); //TODO: [Intentional Variation] .Net returns "Success=false". However, it has no sense.
-                    }
-                    if (nestedGroupIds.indexOf(group.rawIndex) >= 0) {
-                        throw new System.NotSupportedException("References to self/parent group number " + value + " are not supported."); //TODO: [Intentional Variation] This require pattern change with every capture. Not supported.
-                    }
-                    if (group.rawIndex !== groupNumber) {
-                        value = "\\" + group.rawIndex.toString();
-                        scope._updatePatternToken(token, token.type, token.index, value.length, value);
-                    }
-
-                } else if (token.type === tokenTypes.escBackrefName) {
-
-                    if (nestingLevel > 0) {
-                        throw new System.NotSupportedException("Backreferences inside groups are not supported."); //TODO: support references inside groups
-                    }
-
-                    value = token.value.slice(3, token.length - 1);
-                    group = sparseSettings.getSingleGroupByName(value);
-                    if (group == null) {
-                        // If the name is number, treat the backreference as a numbered:
-                        matchRes = scope._matchChars(value, 0, value.length, scope._decSymbols);
-                        if (matchRes.matchLength === value.length) {
-                            value = "\\" + value;
-                            scope._updatePatternToken(token, tokenTypes.escBackrefNumber, token.index, value.length, value);
-                            --i; // process the token again
-                            continue;
-                        }
-                        throw new System.ArgumentException("Reference to undefined group name '" + value + "'.");
-                    }
-
-                    // Replace the group number with RawIndex as JavaScript does not change the ordering
-                    if (allowedBackrefRawIds.indexOf(group.rawIndex) < 0) {
-                        throw new System.NotSupportedException("Reference to unreachable group name '" + value + "'."); //TODO: [Intentional Variation] .Net returns "Success=false". However, it has no sense.
-                    }
-                    if (nestedGroupIds.indexOf(group.rawIndex) >= 0) {
-                        throw new System.NotSupportedException("References to self/parent group name '" + value + "' are not supported."); //TODO: [Intentional Variation] This require pattern change with every capture. Not supported.
-                    }
-                    value = "\\" + group.rawIndex.toString();
-                    scope._updatePatternToken(token, tokenTypes.escBackrefNumber, token.index, value.length, value);
-
-                } else if (token.type === tokenTypes.anchor || token.type === tokenTypes.escAnchor) {
-
-                    if (token.value === "$") {
-                        if (settings.multiline) {
-                            settings.hasEndOfMultiline = true;
-                            extraTokenStr = "(?=\\n|(?![\\d\\D]))"; // Multiline mode implies that "\n" will be used as an anchor as well as EOF.
-                            extraToken = scope._parseGroupToken(extraTokenStr, settings, 0, extraTokenStr.length);
-                            tokens.splice(i, 1, extraToken);
-                        } else {
-                            extraTokenStr = "(?![\\d\\D])"; // Multiline mode implies that "\n" will be used as an anchor as well as EOF.
-                            extraToken = scope._parseGroupToken(extraTokenStr, settings, 0, extraTokenStr.length);
-                            tokens.splice(i, 1, extraToken);
-                        }
-
-                        extraTokenStr = "(?!\\r)"; // JavaScript RegExp does not distinguish \r and \n
-                        extraToken = scope._parseGroupToken(extraTokenStr, settings, 0, extraTokenStr.length);
-                        tokens.splice(i, 0, extraToken);
-                        ++i;
-                    } else if (token.value === "^") {
-                        if (nestingLevel === 0 && i === 0) {
-                            if (!settings.multiline) {
-                                settings.mustCaptureFirstCh = true;
-                            }
-                        } else {
-                            settings.shouldFail = true;
-                        }
-                    } else if (token.value === "\\A") {
-                        extraTokenStr = "^"; // (?-m:^)
-                        extraToken = scope._parseAnchorToken(extraTokenStr, 0); // Replace "\A" with the construction having almost the same meaning + check the 1st captured index
-                        tokens.splice(i, 1, extraToken);
-
-                        if (nestingLevel === 0 && i === 0) {
-                            settings.mustCaptureFirstCh = true;
-                        } else {
-                            settings.shouldFail = true;
-                        }
-                    } else if (token.value === "\\Z") {
-                        extraTokenStr = "(?=\\n?(?![\\d\\D]))"; // i.e. \nEOF or EOF (without capture)
-                        extraToken = scope._parseGroupToken(extraTokenStr, settings, 0, extraTokenStr.length); // Replace "\Z" with the construction having the same meaning: "(?=\n?(?![\d\D]))"
-                        tokens.splice(i, 1, extraToken);
-                    } else if (token.value === "\\z") {
-                        // "\z" is similar to "\Z" with the only difference: "\z" doesn't match "\n" symbol.
-                        extraTokenStr = "(?![\\d\\D])"; // i.e. EOF (without capture)
-                        extraToken = scope._parseGroupToken(extraTokenStr, settings, 0, extraTokenStr.length); // Replace "\z" with the construction having the same meaning: "(?![\d\D])"
-                        tokens.splice(i, 1, extraToken);
-                        // Do not change "i", let "\\Z" to be processed as usual token
-                    } else if (token.value === "\\G") {
-                        if (nestingLevel === 0 && i === 0) {
-                            settings.isContiguous = true;
-                        } else {
-                            settings.shouldFail = true;
-                        }
-
-                        tokens.splice(i, 1);
-                        --i;
-                        continue;
-                    }
-
-                } else if (token.type === tokenTypes.escCharClassDot) {
-
-                    extraTokenStr = settings.singleline // JavaScript RegExp does not distinguish \r and \n
-                        ? "(?:.|\\r|\\n)" // Singleline mode defines that "." will capture any symbol INCLUDING "\n"
-                        : "(?:.|\\r)";
-                    extraToken = scope._parseGroupToken(extraTokenStr, settings, 0, extraTokenStr.length); // JavaScript RegExp does not distinguish \r and \n
-                    tokens.splice(i, 1, extraToken);
-
-                } else if (token.type === tokenTypes.groupConstructImnsx) {
-
-                    extraTokenStr = "?:"; // Replace (?m:Text$) with (?:Text$)
-                    extraToken = scope._parseGroupConstructToken(extraTokenStr, settings, 0, extraTokenStr.length);
-                    tokens.splice(i, 1, extraToken);
-
-                } else if (token.type === tokenTypes.groupConstructImnsxMisc) {
-
-                    // We parsed this token into the groups' local settings, so we don't need this token anymore.
-                    tokens.splice(i, 1);
-                    --i;
-                    continue;
-
-                } else if (token.type === tokenTypes.commentInline || token.type === tokenTypes.commentXMode) {
-
-                    // We can safely remove comments from the pattern
-                    tokens.splice(i, 1);
-                    --i;
-                    continue;
-
-                } else if (token.type === tokenTypes.toBeSkipped) {
-
-                    // We can safely remove this content
-                    tokens.splice(i, 1);
-                    --i;
-                    continue;
-
-                }
-
-                // Update children tokens:
-                if (token.children && token.children.length) {
-                    localNestedGroupIds = token.type === tokenTypes.group ? [token.group.rawIndex] : [];
-                    localNestedGroupIds = localNestedGroupIds.concat(nestedGroupIds);
-
-                    localSettings = token.localSettings || settings;
-                    nestingLevelInc = token.type === tokenTypes.tmpGroup ? 0 : 1;
-                    scope._transformTokensForJsPattern(localSettings, token.children, sparseSettings, allowedBackrefRawIds, localNestedGroupIds, nestingLevel + nestingLevelInc);
-                    settings.shouldFail = settings.shouldFail || localSettings.shouldFail;
-                    settings.isContiguous = settings.isContiguous || localSettings.isContiguous;
-                    settings.mustCaptureFirstCh = settings.mustCaptureFirstCh || localSettings.mustCaptureFirstCh;
-                    settings.hasEndOfMultiline = settings.hasEndOfMultiline || localSettings.hasEndOfMultiline;
-                }
-
-                // Group is processed. Now it can be referenced with Backref:
-                if (token.type === tokenTypes.group) {
-                    allowedBackrefRawIds.push(token.group.rawIndex);
-                }
-            }
-        },
-
         _updateGroupDescriptors: function (tokens, parentIndex) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
             var group;
             var token;
@@ -806,9 +706,6 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
 
                     group.expr = token.value;
                     group.exprFull = group.expr + (group.quantifier != null ? group.quantifier : "");
-
-                    // Remove unnecessary fields:
-                    delete token.group;
                 }
 
                 // Update current index:
@@ -840,7 +737,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
                 throw new System.ArgumentOutOfRangeException("endIndex");
             }
 
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
             var tokens = [];
             var prevToken = null;
@@ -868,11 +765,6 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
                     token = scope._parseAnchorToken(pattern, i);
                 } else if (ch === "(") {
                     token = scope._parseGroupToken(pattern, settings, i, endIndex);
-                    if (token && token.children && token.children.length === 1 && token.children[0].type === tokenTypes.groupConstructImnsxMisc) {
-                        // We parsed this token into a parent group's local settings, so we don't need this token anymore.
-                        i += token.length;
-                        continue;
-                    }
                 } else if (ch === "|") {
                     token = scope._parseAlternationToken(pattern, i);
                 } else if (ch === "#" && settings.ignoreWhitespace) {
@@ -903,7 +795,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _parseEscapeToken: function (pattern, i, endIndex) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -920,18 +812,20 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             if (ch >= "1" && ch <= "9") {
                 // check if the number is a group backreference
                 var groupDigits = scope._matchChars(pattern, i + 1, endIndex, scope._decSymbols, 3); // assume: there are not more than 999 groups
-                return scope._createPatternToken(pattern, tokenTypes.escBackrefNumber, i, 1 + groupDigits.matchLength); // "\nnn"
+                var backrefNumberToken = scope._createPatternToken(pattern, tokenTypes.escBackrefNumber, i, 1 + groupDigits.matchLength); // "\nnn"
+                backrefNumberToken.data = { number: parseInt(groupDigits.match, 10) };
+                return backrefNumberToken;
+            }
+
+            // Parse a sequence for "Anchors"
+            if (scope._escapedAnchors.indexOf(ch) >= 0) {
+                return scope._createPatternToken(pattern, tokenTypes.escAnchor, i, 2); // "\A" or "\Z" or "\z" or "\G" or "\b" or "\B"
             }
 
             // Parse a sequence for "Character Escapes" or "Character Classes"
             var escapedCharToken = scope._parseEscapedChar(pattern, i, endIndex);
             if (escapedCharToken != null) {
                 return escapedCharToken;
-            }
-
-            // Parse a sequence for "Anchors"
-            if (scope._escapedAnchors.indexOf(ch) >= 0) {
-                return scope._createPatternToken(pattern, tokenTypes.escAnchor, i, 2); // "\A" or "\Z" or "\z" or "\G" or "\b" or "\B"
             }
 
             // Parse a sequence for a named backreference ("Backreference Constructs")
@@ -942,7 +836,9 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
                         var closingCh = nameQuoteCh === "<" ? ">" : "'";
                         var refNameChars = scope._matchUntil(pattern, i + 3, endIndex, closingCh);
                         if (refNameChars.unmatchLength === 1 && refNameChars.matchLength > 0) {
-                            return scope._createPatternToken(pattern, tokenTypes.escBackrefName, i, 3 + refNameChars.matchLength + 1); // "\k<Name>" or "\k'Name'"
+                            var backrefNameToken = scope._createPatternToken(pattern, tokenTypes.escBackrefName, i, 3 + refNameChars.matchLength + 1); // "\k<Name>" or "\k'Name'"
+                            backrefNameToken.data = { name: refNameChars.match };
+                            return backrefNameToken;
                         }
                     }
                 }
@@ -955,7 +851,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _parseOctalCharToken: function (pattern, i, endIndex) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -973,7 +869,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _parseEscapedChar: function (pattern, i, endIndex) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -1055,7 +951,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _parseCharRangeToken: function (pattern, i, endIndex) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
             var tokens = [];
 
@@ -1102,7 +998,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _parseDotToken: function (pattern, i) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -1114,7 +1010,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _parseAnchorToken: function (pattern, i) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -1126,30 +1022,15 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _updateSettingsFromConstructs: function (settings, constructs) {
-            if (constructs.isIgnoreCase != null) {
-                settings.ignoreCase = constructs.isIgnoreCase;
-            }
-
-            if (constructs.isMultiline != null) {
-                settings.multiline = constructs.isMultiline;
-            }
-
-            if (constructs.isSingleLine != null) {
-                settings.singleline = constructs.isSingleLine;
-            }
-
             if (constructs.isIgnoreWhitespace != null) {
                 settings.ignoreWhitespace = constructs.isIgnoreWhitespace;
             }
         },
 
         _parseGroupToken: function (pattern, settings, i, endIndex) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
             var groupSettings = {
-                ignoreCase: settings.ignoreCase,
-                multiline: settings.multiline,
-                singleline: settings.singleline,
                 ignoreWhitespace: settings.ignoreWhitespace
             };
 
@@ -1165,6 +1046,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             var isComment = false;
             var isAlternation = false;
             var isInlineOptions = false;
+            var isImnsxConstructed = false;
 
             var grConstructs = null;
 
@@ -1179,35 +1061,29 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
                 } else if (constructToken.type === tokenTypes.groupConstructImnsx) {
                     grConstructs = this._fillGroupConstructs(constructToken);
                     this._updateSettingsFromConstructs(groupSettings, grConstructs);
+                    isImnsxConstructed = true;
                 } else if (constructToken.type === tokenTypes.groupConstructImnsxMisc) {
                     grConstructs = this._fillGroupConstructs(constructToken);
-                    this._updateSettingsFromConstructs(groupSettings, grConstructs);
+                    this._updateSettingsFromConstructs(settings, grConstructs); // parent settings!
                     isInlineOptions = true;
-                    bodyIndex += 1; // Skip closing bracket
                 }
             }
 
-            // Find the closing bracket of the group:
-            if (isInlineOptions) {
-                // we just need add all tokens after inline options in a temp group;
-                closeBracketIndex = endIndex;
-            } else {
-                var index = bodyIndex;
-                while (index < endIndex) {
-                    ch = pattern[index];
-                    if (ch === "(" && !isComment) {
-                        ++bracketLvl;
-                    } else if (ch === ")") {
-                        --bracketLvl;
-                    }
-
-                    if (bracketLvl === 0) {
-                        closeBracketIndex = index;
-                        break;
-                    }
-
-                    ++index;
+            var index = bodyIndex;
+            while (index < endIndex) {
+                ch = pattern[index];
+                if (ch === "(" && !isComment) {
+                    ++bracketLvl;
+                } else if (ch === ")") {
+                    --bracketLvl;
                 }
+
+                if (bracketLvl === 0) {
+                    closeBracketIndex = index;
+                    break;
+                }
+
+                ++index;
             }
 
             if (isComment) {
@@ -1223,9 +1099,10 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
 
             // Parse the "Body" of the group
             var innerTokens = scope._parsePatternImpl(pattern, groupSettings, bodyIndex, closeBracketIndex);
-            if (constructToken != null && !isInlineOptions) {
+            if (constructToken != null) {
                 innerTokens.splice(0, 0, constructToken);
             }
+
 
             // If there is an Alternation expression, treat the group as Alternation group
             if (isAlternation) {
@@ -1249,18 +1126,15 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
                 return altGroupToken;
             }
 
+            // Create Group token:
+            var tokenType = tokenTypes.group;
             if (isInlineOptions) {
-                // Create Temp Group token:
-                var inlineToken = scope._createPatternToken(pattern, tokenTypes.toBeSkipped, i, bodyIndex - i, null);
-                innerTokens.splice(0, 0, inlineToken);
-
-                var tmpGroup = scope._createPatternToken(pattern, tokenTypes.tmpGroup, i, 1 + closeBracketIndex - i, innerTokens, "", "");
-                tmpGroup.localSettings = groupSettings;
-                return tmpGroup;
+                tokenType = tokenTypes.groupImnsxMisc;
+            } else if (isImnsxConstructed) {
+                tokenType = tokenTypes.groupImnsx;
             }
 
-            // Create Group token:
-            var groupToken = scope._createPatternToken(pattern, tokenTypes.group, i, 1 + closeBracketIndex - i, innerTokens, "(", ")");
+            var groupToken = scope._createPatternToken(pattern, tokenType, i, 1 + closeBracketIndex - i, innerTokens, "(", ")");
             groupToken.localSettings = groupSettings;
             return groupToken;
         },
@@ -1279,7 +1153,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             // ?>
             // ?#
 
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -1338,42 +1212,67 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _parseQuantifierToken: function (pattern, i, endIndex) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
+            var token = null;
 
             var ch = pattern[i];
 
             if (ch === "*" || ch === "+" || ch === "?") {
-                return scope._createPatternToken(pattern, tokenTypes.quantifier, i, 1);
+
+                token = scope._createPatternToken(pattern, tokenTypes.quantifier, i, 1);
+                token.data = { val: ch };
+
+            } else if (ch === "{") {
+
+                var dec1Chars = scope._matchChars(pattern, i + 1, endIndex, scope._decSymbols);
+                if (dec1Chars.matchLength !== 0) {
+
+                    if (dec1Chars.unmatchCh === "}") {
+
+                        token = scope._createPatternToken(pattern, tokenTypes.quantifierN, i, 1 + dec1Chars.matchLength + 1);
+                        token.data = {
+                            n: parseInt(dec1Chars.match, 10)
+                        };
+
+                    } else if (dec1Chars.unmatchCh === ",") {
+
+                        var dec2Chars = scope._matchChars(pattern, dec1Chars.unmatchIndex + 1, endIndex, scope._decSymbols);
+                        if (dec2Chars.unmatchCh === "}") {
+                            token = scope._createPatternToken(pattern, tokenTypes.quantifierNM, i, 1 + dec1Chars.matchLength + 1 + dec2Chars.matchLength + 1);
+                            token.data = {
+                                n: parseInt(dec1Chars.match, 10),
+                                m: null
+                            };
+                            if (dec2Chars.matchLength !== 0) {
+                                token.data.m = parseInt(dec2Chars.match, 10);
+                                if (token.data.n > token.data.m) {
+                                    throw new System.ArgumentException("Illegal {x,y} with x > y.");
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
-            if (ch !== "{") {
-                return null;
+            if (token != null) {
+
+                var nextChIndex = i + token.length;
+                if (nextChIndex < endIndex) {
+                    var nextCh = pattern[nextChIndex];
+                    if (nextCh === "?") {
+                        this._modifyPatternToken(token, pattern, token.type, token.index, token.length + 1);
+                        token.data.isLazy = true;
+                    }
+                }
+
             }
 
-            var dec1Chars = scope._matchChars(pattern, i + 1, endIndex, scope._decSymbols);
-            if (dec1Chars.matchLength === 0) {
-                return null;
-            }
-
-            if (dec1Chars.unmatchCh === "}") {
-                return scope._createPatternToken(pattern, tokenTypes.quantifierN, i, 1 + dec1Chars.matchLength + 1);
-            }
-
-            if (dec1Chars.unmatchCh !== ",") {
-                return null;
-            }
-
-            var dec2Chars = scope._matchChars(pattern, dec1Chars.unmatchIndex + 1, endIndex, scope._decSymbols);
-            if (dec2Chars.matchLength === 0 && dec2Chars.unmatchCh !== "}") {
-                return null;
-            }
-
-            return scope._createPatternToken(pattern, tokenTypes.quantifierNM, i, 1 + dec1Chars.matchLength + 1 + dec2Chars.matchLength + 1);
+            return token;
         },
 
         _parseAlternationToken: function (pattern, i) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -1385,7 +1284,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _parseAlternationGroupExprToken: function (pattern, settings, i, endIndex) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -1415,7 +1314,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _parseXModeCommentToken: function (pattern, i, endIndex) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -1437,13 +1336,13 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _createLiteralToken: function (body) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var token = scope._createPatternToken(body, scope.tokenTypes.literal, 0, body.length);
             return token;
         },
 
         _createPositiveLookaheadToken: function (body, settings) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
 
             var pattern = "(?=" + body + ")";
             var groupToken = scope._parseGroupToken(pattern, settings, 0, pattern.length);

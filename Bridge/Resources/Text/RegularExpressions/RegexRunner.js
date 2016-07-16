@@ -32,7 +32,7 @@ Bridge.define("System.Text.RegularExpressions.RegexRunner", {
 
         var timeoutMs = regex._matchTimeout.getTotalMilliseconds();
 
-        this._netEngine = new System.Text.RegularExpressions.RegexNetEngine(regex._pattern, isCaseInsensitive, isMultiline, isSingleline, isIgnoreWhitespace, timeoutMs);
+        this._netEngine = new System.Text.RegularExpressions.RegexEngine(regex._pattern, isCaseInsensitive, isMultiline, isSingleline, isIgnoreWhitespace, timeoutMs);
 
     },
 
@@ -73,7 +73,7 @@ Bridge.define("System.Text.RegularExpressions.RegexRunner", {
         }
 
         // Execute Regex:
-        var jsMatch = this._netEngine.match(this._runtext, this._runtextstart, this._prevlen);
+        var jsMatch = this._netEngine.match(this._runtext, this._runtextstart);
 
         // Convert the results:
         var result = this._convertNetEngineResults(jsMatch);
