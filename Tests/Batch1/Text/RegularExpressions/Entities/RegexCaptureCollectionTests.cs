@@ -2,7 +2,7 @@ using System;
 using System.Text.RegularExpressions;
 using Bridge.Test;
 
-namespace Bridge.ClientTest.Text.RegularExpressions
+namespace Bridge.ClientTest.Text.RegularExpressions.Entities
 {
     [Category(Constants.MODULE_REGEX)]
     [TestFixture(TestNameFormat = "RegexCaptureCollection - {0}")]

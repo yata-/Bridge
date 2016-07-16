@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 using Bridge.Test;
 
-namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
+namespace Bridge.ClientTest.Text.RegularExpressions.Methods
 {
     [Category(Constants.MODULE_REGEX)]
     [TestFixture(TestNameFormat = "Regex.Split - {0}")]
