@@ -29,10 +29,11 @@ Bridge.define("System.Text.RegularExpressions.RegexRunner", {
         var isMultiline = (options & optionsEnum.Multiline) === optionsEnum.Multiline;
         var isSingleline = (options & optionsEnum.Singleline) === optionsEnum.Singleline;
         var isIgnoreWhitespace = (options & optionsEnum.IgnorePatternWhitespace) === optionsEnum.IgnorePatternWhitespace;
+        var isExplicitCapture = (options & optionsEnum.ExplicitCapture) === optionsEnum.ExplicitCapture;
 
         var timeoutMs = regex._matchTimeout.getTotalMilliseconds();
 
-        this._netEngine = new System.Text.RegularExpressions.RegexEngine(regex._pattern, isCaseInsensitive, isMultiline, isSingleline, isIgnoreWhitespace, timeoutMs);
+        this._netEngine = new System.Text.RegularExpressions.RegexEngine(regex._pattern, isCaseInsensitive, isMultiline, isSingleline, isIgnoreWhitespace, isExplicitCapture, timeoutMs);
 
     },
 

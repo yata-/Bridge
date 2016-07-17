@@ -176,7 +176,8 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
             System.Text.RegularExpressions.RegexOptions.IgnoreCase |
             System.Text.RegularExpressions.RegexOptions.Multiline |
             System.Text.RegularExpressions.RegexOptions.Singleline |
-            System.Text.RegularExpressions.RegexOptions.IgnorePatternWhitespace;
+            System.Text.RegularExpressions.RegexOptions.IgnorePatternWhitespace |
+            System.Text.RegularExpressions.RegexOptions.ExplicitCapture;
 
         if ((options | supportedOptions) !== supportedOptions) {
             throw new System.NotSupportedException("Specified Regex options are not supported.");

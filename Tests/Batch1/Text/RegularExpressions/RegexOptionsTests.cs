@@ -213,6 +213,114 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             ValidateCapture(ms[3], 1, 5, 117, 9, "paragraph");
         }
 
+        [Test]
+        public void MsdnExplicitCaptureOptionTest1()
+        {
+            const string pattern = @"\b\(?((?>\w+),?\s?)+[\.!?]\)?";
+            const string text = "This is the first sentence. Is it the beginning of a literary masterpiece? I think not. Instead, it is a nonsensical paragraph.";
+            var rgx = new Regex(pattern);
+            var ms = rgx.Matches(text);
+
+            Assert.AreEqual(4, ms.Count, "Matches count is correct.");
+
+            // Match #0:
+            Assert.NotNull(ms[0], "Match[0] is not null.");
+            ValidateMatch(ms[0], 0, 27, "This is the first sentence.", 2, true);
+
+            ValidateGroup(ms[0], 0, 0, 27, true, "This is the first sentence.", 1);
+            ValidateCapture(ms[0], 0, 0, 0, 27, "This is the first sentence.");
+
+            ValidateGroup(ms[0], 1, 18, 8, true, "sentence", 5);
+            ValidateCapture(ms[0], 1, 0, 0, 5, "This ");
+            ValidateCapture(ms[0], 1, 1, 5, 3, "is ");
+            ValidateCapture(ms[0], 1, 2, 8, 4, "the ");
+            ValidateCapture(ms[0], 1, 3, 12, 6, "first ");
+            ValidateCapture(ms[0], 1, 4, 18, 8, "sentence");
+
+            // Match #1:
+            Assert.NotNull(ms[1], "Match[1] is not null.");
+            ValidateMatch(ms[1], 28, 46, "Is it the beginning of a literary masterpiece?", 2, true);
+
+            ValidateGroup(ms[1], 0, 28, 46, true, "Is it the beginning of a literary masterpiece?", 1);
+            ValidateCapture(ms[1], 0, 0, 28, 46, "Is it the beginning of a literary masterpiece?");
+
+            ValidateGroup(ms[1], 1, 62, 11, true, "masterpiece", 8);
+            ValidateCapture(ms[1], 1, 0, 28, 3, "Is ");
+            ValidateCapture(ms[1], 1, 1, 31, 3, "it ");
+            ValidateCapture(ms[1], 1, 2, 34, 4, "the ");
+            ValidateCapture(ms[1], 1, 3, 38, 10, "beginning ");
+            ValidateCapture(ms[1], 1, 4, 48, 3, "of ");
+            ValidateCapture(ms[1], 1, 5, 51, 2, "a ");
+            ValidateCapture(ms[1], 1, 6, 53, 9, "literary ");
+            ValidateCapture(ms[1], 1, 7, 62, 11, "masterpiece");
+
+            // Match #2:
+            Assert.NotNull(ms[2], "Match[2] is not null.");
+            ValidateMatch(ms[2], 75, 12, "I think not.", 2, true);
+
+            ValidateGroup(ms[2], 0, 75, 12, true, "I think not.", 1);
+            ValidateCapture(ms[2], 0, 0, 75, 12, "I think not.");
+
+            ValidateGroup(ms[2], 1, 83, 3, true, "not", 3);
+            ValidateCapture(ms[2], 1, 0, 75, 2, "I ");
+            ValidateCapture(ms[2], 1, 1, 77, 6, "think ");
+            ValidateCapture(ms[2], 1, 2, 83, 3, "not");
+
+            // Match #3:
+            Assert.NotNull(ms[3], "Match[3] is not null.");
+            ValidateMatch(ms[3], 88, 39, "Instead, it is a nonsensical paragraph.", 2, true);
+
+            ValidateGroup(ms[3], 0, 88, 39, true, "Instead, it is a nonsensical paragraph.", 1);
+            ValidateCapture(ms[3], 0, 0, 88, 39, "Instead, it is a nonsensical paragraph.");
+
+            ValidateGroup(ms[3], 1, 117, 9, true, "paragraph", 6);
+            ValidateCapture(ms[3], 1, 0, 88, 9, "Instead, ");
+            ValidateCapture(ms[3], 1, 1, 97, 3, "it ");
+            ValidateCapture(ms[3], 1, 2, 100, 3, "is ");
+            ValidateCapture(ms[3], 1, 3, 103, 2, "a ");
+            ValidateCapture(ms[3], 1, 4, 105, 12, "nonsensical ");
+            ValidateCapture(ms[3], 1, 5, 117, 9, "paragraph");
+        }
+
+        [Test]
+        public void MsdnExplicitCaptureOptionTest2()
+        {
+            const string pattern = @"\b\(?((?>\w+),?\s?)+[\.!?]\)?";
+            const string text = "This is the first sentence. Is it the beginning of a literary masterpiece? I think not. Instead, it is a nonsensical paragraph.";
+            var rgx = new Regex(pattern, RegexOptions.ExplicitCapture);
+            var ms = rgx.Matches(text);
+
+            Assert.AreEqual(4, ms.Count, "Matches count is correct.");
+
+            // Match #0:
+            Assert.NotNull(ms[0], "Match[0] is not null.");
+            ValidateMatch(ms[0], 0, 27, "This is the first sentence.", 1, true);
+
+            ValidateGroup(ms[0], 0, 0, 27, true, "This is the first sentence.", 1);
+            ValidateCapture(ms[0], 0, 0, 0, 27, "This is the first sentence.");
+
+            // Match #1:
+            Assert.NotNull(ms[1], "Match[1] is not null.");
+            ValidateMatch(ms[1], 28, 46, "Is it the beginning of a literary masterpiece?", 1, true);
+
+            ValidateGroup(ms[1], 0, 28, 46, true, "Is it the beginning of a literary masterpiece?", 1);
+            ValidateCapture(ms[1], 0, 0, 28, 46, "Is it the beginning of a literary masterpiece?");
+
+            // Match #2:
+            Assert.NotNull(ms[2], "Match[2] is not null.");
+            ValidateMatch(ms[2], 75, 12, "I think not.", 1, true);
+
+            ValidateGroup(ms[2], 0, 75, 12, true, "I think not.", 1);
+            ValidateCapture(ms[2], 0, 0, 75, 12, "I think not.");
+
+            // Match #3:
+            Assert.NotNull(ms[3], "Match[3] is not null.");
+            ValidateMatch(ms[3], 88, 39, "Instead, it is a nonsensical paragraph.", 1, true);
+
+            ValidateGroup(ms[3], 0, 88, 39, true, "Instead, it is a nonsensical paragraph.", 1);
+            ValidateCapture(ms[3], 0, 0, 88, 39, "Instead, it is a nonsensical paragraph.");
+        }
+
         #endregion
 
         [Test]

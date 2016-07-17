@@ -244,7 +244,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
                 {RegexOptions.None, true},
                 {RegexOptions.IgnoreCase, true},
                 {RegexOptions.Multiline, true},
-                {(RegexOptions) 0x0004, false},
+                {RegexOptions.ExplicitCapture, true},
                 {(RegexOptions) 0x0008, false},
                 {RegexOptions.Singleline, true},
                 {RegexOptions.IgnorePatternWhitespace, true},

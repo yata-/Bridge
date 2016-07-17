@@ -21,9 +21,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineState", {
         this.capLength += length;
     },
 
-    logCaptureGroup: function (text, group, index, length) {
-
-        //console.log(groupRawIndex.toString() + ": " + text.slice(index, index + length));
+    logCaptureGroup: function (group, index, length) {
         this.groups.push({ rawIndex: group.rawIndex, capIndex: index, capLength: length });
     },
 

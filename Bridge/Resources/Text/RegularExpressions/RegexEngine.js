@@ -29,7 +29,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
     // ============================================================================================
     // Public functions
     // ============================================================================================
-    constructor: function (pattern, isCaseInsensitive, isMultiLine, isSingleline, isIgnoreWhitespace, timeoutMs) {
+    constructor: function (pattern, isCaseInsensitive, isMultiLine, isSingleline, isIgnoreWhitespace, isExplicitCapture, timeoutMs) {
         if (pattern == null) {
             throw new System.ArgumentNullException("pattern");
         }
@@ -40,7 +40,8 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             ignoreCase: isCaseInsensitive,
             multiline: isMultiLine,
             singleline: isSingleline,
-            ignoreWhitespace: isIgnoreWhitespace
+            ignoreWhitespace: isIgnoreWhitespace,
+            explicitCapture: isExplicitCapture
         };
 
     },
@@ -445,7 +446,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             for (i = 0; i < capGroups.length; i++) {
                 capGroup = capGroups[i];
                 groupDesc = groupDescs[capGroup.rawIndex - 1];
-                if (groupDesc.constructs.isNonCapturing) {
+                if (groupDesc.constructs.isNonCapturing || groupDesc.constructs.isNonCapturingExplicit || groupDesc.constructs.isNonbacktracking) {
                     continue;
                 }
 
@@ -474,7 +475,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             // Add groups to Match in the required order:
             for (i = 0; i < groupDescs.length; i++) {
                 groupDesc = groupDescs[i];
-                if (groupDesc.constructs.isNonCapturing) {
+                if (groupDesc.constructs.isNonCapturing || groupDesc.constructs.isNonCapturingExplicit || groupDesc.constructs.isNonbacktracking) {
                     continue;
                 }
 
@@ -601,7 +602,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
                     return resKind.nextBranch;
                 }
 
-                branch.state.logCaptureGroup(text, token.group, capIndex, capLength);
+                branch.state.logCaptureGroup(token.group, capIndex, capLength);
             }
 
             pass.onHold = false;
@@ -619,15 +620,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         pass.onHoldTextIndex = textIndex;
         pass.onHold = true;
 
-        var settingsClone =
-        {
-            ignoreCase: pass.settings.ignoreCase,
-            multiline: pass.settings.multiline,
-            singleline: pass.settings.singleline,
-            ignoreWhitespace: pass.settings.ignoreWhitespace
-        };
-
-        branch.pushPass(0, token.children, settingsClone);
+        branch.pushPass(0, token.children, this._cloneSettings(pass.settings));
         return resKind.nextPass;
     },
 
@@ -649,6 +642,10 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
 
         if (constructs.isIgnoreWhitespace != null) {
             pass.settings.ignoreWhitespace = constructs.isIgnoreWhitespace;
+        }
+
+        if (constructs.isExplicitCapture != null) {
+            pass.settings.explicitCapture = constructs.isExplicitCapture;
         }
 
         return resKind.ok;
@@ -894,7 +891,8 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             ignoreCase: settings.ignoreCase,
             multiline: settings.multiline,
             singleline: settings.singleline,
-            ignoreWhitespace: settings.ignoreWhitespace
+            ignoreWhitespace: settings.ignoreWhitespace,
+            explicitCapture: settings.explicitCapture
         };
         return cloned;
     },

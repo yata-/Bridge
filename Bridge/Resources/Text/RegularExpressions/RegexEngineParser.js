@@ -282,6 +282,10 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                     // fill group constructs:
                     constructCandidateToken = hasChildren ? token.children[0] : null;
                     group.constructs = scope._fillGroupConstructs(constructCandidateToken);
+                    if (token.isNonCapturingExplicit) {
+                        delete token.isNonCapturingExplicit;
+                        group.constructs.isNonCapturingExplicit = true;
+                    }
                 }
 
                 // fill group descriptors for inner tokens:
@@ -313,7 +317,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             // Fill Explicit Numbers:
             for (i = 0; i < groups.length; i++) {
                 group = groups[i];
-                if (group.constructs.isNonCapturing) {
+                if (group.constructs.isNonCapturing || group.constructs.isNonCapturingExplicit || group.constructs.isNonbacktracking) {
                     continue;
                 }
 
@@ -339,7 +343,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             // Add group without names first:
             for (i = 0; i < groups.length; i++) {
                 group = groups[i];
-                if (group.constructs.isNonCapturing) {
+                if (group.constructs.isNonCapturing || group.constructs.isNonCapturingExplicit || group.constructs.isNonbacktracking) {
                     continue;
                 }
 
@@ -359,7 +363,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             // Then add named groups:
             for (i = 0; i < groups.length; i++) {
                 group = groups[i];
-                if (group.constructs.isNonCapturing) {
+                if (group.constructs.isNonCapturing || group.constructs.isNonCapturingExplicit || group.constructs.isNonbacktracking) {
                     continue;
                 }
 
@@ -401,7 +405,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             // Fill Group map:
             for (i = 0; i < groups.length; i++) {
                 group = groups[i];
-                if (group.constructs.isNonCapturing) {
+                if (group.constructs.isNonCapturing || group.constructs.isNonCapturingExplicit || group.constructs.isNonbacktracking) {
                     continue;
                 }
 
@@ -484,6 +488,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                 isNumberName2: false,
 
                 isNonCapturing: false,
+                isNonCapturingExplicit: false,
 
                 isIgnoreCase: null,
                 isMultiline: null,
@@ -1025,13 +1030,17 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             if (constructs.isIgnoreWhitespace != null) {
                 settings.ignoreWhitespace = constructs.isIgnoreWhitespace;
             }
+            if (constructs.isExplicitCapture != null) {
+                settings.explicitCapture = constructs.isExplicitCapture;
+            }
         },
 
         _parseGroupToken: function (pattern, settings, i, endIndex) {
             var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
             var groupSettings = {
-                ignoreWhitespace: settings.ignoreWhitespace
+                ignoreWhitespace: settings.ignoreWhitespace,
+                explicitCapture: settings.explicitCapture
             };
 
             var ch = pattern[i];
@@ -1047,26 +1056,31 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             var isAlternation = false;
             var isInlineOptions = false;
             var isImnsxConstructed = false;
+            var isNonCapturingExplicit = false;
 
             var grConstructs = null;
 
             // Parse the Group construct, if any:
             var constructToken = scope._parseGroupConstructToken(pattern, groupSettings, i + 1, endIndex);
             if (constructToken != null) {
+                grConstructs = this._fillGroupConstructs(constructToken);
+
                 bodyIndex += constructToken.length;
                 if (constructToken.type === tokenTypes.commentInline) {
                     isComment = true;
                 } else if (constructToken.type === tokenTypes.alternationGroupExpr) {
                     isAlternation = true;
                 } else if (constructToken.type === tokenTypes.groupConstructImnsx) {
-                    grConstructs = this._fillGroupConstructs(constructToken);
                     this._updateSettingsFromConstructs(groupSettings, grConstructs);
                     isImnsxConstructed = true;
                 } else if (constructToken.type === tokenTypes.groupConstructImnsxMisc) {
-                    grConstructs = this._fillGroupConstructs(constructToken);
                     this._updateSettingsFromConstructs(settings, grConstructs); // parent settings!
                     isInlineOptions = true;
                 }
+            }
+
+            if (groupSettings.explicitCapture && (grConstructs == null || grConstructs.name1 == null)) {
+                isNonCapturingExplicit = true;
             }
 
             var index = bodyIndex;
@@ -1086,57 +1100,66 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                 ++index;
             }
 
+            var result = null;
+
             if (isComment) {
                 if (closeBracketIndex < 0) {
                     throw new System.ArgumentException("Unterminated (?#...) comment.");
                 }
-                return scope._createPatternToken(pattern, tokenTypes.commentInline, i, 1 + closeBracketIndex - i);
-            }
 
-            if (closeBracketIndex < 0) {
-                throw new System.ArgumentException("Not enough )'s.");
-            }
+                result = scope._createPatternToken(pattern, tokenTypes.commentInline, i, 1 + closeBracketIndex - i);
 
-            // Parse the "Body" of the group
-            var innerTokens = scope._parsePatternImpl(pattern, groupSettings, bodyIndex, closeBracketIndex);
-            if (constructToken != null) {
-                innerTokens.splice(0, 0, constructToken);
-            }
-
-
-            // If there is an Alternation expression, treat the group as Alternation group
-            if (isAlternation) {
-                var innerTokensLen = innerTokens.length;
-                var innerToken;
-                var j;
-
-                // Check that there is only 1 alternation symbol:
-                var altCount = 0;
-                for (j = 0; j < innerTokensLen; j++) {
-                    innerToken = innerTokens[j];
-                    if (innerToken.type === tokenTypes.alternation) {
-                        ++altCount;
-                        if (altCount > 1) {
-                            throw new System.ArgumentException("Too many | in (?()|).");
-                        }
-                    }
+            } else {
+                if (closeBracketIndex < 0) {
+                    throw new System.ArgumentException("Not enough )'s.");
                 }
 
-                var altGroupToken = scope._createPatternToken(pattern, tokenTypes.alternationGroup, i, 1 + closeBracketIndex - i, innerTokens, "(", ")");
-                return altGroupToken;
+                // Parse the "Body" of the group
+                var innerTokens = scope._parsePatternImpl(pattern, groupSettings, bodyIndex, closeBracketIndex);
+                if (constructToken != null) {
+                    innerTokens.splice(0, 0, constructToken);
+                }
+
+                // If there is an Alternation expression, treat the group as Alternation group
+                if (isAlternation) {
+                    var innerTokensLen = innerTokens.length;
+                    var innerToken;
+                    var j;
+
+                    // Check that there is only 1 alternation symbol:
+                    var altCount = 0;
+                    for (j = 0; j < innerTokensLen; j++) {
+                        innerToken = innerTokens[j];
+                        if (innerToken.type === tokenTypes.alternation) {
+                            ++altCount;
+                            if (altCount > 1) {
+                                throw new System.ArgumentException("Too many | in (?()|).");
+                            }
+                        }
+                    }
+
+                    var altGroupToken = scope._createPatternToken(pattern, tokenTypes.alternationGroup, i, 1 + closeBracketIndex - i, innerTokens, "(", ")");
+                    result = altGroupToken;
+                } else {
+                    // Create Group token:
+                    var tokenType = tokenTypes.group;
+                    if (isInlineOptions) {
+                        tokenType = tokenTypes.groupImnsxMisc;
+                    } else if (isImnsxConstructed) {
+                        tokenType = tokenTypes.groupImnsx;
+                    }
+
+                    var groupToken = scope._createPatternToken(pattern, tokenType, i, 1 + closeBracketIndex - i, innerTokens, "(", ")");
+                    groupToken.localSettings = groupSettings;
+                    result = groupToken;
+                }
             }
 
-            // Create Group token:
-            var tokenType = tokenTypes.group;
-            if (isInlineOptions) {
-                tokenType = tokenTypes.groupImnsxMisc;
-            } else if (isImnsxConstructed) {
-                tokenType = tokenTypes.groupImnsx;
+            if (isNonCapturingExplicit) {
+                result.isNonCapturingExplicit = true;
             }
 
-            var groupToken = scope._createPatternToken(pattern, tokenType, i, 1 + closeBracketIndex - i, innerTokens, "(", ")");
-            groupToken.localSettings = groupSettings;
-            return groupToken;
+            return result;
         },
 
         _parseGroupConstructToken: function (pattern, settings, i, endIndex) {
