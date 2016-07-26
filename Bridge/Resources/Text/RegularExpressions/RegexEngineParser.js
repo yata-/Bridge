@@ -240,6 +240,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             var tokenTypes = scope.tokenTypes;
             var group;
             var token;
+            var constructs;
             var constructCandidateToken;
             var hasChildren;
             var i;
@@ -282,10 +283,21 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                     // fill group constructs:
                     constructCandidateToken = hasChildren ? token.children[0] : null;
                     group.constructs = scope._fillGroupConstructs(constructCandidateToken);
+                    constructs = group.constructs;
+
                     if (token.isNonCapturingExplicit) {
                         delete token.isNonCapturingExplicit;
-                        group.constructs.isNonCapturingExplicit = true;
+                        constructs.isNonCapturingExplicit = true;
                     }
+
+                    constructs.skipCapture =
+                        constructs.isNonCapturing ||
+                        constructs.isNonCapturingExplicit ||
+                        constructs.isNonbacktracking ||
+                        constructs.isPositiveLookahead ||
+                        constructs.isNegativeLookahead ||
+                        constructs.isPositiveLookbehind ||
+                        constructs.isNegativeLookbehind;
                 }
 
                 // fill group descriptors for inner tokens:
@@ -317,7 +329,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             // Fill Explicit Numbers:
             for (i = 0; i < groups.length; i++) {
                 group = groups[i];
-                if (group.constructs.isNonCapturing || group.constructs.isNonCapturingExplicit || group.constructs.isNonbacktracking) {
+                if (group.constructs.skipCapture) {
                     continue;
                 }
 
@@ -343,7 +355,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             // Add group without names first:
             for (i = 0; i < groups.length; i++) {
                 group = groups[i];
-                if (group.constructs.isNonCapturing || group.constructs.isNonCapturingExplicit || group.constructs.isNonbacktracking) {
+                if (group.constructs.skipCapture) {
                     continue;
                 }
 
@@ -363,7 +375,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             // Then add named groups:
             for (i = 0; i < groups.length; i++) {
                 group = groups[i];
-                if (group.constructs.isNonCapturing || group.constructs.isNonCapturingExplicit || group.constructs.isNonbacktracking) {
+                if (group.constructs.skipCapture) {
                     continue;
                 }
 
@@ -405,7 +417,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             // Fill Group map:
             for (i = 0; i < groups.length; i++) {
                 group = groups[i];
-                if (group.constructs.isNonCapturing || group.constructs.isNonCapturingExplicit || group.constructs.isNonbacktracking) {
+                if (group.constructs.skipCapture) {
                     continue;
                 }
 
