@@ -67,7 +67,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
 
         this._checkTimeout();
 
-        var scanRes = this._scanAndTransformResult(text, textStart, patternInfo.tokens, false, null);
+        var scanRes = this._scanAndTransformResult(textStart, patternInfo.tokens, false, null);
         return scanRes;
     },
 
@@ -84,13 +84,13 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
     // ============================================================================================
     // Engine main logic
     // ============================================================================================
-    _scanAndTransformResult: function (text, textPos, tokens, noOffset, desiredLen) {
-        var state = this._scan(text, textPos, text.length, tokens, noOffset, desiredLen);
-        var transformedRes = this._collectScanResults(state, text, textPos);
+    _scanAndTransformResult: function (textPos, tokens, noOffset, desiredLen) {
+        var state = this._scan(textPos, this._text.length, tokens, noOffset, desiredLen);
+        var transformedRes = this._collectScanResults(state, textPos);
         return transformedRes;
     },
 
-    _scan: function (text, textPos, textEndPos, tokens, noOffset, desiredLen) {
+    _scan: function (textPos, textEndPos, tokens, noOffset, desiredLen) {
         var resKind = this._branchResultKind;
         var branches = [];
         branches.grCaptureCache = {};
@@ -120,7 +120,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         while (branches.length) {
             branch = branches[branches.length - 1];
 
-            res = this._scanBranch(text, textEndPos, branches, branch);
+            res = this._scanBranch(textEndPos, branches, branch);
             if (res === resKind.ok && (desiredLen == null || branch.state.capLength === desiredLen)) {
                 return branch.state;
             }
@@ -142,7 +142,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         return null;
     },
 
-    _scanBranch: function (text, textEndPos, branches, branch) {
+    _scanBranch: function (textEndPos, branches, branch) {
         var resKind = this._branchResultKind;
         var pass;
         var res;
@@ -160,7 +160,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
                 }
 
                 // Scan:
-                res = this._scanPass(text, textEndPos, branches, branch, pass);
+                res = this._scanPass(textEndPos, branches, branch, pass);
             }
 
             switch (res) {
@@ -186,7 +186,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         return resKind.ok;
     },
 
-    _scanPass: function (text, textEndPos, branches, branch, pass) {
+    _scanPass: function (textEndPos, branches, branch, pass) {
         var resKind = this._branchResultKind;
         var passEndIndex = pass.tokens.length;
         var token;
@@ -206,7 +206,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
                 }
             } else {
                 if (probe.value < probe.min || probe.forced) {
-                    res = this._scanToken(text, textEndPos, branches, branch, pass, token);
+                    res = this._scanToken(textEndPos, branches, branch, pass, token);
                     if (res !== resKind.ok) {
                         return res;
                     }
@@ -226,7 +226,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             }
 
             // Process the token:
-            res = this._scanToken(text, textEndPos, branches, branch, pass, token);
+            res = this._scanToken(textEndPos, branches, branch, pass, token);
 
             // Process the result of the token scan:
             switch (res) {
@@ -427,8 +427,9 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         }
     },
 
-    _collectScanResults: function (state, text, textPos) {
+    _collectScanResults: function (state, textPos) {
         var groupDescs = this._patternInfo.groups;
+        var text = this._text;
         var processedGroupNames = {};
         var capGroups;
         var capGroup;
@@ -445,7 +446,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             capGroups = state.groups;
 
             // For successful match fill Match object:
-            this._fillMatch(match, text, state.capIndex, state.capLength, textPos);
+            this._fillMatch(match, state.capIndex, state.capLength, textPos);
 
             // Fill group captures:
             for (i = 0; i < capGroups.length; i++) {
@@ -522,20 +523,20 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
     // ============================================================================================
     // Token processing
     // ============================================================================================
-    _scanToken: function (text, textEndPos, branches, branch, pass, token) {
+    _scanToken: function (textEndPos, branches, branch, pass, token) {
         var tokenTypes = System.Text.RegularExpressions.RegexEngineParser.tokenTypes;
         var resKind = this._branchResultKind;
 
         switch (token.type) {
             case tokenTypes.group:
             case tokenTypes.groupImnsx:
-                return this._scanGroupToken(text, textEndPos, branches, branch, pass, token);
+                return this._scanGroupToken(textEndPos, branches, branch, pass, token);
 
             case tokenTypes.groupImnsxMisc:
-                return this._scanGroupImnsxToken(text, branches, branch, pass, token);
+                return this._scanGroupImnsxToken(branches, branch, pass, token);
 
             case tokenTypes.charGroup:
-                return this._scanCharGroupToken(text, branches, branch, pass, token);
+                return this._scanCharGroupToken(branches, branch, pass, token);
 
             case tokenTypes.escChar:
             case tokenTypes.escCharOctal:
@@ -546,21 +547,21 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             case tokenTypes.escCharClass:
             case tokenTypes.escCharClassCategory:
             case tokenTypes.escCharClassBlock:
-                return this._scanEscapeToken(text, branches, branch, pass, token);
+                return this._scanEscapeToken(branches, branch, pass, token);
 
             case tokenTypes.escCharClassDot:
-                return this._scanDotToken(text, textEndPos, branches, branch, pass);
+                return this._scanDotToken(textEndPos, branches, branch, pass);
 
             case tokenTypes.escBackrefNumber:
-                return this._scanBackrefNumberToken(text, textEndPos, branches, branch, pass, token);
+                return this._scanBackrefNumberToken(textEndPos, branches, branch, pass, token);
 
             case tokenTypes.escBackrefName:
-                return this._scanBackrefNameToken(text, textEndPos, branches, branch, pass, token);
+                return this._scanBackrefNameToken(textEndPos, branches, branch, pass, token);
 
 
             case tokenTypes.anchor:
             case tokenTypes.escAnchor:
-                return this._scanAnchorToken(text, textEndPos, branches, branch, pass, token);
+                return this._scanAnchorToken(textEndPos, branches, branch, pass, token);
 
             case tokenTypes.groupConstruct:
             case tokenTypes.groupConstructName:
@@ -576,11 +577,11 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
                 return resKind.ok;
 
             default:
-                return this._scanLiteral(text, textEndPos, branches, branch, pass, token.value);
+                return this._scanLiteral(textEndPos, branches, branch, pass, token.value);
         }
     },
 
-    _scanGroupToken: function (text, textEndPos, branches, branch, pass, token) {
+    _scanGroupToken: function (textEndPos, branches, branch, pass, token) {
         var tokenTypes = System.Text.RegularExpressions.RegexEngineParser.tokenTypes;
         var resKind = this._branchResultKind;
         var textIndex = branch.state.txtIndex;
@@ -615,9 +616,9 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             return resKind.ok;
         }
 
-        this._scanGroupImnsxToken(text, branches, branch, pass, token);
+        this._scanGroupImnsxToken(branches, branch, pass, token);
 
-        var scanLookRes = this._scanLook(branch, text, textIndex, textEndPos, token);
+        var scanLookRes = this._scanLook(branch, textIndex, textEndPos, token);
         if (scanLookRes != null) {
             return scanLookRes;
         }
@@ -629,7 +630,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         return resKind.nextPass;
     },
 
-    _scanGroupImnsxToken: function (text, branches, branch, pass, token) {
+    _scanGroupImnsxToken: function (branches, branch, pass, token) {
         var resKind = this._branchResultKind;
         var constructs = token.group.constructs;
 
@@ -656,7 +657,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         return resKind.ok;
     },
 
-    _scanLook: function (branch, text, textIndex, textEndPos, token) {
+    _scanLook: function (branch, textIndex, textEndPos, token) {
         var constructs = token.group.constructs;
         var resKind = this._branchResultKind;
         var children = token.children;
@@ -672,9 +673,9 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
 
             expectedRes = constructs.isPositiveLookahead || constructs.isPositiveLookbehind;
             if (isLookahead) {
-                actualRes = this._scanLookAhead(branch, text, textIndex, textEndPos, children);
+                actualRes = this._scanLookAhead(branch, textIndex, textEndPos, children);
             } else {
-                actualRes = this._scanLookBehind(branch, text, textIndex, textEndPos, children);
+                actualRes = this._scanLookBehind(branch, textIndex, textEndPos, children);
             }
 
             if (expectedRes === actualRes) {
@@ -688,8 +689,8 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         return null;
     },
 
-    _scanLookAhead: function (branch, text, textPos, textEndPos, tokens) {
-        var state = this._scan(text, textPos, textEndPos, tokens, true);
+    _scanLookAhead: function (branch, textPos, textEndPos, tokens) {
+        var state = this._scan(textPos, textEndPos, tokens, true);
 
         if (state != null) {
             var groups = state.groups;
@@ -707,7 +708,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         return false;
     },
 
-    _scanLookBehind: function (branch, text, textPos, textEndPos, tokens) {
+    _scanLookBehind: function (branch, textPos, textEndPos, tokens) {
 
         var index = textPos;
         var strLen;
@@ -715,7 +716,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
 
         while (index >= 0) {
             strLen = textPos - index;
-            state = this._scan(text, index, textPos, tokens, true, strLen);
+            state = this._scan(index, textPos, tokens, true, strLen);
             if (state != null) {
                 var groups = state.groups;
                 var group;
@@ -735,7 +736,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         return false;
     },
 
-    _scanLiteral: function (text, textEndPos, branches, branch, pass, literal) {
+    _scanLiteral: function (textEndPos, branches, branch, pass, literal) {
         var resKind = this._branchResultKind;
         var index = branch.state.txtIndex;
 
@@ -746,14 +747,14 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         var i;
         if (pass.settings.ignoreCase) {
             for (i = 0; i < literal.length; i++) {
-                if (text[index + i].toLowerCase() !== literal[i].toLowerCase()) {
+                if (this._text[index + i].toLowerCase() !== literal[i].toLowerCase()) {
                     return resKind.nextBranch;
                 }
             }
 
         } else {
             for (i = 0; i < literal.length; i++) {
-                if (text[index + i] !== literal[i]) {
+                if (this._text[index + i] !== literal[i]) {
                     return resKind.nextBranch;
                 }
             }
@@ -763,10 +764,10 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         return resKind.ok;
     },
 
-    _scanWithJsRegex: function(text, branches, branch, pass, token) {
+    _scanWithJsRegex: function(branches, branch, pass, token) {
         var resKind = this._branchResultKind;
         var index = branch.state.txtIndex;
-        var ch = text[index];
+        var ch = this._text[index];
         if (ch == null) {
             ch = "";
         }
@@ -787,9 +788,9 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         return resKind.nextBranch;
     },
 
-    _scanWithJsRegex2: function(text, textIndex, pattern) {
+    _scanWithJsRegex2: function(textIndex, pattern) {
         var resKind = this._branchResultKind;
-        var ch = text[textIndex];
+        var ch = this._text[textIndex];
         if (ch == null) {
             ch = "";
         }
@@ -802,15 +803,15 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         return resKind.nextBranch;
     },
 
-    _scanCharGroupToken: function (text, branches, branch, pass, token) {
-        return this._scanWithJsRegex(text, branches, branch, pass, token);
+    _scanCharGroupToken: function (branches, branch, pass, token) {
+        return this._scanWithJsRegex(branches, branch, pass, token);
     },
 
-    _scanEscapeToken: function (text, branches, branch, pass, token) {
-        return this._scanWithJsRegex(text, branches, branch, pass, token);
+    _scanEscapeToken: function (branches, branch, pass, token) {
+        return this._scanWithJsRegex(branches, branch, pass, token);
     },
 
-    _scanDotToken: function (text, textEndPos, branches, branch, pass) {
+    _scanDotToken: function (textEndPos, branches, branch, pass) {
         var resKind = this._branchResultKind;
         var index = branch.state.txtIndex;
 
@@ -820,7 +821,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
                 return resKind.ok;
             }
         } else {
-            if (index < textEndPos && text[index] !== "\n") {
+            if (index < textEndPos && this._text[index] !== "\n") {
                 branch.state.logCapture(1);
                 return resKind.ok;
             }
@@ -829,7 +830,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         return resKind.nextBranch;
     },
 
-    _scanBackrefNumberToken: function (text, textEndPos, branches, branch, pass, token) {
+    _scanBackrefNumberToken: function (textEndPos, branches, branch, pass, token) {
         var resKind = this._branchResultKind;
 
         var grCapture = branch.state.resolveBackref(token.data.number);
@@ -837,11 +838,11 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             return resKind.nextBranch;
         }
 
-        var grCaptureTxt = text.slice(grCapture.capIndex, grCapture.capIndex + grCapture.capLength);
-        return this._scanLiteral(text, textEndPos, branches, branch, pass, grCaptureTxt);
+        var grCaptureTxt = this._text.slice(grCapture.capIndex, grCapture.capIndex + grCapture.capLength);
+        return this._scanLiteral(textEndPos, branches, branch, pass, grCaptureTxt);
     },
 
-    _scanBackrefNameToken: function (text, textEndPos, branches, branch, pass, token) {
+    _scanBackrefNameToken: function (textEndPos, branches, branch, pass, token) {
         var resKind = this._branchResultKind;
 
         var group = this._patternInfo.sparseSettings.getSingleGroupByName(token.data.name);
@@ -854,17 +855,17 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             return resKind.nextBranch;
         }
 
-        var grCaptureTxt = text.slice(grCapture.capIndex, grCapture.capIndex + grCapture.capLength);
-        return this._scanLiteral(text, textEndPos, branches, branch, pass, grCaptureTxt);
+        var grCaptureTxt = this._text.slice(grCapture.capIndex, grCapture.capIndex + grCapture.capLength);
+        return this._scanLiteral(textEndPos, branches, branch, pass, grCaptureTxt);
     },
 
-    _scanAnchorToken: function (text, textEndPos, branches, branch, pass, token) {
+    _scanAnchorToken: function (textEndPos, branches, branch, pass, token) {
         var resKind = this._branchResultKind;
         var index = branch.state.txtIndex;
 
         if (token.value === "\\b" || token.value === "\\B") {
-            var prevIsWord = index > 0 && this._scanWithJsRegex2(text, index - 1, "\\w") === resKind.ok;
-            var currIsWord = this._scanWithJsRegex2(text, index, "\\w") === resKind.ok;
+            var prevIsWord = index > 0 && this._scanWithJsRegex2(index - 1, "\\w") === resKind.ok;
+            var currIsWord = this._scanWithJsRegex2(index, "\\w") === resKind.ok;
             if ((prevIsWord === currIsWord) === (token.value === "\\B")) {
                 return resKind.ok;
             }
@@ -872,14 +873,14 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             if (index === 0) {
                 return resKind.ok;
             }
-            if (pass.settings.multiline && text[index-1] === "\n") {
+            if (pass.settings.multiline && this._text[index-1] === "\n") {
                 return resKind.ok;
             }
         } else if (token.value === "$") {
             if (index === textEndPos) {
                 return resKind.ok;
             }
-            if (pass.settings.multiline && text[index] === "\n") {
+            if (pass.settings.multiline && this._text[index] === "\n") {
                 return resKind.ok;
             }
         } else if (token.value === "\\A") {
@@ -894,7 +895,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             if (index === textEndPos) {
                 return resKind.ok;
             }
-            if (index === textEndPos - 1 && text[index] === "\n") {
+            if (index === textEndPos - 1 && this._text[index] === "\n") {
                 return resKind.ok;
             }
         } else if (token.value === "\\G") {
@@ -932,7 +933,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         return match;
     },
 
-    _fillMatch: function (match, text, capIndex, capLength, textPos) {
+    _fillMatch: function (match, capIndex, capLength, textPos) {
         if (capIndex == null) {
             capIndex = textPos;
         }
@@ -940,7 +941,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         match.capIndex = capIndex;
         match.capLength = capLength;
         match.success = true;
-        match.value = text.slice(capIndex, capIndex + capLength);
+        match.value = this._text.slice(capIndex, capIndex + capLength);
 
         match.groups.push({
             capIndex: capIndex,
