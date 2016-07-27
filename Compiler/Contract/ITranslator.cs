@@ -26,6 +26,11 @@ namespace Bridge.Contract
             get;
         }
 
+        string AssemblyName
+        {
+            get;
+        }
+
         string BridgeLocation
         {
             get;

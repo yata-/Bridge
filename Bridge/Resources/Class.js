@@ -31,13 +31,13 @@
 
             if (config.properties) {
                 for (name in config.properties) {
-                    Bridge.property(scope, name, config.properties[name]);
+                    Bridge.property(scope, name, config.properties[name], statics);
                 }
             }
 
             if (config.events) {
                 for (name in config.events) {
-                    Bridge.event(scope, name, config.events[name]);
+                    Bridge.event(scope, name, config.events[name], statics);
                 }
             }
 
@@ -71,12 +71,19 @@
             }
         },
 
+        definei: function (className, gscope, prop) {
+            var c = Bridge.define(className, gscope, prop);
+            c.$kind = "interface";
+
+            return c;
+        },
+
         // Create a new Class that inherits from this class
-        define: function (className, gscope, prop) {
-            var preventClear = false;
+        define: function (className, gscope, prop, gCfg) {
+            var isGenericInstance = false;
 
             if (prop === true) {
-                preventClear = true;
+                isGenericInstance = true;
                 prop = gscope;
                 gscope = Bridge.global;
             } else if (!prop) {
@@ -93,25 +100,24 @@
                         obj,
                         c;
 
-                    args.unshift(className);
-                    name = Bridge.Class.genericName.apply(null, args);
+                    name = Bridge.Class.genericName(className, args);
                     c = Bridge.Class.cache[name];
 
                     if (c) {
                         return c;
                     }
 
-                    obj = prop.apply(null, args.slice(1));
+                    obj = prop.apply(null, args);
                     obj.$cacheName = name;
-                    c = Bridge.define(name, obj, true);
+                    c = Bridge.define(name, obj, true, { fn: fn, args: args});
 
                     return Bridge.get(c);
                 };
 
-                return Bridge.Class.generic(className, gscope, fn);
+                return Bridge.Class.generic(className, gscope, fn, prop.length);
             }
 
-            if (!preventClear) {
+            if (!isGenericInstance) {
                 Bridge.Class.staticInitAllow = false;
             }
 
@@ -129,6 +135,8 @@
                 isCtor,
                 ctorName,
                 name;
+
+            prop.$kind = prop.$kind || "class";
 
             if (prop.$inherits) {
                 delete prop.$inherits;
@@ -174,9 +182,53 @@
             }
 
             Class.$$name = className;
+            Class.$kind = prop.$kind;
+
+            if (gCfg && isGenericInstance) {
+                Class.$genericTypeDefinition = gCfg.fn;
+                Class.$typeArguments = gCfg.args;
+                Class.$assembly = gCfg.fn.$assembly || Bridge.$currentAssembly;
+
+                var result = Bridge.Reflection.getTypeFullName(gCfg.fn);
+                for (i = 0; i < gCfg.args.length; i++) {
+                    result += (i === 0 ? '[' : ',') + '[' + Bridge.Reflection.getTypeQName(gCfg.args[i]) + ']';
+                }
+
+                result += ']';
+
+                Class.$$fullname = result;
+            }
 
             if (extend && Bridge.isFunction(extend)) {
                 extend = extend();
+            }
+
+            var interfaces = [];
+            var baseInterfaces = [];
+            if (extend) {
+                for (var j = 0; j < extend.length; j++) {
+                    var baseType = extend[j];
+                    var baseI = (baseType.$interfaces || []).concat(baseType.$baseInterfaces || []);
+                    if (baseI.length > 0) {
+                        for (var k = 0; k < baseI.length; k++) {
+                            if (baseInterfaces.indexOf(baseI[k]) < 0) {
+                                baseInterfaces.push(baseI[k]);
+                            }
+                        }
+                    }
+                    
+                    if (extend[j].$kind === "interface") {
+                        interfaces.push(extend[j]);
+                    }
+                }
+            }
+            
+            Class.$baseInterfaces = baseInterfaces;
+            Class.$interfaces = interfaces;
+            var noBase = extend ? extend[0].$kind === "interface" : true;
+
+            if (noBase) {
+                extend = null;
             }
 
             base = extend ? extend[0].prototype : this.prototype;
@@ -186,6 +238,10 @@
             Class.$$initCtor = function () {};
             Class.$$initCtor.prototype = prototype;
             Class.$$initCtor.prototype.constructor = Class;
+
+            if (Class.$$fullname) {
+                Class.$$initCtor.prototype.$$fullname = Class.$$fullname;
+            }
 
             if (statics) {
                 var staticsConfig = statics.$config || statics.config;
@@ -248,11 +304,6 @@
 
             prototype.$$name = className;
 
-            if (prop.$interface) {
-                Class.$interface = prop.$interface;
-                delete prop.$interface;
-            }
-
             if (statics) {
                 for (name in statics) {
                     Class[name] = statics[name];
@@ -260,7 +311,7 @@
             }
 
             if (!extend) {
-                extend = [Object];
+                extend = [Object].concat(interfaces);
             }
 
             Class.$$inherits = extend;
@@ -294,10 +345,71 @@
             }
 
             Class.$staticInit = fn;
+            if (!isGenericInstance) {
+                Bridge.Class.registerType(className, Class);
+            }
+            
+            if (Bridge.Reflection) {
+                Class.$getMetadata = Bridge.Reflection.getMetadata;
+            }
+
+            if (Class.$kind === "enum") {
+                Class.instanceOf = function (instance) {
+                     var utype = Class.prototype.$utype;
+                     if (utype === System.String) {
+                         return typeof (instance) == "string";
+                     }
+
+                     if (utype && utype.instanceOf) {
+                         return utype.instanceOf(instance);
+                     }
+
+                     return typeof (instance) == "number";
+                };
+            }
+
+            if (Class.$kind === "interface" && Class.prototype.$variance) {
+                Class.isAssignableFrom = Bridge.Class.varianceAssignable;
+            }
 
             return Class;
         },
 
+        varianceAssignable: function (source) {
+            var check = function (target, type) {
+                if (type.$genericTypeDefinition === target.$genericTypeDefinition && type.$typeArguments.length === target.$typeArguments.length) {
+                    for (var i = 0; i < target.$typeArguments.length; i++) {
+                        var v = target.prototype.$variance[i], t = target.$typeArguments[i], s = type.$typeArguments[i];
+                        switch (v) {
+                            case 1: if (!Bridge.Reflection.isAssignableFrom(t, s)) return false; break;
+                            case 2: if (!Bridge.Reflection.isAssignableFrom(s, t)) return false; break;
+                            default: if (s !== t) return false;
+                        }
+                    }
+                    return true;
+                }
+                return false;
+            };
+
+            if (source.$kind === "interface" && check(this, source)) {
+                return true;
+            }
+
+            var ifs = Bridge.Reflection.getInterfaces(source);
+            for (var i = 0; i < ifs.length; i++) {
+                if (ifs[i] === this || check(this, ifs[i])) {
+                    return true;
+                }
+            }
+            return false;
+        },
+
+        registerType : function (className, cls) {
+            if (Bridge.$currentAssembly) {
+                Bridge.$currentAssembly.$types[className] = cls;
+                cls.$assembly = Bridge.$currentAssembly;
+            }
+        },
 
         addExtend: function (cls, extend) {
             var i,
@@ -400,24 +512,26 @@
             });
         },
 
-        genericName: function () {
-            var name = arguments[0];
-
-            for (var i = 1; i < arguments.length; i++) {
-                name += "$" + Bridge.getTypeName(arguments[i]);
+        genericName: function (name, typeArguments) {
+            var gName = name;
+            for (var i = 0; i < typeArguments.length; i++) {
+                var ta = typeArguments[i];
+                gName += "$" + (ta.$$name || Bridge.getTypeName(ta));
             }
 
-            return name;
+            return gName;
         },
 
-        generic: function (className, scope, fn) {
-            if (!fn) {
-                fn = scope;
-                scope = Bridge.global;
-            }
-
+        generic: function (className, scope, fn, length) {            
             fn.$$name = className;
+            fn.$kind = "class";
+
             Bridge.Class.set(scope, className, fn, true);
+            Bridge.Class.registerType(className, fn);
+
+            fn.$typeArgumentCount = length;
+            fn.$isGenericTypeDefinition = true;
+            fn.$getMetadata = Bridge.Reflection.getMetadata;
 
             return fn;
         },
@@ -443,4 +557,5 @@
     Bridge.Class = base;
     Bridge.Class.$queue = [];
     Bridge.define = Bridge.Class.define;
+    Bridge.definei = Bridge.Class.definei;
     Bridge.init = Bridge.Class.init;

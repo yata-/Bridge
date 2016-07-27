@@ -79,7 +79,7 @@
             return proxy;
         },
 
-        property: function (scope, name, v) {
+        property: function (scope, name, v, statics) {
             scope[name] = v;
 
             var rs = name.charAt(0) === "$",
@@ -98,20 +98,24 @@
                 setName = name.substring(0, lastSep) + "set" + name.substr(lastSep + 1);
             }
 
-            scope[getName] = (function (name) {
-                return function () {
+            scope[getName] = (function (name, scope, statics) {
+                return statics ? function () {
+                    return scope[name];
+                } : function () {
                     return this[name];
                 };
-            })(name);
+            })(name, scope, statics);
 
-            scope[setName] = (function (name) {
-                return function (value) {
+            scope[setName] = (function (name, scope, statics) {
+                return statics ? function (value) {
+                    scope[name] = value;
+                } : function (value) {
                     this[name] = value;
                 };
-            })(name);
+            })(name, scope, statics);
         },
 
-        event: function (scope, name, v) {
+        event: function (scope, name, v, statics) {
             scope[name] = v;
 
             var rs = name.charAt(0) === "$",
@@ -130,17 +134,21 @@
                 removeName = name.substring(0, lastSep) + "remove" + name.substr(lastSep + 1);
             }
 
-            scope[addName] = (function (name) {
-                return function (value) {
+            scope[addName] = (function (name, scope, statics) {
+                return statics ? function (value) {
+                    scope[name] = Bridge.fn.combine(scope[name], value);
+                } : function (value) {
                     this[name] = Bridge.fn.combine(this[name], value);
                 };
-            })(name);
+            })(name, scope, statics);
 
-            scope[removeName] = (function (name) {
-                return function (value) {
+            scope[removeName] = (function (name, scope, statics) {
+                return statics ? function (value) {
+                    scope[name] = Bridge.fn.remove(scope[name], value);
+                } : function (value) {
                     this[name] = Bridge.fn.remove(this[name], value);
                 };
-            })(name);
+            })(name, scope, statics);
         },
 
         createInstance: function (type) {
@@ -186,6 +194,10 @@
         clone: function (obj) {
             if (Bridge.isArray(obj)) {
                 return System.Array.clone(obj);
+            }
+
+            if (Bridge.isString(obj)) {
+                return obj;
             }
 
             var name;
@@ -373,67 +385,7 @@
         },
 
         getTypeName: function (obj) {
-            var str;
-
-            if (obj.$$name) {
-                return obj.$$name;
-            }
-
-            if ((obj).constructor === Function) {
-                str = (obj).toString();
-            } else {
-                str = (obj).constructor.toString();
-            }
-
-            var results = (/function (.{1,})\(/).exec(str);
-
-            return (results && results.length > 1) ? results[1] : "Object";
-        },
-
-        getBaseType: function (obj) {
-            if (obj == null) {
-                throw new System.NullReferenceException();
-            }
-
-            if (obj.$interface) {
-                return null;
-            }
-
-            if (obj.$$inherits) {
-                return obj.$$inherits[0].$interface ? Object : obj.$$inherits[0];
-            } else {
-                return obj.$$name ? Object : null;
-            }
-        },
-
-        isAssignableFrom: function (baseType, type) {
-            if (baseType === null) {
-                throw new System.NullReferenceException();
-            }
-
-            if (type === null) {
-                return false;
-            }
-
-            if (baseType == type || baseType == Object) {
-                return true;
-            }
-
-            var inheritors = type.$$inherits,
-                i,
-                r;
-
-            if (inheritors) {
-                for (i = 0; i < inheritors.length; i++) {
-                    r = Bridge.isAssignableFrom(baseType, inheritors[i]);
-
-                    if (r) {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
+            return Bridge.Reflection.getTypeFullName(obj);
         },
 
         is: function (obj, type, ignoreFn, allowNull) {
@@ -452,6 +404,10 @@
 
                 if (Bridge.isFunction(type.instanceOf)) {
                     return type.instanceOf(obj);
+                }
+
+                if (Bridge.isFunction(type.isAssignableFrom)) {
+                    return type.isAssignableFrom(Bridge.getType(obj));
                 }
             }
 
@@ -492,8 +448,8 @@
         },
 
         cast: function (obj, type, allowNull) {
-            if (obj === null) {
-                return null;
+            if (obj === null || typeof (obj) === "undefined") {
+                return obj;
             }
 
             var result = Bridge.as(obj, type, allowNull);
@@ -522,7 +478,7 @@
             return obj;
         },
 
-        merge: function (to, from, elemFactory) {
+        merge: function (to, from, callback, elemFactory) {
             // Maps instance of plain JS value or Object into Bridge object. 
             // Used for deserialization. Proper deserialization requires reflection that is currently not supported in Bridge. 
             // It currently is only capable to deserialize:
@@ -600,6 +556,10 @@
                         }
                     }
                 }
+            }
+
+            if (callback) {
+                callback.call(to, to);
             }
 
             return to;
@@ -765,7 +725,7 @@
 
             var eq = a === b;
 
-            if (!eq && typeof a === "object" && typeof b === "object" && a !== null && b !== null && a.$struct && b.$struct && a.$$name === b.$$name) {
+            if (!eq && typeof a === "object" && typeof b === "object" && a !== null && b !== null && a.$kind === "struct" && b.$kind === "struct" && a.$$name === b.$$name) {
                 return Bridge.getHashCode(a) === Bridge.getHashCode(b) && Bridge.objectEquals(a, b);
             }
 
@@ -941,13 +901,13 @@
             }
         },
 
-        isLower: function isLower(c) {
+        isLower: function (c) {
             var s = String.fromCharCode(c);
 
             return s === s.toLowerCase() && s !== s.toUpperCase();
         },
 
-        isUpper: function isUpper(c) {
+        isUpper: function (c) {
             var s = String.fromCharCode(c);
 
             return s !== s.toLowerCase() && s === s.toUpperCase();

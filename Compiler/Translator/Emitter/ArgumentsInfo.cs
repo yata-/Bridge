@@ -38,13 +38,13 @@ namespace Bridge.Translator
         public Expression[] ArgumentsExpressions
         {
             get;
-            private set;
+            set;
         }
 
         public string[] ArgumentsNames
         {
             get;
-            private set;
+            set;
         }
 
         public Expression ParamsExpression
@@ -56,7 +56,7 @@ namespace Bridge.Translator
         public NamedParamExpression[] NamedExpressions
         {
             get;
-            private set;
+            set;
         }
 
         public TypeParamExpression[] TypeArguments
@@ -87,6 +87,23 @@ namespace Bridge.Translator
         {
             get;
             set;
+        }
+        public IMethod Method { get; private set; }
+
+        public IAttribute Attribute { get; set; }
+
+        public ArgumentsInfo(IEmitter emitter, IMethod method)
+        {
+            this.Emitter = emitter;
+            this.Expression = null;
+            this.Method = method;
+        }
+
+        public ArgumentsInfo(IEmitter emitter, IAttribute attr)
+        {
+            this.Emitter = emitter;
+            this.Expression = null;
+            this.Attribute = attr;
         }
 
         public ArgumentsInfo(IEmitter emitter, ConstructorInitializer initializer)
@@ -519,7 +536,7 @@ namespace Bridge.Translator
             }
         }
 
-        private NamedParamExpression[] CreateNamedExpressions(string[] names, Expression[] expressions)
+        public NamedParamExpression[] CreateNamedExpressions(string[] names, Expression[] expressions)
         {
             var result = new NamedParamExpression[names.Length];
 

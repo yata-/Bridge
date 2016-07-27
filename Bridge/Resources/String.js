@@ -10,10 +10,11 @@
                 return true;
             }
 
-            if (type === System.Collections.IEnumerable ||
-                type.$$name && System.String.startsWith(type.$$name, "System.Collections.Generic.IEnumerable$1") ||
-                type.$$name && System.String.startsWith(type.$$name, "System.IComparable$1") ||
-                type.$$name && System.String.startsWith(type.$$name, "System.IEquatable$1")) {
+            if (type === System.ICloneable ||
+                type === System.Collections.IEnumerable ||
+                type === System.Collections.Generic.IEnumerable$1(System.Char) ||
+                type === System.IComparable$1(String) ||
+                type === System.IEquatable$1(String)) {
                 return true;
             }
 

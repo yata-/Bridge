@@ -1,24 +1,24 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("TypeScriptTest", function ($asm, globals) {
     "use strict";
 
     Bridge.define('Interfaces.Interface1', {
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Interfaces.Interface4', {
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Interfaces.Interface6', {
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Interfaces.Interface61', {
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Interfaces.Interface62', {
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Interfaces.Class1', {
@@ -41,7 +41,7 @@
     
     Bridge.define('Interfaces.Interface2', {
         inherits: [Interfaces.Interface1],
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Interfaces.Class4', {
@@ -128,7 +128,7 @@
     
     Bridge.define('Interfaces.Interface3', {
         inherits: [Interfaces.Interface2],
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Interfaces.Class3', {
@@ -144,4 +144,4 @@
     });
     
     Bridge.init();
-})(this);
+});

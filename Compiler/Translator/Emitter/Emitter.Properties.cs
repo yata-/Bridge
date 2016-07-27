@@ -426,5 +426,15 @@ namespace Bridge.Translator
             get;
             set;
         }
+
+        public bool IsAnonymousReflectable
+        {
+            get; set;
+        }
+
+        public string MetaDataOutputName
+        {
+            get; set;
+        }
     }
 }

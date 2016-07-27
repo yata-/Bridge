@@ -342,9 +342,9 @@ namespace Bridge.Translator
                     if (requireNewLine)
                     {
                         this.WriteNewLine();
+                        requireNewLine = false;
                     }
                     this.EmitBaseConstructor(ctor, ctorName);
-                    requireNewLine = true;
                 }
 
                 var script = this.Emitter.GetScript(ctor);

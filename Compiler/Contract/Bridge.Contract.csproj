@@ -87,7 +87,10 @@
     <Compile Include="Constants\CS.cs" />
     <Compile Include="Constants\JS.cs" />
     <Compile Include="IAnonymousType.cs" />
+    <Compile Include="IReflectionConfig.cs" />
     <Compile Include="IWriter.cs" />
+    <Compile Include="MemberOrderer.cs" />
+    <Compile Include="MemberReflectability.cs" />
     <Compile Include="OverflowMode.cs" />
     <Compile Include="EmitterException.cs" />
     <Compile Include="Helpers.Cecil.cs" />

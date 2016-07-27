@@ -1,9 +1,9 @@
 using Bridge.Contract;
 using Bridge.Contract.Constants;
-
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
+using Newtonsoft.Json;
 
 namespace Bridge.Translator
 {
@@ -131,6 +131,11 @@ namespace Bridge.Translator
             this.GenerateHashCode(config);
             this.GenereateToJSON(config);
 
+            if (this.Emitter.IsAnonymousReflectable)
+            {
+                this.GenereateMetadata(config);
+            }
+
             this.WriteNewLine();
             this.EndBlock();
             this.Write(");");
@@ -144,6 +149,10 @@ namespace Bridge.Translator
         private void GenereateCtor(AnonymousType type)
         {
             this.EnsureComma();
+            this.Write(JS.Fields.KIND);
+            this.WriteColon();
+            this.WriteScript(TypeKind.Anonymous.ToString().ToLowerInvariant());
+            this.WriteComma(true);
             this.Write(JS.Funcs.CONSTRUCTOR + ": function (");
             foreach (var property in type.Properties)
             {
@@ -165,6 +174,22 @@ namespace Bridge.Translator
 
             this.EndBlock();
             this.Emitter.Comma = true;
+        }
+
+        private void GenereateMetadata(IAnonymousTypeConfig config)
+        {
+            var meta = MetadataUtils.ConstructITypeMetadata(config.Type, this.Emitter);
+
+            if (meta != null)
+            {
+                this.EnsureComma();
+                this.Write("statics : ");
+                this.BeginBlock();
+                this.Write("$metadata : ");
+                this.Write(meta.ToString(Formatting.None));
+                this.WriteNewLine();
+                this.EndBlock();
+            }
         }
 
         private void GenereateGetters(IAnonymousTypeConfig config)

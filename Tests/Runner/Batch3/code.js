@@ -7,7 +7,7 @@ var SomeExternalNamespace = {
 SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
 
 
-(function (globals) {
+Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     "use strict";
 
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge069', {
@@ -20,6 +20,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge069.Point69', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge069.Point69(); }
         },
@@ -33,7 +34,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + 1643959563;
@@ -215,22 +215,24 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1020.CommonEnum', {
+        $kind: "enum",
         statics: {
             None: 0,
             Flag: 2,
             FlagAlias: 2
         },
-        $enum: true
+        $utype: System.UInt32
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1020.TestEnum', {
+        $kind: "enum",
         statics: {
             None: 0,
             Flag: 1,
             FlagAlias: 1
         },
-        $enum: true,
-        $flags: true
+        $flags: true,
+        $utype: System.UInt32
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1024', {
@@ -495,20 +497,20 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.I7$3', function (T1, T2, T3) { return {
-        $interface: true
+    Bridge.definei('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.I7$3', function (T1, T2, T3) { return {
+        $kind: "interface"
     }; });
     
-    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.I5$1', function (T) { return {
-        $interface: true
+    Bridge.definei('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.I5$1', function (T) { return {
+        $kind: "interface"
     }; });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.I8', {
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.I10', {
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.C18', {
@@ -519,11 +521,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.I2', {
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.I1', {
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.C22', {
@@ -534,7 +536,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.I3', {
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.C6', {
@@ -544,11 +546,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.I4', {
-        $interface: true
+        $kind: "interface"
     });
     
-    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.I6$1', function (T) { return {
-        $interface: true
+    Bridge.definei('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.I6$1', function (T) { return {
+        $kind: "interface"
     }; });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1026', {
@@ -964,19 +966,19 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.define('Bridge1058.Class2_B');
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1058.overlayType', {
+        $kind: "enum",
         statics: {
             CIRCLE: 0,
             MARKER: 1
-        },
-        $enum: true
+        }
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1058.OverlayType_B', {
+        $kind: "enum",
         statics: {
             CIRCLE: 0,
             MARKER: 1
-        },
-        $enum: true
+        }
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1059', {
@@ -1002,35 +1004,35 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1059.OverlayType1', {
+        $kind: "enum",
         statics: {
             cIRCLE: 1,
             marker: 2
-        },
-        $enum: true
+        }
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1059.OverlayType2', {
+        $kind: "enum",
         statics: {
             CIRCLE: 1,
             marker: 2
-        },
-        $enum: true
+        }
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1059.OverlayType3', {
+        $kind: "enum",
         statics: {
             circle: 1,
             marker: 2
-        },
-        $enum: true
+        }
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1059.OverlayType4', {
+        $kind: "enum",
         statics: {
             CIRCLE: 1,
             MARKER: 2
-        },
-        $enum: true
+        }
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1061', {
@@ -1417,17 +1419,18 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1120.Baz', {
+        $kind: "enum",
         statics: {
             a: 0,
             b: 7,
             c: 8,
             d: 9
         },
-        $enum: true,
         $flags: true
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1120.Test', {
+        $kind: "enum",
         statics: {
             M1: -10,
             M2: -9,
@@ -1436,8 +1439,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             M5: -9,
             M6: 0,
             M7: 1
-        },
-        $enum: true
+        }
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1128', {
@@ -1468,6 +1470,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1128.Foo.Item', {
         inherits: function () { return [System.IComparable$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1128.Foo.Item)]; },
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1128.Foo.Item(); }
         },
@@ -1487,7 +1490,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         compareTo: function (other) {
             return System.String.compare(this.value, other.value);
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + -1126420587;
@@ -1523,6 +1525,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1128.Foo1.Item', {
         inherits: function () { return [System.IComparable$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1128.Foo1.Item)]; },
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1128.Foo1.Item(); }
         },
@@ -1542,7 +1545,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         compareTo: function (other) {
             return System.String.compare(this.value, other.value);
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + -1126420587;
@@ -2090,7 +2092,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1175', {
         statics: {
             testNullComparing: function () {
-                var temp = { };
+                var temp = {  };
                 var varNull = null;
                 var varUndefined = temp["this-prop-undefined"];
     
@@ -2175,6 +2177,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1180.Vector2', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1180.Vector2(); }
         },
@@ -2183,7 +2186,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + 1335531435;
@@ -2617,22 +2619,22 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         statics: {
             testTypeInferenceWithNamedArguments: function () {
                 var r1 = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1217.getNavigatorToTest1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1217.DemoNavigator, "", "", $_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge1217.f1);
-                Bridge.Test.Assert.areEqual(Bridge.getTypeName(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1217.DemoNavigator), r1);
+                Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1217.DemoNavigator), r1);
     
                 var r2 = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1217.getNavigatorToTest1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1217.DemoNavigator, "", "", $_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge1217.f1);
-                Bridge.Test.Assert.areEqual(Bridge.getTypeName(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1217.DemoNavigator), r2);
+                Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1217.DemoNavigator), r2);
     
                 var r3 = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1217.getNavigatorToTest2(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1217.DemoNavigator, "", "", Bridge.cast(null, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1217.DemoNavigator));
-                Bridge.Test.Assert.areEqual(Bridge.getTypeName(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1217.DemoNavigator), r3);
+                Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1217.DemoNavigator), r3);
     
                 var r4 = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1217.getNavigatorToTest2(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1217.DemoNavigator, "", "", Bridge.cast(null, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1217.DemoNavigator));
-                Bridge.Test.Assert.areEqual(Bridge.getTypeName(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1217.DemoNavigator), r4);
+                Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1217.DemoNavigator), r4);
             },
             getNavigatorToTest1: function (TNavigator, initialUrl, assert, navigatorGenerator) {
-                return Bridge.getTypeName(TNavigator);
+                return Bridge.Reflection.getTypeFullName(TNavigator);
             },
             getNavigatorToTest2: function (TNavigator, initialUrl, assert, navigatorGenerator) {
-                return Bridge.getTypeName(TNavigator);
+                return Bridge.Reflection.getTypeFullName(TNavigator);
             }
         }
     });
@@ -2803,8 +2805,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     }; });
     
-    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1231.I1$1', function (T) { return {
-        $interface: true
+    Bridge.definei('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1231.I1$1', function (T) { return {
+        $kind: "interface"
     }; });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1232', {
@@ -2886,7 +2888,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             if (str === void 0) { str = []; }
     
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge1232.ClassA.$constructor.call(this, 1, str);
-    
         }
     });
     
@@ -2909,13 +2910,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             if (str === void 0) { str = []; }
     
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge1232.ClassB.$constructor.call(this, 1, str);
-    
         },
         $constructor1: function (s, str) {
             if (str === void 0) { str = []; }
     
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge1232.ClassB.$constructor2.call(this, str);
-    
             this.setS(s);
         }
     });
@@ -2961,11 +2960,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1253.Numbers', {
+        $kind: "enum",
         statics: {
             ONE: 1,
             TWO: 2
-        },
-        $enum: true
+        }
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1256', {
@@ -3454,6 +3453,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1296.MessageId', {
+        $kind: "struct",
         statics: {
             op_Explicit: function (value) {
                 return Bridge.merge(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1296.MessageId(), {
@@ -3473,7 +3473,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + -1223576436;
@@ -3494,13 +3493,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1296.MessageStructId', {
+        $kind: "struct",
         statics: {
             op_Implicit: function (id) {
                 return 123;
             },
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1296.MessageStructId(); }
         },
-        $struct: true,
         $clone: function (to) { return this; }
     });
     
@@ -3834,13 +3833,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1311.SimpleEnum', {
+        $kind: "enum",
         statics: {
             A: 0,
             B: 3,
             C: 4,
             D: 10
-        },
-        $enum: true
+        }
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1313', {
@@ -3857,7 +3856,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1313.IInterface', {
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1316', {
@@ -3990,14 +3989,15 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1328.Optional2$1', function (T) { return {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge1328.Optional2$1(T))(); }
         },
-        $struct: true,
         $clone: function (to) { return this; }
     }; });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1328.Optional3$1', function (T) { return {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge1328.Optional3$1(T))(); }
         },
@@ -4008,13 +4008,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         $constructor1: function (v) {
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge1328.Optional3$1(T).$constructor.call(this);
-    
             this.setValue(v);
         },
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + -1469106983;
@@ -4035,6 +4033,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     }; });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1328.StructLink', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1328.StructLink(); }
         },
@@ -4043,13 +4042,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             if (name === void 0) { name = "some"; }
     
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge1328.StructLink.$constructor.call(this);
-    
             this.name = name;
         },
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + 1552938783;
@@ -4070,6 +4067,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1328.StructLink2', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1328.StructLink2(); }
         },
@@ -4082,13 +4080,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             if (name === void 0) { name = new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge1328.Optional2$1(String))(); }
     
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge1328.StructLink2.$constructor.call(this);
-    
             this.name = name;
         },
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + 344944561;
@@ -4109,6 +4105,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1328.StructLink3', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1328.StructLink3(); }
         },
@@ -4125,7 +4122,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             if (name === void 0) { name = new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge1328.Optional3$1(System.Int32))(); }
     
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge1328.StructLink3.$constructor.call(this);
-    
             this.name = name.$clone();
             this.setUrl(url);
             this.setText(text);
@@ -4133,7 +4129,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + 344944560;
@@ -4439,6 +4434,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1340.Data$1', function (T) { return {
+        $kind: "struct",
         statics: {
             array: null,
             config: {
@@ -4458,7 +4454,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         $constructor1: function (v1, v2) {
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge1340.Data$1(T).$constructor.call(this);
-    
             this.setValue1(v1);
             this.value2 = v2;
         },
@@ -4470,7 +4465,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 return Bridge.getDefaultValue(T);
             });
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + 2620942;
@@ -4493,6 +4487,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     }; });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1340.Data$2', function (T, K) { return {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge1340.Data$2(T,K))(); }
         },
@@ -4505,7 +4500,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + 2620942;
@@ -4816,6 +4810,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define("$AnonymousType$1", $_, {
+        $kind: "anonymous",
         constructor: function (a) {
             this.a = a;
         },
@@ -4842,6 +4837,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define("$AnonymousType$2", $_, {
+        $kind: "anonymous",
         constructor: function (a, b) {
             this.a = a;
             this.b = b;
@@ -4874,6 +4870,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define("$AnonymousType$3", $_, {
+        $kind: "anonymous",
         constructor: function (a, b) {
             this.a = a;
             this.b = b;
@@ -4906,6 +4903,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define("$AnonymousType$4", $_, {
+        $kind: "anonymous",
         constructor: function (a, b) {
             this.a = a;
             this.b = b;
@@ -4938,6 +4936,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define("$AnonymousType$5", $_, {
+        $kind: "anonymous",
         constructor: function (value1) {
             this.value1 = value1;
         },
@@ -4964,6 +4963,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define("$AnonymousType$6", $_, {
+        $kind: "anonymous",
         constructor: function (value2) {
             this.value2 = value2;
         },
@@ -4990,6 +4990,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define("$AnonymousType$7", $_, {
+        $kind: "anonymous",
         constructor: function (b) {
             this.b = b;
         },
@@ -5016,6 +5017,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define("$AnonymousType$8", $_, {
+        $kind: "anonymous",
         constructor: function (b, c) {
             this.b = b;
             this.c = c;
@@ -5048,6 +5050,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define("$AnonymousType$9", $_, {
+        $kind: "anonymous",
         constructor: function (a, b) {
             this.a = a;
             this.b = b;
@@ -5080,6 +5083,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define("$AnonymousType$10", $_, {
+        $kind: "anonymous",
         constructor: function (b, c) {
             this.b = b;
             this.c = c;
@@ -5112,6 +5116,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define("$AnonymousType$11", $_, {
+        $kind: "anonymous",
         constructor: function (b, a) {
             this.b = b;
             this.a = a;
@@ -5144,6 +5149,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define("$AnonymousType$12", $_, {
+        $kind: "anonymous",
         constructor: function (b, c) {
             this.b = b;
             this.c = c;
@@ -5196,6 +5202,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1341.SomeStructA', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1341.SomeStructA(); }
         },
@@ -5207,7 +5214,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + 593585434;
@@ -5228,6 +5234,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1341.SomeStructA1', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1341.SomeStructA1(); }
         },
@@ -5239,7 +5246,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + -776575217;
@@ -5260,6 +5266,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1341.SomeStructA2', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1341.SomeStructA2(); }
         },
@@ -5271,7 +5278,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + -1179859744;
@@ -5690,15 +5696,15 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.areEqual("test_string", c1);
     
                 var c2 = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1411.Thing.$constructor(1);
-                Bridge.Test.Assert.true(true);
+                Bridge.Test.Assert.true(Bridge.hasValue(c2));
             },
             testTemplateCtorDoodad: function () {
                 var c1 = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1411.Doodad.$constructor();
-                Bridge.Test.Assert.true(true);
+                Bridge.Test.Assert.true(Bridge.hasValue(c1));
                 Bridge.Test.Assert.areDeepEqual(3, c1.getData());
     
                 var c2 = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1411.Doodad.$constructor1(1);
-                Bridge.Test.Assert.true(true);
+                Bridge.Test.Assert.true(Bridge.hasValue(c2));
                 Bridge.Test.Assert.areDeepEqual(4, c2.getData());
             },
             testTemplateCtorGizmo: function () {
@@ -5809,7 +5815,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 Bridge.Test.Assert.notNull$1(serialized, " serialized should not be null");
     
-                var result = Bridge.merge(new Array(), JSON.parse(serialized), function(){return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1438.Foo();});
+                var result = Bridge.merge(new Array(), JSON.parse(serialized), null, function(){return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1438.Foo();});
     
                 Bridge.Test.Assert.notNull$1(result, " result should not be null");
                 Bridge.Test.Assert.areEqual$1("Array", Bridge.getTypeName(result), "Check result type name");
@@ -5828,7 +5834,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             }
         },
         someMethod: function () {
-            return "I'm " + Bridge.getTypeName(Bridge.getType(this)) + " and my value is " + this.getValue();
+            return "I'm " + Bridge.Reflection.getTypeFullName(Bridge.getType(this)) + " and my value is " + this.getValue();
         }
     });
     
@@ -6015,7 +6021,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 // Nothing gets written for Class1 in the output JavaScript due to the "new object()" argument.
                 // If null is used instead (as commented-out) then it works as expected.
                 // No compile error.
-                return Bridge.ClientTest.Batch3.BridgeIssues.Bridge266B.test("test", { });
+                return Bridge.ClientTest.Batch3.BridgeIssues.Bridge266B.test("test", {  });
             }
         }
     });
@@ -6037,19 +6043,19 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge272.MyEnum', {
+        $kind: "enum",
         statics: {
             Abc: 1,
             Def: 2,
             Ghi: 3
-        },
-        $enum: true
+        }
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge277', {
+        $kind: "enum",
         statics: {
             Int: 0
-        },
-        $enum: true
+        }
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge294', {
@@ -6067,7 +6073,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.IBridge304', {
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge305', {
@@ -6162,7 +6168,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         constructor: function () {
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge342.$constructor1.call(this, new (System.Collections.Generic.Dictionary$2(System.Int32,String))());
-    
         },
         $constructor1: function (initialValues) {
             this.$initialize();
@@ -6275,6 +6280,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge407', {
+        $kind: "struct",
         statics: {
             op_Addition: function (x, y) {
                 return Bridge.merge(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge407(), {
@@ -6291,7 +6297,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + 1091152776;
@@ -6323,12 +6328,12 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge422', {
+        $kind: "enum",
         statics: {
             first: 0,
             next: 100,
             afterNext: 101
-        },
-        $enum: true
+        }
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge436First', {
@@ -6506,6 +6511,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define("$AnonymousType$13", $_, {
+        $kind: "anonymous",
         constructor: function (lastName, firstName) {
             this.lastName = lastName;
             this.firstName = firstName;
@@ -6921,6 +6927,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define("$AnonymousType$14", $_, {
+        $kind: "anonymous",
         constructor: function () {
         },
         equals: function (o) {
@@ -7653,7 +7660,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         $constructor1: function (a) {
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge559A1.$constructor.call(this);
-    
             this.result += " -> Bridge559A1$1";
         }
     });
@@ -7666,7 +7672,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         $constructor1: function (a) {
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge559A2.$constructor.call(this);
-    
             this.result += " ClassA$1";
         }
     });
@@ -7683,7 +7688,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         constructor: function (value) {
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge559A3.$constructor1.call(this, value.toString());
-    
         }
     });
     
@@ -7762,33 +7766,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge565', {
-        statics: {
-            testUseCase: function () {
-                var t1 = new Function();
-                Bridge.Test.Assert.true$1(t1 != null, "#565 t1");
-    
-                var t2 = new Object();
-                Bridge.Test.Assert.true$1(t2 != null, "#565 t2");
-    
-                var t3 = new Object();
-                Bridge.Test.Assert.true$1(Bridge.referenceEquals(Object, Object), "#565 t3");
-    
-                var t4 = new Object();
-                Bridge.Test.Assert.true$1(Bridge.referenceEquals(Object, Object), "#565 t4");
-    
-                var t5 = new Object();
-                Bridge.Test.Assert.true$1(t5 != null, "#565 t5");
-    
-                var t6 = new Object();
-                Bridge.Test.Assert.true$1(Bridge.referenceEquals(Object, Object), "#565 t6");
-    
-                var t7 = new Object();
-                Bridge.Test.Assert.true$1(Bridge.referenceEquals(Object, Object), "#565 t7");
-            }
-        }
-    });
-    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge566', {
         statics: {
             testUseCase: function () {
@@ -7854,14 +7831,15 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge577.Bridge577UnitA', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge577.Bridge577UnitA(); }
         },
-        $struct: true,
         $clone: function (to) { return this; }
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge577.Bridge577UnitB', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge577.Bridge577UnitB(); }
         },
@@ -7873,7 +7851,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + 1430308972;
@@ -8371,6 +8348,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge603A', {
+        $kind: "struct",
         statics: {
             op_Implicit: function (value) {
                 var $t;
@@ -8387,7 +8365,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + -701022801;
@@ -8408,6 +8385,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge603B', {
+        $kind: "struct",
         statics: {
             op_Implicit$2: function (value) {
                 var $t;
@@ -8446,7 +8424,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + -1104307328;
@@ -8589,6 +8566,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge608A', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge608A(); }
         },
@@ -8609,7 +8587,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         getHashCode: function () {
             return Bridge.getHashCode(this.field);
         },
-        $struct: true,
         $clone: function (to) { return this; }
     });
     
@@ -8702,16 +8679,16 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var list = [1, 2, 3];
     
                 var d1 = System.Linq.Enumerable.from(list).toDictionary($_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge625.f1, null, System.Int32, System.Int32);
-                Bridge.Test.Assert.true$1(true, "Bridge625 d1");
+                Bridge.Test.Assert.true$1(Bridge.hasValue(d1), "Bridge625 d1");
     
                 var d2 = System.Linq.Enumerable.from(list).toDictionary($_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge625.f1, null, System.Int32, System.Int32, new Bridge.ClientTest.Batch3.BridgeIssues.Bridge625A());
-                Bridge.Test.Assert.true$1(true, "Bridge625 d2");
+                Bridge.Test.Assert.true$1(Bridge.hasValue(d2), "Bridge625 d2");
     
                 var d3 = System.Linq.Enumerable.from(list).toDictionary($_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge625.f1, $_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge625.f2, System.Int32, System.Int32);
-                Bridge.Test.Assert.true$1(true, "Bridge625 d3");
+                Bridge.Test.Assert.true$1(Bridge.hasValue(d3), "Bridge625 d3");
     
                 var d4 = System.Linq.Enumerable.from(list).toDictionary($_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge625.f1, $_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge625.f2, System.Int32, System.Int32, new Bridge.ClientTest.Batch3.BridgeIssues.Bridge625A());
-                Bridge.Test.Assert.true$1(true, "Bridge625 d4");
+                Bridge.Test.Assert.true$1(Bridge.hasValue(d4), "Bridge625 d4");
     
                 var content = new (System.Collections.Generic.Dictionary$2(Date,Array))();
                 var dict1 = System.Linq.Enumerable.from(content).where($_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge625.f3).toDictionary($_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge625.f4, $_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge625.f5, Date, Array);
@@ -8767,13 +8744,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var a5 = new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge634A$1.Nested$1.SubNested(String,System.Int32))();
                 var a6 = new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge634A$1.Nested$1.SubNested$1(String,System.Int32,System.Int32))();
     
-                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634A$1$String", Bridge.getTypeName(a), "Bridge634 A a");
-                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634A$1.Nested$String", Bridge.getTypeName(a1), "Bridge634 A a1");
-                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634A$1.Nested$1$String$System.Int32", Bridge.getTypeName(a2), "Bridge634 A a2");
-                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634A$1.Nested.SubNested$String", Bridge.getTypeName(a3), "Bridge634 A a3");
-                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634A$1.Nested.SubNested$1$String$System.Int32", Bridge.getTypeName(a4), "Bridge634 A a4");
-                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634A$1.Nested$1.SubNested$String$System.Int32", Bridge.getTypeName(a5), "Bridge634 A a5");
-                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634A$1.Nested$1.SubNested$1$String$System.Int32$System.Int32", Bridge.getTypeName(a6), "Bridge634 A a6");
+                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634A$1[[String]]", Bridge.getTypeName(a), "Bridge634 A a");
+                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634A$1.Nested[[String]]", Bridge.getTypeName(a1), "Bridge634 A a1");
+                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634A$1.Nested$1[[String],[System.Int32, System]]", Bridge.getTypeName(a2), "Bridge634 A a2");
+                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634A$1.Nested.SubNested[[String]]", Bridge.getTypeName(a3), "Bridge634 A a3");
+                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634A$1.Nested.SubNested$1[[String],[System.Int32, System]]", Bridge.getTypeName(a4), "Bridge634 A a4");
+                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634A$1.Nested$1.SubNested[[String],[System.Int32, System]]", Bridge.getTypeName(a5), "Bridge634 A a5");
+                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634A$1.Nested$1.SubNested$1[[String],[System.Int32, System],[System.Int32, System]]", Bridge.getTypeName(a6), "Bridge634 A a6");
     
                 var b = new (ClientTestLibraryCustom.Bridge634B$1(String))();
                 var b1 = new (ClientTestLibraryCustom.Bridge634B$1.Nested(String))();
@@ -8783,13 +8760,13 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 var b5 = new (ClientTestLibraryCustom.Bridge634B$1.Nested$1.SubNested(String,System.Int32))();
                 var b6 = new (ClientTestLibraryCustom.Bridge634B$1.Nested$1.SubNested$1(String,System.Int32,System.Int32))();
     
-                Bridge.Test.Assert.areEqual$1("ClientTestLibraryCustom.Bridge634B$1$String", Bridge.getTypeName(b), "Bridge634 B b");
-                Bridge.Test.Assert.areEqual$1("ClientTestLibraryCustom.Bridge634B$1.Nested$String", Bridge.getTypeName(b1), "Bridge634 B b1");
-                Bridge.Test.Assert.areEqual$1("ClientTestLibraryCustom.Bridge634B$1.Nested$1$String$System.Int32", Bridge.getTypeName(b2), "Bridge634 B b2");
-                Bridge.Test.Assert.areEqual$1("ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested$String", Bridge.getTypeName(b3), "Bridge634 B b3");
-                Bridge.Test.Assert.areEqual$1("ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested$1$String$System.Int32", Bridge.getTypeName(b4), "Bridge634 B b4");
-                Bridge.Test.Assert.areEqual$1("ClientTestLibraryCustom.Bridge634B$1.Nested$1.SubNested$String$System.Int32", Bridge.getTypeName(b5), "Bridge634 B b5");
-                Bridge.Test.Assert.areEqual$1("ClientTestLibraryCustom.Bridge634B$1.Nested$1.SubNested$1$String$System.Int32$System.Int32", Bridge.getTypeName(b6), "Bridge634 B b6");
+                Bridge.Test.Assert.areEqual$1("ClientTestLibraryCustom.Bridge634B$1[[String]]", Bridge.getTypeName(b), "Bridge634 B b");
+                Bridge.Test.Assert.areEqual$1("ClientTestLibraryCustom.Bridge634B$1.Nested[[String]]", Bridge.getTypeName(b1), "Bridge634 B b1");
+                Bridge.Test.Assert.areEqual$1("ClientTestLibraryCustom.Bridge634B$1.Nested$1[[String],[System.Int32, System]]", Bridge.getTypeName(b2), "Bridge634 B b2");
+                Bridge.Test.Assert.areEqual$1("ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested[[String]]", Bridge.getTypeName(b3), "Bridge634 B b3");
+                Bridge.Test.Assert.areEqual$1("ClientTestLibraryCustom.Bridge634B$1.Nested.SubNested$1[[String],[System.Int32, System]]", Bridge.getTypeName(b4), "Bridge634 B b4");
+                Bridge.Test.Assert.areEqual$1("ClientTestLibraryCustom.Bridge634B$1.Nested$1.SubNested[[String],[System.Int32, System]]", Bridge.getTypeName(b5), "Bridge634 B b5");
+                Bridge.Test.Assert.areEqual$1("ClientTestLibraryCustom.Bridge634B$1.Nested$1.SubNested$1[[String],[System.Int32, System],[System.Int32, System]]", Bridge.getTypeName(b6), "Bridge634 B b6");
     
                 var c = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge634C();
                 var c1 = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge634C.Nested();
@@ -8801,11 +8778,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
                 Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634C", Bridge.getTypeName(c), "Bridge634 C c");
                 Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634C.Nested", Bridge.getTypeName(c1), "Bridge634 C c1");
-                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634C.Nested$1$System.Int32", Bridge.getTypeName(c2), "Bridge634 C c2");
+                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634C.Nested$1[[System.Int32, System]]", Bridge.getTypeName(c2), "Bridge634 C c2");
                 Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634C.Nested.SubNested", Bridge.getTypeName(c3), "Bridge634 C c3");
-                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634C.Nested.SubNested$1$System.Int32", Bridge.getTypeName(c4), "Bridge634 C c4");
-                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634C.Nested$1.SubNested$System.Int32", Bridge.getTypeName(c5), "Bridge634 C c5");
-                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634C.Nested$1.SubNested$1$System.Int32$System.Int32", Bridge.getTypeName(c6), "Bridge634 C c6");
+                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634C.Nested.SubNested$1[[System.Int32, System]]", Bridge.getTypeName(c4), "Bridge634 C c4");
+                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634C.Nested$1.SubNested[[System.Int32, System]]", Bridge.getTypeName(c5), "Bridge634 C c5");
+                Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge634C.Nested$1.SubNested$1[[System.Int32, System],[System.Int32, System]]", Bridge.getTypeName(c6), "Bridge634 C c6");
             }
         }
     });
@@ -8923,10 +8900,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge637.Operator', {
+        $kind: "enum",
         statics: {
             Add: 0
-        },
-        $enum: true
+        }
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge647', {
@@ -9137,6 +9114,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge660Optional$1', function (T) { return {
+        $kind: "struct",
         statics: {
             config: {
                 init: function () {
@@ -9152,7 +9130,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         isDefined: false,
         $constructor1: function (value) {
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge660Optional$1(T).$constructor2.call(this, value, value != null);
-    
         },
         $constructor2: function (value, isDefined) {
             this.$initialize();
@@ -9165,7 +9142,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         getIsDefined: function () {
             return this.isDefined;
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + 390689245;
@@ -9195,7 +9171,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         constructor: function (text) {
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge660TextInputState.$constructor1.call(this, text, Bridge.ClientTest.Batch3.BridgeIssues.Bridge660Optional$1(String).getMissing());
-    
         },
         $constructor1: function (text, validationError) {
             this.$initialize();
@@ -9308,17 +9283,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         invoke: function () {
             return this.func();
-        }
-    });
-    
-    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge674', {
-        statics: {
-            testUseCase: function () {
-                var o = undefined;
-                Bridge.Test.Assert.throws$5(function () {
-                    var s = Bridge.cast(o, String);
-                }, "Unable to cast type 'null' to type String");
-            }
         }
     });
     
@@ -9704,14 +9668,15 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge692.A', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge692.A(); }
         },
-        $struct: true,
         $clone: function (to) { return this; }
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge692.B1', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge692.B1(); }
         },
@@ -9723,7 +9688,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + -1467239093;
@@ -9740,6 +9704,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge692.B2', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge692.B2(); }
         },
@@ -9754,7 +9719,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         getProp1: function () {
             return this.field1;
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + -1063954566;
@@ -9771,6 +9735,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge692.B3', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge692.B3(); }
         },
@@ -9780,11 +9745,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         getProp1: function () {
             return 0;
         },
-        $struct: true,
         $clone: function (to) { return this; }
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge692.C1', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge692.C1(); }
         },
@@ -9799,7 +9764,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         getProp1: function () {
             return this.field1;
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + -1467239094;
@@ -9820,6 +9784,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge692.C2', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge692.C2(); }
         },
@@ -9837,7 +9802,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         setProp1: function (value) {
     
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + -1063954567;
@@ -9858,6 +9822,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge692.C3', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge692.C3(); }
         },
@@ -9869,7 +9834,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + 1664928788;
@@ -9905,7 +9869,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     }; });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.IBridge693D', {
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge694', {
@@ -10313,14 +10277,15 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge762A', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge762A(); }
         },
-        $struct: true,
         $clone: function (to) { return this; }
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge762B', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge762B(); }
         },
@@ -10332,7 +10297,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + -1386632298;
@@ -10506,6 +10470,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge785.DataStruct', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge785.DataStruct(); }
         },
@@ -10522,7 +10487,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 setValue: i
             } );
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + -847529689;
@@ -10582,6 +10546,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge789A', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge789A(); }
         },
@@ -10589,7 +10554,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + 428277234;
@@ -10668,6 +10632,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge795A', {
+        $kind: "struct",
         statics: {
             op_Equality: function (x, y) {
                 return x.equals(y.$clone());
@@ -10684,7 +10649,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         $constructor1: function (value) {
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge795A.$constructor.call(this);
-    
             this.setValue(value);
         },
         constructor: function () {
@@ -10699,7 +10663,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         getHashCode: function () {
             return this.getValue();
         },
-        $struct: true,
         $clone: function (to) {
             var s = to || new Bridge.ClientTest.Batch3.BridgeIssues.Bridge795A();
             s.Value = this.Value;
@@ -10708,6 +10671,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge795B', {
+        $kind: "struct",
         statics: {
             op_Equality: function (x, y) {
                 return x.getValue() === y.getValue();
@@ -10736,7 +10700,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         },
         $constructor1: function (value) {
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge795B.$constructor.call(this);
-    
             this.setValue(value);
         },
         constructor: function () {
@@ -10752,7 +10715,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         getHashCode: function () {
             return this.getValue();
         },
-        $struct: true,
         $clone: function (to) {
             var s = to || new Bridge.ClientTest.Batch3.BridgeIssues.Bridge795B();
             s.Value = this.Value;
@@ -10827,6 +10789,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge815.B', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge815.B(); }
         },
@@ -10838,7 +10801,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + 372029408;
@@ -11148,10 +11110,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge835.Dot', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge835.Dot(); }
         },
-        $struct: true,
         $clone: function (to) { return this; }
     });
     
@@ -11237,36 +11199,40 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge857A', {
+        $kind: "enum",
         statics: {
             All: 4294967295
         },
-        $enum: true
+        $utype: System.UInt64
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge857B', {
+        $kind: "enum",
         statics: {
             All: 4294967295
         },
-        $enum: true
+        $utype: System.Int64
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge857C', {
+        $kind: "enum",
         statics: {
             All1: 0,
             All2: 1,
             All: 4294967295
         },
-        $enum: true
+        $utype: System.UInt32
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge857D', {
+        $kind: "enum",
         statics: {
             All1: 0,
             All2: 1,
             All: 4294967295
         },
-        $enum: true,
-        $flags: true
+        $flags: true,
+        $utype: System.UInt64
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge861', {
@@ -11372,10 +11338,10 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge881A', {
+        $kind: "enum",
         statics: {
             $Name: 0
-        },
-        $enum: true
+        }
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge882', {
@@ -11443,7 +11409,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge883_IInterface', {
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge883_3', {
@@ -11524,20 +11490,20 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge893A', {
+        $kind: "enum",
         statics: {
             TestA1: 0,
             TestA2: 1
-        },
-        $enum: true
+        }
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge893B', {
+        $kind: "enum",
         statics: {
             TestB1: 1,
             TestB2: 2,
             TestB3: 4
         },
-        $enum: true,
         $flags: true
     });
     
@@ -11733,6 +11699,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define("$AnonymousType$15", $_, {
+        $kind: "anonymous",
         constructor: function (value) {
             this.value = value;
         },
@@ -12947,8 +12914,8 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                 Bridge.Test.Assert.false$1(s.equals2("a", "b"), "EqualityComparer<string>.Default.Equals(\"a\", \"b\") works");
             },
             n341: function () {
-                var o11 = { };
-                var o12 = { };
+                var o11 = {  };
+                var o12 = {  };
                 var b1 = new (System.Collections.Generic.EqualityComparer$1(Object))().equals2(o11, o12);
                 Bridge.Test.Assert.false$1(b1, "EqualityComparer<object>.Default.Equals(o11, o12) works");
     
@@ -13319,7 +13286,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
                     [4]
                 ] );
                 var epic = magic.getRange(0, 3);
-                Bridge.Test.Assert.areEqual$1("System.Collections.Generic.List$1$System.Int32", Bridge.getTypeName(Bridge.getType(epic)), "epic.GetType().GetClassName()");
+                Bridge.Test.Assert.areEqual$1("System.Collections.Generic.List$1[[System.Int32, System]]", Bridge.getTypeName(Bridge.getType(epic)), "epic.GetType().GetClassName()");
             },
             n439: function () {
                 var b = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge439();
@@ -13442,6 +13409,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.define("$AnonymousType$16", $_, {
+        $kind: "anonymous",
         constructor: function (i) {
             this.i = i;
         },
@@ -13539,7 +13507,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
             this.$initialize();
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge1024.ClassC.$constructor.call(this, p);
-    
         },
         getFieldA: function () {
             return this.a;
@@ -13629,9 +13596,9 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         }
     });
     
-    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.I9$1', function (T) { return {
+    Bridge.definei('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.I9$1', function (T) { return {
         inherits: [Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.I8],
-        $interface: true
+        $kind: "interface"
     }; });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.C16', {
@@ -13767,7 +13734,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function (b) {
             this.$initialize();
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge1071.A.$constructor.call(this, b, [T]);
-    
         }
     }; });
     
@@ -13776,7 +13742,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function (b) {
             this.$initialize();
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge1071.A.$constructor.call(this, b, [T, T2]);
-    
     
         }
     }; });
@@ -13799,6 +13764,7 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     
     Bridge.define('Demo.Bridge1231.Class1$1.MyStruct', function (T) { return {
         inherits: [Bridge.ClientTest.Batch3.BridgeIssues.Bridge1231.I1$1(T)],
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new (Demo.Bridge1231.Class1$1.MyStruct(T))(); }
         },
@@ -13810,7 +13776,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + 1473705463;
@@ -13859,14 +13824,12 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
             this.$initialize();
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge1411.Thing.$constructor.call(this);
-    
             // 3
             this.setData(3);
         },
         $constructor1: function (x) {
             this.$initialize();
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge1411.Thing.$constructor.call(this, x);
-    
             // 4
             this.setData(4);
         }
@@ -13929,7 +13892,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             this.$initialize();
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge522.BaseClass.$constructor.call(this);
     
-    
         }
     });
     
@@ -13943,7 +13905,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
             this.$initialize();
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge522.BaseClass.$constructor.call(this);
-    
     
         }
     });
@@ -14015,13 +13976,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
             this.$initialize();
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge559A1.$constructor.call(this);
-    
             this.result += " -> Bridge559B1 -- unexpected!";
         },
         $constructor1: function (a) {
             this.$initialize();
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge559A1.$constructor1.call(this, a);
-    
             this.result += " -> Bridge559B1$1";
         }
     });
@@ -14031,13 +13990,11 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
             this.$initialize();
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge559A2.$constructor.call(this);
-    
             this.result += " ClassB -- unexpected!";
         },
         $constructor1: function (a) {
             this.$initialize();
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge559A2.$constructor1.call(this, a);
-    
             this.result += " ClassB$1";
         }
     });
@@ -14054,7 +14011,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function (foo, func) {
             this.$initialize();
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge623A.$constructor.call(this, foo, func);
-    
         },
         getFoo: function () {
             return ((2 * this.foo) | 0);
@@ -14159,7 +14115,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function (foo, func) {
             this.$initialize();
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge623B1.$constructor.call(this, foo, func);
-    
         },
         getFoo: function () {
             return ((3 * this.foo) | 0);
@@ -14174,7 +14129,6 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
         constructor: function () {
             this.$initialize();
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge693A$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge693B.Bridge693C).$constructor.call(this, new Bridge.ClientTest.Batch3.BridgeIssues.Bridge693B.Bridge693C());
-    
         }
     });
     
@@ -14216,4 +14170,4 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
     });
     
     Bridge.init();
-})(this);
+});

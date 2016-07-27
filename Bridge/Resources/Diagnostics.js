@@ -220,7 +220,7 @@
     };
 
     Bridge.define("System.Diagnostics.Contracts.ContractFailureKind", {
-        $enum: true,
+        $kind: "enum",
         $statics: {
             precondition: 0,
             postcondition: 1,

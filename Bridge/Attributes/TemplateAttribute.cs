@@ -7,6 +7,7 @@ namespace Bridge
     /// </summary>
     [External]
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Field | AttributeTargets.Constructor)]
+    [NonScriptable]
     public sealed class TemplateAttribute : Attribute
     {
         internal TemplateAttribute()
@@ -14,6 +15,10 @@ namespace Bridge
         }
 
         public TemplateAttribute(string format)
+        {
+        }
+
+        public TemplateAttribute(string format, string nonExpandedFormat)
         {
         }
     }

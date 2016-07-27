@@ -17,6 +17,7 @@ namespace System
 
     [External]
     [Flags]
+    [NonScriptable]
     public enum AttributeTargets
     {
         Assembly = 0x0001,
@@ -43,6 +44,7 @@ namespace System
 
     [External]
     [AttributeUsage(AttributeTargets.Class)]
+    [NonScriptable]
     public class AttributeUsageAttribute : Attribute
     {
         public extern AttributeUsageAttribute(AttributeTargets validOn);
@@ -75,12 +77,14 @@ namespace System
 
     [AttributeUsage(AttributeTargets.Enum, AllowMultiple = false)]
     [External]
+    [NonScriptable]
     public class FlagsAttribute : Attribute
     {
     }
 
     [AttributeUsage(AttributeTargets.Delegate | AttributeTargets.Interface | AttributeTargets.Event | AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Method | AttributeTargets.Constructor | AttributeTargets.Enum | AttributeTargets.Struct | AttributeTargets.Class, Inherited = false)]
 	[External]
+    [NonScriptable]
     public sealed class ObsoleteAttribute : Attribute
     {
         public extern ObsoleteAttribute();
@@ -106,6 +110,7 @@ namespace System.Runtime.InteropServices
     [ComVisible(true)]
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class)]
     [External]
+    [NonScriptable]
     public sealed class ComVisibleAttribute : Attribute
     {
         public extern ComVisibleAttribute(bool visibility);
@@ -119,6 +124,7 @@ namespace System.Runtime.InteropServices
 
     [AttributeUsageAttribute(AttributeTargets.Parameter)]
     [External]
+    [NonScriptable]
     public sealed class OutAttribute : Attribute
     {
     }
@@ -129,6 +135,7 @@ namespace System.Runtime.InteropServices
     [ComVisible(true)]
     [AttributeUsage(AttributeTargets.Assembly)]
     [External]
+    [NonScriptable]
     public sealed class GuidAttribute : Attribute
     {
         public extern GuidAttribute(string guid);
@@ -145,6 +152,7 @@ namespace System.Reflection
 {
     [AttributeUsage(AttributeTargets.Assembly)]
     [External]
+    [NonScriptable]
     public sealed class AssemblyTitleAttribute : Attribute
     {
         public extern AssemblyTitleAttribute(string title);
@@ -158,6 +166,7 @@ namespace System.Reflection
 
     [AttributeUsage(AttributeTargets.Assembly)]
     [External]
+    [NonScriptable]
     public sealed class AssemblyDescriptionAttribute : Attribute
     {
         public extern AssemblyDescriptionAttribute(string description);
@@ -171,6 +180,7 @@ namespace System.Reflection
 
     [AttributeUsage(AttributeTargets.Assembly)]
     [External]
+    [NonScriptable]
     public sealed class AssemblyConfigurationAttribute : Attribute
     {
         public extern AssemblyConfigurationAttribute(string configuration);
@@ -184,6 +194,7 @@ namespace System.Reflection
 
     [AttributeUsage(AttributeTargets.Assembly)]
     [External]
+    [NonScriptable]
     public sealed class AssemblyCompanyAttribute : Attribute
     {
         public extern AssemblyCompanyAttribute(string company);
@@ -197,6 +208,7 @@ namespace System.Reflection
 
     [AttributeUsage(AttributeTargets.Assembly)]
     [External]
+    [NonScriptable]
     public sealed class AssemblyProductAttribute : Attribute
     {
         public extern AssemblyProductAttribute(string product);
@@ -210,6 +222,7 @@ namespace System.Reflection
 
     [AttributeUsage(AttributeTargets.Assembly)]
     [External]
+    [NonScriptable]
     public sealed class AssemblyCopyrightAttribute : Attribute
     {
         public extern AssemblyCopyrightAttribute(string copyright);
@@ -223,6 +236,7 @@ namespace System.Reflection
 
     [AttributeUsage(AttributeTargets.Assembly)]
     [External]
+    [NonScriptable]
     public sealed class AssemblyTrademarkAttribute : Attribute
     {
         public extern AssemblyTrademarkAttribute(string trademark);
@@ -236,6 +250,7 @@ namespace System.Reflection
 
     [AttributeUsage(AttributeTargets.Assembly)]
     [External]
+    [NonScriptable]
     public sealed class AssemblyCultureAttribute : Attribute
     {
         public extern AssemblyCultureAttribute(string culture);
@@ -249,6 +264,7 @@ namespace System.Reflection
 
     [AttributeUsage(AttributeTargets.Assembly)]
     [External]
+    [NonScriptable]
     public sealed class AssemblyVersionAttribute : Attribute
     {
         public extern AssemblyVersionAttribute(string version);
@@ -262,6 +278,7 @@ namespace System.Reflection
 
     [AttributeUsage(AttributeTargets.Assembly)]
     [External]
+    [NonScriptable]
     public sealed class AssemblyFileVersionAttribute : Attribute
     {
         public extern AssemblyFileVersionAttribute(string version);
@@ -275,6 +292,7 @@ namespace System.Reflection
 
     [AttributeUsage(AttributeTargets.Assembly, Inherited = false)]
     [External]
+    [NonScriptable]
     public sealed class AssemblyInformationalVersionAttribute : Attribute
     {
         public extern AssemblyInformationalVersionAttribute(string informationalVersion);
@@ -286,6 +304,7 @@ namespace System.Reflection
     }
 
     [External]
+    [NonScriptable]
     public sealed class DefaultMemberAttribute : Attribute
     {
         public extern DefaultMemberAttribute(string memberName);
@@ -302,6 +321,7 @@ namespace System.Runtime.Versioning
 {
     [AttributeUsage(AttributeTargets.Assembly)]
     [External]
+    [NonScriptable]
     public sealed class TargetFrameworkAttribute : Attribute
     {
         public extern TargetFrameworkAttribute();
@@ -329,6 +349,7 @@ namespace System.Runtime.CompilerServices
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [External]
+    [NonScriptable]
     public sealed class DummyTypeUsedToAddAttributeToDefaultValueTypeConstructor
     {
         private extern DummyTypeUsedToAddAttributeToDefaultValueTypeConstructor();
@@ -336,6 +357,7 @@ namespace System.Runtime.CompilerServices
 
     [External]
     [AttributeUsage(AttributeTargets.Property)]
+    [NonScriptable]
     public class IndexerNameAttribute : Attribute
     {
         public extern IndexerNameAttribute(string indexerName);
@@ -348,6 +370,7 @@ namespace System.Runtime.CompilerServices
     }
 
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field)]
+    [NonScriptable]
     public sealed class DecimalConstantAttribute : Attribute
     {
         public extern DecimalConstantAttribute(byte scale, byte sign, int hi, int mid, int low);
@@ -361,6 +384,7 @@ namespace System.Runtime.CompilerServices
     }
 
     [External]
+    [NonScriptable]
     public static class RuntimeHelpers
     {
         public static extern void InitializeArray(Array array, RuntimeFieldHandle handle);
@@ -375,6 +399,7 @@ namespace System.Runtime.CompilerServices
 
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class | AttributeTargets.Method)]
     [External]
+    [NonScriptable]
     public sealed class ExtensionAttribute : Attribute
     {
         public extern ExtensionAttribute();
@@ -382,6 +407,7 @@ namespace System.Runtime.CompilerServices
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter | AttributeTargets.ReturnValue)]
     [External]
+    [NonScriptable]
     public sealed class DynamicAttribute : Attribute
     {
         public extern DynamicAttribute();
@@ -395,6 +421,7 @@ namespace System.Runtime.CompilerServices
     }
 
     [External]
+    [NonScriptable]
     public class CallSite
     {
         public extern CallSiteBinder Binder
@@ -406,6 +433,7 @@ namespace System.Runtime.CompilerServices
     }
 
     [External]
+    [NonScriptable]
     public sealed class CallSite<T> : CallSite where T : class
     {
         public extern T Update
@@ -419,6 +447,7 @@ namespace System.Runtime.CompilerServices
     }
 
     [External]
+    [NonScriptable]
     public abstract class CallSiteBinder
     {
         public static extern LabelTarget UpdateLabel
@@ -430,6 +459,7 @@ namespace System.Runtime.CompilerServices
     }
 
     [External]
+    [NonScriptable]
     public struct AsyncVoidMethodBuilder
     {
         public static extern AsyncVoidMethodBuilder Create();
@@ -452,6 +482,7 @@ namespace System.Runtime.CompilerServices
     }
 
     [External]
+    [NonScriptable]
     public struct AsyncTaskMethodBuilder
     {
         public extern Task Task
@@ -479,6 +510,7 @@ namespace System.Runtime.CompilerServices
     }
 
     [External]
+    [NonScriptable]
     public struct AsyncTaskMethodBuilder<TResult>
     {
         public extern Task<TResult> Task
@@ -506,6 +538,7 @@ namespace System.Runtime.CompilerServices
     }
 
     [External]
+    [NonScriptable]
     public interface IAsyncStateMachine
     {
         void MoveNext();
@@ -514,12 +547,14 @@ namespace System.Runtime.CompilerServices
     }
 
     [External]
+    [NonScriptable]
     public interface INotifyCompletion
     {
         void OnCompleted(Action continuation);
     }
 
     [External]
+    [NonScriptable]
     public interface ICriticalNotifyCompletion : INotifyCompletion
     {
         void UnsafeOnCompleted(Action continuation);
@@ -529,6 +564,7 @@ namespace System.Runtime.CompilerServices
 namespace Microsoft.CSharp.RuntimeBinder
 {
     [External]
+    [NonScriptable]
     public static class Binder
     {
         public static extern CallSiteBinder BinaryOperation(CSharpBinderFlags flags, ExpressionType operation, Type context, IEnumerable<CSharpArgumentInfo> argumentInfo);
@@ -555,6 +591,7 @@ namespace Microsoft.CSharp.RuntimeBinder
     }
 
     [External]
+    [NonScriptable]
     public enum CSharpBinderFlags
     {
         None = 0,
@@ -570,12 +607,14 @@ namespace Microsoft.CSharp.RuntimeBinder
     }
 
     [External]
+    [NonScriptable]
     public sealed class CSharpArgumentInfo
     {
         public static extern CSharpArgumentInfo Create(CSharpArgumentInfoFlags flags, string name);
     }
 
     [External]
+    [NonScriptable]
     public enum CSharpArgumentInfoFlags
     {
         None = 0,
@@ -591,6 +630,7 @@ namespace Microsoft.CSharp.RuntimeBinder
 namespace System.Linq.Expressions
 {
     [External]
+    [NonScriptable]
     public sealed class LabelTarget
     {
         internal extern LabelTarget();
@@ -607,6 +647,7 @@ namespace System.Linq.Expressions
     }
 
     [External]
+    [NonScriptable]
     public enum ExpressionType
     {
         Add,
@@ -701,6 +742,7 @@ namespace System.Diagnostics
 {
     [External]
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Constructor | AttributeTargets.Method)]
+    [NonScriptable]
     public sealed class DebuggerStepThroughAttribute : Attribute
     {
     }
@@ -716,6 +758,7 @@ namespace System.ComponentModel
     [EditorBrowsable(EditorBrowsableState.Never)]
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Event | AttributeTargets.Method, AllowMultiple = false)]
     [External]
+    [NonScriptable]
     public sealed class BrowsableAttribute : Attribute
     {
     }
@@ -723,6 +766,7 @@ namespace System.ComponentModel
     [EditorBrowsable(EditorBrowsableState.Never)]
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Enum | AttributeTargets.Constructor | AttributeTargets.Method | AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Event | AttributeTargets.Delegate | AttributeTargets.Interface)]
     [External]
+    [NonScriptable]
     public sealed class EditorBrowsableAttribute : Attribute
     {
         public extern EditorBrowsableAttribute(EditorBrowsableState state);
@@ -735,6 +779,7 @@ namespace System.ComponentModel
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     [External]
+    [NonScriptable]
     public enum EditorBrowsableState
     {
         Always = 0,
@@ -747,6 +792,7 @@ namespace System.Threading
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
     [External]
+    [NonScriptable]
     public static class Interlocked
     {
         public static extern int CompareExchange(ref int location1, int value, int comparand);
@@ -756,6 +802,7 @@ namespace System.Threading
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     [External]
+    [NonScriptable]
     public static class Monitor
     {
         public static extern void Enter(object obj);

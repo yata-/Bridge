@@ -1,4 +1,4 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("test", function ($asm, globals) {
     
     Bridge.define('Bridge.Test.Assert', {
         statics: {
@@ -611,4 +611,4 @@
     });
     
     Bridge.init();
-})(this);
+});

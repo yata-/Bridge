@@ -1,4 +1,4 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("TypeScriptTest", function ($asm, globals) {
     "use strict";
 
     Bridge.define('Misc.B.Class2', {
@@ -8,4 +8,4 @@
     
     
     Bridge.init();
-})(this);
+});
