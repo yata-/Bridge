@@ -31,22 +31,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             const string pattern = @"\b\w+(?=\sis\b)";
             var rgx = new Regex(pattern);
 
-            for (int i = 0; i < inputs.Length; i++)
-            {
-                var m = rgx.Match(inputs[i]);
-                if (expected[i] == null)
-                {
-                    Assert.False(m.Success);
-                }
-                else
-                {
-                    Assert.True(m.Success);
-                    if (m.Success)
-                    {
-                        Assert.AreEqual(expected[i], m.Value);
-                    }
-                }
-            }
+            ValidateMatchResults(rgx, inputs, expected);
         }
 
         [Test]
@@ -86,72 +71,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions
 
             ValidateGroup(ms[3], 0, 37, 8, true, "ultimate", 1);
             ValidateCapture(ms[3], 0, 0, 37, 8, "ultimate");
-        }
-
-        [Test]
-        public void MsdnPositiveLookbehindTest()
-        {
-            const string pattern = @"(?<=\b20)\d{2}\b";
-            const string text = "2010 1999 1861 2140 2009";
-            var rgx = new Regex(pattern);
-            var ms = rgx.Matches(text);
-
-            Assert.AreEqual(2, ms.Count, "Matches count is correct.");
-
-            // Match #0:
-            Assert.NotNull(ms[0], "Match[0] is not null.");
-            ValidateMatch(ms[0], 2, 2, "10", 1, true);
-
-            ValidateGroup(ms[0], 0, 2, 2, true, "10", 1);
-            ValidateCapture(ms[0], 0, 0, 2, 2, "10");
-
-            // Match #1:
-            Assert.NotNull(ms[1], "Match[1] is not null.");
-            ValidateMatch(ms[1], 22, 2, "09", 1, true);
-
-            ValidateGroup(ms[1], 0, 22, 2, true, "09", 1);
-            ValidateCapture(ms[1], 0, 0, 22, 2, "09");
-        }
-
-        [Test]
-        public void MsdnNegativeLookbehindTest()
-        {
-            var inputs = new[]
-            {
-                "Monday February 1, 2010",
-                "Wednesday February 3, 2010",
-                "Saturday February 6, 2010",
-                "Sunday February 7, 2010",
-                "Monday, February 8, 2010"
-            };
-            var expected = new[]
-            {
-                "February 1, 2010",
-                "February 3, 2010",
-                null,
-                null,
-                "February 8, 2010"
-            };
-
-            const string pattern = @"(?<!(Saturday|Sunday) )\b\w+ \d{1,2}, \d{4}\b";
-            var rgx = new Regex(pattern);
-
-            for (int i = 0; i < inputs.Length; i++)
-            {
-                var m = rgx.Match(inputs[i]);
-                if (expected[i] == null)
-                {
-                    Assert.False(m.Success);
-                }
-                else
-                {
-                    Assert.True(m.Success);
-                    if (m.Success)
-                    {
-                        Assert.AreEqual(expected[i], m.Value);
-                    }
-                }
-            }
         }
 
         #endregion
