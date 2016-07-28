@@ -7642,7 +7642,8 @@
     
     Bridge.define('Bridge.ClientTest.CSharp6.TestExceptionFilter', {
         statics: {
-            testBasic: function () {
+            logParameter: null,
+            testFalseFilter: function () {
                 var isCaught = false;
                 try {
                     try {
@@ -7672,32 +7673,41 @@
                         throw $e2;
                     }
                 }
+    
                 Bridge.Test.Assert.true(isCaught);
+            },
+            testTrueFilter: function () {
+                var isCaught = false;
     
+                Bridge.ClientTest.CSharp6.TestExceptionFilter.logParameter = null;
     
-                isCaught = false;
                 try {
                     throw new Bridge.ClientTest.CSharp6.TestExceptionFilter.MyException();
                 }
-                catch ($e3) {
-                    $e3 = System.Exception.create($e3);
+                catch ($e1) {
+                    $e1 = System.Exception.create($e1);
                     var e;
-                    if (Bridge.is($e3, Bridge.ClientTest.CSharp6.TestExceptionFilter.MyException)) {
-                        e = $e3;
+                    if (Bridge.is($e1, Bridge.ClientTest.CSharp6.TestExceptionFilter.MyException)) {
+                        e = $e1;
                         if (Bridge.ClientTest.CSharp6.TestExceptionFilter.log(e, true)) {
                             isCaught = true;
                         }
                         else  {
-                            throw $e3;
+                            throw $e1;
                         }
                     }
                     else {
-                        throw $e3;
+                        throw $e1;
                     }
                 }
                 Bridge.Test.Assert.true(isCaught);
+                Bridge.Test.Assert.notNull$1(Bridge.ClientTest.CSharp6.TestExceptionFilter.logParameter, "Log() parameter was MyException");
             },
             log: function (e, result) {
+                if (e != null) {
+                    Bridge.ClientTest.CSharp6.TestExceptionFilter.logParameter = Bridge.as(e, Bridge.ClientTest.CSharp6.TestExceptionFilter.MyException);
+                }
+    
                 return result;
             }
         }

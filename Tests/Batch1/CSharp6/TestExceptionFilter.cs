@@ -9,8 +9,10 @@ namespace Bridge.ClientTest.CSharp6
     [TestFixture(TestNameFormat = "Exception filter - {0}")]
     public class TestExceptionFilter
     {
+        static MyException LogParameter;
+
         [Test]
-        public static void TestBasic()
+        public static void TestFalseFilter()
         {
             var isCaught = false;
             try
@@ -28,10 +30,17 @@ namespace Bridge.ClientTest.CSharp6
             {
                 isCaught = true;
             }
+
             Assert.True(isCaught);
+        }
 
+        [Test]
+        public static void TestTrueFilter()
+        {
+            var isCaught = false;
 
-            isCaught = false;
+            LogParameter = null;
+
             try
             {
                 throw new MyException();
@@ -42,10 +51,16 @@ namespace Bridge.ClientTest.CSharp6
             }
 
             Assert.True(isCaught);
+            Assert.NotNull(LogParameter, "Log() parameter was MyException");
         }
 
         private static bool Log(Exception e, bool result)
         {
+            if (e != null)
+            {
+                LogParameter = e as MyException;
+            }
+
             return result;
         }
 

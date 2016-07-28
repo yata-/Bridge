@@ -1,7 +1,4 @@
-using Bridge;
 using Bridge.Test;
-using System;
-using Stuff = System.ComponentModel;
 
 namespace Bridge.ClientTest.CSharp6
 {

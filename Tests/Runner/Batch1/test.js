@@ -220,7 +220,8 @@
                 QUnit.test("Auto properties - TestBasic", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestAutoProps.testBasic);
                 QUnit.test("Await in catch and finally - TestBasic", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestAwaitInCatchFinally.testBasic);
                 QUnit.test("ConditionAccess - TestBasic", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestConditionAccess.testBasic);
-                QUnit.test("Exception filter - TestBasic", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestExceptionFilter.testBasic);
+                QUnit.test("Exception filter - TestFalseFilter", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestExceptionFilter.testFalseFilter);
+                QUnit.test("Exception filter - TestTrueFilter", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestExceptionFilter.testTrueFilter);
                 QUnit.test("Expression-bodied function members - TestBasic", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestExpressionBodyFunction.testBasic);
                 QUnit.test("Index initializer - TestBasic", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestIndexInitializer.testBasic);
                 QUnit.test("Interpolated Strings - TestBasic", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestInterpolatedStrings.testBasic);
@@ -4399,9 +4400,13 @@
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestExceptionFilter', {
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestExceptionFilter)],
         statics: {
-            testBasic: function (assert) {
+            testFalseFilter: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestExceptionFilter).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestExceptionFilter);
-                Bridge.ClientTest.CSharp6.TestExceptionFilter.testBasic();
+                Bridge.ClientTest.CSharp6.TestExceptionFilter.testFalseFilter();
+            },
+            testTrueFilter: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestExceptionFilter).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_CSharp6_TestExceptionFilter);
+                Bridge.ClientTest.CSharp6.TestExceptionFilter.testTrueFilter();
             }
         }
     });
