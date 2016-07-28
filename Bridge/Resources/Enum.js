@@ -14,7 +14,7 @@
                 throw new System.ArgumentNullException("enumType");
             }
 
-            if (enumType.prototype && !enumType.prototype.$enum) {
+            if (enumType.prototype && enumType.$kind !== "enum") {
                 throw new System.ArgumentException("", "enumType");
             }
         },
@@ -113,7 +113,7 @@
             var values = enumType;
 
             for (var i in values) {
-                if (values.hasOwnProperty(i) && i.indexOf("$") < 0) {
+                if (values.hasOwnProperty(i) && i.indexOf("$") < 0 && typeof values[i] !== "function") {
                     parts.push(values[i]);
                 }
             }
@@ -155,7 +155,7 @@
             var values = enumType;
 
             for (var i in values) {
-                if (values.hasOwnProperty(i) && i.indexOf("$") < 0) {
+                if (values.hasOwnProperty(i) && i.indexOf("$") < 0 && typeof values[i] !== "function") {
                     parts.push(enumMethods.toName(i));
                 }
             }

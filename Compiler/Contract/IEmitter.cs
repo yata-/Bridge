@@ -434,5 +434,15 @@ namespace Bridge.Contract
             get;
             set;
         }
+
+        bool IsAnonymousReflectable
+        {
+            get; set;
+        }
+
+        string MetaDataOutputName
+        {
+            get; set;
+        }
     }
 }

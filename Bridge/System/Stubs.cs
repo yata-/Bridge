@@ -1,62 +1,53 @@
+using System.ComponentModel;
 using Bridge;
 
 namespace System
 {
+    [EditorBrowsable(EditorBrowsableState.Never)]
     [External]
-    [Name("Function")]
-    public class Type
-    {
-        public extern string FullName
-        {
-            [Template("Bridge.getTypeName({this})")]
-            get;
-        }
-
-        public extern Type BaseType
-        {
-            [Template("Bridge.getBaseType({this})")]
-            get;
-        }
-
-        public static extern Type GetTypeFromHandle(RuntimeTypeHandle typeHandle);
-
-        [Template("Bridge.isAssignableFrom({this}, {type})")]
-        public extern bool IsAssignableFrom(Type type);
-    }
-
-    [External]
-    [Name("Object")]
+    [NonScriptable]
     public class ValueType
     {
     }
 
+    [EditorBrowsable(EditorBrowsableState.Never)]
     [External]
-    [Name("Object")]
+    [NonScriptable]
     public struct IntPtr
     {
     }
 
+    [EditorBrowsable(EditorBrowsableState.Never)]
     [External]
-    [Name("Object")]
+    [NonScriptable]
     public struct UIntPtr
     {
     }
 
+    [EditorBrowsable(EditorBrowsableState.Never)]
     [External]
-    [Name("Object")]
+    [NonScriptable]
     public class ParamArrayAttribute
     {
     }
 
+    [EditorBrowsable(EditorBrowsableState.Never)]
     [External]
-    [Name("Object")]
+    [NonScriptable]
     public struct RuntimeTypeHandle
     {
     }
 
+    [EditorBrowsable(EditorBrowsableState.Never)]
     [External]
-    [Name("Object")]
+    [NonScriptable]
     public struct RuntimeFieldHandle
+    {
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [NonScriptable]
+    public struct RuntimeMethodHandle
     {
     }
 }

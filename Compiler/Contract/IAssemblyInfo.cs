@@ -272,6 +272,11 @@ namespace Bridge.Contract
         {
             get; set;
         }
+
+        IReflectionConfig Reflection
+        {
+            get; set;
+        }
     }
 
     public class LoggingOptions

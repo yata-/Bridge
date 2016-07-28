@@ -1,4 +1,4 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("TestProject", function ($asm, globals) {
     "use strict";
 
     Bridge.define('Test.BridgeIssues.N1461.CreateAnonymous', {
@@ -11,6 +11,7 @@
     var $_ = {};
     
     Bridge.define("$AnonymousType$1", $_, {
+        $kind: "anonymous",
         constructor: function (a) {
             this.a = a;
         },
@@ -39,4 +40,4 @@
     
     
     Bridge.init();
-})(this);
+});

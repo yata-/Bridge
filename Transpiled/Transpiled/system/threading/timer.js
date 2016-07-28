@@ -1,4 +1,4 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("Bridge.Transpiled", function ($asm, globals) {
     "use strict";
 
     Bridge.define('System.Threading.Timer', {
@@ -136,4 +136,4 @@
     });
     
     Bridge.init();
-})(this);
+});

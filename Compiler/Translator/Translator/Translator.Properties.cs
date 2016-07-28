@@ -50,6 +50,12 @@ namespace Bridge.Translator
             protected set;
         }
 
+        public string AssemblyName
+        {
+            get;
+            protected set;
+        }
+
         public string BuildArguments
         {
             get;

@@ -1,4 +1,4 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("Bridge.ClientTest", {"Bridge.ClientTest.Batch1.Reflection.Resource1.bin":"AAECAwQFBgc=","Bridge.ClientTest.Batch1.Reflection.Resource2.bin":"EBESExQV"}, function ($asm, globals) {
     "use strict";
 
     /** @namespace System */
@@ -93,13 +93,13 @@
         },
         containsWorks: function () {
             var arr = ["x", "y"];
-            Bridge.Test.Assert.true(System.Linq.Enumerable.from(arr).contains("x"));
-            Bridge.Test.Assert.false(System.Linq.Enumerable.from(arr).contains("z"));
+            Bridge.Test.Assert.true(System.Array.contains(arr, "x", String));
+            Bridge.Test.Assert.false(System.Array.contains(arr, "z", String));
         },
         containsUsesEqualsMethod: function () {
             var arr = [new Bridge.ClientTest.ArrayTests1.ArrayTestsSet1.C(1), new Bridge.ClientTest.ArrayTests1.ArrayTestsSet1.C(2), new Bridge.ClientTest.ArrayTests1.ArrayTestsSet1.C(3)];
-            Bridge.Test.Assert.true(System.Linq.Enumerable.from(arr).contains(new Bridge.ClientTest.ArrayTests1.ArrayTestsSet1.C(2)));
-            Bridge.Test.Assert.false(System.Linq.Enumerable.from(arr).contains(new Bridge.ClientTest.ArrayTests1.ArrayTestsSet1.C(4)));
+            Bridge.Test.Assert.true(System.Array.contains(arr, new Bridge.ClientTest.ArrayTests1.ArrayTestsSet1.C(2), Bridge.ClientTest.ArrayTests1.ArrayTestsSet1.C));
+            Bridge.Test.Assert.false(System.Array.contains(arr, new Bridge.ClientTest.ArrayTests1.ArrayTestsSet1.C(4), Bridge.ClientTest.ArrayTests1.ArrayTestsSet1.C));
         },
         allWithArrayItemFilterCallbackWorks: function () {
             Bridge.Test.Assert.true(System.Linq.Enumerable.from([1, 2, 3]).all($_.Bridge.ClientTest.ArrayTests1.ArrayTestsSet1.f1));
@@ -111,7 +111,7 @@
         },
         foreachWithArrayItemCallbackWorks: function () {
             var result = "";
-            Bridge.Linq.Enumerable.from(["a", "b", "c"]).forEach(function (s) {
+            ["a", "b", "c"].forEach(function (s) {
                 result += s;
             });
             Bridge.Test.Assert.areEqual("abc", result);
@@ -1621,13 +1621,15 @@
     Bridge.define('Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.B2');
     
     Bridge.define('Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.E1', {
+        $kind: "enum",
         statics: {
             MinusTwo: -2
         },
-        $enum: true
+        $utype: System.SByte
     });
     
     Bridge.define('Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.G', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.G(); }
         },
@@ -1637,7 +1639,6 @@
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + 372029403;
@@ -1662,11 +1663,11 @@
     });
     
     Bridge.define('Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.I1', {
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.I2', {
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.IntegerComparer', {
@@ -1701,6 +1702,7 @@
     });
     
     Bridge.define('Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.S', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.S(); }
         },
@@ -1708,7 +1710,6 @@
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + 372029423;
@@ -1820,7 +1821,6 @@
         },
         $constructor1: function (d) {
             Bridge.ClientTest.BasicCSharp.ClassA.$constructor.call(this);
-    
             if (d == null) {
                 throw new System.Exception("Related should not be null");
             }
@@ -1831,7 +1831,6 @@
             if (p === void 0) { p = []; }
     
             Bridge.ClientTest.BasicCSharp.ClassA.$constructor.call(this);
-    
             if (p == null || p.length < 6) {
                 throw new System.Exception("Should pass six parameters");
             }
@@ -1922,6 +1921,7 @@
     });
     
     Bridge.define('Bridge.ClientTest.BasicCSharp.Point', {
+        $kind: "struct",
         statics: {
             constructor: function () {
                 Bridge.ClientTest.BasicCSharp.Point.staticInt = 500;
@@ -1951,7 +1951,6 @@
                 y: ((this.y + p.y) | 0)
             } );
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + 1554797180;
@@ -1974,6 +1973,7 @@
     });
     
     Bridge.define('Bridge.ClientTest.BasicCSharp.Rectangle', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Bridge.ClientTest.BasicCSharp.Rectangle(); }
         },
@@ -2001,7 +2001,6 @@
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + 2001675717;
@@ -2179,24 +2178,25 @@
     });
     
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestEnum.Abc', {
+        $kind: "enum",
         statics: {
             A: -1,
             B: 0,
             C: 1
-        },
-        $enum: true
+        }
     });
     
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestEnum.Digits', {
+        $kind: "enum",
         statics: {
             Zero: 0,
             One: 1,
             Two: 2
-        },
-        $enum: true
+        }
     });
     
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestEnum.Pets', {
+        $kind: "enum",
         statics: {
             None: 0,
             Dog: 1,
@@ -2205,11 +2205,11 @@
             Rabbit: 8,
             Other: 16
         },
-        $enum: true,
         $flags: true
     });
     
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestEnum.Pets1', {
+        $kind: "enum",
         statics: {
             None: 0,
             Dog: 1,
@@ -2217,8 +2217,7 @@
             Bird: 4,
             Rabbit: 8,
             Other: 16
-        },
-        $enum: true
+        }
     });
     
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestInheritance', {
@@ -2310,11 +2309,11 @@
     });
     
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestInterfaces.ISimple', {
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestInterfaces.ISimpleAsWell', {
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestMethodParametersClass', {
@@ -3188,6 +3187,208 @@
             return "A";
         }
     });
+    
+    Bridge.define('Bridge.ClientTest.Batch1.Reflection.AssemblyTests', {
+        getImportedModuleTestCase: function () {
+            
+    	var x = {
+    		Foo: {
+    			Bar: {
+    				Inner: {
+    					OtherFunction: function() { }
+    				},
+    				Something: function() { }
+    			},
+    			baz: function() {
+    			},
+    			Bar2: 0
+    		}
+    	};
+    	x.Foo.baz.Test = function() {};
+    	return x;
+        },
+        getExecutingAssemblyWorks: function () {
+            Bridge.Test.Assert.areEqual($asm.name, "Bridge.ClientTest");
+        },
+        getAssemblyForTypeWorks: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(System.Int32).name, "System");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).name, "Bridge.ClientTest");
+        },
+        fullNameWorks: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(System.Int32).name, "System");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).name, "Bridge.ClientTest");
+        },
+        toStringWorks: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(System.Int32).toString(), "System");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).toString(), "Bridge.ClientTest");
+        },
+        getTypesWorks: function () {
+            var $t;
+            var types = new (System.Collections.Generic.List$1(String))();
+            $t = Bridge.getEnumerator(Bridge.Reflection.getAssemblyTypes($asm));
+            while ($t.moveNext()) {
+                var t = $t.getCurrent();
+                types.add(Bridge.Reflection.getTypeFullName(t));
+            }
+            Bridge.Test.Assert.true(types.contains(Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Batch1.Reflection.AssemblyTests)));
+            Bridge.Test.Assert.true(types.contains(Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Reflection.ReflectionTests.C1)));
+        },
+        getTypesWithImportedModuleWorks: function () {
+            var asm = this.getImportedModuleTestCase();
+            var types = Bridge.Reflection.getAssemblyTypes(asm);
+            Bridge.Test.Assert.areEqual$1(types.length, 3, "Length");
+            Bridge.Test.Assert.true$1(System.Array.contains(types, Bridge.cast(asm.Foo.Bar.Inner.OtherFunction, Function), Function), "#1");
+            Bridge.Test.Assert.true$1(System.Array.contains(types, Bridge.cast(asm.Foo.Bar.Something, Function), Function), "#2");
+            Bridge.Test.Assert.true$1(System.Array.contains(types, Bridge.cast(asm.Foo.baz.Test, Function), Function), "#3");
+        },
+        getTypeWorks: function () {
+            Bridge.Test.Assert.true(Bridge.referenceEquals(Bridge.Reflection.getType(Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Batch1.Reflection.AssemblyTests), $asm), Bridge.ClientTest.Batch1.Reflection.AssemblyTests));
+            Bridge.Test.Assert.true(Bridge.Reflection.getType(Bridge.Reflection.getTypeFullName(System.Collections.Generic.Dictionary$2), $asm) == null);
+            Bridge.Test.Assert.true(Bridge.referenceEquals(Bridge.Reflection.getType(Bridge.Reflection.getTypeFullName(System.Collections.Generic.Dictionary$2), Bridge.Reflection.getTypeAssembly(System.Int32)), System.Collections.Generic.Dictionary$2));
+        },
+        getTypeWorksWithGenerics: function () {
+            Bridge.Test.Assert.true(Bridge.referenceEquals(Bridge.Reflection.getType(Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Batch1.Reflection.AssemblyTests.G$2), $asm), Bridge.ClientTest.Batch1.Reflection.AssemblyTests.G$2));
+            Bridge.Test.Assert.true(Bridge.referenceEquals(Bridge.Reflection.getType(Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Batch1.Reflection.AssemblyTests.G$2(System.Int32,String)), $asm), Bridge.ClientTest.Batch1.Reflection.AssemblyTests.G$2(System.Int32,String)));
+        },
+        getTypeWithImportedModuleWorks: function () {
+            var asm = this.getImportedModuleTestCase();
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(Bridge.Reflection.getType("Foo.Bar.Inner.OtherFunction", asm), Bridge.cast(asm.Foo.Bar.Inner.OtherFunction, Function)), "#1");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(Bridge.Reflection.getType("Foo.Bar.Something", asm), Bridge.cast(asm.Foo.Bar.Something, Function)), "#2");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(Bridge.Reflection.getType("Foo.baz.Test", asm), Bridge.cast(asm.Foo.baz.Test, Function)), "#3");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getType("Foo.Bar", asm) == null, "#4");
+        },
+        assemblyOfBuiltInTypes: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Date).name, "System");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(System.Double).name, "System");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Boolean).name, "System");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(String).name, "System");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Function).name, "System");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Array).name, "System");
+        },
+        createInstanceWorks: function () {
+            Bridge.Test.Assert.true$1(Bridge.is(Bridge.Reflection.createAssemblyInstance(Bridge.Reflection.getTypeAssembly(Bridge.ClientTest.Batch1.Reflection.AssemblyTests.C), Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Batch1.Reflection.AssemblyTests.C)), Bridge.ClientTest.Batch1.Reflection.AssemblyTests.C), "#1");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.createAssemblyInstance(Bridge.Reflection.getTypeAssembly(System.Int32), Bridge.Reflection.getTypeFullName(System.Int32)), 0, "#2");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.createAssemblyInstance(Bridge.Reflection.getTypeAssembly(Bridge.ClientTest.Batch1.Reflection.AssemblyTests.C), "NonExistentType") == null, "#3");
+        },
+        getCustomAttributesWorks: function () {
+            var $t, $t1;
+            var asm = $asm;
+            $t = Bridge.getEnumerator([asm.getCustomAttributes(), asm.getCustomAttributes(true), asm.getCustomAttributes(false)]);
+            while ($t.moveNext()) {
+                var a = $t.getCurrent();
+                Bridge.Test.Assert.false(a.some($_.Bridge.ClientTest.Batch1.Reflection.AssemblyTests.f1));
+                var a2 = a.filter($_.Bridge.ClientTest.Batch1.Reflection.AssemblyTests.f2);
+                Bridge.Test.Assert.areEqual(a2.length, 1);
+                Bridge.Test.Assert.true(Bridge.cast(a2[0], Bridge.ClientTest.Batch1.Reflection.AssemblyTests.A2Attribute).getX() === 64);
+                Bridge.Test.Assert.true(Bridge.cast(a2[0], Bridge.ClientTest.Batch1.Reflection.AssemblyTests.A2Attribute).getP() === 23);
+    
+                var a3 = a.filter($_.Bridge.ClientTest.Batch1.Reflection.AssemblyTests.f3);
+                Bridge.Test.Assert.areEqual(a3.length, 1);
+                Bridge.Test.Assert.true(Bridge.cast(a3[0], Bridge.ClientTest.Batch1.Reflection.AssemblyTests.A3Attribute).getX() === 15);
+                Bridge.Test.Assert.true(Bridge.cast(a3[0], Bridge.ClientTest.Batch1.Reflection.AssemblyTests.A3Attribute).getP() === 45);
+            }
+    
+            $t1 = Bridge.getEnumerator([asm.getCustomAttributes(Bridge.ClientTest.Batch1.Reflection.AssemblyTests.A2Attribute), asm.getCustomAttributes(Bridge.ClientTest.Batch1.Reflection.AssemblyTests.A2Attribute, true), asm.getCustomAttributes(Bridge.ClientTest.Batch1.Reflection.AssemblyTests.A2Attribute, false)]);
+            while ($t1.moveNext()) {
+                var a1 = $t1.getCurrent();
+                Bridge.Test.Assert.areEqual(a1.length, 1);
+                Bridge.Test.Assert.true(Bridge.cast(a1[0], Bridge.ClientTest.Batch1.Reflection.AssemblyTests.A2Attribute).getX() === 64);
+                Bridge.Test.Assert.true(Bridge.cast(a1[0], Bridge.ClientTest.Batch1.Reflection.AssemblyTests.A2Attribute).getP() === 23);
+            }
+        },
+        loadCanReturnReferenceToLoadedAssembly: function () {
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(Bridge.Reflection.load("Bridge.ClientTest"), $asm), "ClientTest");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(Bridge.Reflection.load("System"), Bridge.Reflection.getTypeAssembly(System.Int32)), "System");
+        },
+        getManifestResourceNamesWorks: function () {
+            var names = $asm.getManifestResourceNames();
+            names.sort($_.Bridge.ClientTest.Batch1.Reflection.AssemblyTests.f4);
+            Bridge.Test.Assert.areEqual(names, ["Bridge.ClientTest.Batch1.Reflection.Resource1.bin", "Bridge.ClientTest.Batch1.Reflection.Resource2.bin"]);
+        },
+        getManifestResourceDataAsBase64WithoutTypeWorks: function () {
+            Bridge.Test.Assert.areEqual$1($asm.getManifestResourceDataAsBase64("Bridge.ClientTest.Batch1.Reflection.Resource1.bin"), "AAECAwQFBgc=", "#1");
+            Bridge.Test.Assert.areEqual$1($asm.getManifestResourceDataAsBase64("Bridge.ClientTest.Batch1.Reflection.Resource2.bin"), "EBESExQV", "#2");
+            Bridge.Test.Assert.null$1($asm.getManifestResourceDataAsBase64("NonExistent"), "#3");
+        },
+        getManifestResourceDataAsBase64WithTypeWorks: function () {
+            Bridge.Test.Assert.areEqual$1($asm.getManifestResourceDataAsBase64(Bridge.ClientTest.Batch1.Reflection.AssemblyTests, "Resource1.bin"), "AAECAwQFBgc=", "#1");
+            Bridge.Test.Assert.areEqual$1($asm.getManifestResourceDataAsBase64(Bridge.ClientTest.Batch1.Reflection.AssemblyTests, "Resource2.bin"), "EBESExQV", "#2");
+            Bridge.Test.Assert.null$1($asm.getManifestResourceDataAsBase64(Bridge.ClientTest.Batch1.Reflection.AssemblyTests, "NonExistent"), "#3");
+        },
+        getManifestResourceDataWithoutTypeWorks: function () {
+            Bridge.Test.Assert.areEqual$1($asm.getManifestResourceData("Bridge.ClientTest.Batch1.Reflection.Resource1.bin"), [0, 1, 2, 3, 4, 5, 6, 7], "#1");
+            Bridge.Test.Assert.areEqual$1($asm.getManifestResourceData("Bridge.ClientTest.Batch1.Reflection.Resource2.bin"), [16, 17, 18, 19, 20, 21], "#2");
+            Bridge.Test.Assert.null$1($asm.getManifestResourceData("NonExistent"), "#3");
+        },
+        getManifestResourceDataWithTypeWorks: function () {
+            Bridge.Test.Assert.areEqual$1($asm.getManifestResourceData(Bridge.ClientTest.Batch1.Reflection.AssemblyTests, "Resource1.bin"), [0, 1, 2, 3, 4, 5, 6, 7], "#1");
+            Bridge.Test.Assert.areEqual$1($asm.getManifestResourceData(Bridge.ClientTest.Batch1.Reflection.AssemblyTests, "Resource2.bin"), [16, 17, 18, 19, 20, 21], "#2");
+            Bridge.Test.Assert.null$1($asm.getManifestResourceData(Bridge.ClientTest.Batch1.Reflection.AssemblyTests, "NonExistent"), "#3");
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.Batch1.Reflection.AssemblyTests", $_);
+    
+    Bridge.apply($_.Bridge.ClientTest.Batch1.Reflection.AssemblyTests, {
+        f1: function (x) {
+            return Bridge.referenceEquals(Bridge.Reflection.getTypeName(Bridge.getType(x)), "A1Attribute");
+        },
+        f2: function (x) {
+            return Bridge.is(x, Bridge.ClientTest.Batch1.Reflection.AssemblyTests.A2Attribute);
+        },
+        f3: function (x) {
+            return Bridge.is(x, Bridge.ClientTest.Batch1.Reflection.AssemblyTests.A3Attribute);
+        },
+        f4: function (a, b) {
+            return System.String.compare(a, b);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch1.Reflection.AssemblyTests.A2Attribute', {
+        inherits: [System.Attribute],
+        config: {
+            properties: {
+                X: 0,
+                P: 0
+            }
+        },
+        constructor: function () {
+            this.$initialize();
+            System.Attribute.$constructor.call(this);
+    
+        },
+        $constructor1: function (x) {
+            this.$initialize();
+            System.Attribute.$constructor.call(this);
+            this.setX(x);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch1.Reflection.AssemblyTests.A3Attribute', {
+        inherits: [System.Attribute],
+        config: {
+            properties: {
+                X: 0,
+                P: 0
+            }
+        },
+        constructor: function () {
+            this.$initialize();
+            System.Attribute.$constructor.call(this);
+    
+        },
+        $constructor1: function (x) {
+            this.$initialize();
+            System.Attribute.$constructor.call(this);
+            this.setX(x);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch1.Reflection.AssemblyTests.C');
+    
+    Bridge.define('Bridge.ClientTest.Batch1.Reflection.AssemblyTests.G$2', function (T1, T2) { return {
+    
+    }; });
     
     Bridge.define('Bridge.ClientTest.CheckedUncheckedTests', {
         statics: {
@@ -4269,14 +4470,14 @@
     
     Bridge.define('Bridge.ClientTest.Collections.Generic.ComparerTests', {
         typePropertiesAreCorrect: function () {
-            Bridge.Test.Assert.areEqual$1("System.Collections.Generic.Comparer$1$Object", Bridge.getTypeName(System.Collections.Generic.Comparer$1(Object)), "GetClassName()");
+            Bridge.Test.Assert.areEqual$1("System.Collections.Generic.Comparer$1[[Object]]", Bridge.getTypeName(System.Collections.Generic.Comparer$1(Object)), "GetClassName()");
     
             var comparer = new (System.Collections.Generic.Comparer$1(Object))(System.Collections.Generic.Comparer$1.$default.fn);
-            Bridge.Test.Assert.true$1(true, "is Comparer<object> should be true");
+            Bridge.Test.Assert.true$1(Bridge.hasValue(comparer), "is Comparer<object> should be true");
             Bridge.Test.Assert.true$1(Bridge.is(comparer, System.Collections.Generic.IComparer$1(Object)), "is IComparer<object> should be true");
     
             var comparer1 = new (System.Collections.Generic.Comparer$1(System.Int32))(System.Collections.Generic.Comparer$1.$default.fn);
-            Bridge.Test.Assert.true$1(true, "is Comparer<int> should be true");
+            Bridge.Test.Assert.true$1(Bridge.hasValue(comparer1), "is Comparer<int> should be true");
             Bridge.Test.Assert.true$1(Bridge.is(comparer1, System.Collections.Generic.IComparer$1(System.Int32)), "is IComparer<int> should be true");
         },
         defaultComparerCanOrderNumbers: function () {
@@ -4329,7 +4530,7 @@
     
     Bridge.define('Bridge.ClientTest.Collections.Generic.EqualityComparerTests', {
         typePropertiesAreCorrect: function () {
-            Bridge.Test.Assert.areEqual$1("System.Collections.Generic.EqualityComparer$1$Object", Bridge.getTypeName(System.Collections.Generic.EqualityComparer$1(Object)), "FullName should be correct");
+            Bridge.Test.Assert.areEqual$1("System.Collections.Generic.EqualityComparer$1[[Object]]", Bridge.getTypeName(System.Collections.Generic.EqualityComparer$1(Object)), "FullName should be correct");
             var dict = new (System.Collections.Generic.EqualityComparer$1(Object))();
             Bridge.Test.Assert.true$1(Bridge.is(dict, System.Collections.Generic.EqualityComparer$1(Object)), "is EqualityComparer<object> should be true");
             Bridge.Test.Assert.true$1(Bridge.is(dict, System.Collections.Generic.IEqualityComparer$1(Object)), "is IEqualityComparer<object> should be true");
@@ -4342,7 +4543,7 @@
             Bridge.Test.Assert.areEqual(0, new (System.Collections.Generic.EqualityComparer$1(Object))().getHashCode2(undefined));
         },
         defaultComparerCanDetermineEquality: function () {
-            var o1 = { }, o2 = { };
+            var o1 = {  }, o2 = {  };
     
             Bridge.Test.Assert.true$1(new (System.Collections.Generic.EqualityComparer$1(Object))().equals2(null, null), "null, null");
             Bridge.Test.Assert.false$1(new (System.Collections.Generic.EqualityComparer$1(Object))().equals2(null, o1), "null, o1");
@@ -4389,7 +4590,7 @@
     
     Bridge.define('Bridge.ClientTest.Collections.Generic.GenericDictionaryTests', {
         typePropertiesAreCorrect: function () {
-            Bridge.Test.Assert.areEqual$1("System.Collections.Generic.Dictionary$2$System.Int32$String", Bridge.getTypeName(System.Collections.Generic.Dictionary$2(System.Int32,String)), "FullName should be correct");
+            Bridge.Test.Assert.areEqual$1("System.Collections.Generic.Dictionary$2[[System.Int32, System],[String]]", Bridge.getTypeName(System.Collections.Generic.Dictionary$2(System.Int32,String)), "FullName should be correct");
             var dict = new (System.Collections.Generic.Dictionary$2(System.Int32,String))();
             Bridge.Test.Assert.true$1(Bridge.is(dict, System.Collections.Generic.Dictionary$2(System.Int32,String)), "is Dictionary<int,string> should be true");
             Bridge.Test.Assert.true$1(Bridge.is(dict, System.Collections.Generic.IDictionary$2(System.Int32,String)), "is IDictionary<int,string> should be true");
@@ -4399,13 +4600,13 @@
             var d = new (System.Collections.Generic.Dictionary$2(System.Int32,String))();
             Bridge.Test.Assert.areEqual$1(0, d.getCount(), "Count is 0");
             Bridge.Test.Assert.areEqual$1("Bridge.CustomEnumerator", Bridge.getTypeName(d.getEnumerator()), "Enumerator should be Bridge.CustomEnumerator");
-            Bridge.Test.Assert.areEqual$1("System.Collections.Generic.EqualityComparer$1$Object", Bridge.getTypeName(d.getComparer()), "Comparer should be Bridge.EqualityComparer$1$Object");
+            Bridge.Test.Assert.areEqual$1("System.Collections.Generic.EqualityComparer$1[[Object]]", Bridge.getTypeName(d.getComparer()), "Comparer should be Bridge.EqualityComparer$1$Object");
         },
         capacityConstructorWorks: function () {
             var d = new (System.Collections.Generic.Dictionary$2(System.Int32, String))();
             Bridge.Test.Assert.areEqual(0, d.getCount());
             Bridge.Test.Assert.areEqual$1("Bridge.CustomEnumerator", Bridge.getTypeName(d.getEnumerator()), "Enumerator should be Bridge.CustomEnumerator");
-            Bridge.Test.Assert.areEqual$1("System.Collections.Generic.EqualityComparer$1$Object", Bridge.getTypeName(d.getComparer()), "Comparer should be Bridge.EqualityComparer$1$Object");
+            Bridge.Test.Assert.areEqual$1("System.Collections.Generic.EqualityComparer$1[[Object]]", Bridge.getTypeName(d.getComparer()), "Comparer should be Bridge.EqualityComparer$1$Object");
         },
         capacityAndEqualityComparerWorks: function () {
             var c = new Bridge.ClientTest.Collections.Generic.GenericDictionaryTests.TestEqualityComparer();
@@ -4772,7 +4973,7 @@
     
     Bridge.define('Bridge.ClientTest.Collections.Generic.IDictionaryTests', {
         typePropertiesAreCorrect: function () {
-            Bridge.Test.Assert.areEqual$1("System.Collections.Generic.IDictionary$2$Object$Object", Bridge.getTypeName(System.Collections.Generic.IDictionary$2(Object,Object)), "FullName should be correct");
+            Bridge.Test.Assert.areEqual$1("System.Collections.Generic.IDictionary$2[[Object],[Object]]", Bridge.getTypeName(System.Collections.Generic.IDictionary$2(Object,Object)), "FullName should be correct");
         },
         classImplementsInterfaces: function () {
             Bridge.Test.Assert.true(Bridge.is(new Bridge.ClientTest.Collections.Generic.IDictionaryTests.MyDictionary.$constructor(), System.Collections.Generic.IDictionary$2(System.Int32,String)));
@@ -4799,7 +5000,7 @@
             ] ));
             var keys = d.getKeys();
             Bridge.Test.Assert.true$1(Bridge.is(keys, System.Collections.Generic.IEnumerable$1(System.Int32)), "IEnumerable<int>");
-            Bridge.Test.Assert.true$1(true, "ICollection<int>");
+            Bridge.Test.Assert.true$1(Bridge.hasValue(keys), "ICollection<int>");
     
             var i = 0;
             $t = Bridge.getEnumerator(keys);
@@ -4989,7 +5190,6 @@
         },
         constructor: function () {
             Bridge.ClientTest.Collections.Generic.IDictionaryTests.MyDictionary.$constructor1.call(this, new (System.Collections.Generic.Dictionary$2(System.Int32,String))());
-    
         },
         $constructor1: function (initialValues) {
             this.$initialize();
@@ -5106,7 +5306,7 @@
     
     Bridge.define('Bridge.ClientTest.Collections.Generic.IListTests', {
         typePropertiesAreCorrect: function () {
-            Bridge.Test.Assert.areEqual$1("System.Collections.Generic.IList$1$Object", Bridge.getTypeName(System.Collections.Generic.IList$1(Object)), "FullName should be correct");
+            Bridge.Test.Assert.areEqual$1("System.Collections.Generic.IList$1[[Object]]", Bridge.getTypeName(System.Collections.Generic.IList$1(Object)), "FullName should be correct");
     
             var iList = new (System.Collections.Generic.List$1(Object))();
     
@@ -5504,7 +5704,7 @@
     
     Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
         typePropertiesAreCorrect: function () {
-            Bridge.Test.Assert.areEqual$1("System.Collections.Generic.List$1$System.Int32", Bridge.getTypeName(System.Collections.Generic.List$1(System.Int32)), "GetClassName()");
+            Bridge.Test.Assert.areEqual$1("System.Collections.Generic.List$1[[System.Int32, System]]", Bridge.getTypeName(System.Collections.Generic.List$1(System.Int32)), "GetClassName()");
             var list = new (System.Collections.Generic.List$1(System.Int32))();
             Bridge.Test.Assert.true$1(Bridge.is(list, System.Collections.Generic.List$1(System.Int32)), "is int[] should be true");
             Bridge.Test.Assert.true$1(Bridge.is(list, System.Collections.Generic.IList$1(System.Int32)), "is IList<int> should be true");
@@ -6152,6 +6352,7 @@
             MODULE_DIAGNOSTICS: "Diagnostics",
             MODULE_CHECKED_UNCKECKED: "Checked/Unckecked",
             MODULE_TYPE_SYSTEM: "Type system",
+            MODULE_REFLECTION: "Reflection",
             IGNORE_DATE: null
         }
     });
@@ -7971,7 +8172,7 @@
         typePropertiesAreCorrect: function () {
             var culture = System.Globalization.CultureInfo.invariantCulture;
             Bridge.Test.Assert.areEqual("System.Globalization.CultureInfo", Bridge.getTypeName(System.Globalization.CultureInfo));
-            Bridge.Test.Assert.true(true);
+            Bridge.Test.Assert.true(Bridge.hasValue(culture));
         },
         getFormatWorks: function () {
             var culture = System.Globalization.CultureInfo.invariantCulture;
@@ -9002,7 +9203,6 @@
         constructor: function (message) {
             this.$initialize();
             System.Exception.$constructor.call(this, message);
-    
         }
     });
     
@@ -9164,7 +9364,6 @@
         constructor: function (message, innerException) {
             this.$initialize();
             System.Exception.$constructor.call(this);
-    
             this._message = message;
             this._innerException = innerException;
         },
@@ -9752,7 +9951,7 @@
         typePropertiesAreCorrect: function () {
             var format = System.Globalization.DateTimeFormatInfo.invariantInfo;
             Bridge.Test.Assert.areEqual("System.Globalization.DateTimeFormatInfo", Bridge.getTypeName(System.Globalization.DateTimeFormatInfo));
-            Bridge.Test.Assert.true(true);
+            Bridge.Test.Assert.true(Bridge.hasValue(format));
         },
         getFormatWorks: function () {
             var format = System.Globalization.DateTimeFormatInfo.invariantInfo;
@@ -9789,7 +9988,7 @@
         typePropertiesAreCorrect: function () {
             var format = System.Globalization.NumberFormatInfo.invariantInfo;
             Bridge.Test.Assert.areEqual("System.Globalization.NumberFormatInfo", Bridge.getTypeName(System.Globalization.NumberFormatInfo));
-            Bridge.Test.Assert.true(true);
+            Bridge.Test.Assert.true(Bridge.hasValue(format));
         },
         getFormatWorks: function () {
             var format = System.Globalization.NumberFormatInfo.invariantInfo;
@@ -10113,7 +10312,7 @@
     
     Bridge.define('Bridge.ClientTest.GuidTests', {
         typePropertiesAreCorrect: function () {
-            Bridge.Test.Assert.areEqual(Bridge.getTypeName(System.Guid), "System.Guid");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(System.Guid), "System.Guid");
     
             var o = System.Guid.empty;
             Bridge.Test.Assert.true(Bridge.is(o, System.Guid));
@@ -10580,6 +10779,7 @@
     });
     
     Bridge.define("$AnonymousType$1", $_, {
+        $kind: "anonymous",
         constructor: function (group, personCount) {
             this.group = group;
             this.personCount = personCount;
@@ -10612,6 +10812,7 @@
     });
     
     Bridge.define("$AnonymousType$2", $_, {
+        $kind: "anonymous",
         constructor: function (group, sum) {
             this.group = group;
             this.sum = sum;
@@ -10644,6 +10845,7 @@
     });
     
     Bridge.define("$AnonymousType$3", $_, {
+        $kind: "anonymous",
         constructor: function (group, min) {
             this.group = group;
             this.min = min;
@@ -10676,6 +10878,7 @@
     });
     
     Bridge.define("$AnonymousType$4", $_, {
+        $kind: "anonymous",
         constructor: function (g, minCount) {
             this.g = g;
             this.minCount = minCount;
@@ -10708,6 +10911,7 @@
     });
     
     Bridge.define("$AnonymousType$5", $_, {
+        $kind: "anonymous",
         constructor: function (group, name) {
             this.group = group;
             this.name = name;
@@ -10740,6 +10944,7 @@
     });
     
     Bridge.define("$AnonymousType$6", $_, {
+        $kind: "anonymous",
         constructor: function (group, max) {
             this.group = group;
             this.max = max;
@@ -10772,6 +10977,7 @@
     });
     
     Bridge.define("$AnonymousType$7", $_, {
+        $kind: "anonymous",
         constructor: function (g, maxCount) {
             this.g = g;
             this.maxCount = maxCount;
@@ -10887,14 +11093,14 @@
                 var wordList1 = System.Linq.Enumerable.from((System.Linq.Enumerable.from(words).orderByDescending($_.Bridge.ClientTest.Linq.TestLinqConversionOperators.f2))).toList(String);
                 var wordListExpected1 = new (System.Collections.Generic.List$1(String))(["3.three", "2.two", "1.one"]);
     
-                Bridge.Test.Assert.areEqual$1("System.Collections.Generic.List$1$String", Bridge.ClientTest.Utilities.TypeHelper.getTypeName(wordList1), "ToList() conversion with explicit String type for string - check type name");
+                Bridge.Test.Assert.areEqual$1("System.Collections.Generic.List$1[[String]]", Bridge.ClientTest.Utilities.TypeHelper.getTypeName(wordList1), "ToList() conversion with explicit String type for string - check type name");
                 Bridge.Test.Assert.areDeepEqual$1(wordListExpected1, wordList1, "ToList() conversion for strings with explicit String type - check content");
     
                 // TEST
                 var wordList2 = (System.Linq.Enumerable.from(words).orderByDescending($_.Bridge.ClientTest.Linq.TestLinqConversionOperators.f2)).toList(String);
                 var wordListExpected2 = new (System.Collections.Generic.List$1(String))(["3.three", "2.two", "1.one"]);
     
-                Bridge.Test.Assert.areEqual$1("System.Collections.Generic.List$1$String", Bridge.ClientTest.Utilities.TypeHelper.getTypeName(wordList2), "ToList() conversion for string - check type name");
+                Bridge.Test.Assert.areEqual$1("System.Collections.Generic.List$1[[String]]", Bridge.ClientTest.Utilities.TypeHelper.getTypeName(wordList2), "ToList() conversion for string - check type name");
                 Bridge.Test.Assert.areDeepEqual$1(wordListExpected2, wordList2, "ToList() conversion for strings - check content");
     
                 // TEST
@@ -10918,7 +11124,7 @@
                     setName: "D",
                     setLimit: 200
                 } ));
-                Bridge.Test.Assert.areEqual$1("System.Collections.Generic.Dictionary$2$String$Bridge.ClientTest.Utilities.Group", Bridge.ClientTest.Utilities.TypeHelper.getTypeName(groupDictionary1), "ToDictionary(keySelector, elementSelector) conversion for <string, Group> - check type name");
+                Bridge.Test.Assert.areEqual$1("System.Collections.Generic.Dictionary$2[[String],[Bridge.ClientTest.Utilities.Group, Bridge.ClientTest]]", Bridge.ClientTest.Utilities.TypeHelper.getTypeName(groupDictionary1), "ToDictionary(keySelector, elementSelector) conversion for <string, Group> - check type name");
                 Bridge.Test.Assert.areDeepEqual$1(expectedGroupDictionary1, groupDictionary1, "ToDictionary(keySelector, elementSelector) conversion for <string, Group> - check content");
     
                 // TEST
@@ -10944,13 +11150,13 @@
     
                 var groupDictionary2 = (System.Linq.Enumerable.from(groups).select($_.Bridge.ClientTest.Linq.TestLinqConversionOperators.f3)).toDictionary($_.Bridge.ClientTest.Linq.TestLinqConversionOperators.f4, $_.Bridge.ClientTest.Linq.TestLinqConversionOperators.f3, String, Bridge.ClientTest.Utilities.Group, comparer);
     
-                Bridge.Test.Assert.areEqual$1("System.Collections.Generic.Dictionary$2$String$Bridge.ClientTest.Utilities.Group", Bridge.ClientTest.Utilities.TypeHelper.getTypeName(groupDictionary2), "ToDictionary(keySelector, elementSelector, IEqualityComparer) conversion for <string, Group> - check type name");
+                Bridge.Test.Assert.areEqual$1("System.Collections.Generic.Dictionary$2[[String],[Bridge.ClientTest.Utilities.Group, Bridge.ClientTest]]", Bridge.ClientTest.Utilities.TypeHelper.getTypeName(groupDictionary2), "ToDictionary(keySelector, elementSelector, IEqualityComparer) conversion for <string, Group> - check type name");
                 Bridge.Test.Assert.areDeepEqual$1(expectedGroupDictionary2, groupDictionary2, "ToDictionary(keySelector, elementSelector, IEqualityComparer) conversion for <string, Group> - check content");
     
                 // TEST
                 var groupDictionary3 = (System.Linq.Enumerable.from(groups).select($_.Bridge.ClientTest.Linq.TestLinqConversionOperators.f3)).toDictionary($_.Bridge.ClientTest.Linq.TestLinqConversionOperators.f4, null, String, Bridge.ClientTest.Utilities.Group);
     
-                Bridge.Test.Assert.areEqual$1("System.Collections.Generic.Dictionary$2$String$Bridge.ClientTest.Utilities.Group", Bridge.ClientTest.Utilities.TypeHelper.getTypeName(groupDictionary3), "ToDictionary(keySelector) conversion for <string, Group> - check type name");
+                Bridge.Test.Assert.areEqual$1("System.Collections.Generic.Dictionary$2[[String],[Bridge.ClientTest.Utilities.Group, Bridge.ClientTest]]", Bridge.ClientTest.Utilities.TypeHelper.getTypeName(groupDictionary3), "ToDictionary(keySelector) conversion for <string, Group> - check type name");
                 Bridge.Test.Assert.areDeepEqual$1(expectedGroupDictionary1, groupDictionary3, "ToDictionary(keySelector) conversion for <string, Group> - check content");
     
                 // TEST
@@ -11143,6 +11349,7 @@
     });
     
     Bridge.define("$AnonymousType$8", $_, {
+        $kind: "anonymous",
         constructor: function (number, isOdd) {
             this.number = number;
             this.isOdd = isOdd;
@@ -11248,6 +11455,7 @@
     });
     
     Bridge.define("$AnonymousType$9", $_, {
+        $kind: "anonymous",
         constructor: function (remainder, numbers) {
             this.remainder = remainder;
             this.numbers = numbers;
@@ -11280,6 +11488,7 @@
     });
     
     Bridge.define("$AnonymousType$10", $_, {
+        $kind: "anonymous",
         constructor: function (firstLetter, words) {
             this.firstLetter = firstLetter;
             this.words = words;
@@ -11312,6 +11521,7 @@
     });
     
     Bridge.define("$AnonymousType$11", $_, {
+        $kind: "anonymous",
         constructor: function (group, persons) {
             this.group = group;
             this.persons = persons;
@@ -11344,6 +11554,7 @@
     });
     
     Bridge.define("$AnonymousType$12", $_, {
+        $kind: "anonymous",
         constructor: function (key, words) {
             this.key = key;
             this.words = words;
@@ -11461,6 +11672,7 @@
     });
     
     Bridge.define("$AnonymousType$13", $_, {
+        $kind: "anonymous",
         constructor: function (name, limit) {
             this.name = name;
             this.limit = limit;
@@ -11493,6 +11705,7 @@
     });
     
     Bridge.define("$AnonymousType$14", $_, {
+        $kind: "anonymous",
         constructor: function (g, pg) {
             this.g = g;
             this.pg = pg;
@@ -11525,6 +11738,7 @@
     });
     
     Bridge.define("$AnonymousType$15", $_, {
+        $kind: "anonymous",
         constructor: function (groupName, personName) {
             this.groupName = groupName;
             this.personName = personName;
@@ -11557,6 +11771,7 @@
     });
     
     Bridge.define("$AnonymousType$16", $_, {
+        $kind: "anonymous",
         constructor: function (name, digit) {
             this.name = name;
             this.digit = digit;
@@ -11589,6 +11804,7 @@
     });
     
     Bridge.define("$AnonymousType$17", $_, {
+        $kind: "anonymous",
         constructor: function (x3, ep) {
             this.x3 = x3;
             this.ep = ep;
@@ -11916,6 +12132,7 @@
     });
     
     Bridge.define("$AnonymousType$18", $_, {
+        $kind: "anonymous",
         constructor: function (name) {
             this.name = name;
         },
@@ -11942,6 +12159,7 @@
     });
     
     Bridge.define("$AnonymousType$19", $_, {
+        $kind: "anonymous",
         constructor: function (number, isIndex) {
             this.number = number;
             this.isIndex = isIndex;
@@ -11974,6 +12192,7 @@
     });
     
     Bridge.define("$AnonymousType$20", $_, {
+        $kind: "anonymous",
         constructor: function (a, b) {
             this.a = a;
             this.b = b;
@@ -12006,6 +12225,7 @@
     });
     
     Bridge.define("$AnonymousType$21", $_, {
+        $kind: "anonymous",
         constructor: function (a, b) {
             this.a = a;
             this.b = b;
@@ -12038,6 +12258,7 @@
     });
     
     Bridge.define("$AnonymousType$22", $_, {
+        $kind: "anonymous",
         constructor: function (sum) {
             this.sum = sum;
         },
@@ -12064,6 +12285,7 @@
     });
     
     Bridge.define("$AnonymousType$23", $_, {
+        $kind: "anonymous",
         constructor: function (a, b, i) {
             this.a = a;
             this.b = b;
@@ -12165,6 +12387,7 @@
     });
     
     Bridge.define("$AnonymousType$24", $_, {
+        $kind: "anonymous",
         constructor: function (group, names) {
             this.group = group;
             this.names = names;
@@ -13567,6 +13790,4112 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests', {
+        canGetCustomTypeAttributesForTypeWithNoAttributes: function () {
+            var arr = Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C1, null, false);
+            Bridge.Test.Assert.areEqual$1(arr.length, 0, "Should have no attributes");
+        },
+        canGetCustomTypeAttributesForClassWithAttributes: function () {
+            var arr = Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C2, null, false);
+            Bridge.Test.Assert.areEqual$1(arr.length, 2, "Should have two attributes");
+            Bridge.Test.Assert.true$1(Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute) || Bridge.is(arr[1], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute), "A1 should exist");
+            Bridge.Test.Assert.true$1(Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute) || Bridge.is(arr[1], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute), "A2 should exist");
+            var a1 = Bridge.cast((Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute) ? arr[0] : arr[1]), Bridge.ClientTest.Reflection.AttributeTests.A1Attribute);
+            Bridge.Test.Assert.areEqual(a1.getV(), 1);
+            var a2 = Bridge.cast((Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute) ? arr[0] : arr[1]), Bridge.ClientTest.Reflection.AttributeTests.A2Attribute);
+            Bridge.Test.Assert.areEqual(a2.getV(), 2);
+        },
+        nonScriptableAttributesAreNotIncluded: function () {
+            var arr = Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C19, null, false);
+            Bridge.Test.Assert.areEqual$1(arr.length, 1, "Should have one attribute");
+            Bridge.Test.Assert.true$1(Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute), "A1 should exist");
+        },
+        canGetCustomTypeAttributesForInterfaceWithAttributes: function () {
+            var arr = Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.I1, null, false);
+            Bridge.Test.Assert.areEqual$1(arr.length, 2, "Should have two attributes");
+            Bridge.Test.Assert.true$1(Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute) || Bridge.is(arr[1], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute), "A1 should exist");
+            Bridge.Test.Assert.true$1(Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute) || Bridge.is(arr[1], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute), "A2 should exist");
+            var a1 = Bridge.cast((Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute) ? arr[0] : arr[1]), Bridge.ClientTest.Reflection.AttributeTests.A1Attribute);
+            Bridge.Test.Assert.areEqual(a1.getV(), 1);
+            var a2 = Bridge.cast((Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute) ? arr[0] : arr[1]), Bridge.ClientTest.Reflection.AttributeTests.A2Attribute);
+            Bridge.Test.Assert.areEqual(a2.getV(), 2);
+        },
+        canGetCustomTypeAttributesForEnumWithAttributes: function () {
+            var arr = Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.E1, null, false);
+            Bridge.Test.Assert.areEqual$1(arr.length, 2, "Should have two attributes");
+            Bridge.Test.Assert.true$1(Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute) || Bridge.is(arr[1], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute), "A1 should exist");
+            Bridge.Test.Assert.true$1(Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute) || Bridge.is(arr[1], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute), "A2 should exist");
+            var a1 = Bridge.cast((Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute) ? arr[0] : arr[1]), Bridge.ClientTest.Reflection.AttributeTests.A1Attribute);
+            Bridge.Test.Assert.areEqual(a1.getV(), 1);
+            var a2 = Bridge.cast((Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute) ? arr[0] : arr[1]), Bridge.ClientTest.Reflection.AttributeTests.A2Attribute);
+            Bridge.Test.Assert.areEqual(a2.getV(), 2);
+        },
+        inheritedFlagToGetCustomAttributesWorks: function () {
+            var arr = Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C3, null, false);
+            Bridge.Test.Assert.areEqual$1(arr.length, 1, "Should have one non-inherited attribute");
+            Bridge.Test.Assert.true(Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A3Attribute));
+    
+            arr = Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C3, null, true);
+            Bridge.Test.Assert.areEqual$1(arr.length, 3, "Should have three inherited attributes");
+            Bridge.Test.Assert.true$1(Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute) || Bridge.is(arr[1], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute) || Bridge.is(arr[2], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute), "A1 should exist");
+            Bridge.Test.Assert.true$1(Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute) || Bridge.is(arr[1], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute) || Bridge.is(arr[2], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute), "A2 should exist");
+            Bridge.Test.Assert.true$1(Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A3Attribute) || Bridge.is(arr[1], Bridge.ClientTest.Reflection.AttributeTests.A3Attribute) || Bridge.is(arr[2], Bridge.ClientTest.Reflection.AttributeTests.A3Attribute), "A3 should exist");
+        },
+        deepInheritanceWorks: function () {
+            var arr = Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C4, null, true);
+            Bridge.Test.Assert.areEqual$1(arr.length, 4, "Should have 4 attributes");
+            Bridge.Test.Assert.true$1(Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute) || Bridge.is(arr[1], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute) || Bridge.is(arr[2], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute) || Bridge.is(arr[3], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute), "A1 should exist");
+            Bridge.Test.Assert.true$1(Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute) || Bridge.is(arr[1], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute) || Bridge.is(arr[2], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute) || Bridge.is(arr[3], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute), "A2 should exist");
+            Bridge.Test.Assert.true$1(Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A3Attribute) || Bridge.is(arr[1], Bridge.ClientTest.Reflection.AttributeTests.A3Attribute) || Bridge.is(arr[2], Bridge.ClientTest.Reflection.AttributeTests.A3Attribute) || Bridge.is(arr[3], Bridge.ClientTest.Reflection.AttributeTests.A3Attribute), "A3 should exist");
+            Bridge.Test.Assert.true$1(Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A4Attribute) || Bridge.is(arr[1], Bridge.ClientTest.Reflection.AttributeTests.A4Attribute) || Bridge.is(arr[2], Bridge.ClientTest.Reflection.AttributeTests.A4Attribute) || Bridge.is(arr[3], Bridge.ClientTest.Reflection.AttributeTests.A4Attribute), "A4 should exist");
+        },
+        overridingSingleUseAttributeReplacesTheAttributeOnTheBaseClass: function () {
+            var arr = Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C5, null, true);
+            Bridge.Test.Assert.areEqual$1(arr.length, 2, "Should have 2 attributes");
+            Bridge.Test.Assert.true$1(Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute) || Bridge.is(arr[1], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute), "A1 should exist");
+            Bridge.Test.Assert.true$1(Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute) || Bridge.is(arr[1], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute), "A2 should exist");
+            var a1 = Bridge.cast((Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute) ? arr[0] : arr[1]), Bridge.ClientTest.Reflection.AttributeTests.A1Attribute);
+            Bridge.Test.Assert.areEqual(a1.getV(), 5);
+        },
+        applyingNewInstanceOfMultipleUseAttributeAddsTheAttribute: function () {
+            var arr = Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C6, null, true);
+            Bridge.Test.Assert.areEqual$1(arr.length, 3, "Should have 2 attributes");
+            Bridge.Test.Assert.areEqual$1(1, arr.filter($_.Bridge.ClientTest.Reflection.AttributeTests.f1).length, "Should have one A1");
+            Bridge.Test.Assert.areEqual$1(2, arr.filter($_.Bridge.ClientTest.Reflection.AttributeTests.f2).length, "Should have two A2");
+            var a2 = Bridge.cast(arr.filter($_.Bridge.ClientTest.Reflection.AttributeTests.f2), Array);
+            Bridge.Test.Assert.true(a2[0].getV() === 2 || a2[1].getV() === 2);
+            Bridge.Test.Assert.true(a2[0].getV() === 6 || a2[1].getV() === 6);
+        },
+        nonInheritedAttributeIsNotInherited: function () {
+            var arr = Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C8, null, true);
+            Bridge.Test.Assert.areEqual$1(arr.length, 0, "Should not have any attributes");
+        },
+        getCustomAttributesTypeFilterWorks: function () {
+            var arr = Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C9, Bridge.ClientTest.Reflection.AttributeTests.A2Attribute, true);
+            Bridge.Test.Assert.areEqual$1(arr.length, 2, "Should have 2 A2 attributes");
+            Bridge.Test.Assert.true$1(Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute) && Bridge.is(arr[1], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute), "Should only return A2 attributes");
+            Bridge.Test.Assert.true$1(Bridge.cast(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute).getV() === 8 || Bridge.cast(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute).getV() === 9, "Attribute members should be correct");
+            Bridge.Test.Assert.true$1(Bridge.cast(arr[1], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute).getV() === 8 || Bridge.cast(arr[1], Bridge.ClientTest.Reflection.AttributeTests.A2Attribute).getV() === 9, "Attribute members should be correct");
+        },
+        getCustomAttributesWorksForOpenGenericClass: function () {
+            var arr = Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C10$2, null, true);
+            Bridge.Test.Assert.areEqual$1(arr.length, 1, "Should have one attribute");
+            Bridge.Test.Assert.true$1(Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute), "Should be A1");
+        },
+        getCustomAttributesWorksForConstructedGenericClass: function () {
+            var arr = Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C10$2(System.Int32,String), null, true);
+            Bridge.Test.Assert.areEqual$1(arr.length, 1, "Should have one attribute");
+            Bridge.Test.Assert.true$1(Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute), "Should be A1");
+        },
+        getCustomAttributesWorksForOpenGenericInterface: function () {
+            var arr = Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.I2$2, null, true);
+            Bridge.Test.Assert.areEqual$1(arr.length, 1, "Should have one attribute");
+            Bridge.Test.Assert.true$1(Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute), "Should be A1");
+        },
+        getCustomAttributesWorksForConstructedGenericInterface: function () {
+            var arr = Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.I2$2(System.Int32,String), null, true);
+            Bridge.Test.Assert.areEqual$1(arr.length, 1, "Should have one attribute");
+            Bridge.Test.Assert.true$1(Bridge.is(arr[0], Bridge.ClientTest.Reflection.AttributeTests.A1Attribute), "Should be A1");
+        },
+        allSupportedScalarTypesCanBeUsedAsAttributeArguments: function () {
+            var a6 = Bridge.cast(Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C11, null, false)[0], Bridge.ClientTest.Reflection.AttributeTests.A6Attribute);
+            Bridge.Test.Assert.areEqual$1(a6.getB(), true, "B");
+            Bridge.Test.Assert.areEqual$1(a6.getY(), 43, "Y");
+            Bridge.Test.Assert.areEqual$1(a6.getC(), 68, "C");
+            Bridge.Test.Assert.areEqual$1(a6.getD(), 45.5, "D");
+            Bridge.Test.Assert.areEqual$1(a6.getF(), 46.5, "F");
+            Bridge.Test.Assert.areEqual$1(a6.getI(), 47, "I");
+            Bridge.Test.Assert.true$1(a6.getL().equals(System.Int64(48)), "L");
+            Bridge.Test.Assert.areEqual$1(a6.getH(), 49, "H");
+            Bridge.Test.Assert.areEqual$1(a6.getE(), Bridge.ClientTest.Reflection.AttributeTests.E1.V1, "E");
+            Bridge.Test.Assert.areEqual$1(a6.getS(), "Test_string", "S");
+            Bridge.Test.Assert.areEqual$1(a6.getO(), null, "O");
+            Bridge.Test.Assert.areEqual$1(a6.getT(), String, "T");
+        },
+        arraysCanBeUsedAsAttributeArguments: function () {
+            var a7 = Bridge.cast(Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C12, null, false)[0], Bridge.ClientTest.Reflection.AttributeTests.A7Attribute);
+            Bridge.Test.Assert.areEqual$1(a7.getI(), [42, 17, 31], "I");
+            Bridge.Test.Assert.areEqual$1(a7.getS(), ["X", "Y2", "Z3"], "S");
+        },
+        namedValuesEnumCanBeUsedAsAttributeArgument: function () {
+            var a8 = Bridge.cast(Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C13, null, false)[0], Bridge.ClientTest.Reflection.AttributeTests.A8Attribute);
+            Bridge.Test.Assert.areEqual$1(a8.getE(), "v2", "E");
+        },
+        propertiesWithSetMethodsImplementedAsNormalMethodsCanBeSetInAttributeDeclaration: function () {
+            var a = Bridge.cast(Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C14, null, false)[0], Bridge.ClientTest.Reflection.AttributeTests.A9Attribute);
+            Bridge.Test.Assert.areEqual(a.getP1(), 42);
+        },
+        propertiesWithSetMethodsImplementedAsInlineCodeCanBeSetInAttributeDeclaration: function () {
+            var a = Bridge.cast(Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C15, null, false)[0], Bridge.ClientTest.Reflection.AttributeTests.A9Attribute);
+            Bridge.Test.Assert.areEqual(a.$$XX$$, 18);
+        },
+        propertiesImplementedAsFieldsCanBeAssignedInAttributeDeclaration: function () {
+            var a = Bridge.cast(Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C16, null, false)[0], Bridge.ClientTest.Reflection.AttributeTests.A9Attribute);
+            Bridge.Test.Assert.areEqual(a.p3, 43);
+        },
+        fieldsCanBeAssignedInAttributeDeclaration: function () {
+            var a = Bridge.cast(Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C18, null, false)[0], Bridge.ClientTest.Reflection.AttributeTests.A9Attribute);
+            Bridge.Test.Assert.areEqual(a.getF1(), 13);
+        },
+        creatingAttributeWithNamedConstructorWorks: function () {
+            var a = Bridge.cast(Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C20, null, false)[0], Bridge.ClientTest.Reflection.AttributeTests.A11Attribute);
+            Bridge.Test.Assert.areEqual(a.i, 42);
+        },
+        creatingAttributeWithInlineCodeConstructorWorks: function () {
+            var a = Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C21, null, false)[0];
+            Bridge.Test.Assert.areEqual(a.i, 18);
+        },
+        conditionalAttributesWhoseSymbolsAreNotDefinedAreRemoved: function () {
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C22, Bridge.ClientTest.Reflection.AttributeTests.A12Attribute, false).length, 1, "A12");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C22, Bridge.ClientTest.Reflection.AttributeTests.A13Attribute, false).length, 1, "A13");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getAttributes(Bridge.ClientTest.Reflection.AttributeTests.C22, Bridge.ClientTest.Reflection.AttributeTests.A14Attribute, false).length, 0, "A14");
+            Bridge.Test.Assert.areEqual$1((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.AttributeTests.C22, 8, 284, "M").attr || []).filter(function(a) { return Bridge.is(a, Bridge.ClientTest.Reflection.AttributeTests.A12Attribute); }).length, 1, "A12");
+            Bridge.Test.Assert.areEqual$1((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.AttributeTests.C22, 8, 284, "M").attr || []).filter(function(a) { return Bridge.is(a, Bridge.ClientTest.Reflection.AttributeTests.A13Attribute); }).length, 1, "A13");
+            Bridge.Test.Assert.areEqual$1((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.AttributeTests.C22, 8, 284, "M").attr || []).filter(function(a) { return Bridge.is(a, Bridge.ClientTest.Reflection.AttributeTests.A14Attribute); }).length, 0, "A14");
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.Reflection.AttributeTests", $_);
+    
+    Bridge.apply($_.Bridge.ClientTest.Reflection.AttributeTests, {
+        f1: function (a) {
+            return Bridge.is(a, Bridge.ClientTest.Reflection.AttributeTests.A1Attribute);
+        },
+        f2: function (a) {
+            return Bridge.is(a, Bridge.ClientTest.Reflection.AttributeTests.A2Attribute);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.A11Attribute', {
+        inherits: [System.Attribute],
+        i: 0,
+        constructor: function () {
+            this.$initialize();
+            System.Attribute.$constructor.call(this);
+        },
+        $constructor1: function (i) {
+            this.$initialize();
+            System.Attribute.$constructor.call(this);
+            this.i = i;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.A12Attribute', {
+        inherits: [System.Attribute]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.A13Attribute', {
+        inherits: [System.Attribute]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.A14Attribute', {
+        inherits: [System.Attribute]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.A1Attribute', {
+        inherits: [System.Attribute],
+        config: {
+            properties: {
+                V: 0
+            }
+        },
+        constructor: function (v) {
+            this.$initialize();
+            System.Attribute.$constructor.call(this);
+            this.setV(v);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.A2Attribute', {
+        inherits: [System.Attribute],
+        config: {
+            properties: {
+                V: 0
+            }
+        },
+        constructor: function (v) {
+            this.$initialize();
+            System.Attribute.$constructor.call(this);
+            this.setV(v);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.A3Attribute', {
+        inherits: [System.Attribute],
+        config: {
+            properties: {
+                V: 0
+            }
+        },
+        constructor: function (v) {
+            this.$initialize();
+            System.Attribute.$constructor.call(this);
+            this.setV(v);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.A4Attribute', {
+        inherits: [System.Attribute],
+        config: {
+            properties: {
+                V: 0
+            }
+        },
+        constructor: function (v) {
+            this.$initialize();
+            System.Attribute.$constructor.call(this);
+            this.setV(v);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.A5Attribute', {
+        inherits: [System.Attribute]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.A6Attribute', {
+        inherits: [System.Attribute],
+        config: {
+            properties: {
+                B: false,
+                Y: 0,
+                C: null,
+                D: 0,
+                F: 0,
+                I: 0,
+                L: System.Int64(0),
+                H: 0,
+                E: 0,
+                S: null,
+                O: null,
+                T: null
+            },
+            init: function () {
+                this.C = new System.Char();
+            }
+        },
+        constructor: function (b, y, c, d, f, i, l, h, e, s, o, t) {
+            this.$initialize();
+            System.Attribute.$constructor.call(this);
+            this.setB(b);
+            this.setY(y);
+            this.setC(c);
+            this.setD(d);
+            this.setF(f);
+            this.setI(i);
+            this.setL(l);
+            this.setH(h);
+            this.setE(e);
+            this.setS(s);
+            this.setO(o);
+            this.setT(t);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.A7Attribute', {
+        inherits: [System.Attribute],
+        config: {
+            properties: {
+                I: null,
+                S: null
+            }
+        },
+        constructor: function (i, s) {
+            this.$initialize();
+            System.Attribute.$constructor.call(this);
+            this.setI(i);
+            this.setS(s);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.A8Attribute', {
+        inherits: [System.Attribute],
+        config: {
+            properties: {
+                E: 0
+            }
+        },
+        constructor: function (e) {
+            this.$initialize();
+            System.Attribute.$constructor.call(this);
+            this.setE(e);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.A9Attribute', {
+        inherits: [System.Attribute],
+        p3: 0,
+        config: {
+            properties: {
+                P1: 0,
+                P4: 0,
+                F1: 0,
+                F2: 0
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.C1');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.C10$2', function (T1, T2) { return {
+    
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.C11');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.C12');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.C13');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.C14');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.C15');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.C16');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.C18');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.C19');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.C2');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.C20');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.C21');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.C22', {
+        m: function () {
+    
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.C7');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.C9');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.E1', {
+        $kind: "enum",
+        statics: {
+            V1: 1,
+            V2: 2
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.E2', {
+        $kind: "enum",
+        statics: {
+            v1: "v1",
+            v2: "v2"
+        },
+        $utype: System.String
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.I1', {
+        $kind: "interface"
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.I2$2', function (T1, T2) { return {
+    
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.GetMembersTests', {
+        assertEquivalent: function (actual, expected) {
+            var actualValues = actual.filter($_.Bridge.ClientTest.Reflection.GetMembersTests.f1).map($_.Bridge.ClientTest.Reflection.GetMembersTests.f2).filter($_.Bridge.ClientTest.Reflection.GetMembersTests.f3);
+            actualValues.sort();
+            expected.sort();
+            Bridge.Test.Assert.areEqual(actualValues, expected);
+        },
+        assertEqual: function (actual, expected) {
+            var actualValue = actual != null ? Bridge.cast((actual.attr || []).filter(function(a) { return Bridge.is(a, Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute); })[0], Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute).getI() : null;
+            Bridge.Test.Assert.areEqual(actualValue, expected);
+        },
+        assertAmbiguous: function (action) {
+            Bridge.Test.Assert.throws(action);
+        },
+        getMembersWithoutBindingFlagsWorks: function () {
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 31, 28), [111, 112, 113, 114, 131, 132, 151, 152, 153, 154, 155, 156, 157, 158, 159, 171, 172, 173, 174, 175, 176, 211, 212, 213, 214, 231, 232, 251, 252, 253, 254, 255, 256, 257, 258, 259, 271, 272, 273, 274, 275, 276, 301, 302, 303, 311, 312, 313, 314, 321, 322, 323, 324, 331, 332, 341, 342, 351, 352, 353, 354, 355, 356, 357, 358, 359, 361, 362, 363, 364, 365, 366, 371, 372, 373, 374, 375, 376, 381, 382, 383, 384, 385, 386]);
+        },
+        getMembersWorksForInterface: function () {
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.I2, 31, 28), [511, 512, 513, 514, 551, 552, 553, 554, 555, 556, 557, 558, 559, 571, 574]);
+        },
+        getMembersWithBindingFlagsWorks: function () {
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 31, 0), System.Array.init(0, 0));
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 31, 28), [111, 112, 113, 114, 131, 132, 151, 152, 153, 154, 155, 156, 157, 158, 159, 171, 172, 173, 174, 175, 176, 211, 212, 213, 214, 231, 232, 251, 252, 253, 254, 255, 256, 257, 258, 259, 271, 272, 273, 274, 275, 276, 301, 302, 303, 311, 312, 313, 314, 321, 322, 323, 324, 331, 332, 341, 342, 351, 352, 353, 354, 355, 356, 357, 358, 359, 361, 362, 363, 364, 365, 366, 371, 372, 373, 374, 375, 376, 381, 382, 383, 384, 385, 386]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 31, 92), [111, 112, 113, 114, 121, 122, 123, 124, 131, 132, 141, 142, 151, 152, 153, 154, 155, 156, 157, 158, 159, 161, 162, 163, 164, 165, 166, 171, 172, 173, 174, 175, 176, 181, 182, 183, 184, 185, 186, 211, 212, 213, 214, 221, 222, 223, 224, 231, 232, 241, 242, 251, 252, 253, 254, 255, 256, 257, 258, 259, 261, 262, 263, 264, 265, 266, 271, 272, 273, 274, 275, 276, 281, 282, 283, 284, 285, 286, 301, 302, 303, 311, 312, 313, 314, 321, 322, 323, 324, 331, 332, 341, 342, 351, 352, 353, 354, 355, 356, 357, 358, 359, 361, 362, 363, 364, 365, 366, 371, 372, 373, 374, 375, 376, 381, 382, 383, 384, 385, 386]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 31, 20), [111, 112, 113, 114, 131, 132, 151, 152, 153, 154, 155, 156, 157, 158, 159, 171, 172, 173, 174, 175, 176, 211, 212, 213, 214, 231, 232, 251, 252, 253, 254, 255, 256, 257, 258, 259, 271, 272, 273, 274, 275, 276, 301, 302, 303, 311, 312, 313, 314, 331, 332, 351, 352, 353, 354, 355, 356, 357, 358, 359, 371, 372, 373, 374, 375, 376]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 31, 22), [301, 302, 303, 311, 312, 313, 314, 331, 332, 351, 352, 353, 354, 355, 356, 357, 358, 359, 371, 372, 373, 374, 375, 376]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 31, 24), [321, 322, 323, 324, 341, 342, 361, 362, 363, 364, 365, 366, 381, 382, 383, 384, 385, 386]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 31, 88), [121, 122, 123, 124, 141, 142, 161, 162, 163, 164, 165, 166, 181, 182, 183, 184, 185, 186, 221, 222, 223, 224, 241, 242, 261, 262, 263, 264, 265, 266, 281, 282, 283, 284, 285, 286, 321, 322, 323, 324, 341, 342, 361, 362, 363, 364, 365, 366, 381, 382, 383, 384, 385, 386]);
+        },
+        getMemberWithNameWorks: function () {
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 31, 28, "FB"), [132]);
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 31, 28, "MB"), [112]);
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 31, 28, "MD"), [312]);
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 31, 28, "M"), [111, 211, 311]);
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 31, 28, "X"), System.Array.init(0, 0));
+        },
+        getMemberWithNameAndBindingFlagsWorks: function () {
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 31, 20, "FB"), [132]);
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 31, 22, "FB"), System.Array.init(0, 0));
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 31, 24, "FB"), System.Array.init(0, 0));
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 31, 20, "FDS"), System.Array.init(0, 0));
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 31, 24, "FDS"), [342]);
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 31, 24, "FBS"), System.Array.init(0, 0));
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 31, 88, "FBS"), [142]);
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 31, 20, "F"), [131, 231, 331]);
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 31, 24, "FS"), [341]);
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 31, 88, "FS"), [141, 241, 341]);
+        },
+        getConstructorsWorks: function () {
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 1, 28), [301, 302, 303]);
+        },
+        getConstructorWorks: function () {
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 1, 284, null, System.Array.init(0, null)), 301);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 1, 284, null, [System.Int32, String]), 303);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 1, 284, null, [Date]), null);
+        },
+        getMethodsWithoutBindingFlagsWorks: function () {
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 8, 28), [111, 112, 113, 114, 152, 153, 155, 156, 158, 159, 172, 173, 175, 176, 211, 212, 213, 214, 252, 253, 255, 256, 258, 259, 272, 273, 275, 276, 311, 312, 313, 314, 321, 322, 323, 324, 352, 353, 355, 356, 358, 359, 362, 363, 365, 366, 372, 373, 375, 376, 382, 383, 385, 386]);
+        },
+        getMethodsWithBindingFlagsWorks: function () {
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 8, 0), System.Array.init(0, 0));
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 8, 28), [111, 112, 113, 114, 152, 153, 155, 156, 158, 159, 172, 173, 175, 176, 211, 212, 213, 214, 252, 253, 255, 256, 258, 259, 272, 273, 275, 276, 311, 312, 313, 314, 321, 322, 323, 324, 352, 353, 355, 356, 358, 359, 362, 363, 365, 366, 372, 373, 375, 376, 382, 383, 385, 386]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 8, 92), [111, 112, 113, 114, 121, 122, 123, 124, 152, 153, 155, 156, 158, 159, 162, 163, 165, 166, 172, 173, 175, 176, 182, 183, 185, 186, 211, 212, 213, 214, 221, 222, 223, 224, 252, 253, 255, 256, 258, 259, 262, 263, 265, 266, 272, 273, 275, 276, 282, 283, 285, 286, 311, 312, 313, 314, 321, 322, 323, 324, 352, 353, 355, 356, 358, 359, 362, 363, 365, 366, 372, 373, 375, 376, 382, 383, 385, 386]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 8, 20), [111, 112, 113, 114, 152, 153, 155, 156, 158, 159, 172, 173, 175, 176, 211, 212, 213, 214, 252, 253, 255, 256, 258, 259, 272, 273, 275, 276, 311, 312, 313, 314, 352, 353, 355, 356, 358, 359, 372, 373, 375, 376]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 8, 22), [311, 312, 313, 314, 352, 353, 355, 356, 358, 359, 372, 373, 375, 376]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 8, 24), [321, 322, 323, 324, 362, 363, 365, 366, 382, 383, 385, 386]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 8, 88), [121, 122, 123, 124, 162, 163, 165, 166, 182, 183, 185, 186, 221, 222, 223, 224, 262, 263, 265, 266, 282, 283, 285, 286, 321, 322, 323, 324, 362, 363, 365, 366, 382, 383, 385, 386]);
+        },
+        getMethodWithNameWorks: function () {
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 284, "MB"), 112);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 284, "MD"), 312);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 284, "M"), 311);
+            this.assertAmbiguous($_.Bridge.ClientTest.Reflection.GetMembersTests.f4);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 284, "F"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 284, "X"), null);
+    
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 8, 284, "get_PD1"), 352);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 8, 284, "set_PD1"), 353);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 8, 284, "add_ED1"), 372);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 8, 284, "remove_ED1"), 373);
+        },
+        getMethodWithNameAndBindingFlagsWorks: function () {
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 20 | 256, "MB"), 112);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 22 | 256, "MB"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 24 | 256, "MB"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 20 | 256, "MDS"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 24 | 256, "MDS"), 322);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 24 | 256, "MBS"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 88 | 256, "MBS"), 122);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 20 | 256, "M"), 311);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 24 | 256, "MS"), 321);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 88 | 256, "MS"), 321);
+            this.assertAmbiguous($_.Bridge.ClientTest.Reflection.GetMembersTests.f5);
+            this.assertAmbiguous($_.Bridge.ClientTest.Reflection.GetMembersTests.f6);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 20 | 256, "F"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 20 | 256, "X"), null);
+    
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 8, 20 | 256, "get_PD1"), 352);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 8, 20 | 256, "set_PD1"), 353);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 8, 20 | 256, "add_ED1"), 372);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 8, 20 | 256, "remove_ED1"), 373);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 8, 24 | 256, "get_PDS1"), 362);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 8, 24 | 256, "set_PDS1"), 363);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 8, 24 | 256, "add_EDS1"), 382);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 8, 24 | 256, "remove_EDS1"), 383);
+        },
+        getMethodWithNameAndArgumentTypesWorks: function () {
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 284, "MD", System.Array.init(0, null)), 312);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 284, "M2D", [System.Int32]), 315);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 284, "M2D", [String]), 316);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 284, "M2D", [Date]), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 284, "M3", [System.Int32]), 117);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 284, "M3", [String]), 217);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 284, "M3", [Date]), 317);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 284, "M3", [Date, System.Int32]), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 284, "M3S", [String]), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 284, "M3S", [Date]), 327);
+        },
+        getMethodWithNameAndArgumentTypesAndBindingFlagsWorks: function () {
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 20 | 256, "MD", System.Array.init(0, null)), 312);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 24 | 256, "MD", System.Array.init(0, null)), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 20 | 256, "M2D", [System.Int32]), 315);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 20 | 256, "M3", [System.Int32]), 117);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 20 | 256, "M3", [String]), 217);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 20 | 256, "M3", [Date]), 317);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 22 | 256, "M3", [String]), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 22 | 256, "M3", [Date]), 317);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 24 | 256, "M3", [Date]), null);
+    
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 24 | 256, "M3S", [String]), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 24 | 256, "M3S", [Date]), 327);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 24 | 256, "M3S", [System.Int32]), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 88 | 256, "M3S", [String]), 227);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 88 | 256, "M3S", [Date]), 327);
+        },
+        getPropertiesWithoutBindingFlagsWorks: function () {
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 16, 28), [151, 154, 157, 251, 254, 257, 351, 354, 357, 361, 364]);
+        },
+        getPropertiesWithBindingFlagsWorks: function () {
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 16, 0), System.Array.init(0, 0));
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 16, 28), [151, 154, 157, 251, 254, 257, 351, 354, 357, 361, 364]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 16, 92), [151, 154, 157, 161, 164, 251, 254, 257, 261, 264, 351, 354, 357, 361, 364]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 16, 20), [151, 154, 157, 251, 254, 257, 351, 354, 357]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 16, 22), [351, 354, 357]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 16, 24), [361, 364]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 16, 88), [161, 164, 261, 264, 361, 364]);
+        },
+        getPropertyWithNameWorks: function () {
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 284, "PB"), 152);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 284, "PD"), 352);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 284, "P"), 351);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 284, "F"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 284, "X"), null);
+            this.assertAmbiguous($_.Bridge.ClientTest.Reflection.GetMembersTests.f7);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.C3, 16, 284, "Item"), 1);
+        },
+        getPropertyWithNameAndBindingFlagsWorks: function () {
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 20 | 256, "PB"), 152);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 22 | 256, "PB"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 24 | 256, "PB"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 20 | 256, "PDS"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 24 | 256, "PDS"), 362);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 24 | 256, "PBS"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 88 | 256, "PBS"), 162);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 20 | 256, "P"), 351);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 24 | 256, "PS"), 361);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 88 | 256, "PS"), 361);
+            this.assertAmbiguous($_.Bridge.ClientTest.Reflection.GetMembersTests.f8);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.C3, 16, 20 | 256, "Item"), 1);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.C3, 16, 24 | 256, "Item"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 20 | 256, "F"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 20 | 256, "X"), null);
+        },
+        getPropertyWithNameAndArgumentTypesWorks: function () {
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 284, "PD", System.Array.init(0, null)), 352);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 284, "Item", [String]), 154);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 284, "Item", [System.Double]), 254);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 284, "Item", [Date]), 354);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 284, "Item", [System.Int32]), 353);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 284, "Item", [System.Int32, String]), null);
+        },
+        getPropertyWithNameAndArgumentTypesAndBindingFlagsWorks: function () {
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 20 | 256, "PD", System.Array.init(0, null)), 352);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 24 | 256, "PD", System.Array.init(0, null)), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 20 | 256, "Item", [String]), 154);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 20 | 256, "Item", [System.Double]), 254);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 20 | 256, "Item", [Date]), 354);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 20 | 256, "Item", [System.Int32]), 353);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 20 | 256, "Item", [System.Int32, String]), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 22 | 256, "Item", [String]), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 22 | 256, "Item", [System.Double]), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 22 | 256, "Item", [Date]), 354);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 22 | 256, "Item", [System.Int32]), 353);
+        },
+        getFieldsWithoutBindingFlagsWorks: function () {
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 4, 28), [131, 132, 231, 232, 331, 332, 341, 342]);
+        },
+        getFieldsWithBindingFlagsWorks: function () {
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 4, 0), System.Array.init(0, 0));
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 4, 28), [131, 132, 231, 232, 331, 332, 341, 342]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 4, 92), [131, 132, 141, 142, 231, 232, 241, 242, 331, 332, 341, 342]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 4, 20), [131, 132, 231, 232, 331, 332]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 4, 22), [331, 332]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 4, 24), [341, 342]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 4, 88), [141, 142, 241, 242, 341, 342]);
+        },
+        getFieldWithNameWorks: function () {
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 4, 284, "FB"), 132);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 4, 284, "FD"), 332);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 4, 284, "F"), 331);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 4, 284, "E"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 4, 284, "X"), null);
+        },
+        getFieldWithNameAndBindingFlagsWorks: function () {
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 4, 20 | 256, "FB"), 132);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 4, 22 | 256, "FB"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 4, 24 | 256, "FB"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 4, 20 | 256, "FDS"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 4, 24 | 256, "FDS"), 342);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 4, 24 | 256, "FBS"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 4, 88 | 256, "FBS"), 142);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 4, 20 | 256, "F"), 331);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 4, 24 | 256, "FS"), 341);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 4, 88 | 256, "FS"), 341);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 4, 20 | 256, "E"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 4, 20 | 256, "X"), null);
+        },
+        getEventsWithoutBindingFlagsWorks: function () {
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 2, 28), [171, 174, 271, 274, 371, 374, 381, 384]);
+        },
+        getEventsWithBindingFlagsWorks: function () {
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 2, 0), System.Array.init(0, 0));
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 2, 28), [171, 174, 271, 274, 371, 374, 381, 384]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 2, 92), [171, 174, 181, 184, 271, 274, 281, 284, 371, 374, 381, 384]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 2, 20), [171, 174, 271, 274, 371, 374]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 2, 22), [371, 374]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 2, 24), [381, 384]);
+    
+            this.assertEquivalent(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D1, 2, 88), [181, 184, 281, 284, 381, 384]);
+        },
+        getEventWithNameWorks: function () {
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 2, 284, "EB"), 172);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 2, 284, "ED"), 372);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 2, 284, "E"), 371);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 2, 284, "F"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 2, 284, "X"), null);
+        },
+        getEventWithNameAndBindingFlagsWorks: function () {
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 2, 20 | 256, "EB"), 172);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 2, 22 | 256, "EB"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 2, 24 | 256, "EB"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 2, 20 | 256, "EDS"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 2, 24 | 256, "EDS"), 382);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 2, 24 | 256, "EBS"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 2, 88 | 256, "EBS"), 182);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 2, 20 | 256, "E"), 371);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 2, 24 | 256, "ES"), 381);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 2, 88 | 256, "ES"), 381);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 2, 20 | 256, "F"), null);
+            this.assertEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 2, 20 | 256, "X"), null);
+        },
+        isOperatorForMemberInfoWorks: function () {
+            Bridge.Test.Assert.true(Bridge.is(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.B1, 1, 284, null, System.Array.init(0, null)), System.Reflection.ConstructorInfo));
+            Bridge.Test.Assert.false(Bridge.is(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.B1, 4, 284, "FB1"), System.Reflection.ConstructorInfo));
+    
+            Bridge.Test.Assert.true(Bridge.is(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.B1, 8, 284, "MB2"), System.Reflection.MethodInfo));
+            Bridge.Test.Assert.false(Bridge.is(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.B1, 4, 284, "FB1"), System.Reflection.MethodInfo));
+    
+            Bridge.Test.Assert.true(Bridge.is(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.B1, 4, 284, "FB1"), System.Reflection.FieldInfo));
+            Bridge.Test.Assert.false(Bridge.is(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.B1, 8, 284, "MB2"), System.Reflection.FieldInfo));
+    
+            Bridge.Test.Assert.true(Bridge.is(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.B1, 16, 284, "PB1"), System.Reflection.PropertyInfo));
+            Bridge.Test.Assert.false(Bridge.is(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.B1, 4, 284, "FB1"), System.Reflection.PropertyInfo));
+    
+            Bridge.Test.Assert.true(Bridge.is(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.B1, 2, 284, "EB1"), System.Reflection.EventInfo));
+            Bridge.Test.Assert.false(Bridge.is(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.B1, 4, 284, "FB1"), System.Reflection.EventInfo));
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.Reflection.GetMembersTests", $_);
+    
+    Bridge.apply($_.Bridge.ClientTest.Reflection.GetMembersTests, {
+        f1: function (m) {
+            return !Bridge.referenceEquals(m.typeDef, Object);
+        },
+        f2: function (m) {
+            var arr = Bridge.cast((m.attr || []).filter(function(a) { return Bridge.is(a, Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute); }), Array);
+            return arr.length > 0 ? arr[0].getI() : 0;
+        },
+        f3: function (x) {
+            return x !== 0;
+        },
+        f4: function () {
+            Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 284, "M2");
+        },
+        f5: function () {
+            Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 20 | 256, "M2D");
+        },
+        f6: function () {
+            Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 8, 24 | 256, "M2DS");
+        },
+        f7: function () {
+            Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 284, "Item");
+        },
+        f8: function () {
+            Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.GetMembersTests.D2, 16, 20 | 256, "Item");
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute', {
+        inherits: [System.Attribute],
+        config: {
+            properties: {
+                I: 0
+            }
+        },
+        constructor: function (i) {
+            this.$initialize();
+            System.Attribute.$constructor.call(this);
+            this.setI(i);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.GetMembersTests.B1', {
+        statics: {
+            fBS1: 0,
+            fBS2: 0,
+            config: {
+                properties: {
+                    PBS1: 0,
+                    PBS2: 0
+                }
+            },
+            addEBS1: function (value) {
+            },
+            removeEBS1: function (value) {
+            },
+            addEBS2: function (value) {
+            },
+            removeEBS2: function (value) {
+            },
+            mBS: function () {
+            },
+            mBS$1: function (x) {
+            },
+            mBS$2: function (x, y) {
+            },
+            mBS2: function (x, y) {
+            }
+        },
+        fB1: 0,
+        fB2: 0,
+        config: {
+            properties: {
+                PB1: 0,
+                PB2: 0
+            }
+        },
+        constructor: function () {
+            this.$initialize();
+        },
+        $constructor1: function (x) {
+            this.$initialize();
+        },
+        $constructor2: function (x, y) {
+            this.$initialize();
+        },
+        getItem: function (x) {
+            return 0;
+        },
+        setItem: function (x, value) {
+        },
+        addEB1: function (value) {
+        },
+        removeEB1: function (value) {
+        },
+        addEB2: function (value) {
+        },
+        removeEB2: function (value) {
+        },
+        mB: function () {
+        },
+        mB$1: function (x) {
+        },
+        mB$2: function (x, y) {
+        },
+        mB2: function (x, y) {
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.GetMembersTests.B2', {
+        statics: {
+            fS: 0,
+            fBS: 0,
+            config: {
+                events: {
+                    ES: null,
+                    EBS: null
+                },
+                properties: {
+                    PS: 0,
+                    PBS: 0
+                }
+            },
+            mS: function () {
+            },
+            mBS: function () {
+            },
+            m2S: function (x) {
+            },
+            m2S$1: function (x) {
+            },
+            m2BS: function (x) {
+            },
+            m2BS$1: function (x) {
+            },
+            m3S: function (x) {
+            }
+        },
+        f: 0,
+        fB: 0,
+        config: {
+            events: {
+                E: null,
+                EB: null
+            },
+            properties: {
+                P: 0,
+                PB: 0
+            }
+        },
+        getItem: function (x) {
+            return 0;
+        },
+        setItem: function (x, value) {
+        },
+        getItem$1: function (x) {
+            return 0;
+        },
+        setItem$1: function (x, value) {
+        },
+        m: function () {
+        },
+        mB: function () {
+        },
+        m2: function (x) {
+        },
+        m2$1: function (x) {
+        },
+        m2B: function (x) {
+        },
+        m2B$1: function (x) {
+        },
+        m3: function (x) {
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.GetMembersTests.C3', {
+        getItem: function (x) {
+            return 0;
+        },
+        setItem: function (x, value) {
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.GetMembersTests.I1', {
+        $kind: "interface"
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests', {
+        getMembersReturnsMethodsWithAnyScriptableAttributeOrReflectableAttribute: function () {
+            var methods = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C1, 31, 28);
+            Bridge.Test.Assert.areEqual$1(methods.length, 2, "Should be two methods");
+            Bridge.Test.Assert.true(Bridge.referenceEquals(methods[0].name, "M2") || Bridge.referenceEquals(methods[1].name, "M2"));
+            Bridge.Test.Assert.true(Bridge.referenceEquals(methods[0].name, "M3") || Bridge.referenceEquals(methods[1].name, "M3"));
+        },
+        structMemberReflectionWorks: function () {
+            var methods = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.S1, 31, 28);
+            Bridge.Test.Assert.areEqual$1(methods.length, 2, "Should be two methods");
+            Bridge.Test.Assert.true(Bridge.referenceEquals(methods[0].name, "M2") || Bridge.referenceEquals(methods[1].name, "M2"));
+            Bridge.Test.Assert.true(Bridge.referenceEquals(methods[0].name, "M3") || Bridge.referenceEquals(methods[1].name, "M3"));
+        },
+        isStaticFlagWorksForMethod: function () {
+            Bridge.Test.Assert.areEqual$1((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C2, 31, 4)[0].isStatic || false), false, "Instance member should not be static");
+            Bridge.Test.Assert.areEqual$1((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C2, 31, 8)[0].isStatic || false), true, "Static member should be static");
+        },
+        memberTypeIsMethodForMethod: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C3, 8, 284, "M1").type, 8);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C21, 8, 284, "M1").type, 8);
+        },
+        isConstructorIsFalseForMethod: function () {
+            Bridge.Test.Assert.areEqual((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C3, 8, 284, "M1").type === 1), false);
+            Bridge.Test.Assert.areEqual((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C21, 8, 284, "M1").type === 1), false);
+        },
+        isConstructorIsTrueForAllKindsOfConstructors: function () {
+            var c10 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C10, 31, 28);
+            var c11 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C11, 31, 28);
+            var c19 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C19, 31, 28);
+            var c20 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C20, 31, 28);
+            Bridge.Test.Assert.true$1((Bridge.cast(c10[0], System.Reflection.ConstructorInfo).type === 1), "Unnamed");
+            Bridge.Test.Assert.true$1((Bridge.cast(c10[1], System.Reflection.ConstructorInfo).type === 1), "Named");
+            Bridge.Test.Assert.true$1((Bridge.cast(c11[0], System.Reflection.ConstructorInfo).type === 1), "Static method");
+            Bridge.Test.Assert.true$1((Bridge.cast(c19[0], System.Reflection.ConstructorInfo).type === 1), "Object literal");
+            Bridge.Test.Assert.true$1((Bridge.cast(c20[0], System.Reflection.ConstructorInfo).type === 1), "Inline code");
+        },
+        isStaticIsFalseForAllKindsOfConstructors: function () {
+            var c10 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C10, 31, 28);
+            var c11 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C11, 31, 28);
+            var c19 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C19, 31, 28);
+            var c20 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C20, 31, 28);
+            Bridge.Test.Assert.false$1((c10[0].isStatic || false), "Unnamed");
+            Bridge.Test.Assert.false$1((c10[1].isStatic || false), "Named");
+            Bridge.Test.Assert.false$1((c11[0].isStatic || false), "Static method");
+            Bridge.Test.Assert.false$1((c19[0].isStatic || false), "Object literal");
+            Bridge.Test.Assert.false$1((c20[0].isStatic || false), "Inline code");
+        },
+        memberTypeIsConstructorForAllKindsOfConstructors: function () {
+            var c10 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C10, 31, 28);
+            var c11 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C11, 31, 28);
+            var c19 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C19, 31, 28);
+            var c20 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C20, 31, 28);
+            Bridge.Test.Assert.areEqual$1(c10[0].type, 1, "Unnamed");
+            Bridge.Test.Assert.areEqual$1(c10[1].type, 1, "Named");
+            Bridge.Test.Assert.areEqual$1(c11[0].type, 1, "Static method");
+            Bridge.Test.Assert.areEqual$1(c19[0].type, 1, "Object literal");
+            Bridge.Test.Assert.areEqual$1(c20[0].type, 1, "Inline code");
+        },
+        nameIsCtorForAllKindsOfConstructors: function () {
+            var c10 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C10, 31, 28);
+            var c11 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C11, 31, 28);
+            var c19 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C19, 31, 28);
+            var c20 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C20, 31, 28);
+            Bridge.Test.Assert.areEqual$1(c10[0].name, ".ctor", "Unnamed");
+            Bridge.Test.Assert.areEqual$1(c10[1].name, ".ctor", "Named");
+            Bridge.Test.Assert.areEqual$1(c11[0].name, ".ctor", "Static method");
+            Bridge.Test.Assert.areEqual$1(c19[0].name, ".ctor", "Object literal");
+            Bridge.Test.Assert.areEqual$1(c20[0].name, ".ctor", "Inline code");
+        },
+        declaringTypeIsCorrectForAllKindsOfConstructors: function () {
+            var c10 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C10, 31, 28);
+            var c11 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C11, 31, 28);
+            var c19 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C19, 31, 28);
+            var c20 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C20, 31, 28);
+            Bridge.Test.Assert.areEqual$1(c10[0].typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C10, "Unnamed");
+            Bridge.Test.Assert.areEqual$1(c10[1].typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C10, "Named");
+            Bridge.Test.Assert.areEqual$1(c11[0].typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C11, "Static method");
+            Bridge.Test.Assert.areEqual$1(c19[0].typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C19, "Object literal");
+            Bridge.Test.Assert.areEqual$1(c20[0].typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C20, "Inline code");
+        },
+        scriptNameIsCorrectForAllKindsOfConstructors: function () {
+            var c10 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C10, 31, 28);
+            var c11 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C11, 31, 28);
+            var c19 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C19, 31, 28);
+            var c20 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C20, 31, 28);
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(Bridge.cast(c10[0], System.Reflection.ConstructorInfo).sname, "$constructor"), "Unnamed");
+            Bridge.Test.Assert.areEqual$1(Bridge.cast(c10[1], System.Reflection.ConstructorInfo).sname, "$constructor1", "Named");
+            Bridge.Test.Assert.areEqual$1(Bridge.cast(c11[0], System.Reflection.ConstructorInfo).sname, "$constructor", "Static method");
+            Bridge.Test.Assert.true$1(Bridge.cast(c19[0], System.Reflection.ConstructorInfo).sname == null, "Object literal");
+            Bridge.Test.Assert.true$1(Bridge.cast(c20[0], System.Reflection.ConstructorInfo).sname == null, "Inline code");
+        },
+        isStaticMethodIsTrueOnlyForStaticMethodConstructors: function () {
+            var c10 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C10, 31, 28);
+            var c11 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C11, 31, 28);
+            var c19 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C19, 31, 28);
+            var c20 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C20, 31, 28);
+            Bridge.Test.Assert.false$1((Bridge.cast(c10[0], System.Reflection.ConstructorInfo).sm || false), "Unnamed");
+            Bridge.Test.Assert.false$1((Bridge.cast(c10[1], System.Reflection.ConstructorInfo).sm || false), "Named");
+            Bridge.Test.Assert.false$1((Bridge.cast(c11[0], System.Reflection.ConstructorInfo).sm || false), "Static method");
+            Bridge.Test.Assert.false$1((Bridge.cast(c19[0], System.Reflection.ConstructorInfo).sm || false), "Object literal");
+            Bridge.Test.Assert.false$1((Bridge.cast(c20[0], System.Reflection.ConstructorInfo).sm || false), "Inline code");
+        },
+        specialImplementationExistsOnlyForObjectLiteralAndInlineCodeConstructors: function () {
+            var c10 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C10, 31, 28);
+            var c11 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C11, 31, 28);
+            var c19 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C19, 31, 28);
+            var c20 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C20, 31, 28);
+            Bridge.Test.Assert.true$1(Bridge.staticEquals(Bridge.cast(c10[0], System.Reflection.ConstructorInfo).def, null), "Unnamed");
+            Bridge.Test.Assert.true$1(Bridge.staticEquals(Bridge.cast(c10[1], System.Reflection.ConstructorInfo).def, null), "Named");
+            Bridge.Test.Assert.true$1(Bridge.staticEquals(Bridge.cast(c11[0], System.Reflection.ConstructorInfo).def, null), "Static method");
+            Bridge.Test.Assert.true$1(!Bridge.staticEquals(Bridge.cast(c19[0], System.Reflection.ConstructorInfo).def, null), "Object literal");
+            Bridge.Test.Assert.true$1(!Bridge.staticEquals(Bridge.cast(c20[0], System.Reflection.ConstructorInfo).def, null), "Inline code");
+        },
+        declaringTypeShouldBeCorrectForMethods: function () {
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C3, 8, 284, "M1").typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C3, "Simple type");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C5$2, 8, 284, "M").typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C5$2, "Open generic type");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C5$2(System.Int32,String), 8, 284, "M").typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C5$2(System.Int32,String), "Constructed generic type");
+        },
+        returnTypeAndParameterTypesAreCorrectForMethods: function () {
+            var m1 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C3, 8, 284, "M1");
+            Bridge.Test.Assert.areEqual$1(m1.returnType, System.Int32, "Return type should be int");
+            Bridge.Test.Assert.areEqual$1((m1.params || []).length, 0, "M1 should have no parameters");
+    
+            var m2 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C3, 8, 284, "M2");
+            Bridge.Test.Assert.areEqual$1((m2.params || []), [String], "M2 parameter types should be correct");
+    
+            var m3 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C3, 8, 284, "M3");
+            Bridge.Test.Assert.areEqual$1((m3.params || []), [String, System.Int32], "M3 parameter types should be correct");
+    
+            var m4 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C7, 8, 284, "M1");
+            Bridge.Test.Assert.false$1((m4.isStatic || false), "M4 should not be static");
+            Bridge.Test.Assert.areEqual$1((m4.params || []), [System.Int32], "C7.M1 parameters should be correct");
+    
+            var m5 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C21, 8, 284, "M1");
+            Bridge.Test.Assert.areEqual$1(m5.returnType, System.Int32, "M5 Return type should be int");
+            Bridge.Test.Assert.false$1((m5.isStatic || false), "M5 should not be static");
+            Bridge.Test.Assert.areEqual$1((m5.params || []), [System.Int32, System.Int32], "M5 parameters should be correct");
+        },
+        parameterTypesShouldBeCorrectForConstructors: function () {
+            var c10 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C10, 31, 28);
+            var c11 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C11, 31, 28);
+            var c19 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C19, 31, 28);
+            var c20 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C20, 31, 28);
+            Bridge.Test.Assert.areEqual$1((Bridge.cast(c10[0], System.Reflection.ConstructorInfo).params || []), [System.Int32], "Unnamed");
+            Bridge.Test.Assert.areEqual$1((Bridge.cast(c10[1], System.Reflection.ConstructorInfo).params || []), [System.Int32, String], "Named");
+            Bridge.Test.Assert.areEqual$1((Bridge.cast(c11[0], System.Reflection.ConstructorInfo).params || []), [Date], "Static method");
+            Bridge.Test.Assert.areEqual$1((Bridge.cast(c19[0], System.Reflection.ConstructorInfo).params || []), [System.Int32, String], "Object literal");
+            Bridge.Test.Assert.areEqual$1((Bridge.cast(c20[0], System.Reflection.ConstructorInfo).params || []), [System.Int32, String], "Object literal");
+        },
+        voidIsConsideredObjectAsReturnType: function () {
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C3, 8, 284, "M4").returnType, Object, "Return type of void method should be object");
+        },
+        methodNameIsTheCSharpName: function () {
+            var members = Bridge.cast(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C4, 31, 28), Array);
+            Bridge.Test.Assert.areEqual$1(members.filter($_.Bridge.ClientTest.Reflection.ReflectionTests.f1).length, 3, "All methods should have name M");
+        },
+        typeParametersAreReplacedWithObjectForReturnAndParameterTypesForOpenGenericTypes: function () {
+            var m = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C5$2, 8, 284, "M");
+            Bridge.Test.Assert.areEqual$1(m.returnType, Object, "Return type should be object");
+            Bridge.Test.Assert.areDeepEqual$1((m.params || []), [Object, String], "Parameters should be correct");
+        },
+        typeParametersAreCorrectForReturnAndParameterTypesForConstructedGenericTypes: function () {
+            var m = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C5$2(String,Date), 8, 284, "M");
+            Bridge.Test.Assert.areEqual$1(m.returnType, String, "Return type of M should be string");
+            Bridge.Test.Assert.areDeepEqual$1((m.params || []), [Date, String], "Parameters to M should be correct");
+    
+            var m2 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C5$2(String,Date), 8, 284, "M2");
+            Bridge.Test.Assert.areEqual$1(m2.returnType, Object, "Return type of M2 should be object");
+            Bridge.Test.Assert.areEqual$1((m2.params || []).length, 0, "M2 should not have any parameters");
+        },
+        methodTypeParametersAreReplacedWithObjectForReturnAndParameterTypes: function () {
+            var m = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C6, 8, 284, "M1");
+            Bridge.Test.Assert.areEqual$1(m.returnType, Object, "Return type should be object");
+            Bridge.Test.Assert.areDeepEqual$1((m.params || []), [Object, String], "Parameters should be correct");
+        },
+        isGenericMethodDefinitionAndTypeParameterCountWork: function () {
+            Bridge.Test.Assert.true$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C6, 8, 284, "M1").tpcount), "M1 should be generic");
+            Bridge.Test.Assert.true$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C6, 8, 284, "M2").tpcount), "M2 should be generic");
+            Bridge.Test.Assert.false$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C6, 8, 284, "M3").tpcount), "M3 should not be generic");
+            Bridge.Test.Assert.areEqual$1((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C6, 8, 284, "M1").tpcount || 0), 2, "M1 should have 2 type parameters");
+            Bridge.Test.Assert.areEqual$1((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C6, 8, 284, "M2").tpcount || 0), 1, "M2 should have 1 type parameters");
+            Bridge.Test.Assert.areEqual$1((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C6, 8, 284, "M3").tpcount || 0), 0, "M3 should have 0 type parameters");
+        },
+        scriptNameWorksForAllKindsOfMethods: function () {
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C4, 8, 284, "M", [System.Int32]).sname, "m$1", "C4.M");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C21, 8, 284, "M1").sname == null, "C21.M1");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C7, 8, 284, "M1").sname, "m1", "C7.m1");
+        },
+        specialImplementationExistsOnlyForMethodsImplementedAsInlineCode: function () {
+            Bridge.Test.Assert.true$1(Bridge.staticEquals(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C4, 8, 284, "M", [System.Int32]).def, null), "C4.M");
+            Bridge.Test.Assert.true$1(!Bridge.staticEquals(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C21, 8, 284, "M3").def, null), "C21.M3");
+            Bridge.Test.Assert.true$1(Bridge.staticEquals(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C7, 8, 284, "M1").def, null), "C7.m1");
+        },
+        createDelegateWorksForNonGenericInstanceMethods: function () {
+            var m = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C8, 8, 284, "M1");
+            var c = new Bridge.ClientTest.Reflection.ReflectionTests.C8("X");
+            var f1 = Bridge.Reflection.midel(m, c);
+            var f2 = Bridge.Reflection.midel(m, c);
+            Bridge.Test.Assert.areEqual$1(f1("a", "b"), "X a b", "Delegate created with delegate type should be correct");
+            Bridge.Test.Assert.areEqual$1(f2("c", "d"), "X c d", "Delegate created without delegate type should be correct");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m);
+            }, "Without target with delegate type should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m);
+            }, "Without target without delegate type should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, null);
+            }, "Null target with delegate type should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, null);
+            }, "Null target without delegate type should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, c, [String]);
+            }, "With type arguments with target should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, null, [String]);
+            }, "With type arguments without target should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, null, [String]);
+            }, "With type arguments with null target should throw");
+        },
+        delegateCreateDelegateWorksForNonGenericInstanceMethods: function () {
+            var m = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C8, 8, 284, "M1");
+            var f1 = Bridge.Reflection.midel(m, new Bridge.ClientTest.Reflection.ReflectionTests.C8("X"));
+            Bridge.Test.Assert.areEqual$1(f1("a", "b"), "X a b", "Delegate should be correct");
+        },
+        createDelegateWorksNonGenericStaticMethods: function () {
+            var m = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C8, 8, 284, "M2");
+            var f1 = Bridge.Reflection.midel(m);
+            var f2 = Bridge.Reflection.midel(m);
+            var f3 = Bridge.Reflection.midel(m, null);
+            var f4 = Bridge.Reflection.midel(m, null);
+            Bridge.Test.Assert.areEqual$1(f1("a", "b"), "a b", "Delegate created with delegate type without target should be correct");
+            Bridge.Test.Assert.areEqual$1(f2("c", "d"), "c d", "Delegate created without delegate type without target should be correct");
+            Bridge.Test.Assert.areEqual$1(f3("e", "f"), "e f", "Delegate created with delegate type with null target should be correct");
+            Bridge.Test.Assert.areEqual$1(f4("g", "h"), "g h", "Delegate created without delegate type with null target should be correct");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, new Bridge.ClientTest.Reflection.ReflectionTests.C8(""));
+            }, "With target with delegate type should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, new Bridge.ClientTest.Reflection.ReflectionTests.C8(""));
+            }, "With target without delegate type should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, new Bridge.ClientTest.Reflection.ReflectionTests.C8(""), [String]);
+            }, "With type arguments with target should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, null, [String]);
+            }, "With type arguments without target should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, null, [String]);
+            }, "With type arguments with null target should throw");
+        },
+        createDelegateWorksNonGenericStaticMethodOfGenericType: function () {
+            var m = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C9$2(System.Int32,String), 8, 284, "M");
+            var f = Bridge.Reflection.midel(m);
+            Bridge.Test.Assert.areEqual$1(f("a"), "System.Int32 String a", "Delegate should return correct results");
+        },
+        createDelegateWorksForGenericInstanceMethods: function () {
+            var m = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C8, 8, 284, "M3");
+            var c = new Bridge.ClientTest.Reflection.ReflectionTests.C8("X");
+            var f = Bridge.Reflection.midel(m, c, [System.Int32, String]);
+            Bridge.Test.Assert.areEqual$1(f("a"), "X System.Int32 String a", "Result of invoking delegate should be correct");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, null, [System.Int32, String]);
+            }, "Null target with correct type arguments should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, c);
+            }, "No type arguments with target should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, c, System.Array.init(0, null));
+            }, "0 type arguments with target should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, c, System.Array.init(1, null));
+            }, "1 type arguments with target should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, c, System.Array.init(3, null));
+            }, "3 type arguments with target should throw");
+        },
+        createDelegateWorksForGenericStaticMethods: function () {
+            var m = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C8, 8, 284, "M4");
+            var f = Bridge.Reflection.midel(m, null, [System.Int32, String]);
+            Bridge.Test.Assert.areEqual$1(f("a"), "System.Int32 String a", "Result of invoking delegate should be correct");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, new Bridge.ClientTest.Reflection.ReflectionTests.C8(""), [System.Int32, String]);
+            }, "Target with correct type arguments should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, null);
+            }, "No type arguments without target should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, null, System.Array.init(0, null));
+            }, "0 type arguments without target should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, null, System.Array.init(1, null));
+            }, "1 type arguments without target should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, null, System.Array.init(3, null));
+            }, "3 type arguments without target should throw");
+        },
+        invokeWorksForNonGenericInstanceMethods: function () {
+            var m = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C8, 8, 284, "M1");
+            var argsArr = ["c", "d"];
+            var c = new Bridge.ClientTest.Reflection.ReflectionTests.C8("X");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.midel(m, c)("a", "b"), "X a b", "Invoke with target should work");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.midel(m, c).apply(null, argsArr), "X c d", "Invoke (non-expanded) with target should work");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, null)("a", "b");
+            }, "Invoke without target should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, c, [String])("a", "b");
+            }, "Invoke with type arguments with target should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, null, [String])("a", "b");
+            }, "Invoke with type arguments without target should throw");
+        },
+        invokeWorksForNonGenericStaticMethods: function () {
+            var m = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C8, 8, 284, "M2");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.midel(m, null)("a", "b"), "a b", "Invoke without target should work");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, new Bridge.ClientTest.Reflection.ReflectionTests.C8(""))("a", "b");
+            }, "Invoke with target should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, new Bridge.ClientTest.Reflection.ReflectionTests.C8(""), [String])("a", "b");
+            }, "Invoke with type arguments with target should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, null, [String])("a", "b");
+            }, "Invoke with type arguments without target should throw");
+        },
+        invokeWorksForNonGenericInstanceMethodsOnSerializableTypes: function () {
+            var m = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C7, 8, 284, "M1");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.midel(m, Bridge.merge(new Bridge.ClientTest.Reflection.ReflectionTests.C7(), {
+                x: 13
+            } ))(14), 27, "Invoke should work");
+        },
+        invokeWorksForNonGenericInlineCodeMethods: function () {
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.midel(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C21, 8, 284, "M1"), new Bridge.ClientTest.Reflection.ReflectionTests.C21(14))(15, 16), 45, "Instance invoke should work");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.midel(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C21, 8, 284, "M2"), null)(15, 16), 31, "Static invoke should work");
+        },
+        invokeWorksForGenericInlineCodeMethods: function () {
+            var m = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C21, 8, 284, "M3");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.midel(m, new Bridge.ClientTest.Reflection.ReflectionTests.C21(42), [String])("World"), "42StringWorld", "Invoke should work");
+        },
+        invokeWorksForGenericInstanceMethod: function () {
+            var m = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C8, 8, 284, "M3");
+            var argsArr = ["x"];
+            var c = new Bridge.ClientTest.Reflection.ReflectionTests.C8("X");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.midel(m, c, [System.Int32, String])("a"), "X System.Int32 String a", "Result of invoking delegate should be correct");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.midel(m, c, [System.Int32, String]).apply(null, argsArr), "X System.Int32 String x", "Result of invoking delegate should be correct");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, null, [System.Int32, String])("a");
+            }, "Null target with correct type arguments should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, c)("a");
+            }, "No type arguments with target should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, c, System.Array.init(0, null))("a");
+            }, "0 type arguments with target should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, c, System.Array.init(1, null))("a");
+            }, "1 type arguments with target should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, c, System.Array.init(3, null))("a");
+            }, "3 type arguments with target should throw");
+        },
+        invokeWorksForGenericStaticMethod: function () {
+            var m = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C8, 8, 284, "M4");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.midel(m, null, [System.Int32, String])("a"), "System.Int32 String a", "Result of invoking delegate should be correct");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, new Bridge.ClientTest.Reflection.ReflectionTests.C8(""), [System.Int32, String])("a");
+            }, "Target with correct type arguments should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, null)("a");
+            }, "No type arguments without target should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, null, System.Array.init(0, null))("a");
+            }, "0 type arguments without target should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, null, System.Array.init(1, null))("a");
+            }, "1 type arguments without target should throw");
+            Bridge.Test.Assert.throws$5(function () {
+                Bridge.Reflection.midel(m, null, System.Array.init(3, null))("a");
+            }, "3 type arguments without target should throw");
+        },
+        invokeWorksForGenericInstanceMethodsOnSerializableTypes: function () {
+            var m = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C7, 8, 284, "M3");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.midel(m, Bridge.merge(new Bridge.ClientTest.Reflection.ReflectionTests.C7(), {
+                x: 13
+            } ), [System.Int32, String])("Suffix"), "13 System.Int32 String Suffix", "Invoke should work");
+        },
+        invokeWorksForExpandParamsMethods: function () {
+            var m1 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C22, 8, 284, "M2");
+            var r1 = Bridge.cast(Bridge.Reflection.midel(m1, new Bridge.ClientTest.Reflection.ReflectionTests.C22.$constructor(0, null)).apply(null, [2, [17, 31]]), Array);
+            Bridge.Test.Assert.areEqual(r1, [2, [17, 31]]);
+    
+            var m2 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C23, 8, 284, "M2");
+            var r2 = Bridge.cast(Bridge.Reflection.midel(m2, new Bridge.ClientTest.Reflection.ReflectionTests.C23.$constructor(0, null)).apply(null, [2, [17, 32]]), Array);
+            Bridge.Test.Assert.areEqual(r2, [2, [17, 32]]);
+        },
+        invokeWorksForAllKindsOfConstructors: function () {
+            var c1 = Bridge.cast(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C10, 31, 28).filter($_.Bridge.ClientTest.Reflection.ReflectionTests.f2)[0], System.Reflection.ConstructorInfo);
+            var o1 = Bridge.cast(Bridge.Reflection.invokeCI(c1, [42]), Bridge.ClientTest.Reflection.ReflectionTests.C10);
+            Bridge.Test.Assert.areEqual$1(o1.x, 42, "o1.X");
+            Bridge.Test.Assert.areEqual$1(o1.s, "X", "o1.S");
+    
+            var c2 = Bridge.cast(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C10, 31, 28).filter($_.Bridge.ClientTest.Reflection.ReflectionTests.f3)[0], System.Reflection.ConstructorInfo);
+            var o2 = Bridge.cast(Bridge.Reflection.invokeCI(c2, [14, "Hello"]), Bridge.ClientTest.Reflection.ReflectionTests.C10);
+            Bridge.Test.Assert.areEqual$1(o2.x, 14, "o2.X");
+            Bridge.Test.Assert.areEqual$1(o2.s, "Hello", "o2.S");
+    
+            var c3 = Bridge.cast(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C11, 31, 28)[0], System.Reflection.ConstructorInfo);
+            var o3 = Bridge.cast(Bridge.Reflection.invokeCI(c3, [new Date(2012, 1 - 1, 2)]), Bridge.ClientTest.Reflection.ReflectionTests.C11);
+            Bridge.Test.Assert.areEqual$1(o3.D, new Date(2012, 1 - 1, 2), "o3.D");
+    
+            var c19 = Bridge.cast(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C19, 31, 28)[0], System.Reflection.ConstructorInfo);
+            var o4 = Bridge.Reflection.invokeCI(c19, [42, "Hello"]);
+            Bridge.Test.Assert.areDeepEqual(o4, { a: 42, b: "Hello" });
+    
+            var c20 = Bridge.cast(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C20, 31, 28)[0], System.Reflection.ConstructorInfo);
+            var o5 = Bridge.Reflection.invokeCI(c20, [42, "Hello"]);
+            Bridge.Test.Assert.areDeepEqual(o5, { a: 42, b: "Hello" });
+        },
+        invokeWorksForExpandParamsConstructors: function () {
+            var c1 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C22, 1, 284, null, [String, Array]);
+            var o1 = Bridge.cast(Bridge.Reflection.invokeCI(c1, ["a", ["b", "c"]]), Bridge.ClientTest.Reflection.ReflectionTests.C22);
+            Bridge.Test.Assert.areEqual$1(o1.a, "a", "o1.a");
+            Bridge.Test.Assert.areEqual$1(o1.b, ["b", "c"], "o1.b");
+    
+            var c2 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C23, 1, 284, null, [String, Array]);
+            var o2 = Bridge.cast(Bridge.Reflection.invokeCI(c2, ["a", ["b", "c"]]), Bridge.ClientTest.Reflection.ReflectionTests.C23);
+            Bridge.Test.Assert.areEqual$1(o2.a, "a", "o1.a");
+            Bridge.Test.Assert.areEqual$1(o2.b, ["b", "c"], "o1.b");
+        },
+        memberTypeIsFieldForField: function () {
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C12, 4, 284, "F1").type, 4, "Instance");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C12, 4, 284, "F3").type, 4, "Static");
+        },
+        declaringTypeIsCorrectForField: function () {
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C12, 4, 284, "F1").typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C12, "Instance");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C12, 4, 284, "F3").typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C12, "Static");
+        },
+        nameIsCorrectForField: function () {
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C12, 4, 284, "F1").name, "F1", "Instance");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C12, 4, 284, "F3").name, "F3", "Static");
+        },
+        isStaticIsCorrectForField: function () {
+            Bridge.Test.Assert.areEqual$1((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C12, 4, 284, "F1").isStatic || false), false, "Instance 1");
+            Bridge.Test.Assert.areEqual$1((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C12, 4, 284, "F2").isStatic || false), false, "Instance 2");
+            Bridge.Test.Assert.areEqual$1((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C12, 4, 284, "F3").isStatic || false), true, "Static");
+        },
+        fieldTypeIsCorrectForField: function () {
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C12, 4, 284, "F1").returnType, System.Int32, "Instance 1");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C12, 4, 284, "F2").returnType, Date, "Instance 2");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C12, 4, 284, "F3").returnType, String, "Static");
+        },
+        scriptNameIsCorrectForField: function () {
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C12, 4, 284, "F1").sname, "f1", "f1");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C12, 4, 284, "F2").sname, "renamedF2", "f2");
+        },
+        getValueWorksForInstanceField: function () {
+            var c = Bridge.merge(new Bridge.ClientTest.Reflection.ReflectionTests.C12(), {
+                f1: 42
+            } );
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.fieldAccess(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C12, 4, 284, "F1"), c), 42);
+        },
+        getValueWorksForStaticField: function () {
+            Bridge.ClientTest.Reflection.ReflectionTests.C12.f3 = "X_Test";
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.fieldAccess(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C12, 4, 284, "F3"), null), "X_Test");
+        },
+        setValueWorksForInstanceField: function () {
+            var c = new Bridge.ClientTest.Reflection.ReflectionTests.C12();
+            Bridge.Reflection.fieldAccess(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C12, 4, 284, "F1"), c, 14);
+            Bridge.Test.Assert.areEqual(c.f1, 14);
+        },
+        setValueWorksForStaticField: function () {
+            Bridge.Reflection.fieldAccess(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C12, 4, 284, "F3"), null, "Hello, world");
+            Bridge.Test.Assert.areEqual(Bridge.ClientTest.Reflection.ReflectionTests.C12.f3, "Hello, world");
+        },
+        memberTypeIsEventForEvent: function () {
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C13, 2, 284, "E1").type, 2, "Instance");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C13, 2, 284, "E2").type, 2, "Static");
+        },
+        declaringTypeIsCorrectForEvent: function () {
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C13, 2, 284, "E1").typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C13, "Instance");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C13, 2, 284, "E2").typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C13, "Static");
+        },
+        nameIsCorrectForEvent: function () {
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C13, 2, 284, "E1").name, "E1", "Instance");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C13, 2, 284, "E2").name, "E2", "Static");
+        },
+        isStaticIsCorrectForEvent: function () {
+            Bridge.Test.Assert.areEqual$1((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C13, 2, 284, "E1").isStatic || false), false, "Instance");
+            Bridge.Test.Assert.areEqual$1((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C13, 2, 284, "E2").isStatic || false), true, "Static");
+        },
+        addEventHandlerMethodWorksForInstanceEvent: function () {
+            var i = 0;
+            var handler = function () {
+                Bridge.identity(i, (i = (i + 1) | 0));
+            };
+            var obj = new Bridge.ClientTest.Reflection.ReflectionTests.C13();
+            var e = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C13, 2, 284, "E1");
+            Bridge.Reflection.midel(e.adder, obj)(handler);
+            obj.raiseE1();
+            Bridge.Test.Assert.areEqual$1(i, 1, "Event should have been raised");
+        },
+        addEventHandlerMethodWorksForInstanceEventWithInlineCodeAddMethod: function () {
+            var i = 0;
+            var handler = function () {
+                Bridge.identity(i, (i = (i + 1) | 0));
+            };
+            var obj = new Bridge.ClientTest.Reflection.ReflectionTests.C13();
+            var e = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C13, 2, 284, "E3");
+            Bridge.Reflection.midel(e.adder, obj)(handler);
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(obj.addedE3Handler, handler), "Event handler should have been added");
+        },
+        addEventHandlerMethodWorksForStaticEvent: function () {
+            var i = 0;
+            var handler = function () {
+                Bridge.identity(i, (i = (i + 1) | 0));
+            };
+            var e = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C13, 2, 284, "E2");
+            Bridge.Reflection.midel(e.adder, null)(handler);
+            Bridge.ClientTest.Reflection.ReflectionTests.C13.raiseE2();
+            Bridge.Test.Assert.areEqual$1(i, 1, "Event should have been raised");
+        },
+        addEventHandlerMethodWorksForStaticEventWithInlineCodeAddMethod: function () {
+            var i = 0;
+            var handler = function () {
+                Bridge.identity(i, (i = (i + 1) | 0));
+            };
+            var e = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C13, 2, 284, "E4");
+            Bridge.Reflection.midel(e.adder, null)(handler);
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(Bridge.ClientTest.Reflection.ReflectionTests.C13.addedE4Handler, handler), "Event handler should have been added");
+        },
+        removeEventHandlerMethodWorksForInstanceEvent: function () {
+            var i = 0;
+            var handler = function () {
+                Bridge.identity(i, (i = (i + 1) | 0));
+            };
+            var obj = new Bridge.ClientTest.Reflection.ReflectionTests.C13();
+            obj.addE1(handler);
+            obj.raiseE1();
+    
+            Bridge.Reflection.midel(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C13, 2, 284, "E1").remover, obj)(handler);
+            obj.raiseE1();
+    
+            Bridge.Test.Assert.areEqual$1(i, 1, "Event handler should have been removed");
+        },
+        removeEventHandlerMethodWorksForInstanceEventWithInlineCodeRemoveMethod: function () {
+            var i = 0;
+            var handler = function () {
+                Bridge.identity(i, (i = (i + 1) | 0));
+            };
+            var obj = new Bridge.ClientTest.Reflection.ReflectionTests.C13();
+    
+            Bridge.Reflection.midel(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C13, 2, 284, "E3").remover, obj)(handler);
+    
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(obj.removedE3Handler, handler), "Event handler should have been removed");
+        },
+        removeEventHandlerMethodWorksForStaticEvent: function () {
+            var i = 0;
+            var handler = function () {
+                Bridge.identity(i, (i = (i + 1) | 0));
+            };
+            Bridge.ClientTest.Reflection.ReflectionTests.C13.addE2(handler);
+            Bridge.ClientTest.Reflection.ReflectionTests.C13.raiseE2();
+    
+            Bridge.Reflection.midel(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C13, 2, 284, "E2").remover, null)(handler);
+            Bridge.ClientTest.Reflection.ReflectionTests.C13.raiseE2();
+    
+            Bridge.Test.Assert.areEqual$1(i, 1, "Event handler should have been removed");
+        },
+        removeEventHandlerMethodWorksForStaticEventWithInlineCodeRemoveMethod: function () {
+            var i = 0;
+            var handler = function () {
+                Bridge.identity(i, (i = (i + 1) | 0));
+            };
+    
+            Bridge.Reflection.midel(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C13, 2, 284, "E4").remover, null)(handler);
+    
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(Bridge.ClientTest.Reflection.ReflectionTests.C13.removedE4Handler, handler), "Event handler should have been removed");
+        },
+        propertiesForAddMethodAreCorrect: function () {
+            var m1 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C13, 2, 284, "E1").adder;
+            var m2 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C13, 2, 284, "E2").adder;
+    
+            Bridge.Test.Assert.areEqual$1(m1.type, 8, "m1.MemberType");
+            Bridge.Test.Assert.areEqual$1(m2.type, 8, "m2.MemberType");
+            Bridge.Test.Assert.areEqual$1(m1.name, "add_E1", "m1.Name");
+            Bridge.Test.Assert.areEqual$1(m2.name, "add_E2", "m2.Name");
+            Bridge.Test.Assert.areEqual$1(m1.typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C13, "m1.DeclaringType");
+            Bridge.Test.Assert.areEqual$1(m2.typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C13, "m2.DeclaringType");
+            Bridge.Test.Assert.false$1((m1.isStatic || false), "m1.IsStatic");
+            Bridge.Test.Assert.true$1((m2.isStatic || false), "m2.IsStatic");
+            Bridge.Test.Assert.areEqual$1((m1.params || []), [Function], "m1.ParameterTypes");
+            Bridge.Test.Assert.areEqual$1((m2.params || []), [Function], "m2.ParameterTypes");
+            Bridge.Test.Assert.false$1((m1.type === 1), "m1.IsConstructor");
+            Bridge.Test.Assert.false$1((m2.type === 1), "m2.IsConstructor");
+            Bridge.Test.Assert.areEqual$1(m1.returnType, Object, "m1.ReturnType");
+            Bridge.Test.Assert.areEqual$1(m2.returnType, Object, "m2.ReturnType");
+            Bridge.Test.Assert.areEqual$1((m1.tpcount || 0), 0, "m1.TypeParameterCount");
+            Bridge.Test.Assert.areEqual$1((m2.tpcount || 0), 0, "m2.TypeParameterCount");
+            Bridge.Test.Assert.areEqual$1((!!m1.tpcount), false, "m1.IsGenericMethodDefinition");
+            Bridge.Test.Assert.areEqual$1((!!m2.tpcount), false, "m2.IsGenericMethodDefinition");
+    
+            var i1 = 0, i2 = 0;
+            var obj = new Bridge.ClientTest.Reflection.ReflectionTests.C13();
+            var handler1 = function () {
+                Bridge.identity(i1, (i1 = (i1 + 1) | 0));
+            }, handler2 = function () {
+                Bridge.identity(i2, (i2 = (i2 + 1) | 0));
+            };
+            Bridge.Reflection.midel(m1, obj)(handler1);
+            obj.raiseE1();
+            Bridge.Test.Assert.areEqual$1(i1, 1, "m1.Invoke");
+    
+            Bridge.Reflection.midel(m2, null)(handler2);
+            Bridge.ClientTest.Reflection.ReflectionTests.C13.raiseE2();
+            Bridge.Test.Assert.areEqual$1(i2, 1, "m2.Invoke");
+        },
+        propertiesForRemoveMethodAreCorrect: function () {
+            var m1 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C13, 2, 284, "E1").remover;
+            var m2 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C13, 2, 284, "E2").remover;
+    
+            Bridge.Test.Assert.areEqual$1(m1.type, 8, "m1.MemberType");
+            Bridge.Test.Assert.areEqual$1(m2.type, 8, "m2.MemberType");
+            Bridge.Test.Assert.areEqual$1(m1.name, "remove_E1", "m1.Name");
+            Bridge.Test.Assert.areEqual$1(m2.name, "remove_E2", "m2.Name");
+            Bridge.Test.Assert.areEqual$1(m1.typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C13, "m1.DeclaringType");
+            Bridge.Test.Assert.areEqual$1(m2.typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C13, "m2.DeclaringType");
+            Bridge.Test.Assert.false$1((m1.isStatic || false), "m1.IsStatic");
+            Bridge.Test.Assert.true$1((m2.isStatic || false), "m2.IsStatic");
+            Bridge.Test.Assert.areEqual$1((m1.params || []), [Function], "m1.ParameterTypes");
+            Bridge.Test.Assert.areEqual$1((m2.params || []), [Function], "m2.ParameterTypes");
+            Bridge.Test.Assert.false$1((m1.type === 1), "m1.IsConstructor");
+            Bridge.Test.Assert.false$1((m2.type === 1), "m2.IsConstructor");
+            Bridge.Test.Assert.areEqual$1(m1.returnType, Object, "m1.ReturnType");
+            Bridge.Test.Assert.areEqual$1(m2.returnType, Object, "m2.ReturnType");
+            Bridge.Test.Assert.areEqual$1((m1.tpcount || 0), 0, "m1.TypeParameterCount");
+            Bridge.Test.Assert.areEqual$1((m2.tpcount || 0), 0, "m2.TypeParameterCount");
+            Bridge.Test.Assert.areEqual$1((!!m1.tpcount), false, "m1.IsGenericMethodDefinition");
+            Bridge.Test.Assert.areEqual$1((!!m2.tpcount), false, "m2.IsGenericMethodDefinition");
+    
+            var i1 = 0, i2 = 0;
+            var obj = new Bridge.ClientTest.Reflection.ReflectionTests.C13();
+            var handler1 = function () {
+                Bridge.identity(i1, (i1 = (i1 + 1) | 0));
+            }, handler2 = function () {
+                Bridge.identity(i2, (i2 = (i2 + 1) | 0));
+            };
+            obj.addE1(handler1);
+            Bridge.Reflection.midel(m1, obj)(handler1);
+            obj.raiseE1();
+            Bridge.Test.Assert.areEqual$1(i1, 0, "m1.Invoke");
+    
+            Bridge.ClientTest.Reflection.ReflectionTests.C13.addE2(handler2);
+            Bridge.Reflection.midel(m2, null)(handler2);
+            Bridge.ClientTest.Reflection.ReflectionTests.C13.raiseE2();
+            Bridge.Test.Assert.areEqual$1(i2, 0, "m2.Invoke");
+        },
+        memberTypeIsPropertyForProperty: function () {
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P1").type, 16, "P1");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P2").type, 16, "P2");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P3").type, 16, "P3");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P4").type, 16, "P4");
+        },
+        scriptFieldNameIsCorrectForPropertiesImplementedAsFieldAndNullForOtherProperties: function () {
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P1").fname == null, "P1");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P2").fname, "p2", "P2");
+        },
+        memberTypeIsPropertyForIndexer: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C15, 16, 284, "Item").type, 16);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C24, 16, 284, "Item").type, 16);
+        },
+        declaringTypeIsCorrectForProperty: function () {
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P1").typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C14, "P1");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P2").typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C14, "P2");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P3").typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C14, "P3");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P4").typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C14, "P4");
+        },
+        declaringTypeIsCorrectForIndexer: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C15, 16, 284, "Item").typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C15);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C24, 16, 284, "Item").typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C24);
+        },
+        nameIsCorrectForProperty: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P1").name, "P1");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P2").name, "P2");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P3").name, "P3");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P4").name, "P4");
+        },
+        nameIsCorrectForIndexer: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C15, 16, 284, "Item").name, "Item");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C24, 16, 284, "Item").name, "Item");
+        },
+        isStaticIsCorrectForProperty: function () {
+            Bridge.Test.Assert.areEqual$1((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P1").isStatic || false), false, "P1");
+            Bridge.Test.Assert.areEqual$1((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P2").isStatic || false), false, "P2");
+            Bridge.Test.Assert.areEqual$1((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P3").isStatic || false), true, "P3");
+            Bridge.Test.Assert.areEqual$1((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P4").isStatic || false), true, "P4");
+        },
+        isStaticIsFalseForIndexer: function () {
+            Bridge.Test.Assert.areEqual((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C15, 16, 284, "Item").isStatic || false), false);
+            Bridge.Test.Assert.areEqual((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C24, 16, 284, "Item").isStatic || false), false);
+        },
+        propertyTypeIsCorrectForProperty: function () {
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P1").returnType, System.Int32, "P1");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P2").returnType, String, "P2");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P3").returnType, Date, "P3");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P4").returnType, System.Double, "P4");
+        },
+        propertyTypeIsCorrectForIndexer: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C15, 16, 284, "Item").returnType, String);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C24, 16, 284, "Item").returnType, String);
+        },
+        indexParameterTypesAreEmptyForProperty: function () {
+            Bridge.Test.Assert.areEqual$1((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P1").params || []), System.Array.init(0, null), "P1");
+            Bridge.Test.Assert.areEqual$1((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P2").params || []), System.Array.init(0, null), "P2");
+            Bridge.Test.Assert.areEqual$1((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P3").params || []), System.Array.init(0, null), "P3");
+            Bridge.Test.Assert.areEqual$1((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P4").params || []), System.Array.init(0, null), "P4");
+        },
+        indexParameterTypesAreCorrectForIndexer: function () {
+            Bridge.Test.Assert.areEqual((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C15, 16, 284, "Item").params || []), [System.Int32, String]);
+            Bridge.Test.Assert.areEqual((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C24, 16, 284, "Item").params || []), [System.Int32, String]);
+        },
+        propertiesForGetMethodAreCorrectForPropertyImplementedAsGetAndSetMethods: function () {
+            var m1 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P1").getter;
+            var m2 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P3").getter;
+            var m3 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P13").getter;
+            var m4 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P14").getter;
+    
+            Bridge.Test.Assert.areEqual$1(m1.type, 8, "m1.MemberType");
+            Bridge.Test.Assert.areEqual$1(m2.type, 8, "m2.MemberType");
+            Bridge.Test.Assert.areEqual$1(m3.type, 8, "m3.MemberType");
+            Bridge.Test.Assert.areEqual$1(m1.name, "get_P1", "m1.Name");
+            Bridge.Test.Assert.areEqual$1(m2.name, "get_P3", "m2.Name");
+            Bridge.Test.Assert.areEqual$1(m3.name, "get_P13", "m3.Name");
+            Bridge.Test.Assert.areEqual$1(m1.typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C14, "m1.DeclaringType");
+            Bridge.Test.Assert.areEqual$1(m2.typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C14, "m2.DeclaringType");
+            Bridge.Test.Assert.areEqual$1(m3.typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C14, "m3.DeclaringType");
+            Bridge.Test.Assert.false$1((m1.isStatic || false), "m1.IsStatic");
+            Bridge.Test.Assert.true$1((m2.isStatic || false), "m2.IsStatic");
+            Bridge.Test.Assert.false$1((m3.isStatic || false), "m3.IsStatic");
+            Bridge.Test.Assert.areEqual$1((m1.params || []).length, 0, "m1.ParameterTypes");
+            Bridge.Test.Assert.areEqual$1((m2.params || []).length, 0, "m2.ParameterTypes");
+            Bridge.Test.Assert.areEqual$1((m3.params || []).length, 0, "m3.ParameterTypes");
+            Bridge.Test.Assert.false$1((m1.type === 1), "m1.IsConstructor");
+            Bridge.Test.Assert.false$1((m2.type === 1), "m2.IsConstructor");
+            Bridge.Test.Assert.false$1((m3.type === 1), "m3.IsConstructor");
+            Bridge.Test.Assert.areEqual$1(m1.returnType, System.Int32, "m1.ReturnType");
+            Bridge.Test.Assert.areEqual$1(m2.returnType, Date, "m2.ReturnType");
+            Bridge.Test.Assert.areEqual$1(m3.returnType, System.Int32, "m3.ReturnType");
+            Bridge.Test.Assert.areEqual$1((m1.tpcount || 0), 0, "m1.TypeParameterCount");
+            Bridge.Test.Assert.areEqual$1((m2.tpcount || 0), 0, "m2.TypeParameterCount");
+            Bridge.Test.Assert.areEqual$1((m3.tpcount || 0), 0, "m3.TypeParameterCount");
+            Bridge.Test.Assert.areEqual$1((!!m1.tpcount), false, "m1.IsGenericMethodDefinition");
+            Bridge.Test.Assert.areEqual$1((!!m2.tpcount), false, "m2.IsGenericMethodDefinition");
+            Bridge.Test.Assert.areEqual$1((!!m3.tpcount), false, "m3.IsGenericMethodDefinition");
+    
+            var c = Bridge.merge(new Bridge.ClientTest.Reflection.ReflectionTests.C14(), {
+                setP1: 78
+            } );
+            var p1 = Bridge.Reflection.midel(m1, c)(null);
+            Bridge.Test.Assert.areEqual$1(p1, 78, "m1.Invoke");
+    
+            Bridge.ClientTest.Reflection.ReflectionTests.C14.setP3(new Date(2012, 4 - 1, 2));
+            var p2 = Bridge.Reflection.midel(m2, null)(null);
+            Bridge.Test.Assert.areEqual$1(p2, new Date(2012, 4 - 1, 2), "m2.Invoke");
+    
+            c = Bridge.merge(new Bridge.ClientTest.Reflection.ReflectionTests.C14(), {
+                p13Field: 13
+            } );
+            var p3 = Bridge.Reflection.midel(m3, c)(null);
+            Bridge.Test.Assert.areEqual$1(p3, 13, "m3.Invoke");
+    
+            Bridge.ClientTest.Reflection.ReflectionTests.C14.p14Field = 124;
+            var p4 = Bridge.Reflection.midel(m4, null)(null);
+            Bridge.Test.Assert.areEqual$1(p4, 124, "m4.Invoke");
+        },
+        propertiesForSetMethodAreCorrectForPropertyImplementedAsGetAndSetMethods: function () {
+            var m1 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P1").setter;
+            var m2 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P3").setter;
+            var m3 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P13").setter;
+            var m4 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P14").setter;
+    
+            Bridge.Test.Assert.areEqual$1(m1.type, 8, "m1.MemberType");
+            Bridge.Test.Assert.areEqual$1(m2.type, 8, "m2.MemberType");
+            Bridge.Test.Assert.areEqual$1(m3.type, 8, "m3.MemberType");
+            Bridge.Test.Assert.areEqual$1(m1.name, "set_P1", "m1.Name");
+            Bridge.Test.Assert.areEqual$1(m2.name, "set_P3", "m2.Name");
+            Bridge.Test.Assert.areEqual$1(m3.name, "set_P13", "m2.Name");
+            Bridge.Test.Assert.areEqual$1(m1.typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C14, "m1.DeclaringType");
+            Bridge.Test.Assert.areEqual$1(m2.typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C14, "m2.DeclaringType");
+            Bridge.Test.Assert.areEqual$1(m3.typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C14, "m3.DeclaringType");
+            Bridge.Test.Assert.false$1((m1.isStatic || false), "m1.IsStatic");
+            Bridge.Test.Assert.true$1((m2.isStatic || false), "m2.IsStatic");
+            Bridge.Test.Assert.false$1((m3.isStatic || false), "m3.IsStatic");
+            Bridge.Test.Assert.areEqual$1((m1.params || []), [System.Int32], "m1.ParameterTypes");
+            Bridge.Test.Assert.areEqual$1((m2.params || []), [Date], "m2.ParameterTypes");
+            Bridge.Test.Assert.areEqual$1((m3.params || []), [System.Int32], "m3.ParameterTypes");
+            Bridge.Test.Assert.false$1((m1.type === 1), "m1.IsConstructor");
+            Bridge.Test.Assert.false$1((m2.type === 1), "m2.IsConstructor");
+            Bridge.Test.Assert.false$1((m3.type === 1), "m3.IsConstructor");
+            Bridge.Test.Assert.areEqual$1(m1.returnType, Object, "m1.ReturnType");
+            Bridge.Test.Assert.areEqual$1(m2.returnType, Object, "m2.ReturnType");
+            Bridge.Test.Assert.areEqual$1(m3.returnType, Object, "m3.ReturnType");
+            Bridge.Test.Assert.areEqual$1((m1.tpcount || 0), 0, "m1.TypeParameterCount");
+            Bridge.Test.Assert.areEqual$1((m2.tpcount || 0), 0, "m2.TypeParameterCount");
+            Bridge.Test.Assert.areEqual$1((m3.tpcount || 0), 0, "m3.TypeParameterCount");
+            Bridge.Test.Assert.areEqual$1((!!m1.tpcount), false, "m1.IsGenericMethodDefinition");
+            Bridge.Test.Assert.areEqual$1((!!m2.tpcount), false, "m2.IsGenericMethodDefinition");
+            Bridge.Test.Assert.areEqual$1((!!m2.tpcount), false, "m3.IsGenericMethodDefinition");
+    
+            var c = new Bridge.ClientTest.Reflection.ReflectionTests.C14();
+            Bridge.Reflection.midel(m1, c)(42);
+            Bridge.Test.Assert.areEqual$1(c.getP1(), 42, "m1.Invoke");
+    
+            Bridge.ClientTest.Reflection.ReflectionTests.C14.setP3(new Date(2010, 1 - 1, 1));
+            Bridge.Reflection.midel(m2, null)(new Date(2012, 2 - 1, 3));
+            Bridge.Test.Assert.areEqual$1(Bridge.ClientTest.Reflection.ReflectionTests.C14.getP3(), new Date(2012, 2 - 1, 3), "m2.Invoke");
+    
+            c = new Bridge.ClientTest.Reflection.ReflectionTests.C14();
+            Bridge.Reflection.midel(m3, c)(422);
+            Bridge.Test.Assert.areEqual$1(c.p13Field, 422, "m3.Invoke");
+    
+            Bridge.ClientTest.Reflection.ReflectionTests.C14.p14Field = 11;
+            Bridge.Reflection.midel(m4, null)(52);
+            Bridge.Test.Assert.areEqual$1(Bridge.ClientTest.Reflection.ReflectionTests.C14.p14Field, 52, "m4.Invoke");
+        },
+        propertiesForGetMethodAreCorrectForPropertyImplementedAsFields: function () {
+            var m1 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P2").getter;
+            var m2 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P4").getter;
+    
+            Bridge.Test.Assert.areEqual$1(m1.type, 8, "m1.MemberType");
+            Bridge.Test.Assert.areEqual$1(m2.type, 8, "m2.MemberType");
+            Bridge.Test.Assert.areEqual$1(m1.name, "get_P2", "m1.Name");
+            Bridge.Test.Assert.areEqual$1(m2.name, "get_P4", "m2.Name");
+            Bridge.Test.Assert.areEqual$1(m1.typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C14, "m1.DeclaringType");
+            Bridge.Test.Assert.areEqual$1(m2.typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C14, "m2.DeclaringType");
+            Bridge.Test.Assert.false$1((m1.isStatic || false), "m1.IsStatic");
+            Bridge.Test.Assert.true$1((m2.isStatic || false), "m2.IsStatic");
+            Bridge.Test.Assert.areEqual$1((m1.params || []).length, 0, "m1.ParameterTypes");
+            Bridge.Test.Assert.areEqual$1((m2.params || []).length, 0, "m2.ParameterTypes");
+            Bridge.Test.Assert.false$1((m1.type === 1), "m1.IsConstructor");
+            Bridge.Test.Assert.false$1((m2.type === 1), "m2.IsConstructor");
+            Bridge.Test.Assert.areEqual$1(m1.returnType, String, "m1.ReturnType");
+            Bridge.Test.Assert.areEqual$1(m2.returnType, System.Double, "m2.ReturnType");
+            Bridge.Test.Assert.areEqual$1((m1.tpcount || 0), 0, "m1.TypeParameterCount");
+            Bridge.Test.Assert.areEqual$1((m2.tpcount || 0), 0, "m2.TypeParameterCount");
+            Bridge.Test.Assert.areEqual$1((!!m1.tpcount), false, "m1.IsGenericMethodDefinition");
+            Bridge.Test.Assert.areEqual$1((!!m2.tpcount), false, "m2.IsGenericMethodDefinition");
+    
+            var c = Bridge.merge(new Bridge.ClientTest.Reflection.ReflectionTests.C14(), {
+                p2: "Hello, world"
+            } );
+            var p1 = Bridge.Reflection.midel(m1, c)(null);
+            Bridge.Test.Assert.areEqual$1(p1, "Hello, world", "m1.Invoke");
+    
+            Bridge.ClientTest.Reflection.ReflectionTests.C14.p4 = 3.5;
+            var p2 = Bridge.Reflection.midel(m2, null)(null);
+            Bridge.Test.Assert.areEqual$1(p2, 3.5, "m2.Invoke");
+        },
+        propertiesForSetMethodAreCorrectForPropertyImplementedAsFields: function () {
+            var m1 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P2").setter;
+            var m2 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P4").setter;
+    
+            Bridge.Test.Assert.areEqual$1(m1.type, 8, "m1.MemberType");
+            Bridge.Test.Assert.areEqual$1(m2.type, 8, "m2.MemberType");
+            Bridge.Test.Assert.areEqual$1(m1.name, "set_P2", "m1.Name");
+            Bridge.Test.Assert.areEqual$1(m2.name, "set_P4", "m2.Name");
+            Bridge.Test.Assert.areEqual$1(m1.typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C14, "m1.DeclaringType");
+            Bridge.Test.Assert.areEqual$1(m2.typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C14, "m2.DeclaringType");
+            Bridge.Test.Assert.false$1((m1.isStatic || false), "m1.IsStatic");
+            Bridge.Test.Assert.true$1((m2.isStatic || false), "m2.IsStatic");
+            Bridge.Test.Assert.areEqual$1((m1.params || []), [String], "m1.ParameterTypes");
+            Bridge.Test.Assert.areEqual$1((m2.params || []), [System.Double], "m2.ParameterTypes");
+            Bridge.Test.Assert.false$1((m1.type === 1), "m1.IsConstructor");
+            Bridge.Test.Assert.false$1((m2.type === 1), "m2.IsConstructor");
+            Bridge.Test.Assert.areEqual$1(m1.returnType, Object, "m1.ReturnType");
+            Bridge.Test.Assert.areEqual$1(m2.returnType, Object, "m2.ReturnType");
+            Bridge.Test.Assert.areEqual$1((m1.tpcount || 0), 0, "m1.TypeParameterCount");
+            Bridge.Test.Assert.areEqual$1((m2.tpcount || 0), 0, "m2.TypeParameterCount");
+            Bridge.Test.Assert.areEqual$1((!!m1.tpcount), false, "m1.IsGenericMethodDefinition");
+            Bridge.Test.Assert.areEqual$1((!!m2.tpcount), false, "m2.IsGenericMethodDefinition");
+    
+            var c = new Bridge.ClientTest.Reflection.ReflectionTests.C14();
+            Bridge.Reflection.midel(m1, c)("Something");
+            Bridge.Test.Assert.areEqual$1(c.p2, "Something", "m1.Invoke");
+    
+            Bridge.ClientTest.Reflection.ReflectionTests.C14.p4 = 7.5;
+            Bridge.Reflection.midel(m2, null)(2.5);
+            Bridge.Test.Assert.areEqual$1(Bridge.ClientTest.Reflection.ReflectionTests.C14.p4, 2.5, "m2.Invoke");
+        },
+        propertiesForGetMethodAreCorrectForIndexer: function () {
+            var m1 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C15, 16, 284, "Item").getter;
+            var m2 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C24, 16, 284, "Item").getter;
+    
+            Bridge.Test.Assert.areEqual$1(m1.type, 8, "m1.MemberType");
+            Bridge.Test.Assert.areEqual$1(m2.type, 8, "m2.MemberType");
+            Bridge.Test.Assert.areEqual$1(m1.name, "get_Item", "m1.Name");
+            Bridge.Test.Assert.areEqual$1(m2.name, "get_Item", "m2.Name");
+            Bridge.Test.Assert.areEqual$1(m1.typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C15, "m1.DeclaringType");
+            Bridge.Test.Assert.areEqual$1(m2.typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C24, "m2.DeclaringType");
+            Bridge.Test.Assert.false$1((m1.isStatic || false), "m1.IsStatic");
+            Bridge.Test.Assert.false$1((m2.isStatic || false), "m2.IsStatic");
+            Bridge.Test.Assert.areEqual$1((m1.params || []), [System.Int32, String], "m1.ParameterTypes");
+            Bridge.Test.Assert.areEqual$1((m2.params || []), [System.Int32, String], "m2.ParameterTypes");
+            Bridge.Test.Assert.false$1((m1.type === 1), "m1.IsConstructor");
+            Bridge.Test.Assert.false$1((m2.type === 1), "m2.IsConstructor");
+            Bridge.Test.Assert.areEqual$1(m1.returnType, String, "m1.ReturnType");
+            Bridge.Test.Assert.areEqual$1(m2.returnType, String, "m2.ReturnType");
+            Bridge.Test.Assert.areEqual$1((m1.tpcount || 0), 0, "m1.TypeParameterCount");
+            Bridge.Test.Assert.areEqual$1((m2.tpcount || 0), 0, "m2.TypeParameterCount");
+            Bridge.Test.Assert.areEqual$1((!!m1.tpcount), false, "m1.IsGenericMethodDefinition");
+            Bridge.Test.Assert.areEqual$1((!!m2.tpcount), false, "m2.IsGenericMethodDefinition");
+    
+            var c1 = Bridge.merge(new Bridge.ClientTest.Reflection.ReflectionTests.C15(), {
+                v: "X"
+            } );
+            var v1 = Bridge.Reflection.midel(m1, c1)(42, "Hello");
+            Bridge.Test.Assert.areEqual$1(v1, "X 42 Hello", "m1.Invoke");
+    
+            var c2 = Bridge.merge(new Bridge.ClientTest.Reflection.ReflectionTests.C24(), {
+                v: "Y"
+            } );
+            var v2 = Bridge.Reflection.midel(m2, c2)(24, "World");
+            Bridge.Test.Assert.areEqual$1(v2, "Y 24 World", "m2.Invoke");
+        },
+        propertiesForSetMethodAreCorrectForIndexer: function () {
+            var m1 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C15, 16, 284, "Item").setter;
+            var m2 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C24, 16, 284, "Item").setter;
+    
+            Bridge.Test.Assert.areEqual$1(m1.type, 8, "m1.MemberType");
+            Bridge.Test.Assert.areEqual$1(m1.type, 8, "m2.MemberType");
+            Bridge.Test.Assert.areEqual$1(m1.name, "set_Item", "m1.Name");
+            Bridge.Test.Assert.areEqual$1(m2.name, "set_Item", "m2.Name");
+            Bridge.Test.Assert.areEqual$1(m1.typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C15, "m1.DeclaringType");
+            Bridge.Test.Assert.areEqual$1(m2.typeDef, Bridge.ClientTest.Reflection.ReflectionTests.C24, "m2.DeclaringType");
+            Bridge.Test.Assert.false$1((m1.isStatic || false), "m1.IsStatic");
+            Bridge.Test.Assert.false$1((m2.isStatic || false), "m2.IsStatic");
+            Bridge.Test.Assert.areEqual$1((m1.params || []), [System.Int32, String, String], "m1.ParameterTypes");
+            Bridge.Test.Assert.areEqual$1((m2.params || []), [System.Int32, String, String], "m2.ParameterTypes");
+            Bridge.Test.Assert.false$1((m1.type === 1), "m1.IsConstructor");
+            Bridge.Test.Assert.false$1((m2.type === 1), "m2.IsConstructor");
+            Bridge.Test.Assert.areEqual$1(m1.returnType, Object, "m1.ReturnType");
+            Bridge.Test.Assert.areEqual$1(m2.returnType, Object, "m2.ReturnType");
+            Bridge.Test.Assert.areEqual$1((m1.tpcount || 0), 0, "m1.TypeParameterCount");
+            Bridge.Test.Assert.areEqual$1((m2.tpcount || 0), 0, "m2.TypeParameterCount");
+            Bridge.Test.Assert.areEqual$1((!!m1.tpcount), false, "m1.IsGenericMethodDefinition");
+            Bridge.Test.Assert.areEqual$1((!!m2.tpcount), false, "m2.IsGenericMethodDefinition");
+    
+            var c1 = new Bridge.ClientTest.Reflection.ReflectionTests.C15();
+            Bridge.Reflection.midel(m1, c1)(42, "Hello", "The_value");
+    
+            Bridge.Test.Assert.areEqual$1(c1.x, 42, "m1.Invoke (x)");
+            Bridge.Test.Assert.areEqual$1(c1.s, "Hello", "m1.Invoke (s)");
+            Bridge.Test.Assert.areEqual$1(c1.v, "The_value", "m1.Invoke (value)");
+    
+            var c2 = new Bridge.ClientTest.Reflection.ReflectionTests.C24();
+            Bridge.Reflection.midel(m2, c2)(234, "World", "Other_value");
+    
+            Bridge.Test.Assert.areEqual$1(c2.x, 234, "m2.Invoke (x)");
+            Bridge.Test.Assert.areEqual$1(c2.s, "World", "m2.Invoke (s)");
+            Bridge.Test.Assert.areEqual$1(c2.v, "Other_value", "m2.Invoke (value)");
+        },
+        canReadAndWriteAndPropertiesWithOnlyOneAccessor: function () {
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P1").getter), true, "P1.CanRead");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P1").setter), true, "P1.CanWrite");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P2").getter), true, "P2.CanRead");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P2").setter), true, "P2.CanWrite");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P3").getter), true, "P3.CanRead");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P3").setter), true, "P3.CanWrite");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P4").getter), true, "P4.CanRead");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P4").setter), true, "P4.CanWrite");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P5").getter), true, "P5.CanRead");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P5").setter), false, "P5.CanWrite");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P6").getter), true, "P6.CanRead");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P6").setter), true, "P6.CanWrite");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P7").getter), true, "P7.CanRead");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P7").setter), false, "P7.CanWrite");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P8").getter), true, "P8.CanRead");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P8").setter), true, "P8.CanWrite");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P9").getter), false, "P9.CanRead");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P9").setter), true, "P9.CanWrite");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P10").getter), true, "P10.CanRead");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P10").setter), true, "P10.CanWrite");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P11").getter), false, "P11.CanRead");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P11").setter), true, "P11.CanWrite");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P12").getter), true, "P12.CanRead");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P12").setter), true, "P12.CanWrite");
+    
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P1").getter != null, "P1.GetMethod");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P1").setter != null, "P1.SetMethod");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P2").getter != null, "P2.GetMethod");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P2").setter != null, "P2.SetMethod");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P3").getter != null, "P3.GetMethod");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P3").setter != null, "P3.SetMethod");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P4").getter != null, "P4.GetMethod");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P4").setter != null, "P4.SetMethod");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P5").getter != null, "P5.GetMethod");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P5").setter != null, "P5.SetMethod");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P6").getter != null, "P6.GetMethod");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P6").setter != null, "P6.SetMethod");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P7").getter != null, "P7.GetMethod");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P7").setter != null, "P7.SetMethod");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P8").getter != null, "P8.GetMethod");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P8").setter != null, "P8.SetMethod");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P9").getter != null, "P9.GetMethod");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P9").setter != null, "P9.SetMethod");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P10").getter != null, "P10.GetMethod");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P10").setter != null, "P10.SetMethod");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P11").getter != null, "P11.GetMethod");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P11").setter != null, "P11.SetMethod");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P12").getter != null, "P12.GetMethod");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P12").setter != null, "P12.SetMethod");
+        },
+        canReadAndWriteAndIndexersWithOnlyOneAccessor: function () {
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C15, 16, 284, "Item").getter), true, "C15.CanRead");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C15, 16, 284, "Item").setter), true, "C15.CanWrite");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C16, 16, 284, "Item").getter), true, "C16.CanRead");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C16, 16, 284, "Item").setter), false, "C16.CanWrite");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C17, 16, 284, "Item").getter), false, "C17.CanRead");
+            Bridge.Test.Assert.areEqual$1((!!Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C17, 16, 284, "Item").setter), true, "C17.CanWrite");
+    
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C15, 16, 284, "Item").getter != null, "C15.GetMethod");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C15, 16, 284, "Item").setter != null, "C15.SetMethod");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C16, 16, 284, "Item").getter != null, "C16.GetMethod");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C16, 16, 284, "Item").setter != null, "C16.SetMethod");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C17, 16, 284, "Item").getter != null, "C17.GetMethod");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C17, 16, 284, "Item").setter != null, "C17.SetMethod");
+        },
+        propertyInfoGetValueWorks: function () {
+            var p1 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P1");
+            var p2 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P2");
+            var p3 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P3");
+            var p4 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P4");
+            var i = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C15, 16, 284, "Item");
+    
+            var c14 = Bridge.merge(new Bridge.ClientTest.Reflection.ReflectionTests.C14(), {
+                setP1: 42,
+                p2: "Hello, world!"
+            } );
+            Bridge.ClientTest.Reflection.ReflectionTests.C14.setP3(new Date(2013, 3 - 1, 5));
+            Bridge.ClientTest.Reflection.ReflectionTests.C14.p4 = 7.5;
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.midel(p1.getter, c14)(), 42, "P1.GetValue");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.midel(p2.getter, c14)(), "Hello, world!", "P2.GetValue");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.midel(p3.getter, null)(), new Date(2013, 3 - 1, 5), "P3.GetValue");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.midel(p4.getter, null)(), 7.5, "P4.GetValue");
+    
+            var c15 = Bridge.merge(new Bridge.ClientTest.Reflection.ReflectionTests.C15(), {
+                v: "X"
+            } );
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.midel(i.getter, c15).apply(null, [42, "Hello"]), "X 42 Hello", "Item.GetValue");
+        },
+        propertyInfoSetValueWorks: function () {
+            var p1 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P1");
+            var p2 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P2");
+            var p3 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P3");
+            var p4 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C14, 16, 284, "P4");
+            var i = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C15, 16, 284, "Item");
+    
+            var c14 = new Bridge.ClientTest.Reflection.ReflectionTests.C14();
+            Bridge.Reflection.midel(p1.setter, c14)(42);
+            Bridge.Reflection.midel(p2.setter, c14)("Hello, world!");
+            Bridge.Reflection.midel(p3.setter, null)(new Date(2013, 3 - 1, 5));
+            Bridge.Reflection.midel(p4.setter, null)(7.5);
+    
+            Bridge.Test.Assert.areEqual$1(c14.getP1(), 42, "P1.SetValue");
+            Bridge.Test.Assert.areEqual$1(c14.p2, "Hello, world!", "P2.SetValue");
+            Bridge.Test.Assert.areEqual$1(Bridge.ClientTest.Reflection.ReflectionTests.C14.getP3(), new Date(2013, 3 - 1, 5), "P3.SetValue");
+            Bridge.Test.Assert.areEqual$1(Bridge.ClientTest.Reflection.ReflectionTests.C14.p4, 7.5, "P4.SetValue");
+    
+            var c15 = Bridge.merge(new Bridge.ClientTest.Reflection.ReflectionTests.C15(), {
+                v: "X"
+            } );
+            Bridge.Reflection.midel(i.setter, c15).apply(null, [378, "X"].concat("The_value"));
+            Bridge.Test.Assert.areEqual$1(c15.s, "X", "Item.SetValue.s");
+            Bridge.Test.Assert.areEqual$1(c15.x, 378, "Item.SetValue.x");
+            Bridge.Test.Assert.areEqual$1(c15.v, "The_value", "Item.SetValue.value");
+        },
+        testMemberAttribute: function (member, expectedA1) {
+            var all = (member.attr || []);
+            Bridge.Test.Assert.areEqual(all.length, 2);
+            Bridge.Test.Assert.true(Bridge.is(all[0], Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute) || Bridge.is(all[1], Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute));
+            Bridge.Test.Assert.true(Bridge.is(all[0], Bridge.ClientTest.Reflection.ReflectionTests.A3Attribute) || Bridge.is(all[1], Bridge.ClientTest.Reflection.ReflectionTests.A3Attribute));
+            Bridge.Test.Assert.areEqual(Bridge.cast((Bridge.is(all[0], Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute) ? all[0] : all[1]), Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute).getX(), expectedA1);
+    
+            all = (member.attr || []);
+            Bridge.Test.Assert.areEqual(all.length, 2);
+            Bridge.Test.Assert.true(Bridge.is(all[0], Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute) || Bridge.is(all[1], Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute));
+            Bridge.Test.Assert.true(Bridge.is(all[0], Bridge.ClientTest.Reflection.ReflectionTests.A3Attribute) || Bridge.is(all[1], Bridge.ClientTest.Reflection.ReflectionTests.A3Attribute));
+            Bridge.Test.Assert.areEqual(Bridge.cast((Bridge.is(all[0], Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute) ? all[0] : all[1]), Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute).getX(), expectedA1);
+    
+            all = (member.attr || []).filter(function(a) { return Bridge.is(a, Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute); });
+            Bridge.Test.Assert.areEqual(all.length, 1);
+            Bridge.Test.Assert.true(Bridge.is(all[0], Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute));
+            Bridge.Test.Assert.areEqual(Bridge.cast(all[0], Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute).getX(), expectedA1);
+    
+            all = (member.attr || []).filter(function(a) { return Bridge.is(a, Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute); });
+            Bridge.Test.Assert.areEqual(all.length, 1);
+            Bridge.Test.Assert.true(Bridge.is(all[0], Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute));
+            Bridge.Test.Assert.areEqual(Bridge.cast(all[0], Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute).getX(), expectedA1);
+    
+            Bridge.Test.Assert.areEqual((member.attr || []).filter(function(a) { return Bridge.is(a, Bridge.ClientTest.Reflection.ReflectionTests.A4Attribute); }).length, 0);
+            Bridge.Test.Assert.areEqual((member.attr || []).filter(function(a) { return Bridge.is(a, Bridge.ClientTest.Reflection.ReflectionTests.A4Attribute); }).length, 0);
+        },
+        memberAttributesWork: function () {
+            this.testMemberAttribute(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C18, 1, 284, null, System.Array.init(0, null)), 1);
+            this.testMemberAttribute(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C18, 8, 284, "M"), 2);
+            this.testMemberAttribute(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C18, 4, 284, "F"), 3);
+            this.testMemberAttribute(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C18, 16, 284, "P"), 4);
+            this.testMemberAttribute(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C18, 16, 284, "P").getter, 5);
+            this.testMemberAttribute(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C18, 16, 284, "P").setter, 6);
+            this.testMemberAttribute(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C18, 2, 284, "E"), 7);
+            this.testMemberAttribute(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C18, 2, 284, "E").adder, 8);
+            this.testMemberAttribute(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C18, 2, 284, "E").remover, 9);
+    
+            Bridge.Test.Assert.areEqual((Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C2, 8, 284, "M1").attr || []).length, 0);
+        },
+        membersReflectableAttributeWorks: function () {
+            var c25 = Bridge.ClientTest.Reflection.ReflectionTests.C25;
+            var c26 = Bridge.ClientTest.Reflection.ReflectionTests.C26;
+            var c27 = Bridge.ClientTest.Reflection.ReflectionTests.C27;
+            var c28 = Bridge.ClientTest.Reflection.ReflectionTests.C28;
+    
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c25, 4, 284, "A1"), "C25.A1");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c25, 4, 284, "B1"), "C25.B1");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c25, 4, 284, "C1"), "C25.C1");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c25, 4, 284, "D1"), "C25.D1");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c25, 4, 284, "A2"), "C25.A2");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c25, 4, 284, "B2"), "C25.B2");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c25, 4, 284, "C2"), "C25.C2");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c25, 4, 284, "D2"), "C25.D2");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c25, 4, 284, "A3"), "C25.A3");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c25, 4, 284, "B3"), "C25.B3");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c25, 4, 284, "C3"), "C25.C3");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c25, 4, 284, "D3"), "C25.D3");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c25, 4, 284, "A4"), "C25.A4");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c25, 4, 284, "B4"), "C25.B4");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c25, 4, 284, "C4"), "C25.C4");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c25, 4, 284, "D4"), "C25.D4");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c25, 4, 284, "A5"), "C25.A5");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c25, 4, 284, "B5"), "C25.B5");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c25, 4, 284, "C5"), "C25.C5");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c25, 4, 284, "D5"), "C25.D5");
+    
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c26, 4, 284, "A1"), "C26.A1");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c26, 4, 284, "B1"), "C26.B1");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c26, 4, 284, "C1"), "C26.C1");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c26, 4, 284, "D1"), "C26.D1");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c26, 4, 284, "A2"), "C26.A2");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c26, 4, 284, "B2"), "C26.B2");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c26, 4, 284, "C2"), "C26.C2");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c26, 4, 284, "D2"), "C26.D2");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c26, 4, 284, "A3"), "C26.A3");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c26, 4, 284, "B3"), "C26.B3");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c26, 4, 284, "C3"), "C26.C3");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c26, 4, 284, "D3"), "C26.D3");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c26, 4, 284, "A4"), "C26.A4");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c26, 4, 284, "B4"), "C26.B4");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c26, 4, 284, "C4"), "C26.C4");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c26, 4, 284, "D4"), "C26.D4");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c26, 4, 284, "A5"), "C26.A5");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c26, 4, 284, "B5"), "C26.B5");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c26, 4, 284, "C5"), "C26.C5");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c26, 4, 284, "D5"), "C26.D5");
+    
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c27, 4, 284, "A1"), "C27.A1");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c27, 4, 284, "B1"), "C27.B1");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c27, 4, 284, "C1"), "C27.C1");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c27, 4, 284, "D1"), "C27.D1");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c27, 4, 284, "A2"), "C27.A2");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c27, 4, 284, "B2"), "C27.B2");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c27, 4, 284, "C2"), "C27.C2");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c27, 4, 284, "D2"), "C27.D2");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c27, 4, 284, "A3"), "C27.A3");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c27, 4, 284, "B3"), "C27.B3");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c27, 4, 284, "C3"), "C27.C3");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c27, 4, 284, "D3"), "C27.D3");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c27, 4, 284, "A4"), "C27.A4");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c27, 4, 284, "B4"), "C27.B4");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c27, 4, 284, "C4"), "C27.C4");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c27, 4, 284, "D4"), "C27.D4");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c27, 4, 284, "A5"), "C27.A5");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c27, 4, 284, "B5"), "C27.B5");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c27, 4, 284, "C5"), "C27.C5");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c27, 4, 284, "D5"), "C27.D5");
+    
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c28, 4, 284, "A1"), "C28.A1");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c28, 4, 284, "B1"), "C28.B1");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c28, 4, 284, "C1"), "C28.C1");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c28, 4, 284, "D1"), "C28.D1");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c28, 4, 284, "A2"), "C28.A2");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c28, 4, 284, "B2"), "C28.B2");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c28, 4, 284, "C2"), "C28.C2");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c28, 4, 284, "D2"), "C28.D2");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c28, 4, 284, "A3"), "C28.A3");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c28, 4, 284, "B3"), "C28.B3");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c28, 4, 284, "C3"), "C28.C3");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c28, 4, 284, "D3"), "C28.D3");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c28, 4, 284, "A4"), "C28.A4");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c28, 4, 284, "B4"), "C28.B4");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c28, 4, 284, "C4"), "C28.C4");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c28, 4, 284, "D4"), "C28.D4");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c28, 4, 284, "A5"), "C28.A5");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c28, 4, 284, "B5"), "C28.B5");
+            Bridge.Test.Assert.notNull$1(Bridge.Reflection.getMembers(c28, 4, 284, "C5"), "C28.C5");
+            Bridge.Test.Assert.null$1(Bridge.Reflection.getMembers(c28, 4, 284, "D5"), "C28.D5");
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.Reflection.ReflectionTests", $_);
+    
+    Bridge.apply($_.Bridge.ClientTest.Reflection.ReflectionTests, {
+        f1: function (m) {
+            return Bridge.referenceEquals(m.name, "M");
+        },
+        f2: function (m) {
+            return (Bridge.cast(m, System.Reflection.ConstructorInfo).params || []).length === 1;
+        },
+        f3: function (m) {
+            return (Bridge.cast(m, System.Reflection.ConstructorInfo).params || []).length === 2;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute', {
+        inherits: [System.Attribute],
+        config: {
+            properties: {
+                X: 0
+            }
+        },
+        constructor: function () {
+            this.$initialize();
+            System.Attribute.$constructor.call(this);
+        },
+        $constructor1: function (x) {
+            this.$initialize();
+            System.Attribute.$constructor.call(this);
+            this.setX(x);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.A3Attribute', {
+        inherits: [System.Attribute]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.A4Attribute', {
+        inherits: [System.Attribute]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C1', {
+        m1: function () {
+        },
+        m2: function () {
+        },
+        m3: function () {
+        },
+        m4: function () {
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C10', {
+        x: 0,
+        s: null,
+        constructor: function (x) {
+            this.$initialize();
+            this.x = x;
+            this.s = "X";
+        },
+        $constructor1: function (x, s) {
+            this.$initialize();
+            this.x = x;
+            this.s = s;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C11', {
+        config: {
+            init: function () {
+                this.D = new Date(-864e13);
+            }
+        },
+        constructor: function (dt) {
+            this.$initialize();
+            this.D = dt;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C12', {
+        statics: {
+            f3: null
+        },
+        f1: 0,
+        config: {
+            init: function () {
+                this.renamedF2 = new Date(-864e13);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C13', {
+        statics: {
+            addedE4Handler: null,
+            removedE4Handler: null,
+            config: {
+                events: {
+                    E2: null
+                }
+            },
+            addE4: function (value) {
+            },
+            removeE4: function (value) {
+            },
+            raiseE2: function () {
+                if (!Bridge.staticEquals(Bridge.ClientTest.Reflection.ReflectionTests.C13.E2, null)) {
+                    Bridge.ClientTest.Reflection.ReflectionTests.C13.E2();
+                }
+            }
+        },
+        addedE3Handler: null,
+        removedE3Handler: null,
+        config: {
+            events: {
+                E1: null
+            }
+        },
+        addE3: function (value) {
+        },
+        removeE3: function (value) {
+        },
+        raiseE1: function () {
+            if (!Bridge.staticEquals(this.E1, null)) {
+                this.E1();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C14', {
+        statics: {
+            p14Field: 0,
+            p4: 0,
+            p8: 0,
+            p12: 0,
+            config: {
+                properties: {
+                    P3: null
+                },
+                init: function () {
+                    this.P3 = new Date(-864e13);
+                }
+            },
+            getP7: function () {
+                return Bridge.getDefaultValue(Date);
+            },
+            setP11: function (value) {
+            }
+        },
+        p13Field: 0,
+        p2: null,
+        p6: null,
+        p10: null,
+        config: {
+            properties: {
+                P1: 0
+            }
+        },
+        getP5: function () {
+            return 0;
+        },
+        setP9: function (value) {
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C15', {
+        x: 0,
+        s: null,
+        v: null,
+        getItem: function (x, s) {
+            return this.v + " " + x + " " + s;
+        },
+        setItem: function (x, s, value) {
+            this.x = x;
+            this.s = s;
+            this.v = value;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C16', {
+        getItem: function (x, s) {
+            return null;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C17', {
+        setItem: function (x, s, value) {
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C18', {
+        f: 0,
+        config: {
+            properties: {
+                P: 0
+            }
+        },
+        constructor: function () {
+            this.$initialize();
+        },
+        addE: function (value) {
+        },
+        removeE: function (value) {
+        },
+        m: function () {
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C19', {
+        A: 0,
+        B: null,
+        constructor: function (a, b) {
+            this.$initialize();
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C2', {
+        statics: {
+            m2: function () {
+            }
+        },
+        m1: function () {
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C20', {
+        A: 0,
+        B: null
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C21', {
+        X: 0,
+        constructor: function (x) {
+            this.$initialize();
+            this.X = x;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C22', {
+        a: null,
+        b: null,
+        constructor: function (a, b) {
+            if (b === void 0) { b = []; }
+    
+            this.$initialize();
+            this.a = a;
+            this.b = b;
+        },
+        $constructor1: function (a, b) {
+            if (b === void 0) { b = []; }
+    
+            this.$initialize();
+            this.a = a;
+            this.b = b;
+        },
+        m1: function (a, b) {
+            if (b === void 0) { b = []; }
+            return [a, b];
+        },
+        m2: function (a, b) {
+            if (b === void 0) { b = []; }
+            return [a, b];
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C23', {
+        a: null,
+        b: null,
+        constructor: function (a, b) {
+            if (b === void 0) { b = []; }
+    
+            this.$initialize();
+            this.a = a;
+            this.b = b;
+        },
+        $constructor1: function (a, b) {
+            if (b === void 0) { b = []; }
+    
+            this.$initialize();
+            this.a = a;
+            this.b = b;
+        },
+        m1: function (a, b) {
+            if (b === void 0) { b = []; }
+            return [a, b];
+        },
+        m2: function (a, b) {
+            if (b === void 0) { b = []; }
+            return [a, b];
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C24', {
+        x: 0,
+        s: null,
+        v: null,
+        getItem: function (x, s) {
+            return null;
+        },
+        setItem: function (x, s, value) {
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C25', {
+        a1: 0,
+        b1: 0,
+        c1: 0,
+        d1: 0,
+        a2: 0,
+        b2: 0,
+        c2: 0,
+        d2: 0,
+        a3: 0,
+        b3: 0,
+        c3: 0,
+        d3: 0,
+        a4: 0,
+        b4: 0,
+        c4: 0,
+        d4: 0,
+        a5: 0,
+        b5: 0,
+        c5: 0,
+        d5: 0
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C26', {
+        a1: 0,
+        b1: 0,
+        c1: 0,
+        d1: 0,
+        a2: 0,
+        b2: 0,
+        c2: 0,
+        d2: 0,
+        a3: 0,
+        b3: 0,
+        c3: 0,
+        d3: 0,
+        a4: 0,
+        b4: 0,
+        c4: 0,
+        d4: 0,
+        a5: 0,
+        b5: 0,
+        c5: 0,
+        d5: 0
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C27', {
+        a1: 0,
+        b1: 0,
+        c1: 0,
+        d1: 0,
+        a2: 0,
+        b2: 0,
+        c2: 0,
+        d2: 0,
+        a3: 0,
+        b3: 0,
+        c3: 0,
+        d3: 0,
+        a4: 0,
+        b4: 0,
+        c4: 0,
+        d4: 0,
+        a5: 0,
+        b5: 0,
+        c5: 0,
+        d5: 0
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C28', {
+        a1: 0,
+        b1: 0,
+        c1: 0,
+        d1: 0,
+        a2: 0,
+        b2: 0,
+        c2: 0,
+        d2: 0,
+        a3: 0,
+        b3: 0,
+        c3: 0,
+        d3: 0,
+        a4: 0,
+        b4: 0,
+        c4: 0,
+        d4: 0,
+        a5: 0,
+        b5: 0,
+        c5: 0,
+        d5: 0
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C3', {
+        m1: function () {
+            return 0;
+        },
+        m2: function (x) {
+            return 0;
+        },
+        m3: function (x, y) {
+            return 0;
+        },
+        m4: function () {
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C4', {
+        m: function () {
+        },
+        m$1: function (i) {
+        },
+        x: function (i, s) {
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C5$2', function (T1, T2) { return {
+        m: function (t2, s) {
+            return Bridge.getDefaultValue(T1);
+        },
+        m2: function () {
+            return null;
+        }
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C6', {
+        m1: function (T1, T2, t2, s) {
+            return Bridge.getDefaultValue(T1);
+        },
+        m2: function (T1, s) {
+            return Bridge.getDefaultValue(T1);
+        },
+        m3: function (s) {
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C7', {
+        statics: {
+            m2: function (x) {
+            }
+        },
+        x: 0,
+        m1: function (x) {
+            return ((this.x + x) | 0);
+        },
+        m3: function (T1, T2, s) {
+            return this.x.toString() + " " + Bridge.Reflection.getTypeFullName(T1) + " " + Bridge.Reflection.getTypeFullName(T2) + " " + s;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C8', {
+        statics: {
+            m2: function (a, b) {
+                return a + " " + b;
+            },
+            m4: function (T1, T2, a) {
+                return Bridge.Reflection.getTypeFullName(T1) + " " + Bridge.Reflection.getTypeFullName(T2) + " " + a;
+            }
+        },
+        s: null,
+        constructor: function (s) {
+            this.$initialize();
+            this.s = s;
+        },
+        m1: function (a, b) {
+            return this.s + " " + a + " " + b;
+        },
+        m3: function (T1, T2, a) {
+            return this.s + " " + Bridge.Reflection.getTypeFullName(T1) + " " + Bridge.Reflection.getTypeFullName(T2) + " " + a;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.C9$2', function (T1, T2) { return {
+        statics: {
+            m: function (a) {
+                return Bridge.Reflection.getTypeFullName(T1) + " " + Bridge.Reflection.getTypeFullName(T2) + " " + a;
+            }
+        }
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.ReflectionTests.S1', {
+        $kind: "struct",
+        statics: {
+            getDefaultValue: function () { return new Bridge.ClientTest.Reflection.ReflectionTests.S1(); }
+        },
+        constructor: function () {
+            this.$initialize();
+        },
+        m1: function () {
+        },
+        m2: function () {
+        },
+        m3: function () {
+        },
+        m4: function () {
+        },
+        $clone: function (to) { return this; }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests', {
+        statics: {
+            canConvert: function (T, arg) {
+                try { /// The variable `x' is assigned but its value is never used
+    
+    
+                    var x = Bridge.cast(arg, T);
+                    return true;
+                }
+                catch ($e1) {
+                    $e1 = System.Exception.create($e1);
+                    return false;
+                }
+            }
+        },
+        typeIsWorksForReferenceTypes: function () {
+            Bridge.Test.Assert.false$1(Bridge.is({  }, Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C1), "#1");
+            Bridge.Test.Assert.true$1(Bridge.hasValue(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C1()), "#2");
+            Bridge.Test.Assert.false$1(Bridge.is({  }, Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I1), "#3");
+            Bridge.Test.Assert.false$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D1), "#4");
+            Bridge.Test.Assert.true$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C1), "#5");
+            Bridge.Test.Assert.true$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I1), "#6");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D2$1(System.Int32))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1(System.Int32)), "#7");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D2$1(System.Int32))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1(String)), "#8");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D2$1(System.Int32))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I2$1(System.Int32)), "#9");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D2$1(System.Int32))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I2$1(String)), "#10");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D2$1(System.Int32))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I1), "#11");
+            Bridge.Test.Assert.false$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D3(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1(String)), "#12");
+            Bridge.Test.Assert.true$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D3(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1(System.Int32)), "#13");
+            Bridge.Test.Assert.false$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D3(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I2$1(System.Int32)), "#14");
+            Bridge.Test.Assert.true$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D3(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I2$1(String)), "#15");
+            Bridge.Test.Assert.true$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D4(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I1), "#16");
+            Bridge.Test.Assert.true$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D4(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I3), "#17");
+            Bridge.Test.Assert.true$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D4(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I4), "#18");
+            Bridge.Test.Assert.true$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I1), "#19");
+            Bridge.Test.Assert.true$1(Bridge.is((0), System.Int32), "#20");
+            Bridge.Test.Assert.true$1(Bridge.is((0), System.Int32), "#21");
+            Bridge.Test.Assert.true$1(Bridge.hasValue((0)), "#22");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#23");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#24");
+            Bridge.Test.Assert.true$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#25");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#26");
+            Bridge.Test.Assert.false$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#27");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#28");
+            Bridge.Test.Assert.true$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#29");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#30");
+            Bridge.Test.Assert.true$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#31");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#32");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#33");
+            Bridge.Test.Assert.true$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#34");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#35");
+            Bridge.Test.Assert.true$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#36");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#37");
+            Bridge.Test.Assert.false$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#38");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#39");
+            Bridge.Test.Assert.true$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#40");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I1), "#41");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#42");
+            Bridge.Test.Assert.true$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#43");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#44");
+            Bridge.Test.Assert.false$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#45");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#46");
+            Bridge.Test.Assert.true$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#47");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#48");
+            Bridge.Test.Assert.false$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#49");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#50");
+            Bridge.Test.Assert.true$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#51");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#52");
+            Bridge.Test.Assert.true$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#53");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#54");
+            Bridge.Test.Assert.true$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#55");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#56");
+            Bridge.Test.Assert.true$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#57");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#58");
+            Bridge.Test.Assert.false$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#59");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#60");
+            Bridge.Test.Assert.false$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#61");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#62");
+            Bridge.Test.Assert.true$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#63");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#64");
+            Bridge.Test.Assert.false$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#65");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#66");
+            Bridge.Test.Assert.false$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#67");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#68");
+            Bridge.Test.Assert.false$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#69");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#70");
+            Bridge.Test.Assert.true$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#71");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#72");
+            Bridge.Test.Assert.true$1(Bridge.is(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#73");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#74");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#75");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#76");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#77");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#78");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#79");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#80");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#81");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#82");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#83");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#84");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), "#85");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#86");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#87");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#88");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), "#89");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#90");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#91");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#92");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#93");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#94");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#95");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#96");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#97");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#98");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#99");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#100");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#101");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#102");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#103");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#104");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#105");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#106");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#107");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#108");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#109");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#110");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#111");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#112");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#113");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#114");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#115");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#116");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#117");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#118");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#119");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#120");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#121");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#122");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#123");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#124");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#125");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#126");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#127");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#128");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#129");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#130");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#131");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#132");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#133");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#134");
+            Bridge.Test.Assert.false$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#135");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))), "#136");
+            Bridge.Test.Assert.true$1(Bridge.is(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))), "#137");
+            Bridge.Test.Assert.false$1(Bridge.hasValue(null), "#138");
+        },
+        typeAsWorksForReferenceTypes: function () {
+            Bridge.Test.Assert.false$1((Bridge.as({  }, Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C1)) != null, "#1");
+            Bridge.Test.Assert.true$1((new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C1()) != null, "#2");
+            Bridge.Test.Assert.false$1((Bridge.as({  }, Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I1)) != null, "#3");
+            Bridge.Test.Assert.false$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D1)) != null, "#4");
+            Bridge.Test.Assert.true$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C1)) != null, "#5");
+            Bridge.Test.Assert.true$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I1)) != null, "#6");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D2$1(System.Int32))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1(System.Int32))) != null, "#7");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D2$1(System.Int32))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1(String))) != null, "#8");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D2$1(System.Int32))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I2$1(System.Int32))) != null, "#9");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D2$1(System.Int32))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I2$1(String))) != null, "#10");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D2$1(System.Int32))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I1)) != null, "#11");
+            Bridge.Test.Assert.false$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D3(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1(String))) != null, "#12");
+            Bridge.Test.Assert.true$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D3(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1(System.Int32))) != null, "#13");
+            Bridge.Test.Assert.false$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D3(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I2$1(System.Int32))) != null, "#14");
+            Bridge.Test.Assert.true$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D3(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I2$1(String))) != null, "#15");
+            Bridge.Test.Assert.true$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D4(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I1)) != null, "#16");
+            Bridge.Test.Assert.true$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D4(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I3)) != null, "#17");
+            Bridge.Test.Assert.true$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D4(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I4)) != null, "#18");
+            Bridge.Test.Assert.true$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I1)) != null, "#19");
+            Bridge.Test.Assert.true$1((Bridge.as((0), System.Int32, true)) != null, "#20");
+            Bridge.Test.Assert.true$1((Bridge.as((0), System.Int32, true)) != null, "#21");
+            Bridge.Test.Assert.true$1(((0)) != null, "#22");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#23");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#24");
+            Bridge.Test.Assert.true$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#25");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#26");
+            Bridge.Test.Assert.false$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#27");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#28");
+            Bridge.Test.Assert.true$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#29");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#30");
+            Bridge.Test.Assert.true$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#31");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#32");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#33");
+            Bridge.Test.Assert.true$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#34");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#35");
+            Bridge.Test.Assert.true$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#36");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#37");
+            Bridge.Test.Assert.false$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#38");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#39");
+            Bridge.Test.Assert.true$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#40");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I1)) != null, "#41");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#42");
+            Bridge.Test.Assert.true$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#43");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#44");
+            Bridge.Test.Assert.false$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#45");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#46");
+            Bridge.Test.Assert.true$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#47");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#48");
+            Bridge.Test.Assert.false$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#49");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#50");
+            Bridge.Test.Assert.true$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#51");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#52");
+            Bridge.Test.Assert.true$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#53");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#54");
+            Bridge.Test.Assert.true$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#55");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#56");
+            Bridge.Test.Assert.true$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#57");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#58");
+            Bridge.Test.Assert.false$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#59");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#60");
+            Bridge.Test.Assert.false$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#61");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#62");
+            Bridge.Test.Assert.true$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#63");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#64");
+            Bridge.Test.Assert.false$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#65");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#66");
+            Bridge.Test.Assert.false$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#67");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#68");
+            Bridge.Test.Assert.false$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#69");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#70");
+            Bridge.Test.Assert.true$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X1(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#71");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#72");
+            Bridge.Test.Assert.true$1((Bridge.as(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X2(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#73");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#74");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#75");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#76");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#77");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#78");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#79");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#80");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#81");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#82");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#83");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#84");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))) != null, "#85");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#86");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#87");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#88");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))) != null, "#89");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#90");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#91");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#92");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#93");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#94");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#95");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#96");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#97");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#98");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#99");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#100");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#101");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#102");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#103");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#104");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#105");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#106");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#107");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#108");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#109");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#110");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#111");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#112");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#113");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#114");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#115");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#116");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#117");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#118");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#119");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#120");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#121");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#122");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#123");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#124");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#125");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#126");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#127");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#128");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#129");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#130");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#131");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#132");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#133");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#134");
+            Bridge.Test.Assert.false$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#135");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)))) != null, "#136");
+            Bridge.Test.Assert.true$1((Bridge.as(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))(), Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)))) != null, "#137");
+            Bridge.Test.Assert.false$1((null) != null, "#138");
+        },
+        castWorksForReferenceTypes: function () {
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C1, {  }), "#1");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Object, new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C1()), "#2");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I1, {  }), "#3");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D1, new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C1()), "#4");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C1, new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D1()), "#5");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I1, new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D1()), "#6");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1(System.Int32), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D2$1(System.Int32))()), "#7");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1(String), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D2$1(System.Int32))()), "#8");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I2$1(System.Int32), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D2$1(System.Int32))()), "#9");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I2$1(String), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D2$1(System.Int32))()), "#10");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I1, new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D2$1(System.Int32))()), "#11");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1(String), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D3()), "#12");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1(System.Int32), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D3()), "#13");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I2$1(System.Int32), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D3()), "#14");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I2$1(String), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D3()), "#15");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I1, new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D4()), "#16");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I3, new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D4()), "#17");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I4, new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D4()), "#18");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I1, new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2()), "#19");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.E1, (0)), "#20");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(System.Int32, (0)), "#21");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Object, (0)), "#22");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#23");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#24");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1X1()), "#25");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#26");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1X1()), "#27");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#28");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1X2()), "#29");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#30");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1X2()), "#31");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#32");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#33");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2X1()), "#34");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#35");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2X1()), "#36");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#37");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2X2()), "#38");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#39");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2X2()), "#40");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I1, new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#41");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#42");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X1()), "#43");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#44");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X2()), "#45");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#46");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X1()), "#47");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#48");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X2()), "#49");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#50");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X1()), "#51");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#52");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X2()), "#53");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#54");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X1()), "#55");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#56");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X2()), "#57");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#58");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X1()), "#59");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#60");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X2()), "#61");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#62");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X1()), "#63");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#64");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X2()), "#65");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#66");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X1()), "#67");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#68");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X2()), "#69");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#70");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X1()), "#71");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#72");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X2()), "#73");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#74");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#75");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#76");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#77");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#78");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#79");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#80");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#81");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#82");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#83");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#84");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#85");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#86");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#87");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#88");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#89");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#90");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#91");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#92");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#93");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#94");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#95");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#96");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#97");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#98");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#99");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#100");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#101");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#102");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#103");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#104");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#105");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#106");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#107");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#108");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#109");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#110");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#111");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#112");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#113");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#114");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#115");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#116");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#117");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#118");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#119");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#120");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#121");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#122");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#123");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#124");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1))()), "#125");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#126");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#127");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#128");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#129");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#130");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#131");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#132");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#133");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#134");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#135");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#136");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.canConvert(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)), new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2))()), "#137");
+            Bridge.Test.Assert.false$1(Bridge.hasValue(null), "#138");
+        },
+        getTypeWorksOnObjects: function () {
+            var a = $_.Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.f1;
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.getType(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C1())), "Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C1");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.getType(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1(System.Int32))())), "Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1[[System.Int32, System]]");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.getType(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1(String))())), "Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1[[String]]");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(System.Int32), "System.Int32");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(String), "String");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Function), "Function");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.getType({  })), "Object");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.getType([1, 2])), "Array");
+        },
+        getTypeOnNullInstanceThrowsException: function () {
+            Bridge.Test.Assert.throws($_.Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.f2);
+        },
+        cast: function (T, o) {
+            return Bridge.cast(o, T);
+        },
+        castOperatorForSerializableTypeWithoutTypeCheckCodeAlwaysSucceedsGeneric: function () {
+            var o = {  };
+            var b = this.cast(Object, o);
+            Bridge.Test.Assert.true(Bridge.referenceEquals(o, b));
+        },
+        typeCheckForSubTypeOfGenericType: function () {
+            var c12 = new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C12();
+            Bridge.Test.Assert.true$1(Bridge.is(c12, Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C12), "#1");
+            Bridge.Test.Assert.true$1(Bridge.is(c12, Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C11$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.K)), "#2");
+            Bridge.Test.Assert.true$1(Bridge.is(c12, Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C10$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.K)), "#3");
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests", $_);
+    
+    Bridge.apply($_.Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests, {
+        f1: function () {
+        },
+        f2: function () {
+            Bridge.getType(null);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.BS', {
+        X: 0,
+        constructor: function (x) {
+            this.$initialize();
+            this.X = x;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C1');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.K');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1', function (T) { return {
+    
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.CI');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I1', {
+        $kind: "interface"
+    });
+    
+    Bridge.definei('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I2$1', function (T1) { return {
+        $kind: "interface"
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I4', {
+        $kind: "interface"
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.E1', {
+        $kind: "enum"
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.E2', {
+        $kind: "enum"
+    });
+    
+    Bridge.definei('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1', function (T) { return {
+        $kind: "interface",
+        $variance: [2]
+    }; });
+    
+    Bridge.definei('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1', function (T) { return {
+        $kind: "interface",
+        $variance: [1]
+    }; });
+    
+    Bridge.definei('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2', function (T1, T2) { return {
+        $kind: "interface",
+        $variance: [0,1]
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests', {
+        fullNamePropertyReturnsTheNameWithTheNamespace: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Reflection.TypeSystemTests), "Bridge.ClientTest.Reflection.TypeSystemTests");
+        },
+        assemblyQualifiedNameReturnsTheNameWithTheNamespaceAndAssemblyName: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeQName(Bridge.ClientTest.Reflection.TypeSystemTests), "Bridge.ClientTest.Reflection.TypeSystemTests, Bridge.ClientTest");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeQName(Bridge.ClientTest.Reflection.TypeSystemTests.BX$1), "Bridge.ClientTest.Reflection.TypeSystemTests.BX$1, Bridge.ClientTest");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeQName(Bridge.ClientTest.Reflection.TypeSystemTests.BX$1(System.Int32)), "Bridge.ClientTest.Reflection.TypeSystemTests.BX$1[[System.Int32, System]], Bridge.ClientTest");
+        },
+        assemblyPropertyWorks: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Bridge.ClientTest.Reflection.TypeSystemTests.B).name, "Bridge.ClientTest");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Bridge.ClientTest.Reflection.TypeSystemTests.I1).name, "Bridge.ClientTest");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1).name, "Bridge.ClientTest");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Bridge.ClientTest.Reflection.TypeSystemTests.BX$1).name, "Bridge.ClientTest");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1(System.Int32)).name, "Bridge.ClientTest");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Bridge.ClientTest.Reflection.TypeSystemTests.BX$1(System.Int32)).name, "Bridge.ClientTest");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Bridge.ClientTest.Reflection.TypeSystemTests.E1).name, "Bridge.ClientTest");
+        },
+        namespacePropertyReturnsTheNamespaceWithoutTheName: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeNamespace(Bridge.ClientTest.Reflection.TypeSystemTests), "Bridge.ClientTest.Reflection");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeNamespace(Bridge.ClientTest.Reflection.TypeSystemTests.DS2), "Bridge.ClientTest.Reflection");
+        },
+        instantiatingClassWithConstructorThatNeedsToBeAppliedWorks: function () {
+            var args = Bridge.merge(new (System.Collections.Generic.List$1(Object))(), [
+                [42],
+                ["x"],
+                [18]
+            ] );
+            var obj = new Bridge.ClientTest.Reflection.TypeSystemTests.ClassWithExpandParamsCtor(args.toArray());
+    
+            Bridge.Test.Assert.areEqual(obj.ctorArgs, args.toArray());
+            Bridge.Test.Assert.areEqual(Bridge.getType(obj), Bridge.ClientTest.Reflection.TypeSystemTests.ClassWithExpandParamsCtor);
+        },
+        namePropertyRemovesTheNamespace: function () {
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getTypeName(Bridge.ClientTest.Reflection.TypeSystemTests), "TypeSystemTests", "non-generic");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getTypeName(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,String)), "G$2[[System.Int32, System],[String]]", "generic");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getTypeName(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(Bridge.ClientTest.Reflection.TypeSystemTests.BX$1(System.Double),String)), "G$2[[Bridge.ClientTest.Reflection.TypeSystemTests.BX$1[[System.Double, System]], Bridge.ClientTest],[String]]", "nested generic");
+        },
+        gettingBaseTypeWorks: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getBaseType(Bridge.ClientTest.Reflection.TypeSystemTests.B), Object);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getBaseType(Bridge.ClientTest.Reflection.TypeSystemTests.C), Bridge.ClientTest.Reflection.TypeSystemTests.B);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getBaseType(Object), null);
+        },
+        gettingImplementedInterfacesWorks: function () {
+            var ifs = Bridge.Reflection.getInterfaces(Bridge.ClientTest.Reflection.TypeSystemTests.C);
+            Bridge.Test.Assert.areEqual(ifs.length, 4);
+            Bridge.Test.Assert.true(System.Array.contains(ifs, Bridge.ClientTest.Reflection.TypeSystemTests.I1, Function));
+            Bridge.Test.Assert.true(System.Array.contains(ifs, Bridge.ClientTest.Reflection.TypeSystemTests.I2, Function));
+            Bridge.Test.Assert.true(System.Array.contains(ifs, Bridge.ClientTest.Reflection.TypeSystemTests.I3, Function));
+            Bridge.Test.Assert.true(System.Array.contains(ifs, Bridge.ClientTest.Reflection.TypeSystemTests.I4, Function));
+        },
+        typeOfAnOpenGenericClassWorks: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Reflection.TypeSystemTests.G$2), "Bridge.ClientTest.Reflection.TypeSystemTests.G$2");
+        },
+        typeOfAnOpenGenericInterfaceWorks: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1), "Bridge.ClientTest.Reflection.TypeSystemTests.IG$1");
+        },
+        typeOfInstantiatedGenericClassWorks: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,Bridge.ClientTest.Reflection.TypeSystemTests.C)), "Bridge.ClientTest.Reflection.TypeSystemTests.G$2[[System.Int32, System],[Bridge.ClientTest.Reflection.TypeSystemTests.C, Bridge.ClientTest]]");
+        },
+        typeOfInstantiatedGenericInterfaceWorks: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1(System.Int32)), "Bridge.ClientTest.Reflection.TypeSystemTests.IG$1[[System.Int32, System]]");
+        },
+        constructingAGenericTypeTwiceWithTheSameArgumentsReturnsTheSameInstance: function () {
+            var t1 = Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,Bridge.ClientTest.Reflection.TypeSystemTests.C);
+            var t2 = Bridge.ClientTest.Reflection.TypeSystemTests.G$2(Bridge.ClientTest.Reflection.TypeSystemTests.C,System.Int32);
+            var t3 = Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,Bridge.ClientTest.Reflection.TypeSystemTests.C);
+            Bridge.Test.Assert.false(Bridge.referenceEquals(t1, t2));
+            Bridge.Test.Assert.true(Bridge.referenceEquals(t1, t3));
+        },
+        accessingAStaticMemberInAGenericClassWorks: function () {
+            Bridge.Test.Assert.areEqual(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,Bridge.ClientTest.Reflection.TypeSystemTests.C).field, "System.Int32 Bridge.ClientTest.Reflection.TypeSystemTests.C");
+            Bridge.Test.Assert.areEqual(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(Bridge.ClientTest.Reflection.TypeSystemTests.C,System.Int32).field, "Bridge.ClientTest.Reflection.TypeSystemTests.C System.Int32");
+            Bridge.Test.Assert.areEqual(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(Bridge.ClientTest.Reflection.TypeSystemTests.C,System.Int32),Bridge.ClientTest.Reflection.TypeSystemTests.G$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.C)).field, "Bridge.ClientTest.Reflection.TypeSystemTests.G$2[[Bridge.ClientTest.Reflection.TypeSystemTests.C, Bridge.ClientTest],[System.Int32, System]] Bridge.ClientTest.Reflection.TypeSystemTests.G$2[[String],[Bridge.ClientTest.Reflection.TypeSystemTests.C, Bridge.ClientTest]]");
+        },
+        typeOfNestedGenericClassWorks: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,Bridge.ClientTest.Reflection.TypeSystemTests.G$2(Bridge.ClientTest.Reflection.TypeSystemTests.C,Bridge.ClientTest.Reflection.TypeSystemTests.IG$1(String)))), "Bridge.ClientTest.Reflection.TypeSystemTests.G$2[[System.Int32, System],[Bridge.ClientTest.Reflection.TypeSystemTests.G$2[[Bridge.ClientTest.Reflection.TypeSystemTests.C, Bridge.ClientTest],[Bridge.ClientTest.Reflection.TypeSystemTests.IG$1[[String]], Bridge.ClientTest]], Bridge.ClientTest]]");
+        },
+        baseTypeAndImplementedInterfacesForGenericTypeWorks: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.Reflection.getBaseType(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,Bridge.ClientTest.Reflection.TypeSystemTests.G$2(Bridge.ClientTest.Reflection.TypeSystemTests.C,Bridge.ClientTest.Reflection.TypeSystemTests.IG$1(String))))), "Bridge.ClientTest.Reflection.TypeSystemTests.BX$1[[Bridge.ClientTest.Reflection.TypeSystemTests.G$2[[System.Int32, System],[Bridge.ClientTest.Reflection.TypeSystemTests.C, Bridge.ClientTest]], Bridge.ClientTest]]");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.Reflection.getInterfaces(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,Bridge.ClientTest.Reflection.TypeSystemTests.G$2(Bridge.ClientTest.Reflection.TypeSystemTests.C,Bridge.ClientTest.Reflection.TypeSystemTests.IG$1(String))))[0]), "Bridge.ClientTest.Reflection.TypeSystemTests.IG$1[[Bridge.ClientTest.Reflection.TypeSystemTests.G$2[[Bridge.ClientTest.Reflection.TypeSystemTests.G$2[[Bridge.ClientTest.Reflection.TypeSystemTests.C, Bridge.ClientTest],[Bridge.ClientTest.Reflection.TypeSystemTests.IG$1[[String]], Bridge.ClientTest]], Bridge.ClientTest],[String]], Bridge.ClientTest]]");
+        },
+        isGenericTypeDefinitionWorksAsExpected: function () {
+            Bridge.Test.Assert.true(Bridge.Reflection.isGenericTypeDefinition(Bridge.ClientTest.Reflection.TypeSystemTests.G$2));
+            Bridge.Test.Assert.false(Bridge.Reflection.isGenericTypeDefinition(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,String)));
+            Bridge.Test.Assert.false(Bridge.Reflection.isGenericTypeDefinition(Bridge.ClientTest.Reflection.TypeSystemTests.C));
+            Bridge.Test.Assert.true(Bridge.Reflection.isGenericTypeDefinition(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1));
+            Bridge.Test.Assert.false(Bridge.Reflection.isGenericTypeDefinition(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1(System.Int32)));
+            Bridge.Test.Assert.false(Bridge.Reflection.isGenericTypeDefinition(Bridge.ClientTest.Reflection.TypeSystemTests.I2));
+            Bridge.Test.Assert.false(Bridge.Reflection.isGenericTypeDefinition(Bridge.ClientTest.Reflection.TypeSystemTests.E1));
+        },
+        genericParameterCountReturnsZeroForConstructedTypesAndNonZeroForOpenOnes: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getGenericParameterCount(Bridge.ClientTest.Reflection.TypeSystemTests.G$2), 2);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getGenericParameterCount(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,String)), 0);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getGenericParameterCount(Bridge.ClientTest.Reflection.TypeSystemTests.C), 0);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getGenericParameterCount(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1), 1);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getGenericParameterCount(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1(System.Int32)), 0);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getGenericParameterCount(Bridge.ClientTest.Reflection.TypeSystemTests.I2), 0);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getGenericParameterCount(Bridge.ClientTest.Reflection.TypeSystemTests.E1), 0);
+        },
+        getGenericArgumentsReturnsTheCorrectTypesForConstructedTypesOtherwiseNull: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getGenericArguments(Bridge.ClientTest.Reflection.TypeSystemTests.G$2), null);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getGenericArguments(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,String)), [System.Int32, String]);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getGenericArguments(Bridge.ClientTest.Reflection.TypeSystemTests.C), null);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getGenericArguments(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1), null);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getGenericArguments(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1(String)), [String]);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getGenericArguments(Bridge.ClientTest.Reflection.TypeSystemTests.I2), null);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getGenericArguments(Bridge.ClientTest.Reflection.TypeSystemTests.E1), null);
+        },
+        getGenericTypeDefinitionReturnsTheGenericTypeDefinitionForConstructedTypeOtherwiseNull: function () {
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getGenericTypeDefinition(Bridge.ClientTest.Reflection.TypeSystemTests.G$2), null);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getGenericTypeDefinition(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,String)), Bridge.ClientTest.Reflection.TypeSystemTests.G$2);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getGenericTypeDefinition(Bridge.ClientTest.Reflection.TypeSystemTests.C), null);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getGenericTypeDefinition(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1), null);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getGenericTypeDefinition(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1(String)), Bridge.ClientTest.Reflection.TypeSystemTests.IG$1);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getGenericTypeDefinition(Bridge.ClientTest.Reflection.TypeSystemTests.I2), null);
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getGenericTypeDefinition(Bridge.ClientTest.Reflection.TypeSystemTests.E1), null);
+        },
+        isAssignableFromWorks: function () {
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C1, Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C1), "#1");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C1, Object), "#2");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Object, Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C1), "#3");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1, Object), "#4");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Object, Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1), "#5");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I3, Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1), "#6");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1, Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I3), "#7");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D1, Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C1), "#8");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C1, Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D1), "#9");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1, Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D1), "#10");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C2$1(System.Int32), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D2$1(System.Int32)), "#11");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C2$1(String), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D2$1(System.Int32)), "#12");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I2$1(System.Int32), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D2$1(System.Int32)), "#13");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I2$1(String), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D2$1(System.Int32)), "#14");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1, Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D2$1(System.Int32)), "#15");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C2$1(String), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D3), "#16");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C2$1(System.Int32), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D3), "#17");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I2$1(System.Int32), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D3), "#18");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I2$1(String), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D3), "#19");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I2$1(System.Int32), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I5$1(String)), "#20");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I2$1(System.Int32), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I5$1(System.Int32)), "#21");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I5$1(System.Int32), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I2$1(System.Int32)), "#22");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1, Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D4), "#23");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I3, Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D4), "#24");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I4, Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D4), "#25");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1, Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), "#26");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I2$1, Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I5$1), "#27");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C2$1, Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D2$1), "#28");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C2$1, Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D3), "#29");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.E1, Bridge.ClientTest.Reflection.TypeSystemTests.E2), "#30");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(System.Int32, Bridge.ClientTest.Reflection.TypeSystemTests.E1), "#31");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Object, Bridge.ClientTest.Reflection.TypeSystemTests.E1), "#32");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#33");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#34");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#35");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#36");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#37");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y1$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#38");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y1$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#39");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y1X1), "#40");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y1$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#41");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y1X1), "#42");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y1$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#43");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y1X2), "#44");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y1$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#45");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y1X2), "#46");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#47");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#48");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#49");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#50");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#51");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y2$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#52");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y2$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#53");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y2X1), "#54");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y2$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#55");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y2X1), "#56");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y2$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#57");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y2X2), "#58");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y2$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#59");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y2X2), "#60");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1, Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#61");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#62");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#63");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#64");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#65");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#66");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#67");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#68");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#69");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#70");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#71");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#72");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#73");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#74");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#75");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#76");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#77");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1, Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#78");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#79");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X1X1), "#80");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#81");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X1X2), "#82");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#83");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X2X1), "#84");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#85");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X2X2), "#86");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#87");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X1X1), "#88");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#89");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X1X2), "#90");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#91");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X2X1), "#92");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#93");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X2X2), "#94");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#95");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X1X1), "#96");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#97");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X1X2), "#98");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#99");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X2X1), "#100");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#101");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X2X2), "#102");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#103");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X1X1), "#104");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#105");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X1X2), "#106");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#107");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X2X1), "#108");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#109");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X2X2), "#110");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#111");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#112");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#113");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#114");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#115");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#116");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#117");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#118");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#119");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#120");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#121");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#122");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#123");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#124");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#125");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#126");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#127");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#128");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#129");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#130");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#131");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#132");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#133");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#134");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#135");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#136");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#137");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#138");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#139");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#140");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#141");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#142");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#143");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#144");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#145");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#146");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#147");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#148");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#149");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#150");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#151");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#152");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#153");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#154");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#155");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#156");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#157");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#158");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#159");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#160");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#161");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#162");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#163");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#164");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#165");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#166");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#167");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#168");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#169");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#170");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#171");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#172");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#173");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#174");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#175");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#176");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#177");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#178");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#179");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#180");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#181");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#182");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#183");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#184");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#185");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#186");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#187");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#188");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#189");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#190");
+        },
+        isSubclassOfWorks: function () {
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.C1.prototype instanceof Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.C1, "#1");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.C1.prototype instanceof Object, "#2");
+            Bridge.Test.Assert.false$1(Object.prototype instanceof Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.C1, "#3");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.D1.prototype instanceof Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.C1, "#4");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.C1.prototype instanceof Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.D1, "#5");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.D1.prototype instanceof Object, "#6");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.D2$1(System.Int32).prototype instanceof Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.C2$1(System.Int32), "#7");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.D2$1(String).prototype instanceof Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.C2$1(System.Int32), "#8");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.D3.prototype instanceof Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.C2$1(String), "#9");
+            Bridge.Test.Assert.true$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.D3.prototype instanceof Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.C2$1(System.Int32), "#10");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.D2$1.prototype instanceof Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.C2$1, "#11");
+            Bridge.Test.Assert.false$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.D3.prototype instanceof Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.C2$1, "#12");
+        },
+        isClassWorks: function () {
+            Bridge.Test.Assert.false(Bridge.Reflection.isClass(Bridge.ClientTest.Reflection.TypeSystemTests.E1));
+            Bridge.Test.Assert.false(Bridge.Reflection.isClass(Bridge.ClientTest.Reflection.TypeSystemTests.E2));
+            Bridge.Test.Assert.true(Bridge.Reflection.isClass(Bridge.ClientTest.Reflection.TypeSystemTests.C));
+            Bridge.Test.Assert.true(Bridge.Reflection.isClass(Bridge.ClientTest.Reflection.TypeSystemTests.G$2));
+            Bridge.Test.Assert.true(Bridge.Reflection.isClass(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,String)));
+            Bridge.Test.Assert.false(Bridge.Reflection.isClass(Bridge.ClientTest.Reflection.TypeSystemTests.I1));
+            Bridge.Test.Assert.false(Bridge.Reflection.isClass(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1));
+            Bridge.Test.Assert.false(Bridge.Reflection.isClass(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1(System.Int32)));
+        },
+        isEnumWorks: function () {
+            Bridge.Test.Assert.true(Bridge.Reflection.isEnum(Bridge.ClientTest.Reflection.TypeSystemTests.E1));
+            Bridge.Test.Assert.true(Bridge.Reflection.isEnum(Bridge.ClientTest.Reflection.TypeSystemTests.E2));
+            Bridge.Test.Assert.false(Bridge.Reflection.isEnum(Bridge.ClientTest.Reflection.TypeSystemTests.C));
+            Bridge.Test.Assert.false(Bridge.Reflection.isEnum(Bridge.ClientTest.Reflection.TypeSystemTests.G$2));
+            Bridge.Test.Assert.false(Bridge.Reflection.isEnum(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,String)));
+            Bridge.Test.Assert.false(Bridge.Reflection.isEnum(Bridge.ClientTest.Reflection.TypeSystemTests.I1));
+            Bridge.Test.Assert.false(Bridge.Reflection.isEnum(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1));
+            Bridge.Test.Assert.false(Bridge.Reflection.isEnum(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1(System.Int32)));
+        },
+        isArrayWorks: function () {
+            var array = System.Array.init(5, 0);
+            Bridge.Test.Assert.true(Bridge.getType(array) === Array);
+            Bridge.Test.Assert.true(Array === Array);
+            Bridge.Test.Assert.true(Array === Array);
+            Bridge.Test.Assert.false(Bridge.ClientTest.Reflection.TypeSystemTests.C === Array);
+            //TODO Assert.False(typeof(List<int>).IsArray);
+            //TODO Assert.False(typeof(Array).IsArray);
+        },
+        isFlagsWorks: function () {
+            Bridge.Test.Assert.false(Bridge.Reflection.isFlags(Bridge.ClientTest.Reflection.TypeSystemTests.E1));
+            Bridge.Test.Assert.true(Bridge.Reflection.isFlags(Bridge.ClientTest.Reflection.TypeSystemTests.E2));
+            Bridge.Test.Assert.false(Bridge.Reflection.isFlags(Bridge.ClientTest.Reflection.TypeSystemTests.C));
+            Bridge.Test.Assert.false(Bridge.Reflection.isFlags(Bridge.ClientTest.Reflection.TypeSystemTests.G$2));
+            Bridge.Test.Assert.false(Bridge.Reflection.isFlags(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,String)));
+            Bridge.Test.Assert.false(Bridge.Reflection.isFlags(Bridge.ClientTest.Reflection.TypeSystemTests.I1));
+            Bridge.Test.Assert.false(Bridge.Reflection.isFlags(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1));
+            Bridge.Test.Assert.false(Bridge.Reflection.isFlags(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1(System.Int32)));
+        },
+        isInterfaceWorks: function () {
+            Bridge.Test.Assert.false(Bridge.Reflection.isInterface(Bridge.ClientTest.Reflection.TypeSystemTests.E1));
+            Bridge.Test.Assert.false(Bridge.Reflection.isInterface(Bridge.ClientTest.Reflection.TypeSystemTests.E2));
+            Bridge.Test.Assert.false(Bridge.Reflection.isInterface(Bridge.ClientTest.Reflection.TypeSystemTests.C));
+            Bridge.Test.Assert.false(Bridge.Reflection.isInterface(Bridge.ClientTest.Reflection.TypeSystemTests.G$2));
+            Bridge.Test.Assert.false(Bridge.Reflection.isInterface(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,String)));
+            Bridge.Test.Assert.true(Bridge.Reflection.isInterface(Bridge.ClientTest.Reflection.TypeSystemTests.I1));
+            Bridge.Test.Assert.true(Bridge.Reflection.isInterface(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1));
+            Bridge.Test.Assert.true(Bridge.Reflection.isInterface(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1(System.Int32)));
+        },
+        isInstanceOfTypeWorksForReferenceTypes: function () {
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType({  }, Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C1), "#1");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C1(), Object), "#2");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType({  }, Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1), "#3");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C1(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D1), "#4");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D1(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C1), "#5");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D1(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1), "#6");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D2$1(System.Int32))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C2$1(System.Int32)), "#7");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D2$1(System.Int32))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C2$1(String)), "#8");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D2$1(System.Int32))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I2$1(System.Int32)), "#9");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D2$1(System.Int32))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I2$1(String)), "#0");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D2$1(System.Int32))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1), "#11");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D3(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C2$1(String)), "#12");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D3(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C2$1(System.Int32)), "#13");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D3(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I2$1(System.Int32)), "#14");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D3(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I2$1(String)), "#15");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D4(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1), "#16");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D4(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I3), "#17");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D4(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I4), "#18");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1), "#19");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D3(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C2$1), "#10");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType((0), Bridge.ClientTest.Reflection.TypeSystemTests.E1), "#21");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType((0), System.Int32), "#22");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType((0), Object), "#23");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(null, Object), "#24");
+    
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType({  }, Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C1), "#25");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C1(), Object), "#26");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType({  }, Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1), "#27");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C1(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D1), "#28");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D1(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C1), "#29");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D1(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1), "#30");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D2$1(System.Int32))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C2$1(System.Int32)), "#31");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D2$1(System.Int32))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C2$1(String)), "#32");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D2$1(System.Int32))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I2$1(System.Int32)), "#33");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D2$1(System.Int32))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I2$1(String)), "#34");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D2$1(System.Int32))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1), "#35");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D3(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C2$1(String)), "#36");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D3(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C2$1(System.Int32)), "#37");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D3(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I2$1(System.Int32)), "#38");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D3(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I2$1(String)), "#39");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D4(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1), "#40");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D4(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I3), "#41");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D4(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I4), "#42");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1), "#43");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D3(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C2$1), "#44");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType((0), Bridge.ClientTest.Reflection.TypeSystemTests.E1), "#45");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType((0), System.Int32), "#46");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType((0), Object), "#47");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y1$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#48");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y1$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#49");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y1X1(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#50");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y1$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#51");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y1X1(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#52");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y1$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#53");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y1X2(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#54");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y1$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#55");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y1X2(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#56");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y2$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#57");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y2$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#58");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y2X1(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#59");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y2$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#60");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y2X1(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#61");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y2$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#62");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y2X2(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#63");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y2$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#64");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y2X2(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#65");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1), "#66");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#67");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X1X1(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#68");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#69");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X1X2(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#70");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#71");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X2X1(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#72");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#73");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X2X2(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#74");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#75");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X1X1(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#76");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#77");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X1X2(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#78");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#79");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X2X1(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#80");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#81");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X2X2(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#82");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#83");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X1X1(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#84");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#85");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X1X2(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#86");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#87");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X2X1(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#88");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#89");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X2X2(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#90");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#91");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X1X1(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#92");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#93");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X1X2(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#94");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#95");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X2X1(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#96");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#97");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X2X2(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#98");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#99");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#100");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#101");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#102");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#103");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#104");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#105");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#106");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#107");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#108");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#109");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)), "#110");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#111");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#112");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#113");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(Object,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)), "#114");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#115");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#116");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#117");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#118");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#119");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#120");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#121");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#122");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#123");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#124");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#125");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#126");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#127");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#128");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#129");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#130");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#131");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#132");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#133");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#134");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#135");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#136");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#137");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#138");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#139");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#140");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#141");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#142");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#143");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#144");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#145");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#146");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#147");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#148");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#149");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#150");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#151");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#152");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#153");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#154");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#155");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#156");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#157");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#158");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#159");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#160");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1))), "#161");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isInstanceOfType(new (Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))(), Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2))), "#162");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(null, Object), "#163");
+        },
+        invokingBaseUnnamedConstructorWithoutArgumentsWorks: function () {
+            var d = new Bridge.ClientTest.Reflection.TypeSystemTests.BaseUnnamedConstructorWithoutArgumentsTypes.D();
+            Bridge.Test.Assert.areEqual(d.messageB + "|" + d.messageD, "X|Y");
+        },
+        invokingBaseUnnamedConstructorWithArgumentsWorks: function () {
+            var d = new Bridge.ClientTest.Reflection.TypeSystemTests.BaseUnnamedConstructorWithArgumentsTypes.D(5, 8);
+            Bridge.Test.Assert.areEqual(d.messageB + "|" + d.messageD, "6 9|5 8");
+        },
+        invokingBaseNamedConstructorWithoutArgumentsWorks: function () {
+            var d = new Bridge.ClientTest.Reflection.TypeSystemTests.BaseNamedConstructorWithoutArgumentsTypes.D();
+            Bridge.Test.Assert.areEqual(d.messageB + "|" + d.messageD, "X|Y");
+        },
+        invokingBaseNamedConstructorWithArgumentsWorks: function () {
+            var d = new Bridge.ClientTest.Reflection.TypeSystemTests.BaseNamedConstructorWithArgumentsTypes.D(5, 8);
+            Bridge.Test.Assert.areEqual(d.messageB + "|" + d.messageD, "6 9|5 8");
+        },
+        constructingInstanceWithNamedConstructorWorks: function () {
+            var d = new Bridge.ClientTest.Reflection.TypeSystemTests.ConstructingInstanceWithNamedConstructorTypes.D();
+            Bridge.Test.Assert.areEqual(Bridge.getType(d), Bridge.ClientTest.Reflection.TypeSystemTests.ConstructingInstanceWithNamedConstructorTypes.D);
+            Bridge.Test.Assert.true(Bridge.is(d, Bridge.ClientTest.Reflection.TypeSystemTests.ConstructingInstanceWithNamedConstructorTypes.D));
+            Bridge.Test.Assert.areEqual(d.getMessage(), "The message from ctor");
+        },
+        constructingInstanceWithNamedConstructorWorks2: function () {
+            var d = new Bridge.ClientTest.Reflection.TypeSystemTests.ConstructingInstanceWithNamedConstructorTypes.E();
+            var t = Bridge.getType(d);
+            Bridge.Test.Assert.areEqual$1(t, Bridge.ClientTest.Reflection.TypeSystemTests.ConstructingInstanceWithNamedConstructorTypes.E, "#1");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getBaseType(t), Bridge.ClientTest.Reflection.TypeSystemTests.ConstructingInstanceWithNamedConstructorTypes.D, "#2");
+            Bridge.Test.Assert.true$1(Bridge.is(d, Bridge.ClientTest.Reflection.TypeSystemTests.ConstructingInstanceWithNamedConstructorTypes.E), "#3");
+            Bridge.Test.Assert.true$1(Bridge.is(d, Bridge.ClientTest.Reflection.TypeSystemTests.ConstructingInstanceWithNamedConstructorTypes.D), "#4");
+            Bridge.Test.Assert.areEqual(d.getMessage(), "The message from ctor and derived ctor");
+        },
+        invokingBaseMethodWorks: function () {
+            Bridge.Test.Assert.areEqual(new Bridge.ClientTest.Reflection.TypeSystemTests.BaseMethodInvocationTypes.D().doIt(5, 3), 2);
+        },
+        invokingGenericBaseMethodWorks: function () {
+            Bridge.Test.Assert.areEqual(new Bridge.ClientTest.Reflection.TypeSystemTests.BaseMethodInvocationTypes.D().doItGeneric(5, 3), 2);
+        },
+        methodGroupConversionWorks: function () {
+            var f = new Bridge.ClientTest.Reflection.TypeSystemTests.MethodGroupConversionTypes.C(4).getF();
+            Bridge.Test.Assert.areEqual(f(5, 3), 12);
+        },
+        methodGroupConversionOnGenericMethodWorks: function () {
+            var f = new Bridge.ClientTest.Reflection.TypeSystemTests.MethodGroupConversionTypes.C(4).getG();
+            Bridge.Test.Assert.areEqual(f(5, 3), "12String");
+        },
+        methodGroupConversionOnBaseMethodWorks: function () {
+            var f = new Bridge.ClientTest.Reflection.TypeSystemTests.MethodGroupConversionTypes.D(4).getF();
+            Bridge.Test.Assert.areEqual(f(3, 5), 12);
+        },
+        methodGroupConversionOnGenericBaseMethodWorks: function () {
+            var g = new Bridge.ClientTest.Reflection.TypeSystemTests.MethodGroupConversionTypes.C(4).getG();
+            Bridge.Test.Assert.areEqual(g(5, 3), "12String");
+        },
+        importedInterfaceAppearsAsObjectWhenUsedAsGenericArgument: function () {
+            Bridge.Test.Assert.areEqual(Bridge.ClientTest.Reflection.TypeSystemTests.BX$1(Object), Bridge.ClientTest.Reflection.TypeSystemTests.BX$1(Object));
+        },
+        falseIsFunctionShouldReturnFalse: function () {
+            Bridge.Test.Assert.false(Bridge.is(false, Function));
+        },
+        castingUndefinedToOtherTypeShouldReturnUndefined: function () {
+            Bridge.Test.Assert.areEqual(typeof Bridge.cast(undefined, Bridge.ClientTest.Reflection.TypeSystemTests.C), "undefined");
+        },
+        nonSerializableTypeCanInheritFromSerializableType: function () {
+            var d = new Bridge.ClientTest.Reflection.TypeSystemTests.DS(42);
+            Bridge.Test.Assert.areEqual$1(d.X, 42, "d.X");
+            Bridge.Test.Assert.areEqual$1(d.getX(), 42, "d.GetX");
+        },
+        inheritingFromRecordWorks: function () {
+            var c = Bridge.merge(new Bridge.ClientTest.Reflection.TypeSystemTests.CS2(), {
+                x: 42
+            } );
+            Bridge.Test.Assert.areEqual(c.x, 42);
+        },
+        instanceOfWorksForSerializableTypesWithCustomTypeCheckCode: function () {
+            var o1 = new $_.$AnonymousType$25(1);
+            var o2 = new $_.$AnonymousType$26(1, 2);
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isInstanceOfType(o1, Bridge.ClientTest.Reflection.TypeSystemTests.DS2), "o1 should not be of type");
+            //Assert.True (typeof(DS2).IsInstanceOfType(o2), "o2 should be of type");
+        },
+        staticGetTypeMethodWorks: function () {
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("Bridge.ClientTest.Reflection.TypeSystemTests"), Bridge.ClientTest.Reflection.TypeSystemTests, "#1");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("Bridge.ClientTest.Reflection.TypeSystemTests, Bridge.ClientTest"), Bridge.ClientTest.Reflection.TypeSystemTests, "#2");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("Bridge.ClientTest.Reflection.TypeSystemTests, System"), null, "#3");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2, System"), System.Collections.Generic.Dictionary$2, "#4");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2, NotLoaded.Assembly"), null, "#5");
+        },
+        staticGetTypeMethodWithGenericsWorks: function () {
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2[[String],[Bridge.ClientTest.Reflection.TypeSystemTests, Bridge.ClientTest]]"), System.Collections.Generic.Dictionary$2(String,Bridge.ClientTest.Reflection.TypeSystemTests), "#1");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2[[Bridge.ClientTest.Reflection.TypeSystemTests, Bridge.ClientTest],[String]]"), System.Collections.Generic.Dictionary$2(Bridge.ClientTest.Reflection.TypeSystemTests,String), "#2");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2[[System.Int32, System],[Bridge.ClientTest.Reflection.TypeSystemTests, Bridge.ClientTest]]"), System.Collections.Generic.Dictionary$2(System.Int32,Bridge.ClientTest.Reflection.TypeSystemTests), "#3");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2[[String],[Bridge.ClientTest.Reflection.TypeSystemTests, Bridge.ClientTest]], System"), System.Collections.Generic.Dictionary$2(String,Bridge.ClientTest.Reflection.TypeSystemTests), "#4");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2[[Bridge.ClientTest.Reflection.TypeSystemTests, Bridge.ClientTest],[String]], System"), System.Collections.Generic.Dictionary$2(Bridge.ClientTest.Reflection.TypeSystemTests,String), "#5");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2[[Bridge.ClientTest.Reflection.TypeSystemTests, Bridge.ClientTest],[Bridge.ClientTest.Reflection.TypeSystemTests, Bridge.ClientTest]], System"), System.Collections.Generic.Dictionary$2(Bridge.ClientTest.Reflection.TypeSystemTests,Bridge.ClientTest.Reflection.TypeSystemTests), "#6");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2[[String],[System.Collections.Generic.Dictionary$2[[System.Collections.Generic.Dictionary$2[[System.Int32, System],[Date]], System],[System.Collections.Generic.Dictionary$2[[System.Int32, System],[System.Double]], System]], System]], System"), System.Collections.Generic.Dictionary$2(String,System.Collections.Generic.Dictionary$2(System.Collections.Generic.Dictionary$2(System.Int32,Date),System.Collections.Generic.Dictionary$2(System.Int32,System.Double))), "#7");
+        },
+        doesItThrow: function (a) {
+            try {
+                a();
+                return false;
+            }
+            catch ($e1) {
+                $e1 = System.Exception.create($e1);
+                return true;
+            }
+        },
+        isOfType: function (T, o) {
+            return Bridge.is(o, T);
+        },
+        getDefault: function (T) {
+            return Bridge.getDefaultValue(T);
+        },
+        castingToNamedValuesEnumCastsToString: function () {
+            Bridge.Test.Assert.true$1(Bridge.is("firstValue", String), "#1");
+            Bridge.Test.Assert.true$1(Bridge.is("firstValue", String), "#2");
+            Bridge.Test.Assert.false$1(Bridge.is(0, String), "#3");
+            Bridge.Test.Assert.false$1(this.doesItThrow($_.Bridge.ClientTest.Reflection.TypeSystemTests.f1), "#4");
+            Bridge.Test.Assert.true$1(this.doesItThrow($_.Bridge.ClientTest.Reflection.TypeSystemTests.f2), "#5");
+    
+            Bridge.Test.Assert.notNull$1(Bridge.as("firstValue", String, true), "#6");
+            Bridge.Test.Assert.notNull$1(Bridge.as("firstValue", String, true), "#7");
+            Bridge.Test.Assert.null$1(Bridge.as(0, String, true), "#8");
+    
+            Bridge.Test.Assert.true$1(this.isOfType(Bridge.ClientTest.Reflection.TypeSystemTests.NamedValuesEnum, "firstValue"), "#9");
+            Bridge.Test.Assert.true$1(this.isOfType(Bridge.ClientTest.Reflection.TypeSystemTests.NamedValuesEnum, "firstValue"), "#10");
+            Bridge.Test.Assert.false$1(this.isOfType(Bridge.ClientTest.Reflection.TypeSystemTests.NamedValuesEnum, 0), "#11");
+        },
+        castingToImportedNamedValuesEnumCastsToString: function () {
+            Bridge.Test.Assert.true$1(Bridge.is("firstValue", String), "#1");
+            Bridge.Test.Assert.true$1(Bridge.is("firstValue", String), "#2");
+            Bridge.Test.Assert.false$1(Bridge.is(0, String), "#3");
+            Bridge.Test.Assert.false$1(this.doesItThrow($_.Bridge.ClientTest.Reflection.TypeSystemTests.f1), "#4");
+            Bridge.Test.Assert.true$1(this.doesItThrow($_.Bridge.ClientTest.Reflection.TypeSystemTests.f2), "#5");
+    
+            Bridge.Test.Assert.notNull$1(Bridge.as("firstValue", String, true), "#6");
+            Bridge.Test.Assert.notNull$1(Bridge.as("firstValue", String, true), "#7");
+            Bridge.Test.Assert.null$1(Bridge.as(0, String, true), "#8");
+        },
+        defaultValueOfNamedValuesEnumIsNull: function () {
+            Bridge.Test.Assert.null$1(Bridge.getDefaultValue(Bridge.ClientTest.Reflection.TypeSystemTests.NamedValuesEnum), "#1");
+            Bridge.Test.Assert.null$1(this.getDefault(Bridge.ClientTest.Reflection.TypeSystemTests.NamedValuesEnum), "#2");
+        },
+        defaultValueOfImportedNamedValuesEnumIsNull: function () {
+            Bridge.Test.Assert.null$1(Bridge.getDefaultValue(Bridge.ClientTest.Reflection.TypeSystemTests.ImportedNamedValuesEnum), "#1");
+            Bridge.Test.Assert.null$1(this.getDefault(Bridge.ClientTest.Reflection.TypeSystemTests.ImportedNamedValuesEnum), "#2");
+        }
+    });
+    
+    Bridge.define("$AnonymousType$25", $_, {
+        $kind: "anonymous",
+        constructor: function (x) {
+            this.x = x;
+        },
+        getx : function () {
+            return this.x;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o, $_.$AnonymousType$25)) {
+                return false;
+            }
+            return Bridge.equals(this.x, o.x);
+        },
+        getHashCode: function () {
+            var hash = 17;
+            hash = hash * 23 + 381236457;
+            hash = hash * 23 + (this.x == null ? 0 : Bridge.getHashCode(this.x));
+            return hash;
+        },
+        toJSON: function () {
+            return {
+                x : this.x
+            };
+        }
+    });
+    
+    Bridge.define("$AnonymousType$26", $_, {
+        $kind: "anonymous",
+        constructor: function (x, y) {
+            this.x = x;
+            this.y = y;
+        },
+        getx : function () {
+            return this.x;
+        },
+        gety : function () {
+            return this.y;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o, $_.$AnonymousType$26)) {
+                return false;
+            }
+            return Bridge.equals(this.x, o.x) && Bridge.equals(this.y, o.y);
+        },
+        getHashCode: function () {
+            var hash = 17;
+            hash = hash * 23 + -22048070;
+            hash = hash * 23 + (this.x == null ? 0 : Bridge.getHashCode(this.x));
+            hash = hash * 23 + (this.y == null ? 0 : Bridge.getHashCode(this.y));
+            return hash;
+        },
+        toJSON: function () {
+            return {
+                x : this.x,
+                y : this.y
+            };
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.Reflection.TypeSystemTests", $_);
+    
+    Bridge.apply($_.Bridge.ClientTest.Reflection.TypeSystemTests, {
+        f1: function () {
+            var x = Bridge.cast("firstValue", String);
+        },
+        f2: function () {
+            var x = Bridge.cast(0, String);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.I1', {
+        $kind: "interface"
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.BaseMethodInvocationTypes');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.BaseMethodInvocationTypes.B', {
+        f: function (x, y) {
+            return ((x - y) | 0);
+        },
+        g: function (T, x, y) {
+            return ((x - y) | 0);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.BaseNamedConstructorWithArgumentsTypes');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.BaseNamedConstructorWithArgumentsTypes.B', {
+        messageB: null,
+        constructor: function (x, y) {
+            this.$initialize();
+            this.messageB = x + " " + y;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.BaseNamedConstructorWithoutArgumentsTypes');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.BaseNamedConstructorWithoutArgumentsTypes.B', {
+        messageB: null,
+        constructor: function () {
+            this.$initialize();
+            this.messageB = "X";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.BaseUnnamedConstructorWithArgumentsTypes');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.BaseUnnamedConstructorWithArgumentsTypes.B', {
+        messageB: null,
+        constructor: function (x, y) {
+            this.$initialize();
+            this.messageB = x + " " + y;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.BaseUnnamedConstructorWithoutArgumentsTypes');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.BaseUnnamedConstructorWithoutArgumentsTypes.B', {
+        messageB: null,
+        constructor: function () {
+            this.$initialize();
+            this.messageB = "X";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.BS', {
+        X: 0,
+        constructor: function (x) {
+            this.$initialize();
+            this.X = x;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.BX$1', function (T) { return {
+    
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.I3', {
+        $kind: "interface"
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.ClassWithExpandParamsCtor', {
+        ctorArgs: null,
+        constructor: function (args) {
+            if (args === void 0) { args = []; }
+    
+            this.$initialize();
+            this.ctorArgs = args;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.ConstructingInstanceWithNamedConstructorTypes');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.ConstructingInstanceWithNamedConstructorTypes.D', {
+        f: null,
+        constructor: function () {
+            this.$initialize();
+            this.f = "from ctor";
+        },
+        getMessage: function () {
+            return "The message " + this.f;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.CS2', {
+        x: 0
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.E1', {
+        $kind: "enum"
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.E2', {
+        $kind: "enum",
+        $flags: true
+    });
+    
+    Bridge.definei('Bridge.ClientTest.Reflection.TypeSystemTests.IG$1', function (T) { return {
+        $kind: "interface"
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.ImportedNamedValuesEnum', {
+        $kind: "enum",
+        statics: {
+            firstValue: "firstValue",
+            secondValue: "secondValue"
+        },
+        $utype: System.String
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C1');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C2$1', function (T) { return {
+    
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1', {
+        $kind: "interface"
+    });
+    
+    Bridge.definei('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I2$1', function (T1) { return {
+        $kind: "interface"
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I4', {
+        $kind: "interface"
+    });
+    
+    Bridge.definei('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1', function (T) { return {
+        $kind: "interface",
+        $variance: [2]
+    }; });
+    
+    Bridge.definei('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1', function (T) { return {
+        $kind: "interface",
+        $variance: [1]
+    }; });
+    
+    Bridge.definei('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2', function (T1, T2) { return {
+        $kind: "interface",
+        $variance: [0,1]
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.C1');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.C2$1', function (T) { return {
+    
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.MethodGroupConversionTypes');
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.MethodGroupConversionTypes.B', {
+        m: 0,
+        constructor: function (m) {
+            this.$initialize();
+            this.m = m;
+        },
+        f: function (x, y) {
+            return ((((x + y) | 0) + this.m) | 0);
+        },
+        g: function (T, x, y) {
+            return ((((x + y) | 0) + this.m) | 0) + Bridge.Reflection.getTypeName(T);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.MethodGroupConversionTypes.C', {
+        m: 0,
+        constructor: function (m) {
+            this.$initialize();
+            this.m = m;
+        },
+        f: function (x, y) {
+            return ((((x + y) | 0) + this.m) | 0);
+        },
+        g: function (T, x, y) {
+            return ((((x + y) | 0) + this.m) | 0) + Bridge.Reflection.getTypeName(T);
+        },
+        getF: function () {
+            return Bridge.fn.bind(this, this.f);
+        },
+        getG: function () {
+            return Bridge.fn.bind(this, function (x, y) { return this.g(String, x, y); });
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.NamedValuesEnum', {
+        $kind: "enum",
+        statics: {
+            firstValue: "firstValue",
+            secondValue: "secondValue"
+        },
+        $utype: System.String
+    });
+    
     Bridge.define('Bridge.ClientTest.SimpleTypes.BooleanTests', {
         typePropertiesAreCorrect: function () {
             Bridge.Test.Assert.true(Bridge.is(true, Boolean));
@@ -14597,7 +18926,7 @@
         typePropertiesAreCorrect: function () {
             //Assert.AreEqual("System.Enum", typeof(Enum).GetClassName());
             Bridge.Test.Assert.areEqual("Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum", Bridge.getTypeName(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum));
-            Bridge.Test.Assert.true(Bridge.hasValue(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.FirstValue));
+            Bridge.Test.Assert.true(Bridge.is(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.FirstValue, System.Int32));
         },
         getDefaultValue: function (T) {
             return Bridge.getDefaultValue(T);
@@ -14609,7 +18938,7 @@
             Bridge.Test.Assert.areStrictEqual(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.FirstValue, this.getDefaultValue(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum));
         },
         defaultConstructorOfEnumTypeReturnsZero: function () {
-            Bridge.Test.Assert.areStrictEqual(0, new Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum().valueOf());
+            Bridge.Test.Assert.areStrictEqual(0, (0).valueOf());
         },
         firstValueOfEnumIsZero: function () {
             Bridge.Test.Assert.areStrictEqual(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.FirstValue, Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.FirstValue);
@@ -14631,23 +18960,23 @@
     });
     
     Bridge.define('Bridge.ClientTest.SimpleTypes.EnumTests.FlagsEnum', {
+        $kind: "enum",
         statics: {
             None: 0,
             FirstValue: 1,
             SecondValue: 2,
             ThirdValue: 4
         },
-        $enum: true,
         $flags: true
     });
     
     Bridge.define('Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum', {
+        $kind: "enum",
         statics: {
             FirstValue: 0,
             SecondValue: 1,
             ThirdValue: 2
-        },
-        $enum: true
+        }
     });
     
     Bridge.define('Bridge.ClientTest.SimpleTypes.Int16Tests', {
@@ -14886,18 +19215,18 @@
         typeIsWorksForInt32: function () {
             Bridge.Test.Assert.false(Bridge.is(null, System.Int32));
             Bridge.Test.Assert.false(Bridge.is(1.5, System.Int32));
-            Bridge.Test.Assert.false(Bridge.is({ }, System.Int32));
+            Bridge.Test.Assert.false(Bridge.is({  }, System.Int32));
             Bridge.Test.Assert.true(Bridge.is(1, System.Int32));
         },
         typeAsWorksForInt32: function () {
             Bridge.Test.Assert.false((null) != null);
-            Bridge.Test.Assert.false((Bridge.as({ }, System.Int32, true)) != null);
+            Bridge.Test.Assert.false((Bridge.as({  }, System.Int32, true)) != null);
             Bridge.Test.Assert.false((Bridge.as(1.5, System.Int32, true)) != null);
             Bridge.Test.Assert.true((Bridge.as(1, System.Int32, true)) != null);
         },
         unboxingWorksForInt32: function () {
             var _null = null;
-            var o = { };
+            var o = {  };
             var d = 1.5;
             var i = 1;
             Bridge.Test.Assert.areEqual(null, Bridge.cast(_null, System.Int32, true));
@@ -15715,27 +20044,27 @@
     
     Bridge.define('Bridge.ClientTest.SimpleTypes.ObjectTests', {
         typePropertiesAreCorrect: function () {
-            Bridge.Test.Assert.true(true);
+            Bridge.Test.Assert.true(Bridge.hasValue({  }));
             Bridge.Test.Assert.areEqual("Object", Bridge.getTypeName(Object));
         },
         canGetHashCodeForObject: function () {
-            var o = { };
+            var o = {  };
             var c = Bridge.getHashCode(o);
             Bridge.Test.Assert.true(Bridge.is(c, System.Int32));
         },
         repeatedCallsToGetHashCodeReturnsSameValue: function () {
-            var o = { };
+            var o = {  };
             Bridge.Test.Assert.areEqual(Bridge.getHashCode(o), Bridge.getHashCode(o));
         },
         objectIsEqualToItself: function () {
-            var o = { };
+            var o = {  };
             Bridge.Test.Assert.true(Bridge.equals(o, o));
         },
         objectIsNotEqualToOtherObject: function () {
-            Bridge.Test.Assert.false(Bridge.equals({ }, { }));
+            Bridge.Test.Assert.false(Bridge.equals({  }, {  }));
         },
         staticEqualsWorks: function () {
-            var o1 = { }, o2 = { };
+            var o1 = {  }, o2 = {  };
             Bridge.Test.Assert.true(Bridge.equals(null, null));
             Bridge.Test.Assert.false(Bridge.equals(null, o1));
             Bridge.Test.Assert.false(Bridge.equals(o1, null));
@@ -15743,7 +20072,7 @@
             Bridge.Test.Assert.false(Bridge.equals(o1, o2));
         },
         referenceEqualsWorks: function () {
-            var o1 = { }, o2 = { }, n = null;
+            var o1 = {  }, o2 = {  }, n = null;
             Bridge.Test.Assert.true$1(Bridge.referenceEquals(n, n), "n, n");
             Bridge.Test.Assert.true$1(Bridge.referenceEquals(n, undefined), "n, Script.Undefined");
             Bridge.Test.Assert.false$1(Bridge.referenceEquals(o1, o2), "o1, o2");
@@ -16230,7 +20559,7 @@
         },
         stringInterfaces: function () {
             var s = "X";
-            Bridge.Test.Assert.true$1(true, "string is object");
+            Bridge.Test.Assert.true$1(Bridge.hasValue(s), "string is object");
             Bridge.Test.Assert.true(Bridge.is(s, System.IComparable$1(String)));
             Bridge.Test.Assert.true(Bridge.is(s, System.IEquatable$1(String)));
         },
@@ -16940,7 +21269,7 @@
                 var v1 = new System.Version.$constructor3(100, 200, 300, 26214900);
                 var v2 = new System.Version.$constructor3(100, 200, 300, 26214900);
                 var v3 = new System.Version.$constructor3(101, 200, 300, 26214900);
-                var o = { };
+                var o = {  };
                 var o2 = v2;
     
                 Bridge.Test.Assert.true$1(v1.equalsT(v2), "v1.Equals(v2)");
@@ -17962,7 +22291,7 @@
         typePropertiesAreCorrect: function () {
             var re = new RegExp("");
             Bridge.Test.Assert.areEqual("RegExp", Bridge.getTypeName(RegExp));
-            Bridge.Test.Assert.true(true);
+            Bridge.Test.Assert.true(Bridge.hasValue(re));
         },
         stringOnlyConstructorWorks: function () {
             var re = new RegExp("test123");
@@ -18651,7 +22980,7 @@
         typePropertiesAreCorrect: function () {
             var sb = new System.Text.StringBuilder();
             Bridge.Test.Assert.areEqual("System.Text.StringBuilder", Bridge.getTypeName(System.Text.StringBuilder));
-            Bridge.Test.Assert.true(true);
+            Bridge.Test.Assert.true(Bridge.hasValue(sb));
         },
         defaultConstructorWorks: function () {
             var sb = new System.Text.StringBuilder();
@@ -19161,9 +23490,9 @@
         typePropertiesForCancellationTokenAreCorrect: function () {
             Bridge.Test.Assert.areEqual$1("System.Threading.CancellationToken", Bridge.getTypeName(System.Threading.CancellationToken), "FullName");
     
-            Bridge.Test.Assert.true(true);
-            Bridge.Test.Assert.true(true);
-            Bridge.Test.Assert.true(true);
+            Bridge.Test.Assert.true(Bridge.hasValue(new System.Threading.CancellationToken()));
+            Bridge.Test.Assert.true(Bridge.hasValue(System.Threading.CancellationToken.none));
+            Bridge.Test.Assert.true(Bridge.hasValue(new System.Threading.CancellationTokenSource().token));
         },
         typePropertiesForCancellationTokenRegistrationAreCorrect: function () {
             Bridge.Test.Assert.areEqual$1("System.Threading.CancellationTokenRegistration", Bridge.getTypeName(System.Threading.CancellationTokenRegistration), "FullName");
@@ -19363,7 +23692,7 @@
         },
         registerWithArgumentOnACancelledSourceInvokesTheCallback: function () {
             var cts = new System.Threading.CancellationTokenSource();
-            var context = { };
+            var context = {  };
             cts.cancel();
             var state = 0;
             cts.token.register(function (c) {
@@ -19389,7 +23718,7 @@
         },
         registerOnACancelledSourceWithContextRethrowsAThrownException: function () {
             var ex1 = new System.Exception();
-            var context = { };
+            var context = {  };
             var cts = new System.Threading.CancellationTokenSource();
             cts.cancel();
             try {
@@ -19406,7 +23735,7 @@
         },
         registerOverloadsWithUseSynchronizationContextWork: function () {
             var cts = new System.Threading.CancellationTokenSource();
-            var context = { };
+            var context = {  };
             cts.cancel();
             var numCalled = 0;
             cts.token.register(function (c) {
@@ -19445,7 +23774,7 @@
             var ct = new System.Threading.CancellationToken(true);
     
             var state = 0;
-            var context = { };
+            var context = {  };
             ct.register(function () {
                 state = 1;
             });
@@ -19491,7 +23820,7 @@
             var reg = cts.token.register(function () {
                 calledHandlers.add(1);
             });
-            Bridge.Test.Assert.true(true);
+            Bridge.Test.Assert.true(Bridge.hasValue(reg));
     
             cts.token.register(function () {
                 calledHandlers.add(2);
@@ -19507,7 +23836,7 @@
         creatingADefaultCancellationTokenRegistrationReturnsARegistrationThatCanBeDisposedWithoutHarm: function () {
             var ct = Bridge.getDefaultValue(System.Threading.CancellationTokenRegistration);
             Bridge.Test.Assert.notNull$1(ct, "not null");
-            Bridge.Test.Assert.true$1(true, "is CancellationTokenRegistration");
+            Bridge.Test.Assert.true$1(Bridge.hasValue(ct), "is CancellationTokenRegistration");
             ct.dispose();
         },
         linkedSourceWithTwoTokensWorks: function () {
@@ -19973,11 +24302,11 @@
     });
     
     Bridge.define('Bridge.ClientTest.Threading.PromiseTests.SimplePromise.Which', {
+        $kind: "enum",
         statics: {
             Resolve: 0,
             Reject: 1
-        },
-        $enum: true
+        }
     });
     
     Bridge.define('Bridge.ClientTest.Threading.PromiseTests.TaskResult', {
@@ -20005,14 +24334,14 @@
         taskCompletionSourceTypePropertiesAreCorrect: function () {
             Bridge.Test.Assert.areEqual$1("System.Threading.Tasks.TaskCompletionSource", Bridge.getTypeName(System.Threading.Tasks.TaskCompletionSource), "FullName should be correct");
             var tcs = new System.Threading.Tasks.TaskCompletionSource();
-            Bridge.Test.Assert.true(true);
+            Bridge.Test.Assert.true(Bridge.hasValue(tcs));
         },
         taskTypePropertiesAreCorrect: function () {
             Bridge.Test.Assert.areEqual$1("System.Threading.Tasks.Task", Bridge.getTypeName(System.Threading.Tasks.Task), "FullName for non-generic task should be correct");
             Bridge.Test.Assert.areEqual$1("System.Threading.Tasks.Task", Bridge.getTypeName(System.Threading.Tasks.Task), "FullName for generic task should be correct");
     
             var task = new System.Threading.Tasks.TaskCompletionSource().task;
-            Bridge.Test.Assert.true(true);
+            Bridge.Test.Assert.true(Bridge.hasValue(task));
             Bridge.Test.Assert.true(Bridge.is(task, System.Threading.Tasks.Task));
             Bridge.Test.Assert.true(Bridge.is(task, System.IDisposable));
     
@@ -20884,7 +25213,7 @@
     
                 Bridge.Test.Assert.true$1(Bridge.referenceEquals(task, t), "Callback parameter should be correct");
     
-                Bridge.Test.Assert.true$1(true, "Exception for the aggregate task should be null");
+                Bridge.Test.Assert.true$1(Bridge.hasValue(t.exception), "Exception for the aggregate task should be null");
                 Bridge.Test.Assert.areEqual$1(2, t.exception.innerExceptions.getCount(), "Should be 2 inner exceptions");
                 Bridge.Test.Assert.true$1(t.exception.innerExceptions.contains(ex1), "ex1 should be propagated");
                 Bridge.Test.Assert.true$1(t.exception.innerExceptions.contains(ex2), "ex2 should be propagated");
@@ -21235,7 +25564,7 @@
             var completeAsync = Bridge.Test.Assert.async();
     
             var taskRun = false, continuationRun = false;
-            var state = { };
+            var state = {  };
     
             var task = new System.Threading.Tasks.Task(function (s) {
                 Bridge.Test.Assert.true$1(Bridge.referenceEquals(state, s), "The state should be correct.");
@@ -21340,7 +25669,7 @@
             var completeAsync = Bridge.Test.Assert.async();
     
             var taskRun = false, continuationRun = false;
-            var state = { };
+            var state = {  };
     
             var task = new System.Threading.Tasks.Task(function (s) {
                 Bridge.Test.Assert.true$1(Bridge.referenceEquals(state, s), "The state should be correct.");
@@ -21768,47 +26097,47 @@
     
     Bridge.define('Bridge.ClientTest.TypeSystemTests', {
         gettingBaseTypeWorks: function () {
-            Bridge.Test.Assert.areEqual$1(null, Bridge.getBaseType(Bridge.ClientTest.TypeSystemTests.I1), "#1");
-            Bridge.Test.Assert.areEqual$1(null, Bridge.getBaseType(Bridge.ClientTest.TypeSystemTests.I2), "#2");
-            Bridge.Test.Assert.areEqual$1(Object, Bridge.getBaseType(Bridge.ClientTest.TypeSystemTests.B), "#3");
-            Bridge.Test.Assert.areEqual$1(Bridge.ClientTest.TypeSystemTests.B, Bridge.getBaseType(Bridge.ClientTest.TypeSystemTests.C), "#4");
-            Bridge.Test.Assert.areEqual$1(null, Bridge.getBaseType(Object), "#5");
+            Bridge.Test.Assert.areEqual$1(null, Bridge.Reflection.getBaseType(Bridge.ClientTest.TypeSystemTests.I1), "#1");
+            Bridge.Test.Assert.areEqual$1(null, Bridge.Reflection.getBaseType(Bridge.ClientTest.TypeSystemTests.I2), "#2");
+            Bridge.Test.Assert.areEqual$1(Object, Bridge.Reflection.getBaseType(Bridge.ClientTest.TypeSystemTests.B), "#3");
+            Bridge.Test.Assert.areEqual$1(Bridge.ClientTest.TypeSystemTests.B, Bridge.Reflection.getBaseType(Bridge.ClientTest.TypeSystemTests.C), "#4");
+            Bridge.Test.Assert.areEqual$1(null, Bridge.Reflection.getBaseType(Object), "#5");
     
             var t = null;
             Bridge.Test.Assert.throws$7(System.NullReferenceException, function () {
-                var b = Bridge.getBaseType(t);
+                var b = Bridge.Reflection.getBaseType(t);
             }, "NullReferenceException");
         },
         isAssignableFromWorks: function () {
-            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.C1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.C1), "#1");
-            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.C1, Object), "#2");
-            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Object, Bridge.ClientTest.TypeSystemTests.AssignableTypes.C1), "#3");
-            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1, Object), "#4");
-            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Object, Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1), "#5");
-            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I3, Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1), "#6");
-            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.I3), "#7");
-            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.D1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.C1), "#8");
-            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.C1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.D1), "#9");
-            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.D1), "#10");
-            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.C2$1(System.Int32), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D2$1(System.Int32)), "#11");
-            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.C2$1(String), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D2$1(System.Int32)), "#12");
-            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(System.Int32), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D2$1(System.Int32)), "#13");
-            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(String), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D2$1(System.Int32)), "#14");
-            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.D2$1(System.Int32)), "#15");
-            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.C2$1(String), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D3), "#16");
-            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.C2$1(System.Int32), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D3), "#17");
-            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(System.Int32), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D3), "#18");
-            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(String), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D3), "#19");
-            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(System.Int32), Bridge.ClientTest.TypeSystemTests.AssignableTypes.I5$1(String)), "#20");
-            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(System.Int32), Bridge.ClientTest.TypeSystemTests.AssignableTypes.I5$1(System.Int32)), "#21");
-            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I5$1(System.Int32), Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(System.Int32)), "#22");
-            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.D4), "#23");
-            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I3, Bridge.ClientTest.TypeSystemTests.AssignableTypes.D4), "#24");
-            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I4, Bridge.ClientTest.TypeSystemTests.AssignableTypes.D4), "#25");
-            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.X2), "#26");
-            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.E1, Bridge.ClientTest.TypeSystemTests.E2), "#30");
-            Bridge.Test.Assert.false$1(Bridge.isAssignableFrom(System.Int32, Bridge.ClientTest.TypeSystemTests.E1), "#31");
-            Bridge.Test.Assert.true$1(Bridge.isAssignableFrom(Object, Bridge.ClientTest.TypeSystemTests.E1), "#32");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.C1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.C1), "#1");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.C1, Object), "#2");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Object, Bridge.ClientTest.TypeSystemTests.AssignableTypes.C1), "#3");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1, Object), "#4");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Object, Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1), "#5");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I3, Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1), "#6");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.I3), "#7");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.D1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.C1), "#8");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.C1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.D1), "#9");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.D1), "#10");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.C2$1(System.Int32), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D2$1(System.Int32)), "#11");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.C2$1(String), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D2$1(System.Int32)), "#12");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(System.Int32), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D2$1(System.Int32)), "#13");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(String), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D2$1(System.Int32)), "#14");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.D2$1(System.Int32)), "#15");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.C2$1(String), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D3), "#16");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.C2$1(System.Int32), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D3), "#17");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(System.Int32), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D3), "#18");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(String), Bridge.ClientTest.TypeSystemTests.AssignableTypes.D3), "#19");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(System.Int32), Bridge.ClientTest.TypeSystemTests.AssignableTypes.I5$1(String)), "#20");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(System.Int32), Bridge.ClientTest.TypeSystemTests.AssignableTypes.I5$1(System.Int32)), "#21");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I5$1(System.Int32), Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(System.Int32)), "#22");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.D4), "#23");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I3, Bridge.ClientTest.TypeSystemTests.AssignableTypes.D4), "#24");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I4, Bridge.ClientTest.TypeSystemTests.AssignableTypes.D4), "#25");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1, Bridge.ClientTest.TypeSystemTests.AssignableTypes.X2), "#26");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(Bridge.ClientTest.TypeSystemTests.E1, Bridge.ClientTest.TypeSystemTests.E2), "#30");
+            Bridge.Test.Assert.false$1(Bridge.Reflection.isAssignableFrom(System.Int32, Bridge.ClientTest.TypeSystemTests.E1), "#31");
+            Bridge.Test.Assert.true$1(Bridge.Reflection.isAssignableFrom(Object, Bridge.ClientTest.TypeSystemTests.E1), "#32");
         }
     });
     
@@ -21821,43 +26150,46 @@
     }; });
     
     Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1', {
-        $interface: true
+        $kind: "interface"
     });
     
-    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1', function (T1) { return {
-        $interface: true
+    Bridge.definei('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1', function (T1) { return {
+        $kind: "interface"
     }; });
     
     Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I4', {
-        $interface: true
+        $kind: "interface"
     });
     
-    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I7$1', function (T) { return {
-        $interface: true
+    Bridge.definei('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I7$1', function (T) { return {
+        $kind: "interface",
+        $variance: [2]
     }; });
     
-    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I6$1', function (T) { return {
-        $interface: true
+    Bridge.definei('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I6$1', function (T) { return {
+        $kind: "interface",
+        $variance: [1]
     }; });
     
-    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I9$2', function (T1, T2) { return {
-        $interface: true
+    Bridge.definei('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I9$2', function (T1, T2) { return {
+        $kind: "interface",
+        $variance: [0,1]
     }; });
     
     Bridge.define('Bridge.ClientTest.TypeSystemTests.I1', {
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Bridge.ClientTest.TypeSystemTests.I3', {
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Bridge.ClientTest.TypeSystemTests.E1', {
-        $enum: true
+        $kind: "enum"
     });
     
     Bridge.define('Bridge.ClientTest.TypeSystemTests.E2', {
-        $enum: true,
+        $kind: "enum",
         $flags: true
     });
     
@@ -22042,7 +26374,6 @@
         constructor: function (x, y) {
             this.$initialize();
             Bridge.ClientTest.BasicCSharp.TestInheritance.A.$constructor.call(this, x);
-    
             this.setY(y);
         },
         handleNumber$1: function (i) {
@@ -22184,7 +26515,7 @@
             var expectedValues = [false];
             this.verifyFromObject(function (value) { return System.Convert.toBoolean(value); }, function (value, provider) { return System.Convert.toBoolean(value, provider); }, testValues, expectedValues);
     
-            var invalidValues = [{ }, new Date()];
+            var invalidValues = [{  }, new Date()];
             this.verifyFromObjectThrows(System.InvalidCastException, function (value) { return System.Convert.toBoolean(value); }, function (value, provider) { return System.Convert.toBoolean(value, provider); }, invalidValues);
         },
         fromSByte: function () {
@@ -22274,7 +26605,7 @@
             var expectedValues = [0];
             this.verifyFromObject(function (value) { return System.Convert.toByte(value); }, function (value, provider) { return System.Convert.toByte(value, provider); }, testValues, expectedValues);
     
-            var invalidValues = [{ }, new Date()];
+            var invalidValues = [{  }, new Date()];
             this.verifyFromObjectThrows(System.InvalidCastException, function (value) { return System.Convert.toByte(value); }, function (value, provider) { return System.Convert.toByte(value, provider); }, invalidValues);
         },
         fromSByte: function () {
@@ -22410,7 +26741,7 @@
             var expectedValues = [0];
             this.verify(Object, function (value) { return System.Convert.toChar(value, null, 1); }, testValues, expectedValues);
     
-            var invalidValues = [{ }, new Date()];
+            var invalidValues = [{  }, new Date()];
             this.verifyThrows(System.InvalidCastException, Object, function (value) { return System.Convert.toChar(value, null, 1); }, invalidValues);
         },
         fromSByte: function () {
@@ -22564,13 +26895,13 @@
     
     Bridge.apply($_.Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests, {
         f1: function () {
-            System.Convert.toDateTime({ });
+            System.Convert.toDateTime({  });
         },
         f2: function (err) {
             return Bridge.is(err, System.InvalidCastException);
         },
         f3: function () {
-            System.Convert.toDateTime({ }, Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.s_dateTimeFormatInfo);
+            System.Convert.toDateTime({  }, Bridge.ClientTest.ConvertTests.ConvertToDateTimeTests.s_dateTimeFormatInfo);
         },
         f4: function () {
             System.Convert.toDateTime(false);
@@ -22646,7 +26977,7 @@
             var expectedValues = [System.Decimal(0)];
             this.verifyFromObject(function (value) { return System.Convert.toDecimal(value); }, function (value, provider) { return System.Convert.toDecimal(value, provider); }, testValues, expectedValues);
     
-            var invalidValues = [{ }, new Date()];
+            var invalidValues = [{  }, new Date()];
             this.verifyFromObjectThrows(System.InvalidCastException, function (value) { return System.Convert.toDecimal(value); }, function (value, provider) { return System.Convert.toDecimal(value, provider); }, invalidValues);
         },
         fromSByte: function () {
@@ -22740,7 +27071,7 @@
             var expectedValues = [0.0];
             this.verifyFromObject(function (value) { return System.Convert.toDouble(value); }, function (value, provider) { return System.Convert.toDouble(value, provider); }, testValues, expectedValues);
     
-            var invalidValues = [{ }, new Date()];
+            var invalidValues = [{  }, new Date()];
             this.verifyFromObjectThrows(System.InvalidCastException, function (value) { return System.Convert.toDouble(value); }, function (value, provider) { return System.Convert.toDouble(value, provider); }, invalidValues);
         },
         fromSByte: function () {
@@ -22843,7 +27174,7 @@
             var expectedValues = [0];
             this.verifyFromObject(function (value) { return System.Convert.toInt16(value); }, function (value, provider) { return System.Convert.toInt16(value, provider); }, testValues, expectedValues);
     
-            var invalidValues = [{ }, new Date()];
+            var invalidValues = [{  }, new Date()];
             this.verifyFromObjectThrows(System.InvalidCastException, function (value) { return System.Convert.toInt16(value); }, function (value, provider) { return System.Convert.toInt16(value, provider); }, invalidValues);
         },
         fromSByte: function () {
@@ -22975,7 +27306,7 @@
             var expectedValues = [0];
             this.verifyFromObject(function (value) { return System.Convert.toInt32(value); }, function (value, provider) { return System.Convert.toInt32(value, provider); }, testValues, expectedValues);
     
-            var invalidValues = [{ }];
+            var invalidValues = [{  }];
             this.verifyFromObjectThrows(System.InvalidCastException, function (value) { return System.Convert.toInt32(value); }, function (value, provider) { return System.Convert.toInt32(value, provider); }, invalidValues);
         },
         fromSByte: function () {
@@ -23101,7 +27432,7 @@
             var expectedValues = [System.Int64(0)];
             this.verifyFromObject(function (value) { return System.Convert.toInt64(value); }, function (value, provider) { return System.Convert.toInt64(value, provider); }, testValues, expectedValues);
     
-            var invalidValues = [{ }, new Date()];
+            var invalidValues = [{  }, new Date()];
             this.verifyFromObjectThrows(System.InvalidCastException, function (value) { return System.Convert.toInt64(value); }, function (value, provider) { return System.Convert.toInt64(value, provider); }, invalidValues);
         },
         fromSByte: function () {
@@ -23237,7 +27568,7 @@
             var expectedValues = [0];
             this.verifyFromObject(function (value) { return System.Convert.toSByte(value); }, function (value, provider) { return System.Convert.toSByte(value, provider); }, testValues, expectedValues);
     
-            var invalidValues = [{ }, new Date()];
+            var invalidValues = [{  }, new Date()];
             this.verifyFromObjectThrows(System.InvalidCastException, function (value) { return System.Convert.toSByte(value); }, function (value, provider) { return System.Convert.toSByte(value, provider); }, invalidValues);
         },
         fromSByte: function () {
@@ -23368,7 +27699,7 @@
             var expectedValues = [0.0];
             this.verifyFromObject(function (value) { return System.Convert.toSingle(value); }, function (value, provider) { return System.Convert.toSingle(value, provider); }, testValues, expectedValues);
     
-            var invalidValues = [{ }, new Date()];
+            var invalidValues = [{  }, new Date()];
             this.verifyFromObjectThrows(System.InvalidCastException, function (value) { return System.Convert.toSingle(value); }, function (value, provider) { return System.Convert.toSingle(value, provider); }, invalidValues);
         },
         fromSByte: function () {
@@ -23473,7 +27804,7 @@
             var expectedValues = [0];
             this.verifyFromObject(function (value) { return System.Convert.toUInt16(value); }, function (value, provider) { return System.Convert.toUInt16(value, provider); }, testValues, expectedValues);
     
-            var invalidValues = [{ }, new Date()];
+            var invalidValues = [{  }, new Date()];
             this.verifyFromObjectThrows(System.InvalidCastException, function (value) { return System.Convert.toUInt16(value); }, function (value, provider) { return System.Convert.toUInt16(value, provider); }, invalidValues);
         },
         fromSByte: function () {
@@ -23608,7 +27939,7 @@
             var expectedValues = [0];
             this.verifyFromObject(function (value) { return System.Convert.toUInt32(value); }, function (value, provider) { return System.Convert.toUInt32(value, provider); }, testValues, expectedValues);
     
-            var invalidValues = [{ }, new Date()];
+            var invalidValues = [{  }, new Date()];
             this.verifyFromObjectThrows(System.InvalidCastException, function (value) { return System.Convert.toUInt32(value); }, function (value, provider) { return System.Convert.toUInt32(value, provider); }, invalidValues);
         },
         fromSByte: function () {
@@ -23742,7 +28073,7 @@
             var expectedValues = [System.UInt64(0)];
             this.verifyFromObject(function (value) { return System.Convert.toUInt64(value); }, function (value, provider) { return System.Convert.toUInt64(value, provider); }, testValues, expectedValues);
     
-            var invalidValues = [{ }, new Date()];
+            var invalidValues = [{  }, new Date()];
             this.verifyFromObjectThrows(System.InvalidCastException, function (value) { return System.Convert.toUInt64(value); }, function (value, provider) { return System.Convert.toUInt64(value, provider); }, invalidValues);
         },
         fromSByte: function () {
@@ -23826,7 +28157,6 @@
         constructor: function (message) {
             this.$initialize();
             Bridge.ClientTest.Exceptions.CommonExceptionTests.E1.$constructor.call(this, message);
-    
         }
     });
     
@@ -23861,6 +28191,406 @@
             Bridge.ClientTest.PropertyAccessorTests.B4$1(T).prototype.setP3.call(this, value - 1);
         }
     }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.C3', {
+        inherits: [Bridge.ClientTest.Reflection.AttributeTests.C2]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.C5', {
+        inherits: [Bridge.ClientTest.Reflection.AttributeTests.C2]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.C6', {
+        inherits: [Bridge.ClientTest.Reflection.AttributeTests.C2]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.C8', {
+        inherits: [Bridge.ClientTest.Reflection.AttributeTests.C7]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.GetMembersTests.C1', {
+        inherits: [Bridge.ClientTest.Reflection.GetMembersTests.B1],
+        statics: {
+            fCS1: 0,
+            fCS2: 0,
+            config: {
+                properties: {
+                    PCS1: 0,
+                    PCS2: 0
+                }
+            },
+            addECS1: function (value) {
+            },
+            removeECS1: function (value) {
+            },
+            addECS2: function (value) {
+            },
+            removeECS2: function (value) {
+            },
+            mCS: function () {
+            },
+            mCS$1: function (x) {
+            },
+            mCS$2: function (x, y) {
+            },
+            mCS2: function (x, y) {
+            }
+        },
+        fC1: 0,
+        fC2: 0,
+        config: {
+            properties: {
+                PC1: 0,
+                PC2: 0
+            }
+        },
+        constructor: function () {
+            this.$initialize();
+            Bridge.ClientTest.Reflection.GetMembersTests.B1.$constructor.call(this);
+        },
+        $constructor1: function (x) {
+            this.$initialize();
+            Bridge.ClientTest.Reflection.GetMembersTests.B1.$constructor.call(this);
+        },
+        $constructor2: function (x, y) {
+            this.$initialize();
+            Bridge.ClientTest.Reflection.GetMembersTests.B1.$constructor.call(this);
+        },
+        getItem$1: function (x) {
+            return 0;
+        },
+        setItem$1: function (x, value) {
+        },
+        addEC1: function (value) {
+        },
+        removeEC1: function (value) {
+        },
+        addEC2: function (value) {
+        },
+        removeEC2: function (value) {
+        },
+        mC: function () {
+        },
+        mC$1: function (x) {
+        },
+        mC$2: function (x, y) {
+        },
+        mC2: function (x, y) {
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.GetMembersTests.C2', {
+        inherits: [Bridge.ClientTest.Reflection.GetMembersTests.B2],
+        statics: {
+            fS: 0,
+            fCS: 0,
+            config: {
+                events: {
+                    ES: null,
+                    ECS: null
+                },
+                properties: {
+                    PS: 0,
+                    PCS: 0
+                }
+            },
+            mS: function () {
+            },
+            mCS: function () {
+            },
+            m2S: function (x) {
+            },
+            m2S$1: function (x) {
+            },
+            m2CS: function (x) {
+            },
+            m2CS$1: function (x) {
+            },
+            m3S: function (x) {
+            }
+        },
+        f$1: 0,
+        fC: 0,
+        config: {
+            events: {
+                E$1: null,
+                EC: null
+            },
+            properties: {
+                P$1: 0,
+                PC: 0
+            }
+        },
+        getItem$2: function (x) {
+            return 0;
+        },
+        setItem$2: function (x, value) {
+        },
+        getItem$3: function (x) {
+            return 0;
+        },
+        setItem$3: function (x, value) {
+        },
+        m$1: function () {
+        },
+        mC: function () {
+        },
+        m2$2: function (x) {
+        },
+        m2$3: function (x) {
+        },
+        m2C: function (x) {
+        },
+        m2C$1: function (x) {
+        },
+        m3$1: function (x) {
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.GetMembersTests.I2', {
+        inherits: [Bridge.ClientTest.Reflection.GetMembersTests.I1],
+        $kind: "interface"
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C10$1', function (T) { return {
+    
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D1', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I1]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D2$1', function (T) { return {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1(T),Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I2$1(T),Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I1]
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D3', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1(System.Int32),Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I2$1(String)]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I3', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I1],
+        $kind: "interface"
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.DS', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.BS],
+        constructor: function () {
+            this.$initialize();
+            Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.BS.$constructor.call(this, 0);
+        }
+    });
+    
+    Bridge.definei('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2', function (T1, T2) { return {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(T1),Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(T2)],
+        $kind: "interface",
+        $variance: [1,2]
+    }; });
+    
+    Bridge.definei('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I5$1', function (T1) { return {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I2$1(T1)],
+        $kind: "interface"
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I1]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1$1', function (T) { return {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(T)]
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2$1', function (T) { return {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(T)]
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y4$2', function (T1, T2) { return {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I9$2(T1,T2)]
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.I2', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.I1],
+        $kind: "interface"
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.BaseMethodInvocationTypes.D', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.BaseMethodInvocationTypes.B],
+        f: function (x, y) {
+            return ((x + y) | 0);
+        },
+        g: function (T, x, y) {
+            return ((x + y) | 0);
+        },
+        doIt: function (x, y) {
+            return Bridge.ClientTest.Reflection.TypeSystemTests.BaseMethodInvocationTypes.B.prototype.f.call(this, x, y);
+        },
+        doItGeneric: function (x, y) {
+            return Bridge.ClientTest.Reflection.TypeSystemTests.BaseMethodInvocationTypes.B.prototype.g.call(this, String, x, y);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.BaseNamedConstructorWithArgumentsTypes.D', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.BaseNamedConstructorWithArgumentsTypes.B],
+        messageD: null,
+        constructor: function (x, y) {
+            this.$initialize();
+            Bridge.ClientTest.Reflection.TypeSystemTests.BaseNamedConstructorWithArgumentsTypes.B.$constructor.call(this, ((x + 1) | 0), ((y + 1) | 0));
+            this.messageD = x + " " + y;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.BaseNamedConstructorWithoutArgumentsTypes.D', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.BaseNamedConstructorWithoutArgumentsTypes.B],
+        messageD: null,
+        constructor: function () {
+            this.$initialize();
+            Bridge.ClientTest.Reflection.TypeSystemTests.BaseNamedConstructorWithoutArgumentsTypes.B.$constructor.call(this);
+            this.messageD = "Y";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.BaseUnnamedConstructorWithArgumentsTypes.D', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.BaseUnnamedConstructorWithArgumentsTypes.B],
+        messageD: null,
+        constructor: function (x, y) {
+            this.$initialize();
+            Bridge.ClientTest.Reflection.TypeSystemTests.BaseUnnamedConstructorWithArgumentsTypes.B.$constructor.call(this, ((x + 1) | 0), ((y + 1) | 0));
+            this.messageD = x + " " + y;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.BaseUnnamedConstructorWithoutArgumentsTypes.D', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.BaseUnnamedConstructorWithoutArgumentsTypes.B],
+        messageD: null,
+        constructor: function () {
+            this.$initialize();
+            Bridge.ClientTest.Reflection.TypeSystemTests.BaseUnnamedConstructorWithoutArgumentsTypes.B.$constructor.call(this);
+            this.messageD = "Y";
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.I4', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.I3],
+        $kind: "interface"
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.ConstructingInstanceWithNamedConstructorTypes.E', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.ConstructingInstanceWithNamedConstructorTypes.D],
+        g: null,
+        constructor: function () {
+            this.$initialize();
+            Bridge.ClientTest.Reflection.TypeSystemTests.ConstructingInstanceWithNamedConstructorTypes.D.$constructor.call(this);
+            this.g = " and derived ctor";
+        },
+        getMessage: function () {
+            return Bridge.ClientTest.Reflection.TypeSystemTests.ConstructingInstanceWithNamedConstructorTypes.D.prototype.getMessage.call(this) + this.g;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.DS', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.BS],
+        constructor: function (x) {
+            this.$initialize();
+            Bridge.ClientTest.Reflection.TypeSystemTests.BS.$constructor.call(this, x);
+        },
+        getX: function () {
+            return this.X;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.DS2', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.BS],
+        constructor: function () {
+            this.$initialize();
+            Bridge.ClientTest.Reflection.TypeSystemTests.BS.$constructor.call(this, 0);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.G$2', function (T1, T2) { return {
+        inherits: function () { return [Bridge.ClientTest.Reflection.TypeSystemTests.BX$1(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(T1,Bridge.ClientTest.Reflection.TypeSystemTests.C)),Bridge.ClientTest.Reflection.TypeSystemTests.IG$1(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(T2,String))]; },
+        statics: {
+            constructor: function () {
+                Bridge.ClientTest.Reflection.TypeSystemTests.G$2(T1,T2).field = Bridge.Reflection.getTypeFullName(T1) + " " + Bridge.Reflection.getTypeFullName(T2);
+            },
+            field: null
+        }
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D1', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D2$1', function (T) { return {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C2$1(T),Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I2$1(T),Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1]
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D3', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.C2$1(System.Int32),Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I2$1(String)]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I3', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1],
+        $kind: "interface"
+    });
+    
+    Bridge.definei('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2', function (T1, T2) { return {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(T1),Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(T2)],
+        $kind: "interface",
+        $variance: [1,2]
+    }; });
+    
+    Bridge.definei('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I5$1', function (T1) { return {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I2$1(T1)],
+        $kind: "interface"
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I1]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y1$1', function (T) { return {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(T)]
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y2$1', function (T) { return {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(T)]
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y4$2', function (T1, T2) { return {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I9$2(T1,T2)]
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.D1', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.C1]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.D2$1', function (T) { return {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.C2$1(T)]
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.D3', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsSubclassOfTypes.C2$1(System.Int32)]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.MethodGroupConversionTypes.D', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.MethodGroupConversionTypes.B],
+        constructor: function (m) {
+            this.$initialize();
+            Bridge.ClientTest.Reflection.TypeSystemTests.MethodGroupConversionTypes.B.$constructor.call(this, m);
+        },
+        f: function (x, y) {
+            return ((((x - y) | 0) - this.m) | 0);
+        },
+        g: function (T, x, y) {
+            return ((((x - y) | 0) - this.m) | 0) + Bridge.Reflection.getTypeName(T);
+        },
+        getF: function () {
+            return Bridge.fn.bind(this, Bridge.ClientTest.Reflection.TypeSystemTests.MethodGroupConversionTypes.B.prototype.f);
+        },
+        getG: function () {
+            return Bridge.fn.bind(this, function (x, y) { return this.g(String, x, y); });
+        }
+    });
     
     Bridge.define('Bridge.ClientTest.SimpleTypes.ObjectTests.C2', {
         inherits: [Bridge.ClientTest.SimpleTypes.ObjectTests.C1]
@@ -27176,17 +31906,18 @@
     
     Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I3', {
         inherits: [Bridge.ClientTest.TypeSystemTests.AssignableTypes.I1],
-        $interface: true
+        $kind: "interface"
     });
     
-    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I8$2', function (T1, T2) { return {
+    Bridge.definei('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I8$2', function (T1, T2) { return {
         inherits: [Bridge.ClientTest.TypeSystemTests.AssignableTypes.I6$1(T1),Bridge.ClientTest.TypeSystemTests.AssignableTypes.I7$1(T2)],
-        $interface: true
+        $kind: "interface",
+        $variance: [1,2]
     }; });
     
-    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I5$1', function (T1) { return {
+    Bridge.definei('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I5$1', function (T1) { return {
         inherits: [Bridge.ClientTest.TypeSystemTests.AssignableTypes.I2$1(T1)],
-        $interface: true
+        $kind: "interface"
     }; });
     
     Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.X1', {
@@ -27195,12 +31926,12 @@
     
     Bridge.define('Bridge.ClientTest.TypeSystemTests.I2', {
         inherits: [Bridge.ClientTest.TypeSystemTests.I1],
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Bridge.ClientTest.TypeSystemTests.I4', {
         inherits: [Bridge.ClientTest.TypeSystemTests.I3],
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Bridge.ClientTest.BasicCSharp.TestAbstractClass.C', {
@@ -27211,13 +31942,274 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.C4', {
+        inherits: [Bridge.ClientTest.Reflection.AttributeTests.C3]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.GetMembersTests.D1', {
+        inherits: [Bridge.ClientTest.Reflection.GetMembersTests.C1,Bridge.ClientTest.Reflection.GetMembersTests.I1],
+        statics: {
+            fDS1: 0,
+            fDS2: 0,
+            config: {
+                properties: {
+                    PDS1: 0,
+                    PDS2: 0
+                }
+            },
+            addEDS1: function (value) {
+            },
+            removeEDS1: function (value) {
+            },
+            addEDS2: function (value) {
+            },
+            removeEDS2: function (value) {
+            },
+            mDS: function () {
+            },
+            mDS$1: function (x) {
+            },
+            mDS$2: function (x, y) {
+            },
+            mDS2: function (x, y) {
+            }
+        },
+        fD1: 0,
+        fD2: 0,
+        config: {
+            properties: {
+                PD1: 0,
+                PD2: 0
+            }
+        },
+        constructor: function () {
+            this.$initialize();
+            Bridge.ClientTest.Reflection.GetMembersTests.C1.$constructor.call(this);
+        },
+        $constructor1: function (x) {
+            this.$initialize();
+            Bridge.ClientTest.Reflection.GetMembersTests.C1.$constructor.call(this);
+        },
+        $constructor2: function (x, y) {
+            this.$initialize();
+            Bridge.ClientTest.Reflection.GetMembersTests.C1.$constructor.call(this);
+        },
+        getItem$2: function (x) {
+            return 0;
+        },
+        setItem$2: function (x, value) {
+        },
+        get_i1item: function (x) {
+            return 0;
+        },
+        set_i1item: function (x, value) {
+        },
+        addED1: function (value) {
+        },
+        removeED1: function (value) {
+        },
+        addED2: function (value) {
+        },
+        removeED2: function (value) {
+        },
+        Bridge$ClientTest$Reflection$GetMembersTests$I1$getPI11: function () {
+            throw new System.NotImplementedException();
+        },
+        Bridge$ClientTest$Reflection$GetMembersTests$I1$setPI11: function (value) {
+            throw new System.NotImplementedException();
+        },
+        Bridge$ClientTest$Reflection$GetMembersTests$I1$getPI12: function () {
+            throw new System.NotImplementedException();
+        },
+        Bridge$ClientTest$Reflection$GetMembersTests$I1$setPI12: function (value) {
+            throw new System.NotImplementedException();
+        },
+        Bridge$ClientTest$Reflection$GetMembersTests$I1$addEI11: function (value) {
+            throw new System.NotImplementedException();
+        },
+        Bridge$ClientTest$Reflection$GetMembersTests$I1$removeEI11: function (value) {
+            throw new System.NotImplementedException();
+        },
+        Bridge$ClientTest$Reflection$GetMembersTests$I1$addEI12: function (value) {
+            throw new System.NotImplementedException();
+        },
+        Bridge$ClientTest$Reflection$GetMembersTests$I1$removeEI12: function (value) {
+            throw new System.NotImplementedException();
+        },
+        mD: function () {
+        },
+        mD$1: function (x) {
+        },
+        mD$2: function (x, y) {
+        },
+        mD2: function (x, y) {
+        },
+        Bridge$ClientTest$Reflection$GetMembersTests$I1$mI1: function () {
+            throw new System.NotImplementedException();
+        },
+        Bridge$ClientTest$Reflection$GetMembersTests$I1$mI1$1: function (x) {
+            throw new System.NotImplementedException();
+        },
+        Bridge$ClientTest$Reflection$GetMembersTests$I1$mI1$2: function (x, y) {
+            throw new System.NotImplementedException();
+        },
+        Bridge$ClientTest$Reflection$GetMembersTests$I1$mI12: function (x, y) {
+            throw new System.NotImplementedException();
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.GetMembersTests.D2', {
+        inherits: [Bridge.ClientTest.Reflection.GetMembersTests.C2],
+        statics: {
+            fS: 0,
+            fDS: 0,
+            config: {
+                events: {
+                    ES: null,
+                    EDS: null
+                },
+                properties: {
+                    PS: 0,
+                    PDS: 0
+                }
+            },
+            mS: function () {
+            },
+            mDS: function () {
+            },
+            m2S: function (x) {
+            },
+            m2S$1: function (x) {
+            },
+            m2DS: function (x) {
+            },
+            m2DS$1: function (x) {
+            },
+            m3S: function (x) {
+            }
+        },
+        f$2: 0,
+        fD: 0,
+        config: {
+            events: {
+                E$2: null,
+                ED: null
+            },
+            properties: {
+                P$2: 0,
+                PD: 0
+            }
+        },
+        getItem$4: function (x) {
+            return 0;
+        },
+        setItem$4: function (x, value) {
+        },
+        getItem$5: function (x) {
+            return 0;
+        },
+        setItem$5: function (x, value) {
+        },
+        m$2: function () {
+        },
+        mD: function () {
+        },
+        m2$4: function (x) {
+        },
+        m2$5: function (x) {
+        },
+        m2D: function (x) {
+        },
+        m2D$1: function (x) {
+        },
+        m3$2: function (x) {
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C11$1', function (T) { return {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C10$1(T)]
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.D4', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I3,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I4]
+    });
+    
+    Bridge.definei('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I10$2', function (T1, T2) { return {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(T1,T2)],
+        $kind: "interface",
+        $variance: [1,2]
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1X1', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2X1', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2', function (T1, T2) { return {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(T1,T2)]
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y5$2', function (T1, T2) { return {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I6$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(T1,T2))]
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y6$2', function (T1, T2) { return {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I7$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.I8$2(T1,T2))]
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.B', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.I2]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.D4', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I3,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I4]
+    });
+    
+    Bridge.definei('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I10$2', function (T1, T2) { return {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(T1,T2)],
+        $kind: "interface",
+        $variance: [1,2]
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y1X1', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y1$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y2X1', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y2$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2', function (T1, T2) { return {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(T1,T2)]
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y5$2', function (T1, T2) { return {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I6$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(T1,T2))]
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y6$2', function (T1, T2) { return {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I7$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.I8$2(T1,T2))]
+    }; });
+    
     Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.D4', {
         inherits: [Bridge.ClientTest.TypeSystemTests.AssignableTypes.I3,Bridge.ClientTest.TypeSystemTests.AssignableTypes.I4]
     });
     
-    Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I10$2', function (T1, T2) { return {
+    Bridge.definei('Bridge.ClientTest.TypeSystemTests.AssignableTypes.I10$2', function (T1, T2) { return {
         inherits: [Bridge.ClientTest.TypeSystemTests.AssignableTypes.I8$2(T1,T2)],
-        $interface: true
+        $kind: "interface",
+        $variance: [1,2]
     }; });
     
     Bridge.define('Bridge.ClientTest.TypeSystemTests.AssignableTypes.X2', {
@@ -27228,9 +32220,159 @@
         inherits: [Bridge.ClientTest.TypeSystemTests.I2]
     });
     
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C12', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C11$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.K)]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1X2', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y1$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2X2', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y2$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X1', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X1X2', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X1', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X1)]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3X2X2', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.Y3$2(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2,Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.X2)]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.C', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.B,Bridge.ClientTest.Reflection.TypeSystemTests.I4]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y1X2', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y1$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y2X2', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y2$1(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X1X1', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X1X2', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X2X1', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X1)]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3X2X2', {
+        inherits: [Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.Y3$2(Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2,Bridge.ClientTest.Reflection.TypeSystemTests.IsAssignableFromTypes.X2)]
+    });
+    
     Bridge.define('Bridge.ClientTest.TypeSystemTests.C', {
         inherits: [Bridge.ClientTest.TypeSystemTests.B,Bridge.ClientTest.TypeSystemTests.I4]
     });
     
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.A2Attribute, function () { return {"attrAllowMultiple":true}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.A5Attribute, function () { return {"attrNoInherit":true}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.C10$2, function (T1, T2) { return {"attr":[new Bridge.ClientTest.Reflection.AttributeTests.A1Attribute(11)]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.C11, function () { return {"attr":[new Bridge.ClientTest.Reflection.AttributeTests.A6Attribute(true, 43, 68, 45.5, 46.5, 47, System.Int64(48), 49, 1, "Test_string", null, String)]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.C12, function () { return {"attr":[new Bridge.ClientTest.Reflection.AttributeTests.A7Attribute([42, 17, 31], ["X", "Y2", "Z3"])]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.C13, function () { return {"attr":[new Bridge.ClientTest.Reflection.AttributeTests.A8Attribute("v2")]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.C14, function () { return {"attr":[Bridge.merge(new Bridge.ClientTest.Reflection.AttributeTests.A9Attribute(), {
+        setP1: 42
+    } )]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.C15, function () { return {"attr":[Bridge.merge(new Bridge.ClientTest.Reflection.AttributeTests.A9Attribute(), {
+    
+    }, function () {
+        this.$$XX$$ = 18;
+    } )]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.C16, function () { return {"attr":[Bridge.merge(new Bridge.ClientTest.Reflection.AttributeTests.A9Attribute(), {
+        p3: 43
+    } )]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.C18, function () { return {"attr":[Bridge.merge(new Bridge.ClientTest.Reflection.AttributeTests.A9Attribute(), {
+        setF1: 13
+    } )]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.C19, function () { return {"attr":[new Bridge.ClientTest.Reflection.AttributeTests.A1Attribute(12)]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.C2, function () { return {"attr":[new Bridge.ClientTest.Reflection.AttributeTests.A1Attribute(1),new Bridge.ClientTest.Reflection.AttributeTests.A2Attribute(2)]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.C20, function () { return {"attr":[new Bridge.ClientTest.Reflection.AttributeTests.A11Attribute.$constructor1(42)]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.C21, function () { return {"attr":[{ i: 18 }]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.C22, function () { return {"attr":[new Bridge.ClientTest.Reflection.AttributeTests.A12Attribute(),new Bridge.ClientTest.Reflection.AttributeTests.A13Attribute()],"members":[{"attr":[new Bridge.ClientTest.Reflection.AttributeTests.A12Attribute(),new Bridge.ClientTest.Reflection.AttributeTests.A13Attribute()],"name":"M","type":8,"sname":"m","returnType":Object}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.C7, function () { return {"attr":[new Bridge.ClientTest.Reflection.AttributeTests.A5Attribute()]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.C9, function () { return {"attr":[new Bridge.ClientTest.Reflection.AttributeTests.A1Attribute(7),new Bridge.ClientTest.Reflection.AttributeTests.A2Attribute(8),new Bridge.ClientTest.Reflection.AttributeTests.A2Attribute(9),new Bridge.ClientTest.Reflection.AttributeTests.A3Attribute(10)]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.E1, function () { return {"attr":[new Bridge.ClientTest.Reflection.AttributeTests.A1Attribute(1),new Bridge.ClientTest.Reflection.AttributeTests.A2Attribute(2)]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.I1, function () { return {"attr":[new Bridge.ClientTest.Reflection.AttributeTests.A1Attribute(1),new Bridge.ClientTest.Reflection.AttributeTests.A2Attribute(2)]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.I2$2, function (T1, T2) { return {"attr":[new Bridge.ClientTest.Reflection.AttributeTests.A1Attribute(12)]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.GetMembersTests.B1, function () { return {"members":[{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(101)],"name":".ctor","type":1,"sname":"$constructor"},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(102)],"name":".ctor","type":1,"params":[System.Int32],"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"$constructor1"},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(103)],"name":".ctor","type":1,"params":[System.Int32,String],"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"y","parameterType":String,"position":1}],"sname":"$constructor2"},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(111)],"name":"MB","type":8,"sname":"mB","returnType":Object},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(112)],"name":"MB","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"mB$1","returnType":Object,"params":[System.Int32]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(113)],"name":"MB","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"y","parameterType":String,"position":1}],"sname":"mB$2","returnType":Object,"params":[System.Int32,String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(114)],"name":"MB2","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"y","parameterType":String,"position":1}],"sname":"mB2","returnType":Object,"params":[System.Int32,String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(121)],"name":"MBS","isStatic":true,"type":8,"sname":"mBS","returnType":Object},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(122)],"name":"MBS","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"mBS$1","returnType":Object,"params":[System.Int32]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(123)],"name":"MBS","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"y","parameterType":String,"position":1}],"sname":"mBS$2","returnType":Object,"params":[System.Int32,String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(124)],"name":"MBS2","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"y","parameterType":String,"position":1}],"sname":"mBS2","returnType":Object,"params":[System.Int32,String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(157)],"name":"Item","type":16,"returnType":System.Int32,"params":[System.Int32],"isIndexer":true,"indexParamsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"getter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(158)],"name":"get_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"getItem","returnType":System.Int32,"params":[System.Int32]},"setter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(159)],"name":"set_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"value","parameterType":System.Int32,"position":1}],"sname":"setItem","returnType":Object,"params":[System.Int32,System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(151)],"name":"PB1","type":16,"returnType":System.Int32,"getter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(152)],"name":"get_PB1","type":8,"sname":"getPB1","returnType":System.Int32},"setter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(153)],"name":"set_PB1","type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setPB1","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(154)],"name":"PB2","type":16,"returnType":System.Int32,"getter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(155)],"name":"get_PB2","type":8,"sname":"getPB2","returnType":System.Int32},"setter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(156)],"name":"set_PB2","type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setPB2","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(161)],"name":"PBS1","isStatic":true,"type":16,"returnType":System.Int32,"getter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(162)],"name":"get_PBS1","isStatic":true,"type":8,"sname":"getPBS1","returnType":System.Int32},"setter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(163)],"name":"set_PBS1","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setPBS1","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(164)],"name":"PBS2","isStatic":true,"type":16,"returnType":System.Int32,"getter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(165)],"name":"get_PBS2","isStatic":true,"type":8,"sname":"getPBS2","returnType":System.Int32},"setter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(166)],"name":"set_PBS2","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setPBS2","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(131)],"name":"FB1","type":4,"returnType":System.Int32,"sname":"fB1","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(132)],"name":"FB2","type":4,"returnType":System.Int32,"sname":"fB2","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(141)],"name":"FBS1","isStatic":true,"type":4,"returnType":System.Int32,"sname":"fBS1","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(142)],"name":"FBS2","isStatic":true,"type":4,"returnType":System.Int32,"sname":"fBS2","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(171)],"name":"EB1","type":2,"adder":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(172)],"name":"add_EB1","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addEB1","returnType":Object,"params":[Function]},"remover":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(173)],"name":"remove_EB1","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeEB1","returnType":Object,"params":[Function]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(174)],"name":"EB2","type":2,"adder":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(175)],"name":"add_EB2","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addEB2","returnType":Object,"params":[Function]},"remover":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(176)],"name":"remove_EB2","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeEB2","returnType":Object,"params":[Function]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(181)],"name":"EBS1","isStatic":true,"type":2,"adder":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(182)],"name":"add_EBS1","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addEBS1","returnType":Object,"params":[Function]},"remover":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(183)],"name":"remove_EBS1","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeEBS1","returnType":Object,"params":[Function]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(184)],"name":"EBS2","isStatic":true,"type":2,"adder":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(185)],"name":"add_EBS2","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addEBS2","returnType":Object,"params":[Function]},"remover":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(186)],"name":"remove_EBS2","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeEBS2","returnType":Object,"params":[Function]}}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.GetMembersTests.B2, function () { return {"members":[{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(111)],"name":"M","type":8,"sname":"m","returnType":Object},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(113)],"name":"M2","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"m2","returnType":Object,"params":[System.Int32]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(114)],"name":"M2","type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0}],"sname":"m2$1","returnType":Object,"params":[String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(115)],"name":"M2B","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"m2B","returnType":Object,"params":[System.Int32]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(116)],"name":"M2B","type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0}],"sname":"m2B$1","returnType":Object,"params":[String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(125)],"name":"M2BS","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"m2BS","returnType":Object,"params":[System.Int32]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(126)],"name":"M2BS","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0}],"sname":"m2BS$1","returnType":Object,"params":[String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(123)],"name":"M2S","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"m2S","returnType":Object,"params":[System.Int32]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(124)],"name":"M2S","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0}],"sname":"m2S$1","returnType":Object,"params":[String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(117)],"name":"M3","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"m3","returnType":Object,"params":[System.Int32]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(127)],"name":"M3S","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"m3S","returnType":Object,"params":[System.Int32]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(112)],"name":"MB","type":8,"sname":"mB","returnType":Object},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(122)],"name":"MBS","isStatic":true,"type":8,"sname":"mBS","returnType":Object},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(121)],"name":"MS","isStatic":true,"type":8,"sname":"mS","returnType":Object},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(153)],"name":"Item","type":16,"returnType":System.Int32,"params":[System.Int32],"isIndexer":true,"indexParamsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"getter":{"name":"get_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"getItem","returnType":System.Int32,"params":[System.Int32]},"setter":{"name":"set_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"value","parameterType":System.Int32,"position":1}],"sname":"setItem","returnType":Object,"params":[System.Int32,System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(154)],"name":"Item","type":16,"returnType":System.Int32,"params":[String],"isIndexer":true,"indexParamsInfo":[{"name":"x","parameterType":String,"position":0}],"getter":{"name":"get_Item","type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0}],"sname":"getItem$1","returnType":System.Int32,"params":[String]},"setter":{"name":"set_Item","type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0},{"name":"value","parameterType":System.Int32,"position":1}],"sname":"setItem$1","returnType":Object,"params":[String,System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(151)],"name":"P","type":16,"returnType":System.Int32,"getter":{"name":"get_P","type":8,"sname":"getP","returnType":System.Int32},"setter":{"name":"set_P","type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setP","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(152)],"name":"PB","type":16,"returnType":System.Int32,"getter":{"name":"get_PB","type":8,"sname":"getPB","returnType":System.Int32},"setter":{"name":"set_PB","type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setPB","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(162)],"name":"PBS","isStatic":true,"type":16,"returnType":System.Int32,"getter":{"name":"get_PBS","isStatic":true,"type":8,"sname":"getPBS","returnType":System.Int32},"setter":{"name":"set_PBS","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setPBS","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(161)],"name":"PS","isStatic":true,"type":16,"returnType":System.Int32,"getter":{"name":"get_PS","isStatic":true,"type":8,"sname":"getPS","returnType":System.Int32},"setter":{"name":"set_PS","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setPS","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(131)],"name":"F","type":4,"returnType":System.Int32,"sname":"f","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(132)],"name":"FB","type":4,"returnType":System.Int32,"sname":"fB","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(142)],"name":"FBS","isStatic":true,"type":4,"returnType":System.Int32,"sname":"fBS","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(141)],"name":"FS","isStatic":true,"type":4,"returnType":System.Int32,"sname":"fS","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(171)],"name":"E","type":2,"adder":{"name":"add_E","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addE","returnType":Object,"params":[Function]},"remover":{"name":"remove_E","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeE","returnType":Object,"params":[Function]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(172)],"name":"EB","type":2,"adder":{"name":"add_EB","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addEB","returnType":Object,"params":[Function]},"remover":{"name":"remove_EB","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeEB","returnType":Object,"params":[Function]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(182)],"name":"EBS","isStatic":true,"type":2,"adder":{"name":"add_EBS","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addEBS","returnType":Object,"params":[Function]},"remover":{"name":"remove_EBS","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeEBS","returnType":Object,"params":[Function]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(181)],"name":"ES","isStatic":true,"type":2,"adder":{"name":"add_ES","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addES","returnType":Object,"params":[Function]},"remover":{"name":"remove_ES","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeES","returnType":Object,"params":[Function]}}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.GetMembersTests.C3, function () { return {"members":[{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(1)],"name":"Item","type":16,"returnType":System.Int32,"params":[System.Int32],"isIndexer":true,"indexParamsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"getter":{"name":"get_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"getItem","returnType":System.Int32,"params":[System.Int32]},"setter":{"name":"set_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"value","parameterType":System.Int32,"position":1}],"sname":"setItem","returnType":Object,"params":[System.Int32,System.Int32]}}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.GetMembersTests.I1, function () { return {"members":[{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(411)],"name":"MI1","type":8,"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I1$mI1","returnType":Object},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(412)],"name":"MI1","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I1$mI1$1","returnType":Object,"params":[System.Int32]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(413)],"name":"MI1","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"y","parameterType":String,"position":1}],"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I1$mI1$2","returnType":Object,"params":[System.Int32,String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(414)],"name":"MI12","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"y","parameterType":String,"position":1}],"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I1$mI12","returnType":Object,"params":[System.Int32,String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(457)],"name":"Item","type":16,"returnType":System.Int32,"params":[System.Int32],"isIndexer":true,"indexParamsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"getter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(458)],"name":"get_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I1$get_i1item","returnType":System.Int32,"params":[System.Int32]},"setter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(459)],"name":"set_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"value","parameterType":System.Int32,"position":1}],"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I1$set_i1item","returnType":Object,"params":[System.Int32,System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(451)],"name":"PI11","type":16,"returnType":System.Int32,"getter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(452)],"name":"get_PI11","type":8,"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I1$getPI11","returnType":System.Int32},"setter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(453)],"name":"set_PI11","type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I1$setPI11","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(454)],"name":"PI12","type":16,"returnType":System.Int32,"getter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(455)],"name":"get_PI12","type":8,"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I1$getPI12","returnType":System.Int32},"setter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(456)],"name":"set_PI12","type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I1$setPI12","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(471)],"name":"EI11","type":2,"adder":{"name":"add_EI11","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I1$addEI11","returnType":Object,"params":[Function]},"remover":{"name":"remove_EI11","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I1$removeEI11","returnType":Object,"params":[Function]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(474)],"name":"EI12","type":2,"adder":{"name":"add_EI12","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I1$addEI12","returnType":Object,"params":[Function]},"remover":{"name":"remove_EI12","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I1$removeEI12","returnType":Object,"params":[Function]}}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C1, function () { return {"members":[{"attr":[new Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute.$constructor()],"name":"M2","type":8,"sname":"m2","returnType":Object},{"name":"M3","type":8,"sname":"m3","returnType":Object}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C10, function () { return {"members":[{"name":".ctor","type":1,"params":[System.Int32],"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"$constructor"},{"name":".ctor","type":1,"params":[System.Int32,String],"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"s","parameterType":String,"position":1}],"sname":"$constructor1"}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C11, function () { return {"members":[{"name":".ctor","type":1,"params":[Date],"paramsInfo":[{"name":"dt","parameterType":Date,"position":0}],"sname":"$constructor"}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C12, function () { return {"members":[{"name":"F1","type":4,"returnType":System.Int32,"sname":"f1","isReadOnly":false},{"name":"F2","type":4,"returnType":Date,"sname":"renamedF2","isReadOnly":false},{"name":"F3","isStatic":true,"type":4,"returnType":String,"sname":"f3","isReadOnly":false}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C13, function () { return {"members":[{"name":"E1","type":2,"adder":{"name":"add_E1","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addE1","returnType":Object,"params":[Function]},"remover":{"name":"remove_E1","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeE1","returnType":Object,"params":[Function]}},{"name":"E2","isStatic":true,"type":2,"adder":{"name":"add_E2","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addE2","returnType":Object,"params":[Function]},"remover":{"name":"remove_E2","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeE2","returnType":Object,"params":[Function]}},{"name":"E3","type":2,"adder":{"name":"add_E3","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"tpcount":0,"def":function (value) { return this.addedE3Handler = value; },"returnType":Object,"params":[Function]},"remover":{"name":"remove_E3","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"tpcount":0,"def":function (value) { return this.removedE3Handler = value; },"returnType":Object,"params":[Function]}},{"name":"E4","isStatic":true,"type":2,"adder":{"name":"add_E4","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"tpcount":0,"def":function (value) { return Bridge.ClientTest.Reflection.ReflectionTests.C13.addedE4Handler = value; },"returnType":Object,"params":[Function]},"remover":{"name":"remove_E4","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"tpcount":0,"def":function (value) { return Bridge.ClientTest.Reflection.ReflectionTests.C13.removedE4Handler = value; },"returnType":Object,"params":[Function]}}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C14, function () { return {"members":[{"name":"P1","type":16,"returnType":System.Int32,"getter":{"name":"get_P1","type":8,"sname":"getP1","returnType":System.Int32},"setter":{"name":"set_P1","type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setP1","returnType":Object,"params":[System.Int32]}},{"name":"P10","type":16,"returnType":String,"getter":{"name":"get_P10","type":8,"returnType":String,"fget":"p10"},"setter":{"name":"set_P10","type":8,"params":[String],"returnType":Object,"fset":"p10"},"fname":"p10"},{"name":"P11","isStatic":true,"type":16,"returnType":Date,"setter":{"name":"set_P11","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Date,"position":0}],"sname":"setP11","returnType":Object,"params":[Date]}},{"name":"P12","isStatic":true,"type":16,"returnType":System.Double,"getter":{"name":"get_P12","type":8,"returnType":System.Double,"fget":"p12","isStatic":true},"setter":{"name":"set_P12","type":8,"params":[System.Double],"returnType":Object,"fset":"p12","isStatic":true},"fname":"p12"},{"name":"P13","type":16,"returnType":System.Int32,"getter":{"name":"get_P13","type":8,"tpcount":0,"def":function () { return this.p13Field; },"returnType":System.Int32},"setter":{"name":"set_P13","type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"tpcount":0,"def":function (value) { return this.p13Field = value; },"returnType":Object,"params":[System.Int32]}},{"name":"P14","isStatic":true,"type":16,"returnType":System.Int32,"getter":{"name":"get_P14","isStatic":true,"type":8,"tpcount":0,"def":function () { return Bridge.ClientTest.Reflection.ReflectionTests.C14.p14Field; },"returnType":System.Int32},"setter":{"name":"set_P14","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"tpcount":0,"def":function (value) { return Bridge.ClientTest.Reflection.ReflectionTests.C14.p14Field = value; },"returnType":Object,"params":[System.Int32]}},{"name":"P2","type":16,"returnType":String,"getter":{"name":"get_P2","type":8,"returnType":String,"fget":"p2"},"setter":{"name":"set_P2","type":8,"params":[String],"returnType":Object,"fset":"p2"},"fname":"p2"},{"name":"P3","isStatic":true,"type":16,"returnType":Date,"getter":{"name":"get_P3","isStatic":true,"type":8,"sname":"getP3","returnType":Date},"setter":{"name":"set_P3","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Date,"position":0}],"sname":"setP3","returnType":Object,"params":[Date]}},{"name":"P4","isStatic":true,"type":16,"returnType":System.Double,"getter":{"name":"get_P4","type":8,"returnType":System.Double,"fget":"p4","isStatic":true},"setter":{"name":"set_P4","type":8,"params":[System.Double],"returnType":Object,"fset":"p4","isStatic":true},"fname":"p4"},{"name":"P5","type":16,"returnType":System.Int32,"getter":{"name":"get_P5","type":8,"sname":"getP5","returnType":System.Int32}},{"name":"P6","type":16,"returnType":String,"getter":{"name":"get_P6","type":8,"returnType":String,"fget":"p6"},"setter":{"name":"set_P6","type":8,"params":[String],"returnType":Object,"fset":"p6"},"fname":"p6"},{"name":"P7","isStatic":true,"type":16,"returnType":Date,"getter":{"name":"get_P7","isStatic":true,"type":8,"sname":"getP7","returnType":Date}},{"name":"P8","isStatic":true,"type":16,"returnType":System.Double,"getter":{"name":"get_P8","type":8,"returnType":System.Double,"fget":"p8","isStatic":true},"setter":{"name":"set_P8","type":8,"params":[System.Double],"returnType":Object,"fset":"p8","isStatic":true},"fname":"p8"},{"name":"P9","type":16,"returnType":System.Int32,"setter":{"name":"set_P9","type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setP9","returnType":Object,"params":[System.Int32]}}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C15, function () { return {"members":[{"name":"Item","type":16,"returnType":String,"params":[System.Int32,String],"isIndexer":true,"indexParamsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"s","parameterType":String,"position":1}],"getter":{"name":"get_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"s","parameterType":String,"position":1}],"sname":"getItem","returnType":String,"params":[System.Int32,String]},"setter":{"name":"set_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"s","parameterType":String,"position":1},{"name":"value","parameterType":String,"position":2}],"sname":"setItem","returnType":Object,"params":[System.Int32,String,String]}}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C16, function () { return {"members":[{"name":"Item","type":16,"returnType":String,"params":[System.Int32,String],"isIndexer":true,"indexParamsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"s","parameterType":String,"position":1}],"getter":{"name":"get_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"s","parameterType":String,"position":1}],"sname":"getItem","returnType":String,"params":[System.Int32,String]}}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C17, function () { return {"members":[{"name":"Item","type":16,"returnType":String,"params":[System.Int32,String],"isIndexer":true,"indexParamsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"s","parameterType":String,"position":1}],"setter":{"name":"set_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"s","parameterType":String,"position":1},{"name":"value","parameterType":String,"position":2}],"sname":"setItem","returnType":Object,"params":[System.Int32,String,String]}}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C18, function () { return {"members":[{"attr":[new Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute.$constructor1(1),new Bridge.ClientTest.Reflection.ReflectionTests.A3Attribute()],"name":".ctor","type":1,"sname":"$constructor"},{"attr":[new Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute.$constructor1(2),new Bridge.ClientTest.Reflection.ReflectionTests.A3Attribute()],"name":"M","type":8,"sname":"m","returnType":Object},{"attr":[new Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute.$constructor1(4),new Bridge.ClientTest.Reflection.ReflectionTests.A3Attribute()],"name":"P","type":16,"returnType":System.Int32,"getter":{"attr":[new Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute.$constructor1(5),new Bridge.ClientTest.Reflection.ReflectionTests.A3Attribute()],"name":"get_P","type":8,"sname":"getP","returnType":System.Int32},"setter":{"attr":[new Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute.$constructor1(6),new Bridge.ClientTest.Reflection.ReflectionTests.A3Attribute()],"name":"set_P","type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setP","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute.$constructor1(3),new Bridge.ClientTest.Reflection.ReflectionTests.A3Attribute()],"name":"F","type":4,"returnType":System.Int32,"sname":"f","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute.$constructor1(7),new Bridge.ClientTest.Reflection.ReflectionTests.A3Attribute()],"name":"E","type":2,"adder":{"attr":[new Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute.$constructor1(8),new Bridge.ClientTest.Reflection.ReflectionTests.A3Attribute()],"name":"add_E","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addE","returnType":Object,"params":[Function]},"remover":{"attr":[new Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute.$constructor1(9),new Bridge.ClientTest.Reflection.ReflectionTests.A3Attribute()],"name":"remove_E","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeE","returnType":Object,"params":[Function]}}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C19, function () { return {"members":[{"name":".ctor","type":1,"params":[System.Int32,String],"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","parameterType":String,"position":1}],"def":function(a, b) { return {a: a, b: b};}}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C2, function () { return {"members":[{"name":"M1","type":8,"sname":"m1","returnType":Object},{"name":"M2","isStatic":true,"type":8,"sname":"m2","returnType":Object}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C20, function () { return {"members":[{"name":".ctor","type":1,"params":[System.Int32,String],"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","parameterType":String,"position":1}],"def":function (a, b) { return { a: a, b: b }; }}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C21, function () { return {"members":[{"name":"M1","type":8,"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","parameterType":System.Int32,"position":1}],"tpcount":0,"def":function (a, b) { return this.X + a + b; },"returnType":System.Int32,"params":[System.Int32,System.Int32]},{"name":"M2","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","parameterType":System.Int32,"position":1}],"tpcount":0,"def":function (a, b) { return a + b; },"returnType":System.Int32,"params":[System.Int32,System.Int32]},{"name":"M3","type":8,"paramsInfo":[{"name":"s","parameterType":String,"position":0}],"tpcount":1,"def":function (T, s) { return this.X + Bridge.Reflection.getTypeFullName(T) + s; },"returnType":String,"params":[String]}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C22, function () { return {"members":[{"name":".ctor","type":1,"params":[System.Int32,Array],"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"$constructor"},{"name":".ctor","type":1,"params":[String,Array],"paramsInfo":[{"name":"a","parameterType":String,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"$constructor1"},{"name":"M1","type":8,"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"m1","returnType":Array,"params":[System.Int32,Array]},{"name":"M2","type":8,"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"m2","returnType":Array,"params":[System.Int32,Array]}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C23, function () { return {"members":[{"name":".ctor","type":1,"params":[System.Int32,Array],"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"$constructor"},{"name":".ctor","type":1,"params":[String,Array],"paramsInfo":[{"name":"a","parameterType":String,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"$constructor1"},{"name":"M1","type":8,"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"m1","returnType":Array,"params":[System.Int32,Array]},{"name":"M2","type":8,"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"m2","returnType":Array,"params":[System.Int32,Array]}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C24, function () { return {"members":[{"name":"Item","type":16,"returnType":String,"params":[System.Int32,String],"isIndexer":true,"indexParamsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"s","parameterType":String,"position":1}],"getter":{"name":"get_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"s","parameterType":String,"position":1}],"tpcount":0,"def":function (x, s) { return this.v + ' ' + x + ' ' + s; },"returnType":String,"params":[System.Int32,String]},"setter":{"name":"set_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"s","parameterType":String,"position":1},{"name":"value","parameterType":String,"position":2}],"tpcount":0,"def":function (x, s, value) { return (function(t, x, s) { t.x = x; t.s = s; t.v = value; })(this, x, s); },"returnType":Object,"params":[System.Int32,String,String]}}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C3, function () { return {"members":[{"name":"M1","type":8,"sname":"m1","returnType":System.Int32},{"name":"M2","type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0}],"sname":"m2","returnType":System.Int32,"params":[String]},{"name":"M3","type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0},{"name":"y","parameterType":System.Int32,"position":1}],"sname":"m3","returnType":System.Int32,"params":[String,System.Int32]},{"name":"M4","type":8,"sname":"m4","returnType":Object}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C4, function () { return {"members":[{"name":"M","type":8,"sname":"m","returnType":Object},{"name":"M","type":8,"paramsInfo":[{"name":"i","parameterType":System.Int32,"position":0}],"sname":"m$1","returnType":Object,"params":[System.Int32]},{"name":"M","type":8,"paramsInfo":[{"name":"i","parameterType":System.Int32,"position":0},{"name":"s","parameterType":String,"position":1}],"sname":"x","returnType":Object,"params":[System.Int32,String]}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C5$2, function (T1, T2) { return {"members":[{"name":"M","type":8,"paramsInfo":[{"name":"t2","parameterType":T2,"position":0},{"name":"s","parameterType":String,"position":1}],"sname":"m","returnType":T1,"params":[T2,String]},{"name":"M2","type":8,"sname":"m2","returnType":Object}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C6, function () { return {"members":[{"name":"M1","type":8,"paramsInfo":[{"name":"t2","parameterType":Object,"position":0},{"name":"s","parameterType":String,"position":1}],"tpcount":2,"sname":"m1","returnType":Object,"params":[Object,String]},{"name":"M2","type":8,"paramsInfo":[{"name":"s","parameterType":String,"position":0}],"tpcount":1,"sname":"m2","returnType":Object,"params":[String]},{"name":"M3","type":8,"paramsInfo":[{"name":"s","parameterType":String,"position":0}],"sname":"m3","returnType":Object,"params":[String]}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C7, function () { return {"members":[{"name":"M1","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"m1","returnType":System.Int32,"params":[System.Int32]},{"name":"M2","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0}],"sname":"m2","returnType":Object,"params":[String]},{"name":"M3","type":8,"paramsInfo":[{"name":"s","parameterType":String,"position":0}],"tpcount":2,"sname":"m3","returnType":String,"params":[String]}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C8, function () { return {"members":[{"name":"M1","type":8,"paramsInfo":[{"name":"a","parameterType":String,"position":0},{"name":"b","parameterType":String,"position":1}],"sname":"m1","returnType":String,"params":[String,String]},{"name":"M2","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":String,"position":0},{"name":"b","parameterType":String,"position":1}],"sname":"m2","returnType":String,"params":[String,String]},{"name":"M3","type":8,"paramsInfo":[{"name":"a","parameterType":String,"position":0}],"tpcount":2,"sname":"m3","returnType":String,"params":[String]},{"name":"M4","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":String,"position":0}],"tpcount":2,"sname":"m4","returnType":String,"params":[String]}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C9$2, function (T1, T2) { return {"members":[{"name":"M","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":String,"position":0}],"sname":"m","returnType":String,"params":[String]}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.S1, function () { return {"members":[{"attr":[new Bridge.ClientTest.Reflection.ReflectionTests.A1Attribute.$constructor()],"name":"M2","type":8,"sname":"m2","returnType":Object},{"name":"M3","type":8,"sname":"m3","returnType":Object}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.SimpleTypes.EnumTests, function () { return {"members":[{"attr":[Bridge.merge(new Bridge.Test.IgnoreTest(), {
+        setUntil: null
+    } )],"name":"CreatingInstanceOfEnumTypeReturnsZero","type":8,"sname":"creatingInstanceOfEnumTypeReturnsZero","returnType":Object},{"attr":[Bridge.merge(new Bridge.Test.IgnoreTest(), {
+        setUntil: null
+    } )],"name":"DefaultConstructorOfEnumTypeReturnsZero","type":8,"sname":"defaultConstructorOfEnumTypeReturnsZero","returnType":Object},{"attr":[Bridge.merge(new Bridge.Test.IgnoreTest(), {
+        setUntil: null
+    } )],"name":"DefaultExpressionWithEnumReturnsZero","type":8,"sname":"defaultExpressionWithEnumReturnsZero","returnType":Object},{"attr":[Bridge.merge(new Bridge.Test.IgnoreTest(), {
+        setUntil: null
+    } )],"name":"DefaultValueOfEnumClassIsNull","type":8,"sname":"defaultValueOfEnumClassIsNull","returnType":Object},{"attr":[Bridge.merge(new Bridge.Test.IgnoreTest(), {
+        setUntil: null
+    } )],"name":"DefaultValueOfEnumTypeIsFirstValue","type":8,"sname":"defaultValueOfEnumTypeIsFirstValue","returnType":Object}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.SimpleTypes.JsDateTimeTests, function () { return {"members":[{"attr":[Bridge.merge(new Bridge.Test.IgnoreTest(), {
+        setUntil: null
+    } )],"name":"IComparableCompareToWorks","type":8,"sname":"iComparableCompareToWorks","returnType":Object},{"attr":[Bridge.merge(new Bridge.Test.IgnoreTest(), {
+        setUntil: null
+    } )],"name":"IEquatableEqualsWorks","type":8,"sname":"iEquatableEqualsWorks","returnType":Object}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.C3, function () { return {"attr":[new Bridge.ClientTest.Reflection.AttributeTests.A3Attribute(3)]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.C5, function () { return {"attr":[new Bridge.ClientTest.Reflection.AttributeTests.A1Attribute(5)]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.C6, function () { return {"attr":[new Bridge.ClientTest.Reflection.AttributeTests.A2Attribute(6)]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.GetMembersTests.C1, function () { return {"members":[{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(201)],"name":".ctor","type":1,"sname":"$constructor"},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(202)],"name":".ctor","type":1,"params":[System.Int32],"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"$constructor1"},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(203)],"name":".ctor","type":1,"params":[System.Int32,String],"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"y","parameterType":String,"position":1}],"sname":"$constructor2"},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(211)],"name":"MC","type":8,"sname":"mC","returnType":Object},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(212)],"name":"MC","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"mC$1","returnType":Object,"params":[System.Int32]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(213)],"name":"MC","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"y","parameterType":String,"position":1}],"sname":"mC$2","returnType":Object,"params":[System.Int32,String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(214)],"name":"MC2","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"y","parameterType":String,"position":1}],"sname":"mC2","returnType":Object,"params":[System.Int32,String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(221)],"name":"MCS","isStatic":true,"type":8,"sname":"mCS","returnType":Object},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(222)],"name":"MCS","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"mCS$1","returnType":Object,"params":[System.Int32]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(223)],"name":"MCS","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"y","parameterType":String,"position":1}],"sname":"mCS$2","returnType":Object,"params":[System.Int32,String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(224)],"name":"MCS2","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"y","parameterType":String,"position":1}],"sname":"mCS2","returnType":Object,"params":[System.Int32,String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(257)],"name":"Item","type":16,"returnType":System.Int32,"params":[String],"isIndexer":true,"indexParamsInfo":[{"name":"x","parameterType":String,"position":0}],"getter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(258)],"name":"get_Item","type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0}],"sname":"getItem$1","returnType":System.Int32,"params":[String]},"setter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(259)],"name":"set_Item","type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0},{"name":"value","parameterType":System.Int32,"position":1}],"sname":"setItem$1","returnType":Object,"params":[String,System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(251)],"name":"PC1","type":16,"returnType":System.Int32,"getter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(252)],"name":"get_PC1","type":8,"sname":"getPC1","returnType":System.Int32},"setter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(253)],"name":"set_PC1","type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setPC1","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(254)],"name":"PC2","type":16,"returnType":System.Int32,"getter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(255)],"name":"get_PC2","type":8,"sname":"getPC2","returnType":System.Int32},"setter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(256)],"name":"set_PC2","type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setPC2","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(261)],"name":"PCS1","isStatic":true,"type":16,"returnType":System.Int32,"getter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(262)],"name":"get_PCS1","isStatic":true,"type":8,"sname":"getPCS1","returnType":System.Int32},"setter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(263)],"name":"set_PCS1","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setPCS1","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(264)],"name":"PCS2","isStatic":true,"type":16,"returnType":System.Int32,"getter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(265)],"name":"get_PCS2","isStatic":true,"type":8,"sname":"getPCS2","returnType":System.Int32},"setter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(266)],"name":"set_PCS2","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setPCS2","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(231)],"name":"FC1","type":4,"returnType":System.Int32,"sname":"fC1","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(232)],"name":"FC2","type":4,"returnType":System.Int32,"sname":"fC2","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(241)],"name":"FCS1","isStatic":true,"type":4,"returnType":System.Int32,"sname":"fCS1","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(242)],"name":"FCS2","isStatic":true,"type":4,"returnType":System.Int32,"sname":"fCS2","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(271)],"name":"EC1","type":2,"adder":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(272)],"name":"add_EC1","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addEC1","returnType":Object,"params":[Function]},"remover":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(273)],"name":"remove_EC1","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeEC1","returnType":Object,"params":[Function]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(274)],"name":"EC2","type":2,"adder":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(275)],"name":"add_EC2","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addEC2","returnType":Object,"params":[Function]},"remover":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(276)],"name":"remove_EC2","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeEC2","returnType":Object,"params":[Function]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(281)],"name":"ECS1","isStatic":true,"type":2,"adder":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(282)],"name":"add_ECS1","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addECS1","returnType":Object,"params":[Function]},"remover":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(283)],"name":"remove_ECS1","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeECS1","returnType":Object,"params":[Function]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(284)],"name":"ECS2","isStatic":true,"type":2,"adder":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(285)],"name":"add_ECS2","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addECS2","returnType":Object,"params":[Function]},"remover":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(286)],"name":"remove_ECS2","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeECS2","returnType":Object,"params":[Function]}}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.GetMembersTests.C2, function () { return {"members":[{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(211)],"name":"M","type":8,"sname":"m$1","returnType":Object},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(213)],"name":"M2","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"m2$2","returnType":Object,"params":[System.Int32]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(214)],"name":"M2","type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0}],"sname":"m2$3","returnType":Object,"params":[String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(215)],"name":"M2C","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"m2C","returnType":Object,"params":[System.Int32]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(216)],"name":"M2C","type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0}],"sname":"m2C$1","returnType":Object,"params":[String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(225)],"name":"M2CS","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"m2CS","returnType":Object,"params":[System.Int32]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(226)],"name":"M2CS","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0}],"sname":"m2CS$1","returnType":Object,"params":[String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(223)],"name":"M2S","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"m2S","returnType":Object,"params":[System.Int32]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(224)],"name":"M2S","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0}],"sname":"m2S$1","returnType":Object,"params":[String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(217)],"name":"M3","type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0}],"sname":"m3$1","returnType":Object,"params":[String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(227)],"name":"M3S","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0}],"sname":"m3S","returnType":Object,"params":[String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(212)],"name":"MC","type":8,"sname":"mC","returnType":Object},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(222)],"name":"MCS","isStatic":true,"type":8,"sname":"mCS","returnType":Object},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(221)],"name":"MS","isStatic":true,"type":8,"sname":"mS","returnType":Object},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(253)],"name":"Item","type":16,"returnType":System.Int32,"params":[System.Int32],"isIndexer":true,"indexParamsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"getter":{"name":"get_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"getItem$2","returnType":System.Int32,"params":[System.Int32]},"setter":{"name":"set_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"value","parameterType":System.Int32,"position":1}],"sname":"setItem$2","returnType":Object,"params":[System.Int32,System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(254)],"name":"Item","type":16,"returnType":System.Int32,"params":[System.Double],"isIndexer":true,"indexParamsInfo":[{"name":"x","parameterType":System.Double,"position":0}],"getter":{"name":"get_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Double,"position":0}],"sname":"getItem$3","returnType":System.Int32,"params":[System.Double]},"setter":{"name":"set_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Double,"position":0},{"name":"value","parameterType":System.Int32,"position":1}],"sname":"setItem$3","returnType":Object,"params":[System.Double,System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(251)],"name":"P","type":16,"returnType":System.Int32,"getter":{"name":"get_P","type":8,"sname":"getP$1","returnType":System.Int32},"setter":{"name":"set_P","type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setP$1","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(252)],"name":"PC","type":16,"returnType":System.Int32,"getter":{"name":"get_PC","type":8,"sname":"getPC","returnType":System.Int32},"setter":{"name":"set_PC","type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setPC","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(262)],"name":"PCS","isStatic":true,"type":16,"returnType":System.Int32,"getter":{"name":"get_PCS","isStatic":true,"type":8,"sname":"getPCS","returnType":System.Int32},"setter":{"name":"set_PCS","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setPCS","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(261)],"name":"PS","isStatic":true,"type":16,"returnType":System.Int32,"getter":{"name":"get_PS","isStatic":true,"type":8,"sname":"getPS","returnType":System.Int32},"setter":{"name":"set_PS","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setPS","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(231)],"name":"F","type":4,"returnType":System.Int32,"sname":"f$1","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(232)],"name":"FC","type":4,"returnType":System.Int32,"sname":"fC","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(242)],"name":"FCS","isStatic":true,"type":4,"returnType":System.Int32,"sname":"fCS","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(241)],"name":"FS","isStatic":true,"type":4,"returnType":System.Int32,"sname":"fS","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(271)],"name":"E","type":2,"adder":{"name":"add_E","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addE$1","returnType":Object,"params":[Function]},"remover":{"name":"remove_E","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeE$1","returnType":Object,"params":[Function]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(272)],"name":"EC","type":2,"adder":{"name":"add_EC","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addEC","returnType":Object,"params":[Function]},"remover":{"name":"remove_EC","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeEC","returnType":Object,"params":[Function]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(282)],"name":"ECS","isStatic":true,"type":2,"adder":{"name":"add_ECS","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addECS","returnType":Object,"params":[Function]},"remover":{"name":"remove_ECS","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeECS","returnType":Object,"params":[Function]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(281)],"name":"ES","isStatic":true,"type":2,"adder":{"name":"add_ES","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addES","returnType":Object,"params":[Function]},"remover":{"name":"remove_ES","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeES","returnType":Object,"params":[Function]}}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.GetMembersTests.I2, function () { return {"members":[{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(511)],"name":"MI2","type":8,"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I2$mI2","returnType":Object},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(512)],"name":"MI2","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I2$mI2$1","returnType":Object,"params":[System.Int32]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(513)],"name":"MI2","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"y","parameterType":String,"position":1}],"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I2$mI2$2","returnType":Object,"params":[System.Int32,String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(514)],"name":"MI22","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"y","parameterType":String,"position":1}],"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I2$mI22","returnType":Object,"params":[System.Int32,String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(557)],"name":"Item","type":16,"returnType":System.Int32,"params":[String],"isIndexer":true,"indexParamsInfo":[{"name":"x","parameterType":String,"position":0}],"getter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(558)],"name":"get_Item","type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0}],"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I2$get_item2","returnType":System.Int32,"params":[String]},"setter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(559)],"name":"set_Item","type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0},{"name":"value","parameterType":System.Int32,"position":1}],"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I2$set_item2","returnType":Object,"params":[String,System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(551)],"name":"PI21","type":16,"returnType":System.Int32,"getter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(552)],"name":"get_PI21","type":8,"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I2$getPI21","returnType":System.Int32},"setter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(553)],"name":"set_PI21","type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I2$setPI21","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(554)],"name":"PI22","type":16,"returnType":System.Int32,"getter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(555)],"name":"get_PI22","type":8,"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I2$getPI22","returnType":System.Int32},"setter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(556)],"name":"set_PI22","type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I2$setPI22","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(571)],"name":"EI21","type":2,"adder":{"name":"add_EI21","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I2$addEI21","returnType":Object,"params":[Function]},"remover":{"name":"remove_EI21","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I2$removeEI21","returnType":Object,"params":[Function]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(574)],"name":"EI22","type":2,"adder":{"name":"add_EI22","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I2$addEI22","returnType":Object,"params":[Function]},"remover":{"name":"remove_EI22","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"Bridge$ClientTest$Reflection$GetMembersTests$I2$removeEI22","returnType":Object,"params":[Function]}}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.C4, function () { return {"attr":[new Bridge.ClientTest.Reflection.AttributeTests.A4Attribute(4)]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.GetMembersTests.D1, function () { return {"members":[{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(301)],"name":".ctor","type":1,"sname":"$constructor"},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(302)],"name":".ctor","type":1,"params":[System.Int32],"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"$constructor1"},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(303)],"name":".ctor","type":1,"params":[System.Int32,String],"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"y","parameterType":String,"position":1}],"sname":"$constructor2"},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(311)],"name":"MD","type":8,"sname":"mD","returnType":Object},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(312)],"name":"MD","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"mD$1","returnType":Object,"params":[System.Int32]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(313)],"name":"MD","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"y","parameterType":String,"position":1}],"sname":"mD$2","returnType":Object,"params":[System.Int32,String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(314)],"name":"MD2","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"y","parameterType":String,"position":1}],"sname":"mD2","returnType":Object,"params":[System.Int32,String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(321)],"name":"MDS","isStatic":true,"type":8,"sname":"mDS","returnType":Object},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(322)],"name":"MDS","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"mDS$1","returnType":Object,"params":[System.Int32]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(323)],"name":"MDS","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"y","parameterType":String,"position":1}],"sname":"mDS$2","returnType":Object,"params":[System.Int32,String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(324)],"name":"MDS2","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"y","parameterType":String,"position":1}],"sname":"mDS2","returnType":Object,"params":[System.Int32,String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(357)],"name":"Item","type":16,"returnType":System.Int32,"params":[System.Double],"isIndexer":true,"indexParamsInfo":[{"name":"x","parameterType":System.Double,"position":0}],"getter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(358)],"name":"get_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Double,"position":0}],"sname":"getItem$2","returnType":System.Int32,"params":[System.Double]},"setter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(359)],"name":"set_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Double,"position":0},{"name":"value","parameterType":System.Int32,"position":1}],"sname":"setItem$2","returnType":Object,"params":[System.Double,System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(351)],"name":"PD1","type":16,"returnType":System.Int32,"getter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(352)],"name":"get_PD1","type":8,"sname":"getPD1","returnType":System.Int32},"setter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(353)],"name":"set_PD1","type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setPD1","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(354)],"name":"PD2","type":16,"returnType":System.Int32,"getter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(355)],"name":"get_PD2","type":8,"sname":"getPD2","returnType":System.Int32},"setter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(356)],"name":"set_PD2","type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setPD2","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(361)],"name":"PDS1","isStatic":true,"type":16,"returnType":System.Int32,"getter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(362)],"name":"get_PDS1","isStatic":true,"type":8,"sname":"getPDS1","returnType":System.Int32},"setter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(363)],"name":"set_PDS1","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setPDS1","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(364)],"name":"PDS2","isStatic":true,"type":16,"returnType":System.Int32,"getter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(365)],"name":"get_PDS2","isStatic":true,"type":8,"sname":"getPDS2","returnType":System.Int32},"setter":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(366)],"name":"set_PDS2","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setPDS2","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(331)],"name":"FD1","type":4,"returnType":System.Int32,"sname":"fD1","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(332)],"name":"FD2","type":4,"returnType":System.Int32,"sname":"fD2","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(341)],"name":"FDS1","isStatic":true,"type":4,"returnType":System.Int32,"sname":"fDS1","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(342)],"name":"FDS2","isStatic":true,"type":4,"returnType":System.Int32,"sname":"fDS2","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(371)],"name":"ED1","type":2,"adder":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(372)],"name":"add_ED1","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addED1","returnType":Object,"params":[Function]},"remover":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(373)],"name":"remove_ED1","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeED1","returnType":Object,"params":[Function]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(374)],"name":"ED2","type":2,"adder":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(375)],"name":"add_ED2","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addED2","returnType":Object,"params":[Function]},"remover":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(376)],"name":"remove_ED2","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeED2","returnType":Object,"params":[Function]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(381)],"name":"EDS1","isStatic":true,"type":2,"adder":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(382)],"name":"add_EDS1","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addEDS1","returnType":Object,"params":[Function]},"remover":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(383)],"name":"remove_EDS1","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeEDS1","returnType":Object,"params":[Function]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(384)],"name":"EDS2","isStatic":true,"type":2,"adder":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(385)],"name":"add_EDS2","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addEDS2","returnType":Object,"params":[Function]},"remover":{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(386)],"name":"remove_EDS2","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeEDS2","returnType":Object,"params":[Function]}}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.GetMembersTests.D2, function () { return {"members":[{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(311)],"name":"M","type":8,"sname":"m$2","returnType":Object},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(313)],"name":"M2","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"m2$4","returnType":Object,"params":[System.Int32]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(314)],"name":"M2","type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0}],"sname":"m2$5","returnType":Object,"params":[String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(315)],"name":"M2D","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"m2D","returnType":Object,"params":[System.Int32]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(316)],"name":"M2D","type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0}],"sname":"m2D$1","returnType":Object,"params":[String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(325)],"name":"M2DS","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"m2DS","returnType":Object,"params":[System.Int32]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(326)],"name":"M2DS","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0}],"sname":"m2DS$1","returnType":Object,"params":[String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(323)],"name":"M2S","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"m2S","returnType":Object,"params":[System.Int32]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(324)],"name":"M2S","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0}],"sname":"m2S$1","returnType":Object,"params":[String]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(317)],"name":"M3","type":8,"paramsInfo":[{"name":"x","parameterType":Date,"position":0}],"sname":"m3$2","returnType":Object,"params":[Date]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(327)],"name":"M3S","isStatic":true,"type":8,"paramsInfo":[{"name":"x","parameterType":Date,"position":0}],"sname":"m3S","returnType":Object,"params":[Date]},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(312)],"name":"MD","type":8,"sname":"mD","returnType":Object},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(322)],"name":"MDS","isStatic":true,"type":8,"sname":"mDS","returnType":Object},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(321)],"name":"MS","isStatic":true,"type":8,"sname":"mS","returnType":Object},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(353)],"name":"Item","type":16,"returnType":System.Int32,"params":[System.Int32],"isIndexer":true,"indexParamsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"getter":{"name":"get_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0}],"sname":"getItem$4","returnType":System.Int32,"params":[System.Int32]},"setter":{"name":"set_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"value","parameterType":System.Int32,"position":1}],"sname":"setItem$4","returnType":Object,"params":[System.Int32,System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(354)],"name":"Item","type":16,"returnType":System.Int32,"params":[Date],"isIndexer":true,"indexParamsInfo":[{"name":"x","parameterType":Date,"position":0}],"getter":{"name":"get_Item","type":8,"paramsInfo":[{"name":"x","parameterType":Date,"position":0}],"sname":"getItem$5","returnType":System.Int32,"params":[Date]},"setter":{"name":"set_Item","type":8,"paramsInfo":[{"name":"x","parameterType":Date,"position":0},{"name":"value","parameterType":System.Int32,"position":1}],"sname":"setItem$5","returnType":Object,"params":[Date,System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(351)],"name":"P","type":16,"returnType":System.Int32,"getter":{"name":"get_P","type":8,"sname":"getP$2","returnType":System.Int32},"setter":{"name":"set_P","type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setP$2","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(352)],"name":"PD","type":16,"returnType":System.Int32,"getter":{"name":"get_PD","type":8,"sname":"getPD","returnType":System.Int32},"setter":{"name":"set_PD","type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setPD","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(362)],"name":"PDS","isStatic":true,"type":16,"returnType":System.Int32,"getter":{"name":"get_PDS","isStatic":true,"type":8,"sname":"getPDS","returnType":System.Int32},"setter":{"name":"set_PDS","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setPDS","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(361)],"name":"PS","isStatic":true,"type":16,"returnType":System.Int32,"getter":{"name":"get_PS","isStatic":true,"type":8,"sname":"getPS","returnType":System.Int32},"setter":{"name":"set_PS","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setPS","returnType":Object,"params":[System.Int32]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(331)],"name":"F","type":4,"returnType":System.Int32,"sname":"f$2","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(332)],"name":"FD","type":4,"returnType":System.Int32,"sname":"fD","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(342)],"name":"FDS","isStatic":true,"type":4,"returnType":System.Int32,"sname":"fDS","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(341)],"name":"FS","isStatic":true,"type":4,"returnType":System.Int32,"sname":"fS","isReadOnly":false},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(371)],"name":"E","type":2,"adder":{"name":"add_E","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addE$2","returnType":Object,"params":[Function]},"remover":{"name":"remove_E","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeE$2","returnType":Object,"params":[Function]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(372)],"name":"ED","type":2,"adder":{"name":"add_ED","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addED","returnType":Object,"params":[Function]},"remover":{"name":"remove_ED","type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeED","returnType":Object,"params":[Function]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(382)],"name":"EDS","isStatic":true,"type":2,"adder":{"name":"add_EDS","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addEDS","returnType":Object,"params":[Function]},"remover":{"name":"remove_EDS","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeEDS","returnType":Object,"params":[Function]}},{"attr":[new Bridge.ClientTest.Reflection.GetMembersTests.A1Attribute(381)],"name":"ES","isStatic":true,"type":2,"adder":{"name":"add_ES","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"addES","returnType":Object,"params":[Function]},"remover":{"name":"remove_ES","isStatic":true,"type":8,"paramsInfo":[{"name":"value","parameterType":Function,"position":0}],"sname":"removeES","returnType":Object,"params":[Function]}}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C25, function () { return {"members":[{"name":"B1","type":4,"returnType":System.Int32,"sname":"b1","isReadOnly":false},{"name":"B2","type":4,"returnType":System.Int32,"sname":"b2","isReadOnly":false},{"name":"B3","type":4,"returnType":System.Int32,"sname":"b3","isReadOnly":false},{"name":"B4","type":4,"returnType":System.Int32,"sname":"b4","isReadOnly":false},{"name":"B5","type":4,"returnType":System.Int32,"sname":"b5","isReadOnly":false},{"name":"C1","type":4,"returnType":System.Int32,"sname":"c1","isReadOnly":false},{"name":"C2","type":4,"returnType":System.Int32,"sname":"c2","isReadOnly":false},{"name":"C3","type":4,"returnType":System.Int32,"sname":"c3","isReadOnly":false},{"name":"C4","type":4,"returnType":System.Int32,"sname":"c4","isReadOnly":false},{"name":"C5","type":4,"returnType":System.Int32,"sname":"c5","isReadOnly":false}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C26, function () { return {"members":[{"name":".ctor","type":1,"sname":"$constructor"},{"name":"A1","type":4,"returnType":System.Int32,"sname":"a1","isReadOnly":false},{"name":"A3","type":4,"returnType":System.Int32,"sname":"a3","isReadOnly":false},{"name":"A4","type":4,"returnType":System.Int32,"sname":"a4","isReadOnly":false},{"name":"B1","type":4,"returnType":System.Int32,"sname":"b1","isReadOnly":false},{"name":"B2","type":4,"returnType":System.Int32,"sname":"b2","isReadOnly":false},{"name":"B3","type":4,"returnType":System.Int32,"sname":"b3","isReadOnly":false},{"name":"B4","type":4,"returnType":System.Int32,"sname":"b4","isReadOnly":false},{"name":"B5","type":4,"returnType":System.Int32,"sname":"b5","isReadOnly":false},{"name":"C1","type":4,"returnType":System.Int32,"sname":"c1","isReadOnly":false},{"name":"C2","type":4,"returnType":System.Int32,"sname":"c2","isReadOnly":false},{"name":"C3","type":4,"returnType":System.Int32,"sname":"c3","isReadOnly":false},{"name":"C4","type":4,"returnType":System.Int32,"sname":"c4","isReadOnly":false},{"name":"C5","type":4,"returnType":System.Int32,"sname":"c5","isReadOnly":false}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C27, function () { return {"members":[{"name":".ctor","type":1,"sname":"$constructor"},{"name":"A1","type":4,"returnType":System.Int32,"sname":"a1","isReadOnly":false},{"name":"A2","type":4,"returnType":System.Int32,"sname":"a2","isReadOnly":false},{"name":"A3","type":4,"returnType":System.Int32,"sname":"a3","isReadOnly":false},{"name":"A4","type":4,"returnType":System.Int32,"sname":"a4","isReadOnly":false},{"name":"B1","type":4,"returnType":System.Int32,"sname":"b1","isReadOnly":false},{"name":"B2","type":4,"returnType":System.Int32,"sname":"b2","isReadOnly":false},{"name":"B3","type":4,"returnType":System.Int32,"sname":"b3","isReadOnly":false},{"name":"B4","type":4,"returnType":System.Int32,"sname":"b4","isReadOnly":false},{"name":"B5","type":4,"returnType":System.Int32,"sname":"b5","isReadOnly":false},{"name":"C1","type":4,"returnType":System.Int32,"sname":"c1","isReadOnly":false},{"name":"C2","type":4,"returnType":System.Int32,"sname":"c2","isReadOnly":false},{"name":"C3","type":4,"returnType":System.Int32,"sname":"c3","isReadOnly":false},{"name":"C4","type":4,"returnType":System.Int32,"sname":"c4","isReadOnly":false},{"name":"C5","type":4,"returnType":System.Int32,"sname":"c5","isReadOnly":false}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C28, function () { return {"members":[{"name":".ctor","type":1,"sname":"$constructor"},{"name":"A1","type":4,"returnType":System.Int32,"sname":"a1","isReadOnly":false},{"name":"A2","type":4,"returnType":System.Int32,"sname":"a2","isReadOnly":false},{"name":"A3","type":4,"returnType":System.Int32,"sname":"a3","isReadOnly":false},{"name":"A4","type":4,"returnType":System.Int32,"sname":"a4","isReadOnly":false},{"name":"A5","type":4,"returnType":System.Int32,"sname":"a5","isReadOnly":false},{"name":"B1","type":4,"returnType":System.Int32,"sname":"b1","isReadOnly":false},{"name":"B2","type":4,"returnType":System.Int32,"sname":"b2","isReadOnly":false},{"name":"B3","type":4,"returnType":System.Int32,"sname":"b3","isReadOnly":false},{"name":"B4","type":4,"returnType":System.Int32,"sname":"b4","isReadOnly":false},{"name":"B5","type":4,"returnType":System.Int32,"sname":"b5","isReadOnly":false},{"name":"C1","type":4,"returnType":System.Int32,"sname":"c1","isReadOnly":false},{"name":"C2","type":4,"returnType":System.Int32,"sname":"c2","isReadOnly":false},{"name":"C3","type":4,"returnType":System.Int32,"sname":"c3","isReadOnly":false},{"name":"C4","type":4,"returnType":System.Int32,"sname":"c4","isReadOnly":false},{"name":"C5","type":4,"returnType":System.Int32,"sname":"c5","isReadOnly":false}]}; });
+    $asm.attr= [Bridge.merge(new Bridge.ClientTest.Batch1.Reflection.AssemblyTests.A2Attribute.$constructor1(64), {
+        setP: 23
+    } ),Bridge.merge(new Bridge.ClientTest.Batch1.Reflection.AssemblyTests.A3Attribute.$constructor1(15), {
+        setP: 45
+    } )];
+    
     Bridge.init();
-})(this);
+});

@@ -26,82 +26,85 @@ namespace System
         }
 
         [Template("new (System.Collections.ObjectModel.ReadOnlyCollection$1({T}))({array})")]
-        public extern static ReadOnlyCollection<T> AsReadOnly<T>(T[] array);
+        public static extern ReadOnlyCollection<T> AsReadOnly<T>(T[] array);
 
         [Template("System.Array.convertAll({array}, {converter})")]
-        public extern static TOutput[] ConvertAll<TInput, TOutput>(TInput[] array, Converter<TInput, TOutput> converter);
+        public static extern TOutput[] ConvertAll<TInput, TOutput>(TInput[] array, Converter<TInput, TOutput> converter);
 
         [Template("(System.Array.findIndex({array}, {match}) !== -1)")]
-        public extern static bool Exists<T>(T[] array, Predicate<T> match);
+        public static extern bool Exists<T>(T[] array, Predicate<T> match);
 
         [Template("System.Array.find({T}, {array}, {match})")]
-        public extern static T Find<T>(T[] array, Predicate<T> match);
+        public static extern T Find<T>(T[] array, Predicate<T> match);
 
         [Template("System.Array.findAll({array}, {match})")]
-        public extern static T[] FindAll<T>(T[] array, Predicate<T> match);
+        public static extern T[] FindAll<T>(T[] array, Predicate<T> match);
 
         [Template("System.Array.findIndex({array}, {match})")]
-        public extern static int FindIndex<T>(T[] array, Predicate<T> match);
+        public static extern int FindIndex<T>(T[] array, Predicate<T> match);
 
         [Template("System.Array.findIndex({array}, {startIndex}, {match})")]
-        public extern static int FindIndex<T>(T[] array, int startIndex, Predicate<T> match);
+        public static extern int FindIndex<T>(T[] array, int startIndex, Predicate<T> match);
 
         [Template("System.Array.findIndex({array}, {startIndex}, {count}, {match})")]
-        public extern static int FindIndex<T>(T[] array, int startIndex, int count, Predicate<T> match);
+        public static extern int FindIndex<T>(T[] array, int startIndex, int count, Predicate<T> match);
 
         [Template("System.Array.findLast({T}, {array}, {match})")]
-        public extern static T FindLast<T>(T[] array, Predicate<T> match);
+        public static extern T FindLast<T>(T[] array, Predicate<T> match);
 
         [Template("System.Array.findLastIndex({array}, {match})")]
-        public extern static int FindLastIndex<T>(T[] array, Predicate<T> match);
+        public static extern int FindLastIndex<T>(T[] array, Predicate<T> match);
 
         [Template("System.Array.findLastIndex({array}, {startIndex}, {match})")]
-        public extern static int FindLastIndex<T>(T[] array, int startIndex, Predicate<T> match);
+        public static extern int FindLastIndex<T>(T[] array, int startIndex, Predicate<T> match);
 
         [Template("System.Array.findLastIndex({array}, {startIndex}, {count}, {match})")]
-        public extern static int FindLastIndex<T>(T[] array, int startIndex, int count, Predicate<T> match);
+        public static extern int FindLastIndex<T>(T[] array, int startIndex, int count, Predicate<T> match);
 
         [Template("System.Array.forEach({array}, {action})")]
-        public extern static void ForEach<T>(T[] array, Action<T> action);
+        public static extern void ForEach<T>(T[] array, Action<T> action);
+
+        [Template("System.Array.forEach({array}, {action})")]
+        public static extern void ForEach<T>(T[] array, Action<T, int, T[]> action);
 
         [Template("System.Array.indexOfT({array}, {value})")]
-        public extern static int IndexOf(Array array, Object value);
+        public static extern int IndexOf(Array array, Object value);
 
         [Template("System.Array.indexOfT({array}, {value}, {startIndex})")]
-        public extern static int IndexOf(Array array, Object value, int startIndex);
+        public static extern int IndexOf(Array array, Object value, int startIndex);
 
         [Template("System.Array.indexOfT({array}, {value}, {startIndex}, {count})")]
-        public extern static int IndexOf(Array array, Object value, int startIndex, int count);
+        public static extern int IndexOf(Array array, Object value, int startIndex, int count);
 
         [Template("System.Array.indexOfT({array}, {value})")]
-        public extern static int IndexOf<T>(T[] array, T value);
+        public static extern int IndexOf<T>(T[] array, T value);
 
         [Template("System.Array.indexOfT({array}, {value}, {startIndex})")]
-        public extern static int IndexOf<T>(T[] array, T value, int startIndex);
+        public static extern int IndexOf<T>(T[] array, T value, int startIndex);
 
         [Template("System.Array.indexOfT({array}, {value}, {startIndex}, {count})")]
         public static extern int IndexOf<T>(T[] array, T value, int startIndex, int count);
 
         [Template("System.Array.lastIndexOfT({array}, {value})")]
-        public extern static int LastIndexOf(Array array, Object value);
+        public static extern int LastIndexOf(Array array, Object value);
 
         [Template("System.Array.lastIndexOfT({array}, {value}, {startIndex})")]
-        public extern static int LastIndexOf(Array array, Object value, int startIndex);
+        public static extern int LastIndexOf(Array array, Object value, int startIndex);
 
         [Template("System.Array.lastIndexOfT({array}, {value}, {startIndex}, {count})")]
-        public extern static int LastIndexOf(Array array, Object value, int startIndex, int count);
+        public static extern int LastIndexOf(Array array, Object value, int startIndex, int count);
 
         [Template("System.Array.lastIndexOfT({array}, {value})")]
-        public extern static int LastIndexOf<T>(T[] array, T value);
+        public static extern int LastIndexOf<T>(T[] array, T value);
 
         [Template("System.Array.lastIndexOfT({array}, {value}, {startIndex})")]
-        public extern static int LastIndexOf<T>(T[] array, T value, int startIndex);
+        public static extern int LastIndexOf<T>(T[] array, T value, int startIndex);
 
         [Template("System.Array.lastIndexOfT({array}, {value}, {startIndex}, {count})")]
         public static extern int LastIndexOf<T>(T[] array, T value, int startIndex, int count);
 
         [Template("System.Array.trueForAll({array}, {match})")]
-        public extern static bool TrueForAll<T>(T[] array, Predicate<T> match);
+        public static extern bool TrueForAll<T>(T[] array, Predicate<T> match);
 
         public extern Array Concat(params object[] items);
 
@@ -253,7 +256,48 @@ namespace System
     [External]
     public static class ArrayExtensions
     {
+        [Template("System.Array.contains({array}, {item}, {T})")]
+        public static extern bool Contains<T>(this T[] array, T item);
+
+        [Template("{array}.every({callback})")]
+        public static extern bool Every<T>(this T[] array, Func<T, int, T[], bool> callback);
+
+        [Template("{array}.every({callback})")]
+        public static extern bool Every<T>(this T[] array, Func<T, bool> callback);
+
+        [Template("{array}.filter({callback})")]
+        public static extern T[] Filter<T>(this T[] array, Func<T, int, T[], bool> callback);
+
+        [Template("{array}.filter({callback})")]
+        public static extern T[] Filter<T>(this T[] array, Func<T, bool> callback);
+
+        [Template("{array}.map({callback})")]
+        public static extern TResult[] Map<TSource, TResult>(this TSource[] array, Func<TSource, int, TSource[], TResult> callback);
+
+        [Template("{array}.map({callback})")]
+        public static extern TResult[] Map<TSource, TResult>(this TSource[] array, Func<TSource, TResult> callback);
+
+        [Template("{array}.some({callback})")]
+        public static extern bool Some<T>(this T[] array, Func<T, int, T[], bool> callback);
+
+        [Template("{array}.some({callback})")]
+        public static extern bool Some<T>(this T[] array, Func<T, bool> callback);
+
         [Template("{source}.push({*values})")]
-        public extern static void Push<T>(this T[] source, params T[] values);
+        public static extern void Push<T>(this T[] source, params T[] values);
+
+        [Template("{array}.sort()")]
+        public static extern void Sort<T>(this T[] array);
+
+        [Template("{array}.sort({compareCallback})")]
+        public static extern void Sort<T>(this T[] array, Func<T, T, int> compareCallback);
+
+        [Template("{array}.forEach({callback})")]
+        public static extern void ForEach<T>(this T[] array, Action<T, int, T[]> callback);
+
+        [Template("{array}.forEach({callback})")]
+        public static extern void ForEach<T>(this T[] array, Action<T> callback);
+
+
     }
 }

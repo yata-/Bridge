@@ -7,6 +7,7 @@
   <file name="String.js" />
   <file name="Enum.js" />
   <file name="Class.js" />
+  <file name="Reflection.js" />
   <file name="Interfaces.js" />
   <file name="Char.js" />
   <file name="FormattableString.js" />
@@ -67,6 +68,7 @@
     <include name="Enum.js" />
     <include name="Browser.js" />
     <include name="Class.js" />
+    <include name="Reflection.js" />
     <include name="Interfaces.js" />
     <include name="Char.js" />
     <include name="FormattableString.js" />

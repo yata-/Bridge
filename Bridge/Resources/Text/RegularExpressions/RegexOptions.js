@@ -14,6 +14,6 @@ Bridge.define("System.Text.RegularExpressions.RegexOptions", {
         CultureInvariant: 0x0200
     },
 
-    $enum: true,
+    $kind: "enum",
     $flags: true
 });

@@ -4,6 +4,7 @@ namespace Bridge
 {
     [External]
     [AttributeUsage(AttributeTargets.Method)]
+    [NonScriptable]
     public class InitAttribute : Attribute
     {
         public InitAttribute()
@@ -16,6 +17,7 @@ namespace Bridge
     }
 
     [External]
+    [NonScriptable]
     public enum InitPosition
     {
         /// <summary>

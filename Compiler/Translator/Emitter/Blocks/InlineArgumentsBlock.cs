@@ -81,6 +81,29 @@ namespace Bridge.Translator
             return expressions.Where(e => e.Name == key).Select(e => e.Expression).ToList();
         }
 
+        protected virtual IList<ResolveResult> GetResolveResultByKey(string key)
+        {
+            if (this.ArgumentsInfo.Attribute.PositionalArguments.Count == 0)
+            {
+                return new List<ResolveResult>();
+            }
+
+            if (Regex.IsMatch(key, "^\\d+$"))
+            {
+                return this.ArgumentsInfo.Attribute.PositionalArguments.Skip(int.Parse(key)).ToList();
+            }
+
+            var p = this.ArgumentsInfo.Attribute.Constructor.Parameters.FirstOrDefault(cp => cp.Name == key);
+
+            if (p != null)
+            {
+                var idx = this.ArgumentsInfo.Attribute.Constructor.Parameters.IndexOf(p);
+                return p.IsParams ? this.ArgumentsInfo.Attribute.PositionalArguments.Skip(idx).ToList() : new List<ResolveResult> { this.ArgumentsInfo.Attribute.PositionalArguments[idx]};
+            }
+
+            return new List<ResolveResult>();
+        }
+
         protected virtual AstType GetAstTypeByKey(IEnumerable<TypeParamExpression> types, string key)
         {
             return types.Where(e => e.Name == key && e.AstType != null).Select(e => e.AstType).FirstOrDefault();
@@ -147,6 +170,15 @@ namespace Bridge.Translator
 
         protected virtual void WriteParamName(string name)
         {
+            if (this.Method.TypeParameters.Count > 0 && this.Method.TypeArguments.Count > 0)
+            {
+                var tp = this.Method.TypeParameters.FirstOrDefault(p => p.Name == name);
+                if (tp != null)
+                {
+                    name = BridgeTypes.ToJsName(this.Method.TypeArguments[tp.Index], this.Emitter);
+                }
+            }
+
             if (Helpers.IsReservedWord(name))
             {
                 name = Helpers.ChangeReservedWord(name);
@@ -155,17 +187,32 @@ namespace Bridge.Translator
             this.Write(name);
         }
 
-        protected virtual void EmitInlineExpressionList(ArgumentsInfo argsInfo, string inline, bool asRef = false, bool isNull = false)
+        protected virtual void EmitInlineExpressionList(ArgumentsInfo argsInfo, string inline, bool asRef = false, bool isNull = false, bool? definition = null)
         {
             IEnumerable<NamedParamExpression> expressions = argsInfo.NamedExpressions;
             IEnumerable<TypeParamExpression> typeParams = argsInfo.TypeArguments;
-
+            bool addClose = false;
             this.Write("");
 
             if (asRef)
             {
+                var withoutTypeParams = this.Method.TypeArguments.Count > 0 &&
+                                     this.Method.TypeArguments.All(t => t.Kind != TypeKind.TypeParameter);
+
+                if (definition.HasValue)
+                {
+                    withoutTypeParams = !definition.Value;
+                }
+
+                if (withoutTypeParams && (!this.Method.IsStatic || this.Method.IsExtensionMethod && this.TargetResolveResult is ThisResolveResult) && (this.TargetResolveResult is ThisResolveResult || this.TargetResolveResult == null) && (inline.Contains("{this}") || this.Method.IsStatic || this.Method.IsExtensionMethod && inline.Contains("{" + this.Method.Parameters.First().Name + "}")))
+                {
+                    this.Write(JS.Funcs.BRIDGE_BIND);
+                    this.Write("(this, ");
+                    addClose = true;
+                }
+
                 this.Write("function (");
-                this.EmitMethodParameters(this.Method, this.Method.Parameters, this.Method.TypeParameters, isNull);
+                this.EmitMethodParameters(this.Method, this.Method.Parameters, withoutTypeParams ? null : this.Method.TypeParameters, isNull);
                 this.Write(") { return ");
             }
 
@@ -180,6 +227,16 @@ namespace Bridge.Translator
                 if (paramsParam != null)
                 {
                     paramsIndex = argsInfo.ResolveResult.Member.Parameters.IndexOf(paramsParam);
+                    paramsName = paramsParam.Name;
+                    paramsType = paramsParam.Type;
+                }
+            }
+            else if(argsInfo.Method != null)
+            {
+                var paramsParam = argsInfo.Method.Parameters.FirstOrDefault(p => p.IsParams);
+                if (paramsParam != null)
+                {
+                    paramsIndex = argsInfo.Method.Parameters.IndexOf(paramsParam);
                     paramsName = paramsParam.Name;
                     paramsType = paramsParam.Type;
                 }
@@ -254,7 +311,7 @@ namespace Bridge.Translator
                                     sb.Append(",");
                                     sb.Append(args);
                                 }
-                                
+
                                 sb.Append(")");
 
                                 inline = inline.Remove(match.Index, match.Length);
@@ -295,6 +352,11 @@ namespace Bridge.Translator
                         key = this.Method.Parameters[index].Name;
                     }
 
+                    if (modifier == "type")
+                    {
+                        this.Write(JS.Funcs.BRIDGE_GET_TYPE + "(");
+                    }
+
                     if (key == "this")
                     {
                         if (isNull)
@@ -305,9 +367,22 @@ namespace Bridge.Translator
                         {
                             this.WriteParamName(this.Method.Parameters.First().Name);
                         }
+                        else if (argsInfo.Expression is MemberReferenceExpression)
+                        {
+                            var trg = ((MemberReferenceExpression)argsInfo.Expression).Target;
+
+                            if (trg is BaseReferenceExpression)
+                            {
+                                this.Write("this");
+                            }
+                            else
+                            {
+                                trg.AcceptVisitor(this.Emitter);
+                            }
+                        }
                         else
                         {
-                            ((MemberReferenceExpression)argsInfo.Expression).Target.AcceptVisitor(this.Emitter);    
+                            this.Write("this");
                         }
                     }
                     else if (this.Method.IsExtensionMethod && key == this.Method.Parameters.First().Name)
@@ -316,9 +391,22 @@ namespace Bridge.Translator
                         {
                             this.WriteParamName(key);
                         }
+                        else if (argsInfo.Expression is MemberReferenceExpression)
+                        {
+                            var trg = ((MemberReferenceExpression)argsInfo.Expression).Target;
+
+                            if (trg is BaseReferenceExpression)
+                            {
+                                this.Write("this");
+                            }
+                            else
+                            {
+                                trg.AcceptVisitor(this.Emitter);
+                            }
+                        }
                         else
                         {
-                            ((MemberReferenceExpression)argsInfo.Expression).Target.AcceptVisitor(this.Emitter);
+                            this.WriteParamName(key);
                         }
                     }
                     else if (paramsName == key && !ignoreArray)
@@ -329,6 +417,11 @@ namespace Bridge.Translator
                     else
                     {
                         this.WriteParamName(key);
+                    }
+
+                    if (modifier == "type")
+                    {
+                        this.Write(")");
                     }
                 }
                 else if (key == "this" || key == argsInfo.ThisName || (key == "0" && argsInfo.IsExtensionMethod))
@@ -547,6 +640,73 @@ namespace Bridge.Translator
                             this.Write(this.WriteIndentToString(s));
                         }
                     }
+                    else if (this.ArgumentsInfo.Attribute != null)
+                    {
+                        var results = this.GetResolveResultByKey(key);
+
+                        if (results.Count > 1 || paramsName == key)
+                        {
+                            if (needExpand)
+                            {
+                                ignoreArray = true;
+                            }
+
+                            if (!ignoreArray)
+                            {
+                                this.Write("[");
+                            }
+
+                            if (exprs.Count == 1 && results[0].IsCompileTimeConstant && results[0].ConstantValue == null)
+                            {
+                                this.Write("null");
+                            }
+                            else
+                            {
+                                bool needComma = false;
+                                foreach (ResolveResult item in results)
+                                {
+                                    if (needComma)
+                                    {
+                                        this.WriteComma();
+                                    }
+
+                                    needComma = true;
+
+                                    AttributeCreateBlock.WriteResolveResult(item, this);
+                                }
+                            }
+
+                            if (!ignoreArray)
+                            {
+                                this.Write("]");
+                            }
+                        }
+                        else
+                        {
+                            string s;
+                            if (results[0] != null)
+                            {
+                                var writer = this.SaveWriter();
+                                this.NewWriter();
+
+                                AttributeCreateBlock.WriteResolveResult(results[0], this);
+
+                                s = this.Emitter.Output.ToString();
+                                this.RestoreWriter(writer);
+
+                                if (modifier == "raw")
+                                {
+                                    s = s.Trim('"');
+                                }
+                            }
+                            else
+                            {
+                                s = "null";
+                            }
+
+                            this.Write(this.WriteIndentToString(s));
+                        }
+                    }
                     else if (typeParams != null)
                     {
                         var type = this.GetAstTypeByKey(typeParams, key);
@@ -599,6 +759,10 @@ namespace Bridge.Translator
             if (asRef)
             {
                 this.Write("; }");
+                if (addClose)
+                {
+                    this.Write(")");
+                }
             }
         }
 
@@ -710,7 +874,7 @@ namespace Bridge.Translator
                 this.Write(JS.Vars.T);
                 needComma = true;
             }
-            else if (!(this.TargetResolveResult is TypeResolveResult))
+            else if (this.Method.IsExtensionMethod && !(this.TargetResolveResult is TypeResolveResult) && this.TargetResolveResult != null)
             {
                 parameters = parameters.Skip(1);
             }
@@ -739,9 +903,9 @@ namespace Bridge.Translator
             }
         }
 
-        public virtual void EmitFunctionReference()
+        public virtual void EmitFunctionReference(bool? definition = null)
         {
-            this.EmitInlineExpressionList(this.ArgumentsInfo, this.InlineCode, true);
+            this.EmitInlineExpressionList(this.ArgumentsInfo, this.InlineCode, true, false, definition);
         }
 
         public virtual void EmitNullableReference()

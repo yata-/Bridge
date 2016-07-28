@@ -1,8 +1,15 @@
 using Bridge.Contract;
+using Newtonsoft.Json.Linq;
 using Object.Net.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+using ICSharpCode.NRefactory;
+using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.TypeSystem;
+using Newtonsoft.Json;
 
 namespace Bridge.Translator
 {
@@ -14,11 +21,11 @@ namespace Bridge.Translator
             this.Emitter = emitter;
         }
 
-        protected virtual StringBuilder GetOutputForType(ITypeInfo typeInfo)
+        protected virtual StringBuilder GetOutputForType(ITypeInfo typeInfo, string name)
         {
             string module = null;
 
-            if (typeInfo.Module != null)
+            if (typeInfo != null && typeInfo.Module != null)
             {
                 module = typeInfo.Module;
             }
@@ -27,7 +34,7 @@ namespace Bridge.Translator
                 module = this.Emitter.AssemblyInfo.Module;
             }
 
-            var fileName = typeInfo.FileName;
+            var fileName = typeInfo != null ? typeInfo.FileName : name;
 
             if (fileName.IsEmpty() && this.Emitter.AssemblyInfo.OutputBy != OutputBy.Project)
             {
@@ -179,7 +186,7 @@ namespace Bridge.Translator
             var dependencies = new List<IPluginDependency>();
             output.ModuleDependencies.Add(module, dependencies);
 
-            if (typeInfo.Dependencies.Count > 0)
+            if (typeInfo != null && typeInfo.Dependencies.Count > 0)
             {
                 dependencies.AddRange(typeInfo.Dependencies);
             }
@@ -241,8 +248,10 @@ namespace Bridge.Translator
         {
             this.Emitter.Writers = new Stack<IWriter>();
             this.Emitter.Outputs = new EmitterOutputs();
+            var metas = new Dictionary<IType, JObject>();
 
             this.Emitter.Translator.Plugins.BeforeTypesEmit(this.Emitter, this.Emitter.Types);
+            var reflectedTypes = this.GetReflectableTypes();
 
             foreach (var type in this.Emitter.Types)
             {
@@ -273,21 +282,263 @@ namespace Bridge.Translator
                     typeInfo = type;
                 }
 
-                this.Emitter.Output = this.GetOutputForType(typeInfo);
+                this.Emitter.Output = this.GetOutputForType(typeInfo, null);
                 this.Emitter.TypeInfo = type;
 
                 if (this.Emitter.TypeInfo.Module != null)
                 {
                     this.Indent();
                 }
-
+                
                 new ClassBlock(this.Emitter, this.Emitter.TypeInfo).Emit();
                 this.Emitter.Translator.Plugins.AfterTypeEmit(this.Emitter, type);
             }
+
+            foreach (var type in this.Emitter.Types)
+            {
+                if (reflectedTypes.Any(t => t == type.Type))
+                {
+                    continue;
+                }
+
+                var meta = MetadataUtils.ConstructTypeMetadata(type.Type.GetDefinition(), this.Emitter, true, type.TypeDeclaration.GetParent<SyntaxTree>());
+
+                if (meta != null)
+                {
+                    metas.Add(type.Type, meta);
+                }
+            }
+
+            foreach (var reflectedType in reflectedTypes)
+            {
+                var typeDef = reflectedType.GetDefinition();
+                JObject meta = null;
+                if (typeDef != null)
+                {
+                    var tInfo = this.Emitter.Types.FirstOrDefault(t => t.Type == reflectedType);
+                    SyntaxTree tree = null;
+
+                    if (tInfo != null && tInfo.TypeDeclaration != null)
+                    {
+                        tree = tInfo.TypeDeclaration.GetParent<SyntaxTree>();
+                    }
+                    meta = MetadataUtils.ConstructTypeMetadata(reflectedType.GetDefinition(), this.Emitter, false, tree);
+                }
+                else
+                {
+                    meta = MetadataUtils.ConstructITypeMetadata(reflectedType, this.Emitter);
+                }
+                
+                if (meta != null)
+                {
+                    metas.Add(reflectedType, meta);
+                }
+            }
+
+            var lastOutput = this.Emitter.Output;
+            var output = this.Emitter.AssemblyInfo.Reflection.Output;
+
+            if (!string.IsNullOrEmpty(output))
+            {
+                this.Emitter.Output = this.GetOutputForType(null, output);
+                this.Emitter.MetaDataOutputName = this.Emitter.EmitterOutput.FileName;
+            }
+
+            foreach (var meta in metas)
+            {
+                var metaData = meta.Value;
+                string typeArgs = "";
+
+                if (meta.Key.TypeArguments.Count > 0)
+                {
+                    StringBuilder arr_sb = new StringBuilder();
+                    var comma = false;
+                    foreach (var typeArgument in meta.Key.TypeArguments)
+                    {
+                        if (comma)
+                        {
+                            arr_sb.Append(", ");
+                        }
+
+                        arr_sb.Append(typeArgument.Name);
+                        comma = true;
+                    }
+                    
+                    typeArgs = arr_sb.ToString();
+                }
+
+                this.Write(string.Format("Bridge.setMetadata({0}, function ({2}) {{ return {1}; }});", BridgeTypes.ToJsName(meta.Key, this.Emitter, true), metaData.ToString(Formatting.None), typeArgs));
+                this.WriteNewLine();
+            }
+
+            var scriptableAttributes = MetadataUtils.GetScriptableAttributes(this.Emitter.Resolver.Compilation.MainAssembly.AssemblyAttributes, this.Emitter, null).ToList();
+            if (scriptableAttributes.Count > 0)
+            {
+                JArray attrArr = new JArray();
+                foreach (var a in scriptableAttributes)
+                {
+                    attrArr.Add(MetadataUtils.ConstructAttribute(a, null, this.Emitter));
+                }
+
+                this.Write(string.Format("$asm.attr= {0};", attrArr.ToString(Formatting.None)));
+            }
+
+            this.Emitter.Output = lastOutput;
 
             this.RemovePenultimateEmptyLines(true);
 
             this.Emitter.Translator.Plugins.AfterTypesEmit(this.Emitter, this.Emitter.Types);
         }
+
+        private IType[] GetReflectableTypes()
+        {
+            var config = this.Emitter.AssemblyInfo.Reflection;
+            var configInternal = ((AssemblyInfo) this.Emitter.AssemblyInfo).ReflectionInternal;
+
+            bool? enable = config.Enable.HasValue ? config.Enable : (configInternal.Enable.HasValue ? configInternal.Enable : null);
+            TypeAccessibility? typeAccessibility = config.TypeAccessibility.HasValue ? config.TypeAccessibility : (configInternal.TypeAccessibility.HasValue ? configInternal.TypeAccessibility : null);
+            string filter = !string.IsNullOrEmpty(config.Filter) ? config.Filter : (!string.IsNullOrEmpty(configInternal.Filter) ? configInternal.Filter : null);
+            
+            var hasSettings = !string.IsNullOrEmpty(config.Filter) || 
+                              config.MemberAccessibility.HasValue ||
+                              config.TypeAccessibility.HasValue || 
+                              !string.IsNullOrEmpty(configInternal.Filter) || 
+                              configInternal.MemberAccessibility.HasValue ||
+                              configInternal.TypeAccessibility.HasValue;
+
+            if (enable.HasValue && !enable.Value)
+            {
+                return new IType[0];
+            }
+
+            if (enable.HasValue && enable.Value && !hasSettings)
+            {
+                this.Emitter.IsAnonymousReflectable = true;
+            }
+
+            if (typeAccessibility.HasValue)
+            {
+                this.Emitter.IsAnonymousReflectable = typeAccessibility.Value.HasFlag(TypeAccessibility.Anonymous);
+            }
+
+            List<IType> reflectTypes = new List<IType>();
+
+            foreach (var bridgeType in this.Emitter.BridgeTypes)
+            {
+                var result = false;
+                var type = bridgeType.Value.Type;
+                var thisAssembly = bridgeType.Value.TypeInfo != null;
+
+                if (enable.HasValue && enable.Value && !hasSettings && thisAssembly)
+                {
+                    result = true;
+                }
+
+                var typeDef = type.GetDefinition();
+
+                if (typeDef != null)
+                {
+                    var attr = typeDef.Attributes.FirstOrDefault(a => a.AttributeType.FullName == "Bridge.ReflectableAttribute");
+
+                    if (attr != null)
+                    {
+                        if (attr.PositionalArguments.Count == 0)
+                        {
+                            reflectTypes.Add(type);
+                            continue;
+                        }
+
+                        var value = attr.PositionalArguments.First().ConstantValue;
+
+                        if (!(value is bool) || (bool)value)
+                        {
+                            reflectTypes.Add(type);
+                        }
+
+                        continue;
+                    }
+                }
+
+                if (typeAccessibility.HasValue)
+                {
+                    result = false;
+
+                    if (typeAccessibility.Value.HasFlag(TypeAccessibility.All))
+                    {
+                        result = true;
+                    }
+
+                    if (typeAccessibility.Value.HasFlag(TypeAccessibility.Anonymous) && type.Kind == TypeKind.Anonymous)
+                    {
+                        result = true;
+                    }
+
+                    if (typeAccessibility.Value.HasFlag(TypeAccessibility.NonAnonymous) && type.Kind != TypeKind.Anonymous)
+                    {
+                        result = true;
+                    }
+
+                    if (typeAccessibility.Value.HasFlag(TypeAccessibility.NonPrivate) && (typeDef == null || !typeDef.IsPrivate))
+                    {
+                        result = true;
+                    }
+
+                    if (typeAccessibility.Value.HasFlag(TypeAccessibility.Public) && (typeDef == null || typeDef.IsPublic || typeDef.IsInternal))
+                    {
+                        result = true;
+                    }
+
+                    if (typeAccessibility.Value.HasFlag(TypeAccessibility.None))
+                    {
+                        continue;
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(filter))
+                {
+                    var fullName = type.FullName;
+                    var parts = filter.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach (var part in parts)
+                    {
+                        string pattern;
+                        bool exclude = part.StartsWith("!");
+
+                        if (part == "this")
+                        {
+                            result = !exclude && thisAssembly;
+                        }
+                        else
+                        {
+                            if (part.StartsWith("regex:"))
+                            {
+                                pattern = part.Substring(6);
+                            }
+                            else
+                            {
+                                pattern = "^" + Regex.Escape(part).Replace("\\*", ".*").Replace("\\?", ".") + "$";
+                            }
+
+                            if (Regex.IsMatch(fullName, pattern))
+                            {
+                                result = !exclude;
+                            }
+                        }
+                    }
+
+                    if (!result)
+                    {
+                        continue;
+                    }
+                }
+
+                if (result)
+                {
+                    reflectTypes.Add(type);
+                }
+            }
+
+            return reflectTypes.ToArray();
+        } 
     }
 }

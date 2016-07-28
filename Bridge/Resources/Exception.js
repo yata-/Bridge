@@ -457,3 +457,12 @@
             System.SystemException.$constructor.call(this, message, innerException);
         }
     });
+
+    Bridge.define("System.Reflection.AmbiguousMatchException", {
+        inherits: [System.Exception],
+
+        constructor: function (message, innerException) {
+            this.$initialize();
+            System.Exception.$constructor.call(this, message || "Ambiguous match.", innerException);
+        }
+    });

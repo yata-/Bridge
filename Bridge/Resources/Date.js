@@ -1,7 +1,7 @@
 ﻿    // @source Date.js
 
     Bridge.define("System.DayOfWeek", {
-        $enum: true,
+        $kind: "enum",
         $statics: {
             sunday: 0,
             monday: 1,

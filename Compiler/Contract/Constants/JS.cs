@@ -12,14 +12,16 @@
         public class Fields
         {
             public const string ENTRY_POINT = "$entryPoint";
+            public const string KIND = "$kind";
+            public const string VARIANCE = "$variance";
             public const string FLAGS = "$flags";
+            public const string UNDERLYINGTYPE = "$utype";
             public const string ENUM = "$enum";
             public const string INHERITS = "inherits";
             public const string STRUCT = "$struct";
             public const string CONFIG = "config";
             public const string EVENTS = "events";
             public const string PROPERTIES = "properties";
-            public const string INTERFACE = "$interface";
             public const string STATICS = "statics";
 
             public const string ASYNC_TASK = "task";
@@ -36,6 +38,7 @@
             public const string BRIDGE_REMOVE = "Bridge.fn.remove";
             public const string BRIDGE_MERGE = "Bridge.merge";
             public const string BRIDGE_DEFINE = "Bridge.define";
+            public const string BRIDGE_DEFINEI = "Bridge.definei";
             public const string BRIDGE_IS = "Bridge.is";
             public const string BRIDGE_IS_DEFINED = "Bridge.isDefined";
             public const string BRIDGE_GET_ENUMERATOR = "Bridge.getEnumerator";

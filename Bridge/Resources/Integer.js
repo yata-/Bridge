@@ -6,11 +6,12 @@
                 inherits: [System.IComparable, System.IFormattable],
 
                 statics: {
+                    $number: true,
                     min: min,
                     max: max,
 
                     instanceOf: function (instance) {
-                        return typeof (instance) === "number" && Math.floor(instance, 0) == instance && instance >= min && instance <= max;
+                        return typeof (instance) === "number" && Math.floor(instance, 0) === instance && instance >= min && instance <= max;
                     },
                     getDefaultValue: function () {
                         return 0;
@@ -41,6 +42,8 @@
     Bridge.define("Bridge.Int", {
         inherits: [System.IComparable, System.IFormattable],
         statics: {
+            $number: true,
+
             instanceOf: function (instance) {
                 return typeof (instance) === "number" && isFinite(instance) && Math.floor(instance, 0) === instance;
             },
@@ -724,6 +727,7 @@
         statics: {
             min: -Number.MAX_VALUE,
             max: Number.MAX_VALUE,
+            $number: true,
 
             instanceOf: function (instance) {
                 return typeof (instance) === "number";
@@ -749,6 +753,7 @@
         statics: {
             min: -3.40282346638528859e+38,
             max: 3.40282346638528859e+38,
+            $number: true,
 
             instanceOf: System.Double.instanceOf,
             getDefaultValue: System.Double.getDefaultValue,

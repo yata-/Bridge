@@ -13,7 +13,7 @@ namespace System
     [External]
     [Name("String")]
     [Constructor("String")]
-    public sealed class String : IEnumerable, IEnumerable<char>, IComparable<String>, IEquatable<String>
+    public sealed class String : IEnumerable, ICloneable, IEnumerable<char>, IComparable<String>, IEquatable<String>
     {
         [FieldProperty]
         public extern int Length
@@ -864,5 +864,8 @@ namespace System
 
         [Template("System.String.remove({this}, {index}, {count})")]
         public extern string Remove(int index, int count);
+
+        [Template("{this}")]
+        public extern Object Clone();
     }
 }

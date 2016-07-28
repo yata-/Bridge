@@ -1,4 +1,4 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("test", function ($asm, globals) {
     
     Bridge.define('Bridge.Test.Assert', {
         statics: {
@@ -1186,6 +1186,227 @@
                 QUnit.test("Random - Unseeded", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_RandomTests.unseeded);
                 QUnit.test("Random - Seeded", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_RandomTests.seeded);
                 QUnit.test("Random - Sample", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_RandomTests.sample);
+                QUnit.module("Reflection");
+                QUnit.test("Reflection - Assembly GetExecutingAssemblyWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests.getExecutingAssemblyWorks);
+                QUnit.test("Reflection - Assembly GetAssemblyForTypeWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests.getAssemblyForTypeWorks);
+                QUnit.test("Reflection - Assembly FullNameWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests.fullNameWorks);
+                QUnit.test("Reflection - Assembly ToStringWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests.toStringWorks);
+                QUnit.test("Reflection - Assembly GetTypesWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests.getTypesWorks);
+                QUnit.test("Reflection - Assembly GetTypesWithImportedModuleWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests.getTypesWithImportedModuleWorks);
+                QUnit.test("Reflection - Assembly GetTypeWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests.getTypeWorks);
+                QUnit.test("Reflection - Assembly GetTypeWorksWithGenerics", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests.getTypeWorksWithGenerics);
+                QUnit.test("Reflection - Assembly GetTypeWithImportedModuleWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests.getTypeWithImportedModuleWorks);
+                QUnit.test("Reflection - Assembly AssemblyOfBuiltInTypes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests.assemblyOfBuiltInTypes);
+                QUnit.test("Reflection - Assembly CreateInstanceWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests.createInstanceWorks);
+                QUnit.test("Reflection - Assembly GetCustomAttributesWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests.getCustomAttributesWorks);
+                QUnit.test("Reflection - Assembly LoadCanReturnReferenceToLoadedAssembly", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests.loadCanReturnReferenceToLoadedAssembly);
+                QUnit.test("Reflection - Assembly GetManifestResourceNamesWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests.getManifestResourceNamesWorks);
+                QUnit.test("Reflection - Assembly GetManifestResourceDataAsBase64WithoutTypeWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests.getManifestResourceDataAsBase64WithoutTypeWorks);
+                QUnit.test("Reflection - Assembly GetManifestResourceDataAsBase64WithTypeWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests.getManifestResourceDataAsBase64WithTypeWorks);
+                QUnit.test("Reflection - Assembly GetManifestResourceDataWithoutTypeWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests.getManifestResourceDataWithoutTypeWorks);
+                QUnit.test("Reflection - Assembly GetManifestResourceDataWithTypeWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests.getManifestResourceDataWithTypeWorks);
+                QUnit.test("Reflection - Attribute CanGetCustomTypeAttributesForTypeWithNoAttributes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.canGetCustomTypeAttributesForTypeWithNoAttributes);
+                QUnit.test("Reflection - Attribute CanGetCustomTypeAttributesForClassWithAttributes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.canGetCustomTypeAttributesForClassWithAttributes);
+                QUnit.test("Reflection - Attribute NonScriptableAttributesAreNotIncluded", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.nonScriptableAttributesAreNotIncluded);
+                QUnit.test("Reflection - Attribute CanGetCustomTypeAttributesForInterfaceWithAttributes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.canGetCustomTypeAttributesForInterfaceWithAttributes);
+                QUnit.test("Reflection - Attribute CanGetCustomTypeAttributesForEnumWithAttributes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.canGetCustomTypeAttributesForEnumWithAttributes);
+                QUnit.test("Reflection - Attribute InheritedFlagToGetCustomAttributesWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.inheritedFlagToGetCustomAttributesWorks);
+                QUnit.test("Reflection - Attribute DeepInheritanceWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.deepInheritanceWorks);
+                QUnit.test("Reflection - Attribute OverridingSingleUseAttributeReplacesTheAttributeOnTheBaseClass", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.overridingSingleUseAttributeReplacesTheAttributeOnTheBaseClass);
+                QUnit.test("Reflection - Attribute ApplyingNewInstanceOfMultipleUseAttributeAddsTheAttribute", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.applyingNewInstanceOfMultipleUseAttributeAddsTheAttribute);
+                QUnit.test("Reflection - Attribute NonInheritedAttributeIsNotInherited", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.nonInheritedAttributeIsNotInherited);
+                QUnit.test("Reflection - Attribute GetCustomAttributesTypeFilterWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.getCustomAttributesTypeFilterWorks);
+                QUnit.test("Reflection - Attribute GetCustomAttributesWorksForOpenGenericClass", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.getCustomAttributesWorksForOpenGenericClass);
+                QUnit.test("Reflection - Attribute GetCustomAttributesWorksForConstructedGenericClass", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.getCustomAttributesWorksForConstructedGenericClass);
+                QUnit.test("Reflection - Attribute GetCustomAttributesWorksForOpenGenericInterface", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.getCustomAttributesWorksForOpenGenericInterface);
+                QUnit.test("Reflection - Attribute GetCustomAttributesWorksForConstructedGenericInterface", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.getCustomAttributesWorksForConstructedGenericInterface);
+                QUnit.test("Reflection - Attribute AllSupportedScalarTypesCanBeUsedAsAttributeArguments", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.allSupportedScalarTypesCanBeUsedAsAttributeArguments);
+                QUnit.test("Reflection - Attribute ArraysCanBeUsedAsAttributeArguments", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.arraysCanBeUsedAsAttributeArguments);
+                QUnit.test("Reflection - Attribute NamedValuesEnumCanBeUsedAsAttributeArgument", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.namedValuesEnumCanBeUsedAsAttributeArgument);
+                QUnit.test("Reflection - Attribute PropertiesWithSetMethodsImplementedAsNormalMethodsCanBeSetInAttributeDeclaration", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.propertiesWithSetMethodsImplementedAsNormalMethodsCanBeSetInAttributeDeclaration);
+                QUnit.test("Reflection - Attribute PropertiesWithSetMethodsImplementedAsInlineCodeCanBeSetInAttributeDeclaration", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.propertiesWithSetMethodsImplementedAsInlineCodeCanBeSetInAttributeDeclaration);
+                QUnit.test("Reflection - Attribute PropertiesImplementedAsFieldsCanBeAssignedInAttributeDeclaration", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.propertiesImplementedAsFieldsCanBeAssignedInAttributeDeclaration);
+                QUnit.test("Reflection - Attribute FieldsCanBeAssignedInAttributeDeclaration", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.fieldsCanBeAssignedInAttributeDeclaration);
+                QUnit.test("Reflection - Attribute CreatingAttributeWithNamedConstructorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.creatingAttributeWithNamedConstructorWorks);
+                QUnit.test("Reflection - Attribute CreatingAttributeWithInlineCodeConstructorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.creatingAttributeWithInlineCodeConstructorWorks);
+                QUnit.test("Reflection - Attribute ConditionalAttributesWhoseSymbolsAreNotDefinedAreRemoved", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests.conditionalAttributesWhoseSymbolsAreNotDefinedAreRemoved);
+                QUnit.test("Reflection - GetMembers GetMembersWithoutBindingFlagsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getMembersWithoutBindingFlagsWorks);
+                QUnit.test("Reflection - GetMembers GetMembersWorksForInterface", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getMembersWorksForInterface);
+                QUnit.test("Reflection - GetMembers GetMembersWithBindingFlagsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getMembersWithBindingFlagsWorks);
+                QUnit.test("Reflection - GetMembers GetMemberWithNameWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getMemberWithNameWorks);
+                QUnit.test("Reflection - GetMembers GetMemberWithNameAndBindingFlagsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getMemberWithNameAndBindingFlagsWorks);
+                QUnit.test("Reflection - GetMembers GetConstructorsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getConstructorsWorks);
+                QUnit.test("Reflection - GetMembers GetConstructorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getConstructorWorks);
+                QUnit.test("Reflection - GetMembers GetMethodsWithoutBindingFlagsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getMethodsWithoutBindingFlagsWorks);
+                QUnit.test("Reflection - GetMembers GetMethodsWithBindingFlagsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getMethodsWithBindingFlagsWorks);
+                QUnit.test("Reflection - GetMembers GetMethodWithNameWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getMethodWithNameWorks);
+                QUnit.test("Reflection - GetMembers GetMethodWithNameAndBindingFlagsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getMethodWithNameAndBindingFlagsWorks);
+                QUnit.test("Reflection - GetMembers GetMethodWithNameAndArgumentTypesWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getMethodWithNameAndArgumentTypesWorks);
+                QUnit.test("Reflection - GetMembers GetMethodWithNameAndArgumentTypesAndBindingFlagsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getMethodWithNameAndArgumentTypesAndBindingFlagsWorks);
+                QUnit.test("Reflection - GetMembers GetPropertiesWithoutBindingFlagsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getPropertiesWithoutBindingFlagsWorks);
+                QUnit.test("Reflection - GetMembers GetPropertiesWithBindingFlagsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getPropertiesWithBindingFlagsWorks);
+                QUnit.test("Reflection - GetMembers GetPropertyWithNameWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getPropertyWithNameWorks);
+                QUnit.test("Reflection - GetMembers GetPropertyWithNameAndBindingFlagsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getPropertyWithNameAndBindingFlagsWorks);
+                QUnit.test("Reflection - GetMembers GetPropertyWithNameAndArgumentTypesWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getPropertyWithNameAndArgumentTypesWorks);
+                QUnit.test("Reflection - GetMembers GetPropertyWithNameAndArgumentTypesAndBindingFlagsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getPropertyWithNameAndArgumentTypesAndBindingFlagsWorks);
+                QUnit.test("Reflection - GetMembers GetFieldsWithoutBindingFlagsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getFieldsWithoutBindingFlagsWorks);
+                QUnit.test("Reflection - GetMembers GetFieldsWithBindingFlagsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getFieldsWithBindingFlagsWorks);
+                QUnit.test("Reflection - GetMembers GetFieldWithNameWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getFieldWithNameWorks);
+                QUnit.test("Reflection - GetMembers GetFieldWithNameAndBindingFlagsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getFieldWithNameAndBindingFlagsWorks);
+                QUnit.test("Reflection - GetMembers GetEventsWithoutBindingFlagsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getEventsWithoutBindingFlagsWorks);
+                QUnit.test("Reflection - GetMembers GetEventsWithBindingFlagsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getEventsWithBindingFlagsWorks);
+                QUnit.test("Reflection - GetMembers GetEventWithNameWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getEventWithNameWorks);
+                QUnit.test("Reflection - GetMembers GetEventWithNameAndBindingFlagsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.getEventWithNameAndBindingFlagsWorks);
+                QUnit.test("Reflection - GetMembers IsOperatorForMemberInfoWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests.isOperatorForMemberInfoWorks);
+                QUnit.test("Reflection - Reflection GetMembersReturnsMethodsWithAnyScriptableAttributeOrReflectableAttribute", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.getMembersReturnsMethodsWithAnyScriptableAttributeOrReflectableAttribute);
+                QUnit.test("Reflection - Reflection StructMemberReflectionWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.structMemberReflectionWorks);
+                QUnit.test("Reflection - Reflection IsStaticFlagWorksForMethod", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.isStaticFlagWorksForMethod);
+                QUnit.test("Reflection - Reflection MemberTypeIsMethodForMethod", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.memberTypeIsMethodForMethod);
+                QUnit.test("Reflection - Reflection IsConstructorIsFalseForMethod", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.isConstructorIsFalseForMethod);
+                QUnit.test("Reflection - Reflection IsConstructorIsTrueForAllKindsOfConstructors", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.isConstructorIsTrueForAllKindsOfConstructors);
+                QUnit.test("Reflection - Reflection IsStaticIsFalseForAllKindsOfConstructors", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.isStaticIsFalseForAllKindsOfConstructors);
+                QUnit.test("Reflection - Reflection MemberTypeIsConstructorForAllKindsOfConstructors", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.memberTypeIsConstructorForAllKindsOfConstructors);
+                QUnit.test("Reflection - Reflection NameIsCtorForAllKindsOfConstructors", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.nameIsCtorForAllKindsOfConstructors);
+                QUnit.test("Reflection - Reflection DeclaringTypeIsCorrectForAllKindsOfConstructors", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.declaringTypeIsCorrectForAllKindsOfConstructors);
+                QUnit.test("Reflection - Reflection ScriptNameIsCorrectForAllKindsOfConstructors", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.scriptNameIsCorrectForAllKindsOfConstructors);
+                QUnit.test("Reflection - Reflection IsStaticMethodIsTrueOnlyForStaticMethodConstructors", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.isStaticMethodIsTrueOnlyForStaticMethodConstructors);
+                QUnit.test("Reflection - Reflection SpecialImplementationExistsOnlyForObjectLiteralAndInlineCodeConstructors", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.specialImplementationExistsOnlyForObjectLiteralAndInlineCodeConstructors);
+                QUnit.test("Reflection - Reflection DeclaringTypeShouldBeCorrectForMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.declaringTypeShouldBeCorrectForMethods);
+                QUnit.test("Reflection - Reflection ReturnTypeAndParameterTypesAreCorrectForMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.returnTypeAndParameterTypesAreCorrectForMethods);
+                QUnit.test("Reflection - Reflection ParameterTypesShouldBeCorrectForConstructors", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.parameterTypesShouldBeCorrectForConstructors);
+                QUnit.test("Reflection - Reflection VoidIsConsideredObjectAsReturnType", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.voidIsConsideredObjectAsReturnType);
+                QUnit.test("Reflection - Reflection MethodNameIsTheCSharpName", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.methodNameIsTheCSharpName);
+                QUnit.test("Reflection - Reflection TypeParametersAreReplacedWithObjectForReturnAndParameterTypesForOpenGenericTypes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.typeParametersAreReplacedWithObjectForReturnAndParameterTypesForOpenGenericTypes);
+                QUnit.test("Reflection - Reflection TypeParametersAreCorrectForReturnAndParameterTypesForConstructedGenericTypes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.typeParametersAreCorrectForReturnAndParameterTypesForConstructedGenericTypes);
+                QUnit.test("Reflection - Reflection MethodTypeParametersAreReplacedWithObjectForReturnAndParameterTypes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.methodTypeParametersAreReplacedWithObjectForReturnAndParameterTypes);
+                QUnit.test("Reflection - Reflection IsGenericMethodDefinitionAndTypeParameterCountWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.isGenericMethodDefinitionAndTypeParameterCountWork);
+                QUnit.test("Reflection - Reflection ScriptNameWorksForAllKindsOfMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.scriptNameWorksForAllKindsOfMethods);
+                QUnit.test("Reflection - Reflection SpecialImplementationExistsOnlyForMethodsImplementedAsInlineCode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.specialImplementationExistsOnlyForMethodsImplementedAsInlineCode);
+                QUnit.test("Reflection - Reflection CreateDelegateWorksForNonGenericInstanceMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.createDelegateWorksForNonGenericInstanceMethods);
+                QUnit.test("Reflection - Reflection DelegateCreateDelegateWorksForNonGenericInstanceMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.delegateCreateDelegateWorksForNonGenericInstanceMethods);
+                QUnit.test("Reflection - Reflection CreateDelegateWorksNonGenericStaticMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.createDelegateWorksNonGenericStaticMethods);
+                QUnit.test("Reflection - Reflection CreateDelegateWorksNonGenericStaticMethodOfGenericType", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.createDelegateWorksNonGenericStaticMethodOfGenericType);
+                QUnit.test("Reflection - Reflection CreateDelegateWorksForGenericInstanceMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.createDelegateWorksForGenericInstanceMethods);
+                QUnit.test("Reflection - Reflection CreateDelegateWorksForGenericStaticMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.createDelegateWorksForGenericStaticMethods);
+                QUnit.test("Reflection - Reflection InvokeWorksForNonGenericInstanceMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.invokeWorksForNonGenericInstanceMethods);
+                QUnit.test("Reflection - Reflection InvokeWorksForNonGenericStaticMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.invokeWorksForNonGenericStaticMethods);
+                QUnit.test("Reflection - Reflection InvokeWorksForNonGenericInstanceMethodsOnSerializableTypes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.invokeWorksForNonGenericInstanceMethodsOnSerializableTypes);
+                QUnit.test("Reflection - Reflection InvokeWorksForNonGenericInlineCodeMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.invokeWorksForNonGenericInlineCodeMethods);
+                QUnit.test("Reflection - Reflection InvokeWorksForGenericInlineCodeMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.invokeWorksForGenericInlineCodeMethods);
+                QUnit.test("Reflection - Reflection InvokeWorksForGenericInstanceMethod", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.invokeWorksForGenericInstanceMethod);
+                QUnit.test("Reflection - Reflection InvokeWorksForGenericStaticMethod", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.invokeWorksForGenericStaticMethod);
+                QUnit.test("Reflection - Reflection InvokeWorksForGenericInstanceMethodsOnSerializableTypes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.invokeWorksForGenericInstanceMethodsOnSerializableTypes);
+                QUnit.test("Reflection - Reflection InvokeWorksForExpandParamsMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.invokeWorksForExpandParamsMethods);
+                QUnit.test("Reflection - Reflection InvokeWorksForAllKindsOfConstructors", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.invokeWorksForAllKindsOfConstructors);
+                QUnit.test("Reflection - Reflection InvokeWorksForExpandParamsConstructors", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.invokeWorksForExpandParamsConstructors);
+                QUnit.test("Reflection - Reflection MemberTypeIsFieldForField", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.memberTypeIsFieldForField);
+                QUnit.test("Reflection - Reflection DeclaringTypeIsCorrectForField", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.declaringTypeIsCorrectForField);
+                QUnit.test("Reflection - Reflection NameIsCorrectForField", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.nameIsCorrectForField);
+                QUnit.test("Reflection - Reflection IsStaticIsCorrectForField", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.isStaticIsCorrectForField);
+                QUnit.test("Reflection - Reflection FieldTypeIsCorrectForField", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.fieldTypeIsCorrectForField);
+                QUnit.test("Reflection - Reflection ScriptNameIsCorrectForField", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.scriptNameIsCorrectForField);
+                QUnit.test("Reflection - Reflection GetValueWorksForInstanceField", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.getValueWorksForInstanceField);
+                QUnit.test("Reflection - Reflection GetValueWorksForStaticField", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.getValueWorksForStaticField);
+                QUnit.test("Reflection - Reflection SetValueWorksForInstanceField", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.setValueWorksForInstanceField);
+                QUnit.test("Reflection - Reflection SetValueWorksForStaticField", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.setValueWorksForStaticField);
+                QUnit.test("Reflection - Reflection MemberTypeIsEventForEvent", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.memberTypeIsEventForEvent);
+                QUnit.test("Reflection - Reflection DeclaringTypeIsCorrectForEvent", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.declaringTypeIsCorrectForEvent);
+                QUnit.test("Reflection - Reflection NameIsCorrectForEvent", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.nameIsCorrectForEvent);
+                QUnit.test("Reflection - Reflection IsStaticIsCorrectForEvent", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.isStaticIsCorrectForEvent);
+                QUnit.test("Reflection - Reflection AddEventHandlerMethodWorksForInstanceEvent", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.addEventHandlerMethodWorksForInstanceEvent);
+                QUnit.test("Reflection - Reflection AddEventHandlerMethodWorksForInstanceEventWithInlineCodeAddMethod", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.addEventHandlerMethodWorksForInstanceEventWithInlineCodeAddMethod);
+                QUnit.test("Reflection - Reflection AddEventHandlerMethodWorksForStaticEvent", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.addEventHandlerMethodWorksForStaticEvent);
+                QUnit.test("Reflection - Reflection AddEventHandlerMethodWorksForStaticEventWithInlineCodeAddMethod", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.addEventHandlerMethodWorksForStaticEventWithInlineCodeAddMethod);
+                QUnit.test("Reflection - Reflection RemoveEventHandlerMethodWorksForInstanceEvent", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.removeEventHandlerMethodWorksForInstanceEvent);
+                QUnit.test("Reflection - Reflection RemoveEventHandlerMethodWorksForInstanceEventWithInlineCodeRemoveMethod", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.removeEventHandlerMethodWorksForInstanceEventWithInlineCodeRemoveMethod);
+                QUnit.test("Reflection - Reflection RemoveEventHandlerMethodWorksForStaticEvent", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.removeEventHandlerMethodWorksForStaticEvent);
+                QUnit.test("Reflection - Reflection RemoveEventHandlerMethodWorksForStaticEventWithInlineCodeRemoveMethod", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.removeEventHandlerMethodWorksForStaticEventWithInlineCodeRemoveMethod);
+                QUnit.test("Reflection - Reflection PropertiesForAddMethodAreCorrect", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.propertiesForAddMethodAreCorrect);
+                QUnit.test("Reflection - Reflection PropertiesForRemoveMethodAreCorrect", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.propertiesForRemoveMethodAreCorrect);
+                QUnit.test("Reflection - Reflection MemberTypeIsPropertyForProperty", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.memberTypeIsPropertyForProperty);
+                QUnit.test("Reflection - Reflection ScriptFieldNameIsCorrectForPropertiesImplementedAsFieldAndNullForOtherProperties", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.scriptFieldNameIsCorrectForPropertiesImplementedAsFieldAndNullForOtherProperties);
+                QUnit.test("Reflection - Reflection MemberTypeIsPropertyForIndexer", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.memberTypeIsPropertyForIndexer);
+                QUnit.test("Reflection - Reflection DeclaringTypeIsCorrectForProperty", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.declaringTypeIsCorrectForProperty);
+                QUnit.test("Reflection - Reflection DeclaringTypeIsCorrectForIndexer", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.declaringTypeIsCorrectForIndexer);
+                QUnit.test("Reflection - Reflection NameIsCorrectForProperty", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.nameIsCorrectForProperty);
+                QUnit.test("Reflection - Reflection NameIsCorrectForIndexer", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.nameIsCorrectForIndexer);
+                QUnit.test("Reflection - Reflection IsStaticIsCorrectForProperty", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.isStaticIsCorrectForProperty);
+                QUnit.test("Reflection - Reflection IsStaticIsFalseForIndexer", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.isStaticIsFalseForIndexer);
+                QUnit.test("Reflection - Reflection PropertyTypeIsCorrectForProperty", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.propertyTypeIsCorrectForProperty);
+                QUnit.test("Reflection - Reflection PropertyTypeIsCorrectForIndexer", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.propertyTypeIsCorrectForIndexer);
+                QUnit.test("Reflection - Reflection IndexParameterTypesAreEmptyForProperty", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.indexParameterTypesAreEmptyForProperty);
+                QUnit.test("Reflection - Reflection IndexParameterTypesAreCorrectForIndexer", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.indexParameterTypesAreCorrectForIndexer);
+                QUnit.test("Reflection - Reflection PropertiesForGetMethodAreCorrectForPropertyImplementedAsGetAndSetMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.propertiesForGetMethodAreCorrectForPropertyImplementedAsGetAndSetMethods);
+                QUnit.test("Reflection - Reflection PropertiesForSetMethodAreCorrectForPropertyImplementedAsGetAndSetMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.propertiesForSetMethodAreCorrectForPropertyImplementedAsGetAndSetMethods);
+                QUnit.test("Reflection - Reflection PropertiesForGetMethodAreCorrectForPropertyImplementedAsFields", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.propertiesForGetMethodAreCorrectForPropertyImplementedAsFields);
+                QUnit.test("Reflection - Reflection PropertiesForSetMethodAreCorrectForPropertyImplementedAsFields", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.propertiesForSetMethodAreCorrectForPropertyImplementedAsFields);
+                QUnit.test("Reflection - Reflection PropertiesForGetMethodAreCorrectForIndexer", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.propertiesForGetMethodAreCorrectForIndexer);
+                QUnit.test("Reflection - Reflection PropertiesForSetMethodAreCorrectForIndexer", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.propertiesForSetMethodAreCorrectForIndexer);
+                QUnit.test("Reflection - Reflection CanReadAndWriteAndPropertiesWithOnlyOneAccessor", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.canReadAndWriteAndPropertiesWithOnlyOneAccessor);
+                QUnit.test("Reflection - Reflection CanReadAndWriteAndIndexersWithOnlyOneAccessor", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.canReadAndWriteAndIndexersWithOnlyOneAccessor);
+                QUnit.test("Reflection - Reflection PropertyInfoGetValueWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.propertyInfoGetValueWorks);
+                QUnit.test("Reflection - Reflection PropertyInfoSetValueWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.propertyInfoSetValueWorks);
+                QUnit.test("Reflection - Reflection MemberAttributesWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.memberAttributesWork);
+                QUnit.test("Reflection - Reflection MembersReflectableAttributeWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.membersReflectableAttributeWorks);
+                QUnit.test("Reflection - TypeSystemLanguageSupport TypeIsWorksForReferenceTypes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemLanguageSupportTests.typeIsWorksForReferenceTypes);
+                QUnit.test("Reflection - TypeSystemLanguageSupport TypeAsWorksForReferenceTypes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemLanguageSupportTests.typeAsWorksForReferenceTypes);
+                QUnit.test("Reflection - TypeSystemLanguageSupport CastWorksForReferenceTypes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemLanguageSupportTests.castWorksForReferenceTypes);
+                QUnit.test("Reflection - TypeSystemLanguageSupport GetTypeWorksOnObjects", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemLanguageSupportTests.getTypeWorksOnObjects);
+                QUnit.test("Reflection - TypeSystemLanguageSupport GetTypeOnNullInstanceThrowsException", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemLanguageSupportTests.getTypeOnNullInstanceThrowsException);
+                QUnit.test("Reflection - TypeSystemLanguageSupport CastOperatorForSerializableTypeWithoutTypeCheckCodeAlwaysSucceedsGeneric", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemLanguageSupportTests.castOperatorForSerializableTypeWithoutTypeCheckCodeAlwaysSucceedsGeneric);
+                QUnit.test("Reflection - TypeSystemLanguageSupport TypeCheckForSubTypeOfGenericType", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemLanguageSupportTests.typeCheckForSubTypeOfGenericType);
+                QUnit.test("Reflection - TypeSystem FullNamePropertyReturnsTheNameWithTheNamespace", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.fullNamePropertyReturnsTheNameWithTheNamespace);
+                QUnit.test("Reflection - TypeSystem AssemblyQualifiedNameReturnsTheNameWithTheNamespaceAndAssemblyName", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.assemblyQualifiedNameReturnsTheNameWithTheNamespaceAndAssemblyName);
+                QUnit.test("Reflection - TypeSystem AssemblyPropertyWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.assemblyPropertyWorks);
+                QUnit.test("Reflection - TypeSystem NamespacePropertyReturnsTheNamespaceWithoutTheName", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.namespacePropertyReturnsTheNamespaceWithoutTheName);
+                QUnit.test("Reflection - TypeSystem InstantiatingClassWithConstructorThatNeedsToBeAppliedWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.instantiatingClassWithConstructorThatNeedsToBeAppliedWorks);
+                QUnit.test("Reflection - TypeSystem NamePropertyRemovesTheNamespace", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.namePropertyRemovesTheNamespace);
+                QUnit.test("Reflection - TypeSystem GettingBaseTypeWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.gettingBaseTypeWorks);
+                QUnit.test("Reflection - TypeSystem GettingImplementedInterfacesWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.gettingImplementedInterfacesWorks);
+                QUnit.test("Reflection - TypeSystem TypeOfAnOpenGenericClassWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.typeOfAnOpenGenericClassWorks);
+                QUnit.test("Reflection - TypeSystem TypeOfAnOpenGenericInterfaceWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.typeOfAnOpenGenericInterfaceWorks);
+                QUnit.test("Reflection - TypeSystem TypeOfInstantiatedGenericClassWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.typeOfInstantiatedGenericClassWorks);
+                QUnit.test("Reflection - TypeSystem TypeOfInstantiatedGenericInterfaceWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.typeOfInstantiatedGenericInterfaceWorks);
+                QUnit.test("Reflection - TypeSystem ConstructingAGenericTypeTwiceWithTheSameArgumentsReturnsTheSameInstance", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.constructingAGenericTypeTwiceWithTheSameArgumentsReturnsTheSameInstance);
+                QUnit.test("Reflection - TypeSystem AccessingAStaticMemberInAGenericClassWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.accessingAStaticMemberInAGenericClassWorks);
+                QUnit.test("Reflection - TypeSystem TypeOfNestedGenericClassWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.typeOfNestedGenericClassWorks);
+                QUnit.test("Reflection - TypeSystem BaseTypeAndImplementedInterfacesForGenericTypeWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.baseTypeAndImplementedInterfacesForGenericTypeWorks);
+                QUnit.test("Reflection - TypeSystem IsGenericTypeDefinitionWorksAsExpected", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.isGenericTypeDefinitionWorksAsExpected);
+                QUnit.test("Reflection - TypeSystem GenericParameterCountReturnsZeroForConstructedTypesAndNonZeroForOpenOnes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.genericParameterCountReturnsZeroForConstructedTypesAndNonZeroForOpenOnes);
+                QUnit.test("Reflection - TypeSystem GetGenericArgumentsReturnsTheCorrectTypesForConstructedTypesOtherwiseNull", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.getGenericArgumentsReturnsTheCorrectTypesForConstructedTypesOtherwiseNull);
+                QUnit.test("Reflection - TypeSystem GetGenericTypeDefinitionReturnsTheGenericTypeDefinitionForConstructedTypeOtherwiseNull", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.getGenericTypeDefinitionReturnsTheGenericTypeDefinitionForConstructedTypeOtherwiseNull);
+                QUnit.test("Reflection - TypeSystem IsAssignableFromWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.isAssignableFromWorks);
+                QUnit.test("Reflection - TypeSystem IsSubclassOfWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.isSubclassOfWorks);
+                QUnit.test("Reflection - TypeSystem IsClassWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.isClassWorks);
+                QUnit.test("Reflection - TypeSystem IsEnumWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.isEnumWorks);
+                QUnit.test("Reflection - TypeSystem IsArrayWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.isArrayWorks);
+                QUnit.test("Reflection - TypeSystem IsFlagsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.isFlagsWorks);
+                QUnit.test("Reflection - TypeSystem IsInterfaceWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.isInterfaceWorks);
+                QUnit.test("Reflection - TypeSystem IsInstanceOfTypeWorksForReferenceTypes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.isInstanceOfTypeWorksForReferenceTypes);
+                QUnit.test("Reflection - TypeSystem InvokingBaseUnnamedConstructorWithoutArgumentsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.invokingBaseUnnamedConstructorWithoutArgumentsWorks);
+                QUnit.test("Reflection - TypeSystem InvokingBaseUnnamedConstructorWithArgumentsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.invokingBaseUnnamedConstructorWithArgumentsWorks);
+                QUnit.test("Reflection - TypeSystem InvokingBaseNamedConstructorWithoutArgumentsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.invokingBaseNamedConstructorWithoutArgumentsWorks);
+                QUnit.test("Reflection - TypeSystem InvokingBaseNamedConstructorWithArgumentsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.invokingBaseNamedConstructorWithArgumentsWorks);
+                QUnit.test("Reflection - TypeSystem ConstructingInstanceWithNamedConstructorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.constructingInstanceWithNamedConstructorWorks);
+                QUnit.test("Reflection - TypeSystem ConstructingInstanceWithNamedConstructorWorks2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.constructingInstanceWithNamedConstructorWorks2);
+                QUnit.test("Reflection - TypeSystem InvokingBaseMethodWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.invokingBaseMethodWorks);
+                QUnit.test("Reflection - TypeSystem InvokingGenericBaseMethodWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.invokingGenericBaseMethodWorks);
+                QUnit.test("Reflection - TypeSystem MethodGroupConversionWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.methodGroupConversionWorks);
+                QUnit.test("Reflection - TypeSystem MethodGroupConversionOnGenericMethodWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.methodGroupConversionOnGenericMethodWorks);
+                QUnit.test("Reflection - TypeSystem MethodGroupConversionOnBaseMethodWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.methodGroupConversionOnBaseMethodWorks);
+                QUnit.test("Reflection - TypeSystem MethodGroupConversionOnGenericBaseMethodWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.methodGroupConversionOnGenericBaseMethodWorks);
+                QUnit.test("Reflection - TypeSystem ImportedInterfaceAppearsAsObjectWhenUsedAsGenericArgument", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.importedInterfaceAppearsAsObjectWhenUsedAsGenericArgument);
+                QUnit.test("Reflection - TypeSystem FalseIsFunctionShouldReturnFalse", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.falseIsFunctionShouldReturnFalse);
+                QUnit.test("Reflection - TypeSystem CastingUndefinedToOtherTypeShouldReturnUndefined", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.castingUndefinedToOtherTypeShouldReturnUndefined);
+                QUnit.test("Reflection - TypeSystem NonSerializableTypeCanInheritFromSerializableType", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.nonSerializableTypeCanInheritFromSerializableType);
+                QUnit.test("Reflection - TypeSystem InheritingFromRecordWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.inheritingFromRecordWorks);
+                QUnit.test("Reflection - TypeSystem InstanceOfWorksForSerializableTypesWithCustomTypeCheckCode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.instanceOfWorksForSerializableTypesWithCustomTypeCheckCode);
+                QUnit.test("Reflection - TypeSystem StaticGetTypeMethodWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.staticGetTypeMethodWorks);
+                QUnit.test("Reflection - TypeSystem StaticGetTypeMethodWithGenericsWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.staticGetTypeMethodWithGenericsWorks);
+                QUnit.test("Reflection - TypeSystem CastingToNamedValuesEnumCastsToString", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.castingToNamedValuesEnumCastsToString);
+                QUnit.test("Reflection - TypeSystem CastingToImportedNamedValuesEnumCastsToString", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.castingToImportedNamedValuesEnumCastsToString);
+                QUnit.test("Reflection - TypeSystem DefaultValueOfNamedValuesEnumIsNull", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.defaultValueOfNamedValuesEnumIsNull);
+                QUnit.test("Reflection - TypeSystem DefaultValueOfImportedNamedValuesEnumIsNull", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.defaultValueOfImportedNamedValuesEnumIsNull);
                 QUnit.module("Regex");
                 QUnit.test("Regex.IsMatch - IsMatchTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexIsMatchTests.isMatchTest);
                 QUnit.test("Regex.IsMatch - IsMatchWithOffsetTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexIsMatchTests.isMatchWithOffsetTest);
@@ -2417,6 +2638,84 @@
             testB: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.BasicCSharp.TestVirtualMethods).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BasicCSharp_TestVirtualMethods, 7);
                 Bridge.ClientTest.BasicCSharp.TestVirtualMethods.testB();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch1.Reflection.AssemblyTests)],
+        statics: {
+            getExecutingAssemblyWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests);
+                t.getFixture().getExecutingAssemblyWorks();
+            },
+            getAssemblyForTypeWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests);
+                t.getFixture().getAssemblyForTypeWorks();
+            },
+            fullNameWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests);
+                t.getFixture().fullNameWorks();
+            },
+            toStringWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests);
+                t.getFixture().toStringWorks();
+            },
+            getTypesWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests);
+                t.getFixture().getTypesWorks();
+            },
+            getTypesWithImportedModuleWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests);
+                t.getFixture().getTypesWithImportedModuleWorks();
+            },
+            getTypeWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests);
+                t.getFixture().getTypeWorks();
+            },
+            getTypeWorksWithGenerics: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests);
+                t.getFixture().getTypeWorksWithGenerics();
+            },
+            getTypeWithImportedModuleWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests);
+                t.getFixture().getTypeWithImportedModuleWorks();
+            },
+            assemblyOfBuiltInTypes: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests);
+                t.getFixture().assemblyOfBuiltInTypes();
+            },
+            createInstanceWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests);
+                t.getFixture().createInstanceWorks();
+            },
+            getCustomAttributesWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests);
+                t.getFixture().getCustomAttributesWorks();
+            },
+            loadCanReturnReferenceToLoadedAssembly: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests);
+                t.getFixture().loadCanReturnReferenceToLoadedAssembly();
+            },
+            getManifestResourceNamesWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests);
+                t.getFixture().getManifestResourceNamesWorks();
+            },
+            getManifestResourceDataAsBase64WithoutTypeWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests);
+                t.getFixture().getManifestResourceDataAsBase64WithoutTypeWorks();
+            },
+            getManifestResourceDataAsBase64WithTypeWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests);
+                t.getFixture().getManifestResourceDataAsBase64WithTypeWorks();
+            },
+            getManifestResourceDataWithoutTypeWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests);
+                t.getFixture().getManifestResourceDataWithoutTypeWorks();
+            },
+            getManifestResourceDataWithTypeWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch1_Reflection_AssemblyTests);
+                t.getFixture().getManifestResourceDataWithTypeWorks();
             }
         }
     });
@@ -6187,6 +6486,844 @@
         }
     });
     
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests)],
+        statics: {
+            canGetCustomTypeAttributesForTypeWithNoAttributes: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().canGetCustomTypeAttributesForTypeWithNoAttributes();
+            },
+            canGetCustomTypeAttributesForClassWithAttributes: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().canGetCustomTypeAttributesForClassWithAttributes();
+            },
+            nonScriptableAttributesAreNotIncluded: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().nonScriptableAttributesAreNotIncluded();
+            },
+            canGetCustomTypeAttributesForInterfaceWithAttributes: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().canGetCustomTypeAttributesForInterfaceWithAttributes();
+            },
+            canGetCustomTypeAttributesForEnumWithAttributes: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().canGetCustomTypeAttributesForEnumWithAttributes();
+            },
+            inheritedFlagToGetCustomAttributesWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().inheritedFlagToGetCustomAttributesWorks();
+            },
+            deepInheritanceWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().deepInheritanceWorks();
+            },
+            overridingSingleUseAttributeReplacesTheAttributeOnTheBaseClass: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().overridingSingleUseAttributeReplacesTheAttributeOnTheBaseClass();
+            },
+            applyingNewInstanceOfMultipleUseAttributeAddsTheAttribute: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().applyingNewInstanceOfMultipleUseAttributeAddsTheAttribute();
+            },
+            nonInheritedAttributeIsNotInherited: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().nonInheritedAttributeIsNotInherited();
+            },
+            getCustomAttributesTypeFilterWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().getCustomAttributesTypeFilterWorks();
+            },
+            getCustomAttributesWorksForOpenGenericClass: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().getCustomAttributesWorksForOpenGenericClass();
+            },
+            getCustomAttributesWorksForConstructedGenericClass: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().getCustomAttributesWorksForConstructedGenericClass();
+            },
+            getCustomAttributesWorksForOpenGenericInterface: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().getCustomAttributesWorksForOpenGenericInterface();
+            },
+            getCustomAttributesWorksForConstructedGenericInterface: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().getCustomAttributesWorksForConstructedGenericInterface();
+            },
+            allSupportedScalarTypesCanBeUsedAsAttributeArguments: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().allSupportedScalarTypesCanBeUsedAsAttributeArguments();
+            },
+            arraysCanBeUsedAsAttributeArguments: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().arraysCanBeUsedAsAttributeArguments();
+            },
+            namedValuesEnumCanBeUsedAsAttributeArgument: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().namedValuesEnumCanBeUsedAsAttributeArgument();
+            },
+            propertiesWithSetMethodsImplementedAsNormalMethodsCanBeSetInAttributeDeclaration: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().propertiesWithSetMethodsImplementedAsNormalMethodsCanBeSetInAttributeDeclaration();
+            },
+            propertiesWithSetMethodsImplementedAsInlineCodeCanBeSetInAttributeDeclaration: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().propertiesWithSetMethodsImplementedAsInlineCodeCanBeSetInAttributeDeclaration();
+            },
+            propertiesImplementedAsFieldsCanBeAssignedInAttributeDeclaration: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().propertiesImplementedAsFieldsCanBeAssignedInAttributeDeclaration();
+            },
+            fieldsCanBeAssignedInAttributeDeclaration: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().fieldsCanBeAssignedInAttributeDeclaration();
+            },
+            creatingAttributeWithNamedConstructorWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().creatingAttributeWithNamedConstructorWorks();
+            },
+            creatingAttributeWithInlineCodeConstructorWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().creatingAttributeWithInlineCodeConstructorWorks();
+            },
+            conditionalAttributesWhoseSymbolsAreNotDefinedAreRemoved: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.AttributeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_AttributeTests);
+                t.getFixture().conditionalAttributesWhoseSymbolsAreNotDefinedAreRemoved();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests)],
+        statics: {
+            getMembersWithoutBindingFlagsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getMembersWithoutBindingFlagsWorks();
+            },
+            getMembersWorksForInterface: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getMembersWorksForInterface();
+            },
+            getMembersWithBindingFlagsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getMembersWithBindingFlagsWorks();
+            },
+            getMemberWithNameWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getMemberWithNameWorks();
+            },
+            getMemberWithNameAndBindingFlagsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getMemberWithNameAndBindingFlagsWorks();
+            },
+            getConstructorsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getConstructorsWorks();
+            },
+            getConstructorWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getConstructorWorks();
+            },
+            getMethodsWithoutBindingFlagsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getMethodsWithoutBindingFlagsWorks();
+            },
+            getMethodsWithBindingFlagsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getMethodsWithBindingFlagsWorks();
+            },
+            getMethodWithNameWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getMethodWithNameWorks();
+            },
+            getMethodWithNameAndBindingFlagsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getMethodWithNameAndBindingFlagsWorks();
+            },
+            getMethodWithNameAndArgumentTypesWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getMethodWithNameAndArgumentTypesWorks();
+            },
+            getMethodWithNameAndArgumentTypesAndBindingFlagsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getMethodWithNameAndArgumentTypesAndBindingFlagsWorks();
+            },
+            getPropertiesWithoutBindingFlagsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getPropertiesWithoutBindingFlagsWorks();
+            },
+            getPropertiesWithBindingFlagsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getPropertiesWithBindingFlagsWorks();
+            },
+            getPropertyWithNameWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getPropertyWithNameWorks();
+            },
+            getPropertyWithNameAndBindingFlagsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getPropertyWithNameAndBindingFlagsWorks();
+            },
+            getPropertyWithNameAndArgumentTypesWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getPropertyWithNameAndArgumentTypesWorks();
+            },
+            getPropertyWithNameAndArgumentTypesAndBindingFlagsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getPropertyWithNameAndArgumentTypesAndBindingFlagsWorks();
+            },
+            getFieldsWithoutBindingFlagsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getFieldsWithoutBindingFlagsWorks();
+            },
+            getFieldsWithBindingFlagsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getFieldsWithBindingFlagsWorks();
+            },
+            getFieldWithNameWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getFieldWithNameWorks();
+            },
+            getFieldWithNameAndBindingFlagsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getFieldWithNameAndBindingFlagsWorks();
+            },
+            getEventsWithoutBindingFlagsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getEventsWithoutBindingFlagsWorks();
+            },
+            getEventsWithBindingFlagsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getEventsWithBindingFlagsWorks();
+            },
+            getEventWithNameWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getEventWithNameWorks();
+            },
+            getEventWithNameAndBindingFlagsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().getEventWithNameAndBindingFlagsWorks();
+            },
+            isOperatorForMemberInfoWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.GetMembersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_GetMembersTests);
+                t.getFixture().isOperatorForMemberInfoWorks();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests)],
+        statics: {
+            getMembersReturnsMethodsWithAnyScriptableAttributeOrReflectableAttribute: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().getMembersReturnsMethodsWithAnyScriptableAttributeOrReflectableAttribute();
+            },
+            structMemberReflectionWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().structMemberReflectionWorks();
+            },
+            isStaticFlagWorksForMethod: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().isStaticFlagWorksForMethod();
+            },
+            memberTypeIsMethodForMethod: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().memberTypeIsMethodForMethod();
+            },
+            isConstructorIsFalseForMethod: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().isConstructorIsFalseForMethod();
+            },
+            isConstructorIsTrueForAllKindsOfConstructors: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().isConstructorIsTrueForAllKindsOfConstructors();
+            },
+            isStaticIsFalseForAllKindsOfConstructors: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().isStaticIsFalseForAllKindsOfConstructors();
+            },
+            memberTypeIsConstructorForAllKindsOfConstructors: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().memberTypeIsConstructorForAllKindsOfConstructors();
+            },
+            nameIsCtorForAllKindsOfConstructors: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().nameIsCtorForAllKindsOfConstructors();
+            },
+            declaringTypeIsCorrectForAllKindsOfConstructors: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().declaringTypeIsCorrectForAllKindsOfConstructors();
+            },
+            scriptNameIsCorrectForAllKindsOfConstructors: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().scriptNameIsCorrectForAllKindsOfConstructors();
+            },
+            isStaticMethodIsTrueOnlyForStaticMethodConstructors: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().isStaticMethodIsTrueOnlyForStaticMethodConstructors();
+            },
+            specialImplementationExistsOnlyForObjectLiteralAndInlineCodeConstructors: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().specialImplementationExistsOnlyForObjectLiteralAndInlineCodeConstructors();
+            },
+            declaringTypeShouldBeCorrectForMethods: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().declaringTypeShouldBeCorrectForMethods();
+            },
+            returnTypeAndParameterTypesAreCorrectForMethods: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().returnTypeAndParameterTypesAreCorrectForMethods();
+            },
+            parameterTypesShouldBeCorrectForConstructors: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().parameterTypesShouldBeCorrectForConstructors();
+            },
+            voidIsConsideredObjectAsReturnType: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().voidIsConsideredObjectAsReturnType();
+            },
+            methodNameIsTheCSharpName: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().methodNameIsTheCSharpName();
+            },
+            typeParametersAreReplacedWithObjectForReturnAndParameterTypesForOpenGenericTypes: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().typeParametersAreReplacedWithObjectForReturnAndParameterTypesForOpenGenericTypes();
+            },
+            typeParametersAreCorrectForReturnAndParameterTypesForConstructedGenericTypes: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().typeParametersAreCorrectForReturnAndParameterTypesForConstructedGenericTypes();
+            },
+            methodTypeParametersAreReplacedWithObjectForReturnAndParameterTypes: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().methodTypeParametersAreReplacedWithObjectForReturnAndParameterTypes();
+            },
+            isGenericMethodDefinitionAndTypeParameterCountWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().isGenericMethodDefinitionAndTypeParameterCountWork();
+            },
+            scriptNameWorksForAllKindsOfMethods: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().scriptNameWorksForAllKindsOfMethods();
+            },
+            specialImplementationExistsOnlyForMethodsImplementedAsInlineCode: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().specialImplementationExistsOnlyForMethodsImplementedAsInlineCode();
+            },
+            createDelegateWorksForNonGenericInstanceMethods: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().createDelegateWorksForNonGenericInstanceMethods();
+            },
+            delegateCreateDelegateWorksForNonGenericInstanceMethods: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().delegateCreateDelegateWorksForNonGenericInstanceMethods();
+            },
+            createDelegateWorksNonGenericStaticMethods: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().createDelegateWorksNonGenericStaticMethods();
+            },
+            createDelegateWorksNonGenericStaticMethodOfGenericType: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().createDelegateWorksNonGenericStaticMethodOfGenericType();
+            },
+            createDelegateWorksForGenericInstanceMethods: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().createDelegateWorksForGenericInstanceMethods();
+            },
+            createDelegateWorksForGenericStaticMethods: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().createDelegateWorksForGenericStaticMethods();
+            },
+            invokeWorksForNonGenericInstanceMethods: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().invokeWorksForNonGenericInstanceMethods();
+            },
+            invokeWorksForNonGenericStaticMethods: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().invokeWorksForNonGenericStaticMethods();
+            },
+            invokeWorksForNonGenericInstanceMethodsOnSerializableTypes: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().invokeWorksForNonGenericInstanceMethodsOnSerializableTypes();
+            },
+            invokeWorksForNonGenericInlineCodeMethods: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().invokeWorksForNonGenericInlineCodeMethods();
+            },
+            invokeWorksForGenericInlineCodeMethods: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().invokeWorksForGenericInlineCodeMethods();
+            },
+            invokeWorksForGenericInstanceMethod: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().invokeWorksForGenericInstanceMethod();
+            },
+            invokeWorksForGenericStaticMethod: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().invokeWorksForGenericStaticMethod();
+            },
+            invokeWorksForGenericInstanceMethodsOnSerializableTypes: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().invokeWorksForGenericInstanceMethodsOnSerializableTypes();
+            },
+            invokeWorksForExpandParamsMethods: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().invokeWorksForExpandParamsMethods();
+            },
+            invokeWorksForAllKindsOfConstructors: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().invokeWorksForAllKindsOfConstructors();
+            },
+            invokeWorksForExpandParamsConstructors: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().invokeWorksForExpandParamsConstructors();
+            },
+            memberTypeIsFieldForField: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().memberTypeIsFieldForField();
+            },
+            declaringTypeIsCorrectForField: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().declaringTypeIsCorrectForField();
+            },
+            nameIsCorrectForField: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().nameIsCorrectForField();
+            },
+            isStaticIsCorrectForField: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().isStaticIsCorrectForField();
+            },
+            fieldTypeIsCorrectForField: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().fieldTypeIsCorrectForField();
+            },
+            scriptNameIsCorrectForField: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().scriptNameIsCorrectForField();
+            },
+            getValueWorksForInstanceField: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().getValueWorksForInstanceField();
+            },
+            getValueWorksForStaticField: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().getValueWorksForStaticField();
+            },
+            setValueWorksForInstanceField: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().setValueWorksForInstanceField();
+            },
+            setValueWorksForStaticField: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().setValueWorksForStaticField();
+            },
+            memberTypeIsEventForEvent: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().memberTypeIsEventForEvent();
+            },
+            declaringTypeIsCorrectForEvent: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().declaringTypeIsCorrectForEvent();
+            },
+            nameIsCorrectForEvent: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().nameIsCorrectForEvent();
+            },
+            isStaticIsCorrectForEvent: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().isStaticIsCorrectForEvent();
+            },
+            addEventHandlerMethodWorksForInstanceEvent: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().addEventHandlerMethodWorksForInstanceEvent();
+            },
+            addEventHandlerMethodWorksForInstanceEventWithInlineCodeAddMethod: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().addEventHandlerMethodWorksForInstanceEventWithInlineCodeAddMethod();
+            },
+            addEventHandlerMethodWorksForStaticEvent: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().addEventHandlerMethodWorksForStaticEvent();
+            },
+            addEventHandlerMethodWorksForStaticEventWithInlineCodeAddMethod: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().addEventHandlerMethodWorksForStaticEventWithInlineCodeAddMethod();
+            },
+            removeEventHandlerMethodWorksForInstanceEvent: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().removeEventHandlerMethodWorksForInstanceEvent();
+            },
+            removeEventHandlerMethodWorksForInstanceEventWithInlineCodeRemoveMethod: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().removeEventHandlerMethodWorksForInstanceEventWithInlineCodeRemoveMethod();
+            },
+            removeEventHandlerMethodWorksForStaticEvent: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().removeEventHandlerMethodWorksForStaticEvent();
+            },
+            removeEventHandlerMethodWorksForStaticEventWithInlineCodeRemoveMethod: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().removeEventHandlerMethodWorksForStaticEventWithInlineCodeRemoveMethod();
+            },
+            propertiesForAddMethodAreCorrect: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().propertiesForAddMethodAreCorrect();
+            },
+            propertiesForRemoveMethodAreCorrect: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().propertiesForRemoveMethodAreCorrect();
+            },
+            memberTypeIsPropertyForProperty: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().memberTypeIsPropertyForProperty();
+            },
+            scriptFieldNameIsCorrectForPropertiesImplementedAsFieldAndNullForOtherProperties: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().scriptFieldNameIsCorrectForPropertiesImplementedAsFieldAndNullForOtherProperties();
+            },
+            memberTypeIsPropertyForIndexer: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().memberTypeIsPropertyForIndexer();
+            },
+            declaringTypeIsCorrectForProperty: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().declaringTypeIsCorrectForProperty();
+            },
+            declaringTypeIsCorrectForIndexer: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().declaringTypeIsCorrectForIndexer();
+            },
+            nameIsCorrectForProperty: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().nameIsCorrectForProperty();
+            },
+            nameIsCorrectForIndexer: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().nameIsCorrectForIndexer();
+            },
+            isStaticIsCorrectForProperty: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().isStaticIsCorrectForProperty();
+            },
+            isStaticIsFalseForIndexer: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().isStaticIsFalseForIndexer();
+            },
+            propertyTypeIsCorrectForProperty: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().propertyTypeIsCorrectForProperty();
+            },
+            propertyTypeIsCorrectForIndexer: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().propertyTypeIsCorrectForIndexer();
+            },
+            indexParameterTypesAreEmptyForProperty: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().indexParameterTypesAreEmptyForProperty();
+            },
+            indexParameterTypesAreCorrectForIndexer: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().indexParameterTypesAreCorrectForIndexer();
+            },
+            propertiesForGetMethodAreCorrectForPropertyImplementedAsGetAndSetMethods: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().propertiesForGetMethodAreCorrectForPropertyImplementedAsGetAndSetMethods();
+            },
+            propertiesForSetMethodAreCorrectForPropertyImplementedAsGetAndSetMethods: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().propertiesForSetMethodAreCorrectForPropertyImplementedAsGetAndSetMethods();
+            },
+            propertiesForGetMethodAreCorrectForPropertyImplementedAsFields: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().propertiesForGetMethodAreCorrectForPropertyImplementedAsFields();
+            },
+            propertiesForSetMethodAreCorrectForPropertyImplementedAsFields: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().propertiesForSetMethodAreCorrectForPropertyImplementedAsFields();
+            },
+            propertiesForGetMethodAreCorrectForIndexer: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().propertiesForGetMethodAreCorrectForIndexer();
+            },
+            propertiesForSetMethodAreCorrectForIndexer: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().propertiesForSetMethodAreCorrectForIndexer();
+            },
+            canReadAndWriteAndPropertiesWithOnlyOneAccessor: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().canReadAndWriteAndPropertiesWithOnlyOneAccessor();
+            },
+            canReadAndWriteAndIndexersWithOnlyOneAccessor: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().canReadAndWriteAndIndexersWithOnlyOneAccessor();
+            },
+            propertyInfoGetValueWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().propertyInfoGetValueWorks();
+            },
+            propertyInfoSetValueWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().propertyInfoSetValueWorks();
+            },
+            memberAttributesWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().memberAttributesWork();
+            },
+            membersReflectableAttributeWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().membersReflectableAttributeWorks();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemLanguageSupportTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests)],
+        statics: {
+            typeIsWorksForReferenceTypes: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemLanguageSupportTests);
+                t.getFixture().typeIsWorksForReferenceTypes();
+            },
+            typeAsWorksForReferenceTypes: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemLanguageSupportTests);
+                t.getFixture().typeAsWorksForReferenceTypes();
+            },
+            castWorksForReferenceTypes: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemLanguageSupportTests);
+                t.getFixture().castWorksForReferenceTypes();
+            },
+            getTypeWorksOnObjects: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemLanguageSupportTests);
+                t.getFixture().getTypeWorksOnObjects();
+            },
+            getTypeOnNullInstanceThrowsException: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemLanguageSupportTests);
+                t.getFixture().getTypeOnNullInstanceThrowsException();
+            },
+            castOperatorForSerializableTypeWithoutTypeCheckCodeAlwaysSucceedsGeneric: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemLanguageSupportTests);
+                t.getFixture().castOperatorForSerializableTypeWithoutTypeCheckCodeAlwaysSucceedsGeneric();
+            },
+            typeCheckForSubTypeOfGenericType: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemLanguageSupportTests);
+                t.getFixture().typeCheckForSubTypeOfGenericType();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests)],
+        statics: {
+            fullNamePropertyReturnsTheNameWithTheNamespace: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().fullNamePropertyReturnsTheNameWithTheNamespace();
+            },
+            assemblyQualifiedNameReturnsTheNameWithTheNamespaceAndAssemblyName: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().assemblyQualifiedNameReturnsTheNameWithTheNamespaceAndAssemblyName();
+            },
+            assemblyPropertyWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().assemblyPropertyWorks();
+            },
+            namespacePropertyReturnsTheNamespaceWithoutTheName: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().namespacePropertyReturnsTheNamespaceWithoutTheName();
+            },
+            instantiatingClassWithConstructorThatNeedsToBeAppliedWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().instantiatingClassWithConstructorThatNeedsToBeAppliedWorks();
+            },
+            namePropertyRemovesTheNamespace: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().namePropertyRemovesTheNamespace();
+            },
+            gettingBaseTypeWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().gettingBaseTypeWorks();
+            },
+            gettingImplementedInterfacesWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().gettingImplementedInterfacesWorks();
+            },
+            typeOfAnOpenGenericClassWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().typeOfAnOpenGenericClassWorks();
+            },
+            typeOfAnOpenGenericInterfaceWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().typeOfAnOpenGenericInterfaceWorks();
+            },
+            typeOfInstantiatedGenericClassWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().typeOfInstantiatedGenericClassWorks();
+            },
+            typeOfInstantiatedGenericInterfaceWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().typeOfInstantiatedGenericInterfaceWorks();
+            },
+            constructingAGenericTypeTwiceWithTheSameArgumentsReturnsTheSameInstance: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().constructingAGenericTypeTwiceWithTheSameArgumentsReturnsTheSameInstance();
+            },
+            accessingAStaticMemberInAGenericClassWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().accessingAStaticMemberInAGenericClassWorks();
+            },
+            typeOfNestedGenericClassWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().typeOfNestedGenericClassWorks();
+            },
+            baseTypeAndImplementedInterfacesForGenericTypeWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().baseTypeAndImplementedInterfacesForGenericTypeWorks();
+            },
+            isGenericTypeDefinitionWorksAsExpected: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().isGenericTypeDefinitionWorksAsExpected();
+            },
+            genericParameterCountReturnsZeroForConstructedTypesAndNonZeroForOpenOnes: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().genericParameterCountReturnsZeroForConstructedTypesAndNonZeroForOpenOnes();
+            },
+            getGenericArgumentsReturnsTheCorrectTypesForConstructedTypesOtherwiseNull: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().getGenericArgumentsReturnsTheCorrectTypesForConstructedTypesOtherwiseNull();
+            },
+            getGenericTypeDefinitionReturnsTheGenericTypeDefinitionForConstructedTypeOtherwiseNull: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().getGenericTypeDefinitionReturnsTheGenericTypeDefinitionForConstructedTypeOtherwiseNull();
+            },
+            isAssignableFromWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().isAssignableFromWorks();
+            },
+            isSubclassOfWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().isSubclassOfWorks();
+            },
+            isClassWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().isClassWorks();
+            },
+            isEnumWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().isEnumWorks();
+            },
+            isArrayWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().isArrayWorks();
+            },
+            isFlagsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().isFlagsWorks();
+            },
+            isInterfaceWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().isInterfaceWorks();
+            },
+            isInstanceOfTypeWorksForReferenceTypes: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().isInstanceOfTypeWorksForReferenceTypes();
+            },
+            invokingBaseUnnamedConstructorWithoutArgumentsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().invokingBaseUnnamedConstructorWithoutArgumentsWorks();
+            },
+            invokingBaseUnnamedConstructorWithArgumentsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().invokingBaseUnnamedConstructorWithArgumentsWorks();
+            },
+            invokingBaseNamedConstructorWithoutArgumentsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().invokingBaseNamedConstructorWithoutArgumentsWorks();
+            },
+            invokingBaseNamedConstructorWithArgumentsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().invokingBaseNamedConstructorWithArgumentsWorks();
+            },
+            constructingInstanceWithNamedConstructorWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().constructingInstanceWithNamedConstructorWorks();
+            },
+            constructingInstanceWithNamedConstructorWorks2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().constructingInstanceWithNamedConstructorWorks2();
+            },
+            invokingBaseMethodWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().invokingBaseMethodWorks();
+            },
+            invokingGenericBaseMethodWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().invokingGenericBaseMethodWorks();
+            },
+            methodGroupConversionWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().methodGroupConversionWorks();
+            },
+            methodGroupConversionOnGenericMethodWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().methodGroupConversionOnGenericMethodWorks();
+            },
+            methodGroupConversionOnBaseMethodWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().methodGroupConversionOnBaseMethodWorks();
+            },
+            methodGroupConversionOnGenericBaseMethodWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().methodGroupConversionOnGenericBaseMethodWorks();
+            },
+            importedInterfaceAppearsAsObjectWhenUsedAsGenericArgument: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().importedInterfaceAppearsAsObjectWhenUsedAsGenericArgument();
+            },
+            falseIsFunctionShouldReturnFalse: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().falseIsFunctionShouldReturnFalse();
+            },
+            castingUndefinedToOtherTypeShouldReturnUndefined: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().castingUndefinedToOtherTypeShouldReturnUndefined();
+            },
+            nonSerializableTypeCanInheritFromSerializableType: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().nonSerializableTypeCanInheritFromSerializableType();
+            },
+            inheritingFromRecordWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().inheritingFromRecordWorks();
+            },
+            instanceOfWorksForSerializableTypesWithCustomTypeCheckCode: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().instanceOfWorksForSerializableTypesWithCustomTypeCheckCode();
+            },
+            staticGetTypeMethodWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().staticGetTypeMethodWorks();
+            },
+            staticGetTypeMethodWithGenericsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().staticGetTypeMethodWithGenericsWorks();
+            },
+            castingToNamedValuesEnumCastsToString: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().castingToNamedValuesEnumCastsToString();
+            },
+            castingToImportedNamedValuesEnumCastsToString: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().castingToImportedNamedValuesEnumCastsToString();
+            },
+            defaultValueOfNamedValuesEnumIsNull: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().defaultValueOfNamedValuesEnumIsNull();
+            },
+            defaultValueOfImportedNamedValuesEnumIsNull: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.TypeSystemTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests);
+                t.getFixture().defaultValueOfImportedNamedValuesEnumIsNull();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_SimpleTypes_BooleanTests', {
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.SimpleTypes.BooleanTests)],
         statics: {
@@ -9663,5 +10800,10 @@
         }
     });
     
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C25, function () { return {"members":[{"name":"B1","type":4,"returnType":System.Int32,"sname":"b1","isReadOnly":false},{"name":"B2","type":4,"returnType":System.Int32,"sname":"b2","isReadOnly":false},{"name":"B3","type":4,"returnType":System.Int32,"sname":"b3","isReadOnly":false},{"name":"B4","type":4,"returnType":System.Int32,"sname":"b4","isReadOnly":false},{"name":"B5","type":4,"returnType":System.Int32,"sname":"b5","isReadOnly":false},{"name":"C1","type":4,"returnType":System.Int32,"sname":"c1","isReadOnly":false},{"name":"C2","type":4,"returnType":System.Int32,"sname":"c2","isReadOnly":false},{"name":"C3","type":4,"returnType":System.Int32,"sname":"c3","isReadOnly":false},{"name":"C4","type":4,"returnType":System.Int32,"sname":"c4","isReadOnly":false},{"name":"C5","type":4,"returnType":System.Int32,"sname":"c5","isReadOnly":false}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C26, function () { return {"members":[{"name":".ctor","type":1,"sname":"$constructor"},{"name":"A1","type":4,"returnType":System.Int32,"sname":"a1","isReadOnly":false},{"name":"A3","type":4,"returnType":System.Int32,"sname":"a3","isReadOnly":false},{"name":"A4","type":4,"returnType":System.Int32,"sname":"a4","isReadOnly":false},{"name":"B1","type":4,"returnType":System.Int32,"sname":"b1","isReadOnly":false},{"name":"B2","type":4,"returnType":System.Int32,"sname":"b2","isReadOnly":false},{"name":"B3","type":4,"returnType":System.Int32,"sname":"b3","isReadOnly":false},{"name":"B4","type":4,"returnType":System.Int32,"sname":"b4","isReadOnly":false},{"name":"B5","type":4,"returnType":System.Int32,"sname":"b5","isReadOnly":false},{"name":"C1","type":4,"returnType":System.Int32,"sname":"c1","isReadOnly":false},{"name":"C2","type":4,"returnType":System.Int32,"sname":"c2","isReadOnly":false},{"name":"C3","type":4,"returnType":System.Int32,"sname":"c3","isReadOnly":false},{"name":"C4","type":4,"returnType":System.Int32,"sname":"c4","isReadOnly":false},{"name":"C5","type":4,"returnType":System.Int32,"sname":"c5","isReadOnly":false}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C27, function () { return {"members":[{"name":".ctor","type":1,"sname":"$constructor"},{"name":"A1","type":4,"returnType":System.Int32,"sname":"a1","isReadOnly":false},{"name":"A2","type":4,"returnType":System.Int32,"sname":"a2","isReadOnly":false},{"name":"A3","type":4,"returnType":System.Int32,"sname":"a3","isReadOnly":false},{"name":"A4","type":4,"returnType":System.Int32,"sname":"a4","isReadOnly":false},{"name":"B1","type":4,"returnType":System.Int32,"sname":"b1","isReadOnly":false},{"name":"B2","type":4,"returnType":System.Int32,"sname":"b2","isReadOnly":false},{"name":"B3","type":4,"returnType":System.Int32,"sname":"b3","isReadOnly":false},{"name":"B4","type":4,"returnType":System.Int32,"sname":"b4","isReadOnly":false},{"name":"B5","type":4,"returnType":System.Int32,"sname":"b5","isReadOnly":false},{"name":"C1","type":4,"returnType":System.Int32,"sname":"c1","isReadOnly":false},{"name":"C2","type":4,"returnType":System.Int32,"sname":"c2","isReadOnly":false},{"name":"C3","type":4,"returnType":System.Int32,"sname":"c3","isReadOnly":false},{"name":"C4","type":4,"returnType":System.Int32,"sname":"c4","isReadOnly":false},{"name":"C5","type":4,"returnType":System.Int32,"sname":"c5","isReadOnly":false}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C28, function () { return {"members":[{"name":".ctor","type":1,"sname":"$constructor"},{"name":"A1","type":4,"returnType":System.Int32,"sname":"a1","isReadOnly":false},{"name":"A2","type":4,"returnType":System.Int32,"sname":"a2","isReadOnly":false},{"name":"A3","type":4,"returnType":System.Int32,"sname":"a3","isReadOnly":false},{"name":"A4","type":4,"returnType":System.Int32,"sname":"a4","isReadOnly":false},{"name":"A5","type":4,"returnType":System.Int32,"sname":"a5","isReadOnly":false},{"name":"B1","type":4,"returnType":System.Int32,"sname":"b1","isReadOnly":false},{"name":"B2","type":4,"returnType":System.Int32,"sname":"b2","isReadOnly":false},{"name":"B3","type":4,"returnType":System.Int32,"sname":"b3","isReadOnly":false},{"name":"B4","type":4,"returnType":System.Int32,"sname":"b4","isReadOnly":false},{"name":"B5","type":4,"returnType":System.Int32,"sname":"b5","isReadOnly":false},{"name":"C1","type":4,"returnType":System.Int32,"sname":"c1","isReadOnly":false},{"name":"C2","type":4,"returnType":System.Int32,"sname":"c2","isReadOnly":false},{"name":"C3","type":4,"returnType":System.Int32,"sname":"c3","isReadOnly":false},{"name":"C4","type":4,"returnType":System.Int32,"sname":"c4","isReadOnly":false},{"name":"C5","type":4,"returnType":System.Int32,"sname":"c5","isReadOnly":false}]}; });
+    
     Bridge.init();
-})(this);
+});

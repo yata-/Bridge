@@ -4,7 +4,7 @@ namespace System.Diagnostics
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
     [External]
-    [Name("Object")]
+    [NonScriptable]
     public sealed class ConditionalAttribute : Attribute
     {
         public extern ConditionalAttribute(string conditionString);
