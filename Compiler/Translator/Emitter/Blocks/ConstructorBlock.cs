@@ -378,11 +378,7 @@ namespace Bridge.Translator
                         this.WriteNewLine();
                     }
 
-                    foreach (var line in script)
-                    {
-                        this.Write(line);
-                        this.WriteNewLine();
-                    }
+                    this.WriteLines(script);
                 }
 
                 if (oldWriter != null)
