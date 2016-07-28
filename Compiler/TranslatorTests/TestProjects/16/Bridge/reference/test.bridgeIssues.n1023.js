@@ -1,7 +1,8 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("TestProject", function ($asm, globals) {
     "use strict";
 
     Bridge.define('Test.BridgeIssues.N1023.Optional$1', function (T) { return {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new (Test.BridgeIssues.N1023.Optional$1(T))(); }
         },
@@ -12,13 +13,11 @@
         },
         $constructor1: function (value) {
             Test.BridgeIssues.N1023.Optional$1(T).$constructor.call(this);
-    
             this.setValue(value);
         },
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + -1412376807;
@@ -56,4 +55,4 @@
     
     
     Bridge.init();
-})(this);
+});
