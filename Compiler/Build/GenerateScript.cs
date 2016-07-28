@@ -82,6 +82,9 @@ namespace Bridge.Build
             };
 #endif
             var logger = new Translator.Logging.Logger(null, false, LoggerLevel.Info, true, new VSLoggerWriter(this.Log), new FileLoggerWriter());
+
+            logger.Info("Executing Bridge.Build.Task...");
+
             var bridgeOptions = this.GetBridgeOptions();
 
             var processor = new TranslatorProcessor(bridgeOptions, logger);
@@ -145,7 +148,7 @@ namespace Bridge.Build
                 Help = false,
                 NoTimeStamp = null,
                 FromTask = true,
-                Name = "Bridge.Build.Task"
+                Name = ""
             };
 
             return bridgeOptions;

@@ -1,4 +1,4 @@
-﻿// @source timer.js
+﻿    // @source timer.js
 
     Bridge.define('System.Threading.Timer', {
         inherits: [System.IDisposable],
@@ -21,22 +21,27 @@
         state: null,
         id: null,
         disposed: false,
-        constructor$1: function (callback, state, dueTime, period) {
+        $constructor1: function (callback, state, dueTime, period) {
+            this.$initialize();
             this.timerSetup(callback, state, System.Int64(dueTime), System.Int64(period));
         },
-        constructor$3: function (callback, state, dueTime, period) {
+        $constructor3: function (callback, state, dueTime, period) {
+            this.$initialize();
             var dueTm = Bridge.Int.clip64(dueTime.getTotalMilliseconds());
             var periodTm = Bridge.Int.clip64(period.getTotalMilliseconds());
 
             this.timerSetup(callback, state, dueTm, periodTm);
         },
-        constructor$4: function (callback, state, dueTime, period) {
+        $constructor4: function (callback, state, dueTime, period) {
+            this.$initialize();
             this.timerSetup(callback, state, System.Int64(dueTime), System.Int64(period));
         },
-        constructor$2: function (callback, state, dueTime, period) {
+        $constructor2: function (callback, state, dueTime, period) {
+            this.$initialize();
             this.timerSetup(callback, state, dueTime, period);
         },
         constructor: function (callback) {
+            this.$initialize();
             var dueTime = -1; // we want timer to be registered, but not activated.  Requires caller to call
             var period = -1; // Change after a timer instance is created.  This is to avoid the potential
             // for a timer to be fired before the returned value is assigned to the variable,
@@ -82,7 +87,7 @@
             if (!Bridge.staticEquals(this.timerCallback, null)) {
                 var myId = this.id;
                 this.timerCallback(this.state);
-    
+
                 // timerCallback may call Change(). To prevent double call we can check if timer changed
                 if (System.Nullable.eq(this.id, myId)) {
                     this.runTimer(this.period, false);
@@ -90,7 +95,9 @@
             }
         },
         runTimer: function (period, checkDispose) {
-            if (checkDispose === void 0) { checkDispose = true; }
+            if (checkDispose === void 0) {
+                checkDispose = true;
+            }
             if (checkDispose && this.disposed) {
                 throw new System.InvalidOperationException(System.Threading.Timer.EXC_DISPOSED);
             }

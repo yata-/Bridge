@@ -42,7 +42,6 @@ namespace Bridge.Translator
         protected void VisitObjectCreateExpression()
         {
             ObjectCreateExpression objectCreateExpression = this.ObjectCreateExpression;
-            int pos = this.Emitter.Output.Length;
 
             var resolveResult = this.Emitter.Resolver.ResolveNode(objectCreateExpression.Type, this.Emitter) as TypeResolveResult;
             bool isTypeParam = resolveResult.Type.Kind == TypeKind.TypeParameter;
@@ -73,9 +72,7 @@ namespace Bridge.Translator
 
             var argsInfo = new ArgumentsInfo(this.Emitter, objectCreateExpression);
             var argsExpressions = argsInfo.ArgumentsExpressions;
-            var argsNames = argsInfo.ArgumentsNames;
             var paramsArg = argsInfo.ParamsExpression;
-            var argsCount = argsExpressions.Count();
 
             var invocationResolveResult = this.Emitter.Resolver.ResolveNode(objectCreateExpression, this.Emitter) as InvocationResolveResult;
             string inlineCode = null;
@@ -146,24 +143,38 @@ namespace Bridge.Translator
                     if (String.IsNullOrEmpty(customCtor))
                     {
                         this.WriteNew();
+                        var typerr = this.Emitter.Resolver.ResolveNode(objectCreateExpression.Type, this.Emitter).Type;
+                        var isGeneric = typerr.TypeArguments.Count > 0 && !Helpers.IsIgnoreGeneric(typerr, this.Emitter);
+
+                        if (isGeneric)
+                        {
+                            this.WriteOpenParentheses();
+                        }
+
                         objectCreateExpression.Type.AcceptVisitor(this.Emitter);
+
+                        if (isGeneric)
+                        {
+                            this.WriteCloseParentheses();
+                        }
                     }
                     else
                     {
                         this.Write(customCtor);
-                    }
-
-                    this.WriteOpenParentheses();
+                    }   
 
                     if (!isTypeParam && !this.Emitter.Validator.IsIgnoreType(type) && type.Methods.Count(m => m.IsConstructor && !m.IsStatic) > (type.IsValueType ? 0 : 1))
                     {
-                        this.WriteScript(OverloadsCollection.Create(this.Emitter, ((InvocationResolveResult)this.Emitter.Resolver.ResolveNode(objectCreateExpression, this.Emitter)).Member).GetOverloadName());
-
-                        if (argsExpressions.Length > 0)
+                        this.WriteDot();
+                        var name = OverloadsCollection.Create(this.Emitter, ((InvocationResolveResult)this.Emitter.Resolver.ResolveNode(objectCreateExpression, this.Emitter)).Member).GetOverloadName();
+                        if (name == JS.Funcs.CONSTRUCTOR)
                         {
-                            this.WriteComma();
+                            name = JS.Funcs.DCONSTRUCTOR;
                         }
+                        this.Write(name);
                     }
+
+                    this.WriteOpenParentheses();
 
                     new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, objectCreateExpression).Emit();
                     this.WriteCloseParentheses();

@@ -424,6 +424,7 @@
     Bridge.define('Bridge.ClientTest.Batch2.BridgeIssues.N772.C', {
         i: 0,
         constructor: function (i) {
+            this.$initialize();
             this.i = i;
         },
         equals: function (o) {
@@ -1527,7 +1528,7 @@
     Bridge.define('Bridge.ClientTest.Batch2.Constants', {
         statics: {
             BATCH_NAME: "Batch2",
-            MODULE_ISSUES: "Issues",
+            MODULE_ISSUES: "Issues2",
             MODULE_CHECKED_UNCKECKED: "Checked/Unckecked"
         }
     });

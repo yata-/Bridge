@@ -17,6 +17,7 @@ Bridge.define("System.Text.RegularExpressions.CaptureCollection", {
     _captures: null,
 
     constructor: function (group) {
+		this.$initialize();
         this._group = group;
         this._capcount = group._capcount;
     },
@@ -114,6 +115,7 @@ Bridge.define("System.Text.RegularExpressions.CaptureEnumerator", {
     _curindex: 0,
 
     constructor: function (captureColl) {
+		this.$initialize();
         this._curindex = -1;
         this._captureColl = captureColl;
     },

@@ -207,6 +207,7 @@ Bridge.define("System.Text.RegularExpressions.RegexReplacement", {
     _rules: [], // negative -> group #, positive -> string #
 
     constructor: function (rep, concat, caps) {
+		this.$initialize();
         this._rep = rep;
 
         if (concat._type !== System.Text.RegularExpressions.RegexNode.Concatenate) {

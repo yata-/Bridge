@@ -17,7 +17,7 @@ namespace System.Collections.Generic
     {
         public static EqualityComparer<T> Default
         {
-            [Template("new System.Collections.Generic.EqualityComparer$1({T})()")]
+            [Template("new (System.Collections.Generic.EqualityComparer$1({T}))()")]
             get
             {
                 return null;

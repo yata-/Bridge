@@ -31,7 +31,6 @@ namespace Bridge.ClientTest
         public const string MODULE_VERSION = PREFIX_SYSTEM_CLASSES; // + "Version";
 
         public const string MODULE_BASIC_CSHARP = "C#"; // "";
-        public const string MODULE_ISSUES = "Issues"; // "";
         public const string MODULE_LINQ = "LINQ"; // "";
 
         public const string MODULE_DATETIME = "Date and time"; // "DateTime, TimeSpan";

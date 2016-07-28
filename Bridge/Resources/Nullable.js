@@ -114,7 +114,7 @@
         },
 
         sub: function (a, b) {
-	        return Bridge.hasValue(a) && Bridge.hasValue(b) ? a - b : null;
+            return Bridge.hasValue(a) && Bridge.hasValue(b) ? a - b : null;
         },
 
         bnot: function (a) {
@@ -126,29 +126,29 @@
         },
 
         not: function (a) {
-	        return Bridge.hasValue(a) ? !a : null;
+            return Bridge.hasValue(a) ? !a : null;
         },
 
         pos: function (a) {
-	        return Bridge.hasValue(a) ? +a : null;
+            return Bridge.hasValue(a) ? +a : null;
         },
 
         lift: function () {
-	        for (var i = 1; i < arguments.length; i++) {
-	            if (!Bridge.hasValue(arguments[i])) {
-	                return null;
-	            }
-	        }
+            for (var i = 1; i < arguments.length; i++) {
+                if (!Bridge.hasValue(arguments[i])) {
+                    return null;
+                }
+            }
 
-	        if (arguments[0] == null) {
-	            return null;
-	        }
+            if (arguments[0] == null) {
+                return null;
+            }
 
-	        if (arguments[0].apply == undefined) {
-	            return arguments[0];
-	        }
+            if (arguments[0].apply == undefined) {
+                return arguments[0];
+            }
 
-	        return arguments[0].apply(null, Array.prototype.slice.call(arguments, 1));
+            return arguments[0].apply(null, Array.prototype.slice.call(arguments, 1));
         },
 
         lift1: function (f, o) {
@@ -164,13 +164,15 @@
         },
 
         lifteq: function (f, a, b) {
-            var va = Bridge.hasValue(a), vb = Bridge.hasValue(b);
+            var va = Bridge.hasValue(a),
+                vb = Bridge.hasValue(b);
 
             return (!va && !vb) || (va && vb && (typeof f === "function" ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))));
         },
 
         liftne: function (f, a, b) {
-            var va = Bridge.hasValue(a), vb = Bridge.hasValue(b);
+            var va = Bridge.hasValue(a),
+                vb = Bridge.hasValue(b);
 
             return (va !== vb) || (va && (typeof f === "function" ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))));
         }

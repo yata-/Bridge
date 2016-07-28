@@ -50,6 +50,7 @@
             }
         },
         constructor: function (name) {
+            this.$initialize();
             this.setName(name);
         }
     });
@@ -62,6 +63,7 @@
             }
         },
         constructor: function (value) {
+            this.$initialize();
             this.setValue(value);
         }
     });

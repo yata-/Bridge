@@ -49,7 +49,7 @@
                 checksum,
                 i,
                 digit,
-                notype= false;
+                notype = false;
 
             if (type === "Visa") {
                 // Visa: length 16, prefix 4, dashes optional.
@@ -88,7 +88,7 @@
             // Add even digits in even length strings or odd digits in odd length strings.
             checksum = 0;
 
-            for (i = (2 - (value.length % 2)) ; i <= value.length; i += 2) {
+            for (i = (2 - (value.length % 2)); i <= value.length; i += 2) {
                 checksum += parseInt(value.charAt(i - 1));
             }
 

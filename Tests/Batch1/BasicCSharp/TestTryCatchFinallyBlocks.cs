@@ -55,19 +55,19 @@ namespace Bridge.ClientTest.BasicCSharp
         public static void ThrownExceptions()
         {
             //#230
-            Assert.Throws(TryCatchFinallyWithNotCaughtTypedException, "catch me", "A. Typed exception is not caught");
+            Assert.Throws<Exception>(TryCatchFinallyWithNotCaughtTypedException, "A. Typed exception is not caught");
             Assert.True(IsATry, "A. exception not caught - try section called");
             Assert.True(!IsACatch, "A. exception not caught - catch section not called");
             Assert.True(IsAFinally, "A. exception not caught - finally section called");
 
             //#229
-            Assert.Throws(TryCatchWithNotCaughtTypedExceptionAndArgument, "catch me", "[#229] B. Typed exception is not caught; and argument");
+            Assert.Throws<Exception>(TryCatchWithNotCaughtTypedExceptionAndArgument, "[#229] B. Typed exception is not caught; and argument");
             Assert.True(IsBTry, "B. exception not caught - try section called");
             Assert.True(!IsBCatch, "B. exception not caught - catch section not called");
             Assert.True(IsBFinally, "B. exception not caught - finally section called");
 
             //#231
-            Assert.Throws(TryCatchWithRethrow, "catch me", "[#231] C. Rethrow");
+            Assert.Throws<InvalidOperationException>(TryCatchWithRethrow, "[#231] C. Rethrow");
             Assert.True(IsCTry, "C. exception caught and re-thrown  - try section called");
             Assert.True(IsCCatch, "C. exception caught and re-thrown  - catch section called");
             Assert.True(IsCFinally, "C. exception caught and re-thrown  - finally section called");

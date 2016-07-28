@@ -22,6 +22,7 @@ Bridge.define("System.Text.RegularExpressions.MatchCollection", {
     _done: false,
 
     constructor: function (regex, input, beginning, length, startat) {
+		this.$initialize();
         if (startat < 0 || startat > input.Length) {
             throw new System.ArgumentOutOfRangeException("startat");
         }
@@ -142,6 +143,7 @@ Bridge.define("System.Text.RegularExpressions.MatchEnumerator", {
     _done: false,
 
     constructor: function (matchColl) {
+		this.$initialize();
         this._matchcoll = matchColl;
     },
 

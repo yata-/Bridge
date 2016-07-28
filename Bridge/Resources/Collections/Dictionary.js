@@ -3,6 +3,7 @@
 Bridge.define('System.Collections.Generic.KeyValuePair$2', function (TKey, TValue) {
     return {
         constructor: function (key, value) {
+			this.$initialize();
             this.key = key;
             this.value = value;
         },
@@ -47,6 +48,7 @@ Bridge.define('System.Collections.Generic.Dictionary$2', function (TKey, TValue)
         },
 
         constructor: function (obj, comparer) {
+			this.$initialize();
             this.comparer = comparer || System.Collections.Generic.EqualityComparer$1.$default;
             this.clear();
 
@@ -70,11 +72,11 @@ Bridge.define('System.Collections.Generic.Dictionary$2', function (TKey, TValue)
         },
 
         getKeys: function () {
-            return new System.Collections.Generic.DictionaryCollection$1(TKey)(this, true);
+            return new (System.Collections.Generic.DictionaryCollection$1(TKey))(this, true);
         },
 
         getValues: function () {
-            return new System.Collections.Generic.DictionaryCollection$1(TValue)(this, false);
+            return new (System.Collections.Generic.DictionaryCollection$1(TValue))(this, false);
         },
 
         clear: function () {
@@ -148,7 +150,7 @@ Bridge.define('System.Collections.Generic.Dictionary$2', function (TKey, TValue)
             }
 
             hash = this.comparer.getHashCode2(key);
-            entry = new System.Collections.Generic.KeyValuePair$2(TKey, TValue)(key, value);
+            entry = new (System.Collections.Generic.KeyValuePair$2(TKey, TValue))(key, value);
 
             if (this.entries[hash]) {
                 this.entries[hash].push(entry);
@@ -260,6 +262,7 @@ Bridge.define('System.Collections.Generic.DictionaryCollection$1', function (T) 
         },
 
         constructor: function (dictionary, keys) {
+			this.$initialize();
             this.dictionary = dictionary;
             this.keys = keys;
         },

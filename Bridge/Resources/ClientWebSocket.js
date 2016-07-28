@@ -3,6 +3,7 @@
     Bridge.define("System.Net.WebSockets.ClientWebSocket", {
         inherits: [System.IDisposable],
         constructor: function () {
+            this.$initialize();
             this.messageBuffer = [];
             this.state = "none";
             this.options = new System.Net.WebSockets.ClientWebSocketOptions();
@@ -264,6 +265,7 @@
 
     Bridge.define("System.Net.WebSockets.ClientWebSocketOptions", {
         constructor: function () {
+            this.$initialize();
             this.isReadOnly = false;
             this.requestedSubProtocols = [];
         },
@@ -291,6 +293,7 @@
 
     Bridge.define("System.Net.WebSockets.WebSocketReceiveResult", {
         constructor: function (count, messageType, endOfMessage, closeStatus, closeStatusDescription) {
+            this.$initialize();
             this.count = count;
             this.messageType = messageType;
             this.endOfMessage = endOfMessage;

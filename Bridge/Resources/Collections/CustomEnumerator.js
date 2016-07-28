@@ -12,6 +12,7 @@ Bridge.define('Bridge.CustomEnumerator', {
     },
 
     constructor: function (moveNext, getCurrent, reset, dispose, scope) {
+		this.$initialize();
         this.$moveNext = moveNext;
         this.$getCurrent = getCurrent;
         this.$dispose = dispose;

@@ -31,7 +31,9 @@
                 throw new System.ArgumentNullException("value");
             }
 
-            var result = { v: false };
+            var result = {
+                v: false
+            };
 
             if (!System.Boolean.tryParse(value, result)) {
                 throw new System.FormatException("Bad format for Boolean value");
@@ -58,8 +60,8 @@
             }
 
             var start = 0,
-                end = value.length-1;
- 
+                end = value.length - 1;
+
             while (start < value.length) {
                 if (!System.Char.isWhiteSpace(value[start]) && !System.Char.isNull(value.charCodeAt(start))) {
                     break;
@@ -67,15 +69,15 @@
 
                 start++;
             }
- 
+
             while (end >= start) {
                 if (!System.Char.isWhiteSpace(value[end]) && !System.Char.isNull(value.charCodeAt(end))) {
                     break;
                 }
 
-                end--;            
+                end--;
             }
- 
+
             value = value.substr(start, end - start + 1);
 
             if (System.String.equals(System.Boolean.trueString, value, 5)) {

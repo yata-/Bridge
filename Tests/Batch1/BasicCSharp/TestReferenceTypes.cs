@@ -269,11 +269,11 @@ namespace Bridge.ClientTest.BasicCSharp
 
             // TEST
             // Check constructor with parameter
-            Assert.Throws(TestSet1FailureHelper.TestConstructor1Failure, "Related should not be null", "Related should not be null");
+            Assert.Throws<Exception>(TestSet1FailureHelper.TestConstructor1Failure, "Related should not be null");
 
             // TEST
             // Check constructor with parameter
-            Assert.Throws(TestSet1FailureHelper.TestConstructor2Failure, "Should pass six parameters", "Should pass six parameters");
+            Assert.Throws<Exception>(TestSet1FailureHelper.TestConstructor2Failure, "Should pass six parameters");
 
             a = new ClassA(150, "151", true, 1.53d, 1.54m, new ClassA.Aux1()
             {

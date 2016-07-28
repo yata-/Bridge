@@ -6,6 +6,7 @@ Bridge.define("System.Text.RegularExpressions.Capture", {
     _length: 0,
 
     constructor: function (text, i, l) {
+		this.$initialize();
         this._text = text;
         this._index = i;
         this._length = l;

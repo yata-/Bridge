@@ -175,10 +175,10 @@
         statics: {
             config: {
                 init: function () {
-                    Bridge.ready(this.runTests);
+                    Bridge.ready(this.main);
                 }
             },
-            runTests: function () {
+            main: function () {
                 QUnit.module("Checked/Unckecked");
                 QUnit.test("CheckedInsideUnchecked - Batch2 TestInt32", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_CheckedInsideUncheckedTests.testInt32);
                 QUnit.test("CheckedInsideUnchecked - Batch2 TestUInt32", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_CheckedInsideUncheckedTests.testUInt32);
@@ -200,7 +200,7 @@
                 QUnit.test("WithNoUncheckedKeyword - Batch2 TestUInt32", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_WithNoUncheckedKeywordTests.testUInt32);
                 QUnit.test("WithNoUncheckedKeyword - Batch2 TestLong", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_WithNoUncheckedKeywordTests.testLong);
                 QUnit.test("WithNoUncheckedKeyword - Batch2 TestULong", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_WithNoUncheckedKeywordTests.testULong);
-                QUnit.module("Issues");
+                QUnit.module("Issues2");
                 QUnit.test("#1385 - Batch2 TestIsTypedArrayForByte", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_Bridge1385.testIsTypedArrayForByte);
                 QUnit.test("#1122 - Batch2 TestClippingInJavaScriptOverflowMode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N1122.testClippingInJavaScriptOverflowMode);
                 QUnit.test("#1122 - Batch2 TestIntegerDivisionInJavaScriptOverflowMode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch2_BridgeIssues_N1122.testIntegerDivisionInJavaScriptOverflowMode);

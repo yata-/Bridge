@@ -7,17 +7,17 @@ namespace System.Collections.Generic
     {
         public extern Dictionary();
 
-        [Template("new System.Collections.Generic.Dictionary$2({TKey}, {TValue})()")]
+        [Template("new (System.Collections.Generic.Dictionary$2({TKey}, {TValue}))()")]
         public extern Dictionary(int capacity);
 
-        [Template("new System.Collections.Generic.Dictionary$2({TKey}, {TValue})(null, {comparer})")]
+        [Template("new (System.Collections.Generic.Dictionary$2({TKey}, {TValue}))(null, {comparer})")]
         public extern Dictionary(int capacity, IEqualityComparer<TKey> comparer);
 
         public extern Dictionary(object obj);
 
         public extern Dictionary(object obj, IEqualityComparer<TKey> comparer);
 
-        [Template("new System.Collections.Generic.Dictionary$2({TKey}, {TValue})(null, {comparer})")]
+        [Template("new (System.Collections.Generic.Dictionary$2({TKey}, {TValue}))(null, {comparer})")]
         public extern Dictionary(IEqualityComparer<TKey> comparer);
 
         public extern Dictionary(IDictionary<TKey, TValue> dictionary);
