@@ -833,7 +833,12 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
     _scanBackrefNumberToken: function (textEndPos, branches, branch, pass, token) {
         var resKind = this._branchResultKind;
 
-        var grCapture = branch.state.resolveBackref(token.data.number);
+        var packetSlotId = this._patternInfo.sparseSettings.getPackedSlotIdBySlotNumber(token.data.number);
+        if (packetSlotId == null) {
+            throw new System.ArgumentException("Reference to undefined group number '" + token.data.number + "'.");
+        }
+
+        var grCapture = branch.state.resolveBackref(packetSlotId);
         if (grCapture == null) {
             return resKind.nextBranch;
         }
@@ -845,12 +850,12 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
     _scanBackrefNameToken: function (textEndPos, branches, branch, pass, token) {
         var resKind = this._branchResultKind;
 
-        var group = this._patternInfo.sparseSettings.getSingleGroupByName(token.data.name);
-        if (group == null) {
-            throw new System.ArgumentException("Reference to undefined group name '" + value + "'.");
+        var packetSlotId = this._patternInfo.sparseSettings.getPackedSlotIdBySlotName(token.data.name);
+        if (packetSlotId == null) {
+            throw new System.ArgumentException("Reference to undefined group name '" + token.data.name + "'.");
         }
 
-        var grCapture = branch.state.resolveBackref(group.rawIndex);
+        var grCapture = branch.state.resolveBackref(packetSlotId);
         if (grCapture == null) {
             return resKind.nextBranch;
         }

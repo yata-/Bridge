@@ -92,12 +92,12 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             return result;
         },
 
-        _transformRawTokens: function (settings, tokens, sparseSettings, allowedBackrefRawIds, nestedGroupIds, nestingLevel) {
+        _transformRawTokens: function (settings, tokens, sparseSettings, allowedPackedSlotIds, nestedGroupIds, nestingLevel) {
             var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
             var token;
             var value;
-            var group;
+            var packedSlotId;
             var groupNumber;
             var matchRes;
             var localNestedGroupIds;
@@ -124,33 +124,23 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
 
                 if (token.type === tokenTypes.escBackrefNumber) {
 
-                    if (nestingLevel > 0) {
-                        throw new System.NotSupportedException("Backreferences inside groups are not supported."); //TODO: support references inside groups
-                    }
-
                     value = token.value.slice(1);
                     groupNumber = parseInt(value, 10);
-                    group = sparseSettings.getSingleGroupByNumber(groupNumber);
-                    if (group == null) {
+                    packedSlotId = sparseSettings.getPackedSlotIdBySlotNumber(groupNumber);
+                    if (packedSlotId == null) {
                         throw new System.ArgumentException("Reference to undefined group number " + value + ".");
                     }
 
-                    if (allowedBackrefRawIds.indexOf(group.rawIndex) < 0) {
-                        throw new System.NotSupportedException("Reference to unreachable group number " + value + "."); //TODO: [Intentional Variation] .Net returns "Success=false". However, it has no sense.
-                    }
-                    if (nestedGroupIds.indexOf(group.rawIndex) >= 0) {
-                        throw new System.NotSupportedException("References to self/parent group number " + value + " are not supported."); //TODO: [Intentional Variation] This require pattern change with every capture. Not supported.
+                    if (allowedPackedSlotIds.indexOf(packedSlotId) < 0) {
+                        settings.shouldFail = true; // Backreferences to unreachable group number lead to an empty match.
+                        continue;
                     }
 
                 } else if (token.type === tokenTypes.escBackrefName) {
 
-                    if (nestingLevel > 0) {
-                        throw new System.NotSupportedException("Backreferences inside groups are not supported."); //TODO: support references inside groups
-                    }
-
                     value = token.value.slice(3, token.length - 1);
-                    group = sparseSettings.getSingleGroupByName(value);
-                    if (group == null) {
+                    packedSlotId = sparseSettings.getPackedSlotIdBySlotName(value);
+                    if (packedSlotId == null) {
                         // TODO: Move this code to earlier stages
                         // If the name is number, treat the backreference as a numbered:
                         matchRes = scope._matchChars(value, 0, value.length, scope._decSymbols);
@@ -163,11 +153,9 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                         throw new System.ArgumentException("Reference to undefined group name '" + value + "'.");
                     }
 
-                    if (allowedBackrefRawIds.indexOf(group.rawIndex) < 0) {
-                        throw new System.NotSupportedException("Reference to unreachable group name '" + value + "'."); //TODO: [Intentional Variation] .Net returns "Success=false". However, it has no sense.
-                    }
-                    if (nestedGroupIds.indexOf(group.rawIndex) >= 0) {
-                        throw new System.NotSupportedException("References to self/parent group name '" + value + "' are not supported."); //TODO: [Intentional Variation] This require pattern change with every capture. Not supported.
+                    if (allowedPackedSlotIds.indexOf(packedSlotId) < 0) {
+                        settings.shouldFail = true; // Backreferences to unreachable group number lead to an empty match.
+                        continue;
                     }
 
                 } else if (token.type === tokenTypes.anchor || token.type === tokenTypes.escAnchor) {
@@ -199,14 +187,14 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                     localNestedGroupIds = localNestedGroupIds.concat(nestedGroupIds);
 
                     localSettings = token.localSettings || settings;
-                    scope._transformRawTokens(localSettings, token.children, sparseSettings, allowedBackrefRawIds, localNestedGroupIds, nestingLevel + 1);
+                    scope._transformRawTokens(localSettings, token.children, sparseSettings, allowedPackedSlotIds, localNestedGroupIds, nestingLevel + 1);
                     settings.shouldFail = settings.shouldFail || localSettings.shouldFail;
                     settings.isContiguous = settings.isContiguous || localSettings.isContiguous;
                 }
 
                 // Group is processed. Now it can be referenced with Backref:
                 if (token.type === tokenTypes.group) {
-                    allowedBackrefRawIds.push(token.group.rawIndex);
+                    allowedPackedSlotIds.push(token.group.packedSlotId);
                 }
             }
         },
@@ -310,21 +298,22 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
         _getGroupSparseInfo: function (groups) {
             var scope = System.Text.RegularExpressions.RegexEngineParser;
 
-            var sparseSlotNames = ["0"];
-            var sparseSlotNumbers = [0];
-
-            var sparseSlotNameMap = {};
-            var sparseSlotNumberMap = {};
-            var sparseSlotGroupsMap = {};
-
             var explNumberedGroups = {};
             var explNumberedGroupKeys = [];
+            var explNamedGroups = {};
             var explGroups;
 
             var numberedGroups;
             var slotNumber;
+            var slotName;
             var group;
             var i;
+
+            var sparseSlotMap = { 0: 0 };
+            sparseSlotMap.lastSlot = 0;
+
+            var sparseSlotNameMap = { "0": 0 };
+            sparseSlotNameMap.keys = ["0"];
 
             // Fill Explicit Numbers:
             for (i = 0; i < groups.length; i++) {
@@ -341,6 +330,14 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                         explNumberedGroups[slotNumber].push(group);
                     } else {
                         explNumberedGroups[slotNumber] = [group];
+                    }
+                } else {
+                    slotName = group.constructs.name1;
+
+                    if (explNamedGroups[slotName]) {
+                        explNamedGroups[slotName].push(group);
+                    } else {
+                        explNamedGroups[slotName] = [group];
                     }
                 }
             }
@@ -359,7 +356,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                     continue;
                 }
 
-                slotNumber = sparseSlotNumbers.length;
+                slotNumber = sparseSlotNameMap.keys.length;
                 if (!group.hasName) {
                     numberedGroups = [group];
                     explGroups = explNumberedGroups[slotNumber];
@@ -368,7 +365,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                         explNumberedGroups[slotNumber] = null;
                     }
 
-                    scope._addSparseSlotForSameNamedGroups(numberedGroups, slotNumber, sparseSlotNames, sparseSlotNumbers);
+                    scope._addSparseSlotForSameNamedGroups(numberedGroups, slotNumber, sparseSlotMap, sparseSlotNameMap);
                 }
             }
 
@@ -385,18 +382,35 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
 
                 // If the slot is already occupied by an explicitly numbered group,
                 // add this group to the slot:
-                slotNumber = sparseSlotNumbers.length;
+                slotNumber = sparseSlotNameMap.keys.length;
                 explGroups = explNumberedGroups[slotNumber];
                 while (explGroups != null) {
-                    scope._addSparseSlotForSameNamedGroups(explGroups, slotNumber, sparseSlotNames, sparseSlotNumbers);
+                    scope._addSparseSlotForSameNamedGroups(explGroups, slotNumber, sparseSlotMap, sparseSlotNameMap);
 
                     explNumberedGroups[slotNumber] = null; // Group is processed.
-                    slotNumber = sparseSlotNumbers.length;
+                    slotNumber = sparseSlotNameMap.keys.length;
                     explGroups = explNumberedGroups[slotNumber];
                 }
 
-                // Add the named group to the 1st free slot:
-                scope._addSparseSlot(group, slotNumber, sparseSlotNames, sparseSlotNumbers);
+                if (!group.constructs.isNumberName1) {
+                    slotNumber = sparseSlotNameMap.keys.length;
+                    explGroups = explNumberedGroups[slotNumber];
+                    while (explGroups != null) {
+                        scope._addSparseSlotForSameNamedGroups(explGroups, slotNumber, sparseSlotMap, sparseSlotNameMap);
+
+                        explNumberedGroups[slotNumber] = null; // Group is processed.
+                        slotNumber = sparseSlotNameMap.keys.length;
+                        explGroups = explNumberedGroups[slotNumber];
+                    }
+                }
+
+                // Add the named group(s) to the 1st free slot:
+                slotName = group.constructs.name1;
+                explGroups = explNamedGroups[slotName];
+                if (explGroups != null) {
+                    scope._addSparseSlotForSameNamedGroups(explGroups, slotNumber, sparseSlotMap, sparseSlotNameMap);
+                    explNamedGroups[slotName] = null;  // Group is processed.
+                }
             }
 
             // Add the rest explicitly numbered groups:
@@ -404,87 +418,57 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                 slotNumber = explNumberedGroupKeys[i];
                 explGroups = explNumberedGroups[slotNumber];
                 if (explGroups != null) {
-                    scope._addSparseSlotForSameNamedGroups(explGroups, slotNumber, sparseSlotNames, sparseSlotNumbers);
-                }
-            }
+                    scope._addSparseSlotForSameNamedGroups(explGroups, slotNumber, sparseSlotMap, sparseSlotNameMap);
 
-            // Fill Name/Number map:
-            for (i = 0; i < sparseSlotNumbers.length; i++) {
-                sparseSlotNameMap[sparseSlotNames[i]] = i;
-                sparseSlotNumberMap[sparseSlotNumbers[i]] = i;
-            }
-
-            // Fill Group map:
-            for (i = 0; i < groups.length; i++) {
-                group = groups[i];
-                if (group.constructs.skipCapture) {
-                    continue;
-                }
-
-                if (sparseSlotGroupsMap[group.sparseSlotId]) {
-                    sparseSlotGroupsMap[group.sparseSlotId].push(group);
-                } else {
-                    sparseSlotGroupsMap[group.sparseSlotId] = [group];
+                    explNumberedGroups[slotNumber] = null; // Group is processed.
                 }
             }
 
             return {
-                isSparse: sparseSlotNumbers.length !== (1 + sparseSlotNumbers[sparseSlotNumbers.length - 1]),
-                sparseSlotNames: sparseSlotNames, // e.g. [1,2,test,5]
-                sparseSlotNumbers: sparseSlotNumbers, // e.g. [1,2,3,5] 
+                isSparse: sparseSlotMap.isSparse || false, //sparseSlotNumbers.length !== (1 + sparseSlotNumbers[sparseSlotNumbers.length - 1]),
+                sparseSlotMap: sparseSlotMap,           // <SlotNumber, PackedSlotId>
+                sparseSlotNameMap: sparseSlotNameMap,   // <SlotName, PackedSlotId>
 
-                sparseSlotNameMap: sparseSlotNameMap, // <GroupName, SlotId>
-                sparseSlotNumberMap: sparseSlotNumberMap, // <GroupNumber, SlotId>
-                sparseSlotGroupsMap: sparseSlotGroupsMap, // <SlotId, Group>
-
-                getSingleGroupByNumber: function (groupNumber) {
-                    var slotId = this.sparseSlotNumberMap[groupNumber];
-                    if (slotId == null) {
-                        return null;
-                    }
-
-                    var requestedGroup = this.getSingleGroupBySlotId(slotId);
-                    return requestedGroup;
+                getPackedSlotIdBySlotNumber: function(slotNumber) {
+                    return this.sparseSlotMap[slotNumber];
                 },
 
-                getSingleGroupByName: function (groupName) {
-                    var slotId = this.sparseSlotNameMap[groupName];
-                    if (slotId == null) {
-                        return null;
-                    }
-
-                    var requestedGroup = this.getSingleGroupBySlotId(slotId);
-                    return requestedGroup;
-                },
-
-                getSingleGroupBySlotId: function (slotId) {
-                    var slotGroups = this.sparseSlotGroupsMap[slotId];
-                    if (slotGroups.length !== 1) {
-                        throw new System.NotSupportedException("Redefined groups are not supported."); //TODO: [Intentional Variation] Can be changed when backrefereces are resolved manually (they should use the closest group/capture)
-                    }
-                    return slotGroups[0];
+                getPackedSlotIdBySlotName: function (slotName) {
+                    return this.sparseSlotNameMap[slotName];
                 }
             };
         },
 
-        _addSparseSlot: function (group, slotNumber, sparseSlotNames, sparseSlotNumbers) {
-            group.sparseSlotId = sparseSlotNames.length; // 0-based index
+        _addSparseSlot: function (group, slotNumber, sparseSlotMap, sparseSlotNameMap) {
 
-            sparseSlotNames.push(group.name); // This a generated name, it shows Seq number.
-            sparseSlotNumbers.push(slotNumber); // 1-based index
+            var packedSlotId = sparseSlotNameMap.keys.length; // 0-based index. Raw Slot number, 0,1..n (without gaps)
+
+            group.packedSlotId = packedSlotId;  
+
+            sparseSlotMap[slotNumber] = packedSlotId;
+            sparseSlotNameMap[group.name] = packedSlotId;
+            sparseSlotNameMap.keys.push(group.name);
+
+            if (!sparseSlotMap.isSparse && ((slotNumber - sparseSlotMap.lastSlot) > 1)) {
+                sparseSlotMap.isSparse = true;
+            }
+
+            sparseSlotMap.lastSlot = slotNumber;
         },
 
-        _addSparseSlotForSameNamedGroups: function (groups, slotNumber, sparseSlotNames, sparseSlotNumbers) {
+        _addSparseSlotForSameNamedGroups: function (groups, slotNumber, sparseSlotMap, sparseSlotNameMap) {
             var scope = System.Text.RegularExpressions.RegexEngineParser;
             var i;
 
-            scope._addSparseSlot(groups[0], slotNumber, sparseSlotNames, sparseSlotNumbers);
-            var slotId = groups[0].sparseSlotId;
+            scope._addSparseSlot(groups[0], slotNumber, sparseSlotMap, sparseSlotNameMap);
+            var sparseSlotId = groups[0].sparseSlotId;
+            var packedSlotId = groups[0].packedSlotId;
 
             // Assign SlotID for all expl. named groups in this slot.
             if (groups.length > 1) {
                 for (i = 1; i < groups.length; i++) {
-                    groups[i].sparseSlotId = slotId;
+                    groups[i].sparseSlotId = sparseSlotId;
+                    groups[i].packedSlotId = packedSlotId;
                 }
             }
         },
@@ -646,9 +630,9 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                     groupNumberStr = token.value.slice(1);
                     groupNumber = parseInt(groupNumberStr, 10);
 
-                    if (groupNumber >= 1 && sparseSettings.getSingleGroupByNumber(groupNumber) != null) {
+                    if (groupNumber >= 1 && sparseSettings.getPackedSlotIdBySlotNumber(groupNumber) != null) {
                         // Expressions from \10 and greater are considered backreferences 
-                        // if there is a backreference corresponding to that number; 
+                        // if there is a group corresponding to that number; 
                         // otherwise, they are interpreted as octal codes.
                         continue; // validated
                     }

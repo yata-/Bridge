@@ -22,15 +22,15 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineState", {
     },
 
     logCaptureGroup: function (group, index, length) {
-        this.groups.push({ rawIndex: group.rawIndex, capIndex: index, capLength: length });
+        this.groups.push({ rawIndex: group.rawIndex, slotId: group.packedSlotId, capIndex: index, capLength: length });
     },
 
-    resolveBackref: function (rawIndex) {
+    resolveBackref: function (packedSlotId) {
         var groups = this.groups;
         var index = groups.length - 1;
 
         while (index >= 0) {
-            if (groups[index].rawIndex === rawIndex) {
+            if (groups[index].slotId === packedSlotId) {
                 return groups[index];
             }
             --index;

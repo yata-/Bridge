@@ -192,21 +192,10 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
 
         //TODO: cache
         var patternInfo = this._runner.parsePattern();
-        var slotNames = patternInfo.sparseSettings.sparseSlotNames;
 
-        this._capsize = slotNames.length;
-        this._capslist = [];
-        this._capnames = {};
-
-        var i;
-        var groupName;
-
-        // Add group without names first (their names are indexes)
-        for (i = 0; i < slotNames.length; i++) {
-            groupName = slotNames[i];
-            this._capslist.push(groupName);
-            this._capnames[groupName] = i;
-        }
+        this._capnames = patternInfo.sparseSettings.sparseSlotNameMap;
+        this._capslist = patternInfo.sparseSettings.sparseSlotNameMap.keys;
+        this._capsize = this._capslist.length;
     },
 
     getMatchTimeout: function () {

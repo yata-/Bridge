@@ -186,28 +186,20 @@ namespace Bridge.ClientTest.Text.RegularExpressions
         [Test]
         public void MsdnNamedBackrefWithRedefinedGroupTest()
         {
-            //TODO: Uncomment when backreferences to redefined groups are supported.
-            // Currently such cases intentionally not supported (they require manual processing of each single referenced capture).
-
             const string pattern = @"(?<1>a)(?<1>\1b)*";
-            const string text = @"aababb";
+            const string text = "aababb";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
 
-            Assert.Throws<NotSupportedException>(() =>
-            {
-                var rgx = new Regex(pattern);
-                rgx.Match(text);
-            });
+            ValidateMatch(m, 0, 6, "aababb", 2, true);
 
-            //var m = rgx.Match(text);
-            //ValidateMatch(m, 0, 6, "aababb", 2, true);
+            ValidateGroup(m, 0, 0, 6, true, "aababb", 1);
+            ValidateCapture(m, 0, 0, 0, 6, "aababb");
 
-            //ValidateGroup(m, 0, 0, 6, true, "aababb", 1);
-            //ValidateCapture(m, 0, 0, 0, 6, "aababb");
-
-            //ValidateGroup(m, 1, 3, 3, true, "abb", 3);
-            //ValidateCapture(m, 1, 0, 0, 1, "a");
-            //ValidateCapture(m, 1, 1, 1, 2, "ab");
-            //ValidateCapture(m, 1, 2, 3, 3, "abb");
+            ValidateGroup(m, 1, 3, 3, true, "abb", 3);
+            ValidateCapture(m, 1, 0, 0, 1, "a");
+            ValidateCapture(m, 1, 1, 1, 2, "ab");
+            ValidateCapture(m, 1, 2, 3, 3, "abb");
         }
 
         [Test]
@@ -260,89 +252,50 @@ namespace Bridge.ClientTest.Text.RegularExpressions
         [Test]
         public void NamedBackrefToUnreachableGroupTest()
         {
-            //TODO: Uncomment if backreferences to unreachable groups are supported.
-            // Currently such cases intentionally not supported (there is no sense in such queries, they always return "Success=False").
-
             const string pattern = @"(a)\2(b)";
-            const string text = @"abb";
+            const string text = "abb";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
 
-            Assert.Throws<NotSupportedException>(() =>
-            {
-                var rgx = new Regex(pattern);
-                rgx.Match(text);
-            });
+            ValidateMatch(m, 0, 0, "", 1, false);
 
+            ValidateGroup(m, 0, 0, 0, false, "", 0);
 
-            //const string pattern = @"(a)\2(b)";
-            //const string text = @"abb";
-            //var rgx = new Regex(pattern);
-            //var m = rgx.Match(text);
+            ValidateGroup(m, 1, 0, 0, false, "", 0);
 
-            //ValidateMatch(m, 0, 0, "", 1, false);
-
-            //ValidateGroup(m, 0, 0, 0, false, "", 0);
-
-            //ValidateGroup(m, 1, 0, 0, false, "", 0);
-
-            //ValidateGroup(m, 2, 0, 0, false, "", 0);
+            ValidateGroup(m, 2, 0, 0, false, "", 0);
         }
 
         [Test]
         public void NamedBackrefToSelfGroupTest()
         {
-            //TODO: Uncomment if backreferences to self are supported.
-            // Currently such cases intentionally not supported (there is no sense in such queries, they always return "Success=False").
-
             const string pattern = @"(?<gr1>a\k<gr1>)";
-            const string text = @"aaa";
+            const string text = "aaa";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
 
-            Assert.Throws<NotSupportedException>(() =>
-            {
-                var rgx = new Regex(pattern);
-                rgx.Match(text);
-            });
+            ValidateMatch(m, 0, 0, "", 1, false);
 
+            ValidateGroup(m, 0, 0, 0, false, "", 0);
 
-            //const string pattern = @"(?<gr1>a\k<gr1>)";
-            //const string text = @"aaa";
-            //var rgx = new Regex(pattern);
-            //var m = rgx.Match(text);
-
-            //ValidateMatch(m, 0, 0, "", 1, false);
-
-            //ValidateGroup(m, 0, 0, 0, false, "", 0);
-
-            //ValidateGroup(m, 1, 0, 0, false, "", 0);
+            ValidateGroup(m, 1, 0, 0, false, "", 0);
         }
 
         [Test]
         public void NamedBackrefToParentGroupTest()
         {
-            //TODO: Uncomment if backreferences to parent groups are supported.
-            // Currently such cases intentionally not supported (there is no sense in such queries, they always return "Success=False").
-
             const string pattern = @"(?<parent>a(?<child>b\k<parent>))";
-            const string text = @"aabb";
+            const string text = "aabb";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
 
-            Assert.Throws<NotSupportedException>(() =>
-            {
-                var rgx = new Regex(pattern);
-                rgx.Match(text);
-            });
+            ValidateMatch(m, 0, 0, "", 1, false);
 
+            ValidateGroup(m, 0, 0, 0, false, "", 0);
 
-            //const string pattern = @"(?<parent>a(?<child>b\k<parent>))";
-            //const string text = @"aabb";
-            //var rgx = new Regex(pattern);
-            //var m = rgx.Match(text);
+            ValidateGroup(m, 1, 0, 0, false, "", 0);
 
-            //ValidateMatch(m, 0, 0, "", 1, false);
-
-            //ValidateGroup(m, 0, 0, 0, false, "", 0);
-
-            //ValidateGroup(m, 1, 0, 0, false, "", 0);
-
-            //ValidateGroup(m, 2, 0, 0, false, "", 0);
+            ValidateGroup(m, 2, 0, 0, false, "", 0);
         }
 
         [Test]
@@ -365,32 +318,91 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             ValidateCapture(m, 2, 0, 0, 3, "abc");
         }
 
-        //TODO: Remove this test when backrefs inside groups are supported
         [Test]
-        public void NumberedBackrefInGroupFailsTest()
+        public void NumberedBackrefInGroupTest()
         {
-            Assert.Throws<NotSupportedException>(() =>
-            {
-                const string pattern = @"((abc)def)(\2)";
-                const string text = "abcdefabc";
-                var rgx = new Regex(pattern);
-                rgx.Match(text);
+            const string pattern = @"((abc)def)(\2)";
+            const string text = "abcdefabc";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
 
-            });
+            ValidateMatch(m, 0, 9, "abcdefabc", 4, true);
+
+            ValidateGroup(m, 0, 0, 9, true, "abcdefabc", 1);
+            ValidateCapture(m, 0, 0, 0, 9, "abcdefabc");
+
+            ValidateGroup(m, 1, 0, 6, true, "abcdef", 1);
+            ValidateCapture(m, 1, 0, 0, 6, "abcdef");
+
+            ValidateGroup(m, 2, 0, 3, true, "abc", 1);
+            ValidateCapture(m, 2, 0, 0, 3, "abc");
+
+            ValidateGroup(m, 3, 6, 3, true, "abc", 1);
+            ValidateCapture(m, 3, 0, 6, 3, "abc");
+
         }
 
-        //TODO: Remove this test when backrefs inside groups are supported
         [Test]
-        public void NamedBackrefInGroupFailsTest()
+        public void NamedBackrefInGroupTest()
         {
-            Assert.Throws<NotSupportedException>(() =>
-            {
-                const string pattern = @"((?<name>abc)def)(\k<name>)";
-                const string text = "abcdefabc";
-                var rgx = new Regex(pattern);
-                rgx.Match(text);
+            const string pattern = @"((?<name>abc)def)(\k<name>)";
+            const string text = "abcdefabc";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
 
-            });
+            ValidateMatch(m, 0, 9, "abcdefabc", 4, true);
+
+            ValidateGroup(m, 0, 0, 9, true, "abcdefabc", 1);
+            ValidateCapture(m, 0, 0, 0, 9, "abcdefabc");
+
+            ValidateGroup(m, 1, 0, 6, true, "abcdef", 1);
+            ValidateCapture(m, 1, 0, 0, 6, "abcdef");
+
+            ValidateGroup(m, 2, 6, 3, true, "abc", 1);
+            ValidateCapture(m, 2, 0, 6, 3, "abc");
+
+            ValidateGroup(m, 3, 0, 3, true, "abc", 1);
+            ValidateCapture(m, 3, 0, 0, 3, "abc");
+        }
+
+        [Test]
+        public void NumberedBackrefRecursiveGroupTest()
+        {
+            const string pattern = @"(a)(?<1>\1b)+";
+            const string text = "aababbabbb";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 0, 10, "aababbabbb", 2, true);
+
+            ValidateGroup(m, 0, 0, 10, true, "aababbabbb", 1);
+            ValidateCapture(m, 0, 0, 0, 10, "aababbabbb");
+
+            ValidateGroup(m, 1, 6, 4, true, "abbb", 4);
+            ValidateCapture(m, 1, 0, 0, 1, "a");
+            ValidateCapture(m, 1, 1, 1, 2, "ab");
+            ValidateCapture(m, 1, 2, 3, 3, "abb");
+            ValidateCapture(m, 1, 3, 6, 4, "abbb");
+        }
+
+        [Test]
+        public void NamedBackrefRecursiveGroupTest()
+        {
+            const string pattern = @"(?<gr>a)(?<gr>\k<gr>b)+";
+            const string text = "aababbabbb";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 0, 10, "aababbabbb", 2, true);
+
+            ValidateGroup(m, 0, 0, 10, true, "aababbabbb", 1);
+            ValidateCapture(m, 0, 0, 0, 10, "aababbabbb");
+
+            ValidateGroup(m, 1, 6, 4, true, "abbb", 4);
+            ValidateCapture(m, 1, 0, 0, 1, "a");
+            ValidateCapture(m, 1, 1, 1, 2, "ab");
+            ValidateCapture(m, 1, 2, 3, 3, "abb");
+            ValidateCapture(m, 1, 3, 6, 4, "abbb");
         }
     }
 }
