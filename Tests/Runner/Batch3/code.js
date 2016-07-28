@@ -9286,6 +9286,25 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge674', {
+        statics: {
+            testUndefinedToReferenceType: function () {
+                // Undefined is considerd as null by default
+                // In .Net the code below produces null and does not fail. Changing the test to reflect this
+                var o = undefined;
+    
+                Bridge.Test.Assert.areEqual$1(null, Bridge.cast(o, String), "Cast 'undefined' to string results in null");
+                Bridge.Test.Assert.areEqual$1(null, Bridge.cast(o, Array), "Cast 'undefined' to int[] results in null");
+            },
+            testUndefinedToValueType: function () {
+                var o = undefined;
+                Bridge.Test.Assert.throws$5(function () {
+                    var i = Bridge.cast(o, System.Int32);
+                }, "Unable to cast 'undefined' to type int");
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge675', {
         statics: {
             testUseCase: function () {
