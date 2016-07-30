@@ -44,7 +44,7 @@ echo f | xcopy /f /y "%root%Bridge\Compiler\Translator\bin\%build%\*.nupkg"     
 echo f | xcopy /f /y "%root%Aspect\Bridge.Aspect\bin\%build%\*.nupkg"               %output%
 
 :: Bridge.Test
-echo f | xcopy /f /y "%root%Test\Bridge.Test\bin\output\*.nupkg"                   %output%
+echo f | xcopy /f /y "%root%Test\Bridge.Test\bin\output\*.nupkg"                   	%output%
 
 ::------------------------------------------------------------------------------------------::
 :: Frameworks
@@ -59,8 +59,8 @@ echo f | xcopy /f /y "%root%Frameworks\Bootstrap3\bin\%build%\*.nupkg"          
 :: Bridge.Collections
 echo f | xcopy /f /y "%root%Frameworks\Collections\bin\%build%\*.nupkg"             %output%
 
-:: Bridge.Console
-echo f | xcopy /f /y "%root%Frameworks\Console\bin\%build%\*.nupkg"                 %output%
+:: Bridge.Html5.Console
+echo f | xcopy /f /y "%root%Frameworks\Html5.Console\bin\%build%\*.nupkg"           %output%
 
 :: Bridge.jQuery2
 echo f | xcopy /f /y "%root%Frameworks\jQuery2\bin\%build%\*.nupkg"                 %output%

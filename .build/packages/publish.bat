@@ -44,8 +44,8 @@ IF "%proceed2%"=="y" (
     ECHO Bridge.Collections has been published
 
 
-    ..\..\.nuget\NuGet.exe push Bridge.Console.1.0.0.nupkg  %apikey%
-    ECHO Bridge.Console has been published
+    ..\..\.nuget\NuGet.exe push Bridge.Html5.Console.1.0.2.nupkg  %apikey%
+    ECHO Bridge.Html5.Console has been published
 
 
     ..\..\.nuget\NuGet.exe push Bridge.jQuery.2.9.0.nupkg  %apikey%
