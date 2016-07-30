@@ -530,6 +530,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         switch (token.type) {
             case tokenTypes.group:
             case tokenTypes.groupImnsx:
+            case tokenTypes.alternationGroup:
                 return this._scanGroupToken(textEndPos, branches, branch, pass, token);
 
             case tokenTypes.groupImnsxMisc:
@@ -568,6 +569,11 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             case tokenTypes.groupConstructImnsx:
             case tokenTypes.groupConstructImnsxMisc:
                 return resKind.ok;
+
+            case tokenTypes.alternationGroupCondition:
+            case tokenTypes.alternationGroupRefNameCondition:
+            case tokenTypes.alternationGroupRefNumberCondition:
+                return this._scanAlternationConditionToken(textEndPos, branches, branch, pass, token);
 
             case tokenTypes.alternation:
                 return resKind.endPass;
@@ -616,22 +622,26 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             return resKind.ok;
         }
 
-        var constructs = token.group.constructs;
+        if (token.type === tokenTypes.group ||
+            token.type === tokenTypes.groupImnsx) {
 
-        // Update Pass settings:
-        this._scanGroupImnsxToken(constructs, pass.settings);
+            var constructs = token.group.constructs;
 
-        // Scan Grouping constructs:
-        if (constructs.isPositiveLookahead || constructs.isNegativeLookahead ||
-            constructs.isPositiveLookbehind || constructs.isNegativeLookbehind) {
+            // Update Pass settings:
+            this._scanGroupImnsxToken(constructs, pass.settings);
 
-            var scanLookRes = this._scanLook(branch, textIndex, textEndPos, token);
-            return scanLookRes;
+            // Scan Grouping constructs:
+            if (constructs.isPositiveLookahead || constructs.isNegativeLookahead ||
+                constructs.isPositiveLookbehind || constructs.isNegativeLookbehind) {
 
-        } else if (constructs.isNonbacktracking) {
+                var scanLookRes = this._scanLook(branch, textIndex, textEndPos, token);
+                return scanLookRes;
 
-            var scanNonBacktrackingRes = this._scanNonBacktracking(branch, textIndex, textEndPos, token);
-            return scanNonBacktrackingRes;
+            } else if (constructs.isNonbacktracking) {
+
+                var scanNonBacktrackingRes = this._scanNonBacktracking(branch, textIndex, textEndPos, token);
+                return scanNonBacktrackingRes;
+            }
         }
 
         // Continue scanning a regular group:
@@ -666,6 +676,32 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         }
 
         return resKind.ok;
+    },
+
+    _scanAlternationConditionToken: function (textEndPos, branches, branch, pass, token) {
+        var tokenTypes = System.Text.RegularExpressions.RegexEngineParser.tokenTypes;
+        var resKind = this._branchResultKind;
+        var children = token.children;
+        var textIndex = branch.state.txtIndex;
+
+        if (token.type === tokenTypes.alternationGroupRefNameCondition ||
+            token.type === tokenTypes.alternationGroupRefNumberCondition) {
+
+            var grCapture = branch.state.resolveBackref(token.data.packedSlotId);
+            if (grCapture != null) {
+                return resKind.ok;
+            } else {
+                return resKind.nextBranch;
+            }
+        }
+
+        // Resolve expression:
+        var state = this._scan(textIndex, textEndPos, children, true, null);
+        if (this._combineScanResults(branch, state)) {
+            return resKind.ok;
+        }
+
+        return resKind.nextBranch;
     },
 
     _scanLook: function (branch, textIndex, textEndPos, token) {

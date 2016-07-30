@@ -54,7 +54,9 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
 
             alternation: 600,
             alternationGroup: 601,
-            alternationGroupExpr: 602,
+            alternationGroupCondition: 602,
+            alternationGroupRefNumberCondition: 603,
+            alternationGroupRefNameCondition: 604,
 
             commentInline: 700,
             commentXMode: 701
@@ -180,20 +182,42 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                     --i;
                     continue;
 
-                } else if (token.type === tokenTypes.literal && i > 0 && !token.qtoken) {
+                } else if (token.type === tokenTypes.literal) {
 
                     // Combine literal tokens for better performance:
-                    prevToken = tokens[i - 1];
-                    if (prevToken.type === tokenTypes.literal && !prevToken.qtoken) {
-                        
-                        prevToken.value += token.value;
-                        prevToken.length += token.length;
+                    if (i > 0 && !token.qtoken) {
+                        prevToken = tokens[i - 1];
+                        if (prevToken.type === tokenTypes.literal && !prevToken.qtoken) {
 
-                        tokens.splice(i, 1);
-                        --i;
-                        continue;
+                            prevToken.value += token.value;
+                            prevToken.length += token.length;
+
+                            tokens.splice(i, 1);
+                            --i;
+                            continue;
+                        }
                     }
 
+                } else if (token.type === tokenTypes.alternationGroupCondition) {
+
+                    if (token.data != null) {
+                        if (token.data.number != null) {
+                            packedSlotId = sparseSettings.getPackedSlotIdBySlotNumber(token.data.number);
+                            if (packedSlotId == null) {
+                                throw new System.ArgumentException("Reference to undefined group number " + value + ".");
+                            }
+                            token.data.packedSlotId = packedSlotId;
+                            scope._updatePatternToken(token, tokenTypes.alternationGroupRefNumberCondition, token.index, token.length, token.value);
+                        } else {
+                            packedSlotId = sparseSettings.getPackedSlotIdBySlotName(token.data.name);
+                            if (packedSlotId != null) {
+                                token.data.packedSlotId = packedSlotId;
+                                scope._updatePatternToken(token, tokenTypes.alternationGroupRefNameCondition, token.index, token.length, token.value);
+                            } else {
+                                delete token.data;
+                            }
+                        }
+                    }
                 }
 
                 // Update children tokens:
@@ -1070,7 +1094,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                 bodyIndex += constructToken.length;
                 if (constructToken.type === tokenTypes.commentInline) {
                     isComment = true;
-                } else if (constructToken.type === tokenTypes.alternationGroupExpr) {
+                } else if (constructToken.type === tokenTypes.alternationGroupCondition) {
                     isAlternation = true;
                 } else if (constructToken.type === tokenTypes.groupConstructImnsx) {
                     this._updateSettingsFromConstructs(groupSettings, grConstructs);
@@ -1196,7 +1220,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             }
 
             if (ch === "(") {
-                return scope._parseAlternationGroupExprToken(pattern, settings, i, endIndex);
+                return scope._parseAlternationGroupConditionToken(pattern, settings, i, endIndex);
             }
 
             if (ch === "<" && i + 2 < endIndex) {
@@ -1308,34 +1332,62 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             return scope._createPatternToken(pattern, tokenTypes.alternation, i, 1);
         },
 
-        _parseAlternationGroupExprToken: function (pattern, settings, i, endIndex) {
+        _parseAlternationGroupConditionToken: function (pattern, settings, i, endIndex) {
             var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
+            var constructToken;
+            var data = null;
 
             var ch = pattern[i];
             if (ch !== "?" || i + 1 >= endIndex || pattern[i + 1] !== "(") {
                 return null;
             }
 
-            // Parse Alternation expression as a group:
+            // Parse Alternation condition as a group:
             var expr = scope._parseGroupToken(pattern, settings, i + 1, endIndex);
             if (expr == null) {
                 return null;
             }
+            if (expr.type === tokenTypes.commentInline) {
+                throw new System.ArgumentException("Alternation conditions cannot be comments.");
+            }
 
-            if (expr.children && expr.children.length) {
-                //TODO: .NET Regex allows some of these. Need to be clarified:
-                switch (expr.children[0].type) {
-                    case tokenTypes.groupConstruct:
-                    case tokenTypes.groupConstructName:
-                    case tokenTypes.groupConstructImnsx:
-                    case tokenTypes.groupConstructImnsxMisc:
-                        throw new System.NotSupportedException("Group constructs are not supported for Alternation expressions.");
+            var children = expr.children;
+            if (children && children.length) {
+                constructToken = children[0];
+                if (constructToken.type === tokenTypes.groupConstructName) {
+                    throw new System.ArgumentException("Alternation conditions do not capture and cannot be named.");
+                }
+                
+                if (constructToken.type === tokenTypes.literal) {
+                    var literalVal = expr.value.slice(1, expr.value.length - 1);
+                    var isDigit = literalVal[0] >= "0" && literalVal[0] <= "9";
+                    if (isDigit) {
+                        var res = scope._matchChars(literalVal, 0, literalVal.length, scope._decSymbols);
+                        if (res.matchLength !== literalVal.length) {
+                            throw new System.ArgumentException("Malformed Alternation group number: " + literalVal + ".");
+                        }
+
+                        var number = parseInt(literalVal, 10);
+                        data = { number: number };
+                    } else {
+                        data = { name: literalVal };
+                    }
                 }
             }
 
+            // Add "Noncapturing" construct if there are no other ones.
+            if (!children.length || (children[0].type !== tokenTypes.groupConstruct && children[0].type !== tokenTypes.groupConstructImnsx)) {
+                constructToken = scope._createPatternToken("?:", tokenTypes.groupConstruct, 0, 2);
+                children.splice(0, 0, constructToken);
+            }
+
             // Transform Group token to Alternation expression token:
-            return scope._createPatternToken(pattern, tokenTypes.alternationGroupExpr, expr.index - 1, 1 + expr.length, expr.children, "?(", ")");
+            var token = scope._createPatternToken(pattern, tokenTypes.alternationGroupCondition, expr.index - 1, 1 + expr.length, [expr], "?", "");
+            if (data != null) {
+                token.data = data;
+            }
+            return token;
         },
 
         _parseXModeCommentToken: function (pattern, i, endIndex) {
