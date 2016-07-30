@@ -170,7 +170,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
 
                 case resKind.nextPass:
                     // switch to the recently added pass
-                    continue;   
+                    continue;
 
                 case resKind.endPass:
                 case resKind.ok:
@@ -221,7 +221,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
                 }
 
                 pass.probe = null;
-                pass.index ++;
+                pass.index++;
                 continue;
             }
 
@@ -533,7 +533,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
                 return this._scanGroupToken(textEndPos, branches, branch, pass, token);
 
             case tokenTypes.groupImnsxMisc:
-                return this._scanGroupImnsxToken(branches, branch, pass, token);
+                return this._scanGroupImnsxToken(token.group.constructs, pass.settings);
 
             case tokenTypes.charGroup:
                 return this._scanCharGroupToken(branches, branch, pass, token);
@@ -616,13 +616,25 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             return resKind.ok;
         }
 
-        this._scanGroupImnsxToken(branches, branch, pass, token);
+        var constructs = token.group.constructs;
 
-        var scanLookRes = this._scanLook(branch, textIndex, textEndPos, token);
-        if (scanLookRes != null) {
+        // Update Pass settings:
+        this._scanGroupImnsxToken(constructs, pass.settings);
+
+        // Scan Grouping constructs:
+        if (constructs.isPositiveLookahead || constructs.isNegativeLookahead ||
+            constructs.isPositiveLookbehind || constructs.isNegativeLookbehind) {
+
+            var scanLookRes = this._scanLook(branch, textIndex, textEndPos, token);
             return scanLookRes;
+
+        } else if (constructs.isNonbacktracking) {
+
+            var scanNonBacktrackingRes = this._scanNonBacktracking(branch, textIndex, textEndPos, token);
+            return scanNonBacktrackingRes;
         }
 
+        // Continue scanning a regular group:
         pass.onHoldTextIndex = textIndex;
         pass.onHold = true;
 
@@ -630,28 +642,27 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         return resKind.nextPass;
     },
 
-    _scanGroupImnsxToken: function (branches, branch, pass, token) {
+    _scanGroupImnsxToken: function (constructs, settings) {
         var resKind = this._branchResultKind;
-        var constructs = token.group.constructs;
 
         if (constructs.isIgnoreCase != null) {
-            pass.settings.ignoreCase = constructs.isIgnoreCase;
+            settings.ignoreCase = constructs.isIgnoreCase;
         }
 
         if (constructs.isMultiline != null) {
-            pass.settings.multiline = constructs.isMultiline;
+            settings.multiline = constructs.isMultiline;
         }
 
         if (constructs.isSingleLine != null) {
-            pass.settings.singleline = constructs.isSingleLine;
+            settings.singleline = constructs.isSingleLine;
         }
 
         if (constructs.isIgnoreWhitespace != null) {
-            pass.settings.ignoreWhitespace = constructs.isIgnoreWhitespace;
+            settings.ignoreWhitespace = constructs.isIgnoreWhitespace;
         }
 
         if (constructs.isExplicitCapture != null) {
-            pass.settings.explicitCapture = constructs.isExplicitCapture;
+            settings.explicitCapture = constructs.isExplicitCapture;
         }
 
         return resKind.ok;
@@ -666,7 +677,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
 
         var isLookahead = constructs.isPositiveLookahead || constructs.isNegativeLookahead;
         var isLookbehind = constructs.isPositiveLookbehind || constructs.isNegativeLookbehind;
-
 
         if (isLookahead || isLookbehind) {
             children = children.slice(1, children.length); // remove constructs
@@ -685,55 +695,46 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             }
         }
 
-
         return null;
     },
 
-    _scanLookAhead: function (branch, textPos, textEndPos, tokens) {
-        var state = this._scan(textPos, textEndPos, tokens, true);
+    _scanLookAhead: function (branch, textIndex, textEndPos, tokens) {
+        var state = this._scan(textIndex, textEndPos, tokens, true, null);
+        return this._combineScanResults(branch, state);
+    },
 
-        if (state != null) {
-            var groups = state.groups;
-            var group;
-            var i;
+    _scanLookBehind: function (branch, textIndex, textEndPos, tokens) {
+        var currIndex = textIndex;
+        var strLen;
+        var state;
 
-            for (i = 0; i < groups.length; ++i) {
-                group = groups[i];
-                branch.state.groups.push(group);
+        while (currIndex >= 0) {
+            strLen = textIndex - currIndex;
+            state = this._scan(currIndex, textEndPos, tokens, true, strLen);
+
+            if (this._combineScanResults(branch, state)) {
+                return true;
             }
 
-            return true;
+            --currIndex;
         }
 
         return false;
     },
 
-    _scanLookBehind: function (branch, textPos, textEndPos, tokens) {
+    _scanNonBacktracking: function (branch, textIndex, textEndPos, token) {
+        var resKind = this._branchResultKind;
+        var children = token.children;
+        children = children.slice(1, children.length); // remove constructs
 
-        var index = textPos;
-        var strLen;
-        var state;
-
-        while (index >= 0) {
-            strLen = textPos - index;
-            state = this._scan(index, textPos, tokens, true, strLen);
-            if (state != null) {
-                var groups = state.groups;
-                var group;
-                var i;
-
-                for (i = 0; i < groups.length; ++i) {
-                    group = groups[i];
-                    branch.state.groups.push(group);
-                }
-
-                return true;
-            }
-
-            --index;
+        var state = this._scan(textIndex, textEndPos, children, true, null);
+        if (!state) {
+            return resKind.nextBranch;
         }
 
-        return false;
+        branch.state.logCapture(state.capLength);
+
+        return resKind.ok;
     },
 
     _scanLiteral: function (textEndPos, branches, branch, pass, literal) {
@@ -764,7 +765,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         return resKind.ok;
     },
 
-    _scanWithJsRegex: function(branches, branch, pass, token) {
+    _scanWithJsRegex: function (branches, branch, pass, token) {
         var resKind = this._branchResultKind;
         var index = branch.state.txtIndex;
         var ch = this._text[index];
@@ -788,7 +789,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         return resKind.nextBranch;
     },
 
-    _scanWithJsRegex2: function(textIndex, pattern) {
+    _scanWithJsRegex2: function (textIndex, pattern) {
         var resKind = this._branchResultKind;
         var ch = this._text[textIndex];
         if (ch == null) {
@@ -878,7 +879,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             if (index === 0) {
                 return resKind.ok;
             }
-            if (pass.settings.multiline && this._text[index-1] === "\n") {
+            if (pass.settings.multiline && this._text[index - 1] === "\n") {
                 return resKind.ok;
             }
         } else if (token.value === "$") {
@@ -923,6 +924,22 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             explicitCapture: settings.explicitCapture
         };
         return cloned;
+    },
+
+    _combineScanResults: function (branch, srcState) {
+        if (srcState != null) {
+            var dstGroups = branch.state.groups;
+            var srcGroups = srcState.groups;
+            var srcGroupsLen = srcGroups.length;
+            var i;
+
+            for (i = 0; i < srcGroupsLen; ++i) {
+                dstGroups.push(srcGroups[i]);
+                }
+
+            return true;
+        }
+        return false;
     },
 
     _getEmptyMatch: function () {

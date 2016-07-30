@@ -95,6 +95,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
         _transformRawTokens: function (settings, tokens, sparseSettings, allowedPackedSlotIds, nestedGroupIds, nestingLevel) {
             var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
+            var prevToken;
             var token;
             var value;
             var packedSlotId;
@@ -179,7 +180,21 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                     --i;
                     continue;
 
-                } 
+                } else if (token.type === tokenTypes.literal && i > 0 && !token.qtoken) {
+
+                    // Combine literal tokens for better performance:
+                    prevToken = tokens[i - 1];
+                    if (prevToken.type === tokenTypes.literal && !prevToken.qtoken) {
+                        
+                        prevToken.value += token.value;
+                        prevToken.length += token.length;
+
+                        tokens.splice(i, 1);
+                        --i;
+                        continue;
+                    }
+
+                }
 
                 // Update children tokens:
                 if (token.children && token.children.length) {
@@ -741,7 +756,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
             var tokens = [];
-            var prevToken = null;
             var token;
             var ch;
             var i;
@@ -775,19 +789,11 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                 }
 
                 if (token == null) {
-                    if (prevToken != null && prevToken.type === tokenTypes.literal) {
-                        prevToken.value += ch;
-                        prevToken.length++;
-                        i++;
-                        continue;
-                    }
-
                     token = scope._createPatternToken(pattern, tokenTypes.literal, i, 1);
                 }
 
                 if (token != null) {
                     tokens.push(token);
-                    prevToken = token;
                     i += token.length;
                 }
             }
