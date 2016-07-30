@@ -614,7 +614,9 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
                     return resKind.nextBranch;
                 }
 
-                branch.state.logCaptureGroup(token.group, capIndex, capLength);
+                if (!token.group.constructs.emptyCapture) {
+                    branch.state.logCaptureGroup(token.group, capIndex, capLength);
+                }
             }
 
             pass.onHold = false;

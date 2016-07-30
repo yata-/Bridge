@@ -317,6 +317,11 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                         constructs.isNonCapturingExplicit = true;
                     }
 
+                    if (token.isEmptyCapturing) {
+                        delete token.isEmptyCapturing;
+                        constructs.emptyCapture = true;
+                    }
+
                     constructs.skipCapture =
                         constructs.isNonCapturing ||
                         constructs.isNonCapturingExplicit ||
@@ -347,6 +352,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             var slotName;
             var group;
             var i;
+            var j;
 
             var sparseSlotMap = { 0: 0 };
             sparseSlotMap.lastSlot = 0;
@@ -388,24 +394,32 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             explNumberedGroupKeys.sort(sortNum);
 
 
-            // Add group without names first:
-            for (i = 0; i < groups.length; i++) {
-                group = groups[i];
-                if (group.constructs.skipCapture) {
-                    continue;
-                }
-
-                slotNumber = sparseSlotNameMap.keys.length;
-                if (!group.hasName) {
-                    numberedGroups = [group];
-                    explGroups = explNumberedGroups[slotNumber];
-                    if (explGroups != null) {
-                        numberedGroups = numberedGroups.concat(explGroups);
-                        explNumberedGroups[slotNumber] = null;
+            // Add group without names first (emptyCapture = false first, than emptyCapture = true):
+            var allowEmptyCapture = false;
+            for (j = 0; j < 2; j++) {
+                for (i = 0; i < groups.length; i++) {
+                    group = groups[i];
+                    if (group.constructs.skipCapture) {
+                        continue;
                     }
 
-                    scope._addSparseSlotForSameNamedGroups(numberedGroups, slotNumber, sparseSlotMap, sparseSlotNameMap);
+                    if ((group.constructs.emptyCapture === true) !== allowEmptyCapture) {
+                        continue;
+                    }
+
+                    slotNumber = sparseSlotNameMap.keys.length;
+                    if (!group.hasName) {
+                        numberedGroups = [group];
+                        explGroups = explNumberedGroups[slotNumber];
+                        if (explGroups != null) {
+                            numberedGroups = numberedGroups.concat(explGroups);
+                            explNumberedGroups[slotNumber] = null;
+                        }
+
+                        scope._addSparseSlotForSameNamedGroups(numberedGroups, slotNumber, sparseSlotMap, sparseSlotNameMap);
+                    }
                 }
+                allowEmptyCapture = true;
             }
 
             // Then add named groups:
@@ -1336,6 +1350,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
             var constructToken;
+            var childToken;
             var data = null;
 
             var ch = pattern[i];
@@ -1358,6 +1373,14 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                 if (constructToken.type === tokenTypes.groupConstructName) {
                     throw new System.ArgumentException("Alternation conditions do not capture and cannot be named.");
                 }
+                
+                if (constructToken.type === tokenTypes.groupConstruct || constructToken.type === tokenTypes.groupConstructImnsx) {
+                    childToken = scope._findFirstGroupWithoutConstructs(children);
+                    if (childToken != null) {
+                        childToken.isEmptyCapturing = true;
+                    }
+                }
+
                 
                 if (constructToken.type === tokenTypes.literal) {
                     var literalVal = expr.value.slice(1, expr.value.length - 1);
@@ -1388,6 +1411,33 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                 token.data = data;
             }
             return token;
+        },
+
+        _findFirstGroupWithoutConstructs: function (tokens) {
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
+            var tokenTypes = scope.tokenTypes;
+            var result = null;
+            var token;
+            var i;
+
+            for (i = 0; i < tokens.length; ++i) {
+                token = tokens[i];
+                if (token.type === tokenTypes.group && token.children && token.children.length) {
+                    if (token.children[0].type !== tokenTypes.groupConstruct && token.children[0].type !== tokenTypes.groupConstructImnsx) {
+                        result = token;
+                        break;
+                    }
+
+                    if (token.children && token.children.length) {
+                        result = scope._findFirstGroupWithoutConstructs(token.children);
+                        if (result != null) {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return result;
         },
 
         _parseXModeCommentToken: function (pattern, i, endIndex) {

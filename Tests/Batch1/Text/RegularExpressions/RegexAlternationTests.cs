@@ -13,8 +13,8 @@ namespace Bridge.ClientTest.Text.RegularExpressions
         [Test]
         public void MsdnSimpleAlternationTest1()
         {
-            string[] inputs = { "the", "sample: this is the day" };
-            string[] expected = { "the", "this" };
+            string[] inputs = {"the", "sample: this is the day"};
+            string[] expected = {"the", "this"};
 
             const string pattern = @"th(e|is|at)";
             var rgx = new Regex(pattern);
@@ -473,6 +473,211 @@ namespace Bridge.ClientTest.Text.RegularExpressions
 
             ValidateGroup(m, 0, 0, 3, true, "iAB", 1);
             ValidateCapture(m, 0, 0, 0, 3, "iAB");
+        }
+
+        [Test]
+        public void AlternationConditionWithGroupTest1()
+        {
+            const string pattern = @"(?(A(B))AB|BC)";
+            const string text = "zAB";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 1, 2, "AB", 2, true);
+
+            ValidateGroup(m, 0, 1, 2, true, "AB", 1);
+            ValidateCapture(m, 0, 0, 1, 2, "AB");
+
+            ValidateGroup(m, 1, 2, 1, true, "B", 1);
+            ValidateCapture(m, 1, 0, 2, 1, "B");
+        }
+
+        [Test]
+        public void AlternationConditionWithGroupTest2()
+        {
+            const string pattern = @"(?(A(?:B(C)))ABCD|XYZ)";
+            const string text = "zABCD";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 1, 4, "ABCD", 2, true);
+
+            ValidateGroup(m, 0, 1, 4, true, "ABCD", 1);
+            ValidateCapture(m, 0, 0, 1, 4, "ABCD");
+
+            ValidateGroup(m, 1, 3, 1, true, "C", 1);
+            ValidateCapture(m, 1, 0, 3, 1, "C");
+        }
+
+        [Test]
+        public void AlternationConditionWithGroupTest3()
+        {
+            const string pattern = @"(?(?:A(B(C)))ABCD|XYZ)";
+            const string text = "zABCD";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 1, 4, "ABCD", 3, true);
+
+            ValidateGroup(m, 0, 1, 4, true, "ABCD", 1);
+            ValidateCapture(m, 0, 0, 1, 4, "ABCD");
+
+            ValidateGroup(m, 1, 3, 1, true, "C", 1);
+            ValidateCapture(m, 1, 0, 3, 1, "C");
+
+            ValidateGroup(m, 2, 0, 0, false, "", 0);
+        }
+
+        [Test]
+        public void AlternationConditionWithGroupTest4()
+        {
+            const string pattern = @"(?(?=(A)(B))ABCD|XYZ)";
+            const string text = "xyzABCD";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 3, 4, "ABCD", 3, true);
+
+            ValidateGroup(m, 0, 3, 4, true, "ABCD", 1);
+            ValidateCapture(m, 0, 0, 3, 4, "ABCD");
+
+            ValidateGroup(m, 1, 4, 1, true, "B", 1);
+            ValidateCapture(m, 1, 0, 4, 1, "B");
+
+            ValidateGroup(m, 2, 0, 0, false, "", 0);
+        }
+
+        [Test]
+        public void AlternationConditionWithGroupTest5()
+        {
+            const string pattern = @"(?(?=(?:A(B))(C)(D))ABCD|XYZ)";
+            const string text = "xyzABCD";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 3, 4, "ABCD", 4, true);
+
+            ValidateGroup(m, 0, 3, 4, true, "ABCD", 1);
+            ValidateCapture(m, 0, 0, 3, 4, "ABCD");
+
+            ValidateGroup(m, 1, 5, 1, true, "C", 1);
+            ValidateCapture(m, 1, 0, 5, 1, "C");
+
+            ValidateGroup(m, 2, 6, 1, true, "D", 1);
+            ValidateCapture(m, 2, 0, 6, 1, "D");
+
+            ValidateGroup(m, 3, 0, 0, false, "", 0);
+        }
+
+        [Test]
+        public void AlternationGroupNonCapturingWithGroupTest()
+        {
+            const string pattern = @"(?(?:A(B))AB|BC)";
+            const string text = "AAB";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 1, 2, "AB", 2, true);
+
+            ValidateGroup(m, 0, 1, 2, true, "AB", 1);
+            ValidateCapture(m, 0, 0, 1, 2, "AB");
+
+            ValidateGroup(m, 1, 0, 0, false, "", 0);
+        }
+
+        [Test]
+        public void AlternationGroupPositiveLookaheadWithGroupTest()
+        {
+            const string pattern = @"(?(?=A(B))AB|BC)";
+            const string text = "AAB";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 1, 2, "AB", 2, true);
+
+            ValidateGroup(m, 0, 1, 2, true, "AB", 1);
+            ValidateCapture(m, 0, 0, 1, 2, "AB");
+
+            ValidateGroup(m, 1, 0, 0, false, "", 0);
+        }
+
+        [Test]
+        public void AlternationGroupNegativeLookaheadWithGroupTest()
+        {
+            const string pattern = @"(?(?!(A))AB|BC)";
+            const string text = "AAB";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 0, 0, "", 1, false);
+
+            ValidateGroup(m, 0, 0, 0, false, "", 0);
+
+            ValidateGroup(m, 1, 0, 0, false, "", 0);
+        }
+
+        [Test]
+        public void AlternationGroupPositiveLookbehindWithGroupTest()
+        {
+            const string pattern = @"(?(?<=(A))AB|BC)";
+            const string text = "AAB";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 1, 2, "AB", 2, true);
+
+            ValidateGroup(m, 0, 1, 2, true, "AB", 1);
+            ValidateCapture(m, 0, 0, 1, 2, "AB");
+
+            ValidateGroup(m, 1, 0, 0, false, "", 0);
+        }
+
+        [Test]
+        public void AlternationGroupNegativeLookbehindWithGroupTest()
+        {
+            const string pattern = @"(?(?<!(A))AB|BC)";
+            const string text = "AABZAB";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 4, 2, "AB", 2, true);
+
+            ValidateGroup(m, 0, 4, 2, true, "AB", 1);
+            ValidateCapture(m, 0, 0, 4, 2, "AB");
+
+            ValidateGroup(m, 1, 0, 0, false, "", 0);
+        }
+
+        [Test]
+        public void AlternationGroupNonBacktrackingWithGroupTest()
+        {
+            const string pattern = @"(?(?>A(B))AB|BC)";
+            const string text = "AAB";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 1, 2, "AB", 2, true);
+
+            ValidateGroup(m, 0, 1, 2, true, "AB", 1);
+            ValidateCapture(m, 0, 0, 1, 2, "AB");
+
+            ValidateGroup(m, 1, 0, 0, false, "", 0);
+        }
+
+        [Test]
+        public void AlternationGroupWithImnsxAndGroupTest()
+        {
+            const string pattern = @"(?(?i:(a))AB|BC)";
+            const string text = "AAB";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 1, 2, "AB", 2, true);
+
+            ValidateGroup(m, 0, 1, 2, true, "AB", 1);
+            ValidateCapture(m, 0, 0, 1, 2, "AB");
+
+            ValidateGroup(m, 1, 0, 0, false, "", 0);
         }
     }
 }

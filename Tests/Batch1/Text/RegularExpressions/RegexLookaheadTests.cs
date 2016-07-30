@@ -251,5 +251,25 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             ValidateGroup(ms[4], 1, 5, 1, true, "f", 1);
             ValidateCapture(ms[4], 1, 0, 5, 1, "f");
         }
+
+        [Test]
+        public void PositiveLookaheadGroupCombineTest()
+        {
+            const string pattern = @"(abc)(?=def)(def)";
+            const string text = "abcdef";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 0, 6, "abcdef", 3, true);
+
+            ValidateGroup(m, 0, 0, 6, true, "abcdef", 1);
+            ValidateCapture(m, 0, 0, 0, 6, "abcdef");
+
+            ValidateGroup(m, 1, 0, 3, true, "abc", 1);
+            ValidateCapture(m, 1, 0, 0, 3, "abc");
+
+            ValidateGroup(m, 2, 3, 3, true, "def", 1);
+            ValidateCapture(m, 2, 0, 3, 3, "def");
+        }
     }
 }
