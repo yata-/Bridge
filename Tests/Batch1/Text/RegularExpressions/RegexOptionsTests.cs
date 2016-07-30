@@ -8,7 +8,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
     [TestFixture(TestNameFormat = "RegexOptions - {0}")]
     public class RegexOptionsTests : RegexTestBase
     {
-        #region Msdn
+        #region MSDN
 
         [Test]
         public void MsdnIgnoreCaseOptionTest()

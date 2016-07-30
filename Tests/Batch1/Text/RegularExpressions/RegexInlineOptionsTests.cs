@@ -8,7 +8,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
     [TestFixture(TestNameFormat = "Regex IMNSX - {0}")]
     public class RegexInlineOptionsTests : RegexTestBase
     {
-        #region Msdn
+        #region MSDN
 
         [Test]
         public void MsdnInlineOptionsTest()

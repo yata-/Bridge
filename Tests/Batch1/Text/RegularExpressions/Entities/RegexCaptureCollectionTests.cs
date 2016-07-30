@@ -5,7 +5,7 @@ using Bridge.Test;
 namespace Bridge.ClientTest.Text.RegularExpressions.Entities
 {
     [Category(Constants.MODULE_REGEX)]
-    [TestFixture(TestNameFormat = "RegexCaptureCollection - {0}")]
+    [TestFixture(TestNameFormat = "RegexCaptureCollection Entity - {0}")]
     public class RegexCaptureCollectionTests : RegexTestBase
     {
         #region Test data

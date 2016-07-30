@@ -9,10 +9,10 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Methods
     [TestFixture(TestNameFormat = "Regex.Escape - {0}")]
     public class RegexEscapeTests : RegexTestBase
     {
-        #region Msdn
+        #region MSDN
 
         [Test]
-        public void EscapeTest()
+        public void MsdnEscapeTest()
         {
             var expected1 = new[] { "?", "?" };
             var actual1 = new List<string>();
@@ -43,7 +43,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Methods
         }
 
         [Test]
-        public void UnescapeTest()
+        public void MsdnUnescapeTest()
         {
             var pattern = "\n\r\t\f[](){}!123abc \\, *, +, ?, |, {, [, (,), ^, $,., #,  \a, \b, \t, and \v";
             var escaped = Regex.Escape(pattern);
