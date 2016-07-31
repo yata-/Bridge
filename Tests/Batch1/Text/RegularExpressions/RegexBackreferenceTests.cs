@@ -404,5 +404,43 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             ValidateCapture(m, 1, 2, 3, 3, "abb");
             ValidateCapture(m, 1, 3, 6, 4, "abbb");
         }
+
+        [Test]
+        public void ComplexBackrefTest1()
+        {
+            const string pattern = @"((a)(\2b))((\1)(\2))(\3(\4))";
+            const string text = "aabaabaabaaba";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 0, 13, "aabaabaabaaba", 9, true);
+
+            ValidateGroup(m, 0, 0, 13, true, "aabaabaabaaba", 1);
+            ValidateCapture(m, 0, 0, 0, 13, "aabaabaabaaba");
+
+            ValidateGroup(m, 1, 0, 3, true, "aab", 1);
+            ValidateCapture(m, 1, 0, 0, 3, "aab");
+
+            ValidateGroup(m, 2, 0, 1, true, "a", 1);
+            ValidateCapture(m, 2, 0, 0, 1, "a");
+
+            ValidateGroup(m, 3, 1, 2, true, "ab", 1);
+            ValidateCapture(m, 3, 0, 1, 2, "ab");
+
+            ValidateGroup(m, 4, 3, 4, true, "aaba", 1);
+            ValidateCapture(m, 4, 0, 3, 4, "aaba");
+
+            ValidateGroup(m, 5, 3, 3, true, "aab", 1);
+            ValidateCapture(m, 5, 0, 3, 3, "aab");
+
+            ValidateGroup(m, 6, 6, 1, true, "a", 1);
+            ValidateCapture(m, 6, 0, 6, 1, "a");
+
+            ValidateGroup(m, 7, 7, 6, true, "abaaba", 1);
+            ValidateCapture(m, 7, 0, 7, 6, "abaaba");
+
+            ValidateGroup(m, 8, 9, 4, true, "aaba", 1);
+            ValidateCapture(m, 8, 0, 9, 4, "aaba");
+        }
     }
 }
