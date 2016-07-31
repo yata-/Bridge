@@ -25,6 +25,39 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineState", {
         this.groups.push({ rawIndex: group.rawIndex, slotId: group.packedSlotId, capIndex: index, capLength: length });
     },
 
+    logCaptureGroupBalancing: function (group, capIndex) {
+        var balancingSlotId = group.balancingSlotId;
+        var groups = this.groups;
+        var index = groups.length - 1;
+        var group2;
+        var group2Index;
+
+        while (index >= 0) {
+            if (groups[index].slotId === balancingSlotId) {
+                group2 = groups[index];
+                group2Index = index;
+                break;
+            }
+            --index;
+        }
+
+        if (group2 != null && group2Index != null) {
+            groups.splice(group2Index, 1); // remove group2 from the collection
+
+            // Add balancing group value:
+            if (group.constructs.name1 != null) {
+                var balCapIndex = group2.capIndex + group2.capLength;
+                var balCapLength = capIndex - balCapIndex;
+
+                this.logCaptureGroup(group, balCapIndex, balCapLength);
+            }
+
+            return true;
+        }
+
+        return false;
+    },
+
     resolveBackref: function (packedSlotId) {
         var groups = this.groups;
         var index = groups.length - 1;

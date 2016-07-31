@@ -42,7 +42,6 @@ Bridge.define("System.Text.RegularExpressions.Match", {
     _textbeg: 0,
     _textend: 0,
     _textstart: 0,
-    _balancing: false,
     _groupColl: null,
     _textpos: 0,
 
@@ -69,7 +68,6 @@ Bridge.define("System.Text.RegularExpressions.Match", {
         this._textbeg = begpos;
         this._textend = begpos + len;
         this._textstart = startpos;
-        this._balancing = false;
     },
 
     getGroups: function () {
@@ -137,51 +135,6 @@ Bridge.define("System.Text.RegularExpressions.Match", {
         this._length = interval[1];
         this._textpos = textpos;
         this._capcount = this._matchcount[0];
-
-        if (this._balancing) {
-
-            //TODO: balancing
-
-            // The idea here is that we want to compact all of our unbalanced captures.  To do that we
-            // use j basically as a count of how many unbalanced captures we have at any given time 
-            // (really j is an index, but j/2 is the count).  First we skip past all of the real captures
-            // until we find a balance captures.  Then we check each subsequent entry.  If it's a balance
-            // capture (it's negative), we decrement j.  If it's a real capture, we increment j and copy 
-            // it down to the last free position. 
-            var cap;
-            var i;
-            var j;
-
-            for (cap = 0; cap < this._matchcount.length; cap++) {
-
-                var limit = this._matchcount[cap] * 2;
-                var matcharray = this._matches[cap];
-
-                for (i = 0; i < limit; i++) {
-                    if (matcharray[i] < 0) {
-                        break;
-                    }
-                }
-
-                for (j = i; i < limit; i++) {
-                    if (matcharray[i] < 0) {
-                        // skip negative values
-                        j--;
-                    } else {
-                        // but if we find something positive (an actual capture), copy it back to the last 
-                        // unbalanced position. 
-                        if (i !== j) {
-                            matcharray[j] = matcharray[i];
-                        }
-                        j++;
-                    }
-                }
-
-                this._matchcount[cap] = j / 2;
-            }
-
-            this._balancing = false;
-        }
     },
 
     _groupToStringImpl: function (groupnum) {

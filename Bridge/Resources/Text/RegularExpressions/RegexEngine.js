@@ -147,6 +147,11 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         var pass;
         var res;
 
+        if (branch.mustFail) {
+            branch.mustFail = false;
+            return resKind.nextBranch;
+        }
+
         while (branch.hasPass()) {
             pass = branch.peekPass();
 
@@ -192,8 +197,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         var token;
         var probe;
         var res;
-
-
 
         while (pass.index < passEndIndex) {
             token = pass.tokens[pass.index];
@@ -260,9 +263,8 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         var token;
         var i;
 
-        // TODO: cache?
         // Scan potential alternations:
-        if (!pass.alternationHandled && branch.type !== branchTypes.or) {
+        if (!pass.alternationHandled && !pass.tokens.noAlternation) {
             orIndexes = [-1];
             for (i = 0; i < passEndIndex; i++) {
                 token = pass.tokens[i];
@@ -286,10 +288,13 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
                 branches[branches.length - orIndexes.length].isNotFailing = false;
 
                 // The parent branch must be ended up immediately:
-                pass.index = pass.tokens.length + 1;
+                branch.mustFail = true;
 
                 pass.alternationHandled = true;
                 return resKind.nextBranch;
+
+            } else {
+                pass.tokens.noAlternation = true;
             }
         }
 
@@ -404,6 +409,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         if (branches.length === 1 && branch.type === this._branchType.offset) {
             branch.value++;
             branch.state.txtIndex = branch.value;
+            branch.mustFail = false;
 
             // clear state:
             branch.state.capIndex = null;
@@ -615,7 +621,11 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
                 }
 
                 if (!token.group.constructs.emptyCapture) {
-                    branch.state.logCaptureGroup(token.group, capIndex, capLength);
+                    if (token.group.isBalancing) {
+                        branch.state.logCaptureGroupBalancing(token.group, capIndex);
+                    } else {
+                        branch.state.logCaptureGroup(token.group, capIndex, capLength);
+                    }
                 }
             }
 
@@ -685,25 +695,30 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         var resKind = this._branchResultKind;
         var children = token.children;
         var textIndex = branch.state.txtIndex;
+        var res = resKind.nextBranch;
 
         if (token.type === tokenTypes.alternationGroupRefNameCondition ||
             token.type === tokenTypes.alternationGroupRefNumberCondition) {
 
             var grCapture = branch.state.resolveBackref(token.data.packedSlotId);
             if (grCapture != null) {
-                return resKind.ok;
+                res = resKind.ok;
             } else {
-                return resKind.nextBranch;
+                res = resKind.nextBranch;
+            }
+        } else {
+            // Resolve expression:
+            var state = this._scan(textIndex, textEndPos, children, true, null);
+            if (this._combineScanResults(branch, state)) {
+                res = resKind.ok;
             }
         }
 
-        // Resolve expression:
-        var state = this._scan(textIndex, textEndPos, children, true, null);
-        if (this._combineScanResults(branch, state)) {
-            return resKind.ok;
+        if (res === resKind.nextBranch && pass.tokens.noAlternation) {
+            res = resKind.endPass;
         }
 
-        return resKind.nextBranch;
+        return res;
     },
 
     _scanLook: function (branch, textIndex, textEndPos, token) {
@@ -872,12 +887,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
     _scanBackrefNumberToken: function (textEndPos, branches, branch, pass, token) {
         var resKind = this._branchResultKind;
 
-        var packetSlotId = this._patternInfo.sparseSettings.getPackedSlotIdBySlotNumber(token.data.number);
-        if (packetSlotId == null) {
-            throw new System.ArgumentException("Reference to undefined group number '" + token.data.number + "'.");
-        }
-
-        var grCapture = branch.state.resolveBackref(packetSlotId);
+        var grCapture = branch.state.resolveBackref(token.data.slotId);
         if (grCapture == null) {
             return resKind.nextBranch;
         }
@@ -889,12 +899,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
     _scanBackrefNameToken: function (textEndPos, branches, branch, pass, token) {
         var resKind = this._branchResultKind;
 
-        var packetSlotId = this._patternInfo.sparseSettings.getPackedSlotIdBySlotName(token.data.name);
-        if (packetSlotId == null) {
-            throw new System.ArgumentException("Reference to undefined group name '" + token.data.name + "'.");
-        }
-
-        var grCapture = branch.state.resolveBackref(packetSlotId);
+        var grCapture = branch.state.resolveBackref(token.data.slotId);
         if (grCapture == null) {
             return resKind.nextBranch;
         }

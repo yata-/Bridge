@@ -262,6 +262,90 @@ namespace Bridge.ClientTest.Text.RegularExpressions
         }
 
         [Test]
+        public void SimpleAlternationTest2()
+        {
+            const string pattern = @"(A|B)+";
+            const string text = "ABA";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 0, 3, "ABA", 2, true);
+
+            ValidateGroup(m, 0, 0, 3, true, "ABA", 1);
+            ValidateCapture(m, 0, 0, 0, 3, "ABA");
+
+            ValidateGroup(m, 1, 2, 1, true, "A", 3);
+            ValidateCapture(m, 1, 0, 0, 1, "A");
+            ValidateCapture(m, 1, 1, 1, 1, "B");
+            ValidateCapture(m, 1, 2, 2, 1, "A");
+        }
+
+        [Test]
+        public void SimpleAlternationTest3()
+        {
+            const string pattern = @"(((A|B)+(C|D)+)|X)+";
+            const string text = "AAXABCADDCABBADXAA";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 2, 14, "XABCADDCABBADX", 5, true);
+
+            ValidateGroup(m, 0, 2, 14, true, "XABCADDCABBADX", 1);
+            ValidateCapture(m, 0, 0, 2, 14, "XABCADDCABBADX");
+
+            ValidateGroup(m, 1, 15, 1, true, "X", 5);
+            ValidateCapture(m, 1, 0, 2, 1, "X");
+            ValidateCapture(m, 1, 1, 3, 3, "ABC");
+            ValidateCapture(m, 1, 2, 6, 4, "ADDC");
+            ValidateCapture(m, 1, 3, 10, 5, "ABBAD");
+            ValidateCapture(m, 1, 4, 15, 1, "X");
+
+            ValidateGroup(m, 2, 10, 5, true, "ABBAD", 3);
+            ValidateCapture(m, 2, 0, 3, 3, "ABC");
+            ValidateCapture(m, 2, 1, 6, 4, "ADDC");
+            ValidateCapture(m, 2, 2, 10, 5, "ABBAD");
+
+            ValidateGroup(m, 3, 13, 1, true, "A", 7);
+            ValidateCapture(m, 3, 0, 3, 1, "A");
+            ValidateCapture(m, 3, 1, 4, 1, "B");
+            ValidateCapture(m, 3, 2, 6, 1, "A");
+            ValidateCapture(m, 3, 3, 10, 1, "A");
+            ValidateCapture(m, 3, 4, 11, 1, "B");
+            ValidateCapture(m, 3, 5, 12, 1, "B");
+            ValidateCapture(m, 3, 6, 13, 1, "A");
+
+            ValidateGroup(m, 4, 14, 1, true, "D", 5);
+            ValidateCapture(m, 4, 0, 5, 1, "C");
+            ValidateCapture(m, 4, 1, 7, 1, "D");
+            ValidateCapture(m, 4, 2, 8, 1, "D");
+            ValidateCapture(m, 4, 3, 9, 1, "C");
+            ValidateCapture(m, 4, 4, 14, 1, "D");
+        }
+
+        [Test]
+        public void AlternationWithGroupTest()
+        {
+            const string pattern = @"((A)|X)+";
+            const string text = "AAX";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 0, 3, "AAX", 3, true);
+
+            ValidateGroup(m, 0, 0, 3, true, "AAX", 1);
+            ValidateCapture(m, 0, 0, 0, 3, "AAX");
+
+            ValidateGroup(m, 1, 2, 1, true, "X", 3);
+            ValidateCapture(m, 1, 0, 0, 1, "A");
+            ValidateCapture(m, 1, 1, 1, 1, "A");
+            ValidateCapture(m, 1, 2, 2, 1, "X");
+
+            ValidateGroup(m, 2, 1, 1, true, "A", 2);
+            ValidateCapture(m, 2, 0, 0, 1, "A");
+            ValidateCapture(m, 2, 1, 1, 1, "A");
+        }
+
+        [Test]
         public void AlternationGroupTest()
         {
             const string pattern = @"(?(A)AB|BC)";
@@ -678,6 +762,130 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             ValidateCapture(m, 0, 0, 1, 2, "AB");
 
             ValidateGroup(m, 1, 0, 0, false, "", 0);
+        }
+
+        [Test]
+        public void AlternationGroupWithoutAlternativeBranchTest1()
+        {
+            const string pattern = @"(?<gr1>test)?(?(gr1)(ab)|)";
+            const string text = "testab";
+            var rgx = new Regex(pattern);
+            var ms = rgx.Matches(text);
+
+            Assert.AreEqual(2, ms.Count, "Matches count is correct.");
+
+            // Match #0:
+            Assert.NotNull(ms[0], "Match[0] is not null.");
+            ValidateMatch(ms[0], 0, 6, "testab", 3, true);
+
+            ValidateGroup(ms[0], 0, 0, 6, true, "testab", 1);
+            ValidateCapture(ms[0], 0, 0, 0, 6, "testab");
+
+            ValidateGroup(ms[0], 1, 4, 2, true, "ab", 1);
+            ValidateCapture(ms[0], 1, 0, 4, 2, "ab");
+
+            ValidateGroup(ms[0], 2, 0, 4, true, "test", 1);
+            ValidateCapture(ms[0], 2, 0, 0, 4, "test");
+
+            // Match #1:
+            Assert.NotNull(ms[1], "Match[1] is not null.");
+            ValidateMatch(ms[1], 6, 0, "", 3, true);
+
+            ValidateGroup(ms[1], 0, 6, 0, true, "", 1);
+            ValidateCapture(ms[1], 0, 0, 6, 0, "");
+
+            ValidateGroup(ms[1], 1, 0, 0, false, "", 0);
+
+            ValidateGroup(ms[1], 2, 0, 0, false, "", 0);
+        }
+
+        [Test]
+        public void AlternationGroupWithoutAlternativeBranchTest2()
+        {
+            const string pattern = @"(?<gr1>test)?(?(gr1)(ab)|)";
+            const string text = "tesab";
+            var rgx = new Regex(pattern);
+            var ms = rgx.Matches(text);
+
+            Assert.AreEqual(6, ms.Count, "Matches count is correct.");
+
+            // Match #0:
+            Assert.NotNull(ms[0], "Match[0] is not null.");
+            ValidateMatch(ms[0], 0, 0, "", 3, true);
+
+            ValidateGroup(ms[0], 0, 0, 0, true, "", 1);
+            ValidateCapture(ms[0], 0, 0, 0, 0, "");
+
+            ValidateGroup(ms[0], 1, 0, 0, false, "", 0);
+
+            ValidateGroup(ms[0], 2, 0, 0, false, "", 0);
+
+            // Match #1:
+            Assert.NotNull(ms[1], "Match[1] is not null.");
+            ValidateMatch(ms[1], 1, 0, "", 3, true);
+
+            ValidateGroup(ms[1], 0, 1, 0, true, "", 1);
+            ValidateCapture(ms[1], 0, 0, 1, 0, "");
+
+            ValidateGroup(ms[1], 1, 0, 0, false, "", 0);
+
+            ValidateGroup(ms[1], 2, 0, 0, false, "", 0);
+
+            // Match #2:
+            Assert.NotNull(ms[2], "Match[2] is not null.");
+            ValidateMatch(ms[2], 2, 0, "", 3, true);
+
+            ValidateGroup(ms[2], 0, 2, 0, true, "", 1);
+            ValidateCapture(ms[2], 0, 0, 2, 0, "");
+
+            ValidateGroup(ms[2], 1, 0, 0, false, "", 0);
+
+            ValidateGroup(ms[2], 2, 0, 0, false, "", 0);
+
+            // Match #3:
+            Assert.NotNull(ms[3], "Match[3] is not null.");
+            ValidateMatch(ms[3], 3, 0, "", 3, true);
+
+            ValidateGroup(ms[3], 0, 3, 0, true, "", 1);
+            ValidateCapture(ms[3], 0, 0, 3, 0, "");
+
+            ValidateGroup(ms[3], 1, 0, 0, false, "", 0);
+
+            ValidateGroup(ms[3], 2, 0, 0, false, "", 0);
+
+            // Match #4:
+            Assert.NotNull(ms[4], "Match[4] is not null.");
+            ValidateMatch(ms[4], 4, 0, "", 3, true);
+
+            ValidateGroup(ms[4], 0, 4, 0, true, "", 1);
+            ValidateCapture(ms[4], 0, 0, 4, 0, "");
+
+            ValidateGroup(ms[4], 1, 0, 0, false, "", 0);
+
+            ValidateGroup(ms[4], 2, 0, 0, false, "", 0);
+
+            // Match #5:
+            Assert.NotNull(ms[5], "Match[5] is not null.");
+            ValidateMatch(ms[5], 5, 0, "", 3, true);
+
+            ValidateGroup(ms[5], 0, 5, 0, true, "", 1);
+            ValidateCapture(ms[5], 0, 0, 5, 0, "");
+
+            ValidateGroup(ms[5], 1, 0, 0, false, "", 0);
+
+            ValidateGroup(ms[5], 2, 0, 0, false, "", 0);
+        }
+
+        [Test]
+        public void AlternationGroupWithoutAlternativeBranchExceptionTest()
+        {
+            Assert.Throws<NotSupportedException>(() =>
+            {
+                const string pattern = @"(?<gr1>test)?(?(gr1)(ab))";
+                const string text = "tesab";
+                var rgx = new Regex(pattern);
+                rgx.Matches(text);
+            });
         }
     }
 }

@@ -335,6 +335,7 @@
     <Compile Include="Linq\TestLinqRestrictionOperators.cs" />
     <Compile Include="Linq\TestLinqSetOperators.cs" />
     <Compile Include="Text\RegularExpressions\RegexAlternationTests.cs" />
+    <Compile Include="Text\RegularExpressions\RegexBalancingGroupsTests.cs" />
     <Compile Include="Text\RegularExpressions\RegexLookaheadTests.cs" />
     <Compile Include="Text\RegularExpressions\RegexLookbehindTests.cs" />
     <Compile Include="Text\RegularExpressions\RegexNonbacktrackingTests.cs" />

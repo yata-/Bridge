@@ -76,6 +76,9 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             // Fill Sparse Info:
             var sparseSettings = scope._getGroupSparseInfo(groups);
 
+            // Fill balancing info for the groups with "name2":
+            scope._fillBalancingGroupInfo(groups, sparseSettings);
+
             // Transform tokens for usage in JS RegExp:
             scope._preTransformBackrefTokens(pattern, tokens, sparseSettings);
             scope._transformRawTokens(settings, tokens, sparseSettings, [], [], 0);
@@ -108,7 +111,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             var qtoken;
             var i;
 
-
             // Transform/adjust tokens collection to work with JS RegExp:
             for (i = 0; i < tokens.length; i++) {
                 token = tokens[i];
@@ -127,21 +129,21 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
 
                 if (token.type === tokenTypes.escBackrefNumber) {
 
-                    value = token.value.slice(1);
-                    groupNumber = parseInt(value, 10);
+                    groupNumber = token.data.number;
                     packedSlotId = sparseSettings.getPackedSlotIdBySlotNumber(groupNumber);
                     if (packedSlotId == null) {
-                        throw new System.ArgumentException("Reference to undefined group number " + value + ".");
+                        throw new System.ArgumentException("Reference to undefined group number " + groupNumber.toString() + ".");
                     }
-
                     if (allowedPackedSlotIds.indexOf(packedSlotId) < 0) {
                         settings.shouldFail = true; // Backreferences to unreachable group number lead to an empty match.
                         continue;
                     }
 
+                    token.data.slotId = packedSlotId;
+
                 } else if (token.type === tokenTypes.escBackrefName) {
 
-                    value = token.value.slice(3, token.length - 1);
+                    value = token.data.name;
                     packedSlotId = sparseSettings.getPackedSlotIdBySlotName(value);
                     if (packedSlotId == null) {
                         // TODO: Move this code to earlier stages
@@ -160,6 +162,8 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                         settings.shouldFail = true; // Backreferences to unreachable group number lead to an empty match.
                         continue;
                     }
+
+                    token.data.slotId = packedSlotId;
 
                 } else if (token.type === tokenTypes.anchor || token.type === tokenTypes.escAnchor) {
 
@@ -218,6 +222,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                             }
                         }
                     }
+
                 }
 
                 // Update children tokens:
@@ -329,7 +334,8 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                         constructs.isPositiveLookahead ||
                         constructs.isNegativeLookahead ||
                         constructs.isPositiveLookbehind ||
-                        constructs.isNegativeLookbehind;
+                        constructs.isNegativeLookbehind ||
+                        (constructs.name1 == null && constructs.name2 != null);
                 }
 
                 // fill group descriptors for inner tokens:
@@ -606,9 +612,11 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                     throw new System.ArgumentException("Invalid group name.");
                 }
 
-                constructs.name1 = groupNames[0];
-                var nameRes1 = scope._validateGroupName(groupNames[0]);
-                constructs.isNumberName1 = nameRes1.isNumberName;
+                if (groupNames[0].length) {
+                    constructs.name1 = groupNames[0];
+                    var nameRes1 = scope._validateGroupName(groupNames[0]);
+                    constructs.isNumberName1 = nameRes1.isNumberName;
+                }
 
                 if (groupNames.length === 2) {
                     constructs.name2 = groupNames[1];
@@ -665,11 +673,29 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             };
         },
 
+        _fillBalancingGroupInfo: function (groups, sparseSettings) {
+            var group;
+            var i;
+
+            // Assign name or id:
+            for (i = 0; i < groups.length; i++) {
+                group = groups[i];
+
+                if (group.constructs.name2 != null) {
+                    group.isBalancing = true;
+
+                    group.balancingSlotId = sparseSettings.getPackedSlotIdBySlotName(group.constructs.name2);
+                    if (group.balancingSlotId == null) {
+                        throw new System.ArgumentException("Reference to undefined group name '" + group.constructs.name2 + "'.");
+                    }
+                }
+            }
+        },
+
         _preTransformBackrefTokens: function (pattern, tokens, sparseSettings) {
             var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
 
-            var groupNumberStr;
             var groupNumber;
             var octalCharToken;
             var extraLength;
@@ -680,8 +706,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             for (i = 0; i < tokens.length; i++) {
                 token = tokens[i];
                 if (token.type === tokenTypes.escBackrefNumber) {
-                    groupNumberStr = token.value.slice(1);
-                    groupNumber = parseInt(groupNumberStr, 10);
+                    groupNumber = token.data.number;
 
                     if (groupNumber >= 1 && sparseSettings.getPackedSlotIdBySlotNumber(groupNumber) != null) {
                         // Expressions from \10 and greater are considered backreferences 
@@ -690,9 +715,9 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                         continue; // validated
                     }
 
-                    if (groupNumberStr.length === 1) {
+                    if (groupNumber <= 9) {
                         // The expressions \1 through \9 are always interpreted as backreferences, and not as octal codes.
-                        throw new System.ArgumentException("Reference to undefined group number " + groupNumberStr + ".");
+                        throw new System.ArgumentException("Reference to undefined group number " + groupNumber.toString() + ".");
                     }
 
                     // Otherwise, transform the token to OctalNumber:
@@ -1126,6 +1151,11 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             var index = bodyIndex;
             while (index < endIndex) {
                 ch = pattern[index];
+                if (ch === "\\") {
+                    index += 2; // skip the escaped char
+                    continue;
+                }
+
                 if (ch === "(" && !isComment) {
                     ++bracketLvl;
                 } else if (ch === ")") {
@@ -1176,6 +1206,10 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                                 throw new System.ArgumentException("Too many | in (?()|).");
                             }
                         }
+                    }
+                    if (altCount === 0) {
+                        // Though .NET works with this case, it ends up with unexpected result. Let's avoid this behaviour.
+                        throw new System.NotSupportedException("Alternation group without | is not supported.");
                     }
 
                     var altGroupToken = scope._createPatternToken(pattern, tokenTypes.alternationGroup, i, 1 + closeBracketIndex - i, innerTokens, "(", ")");
@@ -1252,7 +1286,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                 }
 
                 var nameFirstCh = nameChars.match.slice(0, 1);
-                if ("`~@#$%^&*()-+{}[]|\\/|'\";:,.?".indexOf(nameFirstCh) >= 0) {
+                if ("`~@#$%^&*()+{}[]|\\/|'\";:,.?".indexOf(nameFirstCh) >= 0) {
                     // TODO: replace the "black list" of wrong characters with char class check:
                     // According to UTS#18 Unicode Regular Expressions (http://www.unicode.org/reports/tr18/)
                     // RL 1.4 Simple Word Boundaries  The class of <word_character> includes all Alphabetic
