@@ -116,36 +116,6 @@ namespace Bridge.Translator
 
             block.RestoreWriter(oldWriter);
             return new JRaw(str);
-
-            /*var astType = MetadataUtils.CreateAstType(attr.AttributeType, emitter);
-            var namedExpressions = attr.NamedArguments.Select(a => new NamedExpression(a.Key.Name, MetadataUtils.ResolveResultToExpression(a.Value, emitter)));
-            var positionalExpressions = attr.PositionalArguments.Select(a => MetadataUtils.ResolveResultToExpression(a, emitter));
-
-            SyntaxTree tree = SyntaxTree.Parse("class ____C1{void M(){}}");
-            var method = ((TypeDeclaration)(tree.Members.First())).Members.First() as MethodDeclaration;
-
-            var oce = new ObjectCreateExpression(astType, positionalExpressions) { Initializer = new ArrayInitializerExpression(namedExpressions) };
-            method.Body.AddChildWithExistingRole(oce);
-            var block = new ObjectCreateBlock(emitter, oce);
-            var oldWriter = block.SaveWriter();
-            block.NewWriter();
-            block.Emit();
-            var str = emitter.Output.ToString();
-
-            block.RestoreWriter(oldWriter);
-            return new JRaw(str);*/
-        }
-
-        private static ICSharpCode.NRefactory.CSharp.Expression ResolveResultToExpression(ResolveResult rr, IEmitter emitter)
-        {
-            TypeSystemAstBuilder typeBuilder = new TypeSystemAstBuilder(new CSharpResolver(emitter.Resolver.Compilation));
-            return typeBuilder.ConvertConstantValue(rr);
-        }
-
-        private static AstType CreateAstType(IType type, IEmitter emitter)
-        {
-            TypeSystemAstBuilder typeBuilder = new TypeSystemAstBuilder(new CSharpResolver(emitter.Resolver.Compilation));
-            return typeBuilder.ConvertType(type);
         }
         
         public static IEnumerable<IAttribute> GetScriptableAttributes(IEnumerable<IAttribute> attributes, IEmitter emitter, SyntaxTree tree)
@@ -699,7 +669,37 @@ namespace Bridge.Translator
             if (includeDeclaringType)
             {
                 result.Add("typeDef", new JRaw(MetadataUtils.GetTypeName(m.DeclaringType, emitter, isGenericSpecialization)));
-            }                
+            }
+
+            if (m.IsOverride)
+            {
+                result.Add("isOverride", true);
+            }
+
+            if (m.IsVirtual)
+            {
+                result.Add("isVirtual", true);
+            }
+
+            if (m.IsAbstract)
+            {
+                result.Add("isAbstract", true);
+            }
+
+            if (m.Accessibility != Accessibility.None)
+            {
+                result.Add("accessibility", (int)m.Accessibility);
+            }
+
+            if (m.IsSealed)
+            {
+                result.Add("isSealed", true);
+            }
+
+            if (m.IsSynthetic)
+            {
+                result.Add("isSynthetic", true);
+            }
 
             result.Add("name", m.Name);
             

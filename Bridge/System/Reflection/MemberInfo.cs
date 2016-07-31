@@ -32,12 +32,72 @@ namespace System.Reflection
             get;
 	    }
 
-		/// <summary>
-		/// Returns an array of all custom attributes applied to this member.
-		/// </summary>
-		/// <param name="inherit">Ignored for members. Base members will never be considered.</param>
-		/// <returns>An array that contains all the custom attributes applied to this member, or an array with zero elements if no attributes are defined. </returns>
-		[Template("({this}.attr || [])")]
+        public extern bool IsOverride
+        {
+            [Template("({this}.isOverride || false)")]
+            get;
+        }
+
+        public extern bool IsVirtual
+        {
+            [Template("({this}.isVirtual || false)")]
+            get;
+        }
+
+        public extern bool IsAbstract
+        {
+            [Template("({this}.isAbstract || false)")]
+            get;
+        }
+
+        public extern bool IsSealed
+        {
+            [Template("({this}.isSealed || false)")]
+            get;
+        }
+
+        public extern bool IsSpecialName
+        {
+            [Template("({this}.isSynthetic || false)")]
+            get;
+        }
+
+        public extern bool IsFamily
+        {
+            [Template("({this}.accessibility === 3)")]
+            get;
+        }
+
+        public extern bool IsFamilyOrAssembly
+        {
+            [Template("({this}.accessibility === 5)")]
+            get;
+        }
+
+        public extern bool IsPrivate
+        {
+            [Template("({this}.accessibility === 1)")]
+            get;
+        }
+
+        public extern bool IsPublic
+        {
+            [Template("({this}.accessibility === 2)")]
+            get;
+        }
+
+        public extern bool IsAssembly
+        {
+            [Template("({this}.accessibility === 4)")]
+            get;
+        }
+
+        /// <summary>
+        /// Returns an array of all custom attributes applied to this member.
+        /// </summary>
+        /// <param name="inherit">Ignored for members. Base members will never be considered.</param>
+        /// <returns>An array that contains all the custom attributes applied to this member, or an array with zero elements if no attributes are defined. </returns>
+        [Template("({this}.attr || [])")]
 		public extern object[] GetCustomAttributes(bool inherit);
 
 		/// <summary>
