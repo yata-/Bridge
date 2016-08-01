@@ -210,6 +210,7 @@ namespace Bridge.Translator
 
                         if (method != null)
                         {
+                            var expandParams = method.Attributes.Any(a => a.AttributeType.FullName == "Bridge.ExpandParamsAttribute");
                             foreach (var prm in method.Parameters)
                             {
                                 if (prm.IsOptional)
@@ -229,7 +230,16 @@ namespace Bridge.Translator
                                 }
                                 else if (prm.IsParams)
                                 {
-                                    this.Write(string.Format("if ({0} === void 0) {{ {0} = []; }}", prm.Name));
+                                    if (expandParams)
+                                    {
+                                        //var args = Array.prototype.slice.call(arguments, 1);
+                                        this.Write(string.Format("{0} = Array.prototype.slice.call(arguments, {1});", prm.Name, method.Parameters.IndexOf(prm) + method.TypeParameters.Count));
+                                    }
+                                    else
+                                    {
+                                        this.Write(string.Format("if ({0} === void 0) {{ {0} = []; }}", prm.Name));
+                                    }
+                                    
                                     this.WriteNewLine();
                                 }
                             }

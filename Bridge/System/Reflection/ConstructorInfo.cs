@@ -42,6 +42,12 @@ namespace System.Reflection
             private set;
 	    }
 
-		internal extern ConstructorInfo();
+        /// <summary>
+		/// Whether the [ExpandParams] attribute was specified on the constructor.
+		/// </summary>
+		public extern bool IsExpandParams { [Template("{this}.exp || false")] get; [Template("{this}.exp = {value}")] private set; }
+
+
+        internal extern ConstructorInfo();
 	}
 }

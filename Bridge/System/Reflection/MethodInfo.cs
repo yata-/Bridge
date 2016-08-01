@@ -107,6 +107,12 @@ namespace System.Reflection
             private set;
 	    }
 
-		internal extern MethodInfo();
+        /// <summary>
+		/// Whether the [ExpandParams] attribute was specified on the method.
+		/// </summary>
+		public extern bool IsExpandParams { [Template("{this}.exp || false")] get; [Template("{this}.exp = {value}")] private set; }
+
+
+        internal extern MethodInfo();
 	}
 }

@@ -67,7 +67,7 @@ namespace Bridge.Translator
                         this.WriteOpenParentheses();
                     }
 
-                    new ExpressionListBlock(this.Emitter, new Expression[] { unaryOperatorExpression.Expression }, null).Emit();
+                    new ExpressionListBlock(this.Emitter, new Expression[] { unaryOperatorExpression.Expression }, null, null, 0).Emit();
                     this.WriteCloseParentheses();
 
                     return true;
@@ -528,7 +528,7 @@ namespace Bridge.Translator
                     this.WriteScript(op_name);
                     this.WriteComma();
                     new ExpressionListBlock(this.Emitter,
-                        new Expression[] { this.UnaryOperatorExpression.Expression }, null).Emit();
+                        new Expression[] { this.UnaryOperatorExpression.Expression }, null, null, 0).Emit();
                     this.AddOveflowFlag(typeCode, op_name, true);
                     this.WriteCloseParentheses();
                 }
@@ -679,7 +679,7 @@ namespace Bridge.Translator
                     this.WriteOpenParentheses();
 
                     new ExpressionListBlock(this.Emitter,
-                        new Expression[] { this.UnaryOperatorExpression.Expression }, null).Emit();
+                        new Expression[] { this.UnaryOperatorExpression.Expression }, null, null, 0).Emit();
                     this.WriteCloseParentheses();
                 }
             }

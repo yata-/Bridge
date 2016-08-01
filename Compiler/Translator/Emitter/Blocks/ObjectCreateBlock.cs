@@ -140,20 +140,39 @@ namespace Bridge.Translator
                 }
                 else
                 {
+                    var ctorMember = ((InvocationResolveResult)this.Emitter.Resolver.ResolveNode(objectCreateExpression, this.Emitter)).Member;
+                    var expandParams = ctorMember.Attributes.Any(a => a.AttributeType.FullName == "Bridge.ExpandParamsAttribute");
+                    bool applyCtor = false;
+
+                    if (expandParams)
+                    {
+                        var ctor_rr = this.Emitter.Resolver.ResolveNode(paramsArg, this.Emitter);
+
+                        if (ctor_rr.Type.Kind == TypeKind.Array && !(paramsArg is ArrayCreateExpression) && objectCreateExpression.Arguments.Last() == paramsArg)
+                        {
+                            this.Write("Bridge.Reflection.applyConstructor(");
+                            applyCtor = true;
+                        }
+                    }
+
                     if (String.IsNullOrEmpty(customCtor))
                     {
-                        this.WriteNew();
+                        if (!applyCtor)
+                        {
+                            this.WriteNew();
+                        }
+                        
                         var typerr = this.Emitter.Resolver.ResolveNode(objectCreateExpression.Type, this.Emitter).Type;
                         var isGeneric = typerr.TypeArguments.Count > 0 && !Helpers.IsIgnoreGeneric(typerr, this.Emitter);
 
-                        if (isGeneric)
+                        if (isGeneric && !applyCtor)
                         {
                             this.WriteOpenParentheses();
                         }
 
                         objectCreateExpression.Type.AcceptVisitor(this.Emitter);
 
-                        if (isGeneric)
+                        if (isGeneric && !applyCtor)
                         {
                             this.WriteCloseParentheses();
                         }
@@ -174,9 +193,17 @@ namespace Bridge.Translator
                         this.Write(name);
                     }
 
-                    this.WriteOpenParentheses();
+                    if (applyCtor)
+                    {
+                        this.Write(", ");
+                    }
+                    else
+                    {
+                        this.WriteOpenParentheses();
+                    }
+                    
 
-                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, objectCreateExpression).Emit();
+                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, objectCreateExpression, -1).Emit();
                     this.WriteCloseParentheses();
                 }
 

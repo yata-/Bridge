@@ -102,7 +102,7 @@ namespace Bridge.Translator
                     }
 
                     new ExpressionListBlock(this.Emitter,
-                        new Expression[] { binaryOperatorExpression.Left, binaryOperatorExpression.Right }, null).Emit();
+                        new Expression[] { binaryOperatorExpression.Left, binaryOperatorExpression.Right }, null, null, 0).Emit();
                     this.WriteCloseParentheses();
 
                     return true;
@@ -499,7 +499,7 @@ namespace Bridge.Translator
                     this.WriteScript(op_name);
                     this.WriteComma();
                     new ExpressionListBlock(this.Emitter,
-                        new Expression[] {this.BinaryOperatorExpression.Left, this.BinaryOperatorExpression.Right}, null)
+                        new Expression[] {this.BinaryOperatorExpression.Left, this.BinaryOperatorExpression.Right}, null, null, 0)
                         .Emit();
                     this.AddOveflowFlag(typeCode, op_name);
                     this.WriteCloseParentheses();
@@ -519,7 +519,7 @@ namespace Bridge.Translator
                     this.WriteOpenParentheses();
 
                     new ExpressionListBlock(this.Emitter,
-                        new Expression[] {this.BinaryOperatorExpression.Left, this.BinaryOperatorExpression.Right}, null)
+                        new Expression[] {this.BinaryOperatorExpression.Left, this.BinaryOperatorExpression.Right}, null, null, 0)
                         .Emit();
                     this.AddOveflowFlag(typeCode, op_name);
                     this.WriteCloseParentheses();
@@ -535,7 +535,7 @@ namespace Bridge.Translator
                     this.WriteScript(op_name);
                     this.WriteComma();
                     new ExpressionListBlock(this.Emitter,
-                        new Expression[] { this.BinaryOperatorExpression.Left, this.BinaryOperatorExpression.Right }, null)
+                        new Expression[] { this.BinaryOperatorExpression.Left, this.BinaryOperatorExpression.Right }, null, null, 0)
                         .Emit();
                     this.AddOveflowFlag(typeCode, op_name);
                     this.WriteCloseParentheses();
