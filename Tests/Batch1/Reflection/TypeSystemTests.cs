@@ -10,8 +10,9 @@ namespace Bridge.ClientTest.Reflection
 		public class ClassWithExpandParamsCtor
         {
 			public object[] CtorArgs;
-			
-			public ClassWithExpandParamsCtor(params object[] args)
+
+            [ExpandParams]
+            public ClassWithExpandParamsCtor(params object[] args)
             {
 				this.CtorArgs = args;
 			}

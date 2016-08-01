@@ -220,7 +220,7 @@ namespace Bridge.ClientTest.Reflection
 				this.a = a;
 				this.b = b;
 			}
-			[Reflectable] public C22(string a, params string[] b) {
+			[Reflectable, ExpandParams] public C22(string a, params string[] b) {
 				this.a = a;
 				this.b = b;
 			}
@@ -229,7 +229,7 @@ namespace Bridge.ClientTest.Reflection
 				return new object[] { a, b };
 			}
 
-			[Reflectable] public object[] M2(int a, params int[] b) {
+			[Reflectable, ExpandParams] public object[] M2(int a, params int[] b) {
 				return new object[] { a, b };
 			}
 		}
@@ -242,7 +242,7 @@ namespace Bridge.ClientTest.Reflection
 				this.a = a;
 				this.b = b;
 			}
-			[Reflectable] public C23(string a, params string[] b) {
+			[Reflectable, ExpandParams] public C23(string a, params string[] b) {
 				this.a = a;
 				this.b = b;
 			}
@@ -251,7 +251,7 @@ namespace Bridge.ClientTest.Reflection
 				return new object[] { a, b };
 			}
 
-			[Reflectable] public object[] M2(int a, params int[] b) {
+			[Reflectable, ExpandParams] public object[] M2(int a, params int[] b) {
 				return new object[] { a, b };
 			}
 		}
@@ -484,7 +484,7 @@ namespace Bridge.ClientTest.Reflection
 			Assert.False(((ConstructorInfo)c20[0]).IsStaticMethod, "Inline code");
 		}
 
-		/*[Test]
+		[Test]
 		public void IsExpandParamsIsCorrectForConstructors() {
 			var c1 = typeof(C22).GetConstructor(new[] { typeof(int), typeof(int[]) });
 			var c2 = typeof(C22).GetConstructor(new[] { typeof(string), typeof(string[]) });
@@ -494,7 +494,7 @@ namespace Bridge.ClientTest.Reflection
 			Assert.True (c2.IsExpandParams);
 			Assert.False(c3.IsExpandParams);
 			Assert.True (c4.IsExpandParams);
-		}*/
+		}
 
 		[Test]
 		public void SpecialImplementationExistsOnlyForObjectLiteralAndInlineCodeConstructors() {
@@ -617,7 +617,7 @@ namespace Bridge.ClientTest.Reflection
 			Assert.True(typeof(C7).GetMethod("M1").SpecialImplementation == null, "C7.m1");
 		}
 
-		/*[Test]
+		[Test]
 		public void IsExpandParamsIsCorrectForMethods() {
 			var m1 = typeof(C22).GetMethod("M1");
 			var m2 = typeof(C22).GetMethod("M2");
@@ -627,7 +627,7 @@ namespace Bridge.ClientTest.Reflection
 			Assert.True (m2.IsExpandParams);
 			Assert.False(m3.IsExpandParams);
 			Assert.True (m4.IsExpandParams);
-		}*/
+		}
 
 		[Test]
 		public void CreateDelegateWorksForNonGenericInstanceMethods() {
@@ -775,16 +775,16 @@ namespace Bridge.ClientTest.Reflection
 
 		[Test]
 		public void InvokeWorksForExpandParamsMethods() {
-			var m1 = typeof(C22).GetMethod("M2");
-			var r1 = (object[])m1.Invoke(new C22(0, null), new object[] { 2, new[] { 17, 31 } });
-			Assert.AreEqual(r1, new object[] { 2, new[] { 17, 31 } });
+            var m1 = typeof(C22).GetMethod("M2");
+            var r1 = (object[])m1.Invoke(new C22(0, null), new object[] { 2, new[] { 17, 31 } });
+            Assert.AreEqual(r1, new object[] { 2, new[] { 17, 31 } });
 
-			var m2 = typeof(C23).GetMethod("M2");
-			var r2 = (object[])m2.Invoke(new C23(0, null), new object[] { 2, new[] { 17, 32 } });
-			Assert.AreEqual(r2, new object[] { 2, new[] { 17, 32 } });
-		}
+            var m2 = typeof(C23).GetMethod("M2");
+            var r2 = (object[])m2.Invoke(new C23(0, null), new object[] { 2, new[] { 17, 32 } });
+            Assert.AreEqual(r2, new object[] { 2, new[] { 17, 32 } });
+        }
 
-		[Test]
+        [Test]
 		public void InvokeWorksForAllKindsOfConstructors() {
 			var c1 = (ConstructorInfo)typeof(C10).GetMembers().Filter(m => ((ConstructorInfo)m).ParameterTypes.Length == 1)[0];
 			var o1 = (C10)c1.Invoke(42);
@@ -811,18 +811,18 @@ namespace Bridge.ClientTest.Reflection
 
 		[Test]
 		public void InvokeWorksForExpandParamsConstructors() {
-			var c1 = typeof(C22).GetConstructor(new[] { typeof(string), typeof(string[]) });
-			var o1 = (C22)c1.Invoke(new object[] { "a", new[] { "b", "c" } });
-			Assert.AreEqual(o1.a, "a", "o1.a");
-			Assert.AreEqual(o1.b, new[] { "b", "c" }, "o1.b");
+            var c1 = typeof(C22).GetConstructor(new[] { typeof(string), typeof(string[]) });
+            var o1 = (C22)c1.Invoke(new object[] { "a", new[] { "b", "c" } });
+            Assert.AreEqual(o1.a, "a", "o1.a");
+            Assert.AreEqual(o1.b, new[] { "b", "c" }, "o1.b");
 
-			var c2 = typeof(C23).GetConstructor(new[] { typeof(string), typeof(string[]) });
-			var o2 = (C23)c2.Invoke(new object[] { "a", new[] { "b", "c" } });
-			Assert.AreEqual(o2.a, "a", "o1.a");
-			Assert.AreEqual(o2.b, new[] { "b", "c" }, "o1.b");
-		}
+            var c2 = typeof(C23).GetConstructor(new[] { typeof(string), typeof(string[]) });
+            var o2 = (C23)c2.Invoke(new object[] { "a", new[] { "b", "c" } });
+            Assert.AreEqual(o2.a, "a", "o1.a");
+            Assert.AreEqual(o2.b, new[] { "b", "c" }, "o1.b");
+        }
 
-		[Test]
+        [Test]
 		public void MemberTypeIsFieldForField() {
 			Assert.AreEqual(typeof(C12).GetField("F1").MemberType, MemberTypes.Field, "Instance");
 			Assert.AreEqual(typeof(C12).GetField("F3").MemberType, MemberTypes.Field, "Static");
