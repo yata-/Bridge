@@ -297,7 +297,5 @@ namespace System
 
         [Template("{array}.forEach({callback})")]
         public static extern void ForEach<T>(this T[] array, Action<T> callback);
-
-
     }
 }

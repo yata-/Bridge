@@ -35,7 +35,7 @@ namespace Bridge.Translator
                 this.BeginBlock();
             }
 
-            new ExpressionListBlock(this.Emitter, elements, null).Emit();
+            new ExpressionListBlock(this.Emitter, elements, null, null, 0).Emit();
 
             if (!isObjectInitializer || this.ArrayInitializerExpression.IsSingleElement)
             {

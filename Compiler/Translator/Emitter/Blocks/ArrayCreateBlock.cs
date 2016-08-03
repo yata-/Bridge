@@ -152,7 +152,7 @@ namespace Bridge.Translator
                 else
                 {
                     var elements = arrayCreateExpression.Initializer.Elements;
-                    new ExpressionListBlock(this.Emitter, elements, null).Emit();
+                    new ExpressionListBlock(this.Emitter, elements, null, null, 0).Emit();
                 }
 
                 this.WriteCloseBracket();
