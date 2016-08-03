@@ -3,15 +3,15 @@ using Bridge;
 
 namespace System.Reflection
 {
-	[External]
-	public class MethodInfo : MethodBase
+    [External]
+    public class MethodInfo : MethodBase
     {
         [FieldProperty]
-	    public extern Type ReturnType
-	    {
-	        get;
+        public extern Type ReturnType
+        {
+            get;
             private set;
-	    }
+        }
 
         /// <summary>
 		/// Returns an array of all custom attributes applied to this member.
@@ -46,67 +46,79 @@ namespace System.Reflection
         public extern object[] GetReturnTypeCustomAttributes(Type attributeType);
 
         [Template("Bridge.Reflection.midel({this})")]
-		public extern Delegate CreateDelegate(Type delegateType);
+        public extern Delegate CreateDelegate(Type delegateType);
 
-		[Template("Bridge.Reflection.midel({this}, {target})")]
-		public extern Delegate CreateDelegate(Type delegateType, object target);
+        [Template("Bridge.Reflection.midel({this}, {target})")]
+        public extern Delegate CreateDelegate(Type delegateType, object target);
 
-		[Template("Bridge.Reflection.midel({this})")]
-		public extern Delegate CreateDelegate();
+        [Template("Bridge.Reflection.midel({this})")]
+        public extern Delegate CreateDelegate();
 
-		[Template("Bridge.Reflection.midel({this}, {target})")]
-		public extern Delegate CreateDelegate(object target);
+        [Template("Bridge.Reflection.midel({this}, {target})")]
+        public extern Delegate CreateDelegate(object target);
 
-		[Template("Bridge.Reflection.midel({this}, null, {typeArguments})")]
-		public extern Delegate CreateDelegate(Type[] typeArguments);
+        [Template("Bridge.Reflection.midel({this}, null, {typeArguments})")]
+        public extern Delegate CreateDelegate(Type[] typeArguments);
 
-		[Template("Bridge.Reflection.midel({this}, {target}, {typeArguments})")]
-		public extern Delegate CreateDelegate(object target, Type[] typeArguments);
+        [Template("Bridge.Reflection.midel({this}, {target}, {typeArguments})")]
+        public extern Delegate CreateDelegate(object target, Type[] typeArguments);
 
-	    public extern int TypeParameterCount
-	    {
-	        [Template("({this}.tpcount || 0)")]
+        public extern int TypeParameterCount
+        {
+            [Template("({this}.tpcount || 0)")]
             get;
             [Template("X")]
             private set;
-	    }
+        }
 
-	    public extern bool IsGenericMethodDefinition
-	    {
-	        [Template("(!!{this}.tpcount)")]
+        public extern bool IsGenericMethodDefinition
+        {
+            [Template("(!!{this}.tpcount)")]
             get;
             [Template("X")]
             private set;
-	    }
+        }
 
-		[Template("Bridge.Reflection.midel({this}, {obj})({*arguments})", "Bridge.Reflection.midel({this}, {obj}).apply(null, {arguments:array})")]
-		public extern object Invoke(object obj, params object[] arguments);
+        [Template("Bridge.Reflection.midel({this}, {obj})({*arguments})", "Bridge.Reflection.midel({this}, {obj}).apply(null, {arguments:array})")]
+        public extern object Invoke(object obj, params object[] arguments);
 
-		[Template("Bridge.Reflection.midel({this}, {obj}, {typeArguments})({*arguments})", "Bridge.Reflection.midel({this}, {obj}, {typeArguments}).apply(null, {arguments:array})")]
-		public extern object Invoke(object obj, Type[] typeArguments, params object[] arguments);
+        [Template("Bridge.Reflection.midel({this}, {obj}, {typeArguments})({*arguments})", "Bridge.Reflection.midel({this}, {obj}, {typeArguments}).apply(null, {arguments:array})")]
+        public extern object Invoke(object obj, Type[] typeArguments, params object[] arguments);
 
-	    /// <summary>
-	    /// Script name of the method. Null if the method has a special implementation.
-	    /// </summary>
-	    [Name("sname")]
-	    [FieldProperty]
-	    public extern string ScriptName
-	    {
-	        get;
+        /// <summary>
+        /// Script name of the method. Null if the method has a special implementation.
+        /// </summary>
+        [Name("sname")]
+        [FieldProperty]
+        public extern string ScriptName
+        {
+            get;
             private set;
-	    }
+        }
 
-	    /// <summary>
-	    /// For methods with a special implementation (eg. [Template]), contains a delegate that represents the method. Null for normal methods.
-	    /// </summary>
-	    [Name("def")]
-	    [FieldProperty]
-	    public extern Delegate SpecialImplementation
-	    {
-	        get;
+        /// <summary>
+        /// For methods with a special implementation (eg. [Template]), contains a delegate that represents the method. Null for normal methods.
+        /// </summary>
+        [Name("def")]
+        [FieldProperty]
+        public extern Delegate SpecialImplementation
+        {
+            get;
             private set;
-	    }
+        }
 
-		internal extern MethodInfo();
-	}
+        /// <summary>
+		/// Whether the [ExpandParams] attribute was specified on the method.
+		/// </summary>
+		public extern bool IsExpandParams
+        {
+            [Template("{this}.exp || false")]
+            get;
+
+            [Template("{this}.exp = {value}")]
+            private set;
+        }
+
+        internal extern MethodInfo();
+    }
 }

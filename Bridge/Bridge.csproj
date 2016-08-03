@@ -65,6 +65,7 @@
     <Compile Include="Attributes\AllowAttribute.cs" />
     <Compile Include="Attributes\ConstructorAttribute.cs" />
     <Compile Include="Attributes\ReflectableAttribute.cs" />
+    <Compile Include="Attributes\ExpandParamsAttribute.cs" />
     <Compile Include="Attributes\TemplateAttribute.cs" />
     <Compile Include="Attributes\InitAttribute.cs" />
     <Compile Include="Attributes\ModuleDependencyAttribute.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="System\Action.cs" />
     <Compile Include="System\Activator.cs" />
     <Compile Include="System\AppDomain.cs" />
+    <Compile Include="Bridge\Arguments.cs" />
     <Compile Include="System\CompilerServices\CallerInformationAttributes.cs" />
     <Compile Include="System\CompilerServices\FormattableStringFactory.cs" />
     <Compile Include="System\CompilerServices\RuntimeHelpers.cs" />

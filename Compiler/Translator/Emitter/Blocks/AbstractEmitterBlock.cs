@@ -195,7 +195,7 @@ namespace Bridge.Translator
                     this.WriteDot();
                     this.Write(OverloadsCollection.Create(this.Emitter, method).GetOverloadName());
                     this.WriteOpenParentheses();
-                    new ExpressionListBlock(this.Emitter, new Expression[] {(Expression)node}, null).Emit();
+                    new ExpressionListBlock(this.Emitter, new Expression[] {(Expression)node}, null, null, 0).Emit();
                     this.WriteCloseParentheses();
                 }
                 else

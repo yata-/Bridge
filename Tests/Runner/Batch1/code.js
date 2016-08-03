@@ -10,6 +10,53 @@
      * @return  {TOutput}
      */
     
+    Bridge.define('Bridge.ClientTest.ArgumentsTests', {
+        lengthHelper0: function (args) {
+            args = Array.prototype.slice.call(arguments, 0);
+            Bridge.Test.Assert.areEqual(arguments.length, 0);
+        },
+        lengthHelper1: function (args) {
+            args = Array.prototype.slice.call(arguments, 0);
+            Bridge.Test.Assert.areEqual(arguments.length, 1);
+        },
+        lengthHelper2: function (args) {
+            args = Array.prototype.slice.call(arguments, 0);
+            Bridge.Test.Assert.areEqual(arguments.length, 2);
+        },
+        getArgumentHelper: function (index, args) {
+            args = Array.prototype.slice.call(arguments, 1);
+            return arguments[index];
+        },
+        toArrayHelper: function (args) {
+            args = Array.prototype.slice.call(arguments, 0);
+            return Array.prototype.slice.call(arguments);
+        },
+        toArrayHelper$1: function (T, args) {
+            args = Array.prototype.slice.call(arguments, 1);
+            return Array.prototype.slice.call(arguments, 1); // first argument will be generic type
+        },
+        lengthWorks: function () {
+            this.lengthHelper0();
+            this.lengthHelper1(4);
+            this.lengthHelper2(6, "x");
+        },
+        getArgumentWorks: function () {
+            Bridge.Test.Assert.areEqual(this.getArgumentHelper(0, "x", "y"), 0);
+            Bridge.Test.Assert.areEqual(this.getArgumentHelper(1, "x", "y"), "x");
+            Bridge.Test.Assert.areEqual(this.getArgumentHelper(2, "x", "y"), "y");
+        },
+        toArrayWorks: function () {
+            Bridge.Test.Assert.areEqual(this.toArrayHelper(), System.Array.init(0, null));
+            Bridge.Test.Assert.areEqual(this.toArrayHelper("x"), ["x"]);
+            Bridge.Test.Assert.areEqual(this.toArrayHelper("x", 1), ["x", 1]);
+        },
+        toArrayOfTWorks: function () {
+            Bridge.Test.Assert.areEqual(this.toArrayHelper$1(String), System.Array.init(0, null));
+            Bridge.Test.Assert.areEqual(this.toArrayHelper$1(String, "x"), ["x"]);
+            Bridge.Test.Assert.areEqual(this.toArrayHelper$1(String, "x", "y"), ["x", "y"]);
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.ArrayTests1');
     
     Bridge.define('Bridge.ClientTest.ArrayTests1.ArrayTestsSet1', {
@@ -837,7 +884,7 @@
                 System.Array.copy(s, 0, d, 0, 5);
                 for (var i = 0; i < d.length; i = (i + 1) | 0) {
                     Bridge.Test.Assert.true(Bridge.is(d[i], Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.G));
-                    var g = Bridge.cast((d[i]), Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.G);
+                    var g = System.Nullable.getValue(Bridge.cast((d[i]), Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.G));
                     Bridge.Test.Assert.areEqual(g.x, s[i].x);
                     Bridge.Test.Assert.areEqual(g.s, s[i].s);
                     Bridge.Test.Assert.areEqual(g.z, s[i].z);
@@ -1682,10 +1729,10 @@
             return ((x - y) | 0);
         },
         System$Collections$IEqualityComparer$equals: function (x, y) {
-            return Bridge.cast(x, System.Int32) === Bridge.cast(y, System.Int32);
+            return System.Nullable.getValue(Bridge.cast(x, System.Int32)) === System.Nullable.getValue(Bridge.cast(y, System.Int32));
         },
         getHashCode: function (obj) {
-            return Bridge.cast(obj, System.Int32) >> 2;
+            return System.Nullable.getValue(Bridge.cast(obj, System.Int32)) >> 2;
         }
     });
     
@@ -1783,9 +1830,9 @@
             },
             staticMethod2: function (p) {
                 if (p === void 0) { p = []; }
-                var i = (Bridge.cast(p[0], System.Int32) + 1000) | 0;
+                var i = (System.Nullable.getValue(Bridge.cast(p[0], System.Int32)) + 1000) | 0;
                 var s = Bridge.cast(p[1], String);
-                var d = Bridge.cast(p[2], System.Double);
+                var d = System.Nullable.getValue(Bridge.cast(p[2], System.Double));
     
                 return Bridge.ClientTest.BasicCSharp.ClassA.staticMethod1(i, s, d);
             },
@@ -1836,7 +1883,7 @@
             }
     
             if (Bridge.is(p[0], System.Int32)) {
-                this.setNumberA(Bridge.cast(p[0], System.Int32));
+                this.setNumberA(System.Nullable.getValue(Bridge.cast(p[0], System.Int32)));
             }
     
             if (Bridge.is(p[1], String)) {
@@ -1844,15 +1891,15 @@
             }
     
             if (Bridge.is(p[2], Boolean)) {
-                this.setBoolA(Bridge.cast(p[2], Boolean));
+                this.setBoolA(System.Nullable.getValue(Bridge.cast(p[2], Boolean)));
             }
     
             if (Bridge.is(p[3], System.Double)) {
-                this.setDoubleA(Bridge.cast(p[3], System.Double));
+                this.setDoubleA(System.Nullable.getValue(Bridge.cast(p[3], System.Double)));
             }
     
             if (Bridge.is(p[4], System.Decimal)) {
-                this.setDecimalA(Bridge.cast(p[4], System.Decimal));
+                this.setDecimalA(System.Nullable.getValue(Bridge.cast(p[4], System.Decimal)));
             }
     
             if (Bridge.is(p[5], Bridge.ClientTest.BasicCSharp.ClassA.Aux1)) {
@@ -6353,6 +6400,7 @@
             MODULE_CHECKED_UNCKECKED: "Checked/Unckecked",
             MODULE_TYPE_SYSTEM: "Type system",
             MODULE_REFLECTION: "Reflection",
+            MODULE_ARGUMENTS: "Arguments",
             IGNORE_DATE: null
         }
     });
@@ -8263,7 +8311,7 @@
                     var a = input.get([i, ((lowerBound + 2) | 0)]);
                     var b = input.get([i, ((lowerBound + 3) | 0)]);
                     var expected = input.get([i, ((lowerBound + 4) | 0)]);
-                    var result = Bridge.ClientTest.DecimalMathTests.runOperation(Bridge.cast(a, System.Decimal), Bridge.cast(b, System.Decimal), operation);
+                    var result = Bridge.ClientTest.DecimalMathTests.runOperation(System.Nullable.getValue(Bridge.cast(a, System.Decimal)), System.Nullable.getValue(Bridge.cast(b, System.Decimal)), operation);
     
                     logger.onLog([dotNetDiff, a, b, result]);
     
@@ -8284,7 +8332,7 @@
                     var dotNetDiff = Bridge.ClientTest.DecimalMathTests.parseDotNetDiff(input, i, lowerBound);
                     var a = input.get([i, ((lowerBound + 2) | 0)]);
                     var expected = input.get([i, ((lowerBound + 3) | 0)]);
-                    var result = Bridge.ClientTest.DecimalMathTests.runOperation$1(Bridge.cast(a, System.Decimal), operation);
+                    var result = Bridge.ClientTest.DecimalMathTests.runOperation$1(System.Nullable.getValue(Bridge.cast(a, System.Decimal)), operation);
     
                     logger.onLog([dotNetDiff, a, result]);
     
@@ -8311,7 +8359,7 @@
             },
             assertDecimal: function (dotNetDiff, expected, result, differenceReport, message) {
                 if (Bridge.ClientTest.DecimalMathTests.jSMode) {
-                    Bridge.ClientTest.DecimalMathTests.assertIsDecimalAndEqualTo(result, Bridge.cast(expected, System.Decimal).sub((System.Nullable.hasValue(dotNetDiff) ? System.Nullable.getValue(dotNetDiff) : System.Decimal(0.0))), message);
+                    Bridge.ClientTest.DecimalMathTests.assertIsDecimalAndEqualTo(result, System.Nullable.getValue(Bridge.cast(expected, System.Decimal)).sub((System.Nullable.hasValue(dotNetDiff) ? System.Nullable.getValue(dotNetDiff) : System.Decimal(0.0))), message);
                 }
                 else  {
                     Bridge.ClientTest.DecimalMathTests.assertIsDecimalAndEqualTo(result, expected, message);
@@ -8328,7 +8376,7 @@
             getDifference: function (expected, result) {
                 var difference;
                 if ((Bridge.is(result, System.Decimal) || Bridge.is(result, System.Int32)) && (Bridge.is(expected, System.Decimal) || Bridge.is(expected, System.Int32))) {
-                    difference = Bridge.cast(expected, System.Decimal).sub(Bridge.cast(result, System.Decimal));
+                    difference = System.Nullable.getValue(Bridge.cast(expected, System.Decimal)).sub(System.Nullable.getValue(Bridge.cast(result, System.Decimal)));
                 }
                 else  {
                     difference = System.Decimal(0.0);
@@ -8389,7 +8437,7 @@
                     var o = parameters[i];
                     var j = (i + 1) | 0;
                     if (Bridge.is(o, System.Decimal)) {
-                        var d1 = Bridge.cast(o, System.Decimal);
+                        var d1 = System.Nullable.getValue(Bridge.cast(o, System.Decimal));
                         if (d1.equalsT(Bridge.ClientTest.DecimalMathTests.maxValue)) {
                             result[j] = "DecimalMathTests.MaxValue";
                         }
@@ -13529,7 +13577,7 @@
     Bridge.apply($_.Bridge.ClientTest.NullableTests, {
         f1: function () {
             var o = "x";
-            var x = Bridge.cast(o, System.Int32);
+            var x = System.Nullable.getValue(Bridge.cast(o, System.Int32));
         }
     });
     
@@ -14797,6 +14845,16 @@
             Bridge.Test.Assert.false$1((Bridge.cast(c19[0], System.Reflection.ConstructorInfo).sm || false), "Object literal");
             Bridge.Test.Assert.false$1((Bridge.cast(c20[0], System.Reflection.ConstructorInfo).sm || false), "Inline code");
         },
+        isExpandParamsIsCorrectForConstructors: function () {
+            var c1 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C22, 1, 284, null, [System.Int32, Array]);
+            var c2 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C22, 1, 284, null, [String, Array]);
+            var c3 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C23, 1, 284, null, [System.Int32, Array]);
+            var c4 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C23, 1, 284, null, [String, Array]);
+            Bridge.Test.Assert.false(c1.exp || false);
+            Bridge.Test.Assert.true(c2.exp || false);
+            Bridge.Test.Assert.false(c3.exp || false);
+            Bridge.Test.Assert.true(c4.exp || false);
+        },
         specialImplementationExistsOnlyForObjectLiteralAndInlineCodeConstructors: function () {
             var c10 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C10, 31, 28);
             var c11 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C11, 31, 28);
@@ -14887,6 +14945,16 @@
             Bridge.Test.Assert.true$1(Bridge.staticEquals(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C4, 8, 284, "M", [System.Int32]).def, null), "C4.M");
             Bridge.Test.Assert.true$1(!Bridge.staticEquals(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C21, 8, 284, "M3").def, null), "C21.M3");
             Bridge.Test.Assert.true$1(Bridge.staticEquals(Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C7, 8, 284, "M1").def, null), "C7.m1");
+        },
+        isExpandParamsIsCorrectForMethods: function () {
+            var m1 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C22, 8, 284, "M1");
+            var m2 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C22, 8, 284, "M2");
+            var m3 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C23, 8, 284, "M1");
+            var m4 = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C23, 8, 284, "M2");
+            Bridge.Test.Assert.false(m1.exp || false);
+            Bridge.Test.Assert.true(m2.exp || false);
+            Bridge.Test.Assert.false(m3.exp || false);
+            Bridge.Test.Assert.true(m4.exp || false);
         },
         createDelegateWorksForNonGenericInstanceMethods: function () {
             var m = Bridge.Reflection.getMembers(Bridge.ClientTest.Reflection.ReflectionTests.C8, 8, 284, "M1");
@@ -16151,7 +16219,7 @@
             this.b = b;
         },
         $constructor1: function (a, b) {
-            if (b === void 0) { b = []; }
+            b = Array.prototype.slice.call(arguments, 1);
     
             this.$initialize();
             this.a = a;
@@ -16162,7 +16230,7 @@
             return [a, b];
         },
         m2: function (a, b) {
-            if (b === void 0) { b = []; }
+            b = Array.prototype.slice.call(arguments, 1);
             return [a, b];
         }
     });
@@ -16178,7 +16246,7 @@
             this.b = b;
         },
         $constructor1: function (a, b) {
-            if (b === void 0) { b = []; }
+            b = Array.prototype.slice.call(arguments, 1);
     
             this.$initialize();
             this.a = a;
@@ -16189,7 +16257,7 @@
             return [a, b];
         },
         m2: function (a, b) {
-            if (b === void 0) { b = []; }
+            b = Array.prototype.slice.call(arguments, 1);
             return [a, b];
         }
     });
@@ -16407,7 +16475,9 @@
         statics: {
             canConvert: function (T, arg) {
                 try { /// The variable `x' is assigned but its value is never used
-                    var x = Bridge.cast(arg, T);
+    
+    
+                    var x = System.Nullable.getValue(Bridge.cast(arg, T));
                     return true;
                 }
                 catch ($e1) {
@@ -16851,7 +16921,7 @@
             Bridge.Test.Assert.throws($_.Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.f2);
         },
         cast: function (T, o) {
-            return Bridge.cast(o, T);
+            return System.Nullable.getValue(Bridge.cast(o, T));
         },
         castOperatorForSerializableTypeWithoutTypeCheckCodeAlwaysSucceedsGeneric: function () {
             var o = {  };
@@ -16957,7 +17027,7 @@
                 ["x"],
                 [18]
             ] );
-            var obj = new Bridge.ClientTest.Reflection.TypeSystemTests.ClassWithExpandParamsCtor(args.toArray());
+            var obj = Bridge.Reflection.applyConstructor(Bridge.ClientTest.Reflection.TypeSystemTests.ClassWithExpandParamsCtor, args.toArray());
     
             Bridge.Test.Assert.areEqual(obj.ctorArgs, args.toArray());
             Bridge.Test.Assert.areEqual(Bridge.getType(obj), Bridge.ClientTest.Reflection.TypeSystemTests.ClassWithExpandParamsCtor);
@@ -17679,10 +17749,10 @@
     
     Bridge.apply($_.Bridge.ClientTest.Reflection.TypeSystemTests, {
         f1: function () {
-            var x = Bridge.cast("firstValue", String);
+            var x = System.Nullable.getValue(Bridge.cast("firstValue", String));
         },
         f2: function () {
-            var x = Bridge.cast(0, String);
+            var x = System.Nullable.getValue(Bridge.cast(0, String));
         }
     });
     
@@ -17760,7 +17830,7 @@
     Bridge.define('Bridge.ClientTest.Reflection.TypeSystemTests.ClassWithExpandParamsCtor', {
         ctorArgs: null,
         constructor: function (args) {
-            if (args === void 0) { args = []; }
+            args = Array.prototype.slice.call(arguments, 0);
     
             this.$initialize();
             this.ctorArgs = args;
@@ -18820,7 +18890,7 @@
         },
         constantsWork: function () {
             var zero = 0;
-            Bridge.Test.Assert.true$1(System.Double.max > Bridge.cast(1.7E+308, System.Double), "MaxValue should be correct");
+            Bridge.Test.Assert.true$1(System.Double.max > System.Nullable.getValue(Bridge.cast(1.7E+308, System.Double)), "MaxValue should be correct");
             Bridge.Test.Assert.areEqual$1(4.94065645841247E-324, 4.94065645841247E-324, "MinValue should be correct");
             Bridge.Test.Assert.true$1(isNaN(Number.NaN), "NaN should be correct");
             Bridge.Test.Assert.areStrictEqual$1(1 / zero, Number.POSITIVE_INFINITY, "PositiveInfinity should be correct");
@@ -19862,7 +19932,7 @@
         },
         getTimezoneOffsetWorks: function () {
             var dt = new Date(System.Int64(0).toNumber());
-            Bridge.Test.Assert.areEqual(((Bridge.Int.div(Bridge.cast((new Date(1970, 1 - 1, 1).valueOf()), System.Int32), 60000)) | 0), dt.getTimezoneOffset());
+            Bridge.Test.Assert.areEqual(((Bridge.Int.div(System.Nullable.getValue(Bridge.cast((new Date(1970, 1 - 1, 1).valueOf()), System.Int32)), 60000)) | 0), dt.getTimezoneOffset());
         },
         getUTCFullYearWorks: function () {
             var dt = new Date(System.Int64(Date.UTC(2011, 7 - 1, 12, 13, 42, 56, 345)).toNumber());
@@ -20286,8 +20356,8 @@
         },
         constantsWork: function () {
             var zero = 0;
-            Bridge.Test.Assert.true$1(Bridge.cast(-3.40282347E+38, System.Single) < -3.4E+38 && Bridge.cast(-3.40282347E+38, System.Single) > -3.5E+38, "MinValue should be correct");
-            Bridge.Test.Assert.true$1(Bridge.cast(3.40282347E+38, System.Single) > 3.4E+38 && Bridge.cast(3.40282347E+38, System.Single) < 3.5E+38, "MaxValue should be correct");
+            Bridge.Test.Assert.true$1(System.Nullable.getValue(Bridge.cast(-3.40282347E+38, System.Single)) < -3.4E+38 && System.Nullable.getValue(Bridge.cast(-3.40282347E+38, System.Single)) > -3.5E+38, "MinValue should be correct");
+            Bridge.Test.Assert.true$1(System.Nullable.getValue(Bridge.cast(3.40282347E+38, System.Single)) > 3.4E+38 && System.Nullable.getValue(Bridge.cast(3.40282347E+38, System.Single)) < 3.5E+38, "MaxValue should be correct");
             Bridge.Test.Assert.areEqual$1(1.401298E-45, 1.401298E-45, "Epsilon should be correct");
             Bridge.Test.Assert.true$1(isNaN(Number.NaN), "NaN should be correct");
             Bridge.Test.Assert.areStrictEqual$1(1 / zero, Number.POSITIVE_INFINITY, "PositiveInfinity should be correct");
@@ -24144,7 +24214,7 @@
         },
         handleProgress: function (args) {
             if (args === void 0) { args = []; }
-            var i = Bridge.cast(args[0], System.Int32);
+            var i = System.Nullable.getValue(Bridge.cast(args[0], System.Int32));
             this.setPromiseProgress(i);
         },
         taskFromPromiseWithProgressWithoutResultFactoryWorksWhenPromiseProgressesAndCompletes: function () {
@@ -32326,8 +32396,8 @@
     Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C2, function () { return {"members":[{"accessibility":2,"name":"M1","type":8,"sname":"m1","returnType":Object},{"accessibility":2,"name":"M2","isStatic":true,"type":8,"sname":"m2","returnType":Object}]}; });
     Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C20, function () { return {"members":[{"accessibility":2,"name":".ctor","type":1,"params":[System.Int32,String],"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","parameterType":String,"position":1}],"def":function (a, b) { return { a: a, b: b }; }}]}; });
     Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C21, function () { return {"members":[{"accessibility":2,"name":"M1","type":8,"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","parameterType":System.Int32,"position":1}],"tpcount":0,"def":function (a, b) { return this.X + a + b; },"returnType":System.Int32,"params":[System.Int32,System.Int32]},{"accessibility":2,"name":"M2","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","parameterType":System.Int32,"position":1}],"tpcount":0,"def":function (a, b) { return a + b; },"returnType":System.Int32,"params":[System.Int32,System.Int32]},{"accessibility":2,"name":"M3","type":8,"paramsInfo":[{"name":"s","parameterType":String,"position":0}],"tpcount":1,"def":function (T, s) { return this.X + Bridge.Reflection.getTypeFullName(T) + s; },"returnType":String,"params":[String]}]}; });
-    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C22, function () { return {"members":[{"accessibility":2,"name":".ctor","type":1,"params":[System.Int32,Array],"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"$constructor"},{"accessibility":2,"name":".ctor","type":1,"params":[String,Array],"paramsInfo":[{"name":"a","parameterType":String,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"$constructor1"},{"accessibility":2,"name":"M1","type":8,"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"m1","returnType":Array,"params":[System.Int32,Array]},{"accessibility":2,"name":"M2","type":8,"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"m2","returnType":Array,"params":[System.Int32,Array]}]}; });
-    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C23, function () { return {"members":[{"accessibility":2,"name":".ctor","type":1,"params":[System.Int32,Array],"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"$constructor"},{"accessibility":2,"name":".ctor","type":1,"params":[String,Array],"paramsInfo":[{"name":"a","parameterType":String,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"$constructor1"},{"accessibility":2,"name":"M1","type":8,"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"m1","returnType":Array,"params":[System.Int32,Array]},{"accessibility":2,"name":"M2","type":8,"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"m2","returnType":Array,"params":[System.Int32,Array]}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C22, function () { return {"members":[{"accessibility":2,"name":".ctor","type":1,"params":[System.Int32,Array],"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"$constructor"},{"accessibility":2,"name":".ctor","type":1,"params":[String,Array],"paramsInfo":[{"name":"a","parameterType":String,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"$constructor1","exp":true},{"accessibility":2,"name":"M1","type":8,"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"m1","returnType":Array,"params":[System.Int32,Array]},{"accessibility":2,"name":"M2","exp":true,"type":8,"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"m2","returnType":Array,"params":[System.Int32,Array]}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C23, function () { return {"members":[{"accessibility":2,"name":".ctor","type":1,"params":[System.Int32,Array],"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"$constructor"},{"accessibility":2,"name":".ctor","type":1,"params":[String,Array],"paramsInfo":[{"name":"a","parameterType":String,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"$constructor1","exp":true},{"accessibility":2,"name":"M1","type":8,"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"m1","returnType":Array,"params":[System.Int32,Array]},{"accessibility":2,"name":"M2","exp":true,"type":8,"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","isParams":true,"parameterType":Array,"position":1}],"sname":"m2","returnType":Array,"params":[System.Int32,Array]}]}; });
     Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C24, function () { return {"members":[{"accessibility":2,"name":"Item","type":16,"returnType":String,"params":[System.Int32,String],"isIndexer":true,"indexParamsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"s","parameterType":String,"position":1}],"getter":{"accessibility":2,"name":"get_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"s","parameterType":String,"position":1}],"tpcount":0,"def":function (x, s) { return this.v + ' ' + x + ' ' + s; },"returnType":String,"params":[System.Int32,String]},"setter":{"accessibility":2,"name":"set_Item","type":8,"paramsInfo":[{"name":"x","parameterType":System.Int32,"position":0},{"name":"s","parameterType":String,"position":1},{"name":"value","parameterType":String,"position":2}],"tpcount":0,"def":function (x, s, value) { return (function(t, x, s) { t.x = x; t.s = s; t.v = value; })(this, x, s); },"returnType":Object,"params":[System.Int32,String,String]}}]}; });
     Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C3, function () { return {"members":[{"accessibility":2,"name":"M1","type":8,"sname":"m1","returnType":System.Int32},{"accessibility":2,"name":"M2","type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0}],"sname":"m2","returnType":System.Int32,"params":[String]},{"accessibility":2,"name":"M3","type":8,"paramsInfo":[{"name":"x","parameterType":String,"position":0},{"name":"y","parameterType":System.Int32,"position":1}],"sname":"m3","returnType":System.Int32,"params":[String,System.Int32]},{"accessibility":2,"name":"M4","type":8,"sname":"m4","returnType":Object}]}; });
     Bridge.setMetadata(Bridge.ClientTest.Reflection.ReflectionTests.C4, function () { return {"members":[{"accessibility":2,"name":"M","type":8,"sname":"m","returnType":Object},{"accessibility":2,"name":"M","type":8,"paramsInfo":[{"name":"i","parameterType":System.Int32,"position":0}],"sname":"m$1","returnType":Object,"params":[System.Int32]},{"accessibility":2,"name":"M","type":8,"paramsInfo":[{"name":"i","parameterType":System.Int32,"position":0},{"name":"s","parameterType":String,"position":1}],"sname":"x","returnType":Object,"params":[System.Int32,String]}]}; });

@@ -179,6 +179,11 @@
                 }
             },
             main: function () {
+                QUnit.module("Arguments");
+                QUnit.test("LengthWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArgumentsTests.lengthWorks);
+                QUnit.test("GetArgumentWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArgumentsTests.getArgumentWorks);
+                QUnit.test("ToArrayWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArgumentsTests.toArrayWorks);
+                QUnit.test("ToArrayOfTWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArgumentsTests.toArrayOfTWorks);
                 QUnit.module("C#");
                 QUnit.test("Abstract types - TestB", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BasicCSharp_TestAbstractClass.testB);
                 QUnit.test("Abstract types - TestC", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BasicCSharp_TestAbstractClass.testC);
@@ -1270,6 +1275,7 @@
                 QUnit.test("Reflection - Reflection DeclaringTypeIsCorrectForAllKindsOfConstructors", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.declaringTypeIsCorrectForAllKindsOfConstructors);
                 QUnit.test("Reflection - Reflection ScriptNameIsCorrectForAllKindsOfConstructors", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.scriptNameIsCorrectForAllKindsOfConstructors);
                 QUnit.test("Reflection - Reflection IsStaticMethodIsTrueOnlyForStaticMethodConstructors", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.isStaticMethodIsTrueOnlyForStaticMethodConstructors);
+                QUnit.test("Reflection - Reflection IsExpandParamsIsCorrectForConstructors", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.isExpandParamsIsCorrectForConstructors);
                 QUnit.test("Reflection - Reflection SpecialImplementationExistsOnlyForObjectLiteralAndInlineCodeConstructors", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.specialImplementationExistsOnlyForObjectLiteralAndInlineCodeConstructors);
                 QUnit.test("Reflection - Reflection DeclaringTypeShouldBeCorrectForMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.declaringTypeShouldBeCorrectForMethods);
                 QUnit.test("Reflection - Reflection ReturnTypeAndParameterTypesAreCorrectForMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.returnTypeAndParameterTypesAreCorrectForMethods);
@@ -1282,6 +1288,7 @@
                 QUnit.test("Reflection - Reflection IsGenericMethodDefinitionAndTypeParameterCountWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.isGenericMethodDefinitionAndTypeParameterCountWork);
                 QUnit.test("Reflection - Reflection ScriptNameWorksForAllKindsOfMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.scriptNameWorksForAllKindsOfMethods);
                 QUnit.test("Reflection - Reflection SpecialImplementationExistsOnlyForMethodsImplementedAsInlineCode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.specialImplementationExistsOnlyForMethodsImplementedAsInlineCode);
+                QUnit.test("Reflection - Reflection IsExpandParamsIsCorrectForMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.isExpandParamsIsCorrectForMethods);
                 QUnit.test("Reflection - Reflection CreateDelegateWorksForNonGenericInstanceMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.createDelegateWorksForNonGenericInstanceMethods);
                 QUnit.test("Reflection - Reflection DelegateCreateDelegateWorksForNonGenericInstanceMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.delegateCreateDelegateWorksForNonGenericInstanceMethods);
                 QUnit.test("Reflection - Reflection CreateDelegateWorksNonGenericStaticMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests.createDelegateWorksNonGenericStaticMethods);
@@ -2132,6 +2139,28 @@
             }
         },
         $entryPoint: true
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArgumentsTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArgumentsTests)],
+        statics: {
+            lengthWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArgumentsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArgumentsTests);
+                t.getFixture().lengthWorks();
+            },
+            getArgumentWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArgumentsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArgumentsTests);
+                t.getFixture().getArgumentWorks();
+            },
+            toArrayWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArgumentsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArgumentsTests);
+                t.getFixture().toArrayWorks();
+            },
+            toArrayOfTWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.ArgumentsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArgumentsTests);
+                t.getFixture().toArrayOfTWorks();
+            }
+        }
     });
     
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArrayTestsSet1', {
@@ -6761,6 +6790,10 @@
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
                 t.getFixture().isStaticMethodIsTrueOnlyForStaticMethodConstructors();
             },
+            isExpandParamsIsCorrectForConstructors: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().isExpandParamsIsCorrectForConstructors();
+            },
             specialImplementationExistsOnlyForObjectLiteralAndInlineCodeConstructors: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
                 t.getFixture().specialImplementationExistsOnlyForObjectLiteralAndInlineCodeConstructors();
@@ -6808,6 +6841,10 @@
             specialImplementationExistsOnlyForMethodsImplementedAsInlineCode: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
                 t.getFixture().specialImplementationExistsOnlyForMethodsImplementedAsInlineCode();
+            },
+            isExpandParamsIsCorrectForMethods: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);
+                t.getFixture().isExpandParamsIsCorrectForMethods();
             },
             createDelegateWorksForNonGenericInstanceMethods: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Reflection.ReflectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_ReflectionTests);

@@ -72,12 +72,6 @@ namespace Bridge
         public static extern void Write(string code, params object[] args);
 
         /// <summary>
-        /// An Array-like object corresponding to the arguments passed to a function.
-        /// </summary>
-        [Template("arguments")]
-        public static readonly object[] Arguments;
-
-        /// <summary>
         /// The global undefined property represents the value undefined.
         /// </summary>
         [Template("undefined")]

@@ -525,7 +525,7 @@ namespace Bridge.Translator
                 this.WriteCall();
                 appendScope = true;
             }
-
+            int openPos = this.Emitter.Output.Length;
             this.WriteOpenParentheses();
 
             if (appendScope)
@@ -544,7 +544,7 @@ namespace Bridge.Translator
                 var argsExpressions = argsInfo.ArgumentsExpressions;
                 var paramsArg = argsInfo.ParamsExpression;
 
-                new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, ctor.Initializer).Emit();    
+                new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, ctor.Initializer, openPos).Emit();    
             }
 
             this.WriteCloseParentheses();
