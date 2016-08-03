@@ -1,4 +1,4 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("TypeScriptTest", function ($asm, globals) {
     "use strict";
 
     Bridge.define('Generics.GenericClass$1', function (T) { return {
@@ -150,4 +150,4 @@
     
     
     Bridge.init();
-})(this);
+});

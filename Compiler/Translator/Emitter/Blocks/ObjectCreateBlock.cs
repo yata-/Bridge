@@ -10,6 +10,7 @@ using Mono.Cecil;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Bridge.Translator
@@ -44,6 +45,13 @@ namespace Bridge.Translator
             ObjectCreateExpression objectCreateExpression = this.ObjectCreateExpression;
 
             var resolveResult = this.Emitter.Resolver.ResolveNode(objectCreateExpression.Type, this.Emitter) as TypeResolveResult;
+
+            if (resolveResult != null && resolveResult.Type.Kind == TypeKind.Enum)
+            {
+                this.Write("(0)");
+                return;
+            }
+
             bool isTypeParam = resolveResult.Type.Kind == TypeKind.TypeParameter;
             var type = isTypeParam ? null : this.Emitter.GetTypeDefinition(objectCreateExpression.Type);
 
@@ -113,16 +121,8 @@ namespace Bridge.Translator
                 this.WriteOpenBrace();
                 this.WriteSpace();
 
-                if (hasInitializer)
-                {
-                    this.WriteObjectInitializer(objectCreateExpression.Initializer.Elements, this.Emitter.AssemblyInfo.PreserveMemberCase, type, invocationResolveResult);
-                    this.WriteSpace();
-                }
-                else if (this.Emitter.Validator.IsObjectLiteral(type))
-                {
-                    this.WriteObjectInitializer(null, this.Emitter.AssemblyInfo.PreserveMemberCase, type, invocationResolveResult);
-                    this.WriteSpace();
-                }
+                this.WriteObjectInitializer(objectCreateExpression.Initializer.Elements, this.Emitter.AssemblyInfo.PreserveMemberCase, type, invocationResolveResult);
+                this.WriteSpace();
 
                 this.WriteCloseBrace();
             }
@@ -140,20 +140,39 @@ namespace Bridge.Translator
                 }
                 else
                 {
+                    var ctorMember = ((InvocationResolveResult)this.Emitter.Resolver.ResolveNode(objectCreateExpression, this.Emitter)).Member;
+                    var expandParams = ctorMember.Attributes.Any(a => a.AttributeType.FullName == "Bridge.ExpandParamsAttribute");
+                    bool applyCtor = false;
+
+                    if (expandParams)
+                    {
+                        var ctor_rr = this.Emitter.Resolver.ResolveNode(paramsArg, this.Emitter);
+
+                        if (ctor_rr.Type.Kind == TypeKind.Array && !(paramsArg is ArrayCreateExpression) && objectCreateExpression.Arguments.Last() == paramsArg)
+                        {
+                            this.Write("Bridge.Reflection.applyConstructor(");
+                            applyCtor = true;
+                        }
+                    }
+
                     if (String.IsNullOrEmpty(customCtor))
                     {
-                        this.WriteNew();
+                        if (!applyCtor)
+                        {
+                            this.WriteNew();
+                        }
+                        
                         var typerr = this.Emitter.Resolver.ResolveNode(objectCreateExpression.Type, this.Emitter).Type;
                         var isGeneric = typerr.TypeArguments.Count > 0 && !Helpers.IsIgnoreGeneric(typerr, this.Emitter);
 
-                        if (isGeneric)
+                        if (isGeneric && !applyCtor)
                         {
                             this.WriteOpenParentheses();
                         }
 
                         objectCreateExpression.Type.AcceptVisitor(this.Emitter);
 
-                        if (isGeneric)
+                        if (isGeneric && !applyCtor)
                         {
                             this.WriteCloseParentheses();
                         }
@@ -174,9 +193,17 @@ namespace Bridge.Translator
                         this.Write(name);
                     }
 
-                    this.WriteOpenParentheses();
+                    if (applyCtor)
+                    {
+                        this.Write(", ");
+                    }
+                    else
+                    {
+                        this.WriteOpenParentheses();
+                    }
+                    
 
-                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, objectCreateExpression).Emit();
+                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, objectCreateExpression, -1).Emit();
                     this.WriteCloseParentheses();
                 }
 
@@ -196,7 +223,7 @@ namespace Bridge.Translator
                     {
                         this.BeginBlock();
                     }
-
+                    List<string> inlineInit = new List<string>();
                     foreach (Expression item in elements)
                     {
                         if (needComma)
@@ -206,15 +233,21 @@ namespace Bridge.Translator
 
                         needComma = true;
 
-                        if (item is NamedExpression)
+                        inlineCode = ObjectCreateBlock.GetInlineInit(item, this);
+
+                        if (inlineCode != null)
+                        {
+                            inlineInit.Add(inlineCode);
+                        }
+                        else if (item is NamedExpression)
                         {
                             var namedExpression = (NamedExpression)item;
-                            new NameBlock(this.Emitter, namedExpression.Name, namedExpression, namedExpression.Expression).Emit();
+                            new NameBlock(this.Emitter, namedExpression.Name, namedExpression, namedExpression.Expression, true).Emit();
                         }
                         else if (item is NamedArgumentExpression)
                         {
                             var namedArgumentExpression = (NamedArgumentExpression)item;
-                            new NameBlock(this.Emitter, namedArgumentExpression.Name, namedArgumentExpression, namedArgumentExpression.Expression).Emit();
+                            new NameBlock(this.Emitter, namedArgumentExpression.Name, namedArgumentExpression, namedArgumentExpression.Expression, true).Emit();
                         }
                         else if (item is ArrayInitializerExpression)
                         {
@@ -250,6 +283,20 @@ namespace Bridge.Translator
                         this.EndBlock();
                     }
 
+                    if (inlineInit.Count > 0)
+                    {
+                        this.Write(", function () ");
+                        this.BeginBlock();
+
+                        foreach (var init in inlineInit)
+                        {
+                            this.Write(init);
+                            this.WriteNewLine();
+                        }
+                        
+                        this.EndBlock();
+                    }
+
                     this.WriteSpace();
                     this.WriteCloseParentheses();
                 }
@@ -258,10 +305,146 @@ namespace Bridge.Translator
             //Helpers.CheckValueTypeClone(invocationResolveResult, this.ObjectCreateExpression, this, pos);
         }
 
+        public static string GetInlineInit(Expression item, AbstractEmitterBlock block)
+        {
+            Expression expr = null;
+            if (item is NamedExpression)
+            {
+                var namedExpression = (NamedExpression)item;
+                expr = namedExpression.Expression;
+            }
+            else if (item is NamedArgumentExpression)
+            {
+                var namedArgumentExpression = (NamedArgumentExpression)item;
+                expr = namedArgumentExpression.Expression;
+            }
+
+            var rr = block.Emitter.Resolver.ResolveNode(item, block.Emitter);
+            string inlineCode = null;
+            if (expr != null && rr is MemberResolveResult)
+            {
+                var member = ((MemberResolveResult)rr).Member;
+                
+                if (member is IProperty)
+                {
+                    var setter = ((IProperty)member).Setter;
+                    if (setter != null)
+                    {
+                        inlineCode = block.Emitter.GetInline(setter);
+                    }
+                }
+                else
+                {
+                    inlineCode = block.Emitter.GetInline(member);
+                }
+
+                if (inlineCode != null)
+                {
+                    bool oldIsAssignment = block.Emitter.IsAssignment;
+                    bool oldUnary = block.Emitter.IsUnaryAccessor;
+                    var oldWriter = block.SaveWriter();
+                    block.NewWriter();
+                    block.Emitter.IsAssignment = true;
+                    block.Emitter.IsUnaryAccessor = false;
+
+                    bool hasThis = inlineCode.Contains("{this}");
+                    if (inlineCode.StartsWith("<self>"))
+                    {
+                        hasThis = true;
+                        inlineCode = inlineCode.Substring(6);
+                    }
+
+                    if (hasThis)
+                    {
+                        inlineCode = inlineCode.Replace("{this}", "this");
+
+                        if (member is IProperty)
+                        {
+                            var argsInfo = new ArgumentsInfo(block.Emitter, item, rr);
+                            argsInfo.ArgumentsExpressions = new Expression[] { expr };
+                            argsInfo.ArgumentsNames = new string[] { "value" };
+                            argsInfo.ThisArgument = "this";
+                            argsInfo.NamedExpressions = argsInfo.CreateNamedExpressions(argsInfo.ArgumentsNames, argsInfo.ArgumentsExpressions);
+
+                            inlineCode = inlineCode.Replace("{0}", "[[0]]");
+                            new InlineArgumentsBlock(block.Emitter, argsInfo, inlineCode).Emit();
+                            inlineCode = block.Emitter.Output.ToString();
+                            inlineCode = inlineCode.Replace("[[0]]", "{0}");
+                        }
+                    }
+                    else
+                    {
+                        if (member.SymbolKind == SymbolKind.Property)
+                        {
+                            var count = block.Emitter.Writers.Count;
+                            block.PushWriter("this." + inlineCode);
+
+                            expr.AcceptVisitor(block.Emitter);
+
+                            if (block.Emitter.Writers.Count > count)
+                            {
+                                inlineCode = block.PopWriter(true);
+                            }
+                        }
+                        else
+                        {
+                            block.Write("this." + inlineCode);
+                        }
+                    }
+
+                    block.Emitter.IsAssignment = oldIsAssignment;
+                    block.Emitter.IsUnaryAccessor = oldUnary;
+                    block.RestoreWriter(oldWriter);
+                }
+            }
+
+            if (inlineCode != null && !inlineCode.Trim().EndsWith(";"))
+            {
+                inlineCode += ";";
+            }
+
+            return inlineCode;
+        }
+
         protected virtual void WriteObjectInitializer(IEnumerable<Expression> expressions, bool preserveMemberCase, TypeDefinition type, InvocationResolveResult rr)
         {
             bool needComma = false;
             List<string> names = new List<string>();
+
+            if (rr != null && this.ObjectCreateExpression.Arguments.Count > 0)
+            {
+                var args = this.ObjectCreateExpression.Arguments.ToList();
+                var arrIsOpen = false;
+                for (int i = 0; i < args.Count; i++)
+                {
+                    Expression expression = args[i];
+                    var p = rr.Member.Parameters[i < rr.Member.Parameters.Count ? i : (rr.Member.Parameters.Count - 1)];
+                    var name = p.Name;
+                    
+                    if (needComma)
+                    {
+                        this.WriteComma();
+                    }
+
+                    needComma = true;
+
+                    if (p.IsParams && !arrIsOpen)
+                    {
+                        arrIsOpen = true;
+                        this.Write("[");
+                    }
+                    
+                    this.Write(name, ": ");
+                    expression.AcceptVisitor(this.Emitter);
+
+                    names.Add(name);
+                }
+
+                if (arrIsOpen)
+                {
+                    this.Write("]");
+                }
+            }
 
             if (expressions != null)
             {

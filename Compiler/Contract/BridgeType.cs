@@ -233,6 +233,13 @@ namespace Bridge.Contract
 
         public static string ToJsName(IType type, IEmitter emitter, bool asDefinition = false, bool excludens = false, bool isAlias = false)
         {
+            var itypeDef = type.GetDefinition();
+
+            if (itypeDef != null && itypeDef.Attributes.Any(a => a.AttributeType.FullName == "Bridge.NonScriptableAttribute"))
+            {
+                throw new EmitterException(emitter.Translator.EmitNode, "Type " + type.FullName + " is marked as not usable from script");
+            }
+
             if (type.Kind == TypeKind.Array)
             {
                 return JS.Types.ARRAY;
@@ -261,6 +268,7 @@ namespace Bridge.Contract
             if (hasTypeDef)
             {
                 var typeDef = bridgeType.TypeDefinition;
+
                 if (typeDef.IsNested && !excludens)
                 {
                     name = (string.IsNullOrEmpty(name) ? "" : (name + ".")) + BridgeTypes.GetParentNames(typeDef);
@@ -424,7 +432,10 @@ namespace Bridge.Contract
             }
 
             var resolveResult = emitter.Resolver.ResolveNode(astType, emitter);
-            return BridgeTypes.ToJsName(resolveResult.Type, emitter);
+
+            var symbol = resolveResult.Type as ISymbol;
+            
+            return BridgeTypes.ToJsName(resolveResult.Type, emitter, astType.Parent is TypeOfExpression && symbol != null && symbol.SymbolKind == SymbolKind.TypeDefinition);
         }
 
         public static string AddModule(string name, BridgeType type, out bool isCustomName)

@@ -8,6 +8,7 @@ namespace Bridge
     /// </summary>
     [External]
     [AttributeUsage(AttributeTargets.Enum | AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Interface)]
+    [NonScriptable]
     public sealed class NamespaceAttribute : Attribute
     {
         public NamespaceAttribute(bool includeNamespace)

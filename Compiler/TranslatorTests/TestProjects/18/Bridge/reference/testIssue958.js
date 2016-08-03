@@ -1,8 +1,8 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("TestProject", function ($asm, globals) {
     "use strict";
 
     Bridge.define('TestIssue958.IMessage', {
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('TestIssue958.Issue958', {
@@ -35,7 +35,7 @@
         statics: {
             if: function (T, source, work) {
                 if (Bridge.is(source, T)) {
-                    work(Bridge.cast(source, T));
+                    work(System.Nullable.getValue(Bridge.cast(source, T)));
                 }
                 return source;
             }
@@ -71,4 +71,4 @@
     
     
     Bridge.init();
-})(this);
+});

@@ -1,4 +1,4 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("TypeScriptTest", function ($asm, globals) {
     "use strict";
 
     Bridge.define('Misc.A.Class1', {
@@ -14,14 +14,14 @@
     });
     
     Bridge.define('Misc.A.EnumTest.EnumA', {
+        $kind: "enum",
         statics: {
             M1: 0,
             M2: 1
-        },
-        $enum: true
+        }
     });
     
     
     
     Bridge.init();
-})(this);
+});

@@ -13,6 +13,8 @@ namespace Bridge.Translator
             this.Dependencies = new List<IPluginDependency>();
             this.InjectScriptToAssembly = true;
             this.Logging = new LoggingOptions();
+            this.Reflection = new ReflectionConfig();
+            this.ReflectionInternal = new ReflectionConfig();
         }
 
         /// <summary>
@@ -56,10 +58,10 @@ namespace Bridge.Translator
         {
             get
             {
-                if (this.CombineScripts)
+                /*if (this.CombineScripts)
                 {
                     return OutputBy.Project;
-                }
+                }*/
                 return this.outputBy;
             }
             set
@@ -296,6 +298,16 @@ namespace Bridge.Translator
         {
             get;
             set;
+        }
+
+        public IReflectionConfig Reflection
+        {
+            get; set;
+        }
+
+        internal IReflectionConfig ReflectionInternal
+        {
+            get; set;
         }
     }
 }

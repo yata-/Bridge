@@ -5,7 +5,7 @@ using System;
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
     // Bridge[#565]
-    [Category(Constants.MODULE_ISSUES)]
+    /*[Category(Constants.MODULE_ISSUES)]
     [TestFixture(TestNameFormat = "#565 - {0}")]
     public class Bridge565
     {
@@ -33,5 +33,5 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             var t7 = new RuntimeFieldHandle();
             Assert.True(t7.GetType() == typeof(RuntimeFieldHandle), "#565 t7");
         }
-    }
+    }*/
 }

@@ -1,4 +1,4 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("test", function ($asm, globals) {
     
     Bridge.define('Bridge.Test.Assert', {
         statics: {
@@ -408,7 +408,6 @@
                 QUnit.test("#559 - TestUseCase3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge559.testUseCase3);
                 QUnit.test("#563 - TesForeach", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge563.tesForeach);
                 QUnit.test("#563 - TesFor", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge563.tesFor);
-                QUnit.test("#565 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge565.testUseCase);
                 QUnit.test("#566 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge566.testUseCase);
                 QUnit.test("#572 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge572.testUseCase);
                 QUnit.test("#577 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge577.testUseCase);
@@ -447,7 +446,8 @@
                 QUnit.test("#664 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge664.testUseCase);
                 QUnit.test("#666 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge666.testUseCase);
                 QUnit.test("#671 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge671.testUseCase);
-                QUnit.test("#674 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge674.testUseCase);
+                QUnit.test("#674 - TestUndefinedToReferenceType", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge674.testUndefinedToReferenceType);
+                QUnit.test("#674 - TestUndefinedToValueType", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge674.testUndefinedToValueType);
                 QUnit.test("#675 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge675.testUseCase);
                 QUnit.test("#687 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge687.testUseCase);
                 QUnit.test("#689 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge689.testUseCase);
@@ -2265,16 +2265,6 @@
         }
     });
     
-    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge565', {
-        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge565)],
-        statics: {
-            testUseCase: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge565).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge565, 7);
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge565.testUseCase();
-            }
-        }
-    });
-    
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge566', {
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge566)],
         statics: {
@@ -2628,9 +2618,13 @@
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge674', {
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge674)],
         statics: {
-            testUseCase: function (assert) {
+            testUndefinedToReferenceType: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge674).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge674, 2);
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge674.testUndefinedToReferenceType();
+            },
+            testUndefinedToValueType: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge674).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge674, 1);
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge674.testUseCase();
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge674.testUndefinedToValueType();
             }
         }
     });
@@ -3598,4 +3592,4 @@
     });
     
     Bridge.init();
-})(this);
+});

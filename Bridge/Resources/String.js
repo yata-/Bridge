@@ -10,10 +10,11 @@
                 return true;
             }
 
-            if (type === System.Collections.IEnumerable ||
-                type.$$name && System.String.startsWith(type.$$name, "System.Collections.Generic.IEnumerable$1") ||
-                type.$$name && System.String.startsWith(type.$$name, "System.IComparable$1") ||
-                type.$$name && System.String.startsWith(type.$$name, "System.IEquatable$1")) {
+            if (type === System.ICloneable ||
+                type === System.Collections.IEnumerable ||
+                type === System.Collections.Generic.IEnumerable$1(System.Char) ||
+                type === System.IComparable$1(String) ||
+                type === System.IEquatable$1(String)) {
                 return true;
             }
 
@@ -69,9 +70,17 @@
         },
 
         format: function (format) {
+            return System.String._format(System.Globalization.CultureInfo.getCurrentCulture(), format, Array.prototype.slice.call(arguments, 1));
+        },
+
+        formatProvider: function (provider, format) {
+            return System.String._format(provider, format, Array.prototype.slice.call(arguments, 2));
+        },
+
+        _format: function (provider, format, values) {
             var me = this,
                 _formatRe = /(\{+)((\d+|[a-zA-Z_$]\w+(?:\.[a-zA-Z_$]\w+|\[\d+\])*)(?:\,(-?\d*))?(?:\:([^\}]*))?)(\}+)|(\{+)|(\}+)/g,
-                args = Array.prototype.slice.call(arguments, 1),
+                args = values,
                 fn = this.decodeBraceSequence;
 
             return format.replace(_formatRe, function (m, openBrace, elementContent, index, align, format, closeBrace, repeatOpenBrace, repeatCloseBrace) {
@@ -87,11 +96,11 @@
                     return fn(openBrace) + elementContent + fn(closeBrace);
                 }
 
-                return fn(openBrace, true) + me.handleElement(index, align, format, args) + fn(closeBrace, true);
+                return fn(openBrace, true) + me.handleElement(provider, index, align, format, args) + fn(closeBrace, true);
             });
         },
 
-        handleElement: function (index, alignment, formatStr, args) {
+        handleElement: function (provider, index, alignment, formatStr, args) {
             var value;
 
             index = parseInt(index, 10);
@@ -107,7 +116,7 @@
             }
 
             if (formatStr && Bridge.is(value, System.IFormattable)) {
-                value = Bridge.format(value, formatStr);
+                value = Bridge.format(value, formatStr, provider);
             } else {
                 value = "" + value;
             }

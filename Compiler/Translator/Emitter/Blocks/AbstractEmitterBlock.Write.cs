@@ -2,6 +2,7 @@ using Bridge.Contract;
 using Bridge.Contract.Constants;
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
@@ -97,6 +98,20 @@ namespace Bridge.Translator
             }
 
             this.Emitter.Output.Append(s);
+        }
+
+        public virtual void WriteLines(IEnumerable<string> lines)
+        {
+            foreach (var line in lines)
+            {
+                this.Write(line.Replace("\r\n", "\n"));
+                this.WriteNewLine();
+            }
+        }
+
+        public virtual void WriteLines(params string[] lines)
+        {
+            this.WriteLines((IEnumerable<string>)lines);
         }
 
         public string DecimalConstant(decimal value)

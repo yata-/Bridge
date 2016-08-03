@@ -12,6 +12,7 @@ namespace Bridge
     /// </remarks>
     [External]
     [AttributeUsage(AttributeTargets.Enum | AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Method | AttributeTargets.Interface | AttributeTargets.Field | AttributeTargets.Delegate | AttributeTargets.Property | AttributeTargets.Parameter)]
+    [NonScriptable]
     public sealed class NameAttribute : Attribute
     {
         public NameAttribute(string value)

@@ -176,7 +176,8 @@ namespace Bridge.Translator
                 isConstTarget = false;
             }
 
-            if (memberReferenceExpression.Parent is InvocationExpression && (((InvocationExpression)(memberReferenceExpression.Parent)).Target == memberReferenceExpression))
+            var isInvoke = memberReferenceExpression.Parent is InvocationExpression && (((InvocationExpression)(memberReferenceExpression.Parent)).Target == memberReferenceExpression);
+            if (isInvoke)
             {
                 resolveResult = this.Emitter.Resolver.ResolveNode(memberReferenceExpression.Parent, this.Emitter);
                 expressionResolveResult = this.Emitter.Resolver.ResolveNode(memberReferenceExpression, this.Emitter);
@@ -316,6 +317,40 @@ namespace Bridge.Translator
             Tuple<bool, bool, string> inlineInfo = member != null ? this.Emitter.GetInlineCode(memberReferenceExpression) : null;
             //string inline = member != null ? this.Emitter.GetInline(member.Member) : null;
             string inline = inlineInfo != null ? inlineInfo.Item3 : null;
+
+            if (string.IsNullOrEmpty(inline) && member != null &&
+                member.Member is IMethod &&
+                !(member is InvocationResolveResult) &&
+                !(
+                    memberReferenceExpression.Parent is InvocationExpression &&
+                    memberReferenceExpression.NextSibling != null &&
+                    memberReferenceExpression.NextSibling.Role is TokenRole &&
+                    ((TokenRole) memberReferenceExpression.NextSibling.Role).Token == "("
+                    )
+                )
+            {
+                var method = (IMethod)member.Member;
+                if (method.TypeArguments.Count > 0)
+                {
+                    inline = MemberReferenceBlock.GenerateInlineForMethodReference(method, this.Emitter);
+                }
+            }
+
+            if (member != null && member.Member is IMethod && isInvoke)
+            {
+                var i_rr = this.Emitter.Resolver.ResolveNode(memberReferenceExpression.Parent, this.Emitter) as CSharpInvocationResolveResult;
+
+                if (i_rr != null && !i_rr.IsExpandedForm)
+                {
+                    var tpl = this.Emitter.GetAttribute(member.Member.Attributes, JS.NS.BRIDGE + ".TemplateAttribute");
+
+                    if (tpl != null && tpl.PositionalArguments.Count == 2)
+                    {
+                        inline = tpl.PositionalArguments[1].ConstantValue.ToString();
+                    }
+                }
+            }
+
             bool hasInline = !string.IsNullOrEmpty(inline);
             bool hasThis = hasInline && inline.Contains("{this}");
             bool isInterfaceMember = false;
@@ -339,21 +374,31 @@ namespace Bridge.Translator
             {
                 this.Write("");
                 var oldBuilder = this.Emitter.Output;
-                this.Emitter.Output = new StringBuilder();
-                this.Emitter.IsAssignment = false;
-                this.Emitter.IsUnaryAccessor = false;
-                if (isConstTarget)
+                var oldInline = inline;
+                string thisArg = null;
+
+                if (this.MemberReferenceExpression.Target is BaseReferenceExpression)
                 {
-                    this.Write("(");
+                    thisArg = "this";
                 }
-                this.WriteSimpleTarget(resolveResult);
-                if (isConstTarget)
+                else
                 {
-                    this.Write(")");
+                    this.Emitter.Output = new StringBuilder();
+                    this.Emitter.IsAssignment = false;
+                    this.Emitter.IsUnaryAccessor = false;
+                    if (isConstTarget)
+                    {
+                        this.Write("(");
+                    }
+                    this.WriteSimpleTarget(resolveResult);
+                    if (isConstTarget)
+                    {
+                        this.Write(")");
+                    }
+
+                    thisArg = this.Emitter.Output.ToString();
                 }
                 
-                var oldInline = inline;
-                var thisArg = this.Emitter.Output.ToString();
                 int thisIndex = inline.IndexOf("{this}");
                 inline = inline.Replace("{this}", thisArg);
 
@@ -508,68 +553,98 @@ namespace Bridge.Translator
                          )
                     )
                 {
-                    var resolvedMethod = (IMethod)member.Member;
-                    bool isStatic = resolvedMethod != null && resolvedMethod.IsStatic;
-
-                    var isExtensionMethod = resolvedMethod.IsExtensionMethod;
-
-                    this.Emitter.IsAssignment = false;
-                    this.Emitter.IsUnaryAccessor = false;
-
-                    if (!isStatic)
+                    if (!string.IsNullOrEmpty(inline))
                     {
-                        this.Write(isExtensionMethod ? JS.Funcs.BRIDGE_BIND_SCOPE : JS.Funcs.BRIDGE_BIND);
-                        this.WriteOpenParentheses();
-                        interfaceTempVar = this.WriteTarget(resolveResult, isInterfaceMember, memberTargetrr, targetrr, false);
-                        this.Write(", ");
-                    }
-
-                    this.Emitter.IsAssignment = oldIsAssignment;
-                    this.Emitter.IsUnaryAccessor = oldUnary;
-
-                    if (isExtensionMethod)
-                    {
-                        this.Write(BridgeTypes.ToJsName(resolvedMethod.DeclaringType, this.Emitter));
-                    }
-                    else
-                    {
-                        this.Emitter.IsAssignment = false;
-                        this.Emitter.IsUnaryAccessor = false;
-                        if (isConstTarget)
+                        if (!(resolveResult is InvocationResolveResult) && member != null && member.Member is IMethod)
                         {
-                            this.Write("(");
+                            new InlineArgumentsBlock(this.Emitter,
+                                new ArgumentsInfo(this.Emitter, memberReferenceExpression, resolveResult), inline,
+                                (IMethod) member.Member, targetrr).EmitFunctionReference();
                         }
-
-                        if (interfaceTempVar != null)
+                        else if (resolveResult is InvocationResolveResult ||
+                                 (member.Member.SymbolKind == SymbolKind.Property && this.Emitter.IsAssignment))
                         {
-                            this.Write(interfaceTempVar);
+                            this.PushWriter(inline);
                         }
                         else
                         {
-                            this.WriteSimpleTarget(resolveResult);
+                            this.Write(inline);
                         }
-                        
-                        if (isConstTarget)
-                        {
-                            this.Write(")");
-                        }
-                        this.Emitter.IsAssignment = oldIsAssignment;
-                        this.Emitter.IsUnaryAccessor = oldUnary;
-                    }
-
-                    if (isInterfaceMember)
-                    {
-                        this.WriteInterfaceMember(interfaceTempVar, member, false);
                     }
                     else
                     {
-                        this.WriteDot();
-                        this.Write(OverloadsCollection.Create(this.Emitter, member.Member).GetOverloadName());
-                    }
+                        var resolvedMethod = (IMethod)member.Member;
+                        bool isStatic = resolvedMethod != null && resolvedMethod.IsStatic;
 
-                    if (!isStatic)
-                    {
-                        this.Write(")");
+                        var isExtensionMethod = resolvedMethod.IsExtensionMethod;
+
+                        this.Emitter.IsAssignment = false;
+                        this.Emitter.IsUnaryAccessor = false;
+
+                        if (!isStatic)
+                        {
+                            this.Write(isExtensionMethod ? JS.Funcs.BRIDGE_BIND_SCOPE : JS.Funcs.BRIDGE_BIND);
+                            this.WriteOpenParentheses();
+
+                            if (memberReferenceExpression.Target is BaseReferenceExpression)
+                            {
+                                this.WriteThis();
+                            }
+                            else
+                            {
+                                interfaceTempVar = this.WriteTarget(resolveResult, isInterfaceMember, memberTargetrr, targetrr, false);
+                            }
+                            
+                            this.Write(", ");
+                        }
+
+                        this.Emitter.IsAssignment = oldIsAssignment;
+                        this.Emitter.IsUnaryAccessor = oldUnary;
+
+                        if (isExtensionMethod)
+                        {
+                            this.Write(BridgeTypes.ToJsName(resolvedMethod.DeclaringType, this.Emitter));
+                        }
+                        else
+                        {
+                            this.Emitter.IsAssignment = false;
+                            this.Emitter.IsUnaryAccessor = false;
+                            if (isConstTarget)
+                            {
+                                this.Write("(");
+                            }
+
+                            if (interfaceTempVar != null)
+                            {
+                                this.Write(interfaceTempVar);
+                            }
+                            else
+                            {
+                                this.WriteSimpleTarget(resolveResult);
+                            }
+
+                            if (isConstTarget)
+                            {
+                                this.Write(")");
+                            }
+                            this.Emitter.IsAssignment = oldIsAssignment;
+                            this.Emitter.IsUnaryAccessor = oldUnary;
+                        }
+
+                        if (isInterfaceMember)
+                        {
+                            this.WriteInterfaceMember(interfaceTempVar, member, false);
+                        }
+                        else
+                        {
+                            this.WriteDot();
+                            this.Write(OverloadsCollection.Create(this.Emitter, member.Member).GetOverloadName());
+                        }
+
+                        if (!isStatic)
+                        {
+                            this.Write(")");
+                        }
                     }
 
                     return;
@@ -641,6 +716,15 @@ namespace Bridge.Translator
                     {
                         this.WriteSimpleTarget(resolveResult);
                     }
+					
+					if (member != null && targetrr != null && targetrr.Type.Kind == TypeKind.Delegate && (member.Member.Name == "Invoke"))
+                    {
+                        var method = member.Member as IMethod;
+                        if (!(method != null && method.IsExtensionMethod))
+                        {
+                            return;
+                        }
+                    }
                     
                     if (isConstTarget)
                     {
@@ -698,7 +782,11 @@ namespace Bridge.Translator
                 }
                 else if (!string.IsNullOrEmpty(inline))
                 {
-                    if (resolveResult is InvocationResolveResult || (member.Member.SymbolKind == SymbolKind.Property && this.Emitter.IsAssignment))
+                    if (!(resolveResult is InvocationResolveResult) && member != null && member.Member is IMethod)
+                    {
+                        new InlineArgumentsBlock(this.Emitter, new ArgumentsInfo(this.Emitter, memberReferenceExpression, resolveResult), inline, (IMethod)member.Member, targetrr).EmitFunctionReference();
+                    }
+                    else if (resolveResult is InvocationResolveResult || (member.Member.SymbolKind == SymbolKind.Property && this.Emitter.IsAssignment))
                     {
                         this.PushWriter(inline);
                     }
@@ -1318,6 +1406,63 @@ namespace Bridge.Translator
 
                 Helpers.CheckValueTypeClone(resolveResult, memberReferenceExpression, this, pos);
             }
+        }
+
+        public static string GenerateInlineForMethodReference(IMethod method, IEmitter emitter)
+        {
+            StringBuilder sb = new StringBuilder();
+            var parameters = method.Parameters;
+
+            if (!method.IsStatic)
+            {
+                sb.Append("{this}");
+            }
+            else
+            {
+                sb.Append(BridgeTypes.ToJsName(method.DeclaringType, emitter));
+            }
+
+            sb.Append(".");
+            sb.Append(OverloadsCollection.Create(emitter, method).GetOverloadName());
+            sb.Append("(");
+
+            bool needComma = false;
+
+            foreach (var typeArgument in method.TypeArguments)
+            {
+                if (needComma)
+                {
+                    sb.Append(", ");
+                }
+
+                needComma = true;
+                if (typeArgument.Kind == TypeKind.TypeParameter)
+                {
+                    sb.Append("{");
+                    sb.Append(typeArgument.Name);
+                    sb.Append("}");
+                }
+                else
+                {
+                    sb.Append(BridgeTypes.ToJsName(typeArgument, emitter));
+                }
+            }
+
+            foreach (var parameter in parameters)
+            {
+                if (needComma)
+                {
+                    sb.Append(", ");
+                }
+
+                needComma = true;
+                sb.Append("{");
+                sb.Append(parameter.Name);
+                sb.Append("}");
+            }
+
+            sb.Append(")");
+            return sb.ToString();
         }
     }
 }

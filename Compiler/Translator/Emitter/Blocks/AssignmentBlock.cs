@@ -85,7 +85,7 @@ namespace Bridge.Translator
                     }
 
                     new ExpressionListBlock(this.Emitter,
-                        new Expression[] { assignmentExpression.Left, assignmentExpression.Right }, null).Emit();
+                        new Expression[] { assignmentExpression.Left, assignmentExpression.Right }, null, null, 0).Emit();
                     this.WriteCloseParentheses();
 
                     if (this.Emitter.Writers.Count > initCount)
@@ -678,7 +678,7 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    new ExpressionListBlock(this.Emitter, new Expression[] { this.AssignmentExpression.Right }, null).Emit();
+                    new ExpressionListBlock(this.Emitter, new Expression[] { this.AssignmentExpression.Right }, null, null, 0).Emit();
                 }
 
                 return;
@@ -709,11 +709,11 @@ namespace Bridge.Translator
                     this.WriteComma();
                     if (variable != null)
                     {
-                        new ExpressionListBlock(this.Emitter, new Expression[] { this.AssignmentExpression.Left }, null).Emit();
+                        new ExpressionListBlock(this.Emitter, new Expression[] { this.AssignmentExpression.Left }, null, null, 0).Emit();
                     }
                     else
                     {
-                        new ExpressionListBlock(this.Emitter, new Expression[] { this.AssignmentExpression.Left, this.AssignmentExpression.Right }, null).Emit();
+                        new ExpressionListBlock(this.Emitter, new Expression[] { this.AssignmentExpression.Left, this.AssignmentExpression.Right }, null, null, 0).Emit();
                     }
                     this.AddOveflowFlag(typeCode, op_name);
                     this.WriteCloseParentheses();
@@ -734,12 +734,12 @@ namespace Bridge.Translator
 
                     if (variable != null)
                     {
-                        new ExpressionListBlock(this.Emitter, new Expression[] { this.AssignmentExpression.Left }, null).Emit();
+                        new ExpressionListBlock(this.Emitter, new Expression[] { this.AssignmentExpression.Left }, null, null, 0).Emit();
                         this.Write(", " + variable);
                     }
                     else
                     {
-                        new ExpressionListBlock(this.Emitter, new Expression[] { this.AssignmentExpression.Left, this.AssignmentExpression.Right }, null).Emit();
+                        new ExpressionListBlock(this.Emitter, new Expression[] { this.AssignmentExpression.Left, this.AssignmentExpression.Right }, null, null, 0).Emit();
                     }
 
                     this.WriteCloseParentheses();
@@ -758,11 +758,11 @@ namespace Bridge.Translator
                     this.WriteComma();
                     if (variable != null)
                     {
-                        new ExpressionListBlock(this.Emitter, new Expression[] { this.AssignmentExpression.Left }, null).Emit();
+                        new ExpressionListBlock(this.Emitter, new Expression[] { this.AssignmentExpression.Left }, null, null, 0).Emit();
                     }
                     else
                     {
-                        new ExpressionListBlock(this.Emitter, new Expression[] { this.AssignmentExpression.Left, this.AssignmentExpression.Right }, null).Emit();
+                        new ExpressionListBlock(this.Emitter, new Expression[] { this.AssignmentExpression.Left, this.AssignmentExpression.Right }, null, null, 0).Emit();
                     }
                     this.AddOveflowFlag(typeCode, op_name);
                     this.WriteCloseParentheses();

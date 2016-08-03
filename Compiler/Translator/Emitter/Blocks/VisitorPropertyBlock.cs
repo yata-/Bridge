@@ -78,11 +78,7 @@ namespace Bridge.Translator
                 {
                     this.BeginBlock();
 
-                    foreach (var line in script)
-                    {
-                        this.Write(line);
-                        this.WriteNewLine();
-                    }
+                    this.WriteLines(script);
 
                     this.EndBlock();
                 }

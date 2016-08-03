@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json.Linq;
 
 namespace Bridge.Contract
 {
@@ -248,7 +250,19 @@ namespace Bridge.Contract
                 return true;
             }
 
-            return emitter.Validator.HasAttribute(typeDef.Attributes, "Bridge.IgnoreCastAttribute");
+            var ctorAttr = emitter.Validator.GetAttribute(typeDef.Attributes, "Bridge.ConstructorAttribute");
+
+            if (ctorAttr != null)
+            {
+                var inline = ctorAttr.PositionalArguments[0].ConstantValue.ToString();
+                if (Regex.Match(inline, @"\s*\{\s*\}\s*").Success)
+                {
+                    return true;
+                }
+            }
+
+            return emitter.Validator.HasAttribute(typeDef.Attributes, "Bridge.IgnoreCastAttribute") || 
+                   emitter.Validator.HasAttribute(typeDef.Attributes, "Bridge.ObjectLiteralAttribute");
         }
 
         public static bool IsIgnoreCast(ITypeDefinition typeDef, IEmitter emitter)
@@ -268,7 +282,19 @@ namespace Bridge.Contract
                 return true;
             }
 
-            return emitter.Validator.HasAttribute(typeDef.Attributes, "Bridge.IgnoreCastAttribute");
+            var ctorAttr = emitter.Validator.GetAttribute(typeDef.Attributes, "Bridge.ConstructorAttribute");
+
+            if (ctorAttr != null)
+            {
+                var inline = ctorAttr.PositionalArguments[0].ConstantValue.ToString();
+                if (Regex.Match(inline, @"\s*\{\s*\}\s*").Success)
+                {
+                    return true;
+                }
+            }
+
+            return emitter.Validator.HasAttribute(typeDef.Attributes, "Bridge.IgnoreCastAttribute") ||
+                   emitter.Validator.HasAttribute(typeDef.Attributes, "Bridge.ObjectLiteralAttribute");
         }
 
         public static bool IsIntegerType(IType type, IMemberResolver resolver)
@@ -992,10 +1018,10 @@ namespace Bridge.Contract
 
             return null;
         }
-
-        public static CustomAttribute GetInheritedAttribute(IEmitter emitter, TypeDefinition type, string attrName)
+        
+        public static IAttribute GetInheritedAttribute(ITypeDefinition typeDef, string attrName)
         {
-            foreach (var attr in type.CustomAttributes)
+            foreach (var attr in typeDef.Attributes)
             {
                 if (attr.AttributeType.FullName == attrName)
                 {
@@ -1003,18 +1029,11 @@ namespace Bridge.Contract
                 }
             }
 
-            return null;
-        }
+            var baseType = typeDef.DirectBaseTypes.Where(t => t.Kind != TypeKind.Interface).FirstOrDefault();
 
-        public static IAttribute GetInheritedAttribute(IType type, string attrName)
-        {
-            var typeDef = type.GetDefinition();
-            foreach (var attr in typeDef.Attributes)
+            if (baseType != null)
             {
-                if (attr.AttributeType.FullName == attrName)
-                {
-                    return attr;
-                }
+                return GetInheritedAttribute(baseType.GetDefinition(), attrName);
             }
 
             return null;
@@ -1098,6 +1117,16 @@ namespace Bridge.Contract
             }
 
             return s;
+        }
+
+        public static bool IsNonScriptable(ITypeDefinition type)
+        {
+            return Helpers.GetInheritedAttribute(type, "Bridge.NonScriptableAttribute") != null;
+        }
+
+        public static bool IsNonScriptable(IEntity entity)
+        {
+            return Helpers.GetInheritedAttribute(entity, "Bridge.NonScriptableAttribute") != null;
         }
     }
 }

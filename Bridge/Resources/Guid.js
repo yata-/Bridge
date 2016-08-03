@@ -4,6 +4,8 @@
             return [System.IComparable$1(System.Guid), System.IEquatable$1(System.Guid), System.IFormattable];
         },
 
+        $kind: "struct",
+
         statics: {
             $valid: /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/ig,
             $split: /^(.{8})(.{4})(.{4})(.{4})(.{12})$/,

@@ -1,4 +1,4 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("TypeScriptTest", function ($asm, globals) {
     "use strict";
 
     Bridge.define('Classes.Animal', {
@@ -39,6 +39,7 @@
     });
     
     Bridge.define('Classes.Point', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Classes.Point(); }
         },
@@ -52,7 +53,6 @@
         constructor: function () {
             this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + 1554797180;
@@ -87,7 +87,6 @@
         constructor: function (name) {
             this.$initialize();
             Classes.Animal.$constructor1.call(this, name);
-    
         },
         move$1: function () {
             return 20;
@@ -101,7 +100,6 @@
         constructor: function (name, id) {
             this.$initialize();
             Classes.Animal.$constructor1.call(this, name);
-    
             this.name$1 = name;
             this.id = id;
         }
@@ -112,7 +110,6 @@
         constructor: function (name) {
             this.$initialize();
             Classes.Animal.$constructor1.call(this, name);
-    
         },
         move: function () {
             return 5;
@@ -122,4 +119,4 @@
     
     
     Bridge.init();
-})(this);
+});

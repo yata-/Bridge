@@ -1,4 +1,4 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("Bridge.ClientTest.Batch2", function ($asm, globals) {
     "use strict";
 
     Bridge.define('Bridge.ClientTest.Batch2.BridgeIssues.Bridge1385', {
@@ -48,9 +48,9 @@
     Bridge.define('Bridge.ClientTest.Batch2.BridgeIssues.N1204', {
         statics: {
             testStrictNullChecksOptionForNulls: function () {
-                var temp = { };
+                var temp = {  };
                 var temp1 = temp;
-                var temp2 = { };
+                var temp2 = {  };
                 var l = System.Int64(5);
                 var ol = System.Int64(5);
                 var oi = 5;
@@ -200,13 +200,13 @@
         },
         containsWorks: function () {
             var arr = ["x", "y"];
-            Bridge.Test.Assert.true(System.Linq.Enumerable.from(arr).contains("x"));
-            Bridge.Test.Assert.false(System.Linq.Enumerable.from(arr).contains("z"));
+            Bridge.Test.Assert.true(System.Array.contains(arr, "x", String));
+            Bridge.Test.Assert.false(System.Array.contains(arr, "z", String));
         },
         containsUsesEqualsMethod: function () {
             var arr = [new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(1), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(3)];
-            Bridge.Test.Assert.true(System.Linq.Enumerable.from(arr).contains(new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2)));
-            Bridge.Test.Assert.false(System.Linq.Enumerable.from(arr).contains(new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(4)));
+            Bridge.Test.Assert.true(System.Array.contains(arr, new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2), Bridge.ClientTest.Batch2.BridgeIssues.N772.C));
+            Bridge.Test.Assert.false(System.Array.contains(arr, new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(4), Bridge.ClientTest.Batch2.BridgeIssues.N772.C));
         },
         allWithArrayItemFilterCallbackWorks: function () {
             Bridge.Test.Assert.true(System.Linq.Enumerable.from([1, 2, 3]).all($_.Bridge.ClientTest.Batch2.BridgeIssues.N772.f1));
@@ -218,7 +218,7 @@
         },
         foreachWithArrayItemCallbackWorks: function () {
             var result = "";
-            Bridge.Linq.Enumerable.from(["a", "b", "c"]).forEach(function (s) {
+            ["a", "b", "c"].forEach(function (s) {
                 result += s;
             });
             Bridge.Test.Assert.areEqual("abc", result);
@@ -1534,4 +1534,4 @@
     });
     
     Bridge.init();
-})(this);
+});

@@ -4,6 +4,7 @@ namespace Bridge
 {
     [External]
     [AttributeUsage(AttributeTargets.Enum)]
+    [NonScriptable]
     public class EnumAttribute : Attribute
     {
         public EnumAttribute(Emit emit)
@@ -12,6 +13,7 @@ namespace Bridge
     }
 
     [External]
+    [NonScriptable]
     public enum Emit
     {
         Name = 1,

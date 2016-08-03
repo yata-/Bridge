@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Bridge.Contract;
 using Bridge.Contract.Constants;
 using ICSharpCode.NRefactory.CSharp;
@@ -16,7 +17,21 @@ namespace Bridge.Translator
             this.ArrayCreateExpression = arrayCreateExpression;
         }
 
+        public ArrayCreateBlock(IEmitter emitter, ArrayCreateExpression arrayCreateExpression, ArrayCreateResolveResult arrayCreateResolveResult)
+            : base(emitter, null)
+        {
+            this.Emitter = emitter;
+            this.ArrayCreateExpression = arrayCreateExpression;
+            this.ArrayCreateResolveResult = arrayCreateResolveResult;
+        }
+
         public ArrayCreateExpression ArrayCreateExpression
+        {
+            get;
+            set;
+        }
+
+        public ArrayCreateResolveResult ArrayCreateResolveResult
         {
             get;
             set;
@@ -30,7 +45,7 @@ namespace Bridge.Translator
         protected void VisitArrayCreateExpression()
         {
             ArrayCreateExpression arrayCreateExpression = this.ArrayCreateExpression;
-            var rr = this.Emitter.Resolver.ResolveNode(arrayCreateExpression, this.Emitter) as ArrayCreateResolveResult;
+            var rr = this.ArrayCreateResolveResult ?? (this.Emitter.Resolver.ResolveNode(arrayCreateExpression, this.Emitter) as ArrayCreateResolveResult);
             var at = (ArrayType)rr.Type;
             var rank = arrayCreateExpression.Arguments.Count;
 
@@ -40,13 +55,28 @@ namespace Bridge.Translator
                 if (this.Emitter.AssemblyInfo.UseTypedArrays && (typedArrayName = Helpers.GetTypedArrayName(at.ElementType)) != null)
                 {
                     this.Write("new ", typedArrayName, "(");
-                    arrayCreateExpression.Arguments.First().AcceptVisitor(this.Emitter);
+                    if (this.ArrayCreateResolveResult != null)
+                    {
+                        AttributeCreateBlock.WriteResolveResult(this.ArrayCreateResolveResult.SizeArguments.First(), this);
+                    }
+                    else
+                    {
+                        arrayCreateExpression.Arguments.First().AcceptVisitor(this.Emitter);
+                    }
+                    
                     this.Write(")");
                 }
                 else
                 {
                     this.Write(JS.Types.SYSTEM_ARRAY + ".init(");
-                    arrayCreateExpression.Arguments.First().AcceptVisitor(this.Emitter);
+                    if (this.ArrayCreateResolveResult != null)
+                    {
+                        AttributeCreateBlock.WriteResolveResult(this.ArrayCreateResolveResult.SizeArguments.First(), this);
+                    }
+                    else
+                    {
+                        arrayCreateExpression.Arguments.First().AcceptVisitor(this.Emitter);
+                    }
                     this.WriteComma();
 
                     var def = Inspector.GetDefaultFieldValue(at.ElementType, arrayCreateExpression.Type);
@@ -103,8 +133,28 @@ namespace Bridge.Translator
             if (rr.InitializerElements != null && rr.InitializerElements.Count > 0)
             {
                 this.WriteOpenBracket();
-                var elements = arrayCreateExpression.Initializer.Elements;
-                new ExpressionListBlock(this.Emitter, elements, null).Emit();
+
+                if (this.ArrayCreateResolveResult != null)
+                {
+                    bool needComma = false;
+                    foreach (ResolveResult item in this.ArrayCreateResolveResult.InitializerElements)
+                    {
+                        if (needComma)
+                        {
+                            this.WriteComma();
+                        }
+
+                        needComma = true;
+
+                        AttributeCreateBlock.WriteResolveResult(item, this);
+                    }
+                }
+                else
+                {
+                    var elements = arrayCreateExpression.Initializer.Elements;
+                    new ExpressionListBlock(this.Emitter, elements, null, null, 0).Emit();
+                }
+
                 this.WriteCloseBracket();
             }
             else if (at.Dimensions > 1)
@@ -128,6 +178,10 @@ namespace Bridge.Translator
                     if (a.IsCompileTimeConstant)
                     {
                         this.Write(a.ConstantValue);
+                    }
+                    else if (this.ArrayCreateResolveResult != null)
+                    {
+                        AttributeCreateBlock.WriteResolveResult(this.ArrayCreateResolveResult.SizeArguments[i], this);
                     }
                     else if (arrayCreateExpression.Arguments.Count > i)
                     {

@@ -58,21 +58,10 @@ namespace Bridge.Translator
                 this.EmitStaticBlock();
                 this.EmitInstantiableBlock();
             }
-            else
-            {
-                this.EmitInterfaceBlock();
-            }
 
             this.EmitClassEnd();
         }
-
-        private void EmitInterfaceBlock()
-        {
-            this.EnsureComma();
-            this.Write(JS.Fields.INTERFACE + ": true");
-            this.Emitter.Comma = true;
-        }
-
+        
         protected virtual void EmitClassHeader()
         {
             var beforeDefineMethods = this.GetBeforeDefineMethods();
@@ -115,7 +104,14 @@ namespace Bridge.Translator
                 name = BridgeTypes.DefinitionToJsName(this.TypeInfo.Type, this.Emitter);
             }
 
-            this.Write(JS.Funcs.BRIDGE_DEFINE);
+            if (typeDef.IsInterface && typeDef.HasGenericParameters)
+            {
+                this.Write(JS.Funcs.BRIDGE_DEFINEI);
+            }
+            else
+            {
+                this.Write(JS.Funcs.BRIDGE_DEFINE);
+            }
 
             this.WriteOpenParentheses();
 
@@ -174,9 +170,43 @@ namespace Bridge.Translator
                 this.Emitter.Comma = true;
             }
 
+            this.WriteKind();
+
             if (this.TypeInfo.Module != null)
             {
                 this.WriteScope();
+            }
+
+            this.WriteVariance();
+        }
+
+        protected virtual void WriteVariance()
+        {
+            var itypeDef = this.TypeInfo.Type.GetDefinition();
+            if (itypeDef.Kind == TypeKind.Interface && MetadataUtils.IsJsGeneric(itypeDef, this.Emitter) &&
+                itypeDef.TypeParameters != null &&
+                itypeDef.TypeParameters.Any(typeParameter => typeParameter.Variance != VarianceModifier.Invariant))
+            {
+                this.EnsureComma();
+                this.Write(JS.Fields.VARIANCE);
+                this.WriteColon();
+                this.WriteScript(
+                    itypeDef.TypeParameters.Select(typeParameter => ClassBlock.ConvertVarianceToInt(typeParameter.Variance))
+                        .ToArray());
+                this.Emitter.Comma = true;
+            }
+        }
+
+        private static int ConvertVarianceToInt(VarianceModifier variance)
+        {
+            switch (variance)
+            {
+                case VarianceModifier.Covariant:
+                    return 1;
+                case VarianceModifier.Contravariant:
+                    return 2;
+                default:
+                    return 0;
             }
         }
 
@@ -187,6 +217,18 @@ namespace Bridge.Translator
             this.WriteColon();
             this.Write(JS.Vars.EXPORTS);
             this.Emitter.Comma = true;
+        }
+
+        protected virtual void WriteKind()
+        {
+            if(this.TypeInfo.Type.Kind != TypeKind.Class)
+            {
+                this.EnsureComma();
+                this.Write(JS.Fields.KIND);
+                this.WriteColon();
+                this.WriteScript(this.TypeInfo.Type.Kind.ToString().ToLowerInvariant());
+                this.Emitter.Comma = true;
+            }            
         }
 
         protected virtual void EmitStaticBlock()
@@ -223,10 +265,6 @@ namespace Bridge.Translator
         {
             if (this.TypeInfo.IsEnum)
             {
-                this.EnsureComma();
-                this.Write(JS.Fields.ENUM + ": true");
-                this.Emitter.Comma = true;
-
                 if (this.Emitter.GetTypeDefinition(this.TypeInfo.Type)
                         .CustomAttributes.Any(attr => attr.AttributeType.FullName == "System.FlagsAttribute"))
                 {
@@ -234,9 +272,21 @@ namespace Bridge.Translator
                     this.Write(JS.Fields.FLAGS + ": true");
                     this.Emitter.Comma = true;
                 }
-            }
 
-            if (HasEntryPoint)
+                var etype = this.TypeInfo.Type.GetDefinition().EnumUnderlyingType;
+                var enumMode = this.Emitter.Validator.EnumEmitMode(this.TypeInfo.Type);
+                var isString = enumMode >= 3 && enumMode <= 6;
+                if (!etype.IsKnownType(KnownTypeCode.Int32) || isString)
+                {
+                    this.EnsureComma();
+                    this.Write(JS.Fields.UNDERLYINGTYPE + ": ");
+                    this.Write(isString ? "System.String" : BridgeTypes.ToJsName(etype, this.Emitter));
+
+                    this.Emitter.Comma = true;
+                }
+            }
+            
+            if (this.HasEntryPoint)
             {
                 this.EnsureComma();
                 this.Write(JS.Fields.ENTRY_POINT + ": true");

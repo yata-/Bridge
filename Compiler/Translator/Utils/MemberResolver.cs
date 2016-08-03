@@ -1,6 +1,7 @@
 using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
+using ICSharpCode.NRefactory.CSharp.TypeSystem;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
@@ -80,10 +81,16 @@ namespace Bridge.Translator
 
         private void InitResolver(SyntaxTree syntaxTree)
         {
-            if (this.lastFileName != syntaxTree.FileName)
+            if (this.lastFileName != syntaxTree.FileName || string.IsNullOrEmpty(syntaxTree.FileName))
             {
                 this.lastFileName = syntaxTree.FileName;
-                var unresolvedFile = syntaxTree.ToTypeSystem();
+                CSharpUnresolvedFile unresolvedFile = null;
+
+                if (!string.IsNullOrEmpty(this.lastFileName))
+                {
+                    unresolvedFile = syntaxTree.ToTypeSystem();
+                }
+                
                 this.resolver = new CSharpAstResolver(compilation, syntaxTree, unresolvedFile);
             }
         }

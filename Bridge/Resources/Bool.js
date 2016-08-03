@@ -6,8 +6,8 @@
 
         is: function (obj, type) {
             if (type === System.IComparable ||
-                type.$$name === "System.IEquatable$1$Boolean" ||
-                type.$$name === "System.IComparable$1$Boolean") {
+                type === System.IEquatable$1(Boolean) ||
+                type === System.IComparable$1(Boolean)) {
                 return true;
             }
 

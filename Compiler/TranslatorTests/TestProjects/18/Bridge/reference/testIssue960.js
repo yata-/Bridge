@@ -1,4 +1,4 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("TestProject", function ($asm, globals) {
     "use strict";
 
     Bridge.define('TestIssue960.Example', {
@@ -8,7 +8,7 @@
     });
     
     Bridge.define('TestIssue960.IHaveNamed', {
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('TestIssue960.Issue960', {
@@ -45,4 +45,4 @@
     });
     
     Bridge.init();
-})(this);
+});

@@ -349,6 +349,12 @@ namespace Bridge.Contract
             set;
         }
 
+        Dictionary<string, string> NamedTempVariables
+        {
+            get;
+            set;
+        }
+
         Dictionary<string, bool> ParentTempVariables
         {
             get;
@@ -427,6 +433,16 @@ namespace Bridge.Contract
         {
             get;
             set;
+        }
+
+        bool IsAnonymousReflectable
+        {
+            get; set;
+        }
+
+        string MetaDataOutputName
+        {
+            get; set;
         }
     }
 }
