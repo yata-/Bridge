@@ -53,6 +53,7 @@
     <AdditionalExplicitAssemblyReferences />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Attributes\MixinAttribute.cs" />
     <Compile Include="Attributes\ImmutableAttribute.cs" />
     <Compile Include="Attributes\AccessorsIndexerAttribute.cs" />
     <Compile Include="Attributes\GlobalTargetAttribute.cs" />
