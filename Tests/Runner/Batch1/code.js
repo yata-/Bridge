@@ -6401,6 +6401,7 @@
             MODULE_TYPE_SYSTEM: "Type system",
             MODULE_REFLECTION: "Reflection",
             MODULE_ARGUMENTS: "Arguments",
+            MODULE_MIXIN: "Mixin",
             IGNORE_DATE: null
         }
     });
@@ -13179,6 +13180,16 @@
         },
         tanWorks: function () {
             this.assertAlmostEqual(Math.tan(0.5), 0.54630248984379048);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.MixinTests', {
+        testGlobalMethods: function () {
+            Bridge.Test.Assert.true(Bridge.global.isNaN("a"));
+            Bridge.Test.Assert.false(Bridge.global.isNaN(3));
+        },
+        testMixin: function () {
+            Bridge.Test.Assert.areEqual(3, System.Byte.parse("3"));
         }
     });
     

@@ -184,6 +184,8 @@
                 QUnit.test("GetArgumentWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArgumentsTests.getArgumentWorks);
                 QUnit.test("ToArrayWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArgumentsTests.toArrayWorks);
                 QUnit.test("ToArrayOfTWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_ArgumentsTests.toArrayOfTWorks);
+                QUnit.test("Mixin - TestGlobalMethods", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MixinTests.testGlobalMethods);
+                QUnit.test("Mixin - TestMixin", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MixinTests.testMixin);
                 QUnit.module("C#");
                 QUnit.test("Abstract types - TestB", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BasicCSharp_TestAbstractClass.testB);
                 QUnit.test("Abstract types - TestC", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_BasicCSharp_TestAbstractClass.testC);
@@ -6259,6 +6261,20 @@
             tanWorks: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.MathTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MathTests);
                 t.getFixture().tanWorks();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MixinTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.MixinTests)],
+        statics: {
+            testGlobalMethods: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.MixinTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MixinTests);
+                t.getFixture().testGlobalMethods();
+            },
+            testMixin: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.MixinTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MixinTests);
+                t.getFixture().testMixin();
             }
         }
     });
