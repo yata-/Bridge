@@ -1,11 +1,9 @@
 using Bridge.Contract;
 using Bridge.Contract.Constants;
-
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using Object.Net.Utilities;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,52 +46,72 @@ namespace Bridge.Translator
         protected override void DoEmit()
         {
             XmlToJsDoc.EmitComment(this, this.Emitter.Translator.EmitNode);
+            string globalTarget = BridgeTypes.GetGlobalTarget(this.TypeInfo.Type.GetDefinition(), this.TypeInfo.TypeDeclaration);
 
-            this.EmitClassHeader();
-
-            this.Emitter.NamedFunctions = new Dictionary<string, string>();
-
-            if (this.TypeInfo.TypeDeclaration.ClassType != ClassType.Interface)
+            if (globalTarget != null)
             {
-                this.EmitStaticBlock();
-                this.EmitInstantiableBlock();
+                this.CheckGlobalClass();
+                this.Emitter.NamedFunctions = new Dictionary<string, string>();
+                this.WriteTopInitMethods();
+
+                this.Write("Bridge.apply(");
+                this.Write(globalTarget);
+                this.Write(", ");
+                this.BeginBlock();
+
+                new MethodBlock(this.Emitter, this.TypeInfo, true).Emit();
+
+                this.WriteNewLine();
+                this.EndBlock();
+                this.WriteCloseParentheses();
+                this.WriteSemiColon();
+
+                this.EmitAnonymousTypes();
+                this.EmitNamedFunctions();
+
+                this.WriteAfterInitMethods();
+
+                this.WriteNewLine();
+                this.WriteNewLine();
+            }
+            else
+            {
+                this.EmitClassHeader();
+
+                this.Emitter.NamedFunctions = new Dictionary<string, string>();
+
+                if (this.TypeInfo.TypeDeclaration.ClassType != ClassType.Interface)
+                {
+                    this.EmitStaticBlock();
+                    this.EmitInstantiableBlock();
+                }
+
+                this.EmitClassEnd();
+            }
+        }
+
+        protected void CheckGlobalClass()
+        {
+            var type = this.TypeInfo.Type.GetDefinition();
+            if (!type.IsStatic)
+            {
+                throw new EmitterException(this.TypeInfo.TypeDeclaration, string.Format("The type {0} must be static in order to be decorated with a [MixinAttribute] or [GlobalMethodsAttribute]", this.TypeInfo.Type.FullName));
             }
 
-            this.EmitClassEnd();
+            if (type.TypeParameters.Count > 0)
+            {
+                throw new EmitterException(this.TypeInfo.TypeDeclaration, string.Format("[MixinAttribute] or [GlobalMethodsAttribute] cannot be applied to the generic type {0}.", this.TypeInfo.Type.FullName));
+            }
+
+            if (type.Members.Any(m => !m.IsStatic && m.SymbolKind != SymbolKind.Method))
+            {
+                throw new EmitterException(this.TypeInfo.TypeDeclaration, string.Format("The type {0} can contain only methods in order to be decorated with a [MixinAttribute] or [GlobalMethodsAttribute]", this.TypeInfo.Type.FullName));
+            }
         }
         
         protected virtual void EmitClassHeader()
         {
-            var beforeDefineMethods = this.GetBeforeDefineMethods();
-
-            if (beforeDefineMethods.Any())
-            {
-                foreach (var method in beforeDefineMethods)
-                {
-                    if (!this.Emitter.IsNewLine)
-                    {
-                        this.WriteNewLine();    
-                    }
-                    
-                    this.Write(method);
-                }
-
-                this.WriteNewLine();
-                this.WriteNewLine();
-            }
-
-            var topDefineMethods = this.GetTopDefineMethods();
-
-            if (topDefineMethods.Any())
-            {
-                foreach (var method in topDefineMethods)
-                {
-                    //this.Emitter.EmitterOutput.TopOutput.Append('\n');
-                    this.Emitter.EmitterOutput.TopOutput.Append(method);
-                }
-
-                //this.Emitter.EmitterOutput.TopOutput.Append('\n');
-            }
+            this.WriteTopInitMethods();
 
             var typeDef = this.Emitter.GetTypeDefinition();
             string name = this.Emitter.Validator.GetCustomTypeName(typeDef, this.Emitter);
@@ -178,6 +196,37 @@ namespace Bridge.Translator
             }
 
             this.WriteVariance();
+        }
+
+        private void WriteTopInitMethods()
+        {
+            var beforeDefineMethods = this.GetBeforeDefineMethods();
+
+            if (beforeDefineMethods.Any())
+            {
+                foreach (var method in beforeDefineMethods)
+                {
+                    if (!this.Emitter.IsNewLine)
+                    {
+                        this.WriteNewLine();
+                    }
+
+                    this.Write(method);
+                }
+
+                this.WriteNewLine();
+                this.WriteNewLine();
+            }
+
+            var topDefineMethods = this.GetTopDefineMethods();
+
+            if (topDefineMethods.Any())
+            {
+                foreach (var method in topDefineMethods)
+                {
+                    this.Emitter.EmitterOutput.TopOutput.Append(method);
+                }
+            }
         }
 
         protected virtual void WriteVariance()
@@ -327,6 +376,14 @@ namespace Bridge.Translator
             this.EmitAnonymousTypes();
             this.EmitNamedFunctions();
 
+            this.WriteAfterInitMethods();
+
+            this.WriteNewLine();
+            this.WriteNewLine();
+        }
+
+        private void WriteAfterInitMethods()
+        {
             var afterDefineMethods = this.GetAfterDefineMethods();
 
             if (afterDefineMethods.Any())
@@ -351,9 +408,6 @@ namespace Bridge.Translator
                     this.Emitter.EmitterOutput.BottomOutput.Append(method);
                 }
             }
-
-            this.WriteNewLine();
-            this.WriteNewLine();
         }
 
         protected virtual void EmitAnonymousTypes()
