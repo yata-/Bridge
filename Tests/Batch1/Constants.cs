@@ -95,6 +95,7 @@ namespace Bridge.ClientTest
         public const string MODULE_TYPE_SYSTEM = "Type system";
         public const string MODULE_REFLECTION = "Reflection";
         public const string MODULE_ARGUMENTS = "Arguments";
+        public const string MODULE_MIXIN = "Mixin";
 
         public const string IGNORE_DATE = null;
     }
