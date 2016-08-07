@@ -259,9 +259,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Methods
 
             string pattern = "[a-z]+";
             string input = "Abc1234Def5678Ghi9012Jklm";
-            //TODO: check timeout
             string[] substrings = Regex.Split(input, pattern, RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(500));
-
 
             ValidateResult(expected, substrings);
         }

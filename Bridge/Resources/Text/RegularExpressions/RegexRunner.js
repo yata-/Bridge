@@ -52,7 +52,6 @@ Bridge.define("System.Text.RegularExpressions.RegexRunner", {
         this._runtextstart = startat;
         this._quick = quick;
         this._prevlen = prevlen;
-        //TODO: internalMatchTimeout
 
         var stoppos;
         var bump;
@@ -87,8 +86,6 @@ Bridge.define("System.Text.RegularExpressions.RegexRunner", {
     },
 
     _convertNetEngineResults: function (jsMatch) {
-        //TODO: var stopPos = this._runregex.getRightToLeft() ? this._runtextbeg : this._runtextend;
-
         if (jsMatch.success && this._quick) {
             return null; // in quick mode, a successful match returns null
         }

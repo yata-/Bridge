@@ -614,7 +614,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
                 var capIndex = pass.onHoldTextIndex;
                 var capLength = textIndex - capIndex;
 
-                // TODO: Check this cache? 
+                // Cache value to avoid proceeding with the already checked route:
                 var tokenCache = branches.grCaptureCache[rawIndex];
                 if (tokenCache == null) {
                     tokenCache = {};
