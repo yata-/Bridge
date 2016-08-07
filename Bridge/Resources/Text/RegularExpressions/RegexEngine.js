@@ -30,6 +30,8 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
     // Public functions
     // ============================================================================================
     constructor: function (pattern, isCaseInsensitive, isMultiLine, isSingleline, isIgnoreWhitespace, isExplicitCapture, timeoutMs) {
+        this.$initialize();
+
         if (pattern == null) {
             throw new System.ArgumentNullException("pattern");
         }

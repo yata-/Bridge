@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Bridge.Contract</RootNamespace>
     <AssemblyName>Bridge.Contract</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -87,7 +88,10 @@
     <Compile Include="Constants\CS.cs" />
     <Compile Include="Constants\JS.cs" />
     <Compile Include="IAnonymousType.cs" />
+    <Compile Include="IReflectionConfig.cs" />
     <Compile Include="IWriter.cs" />
+    <Compile Include="MemberOrderer.cs" />
+    <Compile Include="MemberReflectability.cs" />
     <Compile Include="OverflowMode.cs" />
     <Compile Include="EmitterException.cs" />
     <Compile Include="Helpers.Cecil.cs" />
@@ -103,6 +107,7 @@
     <Compile Include="IEmitterOutputs.cs" />
     <Compile Include="IJsDoc.cs" />
     <Compile Include="IJumpInfo.cs" />
+    <Compile Include="IInvocationInterceptor.cs" />
     <Compile Include="LoggerLevel.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="ILog.cs" />
@@ -140,6 +145,7 @@
   <!-- NuGet packaging starts -->
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <NuGetBuildPackage>true</NuGetBuildPackage>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <NuGetPackageSourcePath Include="$(SolutionDir).build\specs\Bridge.Contract.nuspec">

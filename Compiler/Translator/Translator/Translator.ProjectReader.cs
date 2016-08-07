@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Build.Evaluation;
 using System.Collections.Generic;
 using System.IO;
@@ -18,6 +19,15 @@ namespace Bridge.Translator
 
             this.ValidateProject(doc);
 
+            var projectType = (from n in doc.Descendants()
+                               where n.Name.LocalName == "OutputType"
+                               select n).ToArray();
+
+            if (projectType.Length > 0 && projectType[0] != null && projectType[0].Value != Translator.SupportedProjectType)
+            {
+                Bridge.Translator.TranslatorException.Throw("Project type ({0}) is not supported, please use Library instead of {0}", projectType[0].Value);
+            }
+
             this.BuildAssemblyLocation(doc);
             this.SourceFiles = this.GetSourceFiles(doc);
             this.ParsedSourceFiles = new List<ParsedSourceFile>();
@@ -25,15 +35,6 @@ namespace Bridge.Translator
             if (!this.FromTask)
             {
                 this.ReadDefineConstants(doc);
-            }
-
-            var projectType = (from n in doc.Descendants()
-                          where n.Name.LocalName == "OutputType"
-                          select n).ToArray();
-
-            if (projectType.Length > 0 && projectType[0] != null && projectType[0].Value != Translator.SupportedProjectType)
-            {
-                Bridge.Translator.TranslatorException.Throw("Project type ({0}) is not supported, please use Library instead of {0}", projectType[0].Value);
             }
 
             this.Log.Info("Reading project file done");
@@ -134,21 +135,19 @@ namespace Bridge.Translator
                     outputPath = this.GetOutputPath(doc, "Release");
                 }
 
-                this.AssemblyLocation = Path.Combine(outputPath, this.GetAssemblyName(doc) + ".dll");
+                this.AssemblyName = this.GetAssemblyName(doc);
+                this.AssemblyLocation = Path.Combine(outputPath, this.AssemblyName  + ".dll");
 
                 if (!File.Exists(this.AssemblyLocation) && !this.Rebuild)
                 {
                     outputPath = this.GetOutputPath(doc, "Release");
-                    this.AssemblyLocation = Path.Combine(outputPath, this.GetAssemblyName(doc) + ".dll");
+                    this.AssemblyLocation = Path.Combine(outputPath, this.AssemblyName + ".dll");
                 }
             }
         }
 
         protected virtual string GetOutputPath(XDocument doc, string configuration)
         {
-            var opnodes = from n in doc.Descendants()
-                          where n.Name.LocalName == "OutputPath"
-                          select n;
             var nodes = from n in doc.Descendants()
                         where n.Name.LocalName == "OutputPath" &&
                               n.Parent.Attribute("Condition").Value.Contains(configuration)
@@ -214,7 +213,7 @@ namespace Bridge.Translator
                 project.ProjectCollection.UnloadProject(project);
             }
 
-            if (sourceFiles.Count() == 0)
+            if (!sourceFiles.Any())
             {
                 throw new Bridge.Translator.TranslatorException("Unable to get source file list from project file '" +
                     this.Location + "'. In order to use bridge, you have to have at least one source code file " +

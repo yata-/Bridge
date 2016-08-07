@@ -1,11 +1,20 @@
     // @source Core.js
-
     var core = {
         global: globals,
 
-        emptyFn: function () { },
+        emptyFn: function () {},
 
-        identity: function (x) { return x; },
+        identity: function (x) {
+            return x;
+        },
+
+        geti: function (scope, name1, name2) {
+            if (Bridge.hasValue(scope[name1])) {
+                return name1;
+            }
+
+            return name2;
+        },
 
         isPlainObject: function (obj) {
             if (typeof obj == 'object' && obj !== null) {
@@ -13,10 +22,10 @@
                     var proto = Object.getPrototypeOf(obj);
                     return proto === Object.prototype || proto === null;
                 }
-    
+
                 return Object.prototype.toString.call(obj) === '[object Object]';
             }
-  
+
             return false;
         },
 
@@ -69,43 +78,77 @@
 
             return proxy;
         },
-        
-        property : function (scope, name, v) {
+
+        property: function (scope, name, v, statics) {
             scope[name] = v;
 
             var rs = name.charAt(0) === "$",
-                cap = rs ? name.slice(1) : name;
+                cap = rs ? name.slice(1) : name,
+                getName = "get" + cap,
+                setName = "set" + cap,
+                lastSep = name.lastIndexOf("$"),
+                endsNum = lastSep > 0 && ((name.length - lastSep - 1) > 0) && !isNaN(parseInt(name.substr(lastSep + 1)));
 
-            scope["get" + cap] = (function (name) {
-                return function () {
+            if (endsNum) {
+                lastSep = name.substring(0, lastSep - 1).lastIndexOf("$");
+            }
+
+            if (lastSep > 0 && lastSep !== (name.length - 1)) {
+                getName = name.substring(0, lastSep) + "get" + name.substr(lastSep + 1);
+                setName = name.substring(0, lastSep) + "set" + name.substr(lastSep + 1);
+            }
+
+            scope[getName] = (function (name, scope, statics) {
+                return statics ? function () {
+                    return scope[name];
+                } : function () {
                     return this[name];
                 };
-            })(name);
+            })(name, scope, statics);
 
-            scope["set" + cap] = (function (name) {
-                return function (value) {
+            scope[setName] = (function (name, scope, statics) {
+                return statics ? function (value) {
+                    scope[name] = value;
+                } : function (value) {
                     this[name] = value;
                 };
-            })(name);
+            })(name, scope, statics);
         },
 
-        event: function (scope, name, v) {
+        event: function (scope, name, v, statics) {
             scope[name] = v;
 
             var rs = name.charAt(0) === "$",
-                cap = rs ? name.slice(1) : name;
+                cap = rs ? name.slice(1) : name,
+                addName = "add" + cap,
+                removeName = "remove" + cap,
+                lastSep = name.lastIndexOf("$"),
+                endsNum = lastSep > 0 && ((name.length - lastSep - 1) > 0) && !isNaN(parseInt(name.substr(lastSep + 1)));
 
-            scope["add" + cap] = (function (name) {
-                return function (value) {
+            if (endsNum) {
+                lastSep = name.substring(0, lastSep - 1).lastIndexOf("$");
+            }
+
+            if (lastSep > 0 && lastSep !== (name.length - 1)) {
+                addName = name.substring(0, lastSep) + "add" + name.substr(lastSep + 1);
+                removeName = name.substring(0, lastSep) + "remove" + name.substr(lastSep + 1);
+            }
+
+            scope[addName] = (function (name, scope, statics) {
+                return statics ? function (value) {
+                    scope[name] = Bridge.fn.combine(scope[name], value);
+                } : function (value) {
                     this[name] = Bridge.fn.combine(this[name], value);
                 };
-            })(name);
+            })(name, scope, statics);
 
-            scope["remove" + cap] = (function (name) {
-                return function (value) {
+            scope[removeName] = (function (name, scope, statics) {
+                return statics ? function (value) {
+                    scope[name] = Bridge.fn.remove(scope[name], value);
+                } : function (value) {
                     this[name] = Bridge.fn.remove(this[name], value);
                 };
-            })(name);
+            })(name, scope, statics);
         },
 
         createInstance: function (type) {
@@ -124,11 +167,11 @@
             if (type === System.Double ||
                 type === System.Single ||
                 type === System.Byte ||
-	            type === System.SByte ||
-	            type === System.Int16 ||
-	            type === System.UInt16 ||
-	            type === System.Int32 ||
-	            type === System.UInt32 ||
+                type === System.SByte ||
+                type === System.Int16 ||
+                type === System.UInt16 ||
+                type === System.Int32 ||
+                type === System.UInt32 ||
                 type === Bridge.Int) {
                 return 0;
             }
@@ -151,6 +194,15 @@
         clone: function (obj) {
             if (Bridge.isArray(obj)) {
                 return System.Array.clone(obj);
+            }
+
+            if (Bridge.isString(obj)) {
+                return obj;
+            }
+
+            var name;
+            if (Bridge.isFunction(obj[name = "System$ICloneable$clone"])) {
+                return obj[name]();
             }
 
             if (Bridge.is(obj, System.ICloneable)) {
@@ -198,7 +250,7 @@
 
             for (i = 0; i < nsParts.length; i++) {
                 if (typeof scope[nsParts[i]] === "undefined") {
-                    scope[nsParts[i]] = { };
+                    scope[nsParts[i]] = {};
                 }
 
                 scope = scope[nsParts[i]];
@@ -236,7 +288,7 @@
                     e.preventDefault();
                 }
 
-                return(ret);
+                return (ret);
             };
 
             var attachHandler = function () {
@@ -327,91 +379,40 @@
             return null;
         },
 
+        getTypeAlias: function (obj) {
+            var name = Bridge.getTypeName(obj);
+            return name.replace(/[\.\(\)\,]/g, "$");
+        },
+
         getTypeName: function (obj) {
-            var str;
-
-            if (obj.$$name) {
-                return obj.$$name;
-            }
-
-            if ((obj).constructor === Function) {
-                str = (obj).toString();
-            } else {
-                str = (obj).constructor.toString();
-            }
-
-            var results = (/function (.{1,})\(/).exec(str);
-
-            return (results && results.length > 1) ? results[1] : "Object";
-        },
-
-        getBaseType: function (obj) {
-            if (obj == null) {
-                throw new System.NullReferenceException();
-            }
-
-            if (obj.$interface) {
-                return null;
-            }
-
-            if (obj.$$inherits) {
-                return obj.$$inherits[0].$interface ? Object : obj.$$inherits[0];
-            } else {
-                return obj.$$name ? Object : null;
-            }
-        },
-
-        isAssignableFrom: function (baseType, type) {
-            if (baseType === null) {
-                throw new System.NullReferenceException();
-            }
-
-            if (type === null) {
-                return false;
-            }        
-
-            if (baseType == type || baseType == Object) {
-                return true;
-            }
-
-            var inheritors = type.$$inherits,
-                i,
-                r;
-
-            if (inheritors) {
-                for (i = 0; i < inheritors.length; i++) {
-                    r = Bridge.isAssignableFrom(baseType, inheritors[i]);
-
-                    if (r) {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
+            return Bridge.Reflection.getTypeFullName(obj);
         },
 
         is: function (obj, type, ignoreFn, allowNull) {
-	        if (typeof type === "string") {
+            if (typeof type === "string") {
                 type = Bridge.unroll(type);
-	        }
+            }
 
             if (obj == null) {
                 return !!allowNull;
             }
 
             if (ignoreFn !== true) {
-	            if (Bridge.isFunction(type.$is)) {
-	                return type.$is(obj);
-	            }
+                if (Bridge.isFunction(type.$is)) {
+                    return type.$is(obj);
+                }
 
-	            if (Bridge.isFunction(type.instanceOf)) {
-	                return type.instanceOf(obj);
-	            }
+                if (Bridge.isFunction(type.instanceOf)) {
+                    return type.instanceOf(obj);
+                }
+
+                if (Bridge.isFunction(type.isAssignableFrom)) {
+                    return type.isAssignableFrom(Bridge.getType(obj));
+                }
             }
 
             if ((obj.constructor === type) || (obj instanceof type)) {
-	            return true;
+                return true;
             }
 
             if (Bridge.isArray(obj) || obj instanceof Bridge.ArrayEnumerator) {
@@ -435,68 +436,68 @@
 
             for (i = 0; i < inheritors.length; i++) {
                 if (Bridge.is(obj, inheritors[i])) {
-	                return true;
-	            }
+                    return true;
+                }
             }
 
             return false;
-	    },
+        },
 
         as: function (obj, type, allowNull) {
-	        return Bridge.is(obj, type, false, allowNull) ? obj : null;
+            return Bridge.is(obj, type, false, allowNull) ? obj : null;
         },
 
         cast: function (obj, type, allowNull) {
-            if (obj === null) {
-                return null;
+            if (obj === null || typeof (obj) === "undefined") {
+                return obj;
             }
 
             var result = Bridge.as(obj, type, allowNull);
 
-	        if (result === null) {
-	            throw new System.InvalidCastException("Unable to cast type " + (obj ? Bridge.getTypeName(obj) : "'null'") + " to type " + Bridge.getTypeName(type));
-	        }
+            if (result === null) {
+                throw new System.InvalidCastException("Unable to cast type " + (obj ? Bridge.getTypeName(obj) : "'null'") + " to type " + Bridge.getTypeName(type));
+            }
 
-	        return result;
+            return result;
         },
 
-	    apply: function (obj, values) {
-	        var names = Bridge.getPropertyNames(values, true),
-	            i;
+        apply: function (obj, values) {
+            var names = Bridge.getPropertyNames(values, true),
+                i;
 
-	        for (i = 0; i < names.length; i++) {
-	            var name = names[i];
+            for (i = 0; i < names.length; i++) {
+                var name = names[i];
 
-	            if (typeof obj[name] === "function" && typeof values[name] !== "function") {
-	                obj[name](values[name]);
-	            } else {
-	                obj[name] = values[name];
-	            }
-	        }
+                if (typeof obj[name] === "function" && typeof values[name] !== "function") {
+                    obj[name](values[name]);
+                } else {
+                    obj[name] = values[name];
+                }
+            }
 
-	        return obj;
+            return obj;
         },
 
-	    merge: function (to, from, elemFactory) {
-	        // Maps instance of plain JS value or Object into Bridge object. 
-	        // Used for deserialization. Proper deserialization requires reflection that is currently not supported in Bridge. 
-	        // It currently is only capable to deserialize:
-	        // -instance of single class or primitive
-	        // -array of primitives 
-	        // -array of single class            
-	        if (to instanceof System.Decimal && Bridge.isNumber(from)) {
-	            return new System.Decimal(from);
-	        }
+        merge: function (to, from, callback, elemFactory) {
+            // Maps instance of plain JS value or Object into Bridge object. 
+            // Used for deserialization. Proper deserialization requires reflection that is currently not supported in Bridge. 
+            // It currently is only capable to deserialize:
+            // -instance of single class or primitive
+            // -array of primitives 
+            // -array of single class            
+            if (to instanceof System.Decimal && Bridge.isNumber(from)) {
+                return new System.Decimal(from);
+            }
 
-	        if (to instanceof System.Int64 && Bridge.isNumber(from)) {
-	            return new System.Int64(from);
-	        }
+            if (to instanceof System.Int64 && Bridge.isNumber(from)) {
+                return new System.Int64(from);
+            }
 
-	        if (to instanceof System.UInt64 && Bridge.isNumber(from)) {
-	            return new System.UInt64(from);
-	        }
+            if (to instanceof System.UInt64 && Bridge.isNumber(from)) {
+                return new System.UInt64(from);
+            }
 
-	        if (to instanceof Boolean ||
+            if (to instanceof Boolean ||
                 to instanceof Number ||
                 to instanceof String ||
                 to instanceof Function ||
@@ -504,125 +505,138 @@
                 to instanceof System.Double ||
                 to instanceof System.Single ||
                 to instanceof System.Byte ||
-	            to instanceof System.SByte ||
-	            to instanceof System.Int16 ||
-	            to instanceof System.UInt16 ||
-	            to instanceof System.Int32 ||
-	            to instanceof System.UInt32 ||
+                to instanceof System.SByte ||
+                to instanceof System.Int16 ||
+                to instanceof System.UInt16 ||
+                to instanceof System.Int32 ||
+                to instanceof System.UInt32 ||
                 to instanceof Bridge.Int ||
                 to instanceof System.Decimal) {
-	            return from;
-	        }
+                return from;
+            }
 
-	        var key,
-			    i,
+            var key,
+                i,
                 value,
                 toValue,
-			    fn;
+                fn;
 
-	        if (Bridge.isArray(from) && Bridge.isFunction(to.add || to.push)) {
-	            fn = Bridge.isArray(to) ? to.push : to.add;
+            if (Bridge.isArray(from) && Bridge.isFunction(to.add || to.push)) {
+                fn = Bridge.isArray(to) ? to.push : to.add;
 
-	            for (i = 0; i < from.length; i++) {
-	                var item = from[i];
+                for (i = 0; i < from.length; i++) {
+                    var item = from[i];
 
-	                if (!Bridge.isArray(item)) {
-	                    item = [typeof elemFactory === 'undefined' ? item : Bridge.merge(elemFactory(), item)];
-	                }
+                    if (!Bridge.isArray(item)) {
+                        item = [typeof elemFactory === 'undefined' ? item : Bridge.merge(elemFactory(), item)];
+                    }
 
                     fn.apply(to, item);
-	            }
-	        } else {
-	            for (key in from) {
-	                value = from[key];
+                }
+            } else {
+                for (key in from) {
+                    value = from[key];
 
-	                if (typeof to[key] === "function") {
-	                    if (key.match(/^\s*get[A-Z]/)) {
-	                        Bridge.merge(to[key](), value);
-	                    } else {
-	                        to[key](value);
-	                    }
-	                } else {
-	                    var setter = "set" + key.charAt(0).toUpperCase() + key.slice(1);
+                    if (typeof to[key] === "function") {
+                        if (key.match(/^\s*get[A-Z]/)) {
+                            Bridge.merge(to[key](), value);
+                        } else {
+                            to[key](value);
+                        }
+                    } else {
+                        var setter = "set" + key.charAt(0).toUpperCase() + key.slice(1);
 
-	                    if (typeof to[setter] === "function" && typeof value !== "function") {
-	                        to[setter](value);
-	                    } else if (value && value.constructor === Object && to[key]) {
-	                        toValue = to[key];
-	                        Bridge.merge(toValue, value);
-	                    } else {
-	                        to[key] = value;
-	                    }
-	                }
-	            }
-	        }
+                        if (typeof to[setter] === "function" && typeof value !== "function") {
+                            to[setter](value);
+                        } else if (value && value.constructor === Object && to[key]) {
+                            toValue = to[key];
+                            Bridge.merge(toValue, value);
+                        } else {
+                            to[key] = value;
+                        }
+                    }
+                }
+            }
 
-	        return to;
-	    },
+            if (callback) {
+                callback.call(to, to);
+            }
 
-	    getEnumerator: function (obj, suffix) {
-	        if (typeof obj === "string") {
-	            obj = System.String.toCharArray(obj);
-	        }
+            return to;
+        },
 
-	        if (suffix && obj && obj["getEnumerator" + suffix]) {
-	            return obj["getEnumerator" + suffix].call(obj);
-	        }
+        getEnumerator: function (obj, suffix, T) {
+            if (typeof obj === "string") {
+                obj = System.String.toCharArray(obj);
+            }
 
-	        if (obj && obj.getEnumerator) {
-	            return obj.getEnumerator();
-	        }
+            if (suffix && obj && obj["getEnumerator" + suffix]) {
+                return obj["getEnumerator" + suffix].call(obj);
+            }
 
-	        if ((Object.prototype.toString.call(obj) === "[object Array]") ||
+            if (obj && obj.getEnumerator) {
+                return obj.getEnumerator();
+            }
+
+            var name;
+            if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$IEnumerable$1$" + Bridge.getTypeAlias(T) + "$getEnumerator"])) {
+                return obj[name]();
+            }
+
+            if (Bridge.isFunction(obj[name = "System$Collections$IEnumerable$getEnumerator"])) {
+                return obj[name]();
+            }
+
+            if ((Object.prototype.toString.call(obj) === "[object Array]") ||
                 (obj && Bridge.isDefined(obj.length))) {
-	            return new Bridge.ArrayEnumerator(obj);
-	        }
+                return new Bridge.ArrayEnumerator(obj, T);
+            }
 
-	        throw new System.InvalidOperationException("Cannot create enumerator");
-	    },
+            throw new System.InvalidOperationException("Cannot create enumerator");
+        },
 
-	    getPropertyNames: function (obj, includeFunctions) {
-	        var names = [],
-	            name;
+        getPropertyNames: function (obj, includeFunctions) {
+            var names = [],
+                name;
 
-	        for (name in obj) {
+            for (name in obj) {
                 if (includeFunctions || typeof obj[name] !== "function") {
                     names.push(name);
                 }
-	        }
+            }
 
-	        return names;
-	    },
+            return names;
+        },
 
-	    isDefined: function (value, noNull) {
-	        return typeof value !== "undefined" && (noNull ? value !== null : true);
-	    },
+        isDefined: function (value, noNull) {
+            return typeof value !== "undefined" && (noNull ? value !== null : true);
+        },
 
-	    isEmpty: function (value, allowEmpty) {
-	        return (typeof value === "undefined" || value === null) || (!allowEmpty ? value === "" : false) || ((!allowEmpty && Bridge.isArray(value)) ? value.length === 0 : false);
-	    },
+        isEmpty: function (value, allowEmpty) {
+            return (typeof value === "undefined" || value === null) || (!allowEmpty ? value === "" : false) || ((!allowEmpty && Bridge.isArray(value)) ? value.length === 0 : false);
+        },
 
-	    toArray: function (ienumerable) {
-	        var i,
-	            item,
+        toArray: function (ienumerable) {
+            var i,
+                item,
                 len,
-	            result = [];
+                result = [];
 
-	        if (Bridge.isArray(ienumerable)) {
+            if (Bridge.isArray(ienumerable)) {
                 for (i = 0, len = ienumerable.length; i < len; ++i) {
                     result.push(ienumerable[i]);
                 }
-	        } else {
+            } else {
                 i = Bridge.getEnumerator(ienumerable);
 
                 while (i.moveNext()) {
                     item = i.getCurrent();
                     result.push(item);
                 }
-	        }
+            }
 
-	        return result;
-	    },
+            return result;
+        },
 
         isArray: function (obj) {
             return Object.prototype.toString.call(obj) in {
@@ -681,12 +695,12 @@
         referenceEquals: function (a, b) {
             return Bridge.hasValue(a) ? a === b : !Bridge.hasValue(b);
         },
-        
+
         staticEquals: function (a, b) {
             if (!Bridge.hasValue(a)) {
                 return !Bridge.hasValue(b);
             }
-                
+
             return Bridge.hasValue(b) ? Bridge.equals(a, b) : false;
         },
 
@@ -711,7 +725,7 @@
 
             var eq = a === b;
 
-            if (!eq && typeof a === "object" && typeof b === "object" && a !== null && b !== null && a.$struct && b.$struct && a.$$name === b.$$name) {
+            if (!eq && typeof a === "object" && typeof b === "object" && a !== null && b !== null && a.$kind === "struct" && b.$kind === "struct" && a.$$name === b.$$name) {
                 return Bridge.getHashCode(a) === Bridge.getHashCode(b) && Bridge.objectEquals(a, b);
             }
 
@@ -782,7 +796,7 @@
             }
         },
 
-        compare: function (a, b, safe) {
+        compare: function (a, b, safe, T) {
             if (!Bridge.isDefined(a, true)) {
                 if (safe) {
                     return 0;
@@ -799,8 +813,25 @@
                 return Bridge.compare(a.valueOf(), b.valueOf());
             }
 
+            var name;
+            if (T && Bridge.isFunction(a[name = "System$IComparable$1$" + Bridge.getTypeAlias(T) + "$compareTo"])) {
+                return a[name](b);
+            }
+
+            if (Bridge.isFunction(a[name = "System$IComparable$compareTo"])) {
+                return a[name](b);
+            }
+
             if (Bridge.isFunction(a.compareTo)) {
                 return a.compareTo(b);
+            }
+
+            if (T && Bridge.isFunction(b[name = "System$IComparable$1$" + Bridge.getTypeAlias(T) + "$compareTo"])) {
+                return -b[name](a);
+            }
+
+            if (Bridge.isFunction(b[name = "System$IComparable$compareTo"])) {
+                return -b[name](a);
             }
 
             if (Bridge.isFunction(b.compareTo)) {
@@ -814,7 +845,7 @@
             throw new System.Exception("Cannot compare items");
         },
 
-        equalsT: function (a, b) {
+        equalsT: function (a, b, T) {
             if (!Bridge.isDefined(a, true)) {
                 throw new System.NullReferenceException();
             } else if (Bridge.isNumber(a) || Bridge.isString(a) || Bridge.isBoolean(a)) {
@@ -823,17 +854,31 @@
                 return a.valueOf() === b.valueOf();
             }
 
+            var name;
+            if (T && a != null && Bridge.isFunction(a[name = "System$IEquatable$1$" + Bridge.getTypeAlias(T) + "$equalsT"])) {
+                return a[name](b);
+            }
+
+            if (T && b != null && Bridge.isFunction(b[name = "System$IEquatable$1$" + Bridge.getTypeAlias(T) + "$equalsT"])) {
+                return b[name](a);
+            }
+
             return a.equalsT ? a.equalsT(b) : b.equalsT(a);
         },
 
-        format: function (obj, formatString) {
+        format: function (obj, formatString, provider) {
             if (Bridge.isNumber(obj)) {
-                return Bridge.Int.format(obj, formatString);
+                return Bridge.Int.format(obj, formatString, provider);
             } else if (Bridge.isDate(obj)) {
-                return Bridge.Date.format(obj, formatString);
+                return Bridge.Date.format(obj, formatString, provider);
             }
 
-            return obj.format(formatString);
+            var name;
+            if (Bridge.isFunction(obj[name = "System$IFormattable$format"])) {
+                return obj[name](formatString, provider);
+            }
+
+            return obj.format(formatString, provider);
         },
 
         getType: function (instance) {
@@ -841,7 +886,7 @@
                 throw new System.NullReferenceException("instance is null");
             }
 
-            if (typeof(instance) === "number") {
+            if (typeof (instance) === "number") {
                 if (Math.floor(instance, 0) === instance) {
                     return System.Int32;
                 } else {
@@ -856,13 +901,13 @@
             }
         },
 
-        isLower: function isLower(c) {
+        isLower: function (c) {
             var s = String.fromCharCode(c);
 
             return s === s.toLowerCase() && s !== s.toUpperCase();
         },
 
-        isUpper: function isUpper(c) {
+        isUpper: function (c) {
             var s = String.fromCharCode(c);
 
             return s !== s.toLowerCase() && s === s.toUpperCase();
@@ -895,27 +940,90 @@
 
             makeFn: function (fn, length) {
                 switch (length) {
-                    case 0  : return function () { return fn.apply(this, arguments); };
-                    case 1  : return function (a) { return fn.apply(this, arguments); };
-                    case 2  : return function (a,b) { return fn.apply(this, arguments); };
-                    case 3  : return function (a,b,c) { return fn.apply(this, arguments); };
-                    case 4  : return function (a,b,c,d) { return fn.apply(this, arguments); };
-                    case 5  : return function (a,b,c,d,e) { return fn.apply(this, arguments); };
-                    case 6  : return function (a,b,c,d,e,f) { return fn.apply(this, arguments); };
-                    case 7  : return function (a,b,c,d,e,f,g) { return fn.apply(this, arguments); };
-                    case 8  : return function (a,b,c,d,e,f,g,h) { return fn.apply(this, arguments); };
-                    case 9  : return function (a, b, c, d, e, f, g, h, i) { return fn.apply(this, arguments); };
-                    case 10:  return function (a, b, c, d, e, f, g, h, i, j) { return fn.apply(this, arguments); };
-                    case 11:  return function (a, b, c, d, e, f, g, h, i, j, k) { return fn.apply(this, arguments); };
-                    case 12:  return function (a, b, c, d, e, f, g, h, i, j, k, l) { return fn.apply(this, arguments); };
-                    case 13:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m) { return fn.apply(this, arguments); };
-                    case 14:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n) { return fn.apply(this, arguments); };
-                    case 15:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o) { return fn.apply(this, arguments); };
-                    case 16:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) { return fn.apply(this, arguments); };
-                    case 17:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q) { return fn.apply(this, arguments); };
-                    case 18:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r) { return fn.apply(this, arguments); };
-                    case 19:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s) { return fn.apply(this, arguments); };
-                    default:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t) { return fn.apply(this, arguments); };
+                case 0:
+                    return function () {
+                        return fn.apply(this, arguments);
+                    };
+                case 1:
+                    return function (a) {
+                        return fn.apply(this, arguments);
+                    };
+                case 2:
+                    return function (a, b) {
+                        return fn.apply(this, arguments);
+                    };
+                case 3:
+                    return function (a, b, c) {
+                        return fn.apply(this, arguments);
+                    };
+                case 4:
+                    return function (a, b, c, d) {
+                        return fn.apply(this, arguments);
+                    };
+                case 5:
+                    return function (a, b, c, d, e) {
+                        return fn.apply(this, arguments);
+                    };
+                case 6:
+                    return function (a, b, c, d, e, f) {
+                        return fn.apply(this, arguments);
+                    };
+                case 7:
+                    return function (a, b, c, d, e, f, g) {
+                        return fn.apply(this, arguments);
+                    };
+                case 8:
+                    return function (a, b, c, d, e, f, g, h) {
+                        return fn.apply(this, arguments);
+                    };
+                case 9:
+                    return function (a, b, c, d, e, f, g, h, i) {
+                        return fn.apply(this, arguments);
+                    };
+                case 10:
+                    return function (a, b, c, d, e, f, g, h, i, j) {
+                        return fn.apply(this, arguments);
+                    };
+                case 11:
+                    return function (a, b, c, d, e, f, g, h, i, j, k) {
+                        return fn.apply(this, arguments);
+                    };
+                case 12:
+                    return function (a, b, c, d, e, f, g, h, i, j, k, l) {
+                        return fn.apply(this, arguments);
+                    };
+                case 13:
+                    return function (a, b, c, d, e, f, g, h, i, j, k, l, m) {
+                        return fn.apply(this, arguments);
+                    };
+                case 14:
+                    return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n) {
+                        return fn.apply(this, arguments);
+                    };
+                case 15:
+                    return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o) {
+                        return fn.apply(this, arguments);
+                    };
+                case 16:
+                    return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) {
+                        return fn.apply(this, arguments);
+                    };
+                case 17:
+                    return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q) {
+                        return fn.apply(this, arguments);
+                    };
+                case 18:
+                    return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r) {
+                        return fn.apply(this, arguments);
+                    };
+                case 19:
+                    return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s) {
+                        return fn.apply(this, arguments);
+                    };
+                default:
+                    return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t) {
+                        return fn.apply(this, arguments);
+                    };
                 }
             },
 
@@ -1023,7 +1131,7 @@
             },
 
             getInvocationList: function () {
-                
+
             },
 
             remove: function (fn1, fn2) {
@@ -1085,7 +1193,7 @@
 
     globals.Bridge = core;
     globals.Bridge.caller = [];
-    
+
     globals.System = {};
     globals.System.Diagnostics = {};
     globals.System.Diagnostics.Contracts = {};

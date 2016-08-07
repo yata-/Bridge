@@ -1,4 +1,4 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("TestProject", function ($asm, globals) {
     "use strict";
 
     Bridge.define('TestIssue921Nested.Issue921NestedOuter', {
@@ -84,6 +84,7 @@
             }
         },
         constructor: function (offset) {
+            this.$initialize();
             this._offset = offset;
             TestIssue921Nested.Issue921NestedOuter.Issue921Nested.setNameStatic("Static");
         },
@@ -224,4 +225,4 @@
     
     
     Bridge.init();
-})(this);
+});

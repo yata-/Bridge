@@ -347,6 +347,12 @@ namespace Bridge.Translator
             set;
         }
 
+        public Dictionary<string, string> NamedTempVariables
+        {
+            get;
+            set;
+        }
+
         public Dictionary<string, bool> ParentTempVariables
         {
             get;
@@ -425,6 +431,16 @@ namespace Bridge.Translator
         {
             get;
             set;
+        }
+
+        public bool IsAnonymousReflectable
+        {
+            get; set;
+        }
+
+        public string MetaDataOutputName
+        {
+            get; set;
         }
     }
 }

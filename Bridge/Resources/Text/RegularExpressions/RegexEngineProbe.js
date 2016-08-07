@@ -8,6 +8,8 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineProbe", {
     forced: false,
 
     constructor: function (min, max, value, isLazy) {
+        this.$initialize();
+
         this.min = min;
         this.max = max;
         this.value = value;

@@ -1,7 +1,6 @@
 using Bridge.Contract;
 using Bridge.Translator;
 using Bridge.Translator.Logging;
-
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using System;
@@ -82,6 +81,9 @@ namespace Bridge.Build
             };
 #endif
             var logger = new Translator.Logging.Logger(null, false, LoggerLevel.Info, true, new VSLoggerWriter(this.Log), new FileLoggerWriter());
+
+            logger.Info("Executing Bridge.Build.Task...");
+
             var bridgeOptions = this.GetBridgeOptions();
 
             var processor = new TranslatorProcessor(bridgeOptions, logger);
@@ -145,7 +147,7 @@ namespace Bridge.Build
                 Help = false,
                 NoTimeStamp = null,
                 FromTask = true,
-                Name = "Bridge.Build.Task"
+                Name = ""
             };
 
             return bridgeOptions;

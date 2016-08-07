@@ -3,7 +3,16 @@
 Bridge.define('Bridge.CustomEnumerator', {
     inherits: [System.Collections.IEnumerator],
 
+    config: {
+        alias: [
+            "getCurrent", "System$Collections$IEnumerator$getCurrent",
+            "moveNext", "System$Collections$IEnumerator$moveNext",
+            "reset", "System$Collections$IEnumerator$reset"
+        ]
+    },
+
     constructor: function (moveNext, getCurrent, reset, dispose, scope) {
+		this.$initialize();
         this.$moveNext = moveNext;
         this.$getCurrent = getCurrent;
         this.$dispose = dispose;

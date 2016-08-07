@@ -2,6 +2,7 @@
 
     Bridge.define("System.Char", {
         inherits: [System.IComparable, System.IFormattable],
+        $kind: "struct",
         statics: {
             min: 0,
             max: 65535,

@@ -1,12 +1,14 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("TypeScriptTest", function ($asm, globals) {
     "use strict";
 
     Bridge.define('Classes.Animal', {
         name: null,
         constructor: function () {
+            this.$initialize();
             this.name = "Animal";
         },
-        constructor$1: function (name) {
+        $constructor1: function (name) {
+            this.$initialize();
             this.name = name;
         },
         getName: function () {
@@ -37,18 +39,20 @@
     });
     
     Bridge.define('Classes.Point', {
+        $kind: "struct",
         statics: {
             getDefaultValue: function () { return new Classes.Point(); }
         },
         x: 0,
         y: 0,
-        constructor$1: function (x, y) {
+        $constructor1: function (x, y) {
+            this.$initialize();
             this.x = x;
             this.y = y;
         },
         constructor: function () {
+            this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + 1554797180;
@@ -73,7 +77,7 @@
     Bridge.define('Classes.StaticClass', {
         statics: {
             move: function (p, dx, dy) {
-                return new Classes.Point("constructor$1", ((p.x + dx) | 0), ((p.y + dy) | 0));
+                return new Classes.Point.$constructor1(((p.x + dx) | 0), ((p.y + dy) | 0));
             }
         }
     });
@@ -81,8 +85,8 @@
     Bridge.define('Classes.Dog', {
         inherits: [Classes.Animal],
         constructor: function (name) {
-            Classes.Animal.prototype.constructor$1.call(this, name);
-    
+            this.$initialize();
+            Classes.Animal.$constructor1.call(this, name);
         },
         move$1: function () {
             return 20;
@@ -94,8 +98,8 @@
         name$1: null,
         id: 0,
         constructor: function (name, id) {
-            Classes.Animal.prototype.constructor$1.call(this, name);
-    
+            this.$initialize();
+            Classes.Animal.$constructor1.call(this, name);
             this.name$1 = name;
             this.id = id;
         }
@@ -104,8 +108,8 @@
     Bridge.define('Classes.Snake', {
         inherits: [Classes.Animal],
         constructor: function (name) {
-            Classes.Animal.prototype.constructor$1.call(this, name);
-    
+            this.$initialize();
+            Classes.Animal.$constructor1.call(this, name);
         },
         move: function () {
             return 5;
@@ -115,4 +119,4 @@
     
     
     Bridge.init();
-})(this);
+});

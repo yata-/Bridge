@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Generic;
+
 using ICSharpCode.NRefactory.CSharp;
 using Mono.Cecil;
-using System.Collections.Generic;
+
 
 namespace Bridge.Contract
 {
@@ -19,6 +22,11 @@ namespace Bridge.Contract
         }
 
         string AssemblyLocation
+        {
+            get;
+        }
+
+        string AssemblyName
         {
             get;
         }

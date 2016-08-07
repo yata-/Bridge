@@ -1,7 +1,5 @@
 using Bridge.Translator.Logging;
-
 using NUnit.Framework;
-
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -104,7 +102,9 @@ namespace Bridge.Translator.Tests
 
             Directory.SetCurrentDirectory(logDir);
 
-            var logger = new Logger("Bridge.Test.Runner", true, Contract.LoggerLevel.Info, false, new FileLoggerWriter(logDir), new ConsoleLoggerWriter());
+            var logger = new Logger(null, true, Contract.LoggerLevel.Info, false, new FileLoggerWriter(logDir), new ConsoleLoggerWriter());
+
+            logger.Info("Executing Bridge.Test.Runner...");
 
             GetPaths(folder);
 

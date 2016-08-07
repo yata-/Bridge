@@ -12,14 +12,17 @@
         public class Fields
         {
             public const string ENTRY_POINT = "$entryPoint";
+            public const string KIND = "$kind";
+            public const string VARIANCE = "$variance";
             public const string FLAGS = "$flags";
+            public const string UNDERLYINGTYPE = "$utype";
             public const string ENUM = "$enum";
             public const string INHERITS = "inherits";
             public const string STRUCT = "$struct";
             public const string CONFIG = "config";
             public const string EVENTS = "events";
             public const string PROPERTIES = "properties";
-            public const string INTERFACE = "$interface";
+            public const string STATICS = "statics";
 
             public const string ASYNC_TASK = "task";
             public const string PROTOTYPE = "prototype";
@@ -35,18 +38,25 @@
             public const string BRIDGE_REMOVE = "Bridge.fn.remove";
             public const string BRIDGE_MERGE = "Bridge.merge";
             public const string BRIDGE_DEFINE = "Bridge.define";
+            public const string BRIDGE_DEFINEI = "Bridge.definei";
             public const string BRIDGE_IS = "Bridge.is";
             public const string BRIDGE_IS_DEFINED = "Bridge.isDefined";
             public const string BRIDGE_GET_ENUMERATOR = "Bridge.getEnumerator";
             public const string BRIDGE_GET_TYPE = "Bridge.getType";
+            public const string BRIDGE_GET_I = "Bridge.geti";
             public const string BRIDGE_NS = "Bridge.ns";
             public const string BRIDGE_EQUALS = "Bridge.equals";
             public const string BRIDGE_GETHASHCODE = "Bridge.getHashCode";
             public const string BRIDGE_REFERENCEEQUALS = "Bridge.referenceEquals";
+            public const string BRIDGE_REF = "Bridge.ref";
+            public const string BRIDGE_GETDEFAULTVALUE = "Bridge." + GETDEFAULTVALUE;
             public const string BRIDGE_EVENT = "Bridge.event";
             public const string BRIDGE_PROPERTY = "Bridge.property";
+            public const string BRIDGE_TOPLAIN = "Bridge.toPlain";
 
             public const string DCONSTRUCTOR = "$constructor";
+            public const string INITIALIZE = "$initialize";
+            public const string INIT = "init";
             public const string CLONE = "$clone";
             public const string TO_ENUMERATOR = "toEnumerator";
             public const string TO_ENUMERABLE = "toEnumerable";
@@ -55,7 +65,9 @@
             public const string TOSTIRNG = "toString";
             public const string EQUALS = "equals";
             public const string GETHASHCODE = "getHashCode";
-            public const string STRING_FROMCHARCODE = "String.fromCharCode";            
+            public const string GETDEFAULTVALUE = "getDefaultValue";
+            public const string STRING_FROMCHARCODE = "String.fromCharCode";
+            public const string TOJSON = "toJSON";
 
             public const string ASYNC_BODY = "$asyncBody";
             public const string GET_AWAITED_RESULT = "getAwaitedResult";
@@ -74,6 +86,12 @@
             {
                 public const string ADD = "add";
                 public const string REMOVE = "remove";
+            }
+
+            public class Property
+            {
+                public const string GET = "get";
+                public const string SET = "set";
             }
 
             public class Math

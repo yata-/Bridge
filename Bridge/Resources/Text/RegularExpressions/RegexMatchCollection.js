@@ -5,6 +5,13 @@ Bridge.define("System.Text.RegularExpressions.MatchCollection", {
         return [System.Collections.ICollection];
     },
 
+    config: {
+        alias: [
+        "getEnumerator", "System$Collections$IEnumerable$getEnumerator",
+        "getCount", "System$Collections$ICollection$getCount"
+        ]
+    },
+
     _regex: null,
     _input: null,
     _beginning: 0,
@@ -15,6 +22,7 @@ Bridge.define("System.Text.RegularExpressions.MatchCollection", {
     _done: false,
 
     constructor: function (regex, input, beginning, length, startat) {
+		this.$initialize();
         if (startat < 0 || startat > input.Length) {
             throw new System.ArgumentOutOfRangeException("startat");
         }
@@ -121,12 +129,21 @@ Bridge.define("System.Text.RegularExpressions.MatchEnumerator", {
         return [System.Collections.IEnumerator];
     },
 
+    config: {
+        alias: [
+            "getCurrent", "System$Collections$IEnumerator$getCurrent",
+            "moveNext", "System$Collections$IEnumerator$moveNext",
+            "reset", "System$Collections$IEnumerator$reset"
+        ]
+    },
+
     _matchcoll: null,
     _match: null,
     _curindex: 0,
     _done: false,
 
     constructor: function (matchColl) {
+		this.$initialize();
         this._matchcoll = matchColl;
     },
 

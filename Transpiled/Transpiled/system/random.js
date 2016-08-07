@@ -1,4 +1,4 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("Bridge.Transpiled", function ($asm, globals) {
     "use strict";
 
     Bridge.define('System.Random', {
@@ -16,10 +16,10 @@
             }
         },
         constructor: function () {
-            System.Random.prototype.constructor$1.call(this, System.Int64.clip32(System.Int64((new Date()).getTime()).mul(10000)));
-    
+            System.Random.$constructor1.call(this, System.Int64.clip32(System.Int64((new Date()).getTime()).mul(10000)));
         },
-        constructor$1: function (Seed) {
+        $constructor1: function (Seed) {
+            this.$initialize();
             var ii;
             var mj, mk;
     
@@ -140,4 +140,4 @@
     
     
     Bridge.init();
-})(this);
+});

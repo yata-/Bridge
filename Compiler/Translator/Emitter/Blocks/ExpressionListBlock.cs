@@ -1,20 +1,31 @@
 ﻿using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using System.Collections.Generic;
+using System.Linq;
 using ICSharpCode.NRefactory.Semantics;
+using ICSharpCode.NRefactory.TypeSystem;
 
 namespace Bridge.Translator
 {
     public class ExpressionListBlock : AbstractEmitterBlock
     {
-        public ExpressionListBlock(IEmitter emitter, IEnumerable<Expression> expressions, Expression paramArg, AstNode invocation = null)
+        public ExpressionListBlock(IEmitter emitter, IEnumerable<Expression> expressions, Expression paramArg, AstNode invocation, int openBracketPosition)
             : base(emitter, null)
         {
             this.Emitter = emitter;
             this.Expressions = expressions;
             this.ParamExpression = paramArg;
             this.InvocationExpression = invocation;
+            this.OpenBracketPosition = openBracketPosition;
+        }
+
+        public int OpenBracketPosition
+        {
+            get;
+            set;
         }
 
         public IEnumerable<Expression> Expressions
@@ -50,14 +61,72 @@ namespace Bridge.Translator
         {
             bool needComma = false;
             int count = this.Emitter.Writers.Count;
-            bool expanded = true;
+            bool wrapByBrackets = true;
+            bool expandParams = false;
+            bool isApply = false;
 
             if (paramArg != null && this.InvocationExpression != null)
             {
                 var rr = this.Emitter.Resolver.ResolveNode(this.InvocationExpression, this.Emitter) as CSharpInvocationResolveResult;
                 if (rr != null)
                 {
-                    expanded = rr.IsExpandedForm;
+                    expandParams = rr.Member.Attributes.Any(a => a.AttributeType.FullName == "Bridge.ExpandParamsAttribute");
+                    wrapByBrackets = rr.IsExpandedForm && !expandParams;
+                }
+            }
+
+            if (paramArg != null && expandParams)
+            {
+                var resolveResult = this.Emitter.Resolver.ResolveNode(paramArg, this.Emitter);
+
+                if (resolveResult.Type.Kind == TypeKind.Array && !(paramArg is ArrayCreateExpression) && expressions.Last() == paramArg)
+                {
+                    bool needConcat = expressions.Count() > 1;
+
+                    if (this.InvocationExpression is ObjectCreateExpression)
+                    {
+                        if (needConcat)
+                        {
+                            this.Write("[");
+                        }
+                    }
+                    else
+                    {
+                        var scope = "null";
+
+                        if (this.InvocationExpression != null)
+                        {
+                            var rr = this.Emitter.Resolver.ResolveNode(this.InvocationExpression, this.Emitter) as MemberResolveResult;
+
+                            if (rr != null && !rr.Member.IsStatic && this.InvocationExpression is InvocationExpression)
+                            {
+                                var oldWriter = this.SaveWriter();
+                                var sb = this.NewWriter();
+                                var target = ((InvocationExpression)this.InvocationExpression).Target;
+
+                                if (target is MemberReferenceExpression)
+                                {
+                                    target = ((MemberReferenceExpression)target).Target;
+                                }
+                                else if (target is IdentifierExpression)
+                                {
+                                    target = new ThisReferenceExpression();
+                                }
+
+                                target.AcceptVisitor(this.Emitter);
+                                scope = sb.ToString();
+                                this.RestoreWriter(oldWriter);
+                            }
+                        }
+
+                        var pos = this.OpenBracketPosition;
+                        this.Emitter.Output.Insert(pos, ".apply");
+                        pos += 7;
+                        
+                        this.Emitter.Output.Insert(pos, scope + ", " + (needConcat ? "[" : ""));
+                    }
+                    
+                    isApply = needConcat;
                 }
             }
 
@@ -69,8 +138,9 @@ namespace Bridge.Translator
                 }
                 
                 this.Emitter.Translator.EmitNode = expr;
+                var isParamsArg = expr == paramArg;
 
-                if (needComma)
+                if (needComma && !(isParamsArg && isApply))
                 {
                     this.WriteComma();
                 }
@@ -80,11 +150,12 @@ namespace Bridge.Translator
                 var directExpr = expr as DirectionExpression;
                 if (directExpr != null)
                 {
-                    var rr = this.Emitter.Resolver.ResolveNode(expr, this.Emitter) as ByReferenceResolveResult;
+                    var resolveResult = this.Emitter.Resolver.ResolveNode(expr, this.Emitter);
+                    var byReferenceResolveResult = resolveResult as ByReferenceResolveResult;
 
-                    if (rr != null && !(rr.ElementResult is LocalResolveResult))
+                    if (byReferenceResolveResult != null && !(byReferenceResolveResult.ElementResult is LocalResolveResult))
                     {
-                        this.Write("Bridge.ref(");
+                        this.Write(JS.Funcs.BRIDGE_REF + "(");
 
                         this.Emitter.IsRefArg = true;
                         expr.AcceptVisitor(this.Emitter);
@@ -101,15 +172,34 @@ namespace Bridge.Translator
                         continue;
                     }
                 }
-                            
-
-                if (expanded && expr == paramArg)
+                
+                if (isParamsArg)
                 {
-                    this.WriteOpenBracket();
+                    if (wrapByBrackets)
+                    {
+                        this.WriteOpenBracket();
+                    }
+                    else if(isApply)
+                    {
+                        this.Write("].concat(");
+                    }
                 }
                 
                 int pos = this.Emitter.Output.Length;
-                expr.AcceptVisitor(this.Emitter);
+
+                if (expandParams && isParamsArg && expr is ArrayCreateExpression)
+                {
+                    new ExpressionListBlock(this.Emitter, ((ArrayCreateExpression)expr).Initializer.Elements, null, null, 0).DoEmit();
+                }
+                else
+                {
+                    expr.AcceptVisitor(this.Emitter);
+
+                    if (isParamsArg && isApply)
+                    {
+                        this.Write(")");
+                    }
+                }
 
                 if (this.Emitter.Writers.Count != count)
                 {
@@ -123,7 +213,7 @@ namespace Bridge.Translator
                 }
             }
 
-            if (expanded && paramArg != null)
+            if (wrapByBrackets && paramArg != null)
             {
                 this.WriteCloseBracket();
             }

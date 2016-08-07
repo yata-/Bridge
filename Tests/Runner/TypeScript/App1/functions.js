@@ -1,4 +1,4 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("TypeScriptTest", function ($asm, globals) {
     "use strict";
 
     Bridge.define('Functions.DelegateClass', {
@@ -8,7 +8,7 @@
     });
     
     Bridge.define('Functions.DelegateInterface', {
-        $interface: true
+        $kind: "interface"
     });
     
     Bridge.define('Functions.Delegates');
@@ -32,4 +32,4 @@
     
     
     Bridge.init();
-})(this);
+});

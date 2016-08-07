@@ -192,3 +192,4 @@ FakesAssemblies/
 /Tests/Runner/Batch2/bridge.js
 Tests/**/App_Readme/
 /Transpiled/bridge.js
+/Tests/Runner/Batch3

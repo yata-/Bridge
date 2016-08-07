@@ -72,7 +72,7 @@ namespace Bridge.Translator
             var overloads = OverloadsCollection.Create(this.Emitter, methodDeclaration);
             XmlToJsDoc.EmitComment(this, this.MethodDeclaration);
 
-            string name = overloads.GetOverloadName();
+            string name = overloads.GetOverloadName(false, null, true);
             this.Write(name);
 
             this.WriteColon();
@@ -100,11 +100,7 @@ namespace Bridge.Translator
             {
                 this.BeginBlock();
 
-                foreach (var line in script)
-                {
-                    this.Write(line);
-                    this.WriteNewLine();
-                }
+                this.WriteLines(script);
 
                 this.EndBlock();
             }

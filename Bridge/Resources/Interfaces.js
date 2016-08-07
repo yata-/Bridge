@@ -1,13 +1,10 @@
 ﻿    // @source Interfaces.js
 
     Bridge.define("System.IFormattable", {
+        $kind: "interface",
         statics: {
             $is: function (obj) {
-                if (Bridge.isNumber(obj)) {
-                    return true;
-                }
-
-                if (Bridge.isDate(obj)) {
+                if (Bridge.isNumber(obj) || Bridge.isDate(obj) || System.Guid.instanceOf(obj)) {
                     return true;
                 }
 
@@ -16,16 +13,64 @@
         }
     });
 
-    Bridge.define("System.IComparable");
+    Bridge.define("System.IComparable", {
+        $kind: "interface",
 
-    Bridge.define("System.IFormatProvider");
+        statics: {
+            $is: function (obj) {
+                if (Bridge.isNumber(obj) || Bridge.isDate(obj) || Bridge.isBoolean(obj) || Bridge.isString(obj)) {
+                    return true;
+                }
 
-    Bridge.define("System.ICloneable");
+                return Bridge.is(obj, System.IComparable, true);
+            }
+        }
+    });
 
-    Bridge.define('System.IComparable$1', function (T) { return {}; });
+    Bridge.define("System.IFormatProvider", {
+        $kind: "interface"
+    });
 
-    Bridge.define('System.IEquatable$1', function (T) { return {}; });
+    Bridge.define("System.ICloneable", {
+        $kind: "interface"
+    });
 
-    Bridge.define("Bridge.IPromise");
+    Bridge.define('System.IComparable$1', function (T) {
+        return {
+            $kind: "interface",
 
-    Bridge.define("System.IDisposable");
+            statics: {
+                $is: function (obj) {
+                    if (Bridge.isNumber(obj) && T.$number && T.instanceOf(obj) || Bridge.isDate(obj) && T === Date || Bridge.isBoolean(obj) && T === Boolean || Bridge.isString(obj) && T === String || System.Guid.instanceOf(obj) && T === System.Guid) {
+                        return true;
+                    }
+
+                    return Bridge.is(obj, System.IComparable$1(T), true);
+                }
+            }
+        };
+    });
+
+    Bridge.define('System.IEquatable$1', function (T) {
+        return {
+            $kind: "interface",
+
+            statics: {
+                $is: function (obj) {
+                    if (Bridge.isNumber(obj) && T.$number && T.instanceOf(obj) || Bridge.isDate(obj) && T === Date || Bridge.isBoolean(obj) && T === Boolean || Bridge.isString(obj) && T === String || System.Guid.instanceOf(obj) && T === System.Guid) {
+                        return true;
+                    }
+
+                    return Bridge.is(obj, System.IEquatable$1(T), true);
+                }
+            }
+        };
+    });
+
+    Bridge.define("Bridge.IPromise", {
+        $kind: "interface"
+    });
+
+    Bridge.define("System.IDisposable", {
+        $kind: "interface"
+    });

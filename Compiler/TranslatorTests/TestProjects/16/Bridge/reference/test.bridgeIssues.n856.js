@@ -1,4 +1,4 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("TestProject", function ($asm, globals) {
     "use strict";
 
     
@@ -25,4 +25,4 @@
     
     
     Bridge.init();
-})(this);
+});

@@ -22,6 +22,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNode", {
     },
 
     constructor: function (type, options, arg) {
+		this.$initialize();
         this._type = type;
         this._options = options;
 

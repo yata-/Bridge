@@ -1,7 +1,7 @@
 ﻿/*
- * @version   : 1.14.0 - Bridge.NET
+ * @version   : 15.0.0 - Bridge.NET
  * @author    : Object.NET, Inc. http://bridge.net/
- * @date      : 2016-06-08
+ * @date      : 2016-09-12
  * @copyright : Copyright (c) 2008-2016, Object.NET, Inc. (http://object.net/). All rights reserved.
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge.NET/blob/master/LICENSE.
  */
@@ -10,13 +10,22 @@
     "use strict";
 
     // @source Core.js
-
     var core = {
         global: globals,
 
-        emptyFn: function () { },
+        emptyFn: function () {},
 
-        identity: function (x) { return x; },
+        identity: function (x) {
+            return x;
+        },
+
+        geti: function (scope, name1, name2) {
+            if (Bridge.hasValue(scope[name1])) {
+                return name1;
+            }
+
+            return name2;
+        },
 
         isPlainObject: function (obj) {
             if (typeof obj == 'object' && obj !== null) {
@@ -24,10 +33,10 @@
                     var proto = Object.getPrototypeOf(obj);
                     return proto === Object.prototype || proto === null;
                 }
-    
+
                 return Object.prototype.toString.call(obj) === '[object Object]';
             }
-  
+
             return false;
         },
 
@@ -80,43 +89,77 @@
 
             return proxy;
         },
-        
-        property : function (scope, name, v) {
+
+        property: function (scope, name, v, statics) {
             scope[name] = v;
 
             var rs = name.charAt(0) === "$",
-                cap = rs ? name.slice(1) : name;
+                cap = rs ? name.slice(1) : name,
+                getName = "get" + cap,
+                setName = "set" + cap,
+                lastSep = name.lastIndexOf("$"),
+                endsNum = lastSep > 0 && ((name.length - lastSep - 1) > 0) && !isNaN(parseInt(name.substr(lastSep + 1)));
 
-            scope["get" + cap] = (function (name) {
-                return function () {
+            if (endsNum) {
+                lastSep = name.substring(0, lastSep - 1).lastIndexOf("$");
+            }
+
+            if (lastSep > 0 && lastSep !== (name.length - 1)) {
+                getName = name.substring(0, lastSep) + "get" + name.substr(lastSep + 1);
+                setName = name.substring(0, lastSep) + "set" + name.substr(lastSep + 1);
+            }
+
+            scope[getName] = (function (name, scope, statics) {
+                return statics ? function () {
+                    return scope[name];
+                } : function () {
                     return this[name];
                 };
-            })(name);
+            })(name, scope, statics);
 
-            scope["set" + cap] = (function (name) {
-                return function (value) {
+            scope[setName] = (function (name, scope, statics) {
+                return statics ? function (value) {
+                    scope[name] = value;
+                } : function (value) {
                     this[name] = value;
                 };
-            })(name);
+            })(name, scope, statics);
         },
 
-        event: function (scope, name, v) {
+        event: function (scope, name, v, statics) {
             scope[name] = v;
 
             var rs = name.charAt(0) === "$",
-                cap = rs ? name.slice(1) : name;
+                cap = rs ? name.slice(1) : name,
+                addName = "add" + cap,
+                removeName = "remove" + cap,
+                lastSep = name.lastIndexOf("$"),
+                endsNum = lastSep > 0 && ((name.length - lastSep - 1) > 0) && !isNaN(parseInt(name.substr(lastSep + 1)));
 
-            scope["add" + cap] = (function (name) {
-                return function (value) {
+            if (endsNum) {
+                lastSep = name.substring(0, lastSep - 1).lastIndexOf("$");
+            }
+
+            if (lastSep > 0 && lastSep !== (name.length - 1)) {
+                addName = name.substring(0, lastSep) + "add" + name.substr(lastSep + 1);
+                removeName = name.substring(0, lastSep) + "remove" + name.substr(lastSep + 1);
+            }
+
+            scope[addName] = (function (name, scope, statics) {
+                return statics ? function (value) {
+                    scope[name] = Bridge.fn.combine(scope[name], value);
+                } : function (value) {
                     this[name] = Bridge.fn.combine(this[name], value);
                 };
-            })(name);
+            })(name, scope, statics);
 
-            scope["remove" + cap] = (function (name) {
-                return function (value) {
+            scope[removeName] = (function (name, scope, statics) {
+                return statics ? function (value) {
+                    scope[name] = Bridge.fn.remove(scope[name], value);
+                } : function (value) {
                     this[name] = Bridge.fn.remove(this[name], value);
                 };
-            })(name);
+            })(name, scope, statics);
         },
 
         createInstance: function (type) {
@@ -135,11 +178,11 @@
             if (type === System.Double ||
                 type === System.Single ||
                 type === System.Byte ||
-	            type === System.SByte ||
-	            type === System.Int16 ||
-	            type === System.UInt16 ||
-	            type === System.Int32 ||
-	            type === System.UInt32 ||
+                type === System.SByte ||
+                type === System.Int16 ||
+                type === System.UInt16 ||
+                type === System.Int32 ||
+                type === System.UInt32 ||
                 type === Bridge.Int) {
                 return 0;
             }
@@ -162,6 +205,15 @@
         clone: function (obj) {
             if (Bridge.isArray(obj)) {
                 return System.Array.clone(obj);
+            }
+
+            if (Bridge.isString(obj)) {
+                return obj;
+            }
+
+            var name;
+            if (Bridge.isFunction(obj[name = "System$ICloneable$clone"])) {
+                return obj[name]();
             }
 
             if (Bridge.is(obj, System.ICloneable)) {
@@ -209,7 +261,7 @@
 
             for (i = 0; i < nsParts.length; i++) {
                 if (typeof scope[nsParts[i]] === "undefined") {
-                    scope[nsParts[i]] = { };
+                    scope[nsParts[i]] = {};
                 }
 
                 scope = scope[nsParts[i]];
@@ -247,7 +299,7 @@
                     e.preventDefault();
                 }
 
-                return(ret);
+                return (ret);
             };
 
             var attachHandler = function () {
@@ -338,91 +390,40 @@
             return null;
         },
 
+        getTypeAlias: function (obj) {
+            var name = Bridge.getTypeName(obj);
+            return name.replace(/[\.\(\)\,]/g, "$");
+        },
+
         getTypeName: function (obj) {
-            var str;
-
-            if (obj.$$name) {
-                return obj.$$name;
-            }
-
-            if ((obj).constructor === Function) {
-                str = (obj).toString();
-            } else {
-                str = (obj).constructor.toString();
-            }
-
-            var results = (/function (.{1,})\(/).exec(str);
-
-            return (results && results.length > 1) ? results[1] : "Object";
-        },
-
-        getBaseType: function (obj) {
-            if (obj == null) {
-                throw new System.NullReferenceException();
-            }
-
-            if (obj.$interface) {
-                return null;
-            }
-
-            if (obj.$$inherits) {
-                return obj.$$inherits[0].$interface ? Object : obj.$$inherits[0];
-            } else {
-                return obj.$$name ? Object : null;
-            }
-        },
-
-        isAssignableFrom: function (baseType, type) {
-            if (baseType === null) {
-                throw new System.NullReferenceException();
-            }
-
-            if (type === null) {
-                return false;
-            }        
-
-            if (baseType == type || baseType == Object) {
-                return true;
-            }
-
-            var inheritors = type.$$inherits,
-                i,
-                r;
-
-            if (inheritors) {
-                for (i = 0; i < inheritors.length; i++) {
-                    r = Bridge.isAssignableFrom(baseType, inheritors[i]);
-
-                    if (r) {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
+            return Bridge.Reflection.getTypeFullName(obj);
         },
 
         is: function (obj, type, ignoreFn, allowNull) {
-	        if (typeof type === "string") {
+            if (typeof type === "string") {
                 type = Bridge.unroll(type);
-	        }
+            }
 
             if (obj == null) {
                 return !!allowNull;
             }
 
             if (ignoreFn !== true) {
-	            if (Bridge.isFunction(type.$is)) {
-	                return type.$is(obj);
-	            }
+                if (Bridge.isFunction(type.$is)) {
+                    return type.$is(obj);
+                }
 
-	            if (Bridge.isFunction(type.instanceOf)) {
-	                return type.instanceOf(obj);
-	            }
+                if (Bridge.isFunction(type.instanceOf)) {
+                    return type.instanceOf(obj);
+                }
+
+                if (Bridge.isFunction(type.isAssignableFrom)) {
+                    return type.isAssignableFrom(Bridge.getType(obj));
+                }
             }
 
             if ((obj.constructor === type) || (obj instanceof type)) {
-	            return true;
+                return true;
             }
 
             if (Bridge.isArray(obj) || obj instanceof Bridge.ArrayEnumerator) {
@@ -446,68 +447,68 @@
 
             for (i = 0; i < inheritors.length; i++) {
                 if (Bridge.is(obj, inheritors[i])) {
-	                return true;
-	            }
+                    return true;
+                }
             }
 
             return false;
-	    },
+        },
 
         as: function (obj, type, allowNull) {
-	        return Bridge.is(obj, type, false, allowNull) ? obj : null;
+            return Bridge.is(obj, type, false, allowNull) ? obj : null;
         },
 
         cast: function (obj, type, allowNull) {
-            if (obj === null) {
-                return null;
+            if (obj === null || typeof (obj) === "undefined") {
+                return obj;
             }
 
             var result = Bridge.as(obj, type, allowNull);
 
-	        if (result === null) {
-	            throw new System.InvalidCastException("Unable to cast type " + (obj ? Bridge.getTypeName(obj) : "'null'") + " to type " + Bridge.getTypeName(type));
-	        }
+            if (result === null) {
+                throw new System.InvalidCastException("Unable to cast type " + (obj ? Bridge.getTypeName(obj) : "'null'") + " to type " + Bridge.getTypeName(type));
+            }
 
-	        return result;
+            return result;
         },
 
-	    apply: function (obj, values) {
-	        var names = Bridge.getPropertyNames(values, true),
-	            i;
+        apply: function (obj, values) {
+            var names = Bridge.getPropertyNames(values, true),
+                i;
 
-	        for (i = 0; i < names.length; i++) {
-	            var name = names[i];
+            for (i = 0; i < names.length; i++) {
+                var name = names[i];
 
-	            if (typeof obj[name] === "function" && typeof values[name] !== "function") {
-	                obj[name](values[name]);
-	            } else {
-	                obj[name] = values[name];
-	            }
-	        }
+                if (typeof obj[name] === "function" && typeof values[name] !== "function") {
+                    obj[name](values[name]);
+                } else {
+                    obj[name] = values[name];
+                }
+            }
 
-	        return obj;
+            return obj;
         },
 
-	    merge: function (to, from, elemFactory) {
-	        // Maps instance of plain JS value or Object into Bridge object. 
-	        // Used for deserialization. Proper deserialization requires reflection that is currently not supported in Bridge. 
-	        // It currently is only capable to deserialize:
-	        // -instance of single class or primitive
-	        // -array of primitives 
-	        // -array of single class            
-	        if (to instanceof System.Decimal && Bridge.isNumber(from)) {
-	            return new System.Decimal(from);
-	        }
+        merge: function (to, from, callback, elemFactory) {
+            // Maps instance of plain JS value or Object into Bridge object. 
+            // Used for deserialization. Proper deserialization requires reflection that is currently not supported in Bridge. 
+            // It currently is only capable to deserialize:
+            // -instance of single class or primitive
+            // -array of primitives 
+            // -array of single class            
+            if (to instanceof System.Decimal && Bridge.isNumber(from)) {
+                return new System.Decimal(from);
+            }
 
-	        if (to instanceof System.Int64 && Bridge.isNumber(from)) {
-	            return new System.Int64(from);
-	        }
+            if (to instanceof System.Int64 && Bridge.isNumber(from)) {
+                return new System.Int64(from);
+            }
 
-	        if (to instanceof System.UInt64 && Bridge.isNumber(from)) {
-	            return new System.UInt64(from);
-	        }
+            if (to instanceof System.UInt64 && Bridge.isNumber(from)) {
+                return new System.UInt64(from);
+            }
 
-	        if (to instanceof Boolean ||
+            if (to instanceof Boolean ||
                 to instanceof Number ||
                 to instanceof String ||
                 to instanceof Function ||
@@ -515,125 +516,138 @@
                 to instanceof System.Double ||
                 to instanceof System.Single ||
                 to instanceof System.Byte ||
-	            to instanceof System.SByte ||
-	            to instanceof System.Int16 ||
-	            to instanceof System.UInt16 ||
-	            to instanceof System.Int32 ||
-	            to instanceof System.UInt32 ||
+                to instanceof System.SByte ||
+                to instanceof System.Int16 ||
+                to instanceof System.UInt16 ||
+                to instanceof System.Int32 ||
+                to instanceof System.UInt32 ||
                 to instanceof Bridge.Int ||
                 to instanceof System.Decimal) {
-	            return from;
-	        }
+                return from;
+            }
 
-	        var key,
-			    i,
+            var key,
+                i,
                 value,
                 toValue,
-			    fn;
+                fn;
 
-	        if (Bridge.isArray(from) && Bridge.isFunction(to.add || to.push)) {
-	            fn = Bridge.isArray(to) ? to.push : to.add;
+            if (Bridge.isArray(from) && Bridge.isFunction(to.add || to.push)) {
+                fn = Bridge.isArray(to) ? to.push : to.add;
 
-	            for (i = 0; i < from.length; i++) {
-	                var item = from[i];
+                for (i = 0; i < from.length; i++) {
+                    var item = from[i];
 
-	                if (!Bridge.isArray(item)) {
-	                    item = [typeof elemFactory === 'undefined' ? item : Bridge.merge(elemFactory(), item)];
-	                }
+                    if (!Bridge.isArray(item)) {
+                        item = [typeof elemFactory === 'undefined' ? item : Bridge.merge(elemFactory(), item)];
+                    }
 
                     fn.apply(to, item);
-	            }
-	        } else {
-	            for (key in from) {
-	                value = from[key];
+                }
+            } else {
+                for (key in from) {
+                    value = from[key];
 
-	                if (typeof to[key] === "function") {
-	                    if (key.match(/^\s*get[A-Z]/)) {
-	                        Bridge.merge(to[key](), value);
-	                    } else {
-	                        to[key](value);
-	                    }
-	                } else {
-	                    var setter = "set" + key.charAt(0).toUpperCase() + key.slice(1);
+                    if (typeof to[key] === "function") {
+                        if (key.match(/^\s*get[A-Z]/)) {
+                            Bridge.merge(to[key](), value);
+                        } else {
+                            to[key](value);
+                        }
+                    } else {
+                        var setter = "set" + key.charAt(0).toUpperCase() + key.slice(1);
 
-	                    if (typeof to[setter] === "function" && typeof value !== "function") {
-	                        to[setter](value);
-	                    } else if (value && value.constructor === Object && to[key]) {
-	                        toValue = to[key];
-	                        Bridge.merge(toValue, value);
-	                    } else {
-	                        to[key] = value;
-	                    }
-	                }
-	            }
-	        }
+                        if (typeof to[setter] === "function" && typeof value !== "function") {
+                            to[setter](value);
+                        } else if (value && value.constructor === Object && to[key]) {
+                            toValue = to[key];
+                            Bridge.merge(toValue, value);
+                        } else {
+                            to[key] = value;
+                        }
+                    }
+                }
+            }
 
-	        return to;
-	    },
+            if (callback) {
+                callback.call(to, to);
+            }
 
-	    getEnumerator: function (obj, suffix) {
-	        if (typeof obj === "string") {
-	            obj = System.String.toCharArray(obj);
-	        }
+            return to;
+        },
 
-	        if (suffix && obj && obj["getEnumerator" + suffix]) {
-	            return obj["getEnumerator" + suffix].call(obj);
-	        }
+        getEnumerator: function (obj, suffix, T) {
+            if (typeof obj === "string") {
+                obj = System.String.toCharArray(obj);
+            }
 
-	        if (obj && obj.getEnumerator) {
-	            return obj.getEnumerator();
-	        }
+            if (suffix && obj && obj["getEnumerator" + suffix]) {
+                return obj["getEnumerator" + suffix].call(obj);
+            }
 
-	        if ((Object.prototype.toString.call(obj) === "[object Array]") ||
+            if (obj && obj.getEnumerator) {
+                return obj.getEnumerator();
+            }
+
+            var name;
+            if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$IEnumerable$1$" + Bridge.getTypeAlias(T) + "$getEnumerator"])) {
+                return obj[name]();
+            }
+
+            if (Bridge.isFunction(obj[name = "System$Collections$IEnumerable$getEnumerator"])) {
+                return obj[name]();
+            }
+
+            if ((Object.prototype.toString.call(obj) === "[object Array]") ||
                 (obj && Bridge.isDefined(obj.length))) {
-	            return new Bridge.ArrayEnumerator(obj);
-	        }
+                return new Bridge.ArrayEnumerator(obj, T);
+            }
 
-	        throw new System.InvalidOperationException("Cannot create enumerator");
-	    },
+            throw new System.InvalidOperationException("Cannot create enumerator");
+        },
 
-	    getPropertyNames: function (obj, includeFunctions) {
-	        var names = [],
-	            name;
+        getPropertyNames: function (obj, includeFunctions) {
+            var names = [],
+                name;
 
-	        for (name in obj) {
+            for (name in obj) {
                 if (includeFunctions || typeof obj[name] !== "function") {
                     names.push(name);
                 }
-	        }
+            }
 
-	        return names;
-	    },
+            return names;
+        },
 
-	    isDefined: function (value, noNull) {
-	        return typeof value !== "undefined" && (noNull ? value !== null : true);
-	    },
+        isDefined: function (value, noNull) {
+            return typeof value !== "undefined" && (noNull ? value !== null : true);
+        },
 
-	    isEmpty: function (value, allowEmpty) {
-	        return (typeof value === "undefined" || value === null) || (!allowEmpty ? value === "" : false) || ((!allowEmpty && Bridge.isArray(value)) ? value.length === 0 : false);
-	    },
+        isEmpty: function (value, allowEmpty) {
+            return (typeof value === "undefined" || value === null) || (!allowEmpty ? value === "" : false) || ((!allowEmpty && Bridge.isArray(value)) ? value.length === 0 : false);
+        },
 
-	    toArray: function (ienumerable) {
-	        var i,
-	            item,
+        toArray: function (ienumerable) {
+            var i,
+                item,
                 len,
-	            result = [];
+                result = [];
 
-	        if (Bridge.isArray(ienumerable)) {
+            if (Bridge.isArray(ienumerable)) {
                 for (i = 0, len = ienumerable.length; i < len; ++i) {
                     result.push(ienumerable[i]);
                 }
-	        } else {
+            } else {
                 i = Bridge.getEnumerator(ienumerable);
 
                 while (i.moveNext()) {
                     item = i.getCurrent();
                     result.push(item);
                 }
-	        }
+            }
 
-	        return result;
-	    },
+            return result;
+        },
 
         isArray: function (obj) {
             return Object.prototype.toString.call(obj) in {
@@ -692,12 +706,12 @@
         referenceEquals: function (a, b) {
             return Bridge.hasValue(a) ? a === b : !Bridge.hasValue(b);
         },
-        
+
         staticEquals: function (a, b) {
             if (!Bridge.hasValue(a)) {
                 return !Bridge.hasValue(b);
             }
-                
+
             return Bridge.hasValue(b) ? Bridge.equals(a, b) : false;
         },
 
@@ -722,7 +736,7 @@
 
             var eq = a === b;
 
-            if (!eq && typeof a === "object" && typeof b === "object" && a !== null && b !== null && a.$struct && b.$struct && a.$$name === b.$$name) {
+            if (!eq && typeof a === "object" && typeof b === "object" && a !== null && b !== null && a.$kind === "struct" && b.$kind === "struct" && a.$$name === b.$$name) {
                 return Bridge.getHashCode(a) === Bridge.getHashCode(b) && Bridge.objectEquals(a, b);
             }
 
@@ -793,7 +807,7 @@
             }
         },
 
-        compare: function (a, b, safe) {
+        compare: function (a, b, safe, T) {
             if (!Bridge.isDefined(a, true)) {
                 if (safe) {
                     return 0;
@@ -810,8 +824,25 @@
                 return Bridge.compare(a.valueOf(), b.valueOf());
             }
 
+            var name;
+            if (T && Bridge.isFunction(a[name = "System$IComparable$1$" + Bridge.getTypeAlias(T) + "$compareTo"])) {
+                return a[name](b);
+            }
+
+            if (Bridge.isFunction(a[name = "System$IComparable$compareTo"])) {
+                return a[name](b);
+            }
+
             if (Bridge.isFunction(a.compareTo)) {
                 return a.compareTo(b);
+            }
+
+            if (T && Bridge.isFunction(b[name = "System$IComparable$1$" + Bridge.getTypeAlias(T) + "$compareTo"])) {
+                return -b[name](a);
+            }
+
+            if (Bridge.isFunction(b[name = "System$IComparable$compareTo"])) {
+                return -b[name](a);
             }
 
             if (Bridge.isFunction(b.compareTo)) {
@@ -825,7 +856,7 @@
             throw new System.Exception("Cannot compare items");
         },
 
-        equalsT: function (a, b) {
+        equalsT: function (a, b, T) {
             if (!Bridge.isDefined(a, true)) {
                 throw new System.NullReferenceException();
             } else if (Bridge.isNumber(a) || Bridge.isString(a) || Bridge.isBoolean(a)) {
@@ -834,17 +865,31 @@
                 return a.valueOf() === b.valueOf();
             }
 
+            var name;
+            if (T && a != null && Bridge.isFunction(a[name = "System$IEquatable$1$" + Bridge.getTypeAlias(T) + "$equalsT"])) {
+                return a[name](b);
+            }
+
+            if (T && b != null && Bridge.isFunction(b[name = "System$IEquatable$1$" + Bridge.getTypeAlias(T) + "$equalsT"])) {
+                return b[name](a);
+            }
+
             return a.equalsT ? a.equalsT(b) : b.equalsT(a);
         },
 
-        format: function (obj, formatString) {
+        format: function (obj, formatString, provider) {
             if (Bridge.isNumber(obj)) {
-                return Bridge.Int.format(obj, formatString);
+                return Bridge.Int.format(obj, formatString, provider);
             } else if (Bridge.isDate(obj)) {
-                return Bridge.Date.format(obj, formatString);
+                return Bridge.Date.format(obj, formatString, provider);
             }
 
-            return obj.format(formatString);
+            var name;
+            if (Bridge.isFunction(obj[name = "System$IFormattable$format"])) {
+                return obj[name](formatString, provider);
+            }
+
+            return obj.format(formatString, provider);
         },
 
         getType: function (instance) {
@@ -852,7 +897,7 @@
                 throw new System.NullReferenceException("instance is null");
             }
 
-            if (typeof(instance) === "number") {
+            if (typeof (instance) === "number") {
                 if (Math.floor(instance, 0) === instance) {
                     return System.Int32;
                 } else {
@@ -867,13 +912,13 @@
             }
         },
 
-        isLower: function isLower(c) {
+        isLower: function (c) {
             var s = String.fromCharCode(c);
 
             return s === s.toLowerCase() && s !== s.toUpperCase();
         },
 
-        isUpper: function isUpper(c) {
+        isUpper: function (c) {
             var s = String.fromCharCode(c);
 
             return s !== s.toLowerCase() && s === s.toUpperCase();
@@ -906,27 +951,90 @@
 
             makeFn: function (fn, length) {
                 switch (length) {
-                    case 0  : return function () { return fn.apply(this, arguments); };
-                    case 1  : return function (a) { return fn.apply(this, arguments); };
-                    case 2  : return function (a,b) { return fn.apply(this, arguments); };
-                    case 3  : return function (a,b,c) { return fn.apply(this, arguments); };
-                    case 4  : return function (a,b,c,d) { return fn.apply(this, arguments); };
-                    case 5  : return function (a,b,c,d,e) { return fn.apply(this, arguments); };
-                    case 6  : return function (a,b,c,d,e,f) { return fn.apply(this, arguments); };
-                    case 7  : return function (a,b,c,d,e,f,g) { return fn.apply(this, arguments); };
-                    case 8  : return function (a,b,c,d,e,f,g,h) { return fn.apply(this, arguments); };
-                    case 9  : return function (a, b, c, d, e, f, g, h, i) { return fn.apply(this, arguments); };
-                    case 10:  return function (a, b, c, d, e, f, g, h, i, j) { return fn.apply(this, arguments); };
-                    case 11:  return function (a, b, c, d, e, f, g, h, i, j, k) { return fn.apply(this, arguments); };
-                    case 12:  return function (a, b, c, d, e, f, g, h, i, j, k, l) { return fn.apply(this, arguments); };
-                    case 13:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m) { return fn.apply(this, arguments); };
-                    case 14:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n) { return fn.apply(this, arguments); };
-                    case 15:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o) { return fn.apply(this, arguments); };
-                    case 16:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) { return fn.apply(this, arguments); };
-                    case 17:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q) { return fn.apply(this, arguments); };
-                    case 18:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r) { return fn.apply(this, arguments); };
-                    case 19:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s) { return fn.apply(this, arguments); };
-                    default:  return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t) { return fn.apply(this, arguments); };
+                case 0:
+                    return function () {
+                        return fn.apply(this, arguments);
+                    };
+                case 1:
+                    return function (a) {
+                        return fn.apply(this, arguments);
+                    };
+                case 2:
+                    return function (a, b) {
+                        return fn.apply(this, arguments);
+                    };
+                case 3:
+                    return function (a, b, c) {
+                        return fn.apply(this, arguments);
+                    };
+                case 4:
+                    return function (a, b, c, d) {
+                        return fn.apply(this, arguments);
+                    };
+                case 5:
+                    return function (a, b, c, d, e) {
+                        return fn.apply(this, arguments);
+                    };
+                case 6:
+                    return function (a, b, c, d, e, f) {
+                        return fn.apply(this, arguments);
+                    };
+                case 7:
+                    return function (a, b, c, d, e, f, g) {
+                        return fn.apply(this, arguments);
+                    };
+                case 8:
+                    return function (a, b, c, d, e, f, g, h) {
+                        return fn.apply(this, arguments);
+                    };
+                case 9:
+                    return function (a, b, c, d, e, f, g, h, i) {
+                        return fn.apply(this, arguments);
+                    };
+                case 10:
+                    return function (a, b, c, d, e, f, g, h, i, j) {
+                        return fn.apply(this, arguments);
+                    };
+                case 11:
+                    return function (a, b, c, d, e, f, g, h, i, j, k) {
+                        return fn.apply(this, arguments);
+                    };
+                case 12:
+                    return function (a, b, c, d, e, f, g, h, i, j, k, l) {
+                        return fn.apply(this, arguments);
+                    };
+                case 13:
+                    return function (a, b, c, d, e, f, g, h, i, j, k, l, m) {
+                        return fn.apply(this, arguments);
+                    };
+                case 14:
+                    return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n) {
+                        return fn.apply(this, arguments);
+                    };
+                case 15:
+                    return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o) {
+                        return fn.apply(this, arguments);
+                    };
+                case 16:
+                    return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) {
+                        return fn.apply(this, arguments);
+                    };
+                case 17:
+                    return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q) {
+                        return fn.apply(this, arguments);
+                    };
+                case 18:
+                    return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r) {
+                        return fn.apply(this, arguments);
+                    };
+                case 19:
+                    return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s) {
+                        return fn.apply(this, arguments);
+                    };
+                default:
+                    return function (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t) {
+                        return fn.apply(this, arguments);
+                    };
                 }
             },
 
@@ -1034,7 +1142,7 @@
             },
 
             getInvocationList: function () {
-                
+
             },
 
             remove: function (fn1, fn2) {
@@ -1096,12 +1204,11 @@
 
     globals.Bridge = core;
     globals.Bridge.caller = [];
-    
+
     globals.System = {};
     globals.System.Diagnostics = {};
     globals.System.Diagnostics.Contracts = {};
     globals.System.Threading = {};
-
     // @source Nullable.js
 
     var nullable = {
@@ -1218,7 +1325,7 @@
         },
 
         sub: function (a, b) {
-	        return Bridge.hasValue(a) && Bridge.hasValue(b) ? a - b : null;
+            return Bridge.hasValue(a) && Bridge.hasValue(b) ? a - b : null;
         },
 
         bnot: function (a) {
@@ -1230,29 +1337,29 @@
         },
 
         not: function (a) {
-	        return Bridge.hasValue(a) ? !a : null;
+            return Bridge.hasValue(a) ? !a : null;
         },
 
         pos: function (a) {
-	        return Bridge.hasValue(a) ? +a : null;
+            return Bridge.hasValue(a) ? +a : null;
         },
 
         lift: function () {
-	        for (var i = 1; i < arguments.length; i++) {
-	            if (!Bridge.hasValue(arguments[i])) {
-	                return null;
-	            }
-	        }
+            for (var i = 1; i < arguments.length; i++) {
+                if (!Bridge.hasValue(arguments[i])) {
+                    return null;
+                }
+            }
 
-	        if (arguments[0] == null) {
-	            return null;
-	        }
+            if (arguments[0] == null) {
+                return null;
+            }
 
-	        if (arguments[0].apply == undefined) {
-	            return arguments[0];
-	        }
+            if (arguments[0].apply == undefined) {
+                return arguments[0];
+            }
 
-	        return arguments[0].apply(null, Array.prototype.slice.call(arguments, 1));
+            return arguments[0].apply(null, Array.prototype.slice.call(arguments, 1));
         },
 
         lift1: function (f, o) {
@@ -1268,13 +1375,15 @@
         },
 
         lifteq: function (f, a, b) {
-            var va = Bridge.hasValue(a), vb = Bridge.hasValue(b);
+            var va = Bridge.hasValue(a),
+                vb = Bridge.hasValue(b);
 
             return (!va && !vb) || (va && vb && (typeof f === "function" ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))));
         },
 
         liftne: function (f, a, b) {
-            var va = Bridge.hasValue(a), vb = Bridge.hasValue(b);
+            var va = Bridge.hasValue(a),
+                vb = Bridge.hasValue(b);
 
             return (va !== vb) || (va && (typeof f === "function" ? f.apply(null, Array.prototype.slice.call(arguments, 1)) : a[f].apply(a, Array.prototype.slice.call(arguments, 2))));
         }
@@ -1295,10 +1404,11 @@
                 return true;
             }
 
-            if (type === System.Collections.IEnumerable ||
-                type.$$name && System.String.startsWith(type.$$name, "System.Collections.Generic.IEnumerable$1") ||
-                type.$$name && System.String.startsWith(type.$$name, "System.IComparable$1") ||
-                type.$$name && System.String.startsWith(type.$$name, "System.IEquatable$1")) {
+            if (type === System.ICloneable ||
+                type === System.Collections.IEnumerable ||
+                type === System.Collections.Generic.IEnumerable$1(System.Char) ||
+                type === System.IComparable$1(String) ||
+                type === System.IEquatable$1(String)) {
                 return true;
             }
 
@@ -1354,9 +1464,17 @@
         },
 
         format: function (format) {
+            return System.String._format(System.Globalization.CultureInfo.getCurrentCulture(), format, Array.prototype.slice.call(arguments, 1));
+        },
+
+        formatProvider: function (provider, format) {
+            return System.String._format(provider, format, Array.prototype.slice.call(arguments, 2));
+        },
+
+        _format: function (provider, format, values) {
             var me = this,
                 _formatRe = /(\{+)((\d+|[a-zA-Z_$]\w+(?:\.[a-zA-Z_$]\w+|\[\d+\])*)(?:\,(-?\d*))?(?:\:([^\}]*))?)(\}+)|(\{+)|(\}+)/g,
-                args = Array.prototype.slice.call(arguments, 1),
+                args = values,
                 fn = this.decodeBraceSequence;
 
             return format.replace(_formatRe, function (m, openBrace, elementContent, index, align, format, closeBrace, repeatOpenBrace, repeatCloseBrace) {
@@ -1372,11 +1490,11 @@
                     return fn(openBrace) + elementContent + fn(closeBrace);
                 }
 
-                return fn(openBrace, true) + me.handleElement(index, align, format, args) + fn(closeBrace, true);
+                return fn(openBrace, true) + me.handleElement(provider, index, align, format, args) + fn(closeBrace, true);
             });
         },
 
-        handleElement: function (index, alignment, formatStr, args) {
+        handleElement: function (provider, index, alignment, formatStr, args) {
             var value;
 
             index = parseInt(index, 10);
@@ -1392,7 +1510,7 @@
             }
 
             if (formatStr && Bridge.is(value, System.IFormattable)) {
-                value = Bridge.format(value, formatStr);
+                value = Bridge.format(value, formatStr, provider);
             } else {
                 value = "" + value;
             }
@@ -1596,11 +1714,15 @@
                     // StringComparison
                     switch (arguments[2]) {
                         case 1: // CurrentCultureIgnoreCase
-                            return strA.localeCompare(strB, System.Globalization.CultureInfo.getCurrentCulture().name, { sensitivity: "accent" });
+                            return strA.localeCompare(strB, System.Globalization.CultureInfo.getCurrentCulture().name, {
+                                sensitivity: "accent"
+                            });
                         case 2: // InvariantCulture
                             return strA.localeCompare(strB, System.Globalization.CultureInfo.invariantCulture.name);
                         case 3: // InvariantCultureIgnoreCase
-                            return strA.localeCompare(strB, System.Globalization.CultureInfo.invariantCulture.name, { sensitivity: "accent" });
+                            return strA.localeCompare(strB, System.Globalization.CultureInfo.invariantCulture.name, {
+                                sensitivity: "accent"
+                            });
                         case 4: // Ordinal
                             return (strA === strB) ? 0 : ((strA > strB) ? 1 : -1);
                         case 5: // OrdinalIgnoreCase
@@ -1753,7 +1875,7 @@
                 throw new System.ArgumentNullException("enumType");
             }
 
-            if (enumType.prototype && !enumType.prototype.$enum) {
+            if (enumType.prototype && enumType.$kind !== "enum") {
                 throw new System.ArgumentException("", "enumType");
             }
         },
@@ -1852,7 +1974,7 @@
             var values = enumType;
 
             for (var i in values) {
-                if (values.hasOwnProperty(i) && i.indexOf("$") < 0) {
+                if (values.hasOwnProperty(i) && i.indexOf("$") < 0 && typeof values[i] !== "function") {
                     parts.push(values[i]);
                 }
             }
@@ -1894,7 +2016,7 @@
             var values = enumType;
 
             for (var i in values) {
-                if (values.hasOwnProperty(i) && i.indexOf("$") < 0) {
+                if (values.hasOwnProperty(i) && i.indexOf("$") < 0 && typeof values[i] !== "function") {
                     parts.push(enumMethods.toName(i));
                 }
             }
@@ -1951,220 +2073,215 @@
 
     // @source Browser.js
 
-	var check = function (regex) {
-	    return regex.test(navigator.userAgent.toLowerCase());
-	},
+    var check = function (regex) {
+            return regex.test(navigator.userAgent.toLowerCase());
+        },
 
-    isStrict = Bridge.global.document && Bridge.global.document.compatMode === "CSS1Compat",
+        isStrict = Bridge.global.document && Bridge.global.document.compatMode === "CSS1Compat",
 
-    version = function (is, regex) {
-        var m;
+        version = function (is, regex) {
+            var m;
 
-        return (is && (m = regex.exec(navigator.userAgent.toLowerCase()))) ? parseFloat(m[1]) : 0;
-    },
+            return (is && (m = regex.exec(navigator.userAgent.toLowerCase()))) ? parseFloat(m[1]) : 0;
+        },
 
-    docMode = Bridge.global.document ? Bridge.global.document.documentMode : null,
-    isOpera = check(/opera/),
-    isOpera10_5 = isOpera && check(/version\/10\.5/),
-    isChrome = check(/\bchrome\b/),
-    isWebKit = check(/webkit/),
-    isSafari = !isChrome && check(/safari/),
-    isSafari2 = isSafari && check(/applewebkit\/4/),
-    isSafari3 = isSafari && check(/version\/3/),
-    isSafari4 = isSafari && check(/version\/4/),
-    isSafari5_0 = isSafari && check(/version\/5\.0/),
-    isSafari5 = isSafari && check(/version\/5/),
-    isIE = !isOpera && (check(/msie/) || check(/trident/)),
-    isIE7 = isIE && ((check(/msie 7/) && docMode !== 8 && docMode !== 9 && docMode !== 10) || docMode === 7),
-    isIE8 = isIE && ((check(/msie 8/) && docMode !== 7 && docMode !== 9 && docMode !== 10) || docMode === 8),
-    isIE9 = isIE && ((check(/msie 9/) && docMode !== 7 && docMode !== 8 && docMode !== 10) || docMode === 9),
-    isIE10 = isIE && ((check(/msie 10/) && docMode !== 7 && docMode !== 8 && docMode !== 9) || docMode === 10),
-    isIE11 = isIE && ((check(/trident\/7\.0/) && docMode !== 7 && docMode !== 8 && docMode !== 9 && docMode !== 10) || docMode === 11),
-    isIE6 = isIE && check(/msie 6/),
-    isGecko = !isWebKit && !isIE && check(/gecko/),
-    isGecko3 = isGecko && check(/rv:1\.9/),
-    isGecko4 = isGecko && check(/rv:2\.0/),
-    isGecko5 = isGecko && check(/rv:5\./),
-    isGecko10 = isGecko && check(/rv:10\./),
-    isFF3_0 = isGecko3 && check(/rv:1\.9\.0/),
-    isFF3_5 = isGecko3 && check(/rv:1\.9\.1/),
-    isFF3_6 = isGecko3 && check(/rv:1\.9\.2/),
-    isWindows = check(/windows|win32/),
-    isMac = check(/macintosh|mac os x/),
-    isLinux = check(/linux/),
-    scrollbarSize = null,
-    chromeVersion = version(true, /\bchrome\/(\d+\.\d+)/),
-    firefoxVersion = version(true, /\bfirefox\/(\d+\.\d+)/),
-    ieVersion = version(isIE, /msie (\d+\.\d+)/),
-    operaVersion = version(isOpera, /version\/(\d+\.\d+)/),
-    safariVersion = version(isSafari, /version\/(\d+\.\d+)/),
-    webKitVersion = version(isWebKit, /webkit\/(\d+\.\d+)/),
-    isSecure = Bridge.global.location ? /^https/i.test(Bridge.global.location.protocol) : false,
-    isiPhone = /iPhone/i.test(navigator.platform),
-    isiPod = /iPod/i.test(navigator.platform),
-    isiPad = /iPad/i.test(navigator.userAgent),
-    isBlackberry = /Blackberry/i.test(navigator.userAgent),
-    isAndroid = /Android/i.test(navigator.userAgent),
-    isDesktop = isMac || isWindows || (isLinux && !isAndroid),
-    isTablet = isiPad,
-    isPhone = !isDesktop && !isTablet;
+        docMode = Bridge.global.document ? Bridge.global.document.documentMode : null,
+        isOpera = check(/opera/),
+        isOpera10_5 = isOpera && check(/version\/10\.5/),
+        isChrome = check(/\bchrome\b/),
+        isWebKit = check(/webkit/),
+        isSafari = !isChrome && check(/safari/),
+        isSafari2 = isSafari && check(/applewebkit\/4/),
+        isSafari3 = isSafari && check(/version\/3/),
+        isSafari4 = isSafari && check(/version\/4/),
+        isSafari5_0 = isSafari && check(/version\/5\.0/),
+        isSafari5 = isSafari && check(/version\/5/),
+        isIE = !isOpera && (check(/msie/) || check(/trident/)),
+        isIE7 = isIE && ((check(/msie 7/) && docMode !== 8 && docMode !== 9 && docMode !== 10) || docMode === 7),
+        isIE8 = isIE && ((check(/msie 8/) && docMode !== 7 && docMode !== 9 && docMode !== 10) || docMode === 8),
+        isIE9 = isIE && ((check(/msie 9/) && docMode !== 7 && docMode !== 8 && docMode !== 10) || docMode === 9),
+        isIE10 = isIE && ((check(/msie 10/) && docMode !== 7 && docMode !== 8 && docMode !== 9) || docMode === 10),
+        isIE11 = isIE && ((check(/trident\/7\.0/) && docMode !== 7 && docMode !== 8 && docMode !== 9 && docMode !== 10) || docMode === 11),
+        isIE6 = isIE && check(/msie 6/),
+        isGecko = !isWebKit && !isIE && check(/gecko/),
+        isGecko3 = isGecko && check(/rv:1\.9/),
+        isGecko4 = isGecko && check(/rv:2\.0/),
+        isGecko5 = isGecko && check(/rv:5\./),
+        isGecko10 = isGecko && check(/rv:10\./),
+        isFF3_0 = isGecko3 && check(/rv:1\.9\.0/),
+        isFF3_5 = isGecko3 && check(/rv:1\.9\.1/),
+        isFF3_6 = isGecko3 && check(/rv:1\.9\.2/),
+        isWindows = check(/windows|win32/),
+        isMac = check(/macintosh|mac os x/),
+        isLinux = check(/linux/),
+        scrollbarSize = null,
+        chromeVersion = version(true, /\bchrome\/(\d+\.\d+)/),
+        firefoxVersion = version(true, /\bfirefox\/(\d+\.\d+)/),
+        ieVersion = version(isIE, /msie (\d+\.\d+)/),
+        operaVersion = version(isOpera, /version\/(\d+\.\d+)/),
+        safariVersion = version(isSafari, /version\/(\d+\.\d+)/),
+        webKitVersion = version(isWebKit, /webkit\/(\d+\.\d+)/),
+        isSecure = Bridge.global.location ? /^https/i.test(Bridge.global.location.protocol) : false,
+        isiPhone = /iPhone/i.test(navigator.platform),
+        isiPod = /iPod/i.test(navigator.platform),
+        isiPad = /iPad/i.test(navigator.userAgent),
+        isBlackberry = /Blackberry/i.test(navigator.userAgent),
+        isAndroid = /Android/i.test(navigator.userAgent),
+        isDesktop = isMac || isWindows || (isLinux && !isAndroid),
+        isTablet = isiPad,
+        isPhone = !isDesktop && !isTablet;
 
-	var browser = {
-	    isStrict: isStrict,
-	    isIEQuirks: isIE && (!isStrict && (isIE6 || isIE7 || isIE8 || isIE9)),
-	    isOpera: isOpera,
-	    isOpera10_5: isOpera10_5,
-	    isWebKit: isWebKit,
-	    isChrome: isChrome,
-	    isSafari: isSafari,
-	    isSafari3: isSafari3,
-	    isSafari4: isSafari4,
-	    isSafari5: isSafari5,
-	    isSafari5_0: isSafari5_0,
-	    isSafari2: isSafari2,
-	    isIE: isIE,
-	    isIE6: isIE6,
-	    isIE7: isIE7,
-	    isIE7m: isIE6 || isIE7,
-	    isIE7p: isIE && !isIE6,
-	    isIE8: isIE8,
-	    isIE8m: isIE6 || isIE7 || isIE8,
-	    isIE8p: isIE && !(isIE6 || isIE7),
-	    isIE9: isIE9,
-	    isIE9m: isIE6 || isIE7 || isIE8 || isIE9,
-	    isIE9p: isIE && !(isIE6 || isIE7 || isIE8),
-	    isIE10: isIE10,
-	    isIE10m: isIE6 || isIE7 || isIE8 || isIE9 || isIE10,
-	    isIE10p: isIE && !(isIE6 || isIE7 || isIE8 || isIE9),
-	    isIE11: isIE11,
-	    isIE11m: isIE6 || isIE7 || isIE8 || isIE9 || isIE10 || isIE11,
-	    isIE11p: isIE && !(isIE6 || isIE7 || isIE8 || isIE9 || isIE10),
-	    isGecko: isGecko,
-	    isGecko3: isGecko3,
-	    isGecko4: isGecko4,
-	    isGecko5: isGecko5,
-	    isGecko10: isGecko10,
-	    isFF3_0: isFF3_0,
-	    isFF3_5: isFF3_5,
-	    isFF3_6: isFF3_6,
-	    isFF4: 4 <= firefoxVersion && firefoxVersion < 5,
-	    isFF5: 5 <= firefoxVersion && firefoxVersion < 6,
-	    isFF10: 10 <= firefoxVersion && firefoxVersion < 11,
-	    isLinux: isLinux,
-	    isWindows: isWindows,
-	    isMac: isMac,
-	    chromeVersion: chromeVersion,
-	    firefoxVersion: firefoxVersion,
-	    ieVersion: ieVersion,
-	    operaVersion: operaVersion,
-	    safariVersion: safariVersion,
-	    webKitVersion: webKitVersion,
-	    isSecure: isSecure,
-	    isiPhone: isiPhone,
-	    isiPod: isiPod,
-	    isiPad: isiPad,
-	    isBlackberry: isBlackberry,
-	    isAndroid: isAndroid,
-	    isDesktop: isDesktop,
-	    isTablet: isTablet,
-	    isPhone: isPhone,
-	    iOS: isiPhone || isiPad || isiPod,
-	    standalone: Bridge.global.navigator ? !!Bridge.global.navigator.standalone : false
-	};
+    var browser = {
+        isStrict: isStrict,
+        isIEQuirks: isIE && (!isStrict && (isIE6 || isIE7 || isIE8 || isIE9)),
+        isOpera: isOpera,
+        isOpera10_5: isOpera10_5,
+        isWebKit: isWebKit,
+        isChrome: isChrome,
+        isSafari: isSafari,
+        isSafari3: isSafari3,
+        isSafari4: isSafari4,
+        isSafari5: isSafari5,
+        isSafari5_0: isSafari5_0,
+        isSafari2: isSafari2,
+        isIE: isIE,
+        isIE6: isIE6,
+        isIE7: isIE7,
+        isIE7m: isIE6 || isIE7,
+        isIE7p: isIE && !isIE6,
+        isIE8: isIE8,
+        isIE8m: isIE6 || isIE7 || isIE8,
+        isIE8p: isIE && !(isIE6 || isIE7),
+        isIE9: isIE9,
+        isIE9m: isIE6 || isIE7 || isIE8 || isIE9,
+        isIE9p: isIE && !(isIE6 || isIE7 || isIE8),
+        isIE10: isIE10,
+        isIE10m: isIE6 || isIE7 || isIE8 || isIE9 || isIE10,
+        isIE10p: isIE && !(isIE6 || isIE7 || isIE8 || isIE9),
+        isIE11: isIE11,
+        isIE11m: isIE6 || isIE7 || isIE8 || isIE9 || isIE10 || isIE11,
+        isIE11p: isIE && !(isIE6 || isIE7 || isIE8 || isIE9 || isIE10),
+        isGecko: isGecko,
+        isGecko3: isGecko3,
+        isGecko4: isGecko4,
+        isGecko5: isGecko5,
+        isGecko10: isGecko10,
+        isFF3_0: isFF3_0,
+        isFF3_5: isFF3_5,
+        isFF3_6: isFF3_6,
+        isFF4: 4 <= firefoxVersion && firefoxVersion < 5,
+        isFF5: 5 <= firefoxVersion && firefoxVersion < 6,
+        isFF10: 10 <= firefoxVersion && firefoxVersion < 11,
+        isLinux: isLinux,
+        isWindows: isWindows,
+        isMac: isMac,
+        chromeVersion: chromeVersion,
+        firefoxVersion: firefoxVersion,
+        ieVersion: ieVersion,
+        operaVersion: operaVersion,
+        safariVersion: safariVersion,
+        webKitVersion: webKitVersion,
+        isSecure: isSecure,
+        isiPhone: isiPhone,
+        isiPod: isiPod,
+        isiPad: isiPad,
+        isBlackberry: isBlackberry,
+        isAndroid: isAndroid,
+        isDesktop: isDesktop,
+        isTablet: isTablet,
+        isPhone: isPhone,
+        iOS: isiPhone || isiPad || isiPod,
+        standalone: Bridge.global.navigator ? !!Bridge.global.navigator.standalone : false
+    };
 
-	Bridge.Browser = browser;
+    Bridge.Browser = browser;
 
     // @source Class.js
-
-    var initializing = false;
-
     // The base Class implementation
     var base = {
-        cache: { },
+        cache: {},
 
-        initCtor: function () {
-            var value = arguments[0];
-
-            if (this.$multipleCtors && arguments.length > 0 && typeof value == "string") {
-                value = value === "constructor" ? "$constructor" : value;
-
-                if ((value === "$constructor" || System.String.startsWith(value, "constructor$")) && Bridge.isFunction(this[value])) {
-                    this[value].apply(this, Array.prototype.slice.call(arguments, 1));
-
-                    return;
-                }
+        initialize: function () {
+            if (this.$initialized) {
+                return;
             }
 
-            if (this.$constructor) {
-                this.$constructor.apply(this, arguments);
+            this.$initialized = Bridge.emptyFn;
+
+            if (this.$staticInit) {
+                this.$staticInit();
+            }
+
+            if (this.$initMembers) {
+                this.$initMembers();
             }
         },
 
-        initConfig: function (extend, base, cfg, statics, scope) {
+        initConfig: function (extend, base, config, statics, scope, prototype) {
             var initFn,
-                isFn = Bridge.isFunction(cfg),
-                fn = function () {
-                    var name,
-                        config;
+                name;
 
-                    config = Bridge.isFunction(cfg) ? cfg() : cfg;
-
-                    if (config.fields) {
-                        for (name in config.fields) {
-                            this[name] = config.fields[name];
-                        }
-                    }
-
-                    if (config.properties) {
-                        for (name in config.properties) {
-                            Bridge.property(this, name, config.properties[name]);
-                        }
-                    }
-
-                    if (config.events) {
-                        for (name in config.events) {
-                            Bridge.event(this, name, config.events[name]);
-                        }
-                    }
-
-                    if (config.alias) {
-                        for (name in config.alias) {
-                            if (this[name]) {
-                                this[name] = this[config.alias[name]];
-                            }
-                        }
-                    }
-
-                    if (config.init) {
-                        initFn = config.init;
-                    }
-                };
-
-            if (!isFn) {
-                fn.apply(scope);
+            if (config.fields) {
+                for (name in config.fields) {
+                    scope[name] = config.fields[name];
+                }
             }
 
-            scope.$initMembers = function () {
-                if (extend && !statics && base.$initMembers) {
-                    base.$initMembers.apply(this, arguments);
+            if (config.properties) {
+                for (name in config.properties) {
+                    Bridge.property(scope, name, config.properties[name], statics);
                 }
+            }
 
-                if (isFn) {
-                    fn.apply(this);
+            if (config.events) {
+                for (name in config.events) {
+                    Bridge.event(scope, name, config.events[name], statics);
                 }
+            }
 
-                if (initFn) {
-                    initFn.apply(this, arguments);
+            if (config.alias) {
+                for (var i = 0; i < config.alias.length; i++) {
+                    var m = scope[config.alias[i]];
+
+                    if (m === undefined && prototype) {
+                        m = prototype[config.alias[i]];
+                    }
+
+                    scope[config.alias[i + 1]] = m;
+                    i++;
                 }
-            };
+            }
+
+            if (config.init) {
+                initFn = config.init;
+            }
+
+            if (initFn || (extend && !statics && base.$initMembers)) {
+                scope.$initMembers = function () {
+                    if (extend && !statics && base.$initMembers) {
+                        base.$initMembers.call(this);
+                    }
+
+                    if (initFn) {
+                        initFn.call(this);
+                    }
+                };
+            }
+        },
+
+        definei: function (className, gscope, prop) {
+            var c = Bridge.define(className, gscope, prop);
+            c.$kind = "interface";
+
+            return c;
         },
 
         // Create a new Class that inherits from this class
-        define: function (className, gscope, prop) {
-            var preventClear = false;
+        define: function (className, gscope, prop, gCfg) {
+            var isGenericInstance = false;
 
             if (prop === true) {
-                preventClear = true;
+                isGenericInstance = true;
                 prop = gscope;
                 gscope = Bridge.global;
             } else if (!prop) {
@@ -2181,28 +2298,27 @@
                         obj,
                         c;
 
-                    args.unshift(className);
-                    name = Bridge.Class.genericName.apply(null, args);
+                    name = Bridge.Class.genericName(className, args);
                     c = Bridge.Class.cache[name];
 
                     if (c) {
                         return c;
                     }
 
-                    obj = prop.apply(null, args.slice(1));
+                    obj = prop.apply(null, args);
                     obj.$cacheName = name;
-                    c = Bridge.define(name, obj, true);
+                    c = Bridge.define(name, obj, true, { fn: fn, args: args});
 
                     return Bridge.get(c);
                 };
 
-                return Bridge.Class.generic(className, gscope, fn);
+                return Bridge.Class.generic(className, gscope, fn, prop.length);
             }
 
-            if (!preventClear) {
+            if (!isGenericInstance) {
                 Bridge.Class.staticInitAllow = false;
             }
-            
+
             prop = prop || {};
 
             var extend = prop.$inherits || prop.inherits,
@@ -2214,10 +2330,11 @@
                 scope = prop.$scope || gscope || Bridge.global,
                 i,
                 v,
-                ctorCounter,
                 isCtor,
                 ctorName,
                 name;
+
+            prop.$kind = prop.$kind || "class";
 
             if (prop.$inherits) {
                 delete prop.$inherits;
@@ -2241,29 +2358,20 @@
                 delete prop.$cacheName;
             }
 
-            // The dummy class constructor
-            function Class() {
-                if (!(this instanceof Class)) {
-                    var args = Array.prototype.slice.call(arguments, 0),
-                        object = Object.create(Class.prototype),
-                        result = Class.apply(object, args);
+            var Class,
+                cls = prop.hasOwnProperty("constructor") && prop.constructor || prop.$constructor;
 
-                    return typeof result === "object" ? result : object;
-                }
-
-                // All construction is actually done in the init method
-                if (!initializing) {
-                    if (this.$staticInit) {
-                        this.$staticInit();
+            if (!cls) {
+                Class = function () {
+                    this.$initialize();
+                    if (Class.$base) {
+                        Class.$base.$constructor.call(this);
                     }
-
-                    if (this.$initMembers) {
-                        this.$initMembers.apply(this, arguments);
-                    }
-
-                    this.$$initCtor.apply(this, arguments);
-                }
-            };
+                };
+                prop.constructor = Class;
+            } else {
+                Class = cls;
+            }
 
             scope = Bridge.Class.set(scope, className, Class);
 
@@ -2272,18 +2380,66 @@
             }
 
             Class.$$name = className;
+            Class.$kind = prop.$kind;
+
+            if (gCfg && isGenericInstance) {
+                Class.$genericTypeDefinition = gCfg.fn;
+                Class.$typeArguments = gCfg.args;
+                Class.$assembly = gCfg.fn.$assembly || Bridge.$currentAssembly;
+
+                var result = Bridge.Reflection.getTypeFullName(gCfg.fn);
+                for (i = 0; i < gCfg.args.length; i++) {
+                    result += (i === 0 ? '[' : ',') + '[' + Bridge.Reflection.getTypeQName(gCfg.args[i]) + ']';
+                }
+
+                result += ']';
+
+                Class.$$fullname = result;
+            }
 
             if (extend && Bridge.isFunction(extend)) {
                 extend = extend();
             }
 
-            base = extend ? extend[0].prototype : this.prototype;
+            var interfaces = [];
+            var baseInterfaces = [];
+            if (extend) {
+                for (var j = 0; j < extend.length; j++) {
+                    var baseType = extend[j];
+                    var baseI = (baseType.$interfaces || []).concat(baseType.$baseInterfaces || []);
+                    if (baseI.length > 0) {
+                        for (var k = 0; k < baseI.length; k++) {
+                            if (baseInterfaces.indexOf(baseI[k]) < 0) {
+                                baseInterfaces.push(baseI[k]);
+                            }
+                        }
+                    }
+                    
+                    if (extend[j].$kind === "interface") {
+                        interfaces.push(extend[j]);
+                    }
+                }
+            }
+            
+            Class.$baseInterfaces = baseInterfaces;
+            Class.$interfaces = interfaces;
+            var noBase = extend ? extend[0].$kind === "interface" : true;
 
-            // Instantiate a base class (but only create the instance,
-            // don't run the init constructor)
-            initializing = true;
-            prototype = extend ? new extend[0]() : new Object();
-            initializing = false;
+            if (noBase) {
+                extend = null;
+            }
+
+            base = extend ? extend[0].prototype : this.prototype;
+            Class.$base = base;
+            prototype = extend ? (extend[0].$$initCtor ? new extend[0].$$initCtor() : new extend[0]()) : new Object();
+
+            Class.$$initCtor = function () {};
+            Class.$$initCtor.prototype = prototype;
+            Class.$$initCtor.prototype.constructor = Class;
+
+            if (Class.$$fullname) {
+                Class.$$initCtor.prototype.$$fullname = Class.$$fullname;
+            }
 
             if (statics) {
                 var staticsConfig = statics.$config || statics.config;
@@ -2302,29 +2458,26 @@
             var instanceConfig = prop.$config || prop.config;
 
             if (instanceConfig && !Bridge.isFunction(instanceConfig)) {
-                Bridge.Class.initConfig(extend, base, instanceConfig, false, prop);                
+                Bridge.Class.initConfig(extend, base, instanceConfig, false, prop, prototype);
 
                 if (prop.$config) {
                     delete prop.$config;
                 } else {
                     delete prop.config;
                 }
-            } else {
-                prop.$initMembers = extend && base.$initMembers ? function () {
-                    base.$initMembers.apply(this, arguments);
-                } : function () { };
+            } else if (extend && base.$initMembers) {
+                prop.$initMembers = function () {
+                    base.$initMembers.call(this);
+                };
             }
 
-            prop.$$initCtor = Bridge.Class.initCtor;
-
-            // Copy the properties over onto the new prototype
-            ctorCounter = 0;
+            prop.$initialize = Bridge.Class.initialize;
 
             var keys = [];
 
             for (name in prop) {
                 keys.push(name);
-            }          
+            }
 
             for (i = 0; i < keys.length; i++) {
                 name = keys[i];
@@ -2333,54 +2486,21 @@
                 isCtor = name === "constructor";
                 ctorName = isCtor ? "$constructor" : name;
 
-                if (Bridge.isFunction(v) && (isCtor || System.String.startsWith(name, "constructor$"))) {
-                    ctorCounter++;
+                if (Bridge.isFunction(v) && (isCtor || name.match("^\\$constructor") !== null)) {
                     isCtor = true;
                 }
 
-                prototype[ctorName] = prop[name];
-
                 if (isCtor) {
-                    (function (ctorName) {
-                        Class[ctorName] = function () {
-                            var args = Array.prototype.slice.call(arguments);
-
-                            if (this.$initMembers) {
-                                this.$initMembers.apply(this, args);
-                            }
-
-                            args.unshift(ctorName);
-                            this.$$initCtor.apply(this, args);
-                        };
-                    })(ctorName);
-
+                    Class[ctorName] = prop[name];
                     Class[ctorName].prototype = prototype;
                     Class[ctorName].prototype.constructor = Class;
+                    prototype[ctorName] = prop[name];
+                } else {
+                    prototype[ctorName] = prop[name];
                 }
             }
 
-            if (ctorCounter === 0) {
-                prototype.$constructor = extend ? function () {
-                    base.$constructor.apply(this, arguments);
-                } : function () { };
-            }
-
-            if (ctorCounter > 1) {
-                prototype.$multipleCtors = true;
-            }
-
             prototype.$$name = className;
-
-            // Populate our constructed prototype object
-            Class.prototype = prototype;
-
-            // Enforce the constructor to be what we expect
-            Class.prototype.constructor = Class;
-
-            if (prop.$interface) {
-                Class.$interface = prop.$interface;
-                delete prop.$interface;
-            }
 
             if (statics) {
                 for (name in statics) {
@@ -2389,7 +2509,7 @@
             }
 
             if (!extend) {
-                extend = [Object];
+                extend = [Object].concat(interfaces);
             }
 
             Class.$$inherits = extend;
@@ -2409,11 +2529,11 @@
                     Class.$staticInit = null;
 
                     if (Class.$initMembers) {
-                        Class.$initMembers.call(Class);
+                        Class.$initMembers();
                     }
 
                     if (Class.constructor) {
-                        Class.constructor.call(Class);
+                        Class.constructor();
                     }
                 }
             };
@@ -2421,12 +2541,73 @@
             if (isEntryPoint) {
                 Bridge.Class.$queue.push(Class);
             }
-            
+
             Class.$staticInit = fn;
+            if (!isGenericInstance) {
+                Bridge.Class.registerType(className, Class);
+            }
+            
+            if (Bridge.Reflection) {
+                Class.$getMetadata = Bridge.Reflection.getMetadata;
+            }
+
+            if (Class.$kind === "enum") {
+                Class.instanceOf = function (instance) {
+                     var utype = Class.prototype.$utype;
+                     if (utype === System.String) {
+                         return typeof (instance) == "string";
+                     }
+
+                     if (utype && utype.instanceOf) {
+                         return utype.instanceOf(instance);
+                     }
+
+                     return typeof (instance) == "number";
+                };
+            }
+
+            if (Class.$kind === "interface" && Class.prototype.$variance) {
+                Class.isAssignableFrom = Bridge.Class.varianceAssignable;
+            }
 
             return Class;
         },
 
+        varianceAssignable: function (source) {
+            var check = function (target, type) {
+                if (type.$genericTypeDefinition === target.$genericTypeDefinition && type.$typeArguments.length === target.$typeArguments.length) {
+                    for (var i = 0; i < target.$typeArguments.length; i++) {
+                        var v = target.prototype.$variance[i], t = target.$typeArguments[i], s = type.$typeArguments[i];
+                        switch (v) {
+                            case 1: if (!Bridge.Reflection.isAssignableFrom(t, s)) return false; break;
+                            case 2: if (!Bridge.Reflection.isAssignableFrom(s, t)) return false; break;
+                            default: if (s !== t) return false;
+                        }
+                    }
+                    return true;
+                }
+                return false;
+            };
+
+            if (source.$kind === "interface" && check(this, source)) {
+                return true;
+            }
+
+            var ifs = Bridge.Reflection.getInterfaces(source);
+            for (var i = 0; i < ifs.length; i++) {
+                if (ifs[i] === this || check(this, ifs[i])) {
+                    return true;
+                }
+            }
+            return false;
+        },
+
+        registerType : function (className, cls) {
+            if (Bridge.$currentAssembly) {
+                Bridge.$currentAssembly.$types[className] = cls;
+                cls.$assembly = Bridge.$currentAssembly;
+            }
+        },
 
         addExtend: function (cls, extend) {
             var i,
@@ -2452,9 +2633,9 @@
                 exists,
                 i;
 
-            for (i = 0; i < (nameParts.length - 1) ; i++) {
+            for (i = 0; i < (nameParts.length - 1); i++) {
                 if (typeof scope[nameParts[i]] == "undefined") {
-                    scope[nameParts[i]] = { };
+                    scope[nameParts[i]] = {};
                 }
 
                 scope = scope[nameParts[i]];
@@ -2469,25 +2650,25 @@
 
                     if (typeof o === "function" && o.$$name) {
                         (function (cls, key, o) {
-							Object.defineProperty(cls, key, {
-								get: function () {
-									if (Bridge.Class.staticInitAllow) {
-										if (o.$staticInit) {
-											o.$staticInit();
-										}
+                            Object.defineProperty(cls, key, {
+                                get: function () {
+                                    if (Bridge.Class.staticInitAllow) {
+                                        if (o.$staticInit) {
+                                            o.$staticInit();
+                                        }
 
-										Bridge.Class.defineProperty(cls, key, o);
-									}
+                                        Bridge.Class.defineProperty(cls, key, o);
+                                    }
 
-									return o;
-								},
-								set: function (newValue) {
-									o = newValue;
-								},
-								enumerable: true,
-								configurable: true
-							});
-						})(cls, key, o);
+                                    return o;
+                                },
+                                set: function (newValue) {
+                                    o = newValue;
+                                },
+                                enumerable: true,
+                                configurable: true
+                            });
+                        })(cls, key, o);
                     }
                 }
             }
@@ -2503,7 +2684,7 @@
 
                                 Bridge.Class.defineProperty(scope, name, cls);
                             }
-                            
+
                             return cls;
                         },
                         set: function (newValue) {
@@ -2513,7 +2694,7 @@
                         configurable: true
                     });
                 })(scope, name, cls);
-                
+
             } else {
                 scope[name] = cls;
             }
@@ -2529,24 +2710,26 @@
             });
         },
 
-        genericName: function () {
-            var name = arguments[0];
-
-            for (var i = 1; i < arguments.length; i++) {
-                name += "$" + Bridge.getTypeName(arguments[i]);
+        genericName: function (name, typeArguments) {
+            var gName = name;
+            for (var i = 0; i < typeArguments.length; i++) {
+                var ta = typeArguments[i];
+                gName += "$" + (ta.$$name || Bridge.getTypeName(ta));
             }
 
-            return name;
+            return gName;
         },
 
-        generic: function (className, scope, fn) {
-            if (!fn) {
-                fn = scope;
-                scope = Bridge.global;
-            }
-
+        generic: function (className, scope, fn, length) {            
             fn.$$name = className;
+            fn.$kind = "class";
+
             Bridge.Class.set(scope, className, fn, true);
+            Bridge.Class.registerType(className, fn);
+
+            fn.$typeArgumentCount = length;
+            fn.$isGenericTypeDefinition = true;
+            fn.$getMetadata = Bridge.Reflection.getMetadata;
 
             return fn;
         },
@@ -2572,18 +2755,690 @@
     Bridge.Class = base;
     Bridge.Class.$queue = [];
     Bridge.define = Bridge.Class.define;
+    Bridge.definei = Bridge.Class.definei;
     Bridge.init = Bridge.Class.init;
 
+Bridge.initAssembly = function (assemblyName, res, callback) {
+    if (!callback) {
+        callback = res;
+        res = {};
+    }
+
+    assemblyName = assemblyName || "Bridge.$Unknown";
+    var asm = System.Reflection.Assembly.assemblies[assemblyName];
+
+    if (!asm) {
+        asm = new System.Reflection.Assembly(assemblyName, res);
+    } else {
+        Bridge.apply(asm.res, res || {});
+    }
+    
+    Bridge.$currentAssembly = asm; 
+    if (callback) {
+        callback.call(Bridge.global, asm, Bridge.global);
+    }
+};
+
+Bridge.define("System.Reflection.Assembly", {
+    statics: {
+        assemblies: {}
+    },
+
+    constructor: function (name, res) {
+        this.$initialize();
+        this.name = name;
+        this.res = res || {};
+        this.$types = {}
+        System.Reflection.Assembly.assemblies[name] = this;
+    },
+
+    toString: function() {
+        return this.name;
+    },
+
+    getManifestResourceNames: function () {
+         return Object.keys(this.res);
+    },
+
+    getManifestResourceDataAsBase64: function (type, name) {
+        if (arguments.length === 1) {
+            name = type;
+            type = null;
+        }
+
+        if (type) {
+            name = Bridge.Reflection.getTypeNamespace(type) + "." + name;
+        }
+
+        return this.res[name] || null;
+    },
+
+    getManifestResourceData: function (type, name) {
+        if (arguments.length === 1) {
+            name = type;
+            type = null;
+        }
+
+        if (type) {
+            name = Bridge.Reflection.getTypeNamespace(type) + '.' + name;
+        }
+
+        var r = this.res[name];
+        return r ? System.Convert.fromBase64String(r) : null;
+    },
+
+    getCustomAttributes: function (attributeType) {
+        if (attributeType && !Bridge.isBoolean(attributeType)) {
+            return this.attr.filter(function(a) {
+                return Bridge.is(a, attributeType);
+            });
+        }
+
+        return this.attr;
+    }
+});
+
+Bridge.$currentAssembly = new System.Reflection.Assembly("System");
+Bridge.SystemAssembly = Bridge.$currentAssembly;
+Bridge.SystemAssembly.$types["System.Reflection.Assembly"] = System.Reflection.Assembly;
+System.Reflection.Assembly.$assembly = Bridge.SystemAssembly;
+
+Bridge.Reflection = {
+    setMetadata: function (type, metadata) {
+        type.$metadata = metadata;
+    },
+
+    initMetaData: function (type, metadata) {
+        if (metadata.members) {
+            for (var i = 0; i < metadata.members.length; i++) {
+                var m = metadata.members[i];
+                m.typeDef = type;
+                if (m.adder) m.adder.typeDef = type;
+                if (m.remover) m.remover.typeDef = type;
+                if (m.getter) m.getter.typeDef = type;
+                if (m.setter) m.setter.typeDef = type;
+            }
+        }
+        type.$metadata = metadata;
+        type.$initMetaData = true;
+    },
+
+    getMetadata: function () {
+        if (!this.$metadata && this.$genericTypeDefinition) {
+            this.$metadata = this.$genericTypeDefinition.$factoryMetadata || this.$genericTypeDefinition.$metadata;
+        }
+        
+        var metadata = this.$metadata;
+
+        if (typeof (metadata) === "function") {
+            if (this.$isGenericTypeDefinition) {
+                var i,
+                    size = this.$typeArgumentCount,
+                    arr = new Array(size);
+
+                for (i = 0; i < size; i++) {
+                    arr[i] = Object;
+                }
+                this.$factoryMetadata = this.$metadata;
+                metadata = this.$metadata.apply(null, arr);
+            }
+            else if (this.$typeArguments) {
+                metadata = this.$metadata.apply(null, this.$typeArguments);
+            } else {
+                metadata = this.$metadata();
+            }
+        }
+
+        if (!this.$initMetaData && metadata) {
+            Bridge.Reflection.initMetaData(this, metadata);
+        }
+
+        return metadata;
+    },
+
+    load: function(name) {
+        return System.Reflection.Assembly.assemblies[name] || require(name);
+    },
+
+    getGenericTypeDefinition: function (type) {
+	    return type.$genericTypeDefinition || null;
+    },
+
+    getGenericParameterCount: function(type) {
+	    return type.$typeArgumentCount || 0;
+    },
+
+    getGenericArguments: function(type) {
+	    return type.$typeArguments || null;
+    },
+
+    isGenericTypeDefinition: function (type) {
+        return type.$isGenericTypeDefinition || false;
+    },
+
+    getBaseType: function(type) {
+	    if (type === Object || type.$kind === "interface") {
+		    return null;
+	    }
+	    else if (Object.getPrototypeOf) {
+		    return Object.getPrototypeOf(type.prototype).constructor;
+	    }
+	    else {
+		    var p = type.prototype;
+		    if (Object.prototype.hasOwnProperty.call(p, "constructor")) {
+		        var ownValue;
+			    try {
+				    ownValue = p.constructor;
+				    delete p.constructor;
+				    return p.constructor;
+			    }
+			    finally {
+				    p.constructor = ownValue;
+			    }
+		    }
+		    return p.constructor;
+	    }
+    },
+
+    getTypeFullName: function(obj) {
+        var str;
+
+        if (obj.$$fullname) {
+            return obj.$$fullname;
+        }
+
+        if (obj.$$name) {
+            return obj.$$name;
+        }
+
+        if ((obj).constructor === Function) {
+            str = (obj).toString();
+        } else {
+            str = (obj).constructor.toString();
+        }
+
+        var results = (/function (.{1,})\(/).exec(str);
+
+        return (results && results.length > 1) ? results[1] : "Object";
+    },
+
+    _makeQName: function(name, asm) {
+	    return name + (asm ? ', ' + asm.name : '');
+    },
+
+    getTypeQName: function(type) {
+        return Bridge.Reflection._makeQName(Bridge.Reflection.getTypeFullName(type), type.$assembly);
+    },
+
+    getTypeName: function(type) {
+        var fullName = Bridge.Reflection.getTypeFullName(type);
+	    var bIndex = fullName.indexOf('[');
+	    var nsIndex = fullName.lastIndexOf('.', bIndex >= 0 ? bIndex : fullName.length);
+	    return nsIndex > 0 ? fullName.substr(nsIndex + 1) : fullName;
+    },
+
+    getTypeNamespace: function(type) {
+        var fullName = Bridge.Reflection.getTypeFullName(type);
+	    var bIndex = fullName.indexOf('[');
+	    var nsIndex = fullName.lastIndexOf('.', bIndex >= 0 ? bIndex : fullName.length);
+	    var ns = nsIndex > 0 ? fullName.substr(0, nsIndex) : '';
+
+	    if (type.$assembly) {
+	        var parentType = Bridge.Reflection._getAssemblyType(type.$assembly, ns);
+            if (parentType) {
+                ns = Bridge.Reflection.getTypeNamespace(parentType);
+            }
+        }
+
+        return ns;
+    },
+
+    getTypeAssembly: function(type) {
+	    if (System.Array.contains([Date, Number, Boolean, String, Function, Array], type)) {
+	        return Bridge.SystemAssembly;
+	    } else {
+	        return type.$assembly || Bridge.SystemAssembly;
+	    }
+    },
+
+    _getAssemblyType: function (asm, name) {
+        var noAsm = false;
+        if (!asm) {
+            asm = Bridge.SystemAssembly;
+            noAsm = true;
+        }
+
+	    if (asm.$types) {
+	        var t = asm.$types[name] || null;
+
+            if (t) {
+                return t;
+            }
+
+            if (asm.name === "System") {
+                asm = Bridge.global;
+            } else {
+                return null;
+            }
+	    }
+	    
+        var a = name.split('.'),
+            scope = asm;
+        
+	    for (var i = 0; i < a.length; i++) {
+	        scope = scope[a[i]];
+	        if (!scope) {
+	            return null;
+	        }
+	    }
+	    if (typeof scope !== 'function' || !noAsm && scope.$assembly && asm.name !== scope.$assembly.name) {
+	        return null;
+	    }
+
+	    return scope;
+    },
+
+    getAssemblyTypes: function(asm) {
+	    var result = [];
+	    if (asm.$types) {
+		    for (var t in asm.$types) {
+			    if (asm.$types.hasOwnProperty(t))
+				    result.push(asm.$types[t]);
+		    }
+	    }
+	    else {
+		    var traverse = function(s, n) {
+			    for (var c in s) {
+				    if (s.hasOwnProperty(c)) {
+				        traverse(s[c], c);
+				    }
+			    }
+			    if (typeof(s) === 'function' && Bridge.isUpper(n.charCodeAt(0))) {
+			        result.push(s);
+			    }
+		    };
+		    traverse(asm, '');
+	    }
+	    return result;
+    },
+
+    createAssemblyInstance: function(asm, typeName) {
+	    var t = Bridge.Reflection.getType(typeName, asm);
+	    return t ? Bridge.createInstance(t) : null;
+    },
+
+    getInterfaces: function(type) {
+	    if (type.$interfaces || type.$baseInterfaces) {
+	        return (type.$interfaces || []).concat(type.$baseInterfaces || []);
+	    }
+	    else if (type === Date) {
+	        return [ System.IComparable$1(Date), System.IEquatable$1(Date), System.IComparable, System.IFormattable ];
+	    }
+	    else if (type === Number) {
+	        return [ System.IComparable$1(Bridge.Int), System.IEquatable$1(Bridge.Int), System.IComparable, System.IFormattable ];
+	    }
+	    else if (type === Boolean) {
+	        return [ System.IComparable$1(Boolean), System.IEquatable$1(Boolean), System.IComparable ];
+	    }
+	    else if (type === String) {
+	        return [ System.IComparable$1(String), System.IEquatable$1(String), System.IComparable, System.ICloneable, System.Collections.IEnumerable, System.Collections.Generic.IEnumerable$1(System.Char) ];
+	    }
+	    else if (type === Array || System.Array._typedArrays[Bridge.getTypeName(type)]) {
+	        return [System.Collections.IEnumerable, System.Collections.ICollection, System.ICloneable, System.Collections.Generic.IEnumerable$1(Object), System.Collections.Generic.ICollection$1(Object), System.Collections.Generic.IList$1(Object)];
+	    } else {
+	        return [];
+	    }
+    },
+
+    isInstanceOfType: function(instance, type) {
+        return Bridge.is(instance, type);
+    },
+
+    /*isAssignableFrom: function(target, type) {
+	    return target === type || (typeof(target.isAssignableFrom) === 'function' && target.isAssignableFrom(type)) || type.prototype instanceof target;
+    },*/
+
+    isAssignableFrom: function (baseType, type) {
+        if (baseType == null) {
+            throw new System.NullReferenceException();
+        }
+
+        if (type == null) {
+            return false;
+        }
+
+        if (baseType === type || baseType === Object) {
+            return true;
+        }
+
+        if (Bridge.isFunction(baseType.isAssignableFrom)) {
+            return baseType.isAssignableFrom(type);
+        }
+
+        var inheritors = type.$$inherits,
+            i,
+            r;
+
+        if (inheritors) {
+            for (i = 0; i < inheritors.length; i++) {
+                r = Bridge.Reflection.isAssignableFrom(baseType, inheritors[i]);
+
+                if (r) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    },
+
+    isClass: function(type) {
+	    return (type.$kind === "class" || type === Array || type === Function || type === RegExp || type === String || type === Error || type === Object);
+    },
+
+    isEnum: function (type) {
+        return type.$kind === "enum";
+    },
+
+    isFlags: function (type) {
+        return !!(type.prototype && type.prototype.$flags);
+    },
+
+    isInterface: function(type) {
+        return type.$kind === "interface";
+    },
+
+    _getType: function (typeName, asm, re) {
+	    var outer = !re;
+	    re = re || /[[,\]]/g;
+	    var last = re.lastIndex, 
+            m = re.exec(typeName), 
+            tname, 
+            targs = [],
+            t;
+	    if (m) {
+		    tname = typeName.substring(last, m.index);
+		    switch (m[0]) {
+			    case '[':
+				    if (typeName[m.index + 1] !== '[') {
+				        return null;
+				    }
+				    for (;;) {
+					    re.exec(typeName);
+					    t = Bridge.Reflection._getType(typeName, Bridge.SystemAssembly, re);
+					    if (!t) {
+					        return null;
+					    }
+					    targs.push(t);
+					    m = re.exec(typeName);
+				        if (m[0] === ']') {
+				            break;
+				        } else if (m[0] !== ',') {
+				            return null;
+				        }
+				    }
+				    m = re.exec(typeName);
+				    if (m && m[0] === ',') {
+					    re.exec(typeName);
+					    if (!(asm = System.Reflection.Assembly.assemblies[(re.lastIndex > 0 ? typeName.substring(m.index + 1, re.lastIndex - 1) : typeName.substring(m.index + 1)).trim()]))
+						    return null;
+				    }
+				    break;
+
+			    case ']':
+				    break;
+
+			    case ',':
+				    re.exec(typeName);
+				    if (!(asm = System.Reflection.Assembly.assemblies[(re.lastIndex > 0 ? typeName.substring(m.index + 1, re.lastIndex - 1) : typeName.substring(m.index + 1)).trim()]))
+					    return null;
+				    break;
+		    }
+	    }
+	    else {
+		    tname = typeName.substring(last);
+	    }
+
+	    if (outer && re.lastIndex)
+		    return null;
+
+	    t = Bridge.Reflection._getAssemblyType(asm, tname.trim());
+	    return targs.length ? t.apply(null, targs) : t;
+    },
+
+    getType: function(typeName, asm) {
+        return typeName ? Bridge.Reflection._getType(typeName, asm) : null;
+    },
+
+    applyConstructor: function(constructor, args) {
+	    var f = function() {
+		    constructor.apply(this, args);
+	    };
+	    f.prototype = constructor.prototype;
+	    return new f();
+    },
+
+    getAttributes: function(type, attrType, inherit) {
+        var result = [],
+            i, t, a, md, type_md;
+	    if (inherit) {
+		    var b = Bridge.Reflection.getBaseType(type);
+		    if (b) {
+		        a = Bridge.Reflection.getAttributes(b, attrType, true);
+			    for (i = 0; i < a.length; i++) {
+			        t = Bridge.getType(a[i]);
+			        md = t.$getMetadata ? t.$getMetadata() : t.$metadata;
+				    if (!md || !md.attrNoInherit) {
+				        result.push(a[i]);
+				    }
+			    }
+		    }
+	    }
+
+	    type_md = type.$getMetadata ? type.$getMetadata() : type.$metadata;
+	    if (type_md && type_md.attr) {
+	        for (i = 0; i < type_md.attr.length; i++) {
+	            a = type_md.attr[i];
+			    if (attrType == null || Bridge.Reflection.isInstanceOfType(a, attrType)) {
+			        t = Bridge.getType(a);
+			        md = t.$getMetadata ? t.$getMetadata() : t.$metadata;
+			        if (!md || !md.attrAllowMultiple) {
+					    for (var j = result.length - 1; j >= 0; j--) {
+						    if (Bridge.Reflection.isInstanceOfType(result[j], t)) {
+						        result.splice(j, 1);
+						    }
+					    }
+				    }
+				    result.push(a);
+			    }
+		    }
+	    }
+	    return result;
+    },
+
+    getMembers: function(type, memberTypes, bindingAttr, name, params) {
+	    var result = [];
+	    if ((bindingAttr & 72) === 72 || (bindingAttr & 6) === 4) {
+	        var b = Bridge.Reflection.getBaseType(type);
+	        if (b) {
+	            result = Bridge.Reflection.getMembers(b, memberTypes & ~1, bindingAttr & (bindingAttr & 64 ? 255 : 247) & (bindingAttr & 2 ? 251 : 255), name, params);
+	        }
+	    }
+
+	    var f = function(m) {
+		    if ((memberTypes & m.type) && (((bindingAttr & 4) && !m.isStatic) || ((bindingAttr & 8) && m.isStatic)) && (!name || m.name === name)) {
+			    if (params) {
+			        if ((m.params || []).length !== params.length) {
+			            return;
+			        }
+			        for (var i = 0; i < params.length; i++) {
+			            if (params[i] !== m.params[i]) {
+			                return;
+			            }
+			        }
+			    }
+			    result.push(m);
+		    }
+	    };
+
+	    var type_md = type.$getMetadata ? type.$getMetadata() : type.$metadata;
+	    if (type_md && type_md.members) {
+	        var mNames = ['getter', 'setter', 'adder', 'remover'];
+	        for (var i = 0; i < type_md.members.length; i++) {
+	            var m = type_md.members[i];
+			    f(m);
+			    for (var j = 0; j < 4; j++) {
+			        var a = mNames[j];
+				    if (m[a]) {
+				        f(m[a]);
+				    }
+			    }
+		    }
+	    }
+
+	    if (bindingAttr & 256) {
+		    while (type) {
+			    var r = [];
+			    for (var i = 0; i < result.length; i++) {
+			        if (result[i].typeDef === type) {
+			            r.push(result[i]);
+			        }
+			    }
+		        if (r.length > 1) {
+		            throw new System.Reflection.AmbiguousMatchException('Ambiguous match');
+		        } else if (r.length === 1) {
+		            return r[0];
+		        }
+		        type = Bridge.Reflection.getBaseType(type);
+		    }
+		    return null;
+	    }
+
+	    return result;
+    },
+
+    midel: function(mi, target, typeArguments) {
+        if (mi.isStatic && !!target) {
+            throw new System.ArgumentException('Cannot specify target for static method');
+        } else if (!mi.isStatic && !target)
+            throw new System.ArgumentException('Must specify target for instance method');
+
+        var method;
+	    if (mi.fget) {
+		    method = function() { return (mi.isStatic ? mi.typeDef : this)[mi.fget]; };
+	    }
+	    else if (mi.fset) {
+		    method = function(v) { (mi.isStatic ? mi.typeDef : this)[mi.fset] = v; };
+	    }
+	    else {
+		    method = mi.def || (mi.isStatic || mi.sm ? mi.typeDef[mi.sname] : target[mi.sname]);
+
+		    if (mi.tpcount) {
+		        if (!typeArguments || typeArguments.length !== mi.tpcount) {
+		            throw new System.ArgumentException('Wrong number of type arguments');
+		        }
+
+		        var gMethod = method;
+                method = function() {
+                    return gMethod.apply(this, typeArguments.concat(Array.prototype.slice.call(arguments)));
+                }
+		    }
+		    else {
+		        if (typeArguments && typeArguments.length) {
+		            throw new System.ArgumentException('Cannot specify type arguments for non-generic method');
+		        }
+		    }
+		    if (mi.exp) {
+			    var _m1 = method;
+			    method = function () { return _m1.apply(this, Array.prototype.slice.call(arguments, 0, arguments.length - 1).concat(arguments[arguments.length - 1])); };
+		    }
+		    if (mi.sm) {
+			    var _m2 = method;
+			    method = function() { return _m2.apply(null, [this].concat(Array.prototype.slice.call(arguments))); };
+		    }
+	    }
+	    return Bridge.fn.bind(target, method);
+    },
+
+    invokeCI: function(ci, args) {
+        if (ci.exp) {
+            args = args.slice(0, args.length - 1).concat(args[args.length - 1]);
+        }
+
+        if (ci.def) {
+            return ci.def.apply(null, args);
+        } else if (ci.sm) {
+            return ci.typeDef[ci.sname].apply(null, args);
+        } else {
+            return Bridge.Reflection.applyConstructor(ci.sname ? ci.typeDef[ci.sname] : ci.typeDef, args);
+        }
+    },
+
+    fieldAccess: function(fi, obj) {
+        if (fi.isStatic && !!obj) {
+            throw new System.ArgumentException('Cannot specify target for static field');
+        } else if (!fi.isStatic && !obj) {
+            throw new System.ArgumentException('Must specify target for instance field');
+        }
+        obj = fi.isStatic ? fi.typeDef : obj;
+        if (arguments.length === 3) {
+            obj[fi.sname] = arguments[2];
+        } else {
+            return obj[fi.sname];
+        }
+    }
+};
+
+Bridge.setMetadata = Bridge.Reflection.setMetadata;
+
+System.Reflection.ConstructorInfo = {
+    $is: function(obj) {
+        return obj != null && obj.type === 1;
+    }
+};
+
+System.Reflection.EventInfo = {
+    $is: function (obj) {
+        return obj != null && obj.type === 2;
+    }
+};
+
+System.Reflection.FieldInfo = {
+    $is: function (obj) {
+        return obj != null && obj.type === 4;
+    }
+};
+
+System.Reflection.MethodBase = {
+    $is: function (obj) {
+        return obj != null && (obj.type === 1 || obj.type === 8);
+    }
+};
+
+System.Reflection.MethodInfo = {
+    $is: function (obj) {
+        return obj != null && obj.type === 8;
+    }
+};
+
+System.Reflection.PropertyInfo = {
+    $is: function (obj) {
+        return obj != null && obj.type === 16;
+    }
+};
+
+System.AppDomain = {
+    getAssemblies: function() {
+        return Object.keys(System.Reflection.Assembly.assemblies).map(function (n) { return System.Reflection.Assembly.assemblies[n]; });
+    }
+};
     // @source Interfaces.js
 
     Bridge.define("System.IFormattable", {
+        $kind: "interface",
         statics: {
             $is: function (obj) {
-                if (Bridge.isNumber(obj)) {
-                    return true;
-                }
-
-                if (Bridge.isDate(obj)) {
+                if (Bridge.isNumber(obj) || Bridge.isDate(obj) || System.Guid.instanceOf(obj)) {
                     return true;
                 }
 
@@ -2592,24 +3447,73 @@
         }
     });
 
-    Bridge.define("System.IComparable");
+    Bridge.define("System.IComparable", {
+        $kind: "interface",
 
-    Bridge.define("System.IFormatProvider");
+        statics: {
+            $is: function (obj) {
+                if (Bridge.isNumber(obj) || Bridge.isDate(obj) || Bridge.isBoolean(obj) || Bridge.isString(obj)) {
+                    return true;
+                }
 
-    Bridge.define("System.ICloneable");
+                return Bridge.is(obj, System.IComparable, true);
+            }
+        }
+    });
 
-    Bridge.define('System.IComparable$1', function (T) { return {}; });
+    Bridge.define("System.IFormatProvider", {
+        $kind: "interface"
+    });
 
-    Bridge.define('System.IEquatable$1', function (T) { return {}; });
+    Bridge.define("System.ICloneable", {
+        $kind: "interface"
+    });
 
-    Bridge.define("Bridge.IPromise");
+    Bridge.define('System.IComparable$1', function (T) {
+        return {
+            $kind: "interface",
 
-    Bridge.define("System.IDisposable");
+            statics: {
+                $is: function (obj) {
+                    if (Bridge.isNumber(obj) && T.$number && T.instanceOf(obj) || Bridge.isDate(obj) && T === Date || Bridge.isBoolean(obj) && T === Boolean || Bridge.isString(obj) && T === String || System.Guid.instanceOf(obj) && T === System.Guid) {
+                        return true;
+                    }
+
+                    return Bridge.is(obj, System.IComparable$1(T), true);
+                }
+            }
+        };
+    });
+
+    Bridge.define('System.IEquatable$1', function (T) {
+        return {
+            $kind: "interface",
+
+            statics: {
+                $is: function (obj) {
+                    if (Bridge.isNumber(obj) && T.$number && T.instanceOf(obj) || Bridge.isDate(obj) && T === Date || Bridge.isBoolean(obj) && T === Boolean || Bridge.isString(obj) && T === String || System.Guid.instanceOf(obj) && T === System.Guid) {
+                        return true;
+                    }
+
+                    return Bridge.is(obj, System.IEquatable$1(T), true);
+                }
+            }
+        };
+    });
+
+    Bridge.define("Bridge.IPromise", {
+        $kind: "interface"
+    });
+
+    Bridge.define("System.IDisposable", {
+        $kind: "interface"
+    });
 
     // @source Char.js
 
     Bridge.define("System.Char", {
         inherits: [System.IComparable, System.IFormattable],
+        $kind: "struct",
         statics: {
             min: 0,
             max: 65535,
@@ -2733,14 +3637,58 @@
 
     Bridge.Class.addExtend(System.Char, [System.IComparable$1(System.Char), System.IEquatable$1(System.Char)]);
 
+    Bridge.define('System.FormattableString', {
+        inherits: [System.IFormattable],
+        format: function (_, provider) {
+            return this.fmt(provider);
+        },
+
+        toString: function () {
+            return this.fmt(System.Globalization.CultureInfo.getCurrentCulture());
+        }            
+    });
+
+    Bridge.define('System.FormattableStringImpl', {
+        inherits: [System.FormattableString],
+
+        constructor: function (format, args) {
+            this._format = format;
+            this._args = args;
+        },
+
+        fmt: function (provider) {
+            return System.String.formatProvider.apply(System.String, [provider, this._format].concat(this._args));
+		},
+		getArgumentCount: function () {
+			return this._args.length;
+		},
+		getFormat: function () {
+			return this._format;
+		},
+		getArgument: function (i) {
+			return this._args[i];
+		},
+		getArguments: function () {
+			return this._args;
+		}
+    });
+
+    Bridge.define('System.FormattableStringFactory', {
+        statics: {
+            create: function (fmt, args) {
+                return new System.FormattableStringImpl(fmt, args);
+            }
+        }        
+    });
     // @source Exception.js
 
     Bridge.define("System.Exception", {
         constructor: function (message, innerException) {
+            this.$initialize();
             this.message = message ? message : null;
             this.innerException = innerException ? innerException : null;
             this.errorStack = new Error();
-            this.data = new System.Collections.Generic.Dictionary$2(Object, Object)();
+            this.data = new(System.Collections.Generic.Dictionary$2(Object, Object))();
         },
 
         getMessage: function () {
@@ -2786,7 +3734,8 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-            System.Exception.prototype.$constructor.call(this, message || "System error.", innerException);
+            this.$initialize();
+            System.Exception.$constructor.call(this, message || "System error.", innerException);
         }
     });
 
@@ -2794,11 +3743,12 @@
         inherits: [System.SystemException],
 
         constructor: function (message, innerException) {
+            this.$initialize();
             if (!message) {
                 message = "Insufficient memory to continue the execution of the program.";
             }
 
-            System.SystemException.prototype.$constructor.call(this, message, innerException);
+            System.SystemException.$constructor.call(this, message, innerException);
         }
     });
 
@@ -2806,11 +3756,12 @@
         inherits: [System.SystemException],
 
         constructor: function (message, innerException) {
+            this.$initialize();
             if (!message) {
                 message = "Index was outside the bounds of the array.";
             }
 
-            System.SystemException.prototype.$constructor.call(this, message, innerException);
+            System.SystemException.$constructor.call(this, message, innerException);
         }
     });
 
@@ -2818,11 +3769,12 @@
         inherits: [System.SystemException],
 
         constructor: function (message, innerException) {
+            this.$initialize();
             if (!message) {
                 message = "The operation has timed out.";
             }
 
-            System.SystemException.prototype.$constructor.call(this, message, innerException);
+            System.SystemException.$constructor.call(this, message, innerException);
         }
     });
 
@@ -2839,24 +3791,28 @@
         },
 
         constructor: function () {
-            System.TimeoutException.prototype.$constructor.call(this);
+            this.$initialize();
+            System.TimeoutException.$constructor.call(this);
         },
 
-        constructor$1: function (message) {
-            System.TimeoutException.prototype.$constructor.call(this, message);
+        $constructor1: function (message) {
+            this.$initialize();
+            System.TimeoutException.$constructor.call(this, message);
         },
 
-        constructor$2: function (message, innerException) {
-            System.TimeoutException.prototype.$constructor.call(this, message, innerException);
+        $constructor2: function (message, innerException) {
+            this.$initialize();
+            System.TimeoutException.$constructor.call(this, message, innerException);
         },
 
-        constructor$3: function (regexInput, regexPattern, matchTimeout) {
+        $constructor3: function (regexInput, regexPattern, matchTimeout) {
+            this.$initialize();
             this._regexInput = regexInput;
             this._regexPattern = regexPattern;
             this._matchTimeout = matchTimeout;
 
             var message = "The RegEx engine has timed out while trying to match a pattern to an input string. This can occur for many reasons, including very large inputs or excessive backtracking caused by nested quantifiers, back-references and other factors.";
-            this.constructor$1(message);
+            this.$constructor1(message);
         },
 
         getPattern: function () {
@@ -2876,7 +3832,8 @@
         inherits: [System.Exception],
 
         constructor: function (error) {
-            System.Exception.prototype.$constructor.call(this, error.message);
+            this.$initialize();
+            System.Exception.$constructor.call(this, error.message);
             this.errorStack = error;
             this.error = error;
         },
@@ -2890,7 +3847,8 @@
         inherits: [System.Exception],
 
         constructor: function (message, paramName, innerException) {
-            System.Exception.prototype.$constructor.call(this, message || "Value does not fall within the expected range.", innerException);
+            this.$initialize();
+            System.Exception.$constructor.call(this, message || "Value does not fall within the expected range.", innerException);
             this.paramName = paramName ? paramName : null;
         },
 
@@ -2903,6 +3861,7 @@
         inherits: [System.ArgumentException],
 
         constructor: function (paramName, message, innerException) {
+            this.$initialize();
             if (!message) {
                 message = "Value cannot be null.";
 
@@ -2911,7 +3870,7 @@
                 }
             }
 
-            System.ArgumentException.prototype.$constructor.call(this, message, paramName, innerException);
+            System.ArgumentException.$constructor.call(this, message, paramName, innerException);
         }
     });
 
@@ -2919,6 +3878,7 @@
         inherits: [System.ArgumentException],
 
         constructor: function (paramName, message, innerException, actualValue) {
+            this.$initialize();
             if (!message) {
                 message = "Value is out of range.";
 
@@ -2927,7 +3887,7 @@
                 }
             }
 
-            System.ArgumentException.prototype.$constructor.call(this, message, paramName, innerException);
+            System.ArgumentException.$constructor.call(this, message, paramName, innerException);
 
             this.actualValue = actualValue ? actualValue : null;
         },
@@ -2941,6 +3901,7 @@
         inherits: [System.ArgumentException],
 
         constructor: function (paramName, invalidCultureName, message, innerException, invalidCultureId) {
+            this.$initialize();
             if (!message) {
                 message = "Culture is not supported.";
 
@@ -2953,7 +3914,7 @@
                 }
             }
 
-            System.ArgumentException.prototype.$constructor.call(this, message, paramName, innerException);
+            System.ArgumentException.$constructor.call(this, message, paramName, innerException);
 
             this.invalidCultureName = invalidCultureName ? invalidCultureName : null;
             this.invalidCultureId = invalidCultureId ? invalidCultureId : null;
@@ -2972,7 +3933,8 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-            System.Exception.prototype.$constructor.call(this, message || "Key not found.", innerException);
+            this.$initialize();
+            System.Exception.$constructor.call(this, message || "Key not found.", innerException);
         }
     });
 
@@ -2980,7 +3942,8 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-            System.Exception.prototype.$constructor.call(this, message || "Overflow or underflow in the arithmetic operation.", innerException);
+            this.$initialize();
+            System.Exception.$constructor.call(this, message || "Overflow or underflow in the arithmetic operation.", innerException);
         }
     });
 
@@ -2988,7 +3951,8 @@
         inherits: [System.ArithmeticException],
 
         constructor: function (message, innerException) {
-            System.ArithmeticException.prototype.$constructor.call(this, message || "Division by 0.", innerException);
+            this.$initialize();
+            System.ArithmeticException.$constructor.call(this, message || "Division by 0.", innerException);
         }
     });
 
@@ -2996,7 +3960,8 @@
         inherits: [System.ArithmeticException],
 
         constructor: function (message, innerException) {
-            System.ArithmeticException.prototype.$constructor.call(this, message || "Arithmetic operation resulted in an overflow.", innerException);
+            this.$initialize();
+            System.ArithmeticException.$constructor.call(this, message || "Arithmetic operation resulted in an overflow.", innerException);
         }
     });
 
@@ -3004,7 +3969,8 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-            System.Exception.prototype.$constructor.call(this, message || "Invalid format.", innerException);
+            this.$initialize();
+            System.Exception.$constructor.call(this, message || "Invalid format.", innerException);
         }
     });
 
@@ -3012,7 +3978,8 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-            System.Exception.prototype.$constructor.call(this, message || "The cast is not valid.", innerException);
+            this.$initialize();
+            System.Exception.$constructor.call(this, message || "The cast is not valid.", innerException);
         }
     });
 
@@ -3020,7 +3987,8 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-            System.Exception.prototype.$constructor.call(this, message || "Operation is not valid due to the current state of the object.", innerException);
+            this.$initialize();
+            System.Exception.$constructor.call(this, message || "Operation is not valid due to the current state of the object.", innerException);
         }
     });
 
@@ -3028,7 +3996,8 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-            System.Exception.prototype.$constructor.call(this, message || "The method or operation is not implemented.", innerException);
+            this.$initialize();
+            System.Exception.$constructor.call(this, message || "The method or operation is not implemented.", innerException);
         }
     });
 
@@ -3036,7 +4005,8 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-            System.Exception.prototype.$constructor.call(this, message || "Specified method is not supported.", innerException);
+            this.$initialize();
+            System.Exception.$constructor.call(this, message || "Specified method is not supported.", innerException);
         }
     });
 
@@ -3044,7 +4014,8 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-            System.Exception.prototype.$constructor.call(this, message || "Object is null.", innerException);
+            this.$initialize();
+            System.Exception.$constructor.call(this, message || "Object is null.", innerException);
         }
     });
 
@@ -3052,7 +4023,8 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerException) {
-            System.Exception.prototype.$constructor.call(this, message || "Attempted to operate on an array with the incorrect number of dimensions.", innerException);
+            this.$initialize();
+            System.Exception.$constructor.call(this, message || "Attempted to operate on an array with the incorrect number of dimensions.", innerException);
         }
     });
 
@@ -3060,7 +4032,8 @@
         inherits: [System.Exception],
 
         constructor: function (args, message, innerException) {
-            System.Exception.prototype.$constructor.call(this, message || (args.length && args[0] ? args[0].toString() : "An error occurred"), innerException);
+            this.$initialize();
+            System.Exception.$constructor.call(this, message || (args.length && args[0] ? args[0].toString() : "An error occurred"), innerException);
             this.arguments = System.Array.clone(args);
         },
 
@@ -3073,7 +4046,8 @@
         inherits: [System.Exception],
 
         constructor: function (message, token, innerException) {
-            System.Exception.prototype.$constructor.call(this, message || "Operation was canceled.", innerException);
+            this.$initialize();
+            System.Exception.$constructor.call(this, message || "Operation was canceled.", innerException);
             this.cancellationToken = token || System.Threading.CancellationToken.none;
         }
     });
@@ -3082,7 +4056,8 @@
         inherits: [System.OperationCanceledException],
 
         constructor: function (message, task, innerException) {
-            System.OperationCanceledException.prototype.$constructor.call(this, message || "A task was canceled.", null, innerException);
+            this.$initialize();
+            System.OperationCanceledException.$constructor.call(this, message || "A task was canceled.", null, innerException);
             this.task = task || null;
         }
     });
@@ -3091,8 +4066,9 @@
         inherits: [System.Exception],
 
         constructor: function (message, innerExceptions) {
-            this.innerExceptions = new System.Collections.ObjectModel.ReadOnlyCollection$1(System.Exception)(Bridge.hasValue(innerExceptions) ? Bridge.toArray(innerExceptions) : []);
-            System.Exception.prototype.$constructor.call(this, message || 'One or more errors occurred.', this.innerExceptions.items.length ? this.innerExceptions.items[0] : null);
+            this.$initialize();
+            this.innerExceptions = new(System.Collections.ObjectModel.ReadOnlyCollection$1(System.Exception))(Bridge.hasValue(innerExceptions) ? Bridge.toArray(innerExceptions) : []);
+            System.Exception.$constructor.call(this, message || 'One or more errors occurred.', this.innerExceptions.items.length ? this.innerExceptions.items[0] : null);
         },
 
         handle: function (predicate) {
@@ -3116,10 +4092,10 @@
 
         flatten: function () {
             // Initialize a collection to contain the flattened exceptions.
-            var flattenedExceptions = new System.Collections.Generic.List$1(System.Exception)();
+            var flattenedExceptions = new(System.Collections.Generic.List$1(System.Exception))();
 
             // Create a list to remember all aggregates to be flattened, this will be accessed like a FIFO queue
-            var exceptionsToFlatten = new System.Collections.Generic.List$1(System.AggregateException)();
+            var exceptionsToFlatten = new(System.Collections.Generic.List$1(System.AggregateException))();
             exceptionsToFlatten.add(this);
             var nDequeueIndex = 0;
 
@@ -3128,7 +4104,7 @@
                 // dequeue one from exceptionsToFlatten
                 var currentInnerExceptions = exceptionsToFlatten.getItem(nDequeueIndex++).innerExceptions;
 
-                for (var i = 0; i < currentInnerExceptions.getCount() ; i++) {
+                for (var i = 0; i < currentInnerExceptions.getCount(); i++) {
                     var currentInnerException = currentInnerExceptions.get(i);
 
                     if (!Bridge.hasValue(currentInnerException)) {
@@ -3155,19 +4131,34 @@
         inherits: [System.SystemException],
 
         constructor: function (message, innerException) {
+            this.$initialize();
             if (!message) {
                 message = "Index was outside the bounds of the array.";
             }
 
-            System.SystemException.prototype.$constructor.call(this, message, innerException);
+            System.SystemException.$constructor.call(this, message, innerException);
         }
     });
 
+    Bridge.define("System.Reflection.AmbiguousMatchException", {
+        inherits: [System.Exception],
+
+        constructor: function (message, innerException) {
+            this.$initialize();
+            System.Exception.$constructor.call(this, message || "Ambiguous match.", innerException);
+        }
+    });
     /// <reference path="Init.js" />
     // @source Globalization.js
 
     Bridge.define("System.Globalization.DateTimeFormatInfo", {
         inherits: [System.IFormatProvider, System.ICloneable],
+
+        config: {
+            alias: {
+                getFormat: "System$IFormatProvider$getFormat"
+            }
+        },
 
         statics: {
             $allStandardFormats: {
@@ -3265,7 +4256,7 @@
                     throw new System.ArgumentException(null, "format");
                 }
 
-                formats = { };
+                formats = {};
                 formats[format] = f[format];
             } else {
                 formats = f;
@@ -3298,7 +4289,7 @@
                 throw new System.ArgumentOutOfRangeException("month");
             }
 
-            return this.monthNames[month-1];
+            return this.monthNames[month - 1];
         },
 
         getShortestDayName: function (dayOfWeek) {
@@ -3341,9 +4332,15 @@
     Bridge.define("System.Globalization.NumberFormatInfo", {
         inherits: [System.IFormatProvider, System.ICloneable],
 
+        config: {
+            alias: {
+                getFormat: "System$IFormatProvider$getFormat"
+            }
+        },
+
         statics: {
             constructor: function () {
-                this.numberNegativePatterns =  ["(n)", "-n", "- n", "n-", "n -"];
+                this.numberNegativePatterns = ["(n)", "-n", "- n", "n-", "n -"];
                 this.currencyNegativePatterns = ["($n)", "-$n", "$-n", "$n-", "(n$)", "-n$", "n-$", "n$-", "-n $", "-$ n", "n $-", "$ n-", "$ -n", "n- $", "($ n)", "(n $)"];
                 this.currencyPositivePatterns = ["$n", "n$", "$ n", "n $"];
                 this.percentNegativePatterns = ["-n %", "-n%", "-%n", "%-n", "%n-", "n-%", "n%-", "-% n", "n %-", "% n-", "% -n", "n- %"];
@@ -3423,6 +4420,12 @@
     Bridge.define("System.Globalization.CultureInfo", {
         inherits: [System.IFormatProvider, System.ICloneable],
 
+        config: {
+            alias: {
+                getFormat: "System$IFormatProvider$getFormat"
+            }
+        },
+
         statics: {
             constructor: function () {
                 this.cultures = this.cultures || {};
@@ -3470,6 +4473,7 @@
         },
 
         constructor: function (name, create) {
+            this.$initialize();
             this.name = name;
 
             if (!System.Globalization.CultureInfo.cultures) {
@@ -3492,7 +4496,7 @@
             }
         },
 
-        getFormat:  function (type) {
+        getFormat: function (type) {
             switch (type) {
                 case System.Globalization.NumberFormatInfo:
                     return this.numberFormat;
@@ -3543,7 +4547,7 @@
             return (Math.exp(x) + Math.exp(-x)) / 2;
         },
 
-        tanh: Math.tanh|| function (x) {
+        tanh: Math.tanh || function (x) {
             if (x === Infinity) {
                 return 1;
             } else if (x === -Infinity) {
@@ -3562,8 +4566,8 @@
 
         is: function (obj, type) {
             if (type === System.IComparable ||
-                type.$$name === "System.IEquatable$1$Boolean" ||
-                type.$$name === "System.IComparable$1$Boolean") {
+                type === System.IEquatable$1(Boolean) ||
+                type === System.IComparable$1(Boolean)) {
                 return true;
             }
 
@@ -3587,7 +4591,9 @@
                 throw new System.ArgumentNullException("value");
             }
 
-            var result = { v: false };
+            var result = {
+                v: false
+            };
 
             if (!System.Boolean.tryParse(value, result)) {
                 throw new System.FormatException("Bad format for Boolean value");
@@ -3614,8 +4620,8 @@
             }
 
             var start = 0,
-                end = value.length-1;
- 
+                end = value.length - 1;
+
             while (start < value.length) {
                 if (!System.Char.isWhiteSpace(value[start]) && !System.Char.isNull(value.charCodeAt(start))) {
                     break;
@@ -3623,15 +4629,15 @@
 
                 start++;
             }
- 
+
             while (end >= start) {
                 if (!System.Char.isWhiteSpace(value[end]) && !System.Char.isNull(value.charCodeAt(end))) {
                     break;
                 }
 
-                end--;            
+                end--;
             }
- 
+
             value = value.substr(start, end - start + 1);
 
             if (System.String.equals(System.Boolean.trueString, value, 5)) {
@@ -3658,11 +4664,12 @@
                 inherits: [System.IComparable, System.IFormattable],
 
                 statics: {
+                    $number: true,
                     min: min,
                     max: max,
 
                     instanceOf: function (instance) {
-                        return typeof(instance) === "number" && Math.floor(instance, 0) == instance && instance >= min && instance <= max;
+                        return typeof (instance) === "number" && Math.floor(instance, 0) === instance && instance >= min && instance <= max;
                     },
                     getDefaultValue: function () {
                         return 0;
@@ -3693,8 +4700,10 @@
     Bridge.define("Bridge.Int", {
         inherits: [System.IComparable, System.IFormattable],
         statics: {
+            $number: true,
+
             instanceOf: function (instance) {
-                return typeof(instance) === "number" && isFinite(instance) && Math.floor(instance, 0) === instance;
+                return typeof (instance) === "number" && isFinite(instance) && Math.floor(instance, 0) === instance;
             },
 
             getDefaultValue: function () {
@@ -3752,7 +4761,7 @@
                                 } else {
                                     coefficient /= 10;
                                 }
-                                
+
                                 exponent++;
                             }
 
@@ -3876,7 +4885,7 @@
                     } else {
                         number *= -1;
                     }
-                    
+
                     format = groups[1];
                 } else {
                     format = groups[(isDecimal || isLong ? number.ne(0) : !number) && groups.length > 2 ? 2 : 0];
@@ -4076,7 +5085,8 @@
 
                 if (isDecimal) {
                     number = number.abs().mul(roundingFactor).round().div(roundingFactor).toString();
-                } if (isLong) {
+                }
+                if (isLong) {
                     number = number.abs().mul(roundingFactor).div(roundingFactor).toString();
                 } else {
                     number = "" + (Math.round(Math.abs(number) * roundingFactor) / roundingFactor);
@@ -4318,7 +5328,7 @@
 
                     return type.min;
                 }
-                
+
                 return x;
             },
 
@@ -4375,6 +5385,7 @@
         statics: {
             min: -Number.MAX_VALUE,
             max: Number.MAX_VALUE,
+            $number: true,
 
             instanceOf: function (instance) {
                 return typeof (instance) === "number";
@@ -4400,6 +5411,7 @@
         statics: {
             min: -3.40282346638528859e+38,
             max: 3.40282346638528859e+38,
+            $number: true,
 
             instanceOf: System.Double.instanceOf,
             getDefaultValue: System.Double.getDefaultValue,
@@ -5664,7 +6676,7 @@ System.UInt64.MaxValue = System.UInt64(Bridge.$Long.MAX_UNSIGNED_VALUE);
     // @source Date.js
 
     Bridge.define("System.DayOfWeek", {
-        $enum: true,
+        $kind: "enum",
         $statics: {
             sunday: 0,
             monday: 1,
@@ -5681,7 +6693,7 @@ System.UInt64.MaxValue = System.UInt64(Bridge.$Long.MAX_UNSIGNED_VALUE);
             return new Date(-864e13);
         },
 
-        utcNow:  function () {
+        utcNow: function () {
             var d = new Date();
 
             return new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds(), d.getUTCMilliseconds());
@@ -5698,10 +6710,10 @@ System.UInt64.MaxValue = System.UInt64(Bridge.$Long.MAX_UNSIGNED_VALUE);
         },
 
         isUseGenitiveForm: function (format, index, tokenLen, patternToMatch) {
-	        var i,
+            var i,
                 repeat = 0;
 
-	        for (i = index - 1; i >= 0 && format[i] !== patternToMatch; i--) { }
+            for (i = index - 1; i >= 0 && format[i] !== patternToMatch; i--) {}
 
             if (i >= 0) {
                 while (--i >= 0 && format[i] === patternToMatch) {
@@ -5713,7 +6725,7 @@ System.UInt64.MaxValue = System.UInt64(Bridge.$Long.MAX_UNSIGNED_VALUE);
                 }
             }
 
-            for (i = index + tokenLen; i < format.length && format[i] !== patternToMatch; i++) { }
+            for (i = index + tokenLen; i < format.length && format[i] !== patternToMatch; i++) {}
 
             if (i < format.length) {
                 repeat = 0;
@@ -5754,167 +6766,167 @@ System.UInt64.MaxValue = System.UInt64(Bridge.$Long.MAX_UNSIGNED_VALUE);
             }
 
             return format.replace(/(\\.|'[^']*'|"[^"]*"|d{1,4}|M{1,4}|yyyy|yy|y|HH?|hh?|mm?|ss?|tt?|f{1,3}|z{1,3}|\:|\/)/g,
-			    function (match, group, index) {
-			        var part = match;
+                function (match, group, index) {
+                    var part = match;
 
-			        switch (match) {
-			            case "dddd":
-			                part = df.dayNames[dayOfWeek];
+                    switch (match) {
+                        case "dddd":
+                            part = df.dayNames[dayOfWeek];
 
-			                break;
-			            case "ddd":
-			                part = df.abbreviatedDayNames[dayOfWeek];
+                            break;
+                        case "ddd":
+                            part = df.abbreviatedDayNames[dayOfWeek];
 
-			                break;
-			            case "dd":
-			                part = dayOfMonth < 10 ? "0" + dayOfMonth : dayOfMonth;
+                            break;
+                        case "dd":
+                            part = dayOfMonth < 10 ? "0" + dayOfMonth : dayOfMonth;
 
-			                break;
-			            case "d":
-			                part = dayOfMonth;
+                            break;
+                        case "d":
+                            part = dayOfMonth;
 
-			                break;
-			            case "MMMM":
-			                if (me.isUseGenitiveForm(format, index, 4, "d")) {
-			                    part = df.monthGenitiveNames[month];
-			                } else {
-			                    part = df.monthNames[month];
-			                }
+                            break;
+                        case "MMMM":
+                            if (me.isUseGenitiveForm(format, index, 4, "d")) {
+                                part = df.monthGenitiveNames[month];
+                            } else {
+                                part = df.monthNames[month];
+                            }
 
-			                break;
-			            case "MMM":
-			                if (me.isUseGenitiveForm(format, index, 3, "d")) {
-			                    part = df.abbreviatedMonthGenitiveNames[month];
-			                } else {
-			                    part = df.abbreviatedMonthNames[month];
-			                }
+                            break;
+                        case "MMM":
+                            if (me.isUseGenitiveForm(format, index, 3, "d")) {
+                                part = df.abbreviatedMonthGenitiveNames[month];
+                            } else {
+                                part = df.abbreviatedMonthNames[month];
+                            }
 
-			                break;
-			            case "MM":
-			                part = (month + 1) < 10 ? "0" + (month + 1) : (month + 1);
+                            break;
+                        case "MM":
+                            part = (month + 1) < 10 ? "0" + (month + 1) : (month + 1);
 
-			                break;
-			            case "M":
-			                part = month + 1;
+                            break;
+                        case "M":
+                            part = month + 1;
 
-			                break;
-			            case "yyyy":
-			                part = year;
+                            break;
+                        case "yyyy":
+                            part = year;
 
-			                break;
-			            case "yy":
-			                part = (year % 100).toString();
+                            break;
+                        case "yy":
+                            part = (year % 100).toString();
 
-			                if (part.length === 1) {
-			                    part = "0" + part;
-			                }
+                            if (part.length === 1) {
+                                part = "0" + part;
+                            }
 
-			                break;
-			            case "y":
-			                part = year % 100;
+                            break;
+                        case "y":
+                            part = year % 100;
 
-			                break;
-			            case "h":
-			            case "hh":
-			                part = hour % 12;
+                            break;
+                        case "h":
+                        case "hh":
+                            part = hour % 12;
 
-			                if (!part) {
-			                    part = "12";
-			                } else if (match === "hh" && part.length === 1) {
-			                    part = "0" + part;
-			                }
+                            if (!part) {
+                                part = "12";
+                            } else if (match === "hh" && part.length === 1) {
+                                part = "0" + part;
+                            }
 
-			                break;
-			            case "HH":
-			                part = hour.toString();
+                            break;
+                        case "HH":
+                            part = hour.toString();
 
-			                if (part.length === 1) {
-			                    part = "0" + part;
-			                }
+                            if (part.length === 1) {
+                                part = "0" + part;
+                            }
 
-			                break;
-			            case "H":
-			                part = hour;
-			                break;
-			            case "mm":
-			                part = minute.toString();
+                            break;
+                        case "H":
+                            part = hour;
+                            break;
+                        case "mm":
+                            part = minute.toString();
 
-			                if (part.length === 1) {
-			                    part = "0" + part;
-			                }
+                            if (part.length === 1) {
+                                part = "0" + part;
+                            }
 
-			                break;
-			            case "m":
-			                part = minute;
+                            break;
+                        case "m":
+                            part = minute;
 
-			                break;
-			            case "ss":
-			                part = second.toString();
+                            break;
+                        case "ss":
+                            part = second.toString();
 
-			                if (part.length === 1) {
-			                    part = "0" + part;
-			                }
+                            if (part.length === 1) {
+                                part = "0" + part;
+                            }
 
-			                break;
-			            case "s":
-			                part = second;
-			                break;
-			            case "t":
-			            case "tt":
-			                part = (hour < 12) ? df.amDesignator : df.pmDesignator;
+                            break;
+                        case "s":
+                            part = second;
+                            break;
+                        case "t":
+                        case "tt":
+                            part = (hour < 12) ? df.amDesignator : df.pmDesignator;
 
-			                if (match === "t") {
-			                    part = part.charAt(0);
-			                }
+                            if (match === "t") {
+                                part = part.charAt(0);
+                            }
 
-			                break;
-			            case "f":
-			            case "ff":
-			            case "fff":
-			                part = millisecond.toString();
+                            break;
+                        case "f":
+                        case "ff":
+                        case "fff":
+                            part = millisecond.toString();
 
-			                if (part.length < 3) {
-			                    part = Array(3 - part.length).join("0") + part;
-			                }
+                            if (part.length < 3) {
+                                part = Array(3 - part.length).join("0") + part;
+                            }
 
-			                if (match === "ff") {
-			                    part = part.substr(0, 2);
-			                } else if (match === "f") {
-			                    part = part.charAt(0);
-			                }
+                            if (match === "ff") {
+                                part = part.substr(0, 2);
+                            } else if (match === "f") {
+                                part = part.charAt(0);
+                            }
 
-			                break;
-			            case "z":
-			                part = timezoneOffset / 60;
-			                part = ((part >= 0) ? "-" : "+") + Math.floor(Math.abs(part));
+                            break;
+                        case "z":
+                            part = timezoneOffset / 60;
+                            part = ((part >= 0) ? "-" : "+") + Math.floor(Math.abs(part));
 
-			                break;
-			            case "zz":
-			            case "zzz":
-			                part = timezoneOffset / 60;
-			                part = ((part >= 0) ? "-" : "+") + System.String.alignString(Math.floor(Math.abs(part)).toString(), 2, "0", 2);
+                            break;
+                        case "zz":
+                        case "zzz":
+                            part = timezoneOffset / 60;
+                            part = ((part >= 0) ? "-" : "+") + System.String.alignString(Math.floor(Math.abs(part)).toString(), 2, "0", 2);
 
-			                if (match === "zzz") {
-			                    part += df.timeSeparator + System.String.alignString(Math.floor(Math.abs(timezoneOffset % 60)).toString(), 2, "0", 2);
-			                }
+                            if (match === "zzz") {
+                                part += df.timeSeparator + System.String.alignString(Math.floor(Math.abs(timezoneOffset % 60)).toString(), 2, "0", 2);
+                            }
 
-			                break;
-			            case ":":
-			                part = df.timeSeparator;
+                            break;
+                        case ":":
+                            part = df.timeSeparator;
 
-			                break;
-			            case "/":
-			                part = df.dateSeparator;
+                            break;
+                        case "/":
+                            part = df.dateSeparator;
 
-			                break;
-			            default:
-			                part = match.substr(1, match.length - 1 - (match.charAt(0) !== "\\"));
+                            break;
+                        default:
+                            part = match.substr(1, match.length - 1 - (match.charAt(0) !== "\\"));
 
-			                break;
-			        }
+                            break;
+                    }
 
-			        return part;
-			    });
+                    return part;
+                });
         },
 
         parse: function (value, provider, utc, silent) {
@@ -6404,22 +7416,22 @@ System.UInt64.MaxValue = System.UInt64(Bridge.$Long.MAX_UNSIGNED_VALUE);
 
         toUTC: function (date) {
             return new Date(date.getUTCFullYear(),
-                            date.getUTCMonth(),
-                            date.getUTCDate(),
-                            date.getUTCHours(),
-                            date.getUTCMinutes(),
-                            date.getUTCSeconds(),
-                            date.getUTCMilliseconds());
+                date.getUTCMonth(),
+                date.getUTCDate(),
+                date.getUTCHours(),
+                date.getUTCMinutes(),
+                date.getUTCSeconds(),
+                date.getUTCMilliseconds());
         },
 
         toLocal: function (date) {
             return new Date(Date.UTC(date.getFullYear(),
-                                     date.getMonth(),
-                                     date.getDate(),
-                                     date.getHours(),
-                                     date.getMinutes(),
-                                     date.getSeconds(),
-                                     date.getMilliseconds()));
+                date.getMonth(),
+                date.getDate(),
+                date.getHours(),
+                date.getMinutes(),
+                date.getSeconds(),
+                date.getMilliseconds()));
         },
 
         dateDiff: function (a, b) {
@@ -6476,7 +7488,14 @@ System.UInt64.MaxValue = System.UInt64(Bridge.$Long.MAX_UNSIGNED_VALUE);
 
     Bridge.define("System.TimeSpan", {
         inherits: [System.IComparable],
-        $struct: true,
+
+        config: {
+            alias: [
+                "compareTo", "System$IComparable$compareTo"
+            ]
+        },
+
+        $kind: "struct",
         statics: {
             fromDays: function (value) {
                 return new System.TimeSpan(value * 864e9);
@@ -6554,6 +7573,7 @@ System.UInt64.MaxValue = System.UInt64(Bridge.$Long.MAX_UNSIGNED_VALUE);
         },
 
         constructor: function () {
+            this.$initialize();
             this.ticks = System.Int64.Zero;
 
             if (arguments.length === 1) {
@@ -6719,6 +7739,7 @@ System.UInt64.MaxValue = System.UInt64(Bridge.$Long.MAX_UNSIGNED_VALUE);
 
 Bridge.define("System.Text.StringBuilder", {
     constructor: function () {
+		this.$initialize();
         this.buffer = [],
         this.capacity = 16;
 
@@ -7012,6 +8033,7 @@ Bridge.define("System.Text.StringBuilder", {
 
     Bridge.define("System.Diagnostics.Stopwatch", {
         constructor: function () {
+            this.$initialize();
             this._stopTime = System.Int64.Zero;
             this._startTime = System.Int64.Zero;
             this.isRunning = false;
@@ -7071,117 +8093,124 @@ Bridge.define("System.Text.StringBuilder", {
     if (typeof (window) !== 'undefined' && window.performance && window.performance.now) {
         System.Diagnostics.Stopwatch.frequency = new System.Int64(1e6);
         System.Diagnostics.Stopwatch.isHighResolution = true;
-        System.Diagnostics.Stopwatch.getTimestamp = function () { return new System.Int64(Math.round(window.performance.now() * 1000)); };
+        System.Diagnostics.Stopwatch.getTimestamp = function () {
+            return new System.Int64(Math.round(window.performance.now() * 1000));
+        };
     } else if (typeof (process) !== 'undefined' && process.hrtime) {
         System.Diagnostics.Stopwatch.frequency = new System.Int64(1e9);
         System.Diagnostics.Stopwatch.isHighResolution = true;
-        System.Diagnostics.Stopwatch.getTimestamp = function () { var hr = process.hrtime(); return new System.Int64(hr[0]).mul(1e9).add(hr[1]); };
+        System.Diagnostics.Stopwatch.getTimestamp = function () {
+            var hr = process.hrtime();
+            return new System.Int64(hr[0]).mul(1e9).add(hr[1]);
+        };
     } else {
         System.Diagnostics.Stopwatch.frequency = new System.Int64(1e3);
         System.Diagnostics.Stopwatch.isHighResolution = false;
-        System.Diagnostics.Stopwatch.getTimestamp = function () { return new System.Int64(new Date().valueOf()); };
+        System.Diagnostics.Stopwatch.getTimestamp = function () {
+            return new System.Int64(new Date().valueOf());
+        };
     }
 
     System.Diagnostics.Contracts.Contract = {
-	    reportFailure: function (failureKind, userMessage, condition, innerException, TException) {
-	        var conditionText = condition.toString();
+        reportFailure: function (failureKind, userMessage, condition, innerException, TException) {
+            var conditionText = condition.toString();
 
-		    conditionText = conditionText.substring(conditionText.indexOf("return") + 7);
-		    conditionText = conditionText.substr(0, conditionText.lastIndexOf(";"));
+            conditionText = conditionText.substring(conditionText.indexOf("return") + 7);
+            conditionText = conditionText.substr(0, conditionText.lastIndexOf(";"));
 
-		    var failureMessage = (conditionText) ? "Contract '" + conditionText + "' failed" : "Contract failed";
-		    var displayMessage = (userMessage) ? failureMessage + ": " + userMessage : failureMessage;
+            var failureMessage = (conditionText) ? "Contract '" + conditionText + "' failed" : "Contract failed";
+            var displayMessage = (userMessage) ? failureMessage + ": " + userMessage : failureMessage;
 
-		    if (TException) {
-			    throw new TException(conditionText, userMessage);
-		    } else {
-			    throw new System.Diagnostics.Contracts.ContractException(failureKind, displayMessage, userMessage, conditionText, innerException);
-		    }
-	    },
-	    assert: function (failureKind, condition, message) {
-		    if (!condition()) {
-			    System.Diagnostics.Contracts.Contract.reportFailure(failureKind, message, condition, null);
-		    }
-	    },
-	    requires: function (TException, condition, message) {
-		    if (!condition()) {
-			    System.Diagnostics.Contracts.Contract.reportFailure(0, message, condition, null, TException);
-		    }
-	    },
-	    forAll: function (fromInclusive, toExclusive, predicate) {
-		    if (!predicate) {
-			    throw new System.ArgumentNullException("predicate");
-		    }
+            if (TException) {
+                throw new TException(conditionText, userMessage);
+            } else {
+                throw new System.Diagnostics.Contracts.ContractException(failureKind, displayMessage, userMessage, conditionText, innerException);
+            }
+        },
+        assert: function (failureKind, condition, message) {
+            if (!condition()) {
+                System.Diagnostics.Contracts.Contract.reportFailure(failureKind, message, condition, null);
+            }
+        },
+        requires: function (TException, condition, message) {
+            if (!condition()) {
+                System.Diagnostics.Contracts.Contract.reportFailure(0, message, condition, null, TException);
+            }
+        },
+        forAll: function (fromInclusive, toExclusive, predicate) {
+            if (!predicate) {
+                throw new System.ArgumentNullException("predicate");
+            }
 
-		    for (; fromInclusive < toExclusive; fromInclusive++) {
-			    if (!predicate(fromInclusive)) {
-				    return false;
-			    }
-		    }
+            for (; fromInclusive < toExclusive; fromInclusive++) {
+                if (!predicate(fromInclusive)) {
+                    return false;
+                }
+            }
 
-		    return true;
-	    },
-	    forAll$1: function (collection, predicate) {
-		    if (!collection) {
-			    throw new System.ArgumentNullException("collection");
-		    }
+            return true;
+        },
+        forAll$1: function (collection, predicate) {
+            if (!collection) {
+                throw new System.ArgumentNullException("collection");
+            }
 
-		    if (!predicate) {
-			    throw new System.ArgumentNullException("predicate");
-		    }
+            if (!predicate) {
+                throw new System.ArgumentNullException("predicate");
+            }
 
-		    var enumerator = Bridge.getEnumerator(collection);
+            var enumerator = Bridge.getEnumerator(collection);
 
-	        try {
-			    while (enumerator.moveNext()) {
-				    if (!predicate(enumerator.getCurrent())) {
-					    return false;
-				    }
-			    }
-			    return true;
-		    } finally {
-			    enumerator.dispose();
-		    }
-	    },
-	    exists: function (fromInclusive, toExclusive, predicate) {
-		    if (!predicate) {
-			    throw new System.ArgumentNullException("predicate");
-		    }
+            try {
+                while (enumerator.moveNext()) {
+                    if (!predicate(enumerator.getCurrent())) {
+                        return false;
+                    }
+                }
+                return true;
+            } finally {
+                enumerator.dispose();
+            }
+        },
+        exists: function (fromInclusive, toExclusive, predicate) {
+            if (!predicate) {
+                throw new System.ArgumentNullException("predicate");
+            }
 
-		    for (; fromInclusive < toExclusive; fromInclusive++) {
-			    if (predicate(fromInclusive)) {
-				    return true;
-			    }
-		    }
+            for (; fromInclusive < toExclusive; fromInclusive++) {
+                if (predicate(fromInclusive)) {
+                    return true;
+                }
+            }
 
-		    return false;
-	    },
-	    exists$1: function (collection, predicate) {
-		    if (!collection) {
-			    throw new System.ArgumentNullException("collection");
-		    }
+            return false;
+        },
+        exists$1: function (collection, predicate) {
+            if (!collection) {
+                throw new System.ArgumentNullException("collection");
+            }
 
-		    if (!predicate) {
-			    throw new System.ArgumentNullException("predicate");
-		    }
+            if (!predicate) {
+                throw new System.ArgumentNullException("predicate");
+            }
 
-		    var enumerator = Bridge.getEnumerator(collection);
+            var enumerator = Bridge.getEnumerator(collection);
 
-	        try {
-			    while (enumerator.moveNext()) {
-				    if (predicate(enumerator.getCurrent())) {
-					    return true;
-				    }
-			    }
-			    return false;
-		    } finally {
-			    enumerator.dispose();
-		    }
-	    }
+            try {
+                while (enumerator.moveNext()) {
+                    if (predicate(enumerator.getCurrent())) {
+                        return true;
+                    }
+                }
+                return false;
+            } finally {
+                enumerator.dispose();
+            }
+        }
     };
 
     Bridge.define("System.Diagnostics.Contracts.ContractFailureKind", {
-        $enum: true,
+        $kind: "enum",
         $statics: {
             precondition: 0,
             postcondition: 1,
@@ -7196,7 +8225,8 @@ Bridge.define("System.Text.StringBuilder", {
         inherits: [System.Exception],
 
         constructor: function (failureKind, failureMessage, userMessage, condition, innerException) {
-            System.Exception.prototype.$constructor.call(this, failureMessage, innerException);
+            this.$initialize();
+            System.Exception.$constructor.call(this, failureMessage, innerException);
             this._kind = failureKind;
             this._failureMessage = failureMessage || null;
             this._userMessage = userMessage || null;
@@ -7204,21 +8234,20 @@ Bridge.define("System.Text.StringBuilder", {
         },
 
         getKind: function () {
-		    return this._kind;
-	    },
-	    getFailure: function () {
-		    return this._failureMessage;
-	    },
-	    getUserMessage: function () {
-		    return this._userMessage;
-	    },
-	    getCondition: function () {
-		    return this._condition;
-	    }
+            return this._kind;
+        },
+        getFailure: function () {
+            return this._failureMessage;
+        },
+        getUserMessage: function () {
+            return this._userMessage;
+        },
+        getCondition: function () {
+            return this._condition;
+        }
     });
 
     // @source Array.js
-
     var array = {
         toIndex: function (arr, indices) {
             if (indices.length !== (arr.$s ? arr.$s.length : 1)) {
@@ -7355,11 +8384,11 @@ Bridge.define("System.Text.StringBuilder", {
             return new Bridge.ArrayEnumerable(array);
         },
 
-        toEnumerator: function (array) {
-            return new Bridge.ArrayEnumerator(array);
+        toEnumerator: function (array, T) {
+            return new Bridge.ArrayEnumerator(array, T);
         },
 
-        _typedArrays : {
+        _typedArrays: {
             Float32Array: true,
             Float64Array: true,
             Int8Array: true,
@@ -7412,9 +8441,14 @@ Bridge.define("System.Text.StringBuilder", {
             }
         },
 
-        getCount: function (obj) {
+        getCount: function (obj, T) {
+            var name;
             if (Bridge.isArray(obj)) {
                 return obj.length;
+            } else if (Bridge.isFunction(obj[name = "System$Collections$ICollection$getCount"])) {
+                return obj[name]();
+            } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$getCount"])) {
+                return obj[name]();
             } else if (Bridge.isFunction(obj.getCount)) {
                 return obj.getCount();
             }
@@ -7422,17 +8456,23 @@ Bridge.define("System.Text.StringBuilder", {
             return 0;
         },
 
-        add: function (obj, item) {
+        add: function (obj, item, T) {
+            var name;
             if (Bridge.isArray(obj)) {
                 obj.push(item);
+            } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$add"])) {
+                obj[name](item);
             } else if (Bridge.isFunction(obj.add)) {
                 obj.add(item);
             }
         },
 
         clear: function (obj, T) {
+            var name;
             if (Bridge.isArray(obj)) {
                 System.Array.fill(obj, T ? (T.getDefaultValue || Bridge.getDefaultValue(T)) : null, 0, obj.length);
+            } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$clear"])) {
+                obj[name]();
             } else if (Bridge.isFunction(obj.clear)) {
                 obj.clear();
             }
@@ -7474,7 +8514,8 @@ Bridge.define("System.Text.StringBuilder", {
             }
         },
 
-        indexOf: function (arr, item, startIndex, count) {
+        indexOf: function (arr, item, startIndex, count, T) {
+            var name;
             if (Bridge.isArray(arr)) {
                 var i,
                     el,
@@ -7491,6 +8532,8 @@ Bridge.define("System.Text.StringBuilder", {
                         return i;
                     }
                 }
+            } else if (T && Bridge.isFunction(arr[name = "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$indexOf"])) {
+                return arr[name](item);
             } else if (Bridge.isFunction(arr.indexOf)) {
                 return arr.indexOf(item);
             }
@@ -7498,9 +8541,12 @@ Bridge.define("System.Text.StringBuilder", {
             return -1;
         },
 
-        contains: function (obj, item) {
+        contains: function (obj, item, T) {
+            var name;
             if (Bridge.isArray(obj)) {
                 return System.Array.indexOf(obj, item) > -1;
+            } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$contains"])) {
+                return obj[name](item);
             } else if (Bridge.isFunction(obj.contains)) {
                 return obj.contains(item);
             }
@@ -7508,7 +8554,8 @@ Bridge.define("System.Text.StringBuilder", {
             return false;
         },
 
-        remove: function (obj, item) {
+        remove: function (obj, item, T) {
+            var name;
             if (Bridge.isArray(obj)) {
                 var index = System.Array.indexOf(obj, item);
 
@@ -7517,6 +8564,8 @@ Bridge.define("System.Text.StringBuilder", {
 
                     return true;
                 }
+            } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$remove"])) {
+                return obj[name](item);
             } else if (Bridge.isFunction(obj.remove)) {
                 return obj.remove(item);
             }
@@ -7524,41 +8573,53 @@ Bridge.define("System.Text.StringBuilder", {
             return false;
         },
 
-        insert: function (obj, index, item) {
+        insert: function (obj, index, item, T) {
+            var name;
             if (Bridge.isArray(obj)) {
                 obj.splice(index, 0, item);
+            } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$insert"])) {
+                obj[name](index, item);
             } else if (Bridge.isFunction(obj.insert)) {
                 obj.insert(index, item);
             }
         },
 
-        removeAt: function (obj, index) {
+        removeAt: function (obj, index, T) {
+            var name;
             if (Bridge.isArray(obj)) {
                 obj.splice(index, 1);
+            } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$removeAt"])) {
+                obj[name](index);
             } else if (Bridge.isFunction(obj.removeAt)) {
                 obj.removeAt(index);
             }
         },
 
-        getItem: function (obj, idx) {
+        getItem: function (obj, idx, T) {
+            var name;
             if (Bridge.isArray(obj)) {
                 return obj[idx];
             } else if (Bridge.isFunction(obj.get)) {
                 return obj.get(idx);
             } else if (Bridge.isFunction(obj.getItem)) {
                 return obj.getItem(idx);
+            } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$getItem"])) {
+                return obj[name](idx);
             } else if (Bridge.isFunction(obj.get_Item)) {
                 return obj.get_Item(idx);
             }
         },
 
-        setItem: function (obj, idx, value) {
+        setItem: function (obj, idx, value, T) {
+            var name;
             if (Bridge.isArray(obj)) {
                 obj[idx] = value;
             } else if (Bridge.isFunction(obj.set)) {
                 obj.set(idx, value);
             } else if (Bridge.isFunction(obj.setItem)) {
                 obj.setItem(idx, value);
+            } else if (T && Bridge.isFunction(obj[name = "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$setItem"])) {
+                return obj[name](idx, value);
             } else if (Bridge.isFunction(obj.set_Item)) {
                 obj.set_Item(idx, value);
             }
@@ -7654,8 +8715,7 @@ Bridge.define("System.Text.StringBuilder", {
 
                 try {
                     c = comparer.compare(array[i], value);
-                }
-                catch (e) {
+                } catch (e) {
                     throw new System.InvalidOperationException("Failed to compare two elements in the array.", e);
                 }
 
@@ -7702,7 +8762,7 @@ Bridge.define("System.Text.StringBuilder", {
 
                 newarray.sort(Bridge.fn.bind(comparer, comparer.compare));
 
-                for (var i = index; i < (index + length) ; i++) {
+                for (var i = index; i < (index + length); i++) {
                     array[i] = newarray[i - index];
                 }
             }
@@ -7743,8 +8803,7 @@ Bridge.define("System.Text.StringBuilder", {
                     while (e.moveNext()) {
                         arr.push(e.getCurrent());
                     }
-                }
-                finally {
+                } finally {
                     if (Bridge.is(e, System.IDisposable)) {
                         e.dispose();
                     }
@@ -7912,7 +8971,7 @@ Bridge.define("System.Text.StringBuilder", {
             }
 
             for (var i = 0; i < array.length; i++) {
-                action(array[i]);
+                action(array[i], i, array);
             }
         },
 
@@ -7992,82 +9051,96 @@ Bridge.define("System.Text.StringBuilder", {
     };
 
     System.Array = array;
-
     // @source ArraySegment.js
 
-    Bridge.Class.generic('System.ArraySegment$1', function (T) {
-        var $$name = Bridge.Class.genericName('System.ArraySegment$1', T);
+    Bridge.define('System.ArraySegment', {
+        constructor: function (array, offset, count) {
+	    this.$initialize();
+            this.array = array;
+            this.offset = offset || 0;
+            this.count = count || array.length;
+        },
 
-        return Bridge.Class.cache[$$name] || (Bridge.Class.cache[$$name] = Bridge.define($$name, {
-            constructor: function (array, offset, count) {
-                this.array = array;
-                this.offset = offset || 0;
-                this.count = count || array.length;
-            },
+        getArray: function () {
+            return this.array;
+        },
 
-            getArray: function () {
-                return this.array;
-            },
+        getCount: function () {
+            return this.count;
+        },
 
-            getCount: function () {
-                return this.count;
-            },
-
-            getOffset: function () {
-                return this.offset;
-            }
-        }));
+        getOffset: function () {
+            return this.offset;
+        }
     });
 
 // @source /Collections/Interfaces.js
 
-Bridge.define('System.Collections.IEnumerable');
-Bridge.define('System.Collections.IEnumerator');
-Bridge.define('System.Collections.IEqualityComparer');
+Bridge.define('System.Collections.IEnumerable', {
+    $kind: "interface"
+});
+Bridge.define('System.Collections.IEnumerator', {
+    $kind: "interface"
+});
+Bridge.define('System.Collections.IEqualityComparer', {
+    $kind: "interface"
+});
 Bridge.define('System.Collections.ICollection', {
-    inherits: [System.Collections.IEnumerable]
+    inherits: [System.Collections.IEnumerable],
+    $kind: "interface"
 });
 
-Bridge.define('System.Collections.Generic.IEnumerator$1', function (T) { return {
-    inherits: [System.Collections.IEnumerator]
-};
+Bridge.define('System.Collections.Generic.IEnumerator$1', function (T) {
+    return {
+        inherits: [System.Collections.IEnumerator],
+        $kind: "interface"
+    };
 });
 
 Bridge.define('System.Collections.Generic.IEnumerable$1', function (T) {
     return {
-        inherits: [System.Collections.IEnumerable]
+        inherits: [System.Collections.IEnumerable],
+        $kind: "interface"
     };
 });
 
 Bridge.define('System.Collections.Generic.ICollection$1', function (T) {
     return {
-        inherits: [System.Collections.Generic.IEnumerable$1(T)]
+        inherits: [System.Collections.Generic.IEnumerable$1(T)],
+        $kind: "interface"
     };
 });
 
 Bridge.define('System.Collections.Generic.IEqualityComparer$1', function (T) {
-    return {};
+    return {
+        $kind: "interface"
+    };
 });
 
 Bridge.define('System.Collections.Generic.IDictionary$2', function (TKey, TValue) {
     return {
-        inherits: [System.Collections.Generic.IEnumerable$1(System.Collections.Generic.KeyValuePair$2(TKey, TValue))]
+        inherits: [System.Collections.Generic.IEnumerable$1(System.Collections.Generic.KeyValuePair$2(TKey, TValue))],
+        $kind: "interface"
     };
 });
 
 Bridge.define('System.Collections.Generic.IList$1', function (T) {
     return {
-        inherits: [System.Collections.Generic.ICollection$1(T)]
+        inherits: [System.Collections.Generic.ICollection$1(T)],
+        $kind: "interface"
     };
 });
 
 Bridge.define('System.Collections.Generic.IComparer$1', function (T) {
-    return {};
+    return {
+        $kind: "interface"
+    };
 });
 
 Bridge.define('System.Collections.Generic.ISet$1', function (T) {
     return {
-        inherits: [System.Collections.Generic.ICollection$1(T)]
+        inherits: [System.Collections.Generic.ICollection$1(T)],
+        $kind: "interface"
     };
 });
 // @source /Collections/CustomEnumerator.js
@@ -8075,7 +9148,16 @@ Bridge.define('System.Collections.Generic.ISet$1', function (T) {
 Bridge.define('Bridge.CustomEnumerator', {
     inherits: [System.Collections.IEnumerator],
 
+    config: {
+        alias: [
+            "getCurrent", "System$Collections$IEnumerator$getCurrent",
+            "moveNext", "System$Collections$IEnumerator$moveNext",
+            "reset", "System$Collections$IEnumerator$reset"
+        ]
+    },
+
     constructor: function (moveNext, getCurrent, reset, dispose, scope) {
+		this.$initialize();
         this.$moveNext = moveNext;
         this.$getCurrent = getCurrent;
         this.$dispose = dispose;
@@ -8118,11 +9200,25 @@ Bridge.define('Bridge.CustomEnumerator', {
 // @source /Collections/ArrayEnumerator.js
 
 Bridge.define('Bridge.ArrayEnumerator', {
-    inherits: [System.Collections.IEnumerator],
+    inherits: [System.Collections.IEnumerator, System.IDisposable],
 
-    constructor: function (array) {
+    config: {
+        alias: [
+            "getCurrent", "System$Collections$IEnumerator$getCurrent",
+            "moveNext", "System$Collections$IEnumerator$moveNext",
+            "reset", "System$Collections$IEnumerator$reset",
+            "dispose", "System$IDisposable$dispose"
+        ]
+    },
+
+    constructor: function (array, T) {
+		this.$initialize();
         this.array = array;
         this.reset();
+
+        if (T) {
+            this["System$Collections$Generic$IEnumerator$1$" + Bridge.getTypeAlias(T) + "$getCurrent$1"] = this.getCurrent;
+        }
     },
     
     moveNext: function () {
@@ -8148,7 +9244,15 @@ Bridge.define('Bridge.ArrayEnumerator', {
 
 Bridge.define('Bridge.ArrayEnumerable', {
     inherits: [System.Collections.IEnumerable],
+
+    config: {
+        alias: [
+            "getEnumerator", "System$Collections$IEnumerable$getEnumerator"
+        ]
+    },
+
     constructor: function (array) {
+		this.$initialize();
         this.array = array;
     },
 
@@ -8161,6 +9265,13 @@ Bridge.define('Bridge.ArrayEnumerable', {
 Bridge.define('System.Collections.Generic.EqualityComparer$1', function (T) {
     return {
         inherits: [System.Collections.Generic.IEqualityComparer$1(T)],
+
+        config: {
+            alias: [
+                "equals2", "System$Collections$Generic$IEqualityComparer$1$" + Bridge.getTypeAlias(T) + "$equals2",
+                "getHashCode2", "System$Collections$Generic$IEqualityComparer$1$" + Bridge.getTypeAlias(T) + "$getHashCode2"
+            ]
+        },
 
         equals2: function (x, y) {
             if (!Bridge.isDefined(x, true)) {
@@ -8190,20 +9301,27 @@ Bridge.define('System.Collections.Generic.EqualityComparer$1', function (T) {
     };
 });
 
-System.Collections.Generic.EqualityComparer$1.$default = new System.Collections.Generic.EqualityComparer$1(Object)();
+System.Collections.Generic.EqualityComparer$1.$default = new (System.Collections.Generic.EqualityComparer$1(Object))();
 
 Bridge.define('System.Collections.Generic.Comparer$1', function (T) {
     return {
         inherits: [System.Collections.Generic.IComparer$1(T)],
 
+        config: {
+            alias: [
+                "compare", "System$Collections$Generic$IComparer$1$" + Bridge.getTypeAlias(T) + "$compare"
+            ]
+        },
+
         constructor: function (fn) {
+			this.$initialize();
             this.fn = fn;
             this.compare = fn;
         }
     }
 });
 
-System.Collections.Generic.Comparer$1.$default = new System.Collections.Generic.Comparer$1(Object)(function (x, y) {
+System.Collections.Generic.Comparer$1.$default = new (System.Collections.Generic.Comparer$1(Object))(function (x, y) {
     if (!Bridge.hasValue(x)) {
         return !Bridge.hasValue(y) ? 0 : -1;
     } else if (!Bridge.hasValue(y)) {
@@ -8217,6 +9335,7 @@ System.Collections.Generic.Comparer$1.$default = new System.Collections.Generic.
 Bridge.define('System.Collections.Generic.KeyValuePair$2', function (TKey, TValue) {
     return {
         constructor: function (key, value) {
+			this.$initialize();
             this.key = key;
             this.value = value;
         },
@@ -8245,7 +9364,23 @@ Bridge.define('System.Collections.Generic.Dictionary$2', function (TKey, TValue)
     return {
         inherits: [System.Collections.Generic.IDictionary$2(TKey, TValue)],
 
+        config: {
+            alias: [
+                "getCount", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$getCount",
+                "getKeys", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$getKeys",
+                "getValues", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$getValues",
+                "get", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$getItem",
+                "set", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$setItem",
+                "add", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$add",
+                "containsKey", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$containsKey",
+                "getEnumerator", "System$Collections$Generic$IEnumerable$1$System$Collections$Generic$KeyValuePair$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$getEnumerator",
+                "remove", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$remove",
+                "tryGetValue", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$tryGetValue"
+            ]
+        },
+
         constructor: function (obj, comparer) {
+			this.$initialize();
             this.comparer = comparer || System.Collections.Generic.EqualityComparer$1.$default;
             this.clear();
 
@@ -8269,11 +9404,11 @@ Bridge.define('System.Collections.Generic.Dictionary$2', function (TKey, TValue)
         },
 
         getKeys: function () {
-            return new System.Collections.Generic.DictionaryCollection$1(TKey)(this, true);
+            return new (System.Collections.Generic.DictionaryCollection$1(TKey))(this, true);
         },
 
         getValues: function () {
-            return new System.Collections.Generic.DictionaryCollection$1(TValue)(this, false);
+            return new (System.Collections.Generic.DictionaryCollection$1(TValue))(this, false);
         },
 
         clear: function () {
@@ -8347,7 +9482,7 @@ Bridge.define('System.Collections.Generic.Dictionary$2', function (TKey, TValue)
             }
 
             hash = this.comparer.getHashCode2(key);
-            entry = new System.Collections.Generic.KeyValuePair$2(TKey, TValue)(key, value);
+            entry = new (System.Collections.Generic.KeyValuePair$2(TKey, TValue))(key, value);
 
             if (this.entries[hash]) {
                 this.entries[hash].push(entry);
@@ -8447,7 +9582,19 @@ Bridge.define('System.Collections.Generic.DictionaryCollection$1', function (T) 
     return {
         inherits: [System.Collections.Generic.ICollection$1(T)],
 
+        config: {
+            alias: [
+              "getEnumerator", "System$Collections$Generic$IEnumerable$1$" + Bridge.getTypeAlias(T) + "$getEnumerator",
+              "getCount", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$getCount",
+              "add", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$add",
+              "clear", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$clear",
+              "contains", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$contains",
+              "remove", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$remove"
+            ]
+        },
+
         constructor: function (dictionary, keys) {
+			this.$initialize();
             this.dictionary = dictionary;
             this.keys = keys;
         },
@@ -8487,7 +9634,25 @@ Bridge.define('System.Collections.Generic.DictionaryCollection$1', function (T) 
 Bridge.define('System.Collections.Generic.List$1', function (T) {
     return {
         inherits: [System.Collections.Generic.ICollection$1(T), System.Collections.ICollection, System.Collections.Generic.IList$1(T)],
+
+        config: {
+            alias: [
+            "getItem", "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$getItem",
+            "setItem", "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$setItem",
+            "getCount", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$getCount",
+            "add", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$add",
+            "clear", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$clear",
+            "contains", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$contains",
+            "getEnumerator", "System$Collections$Generic$IEnumerable$1$" + Bridge.getTypeAlias(T) + "$getEnumerator",
+            "indexOf", "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$indexOf",
+            "insert", "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$insert",
+            "remove", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$remove",
+            "removeAt", "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$removeAt"
+            ]
+        },
+
         constructor: function (obj) {
+			this.$initialize();
             if (Object.prototype.toString.call(obj) === '[object Array]') {
                 this.items = System.Array.clone(obj);
             } else if (Bridge.is(obj, System.Collections.IEnumerable)) {
@@ -8590,7 +9755,7 @@ Bridge.define('System.Collections.Generic.List$1', function (T) {
         },
 
         getEnumerator: function () {
-            return new Bridge.ArrayEnumerator(this.items);
+            return new Bridge.ArrayEnumerator(this.items, T);
         },
 
         getRange: function (index, count) {
@@ -8616,7 +9781,7 @@ Bridge.define('System.Collections.Generic.List$1', function (T) {
                 result.push(this.items[i]);
             }
 
-            return new System.Collections.Generic.List$1(T)(result);
+            return new (System.Collections.Generic.List$1(T))(result);
         },
 
         insert: function (index, item) {
@@ -8691,7 +9856,7 @@ Bridge.define('System.Collections.Generic.List$1', function (T) {
         slice: function (start, end) {
             this.checkReadOnly();
 
-            return new System.Collections.Generic.List$1(this.$$name.substr(this.$$name.lastIndexOf('$')+1))(this.items.slice(start, end));
+            return new (System.Collections.Generic.List$1(this.$$name.substr(this.$$name.lastIndexOf('$')+1)))(this.items.slice(start, end));
         },
 
         sort: function (comparison) {
@@ -8752,7 +9917,7 @@ Bridge.define('System.Collections.Generic.List$1', function (T) {
                 throw new System.ArgumentNullException("converter is null.");
             }
 
-            var list = new System.Collections.Generic.List$1(TOutput)(this.items.length);
+            var list = new (System.Collections.Generic.List$1(TOutput))(this.items.length);
             for (var i = 0; i < this.items.length; i++) {
                 list.items[i] = converter(this.items[i]);
             }
@@ -8766,11 +9931,12 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
     return {
         inherits: [System.Collections.Generic.List$1(T)],
         constructor: function (list) {
+			this.$initialize();
             if (list == null) {
                 throw new System.ArgumentNullException("list");
             }
 
-            System.Collections.Generic.List$1(T).prototype.$constructor.call(this, list);
+            System.Collections.Generic.List$1(T).$constructor.call(this, list);
             this.readOnly = true;
         }
     };
@@ -8780,7 +9946,15 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
     Bridge.define("System.Threading.Tasks.Task", {
         inherits: [System.IDisposable],
+
+        config: {
+            alias: [
+                "dispose", "System$IDisposable$dispose"
+            ]
+        },
+
         constructor: function (action, state) {
+            this.$initialize();
             this.action = action;
             this.state = state;
             this.exception = null;
@@ -8955,7 +10129,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                     tcs.setResult(value);
                 };
 
-                args[0] = args[0] || { };
+                args[0] = args[0] || {};
                 args[0][name] = callback;
 
                 target[method].apply(target, args);
@@ -8971,9 +10145,15 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                 }
 
                 if (typeof (handler) === 'number') {
-                    handler = (function (i) { return function () { return arguments[i >= 0 ? i : (arguments.length + i)]; }; })(handler);
+                    handler = (function (i) {
+                        return function () {
+                            return arguments[i >= 0 ? i : (arguments.length + i)];
+                        };
+                    })(handler);
                 } else if (typeof (handler) !== 'function') {
-                    handler = function () { return Array.prototype.slice.call(arguments, 0); };
+                    handler = function () {
+                        return Array.prototype.slice.call(arguments, 0);
+                    };
                 }
 
                 promise.then(function () {
@@ -8994,8 +10174,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                 } : function () {
                     try {
                         tcs.setResult(continuationAction(me));
-                    }
-                    catch (e) {
+                    } catch (e) {
                         tcs.setException(System.Exception.create(e));
                     }
                 };
@@ -9107,8 +10286,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             return this._getResult(false);
         },
 
-        dispose: function () {
-        },
+        dispose: function () {},
 
         getAwaiter: function () {
             return this;
@@ -9120,7 +10298,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
     });
 
     Bridge.define("System.Threading.Tasks.TaskStatus", {
-        $enum: true,
+        $kind: "enum",
         $statics: {
             created: 0,
             waitingForActivation: 1,
@@ -9136,6 +10314,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
     Bridge.define("System.Threading.Tasks.TaskCompletionSource", {
         constructor: function () {
+            this.$initialize();
             this.task = new System.Threading.Tasks.Task();
             this.task.status = System.Threading.Tasks.TaskStatus.running;
         },
@@ -9170,19 +10349,20 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             if (Bridge.is(exception, System.Exception)) {
                 exception = [exception];
             }
-                
+
             return this.task.fail(new System.AggregateException(null, exception));
         }
     });
 
     Bridge.define("System.Threading.CancellationToken", {
-         $struct: true,
+         $kind: "struct",
 
-         constructor: function (source) {
+        constructor: function (source) {
+            this.$initialize();
             if (!Bridge.is(source, System.Threading.CancellationTokenSource)) {
                 source = source ? System.Threading.CancellationToken.sourceTrue : System.Threading.CancellationToken.sourceFalse;
             }
-                
+
             this.source = source;
         },
 
@@ -9218,18 +10398,18 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
         statics: {
             sourceTrue: {
-                isCancellationRequested: true, 
+                isCancellationRequested: true,
                 register: function (f, s) {
                     f(s);
 
                     return new System.Threading.CancellationTokenRegistration();
-                } 
+                }
             },
             sourceFalse: {
-                uncancellable: true, 
-                isCancellationRequested: false, 
+                uncancellable: true,
+                isCancellationRequested: false,
                 register: function () {
-                     return new System.Threading.CancellationTokenRegistration();
+                    return new System.Threading.CancellationTokenRegistration();
                 }
             },
             getDefaultValue: function () {
@@ -9244,7 +10424,17 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
         inherits: function () {
             return [System.IDisposable, System.IEquatable$1(System.Threading.CancellationTokenRegistration)];
         },
+
+        $kind: "struct",
+
+        config: {
+            alias: [
+                "dispose", "System$IDisposable$dispose"
+            ]
+        },
+
         constructor: function (cts, o) {
+            this.$initialize();
             this.cts = cts;
             this.o = o;
         },
@@ -9274,7 +10464,14 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
     Bridge.define("System.Threading.CancellationTokenSource", {
         inherits: [System.IDisposable],
 
+        config: {
+            alias: [
+                "dispose", "System$IDisposable$dispose"
+            ]
+        },
+
         constructor: function (delay) {
+            this.$initialize();
             this.timeout = typeof delay === "number" && delay >= 0 ? setTimeout(Bridge.fn.bind(this, this.cancel), delay, -1) : null;
             this.isCancellationRequested = false;
             this.token = new System.Threading.CancellationToken(this);
@@ -9283,7 +10480,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
         cancel: function (throwFirst) {
             if (this.isCancellationRequested) {
-                return ;
+                return;
             }
 
             this.isCancellationRequested = true;
@@ -9299,7 +10496,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                     if (throwFirst && throwFirst !== -1) {
                         throw ex;
                     }
-                        
+
                     x.push(ex);
                 }
             }
@@ -9307,18 +10504,18 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             if (x.length > 0 && throwFirst !== -1) {
                 throw new System.AggregateException(null, x);
             }
-                
+
         },
 
         cancelAfter: function (delay) {
             if (this.isCancellationRequested) {
                 return;
             }
-                
+
             if (this.timeout) {
                 clearTimeout(this.timeout);
             }
-                
+
             this.timeout = setTimeout(Bridge.fn.bind(this, this.cancel), delay, -1);
         },
 
@@ -9328,7 +10525,10 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
                 return new System.Threading.CancellationTokenRegistration();
             } else {
-                var o = {f: f, s: s };
+                var o = {
+                    f: f,
+                    s: s
+                };
                 this.handlers.push(o);
 
                 return new System.Threading.CancellationTokenRegistration(this, o);
@@ -9351,7 +10551,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             if (this.timeout) {
                 clearTimeout(this.timeout);
             }
-                
+
             this.timeout = null;
             this.handlers = [];
 
@@ -9359,7 +10559,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                 for (var i = 0; i < this.links.length; i++) {
                     this.links[i].dispose();
                 }
-                    
+
                 this.links = null;
             }
         },
@@ -9432,7 +10632,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                 checksum,
                 i,
                 digit,
-                notype= false;
+                notype = false;
 
             if (type === "Visa") {
                 // Visa: length 16, prefix 4, dashes optional.
@@ -9471,7 +10671,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             // Add even digits in even length strings or odd digits in odd length strings.
             checksum = 0;
 
-            for (i = (2 - (value.length % 2)) ; i <= value.length; i += 2) {
+            for (i = (2 - (value.length % 2)); i <= value.length; i += 2) {
                 checksum += parseInt(value.charAt(i - 1));
             }
 
@@ -9524,7 +10724,9 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                     throw new System.ArgumentNullException("input");
                 }
 
-                var r = { v: new System.Version.VersionResult() };
+                var r = {
+                    v: new System.Version.VersionResult()
+                };
 
                 r.v.init("input", true);
 
@@ -9536,7 +10738,9 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             },
 
             tryParse: function (input, result) {
-                var r = { v: new System.Version.VersionResult() };
+                var r = {
+                    v: new System.Version.VersionResult()
+                };
 
                 r.v.init("input", false);
 
@@ -9548,7 +10752,10 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             },
 
             tryParseVersion: function (version, result) {
-                var major = {}, minor = {}, build = {}, revision = {};
+                var major = {},
+                    minor = {},
+                    build = {},
+                    revision = {};
 
                 if (version === null) {
                     result.v.setFailure(System.Version.ParseFailureKind.argumentNullException);
@@ -9585,13 +10792,13 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                         if (!System.Version.tryParseComponent(parsedComponents[3], "revision", result, revision)) {
                             return false;
                         } else {
-                            result.v.m_parsedVersion = new System.Version("constructor$3", major.v, minor.v, build.v, revision.v);
+                            result.v.m_parsedVersion = new System.Version.$constructor3(major.v, minor.v, build.v, revision.v);
                         }
                     } else {
-                        result.v.m_parsedVersion = new System.Version("constructor$2", major.v, minor.v, build.v);
+                        result.v.m_parsedVersion = new System.Version.$constructor2(major.v, minor.v, build.v);
                     }
                 } else {
-                    result.v.m_parsedVersion = new System.Version("constructor$1", major.v, minor.v);
+                    result.v.m_parsedVersion = new System.Version.$constructor1(major.v, minor.v);
                 }
 
                 return true;
@@ -9662,13 +10869,20 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
         _Minor: 0,
 
         config: {
+            alias: [
+                "clone", "System$ICloneable$clone",
+                "compareTo", "System$IComparable$1$System$Version$compareTo",
+                "equalsT", "System$IEquatable$1$System$Version$equalsT"
+            ],
+
             init: function () {
                 this._Build = -1;
                 this._Revision = -1;
             }
         },
 
-        constructor$3: function (major, minor, build, revision) {
+        $constructor3: function (major, minor, build, revision) {
+            this.$initialize();
             if (major < 0) {
                 throw new System.ArgumentOutOfRangeException("major", "Cannot be < 0");
             }
@@ -9691,7 +10905,8 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             this._Revision = revision;
         },
 
-        constructor$2: function (major, minor, build) {
+        $constructor2: function (major, minor, build) {
+            this.$initialize();
             if (major < 0) {
                 throw new System.ArgumentOutOfRangeException("major", "Cannot be < 0");
             }
@@ -9709,7 +10924,8 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             this._Build = build;
         },
 
-        constructor$1: function (major, minor) {
+        $constructor1: function (major, minor) {
+            this.$initialize();
             if (major < 0) {
                 throw new System.ArgumentOutOfRangeException("major", "Cannot be < 0");
             }
@@ -9722,7 +10938,8 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             this._Minor = minor;
         },
 
-        constructor$4: function (version) {
+        $constructor4: function (version) {
+            this.$initialize();
             var v = System.Version.parse(version);
 
             this._Major = v.getMajor();
@@ -9732,6 +10949,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
         },
 
         constructor: function () {
+            this.$initialize();
             this._Major = 0;
             this._Minor = 0;
         },
@@ -9767,7 +10985,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
         },
 
         clone: function () {
-            var v = new System.Version("constructor");
+            var v = new System.Version.$constructor();
 
             v._Major = this._Major;
             v._Minor = this._Minor;
@@ -9945,6 +11163,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
         m_argumentName: null,
         m_canThrow: false,
         constructor: function () {
+            this.$initialize();
         },
 
         init: function (argumentName, canThrow) {
@@ -9976,8 +11195,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                 case System.Version.ParseFailureKind.formatException:
                     try {
                         Bridge.Int.parseInt(this.m_exceptionArgument, -2147483648, 2147483647);
-                    }
-                    catch ($e) {
+                    } catch ($e) {
                         $e = System.Exception.create($e);
                         var e;
 
@@ -10038,11 +11256,16 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
     // @source INotifyPropertyChanged.js
 
-    Bridge.define("System.ComponentModel.INotifyPropertyChanged");
+    Bridge.define("System.ComponentModel.INotifyPropertyChanged", {
+        $kind: "interface",
+    });
 
     Bridge.define("System.ComponentModel.PropertyChangedEventArgs", {
-        constructor: function (propertyName) {
+        constructor: function (propertyName, newValue, oldValue) {
+            this.$initialize();
             this.propertyName = propertyName;
+            this.newValue = newValue;
+            this.oldValue = oldValue;
         }
     });
 
@@ -10206,12 +11429,12 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
         toInt64: function (value, formatProvider) {
             var result = scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.Int64);
-	    return new System.Int64(result);
+            return new System.Int64(result);
         },
 
         toUInt64: function (value, formatProvider) {
             var result = scope.internal.toNumber(value, formatProvider || null, scope.convert.typeCodes.UInt64);
-	    return new System.UInt64(result);
+            return new System.UInt64(result);
         },
 
         toSingle: function (value, formatProvider) {
@@ -10513,8 +11736,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                 } else {
                     return value.value.toUnsigned().toString(toBase);
                 }
-            }
-            else if (value < 0) {
+            } else if (value < 0) {
                 if (toBase === 10) {
                     isNegative = true;
                     value *= -1;
@@ -10650,7 +11872,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                 throw new System.ArgumentOutOfRangeException("offsetOut", "Value must be positive.");
             }
 
-            options = options || 0;     // 0 - means "None", 1 - stands for "InsertLineBreaks"
+            options = options || 0; // 0 - means "None", 1 - stands for "InsertLineBreaks"
 
             if (options < 0 || options > 1) {
                 throw new System.ArgumentException("Illegal enum value.");
@@ -10666,7 +11888,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             }
 
             var insertLineBreaks = options === 1;
-            var outArrayLength = outArray.length;   //This is the maximally required length that must be available in the char array
+            var outArrayLength = outArray.length; //This is the maximally required length that must be available in the char array
 
             // Length of the char buffer required
             var numElementsToCopy = scope.internal.toBase64_CalculateAndValidateOutputLength(length, insertLineBreaks);
@@ -10952,8 +12174,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
                     if (System.Int64.is64Bit(value)) {
                         value = value.toNumber();
-                    }
-                    else if (value instanceof System.Decimal) {
+                    } else if (value instanceof System.Decimal) {
                         value = value.toFloat();
                     }
 
@@ -11074,8 +12295,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                     }
 
                     value = new System.Decimal(value);
-                }
-                else if (typeCode === typeCodes.Int64) {
+                } else if (typeCode === typeCodes.Int64) {
                     if (value instanceof System.UInt64) {
                         if (value.gt(System.Int64.MaxValue)) {
                             this.throwOverflow(typeName);
@@ -11091,8 +12311,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                     }
 
                     value = new System.Int64(value);
-                }
-                else if (typeCode === typeCodes.UInt64) {
+                } else if (typeCode === typeCodes.UInt64) {
                     if (value instanceof System.Int64) {
                         if (value.isNegative()) {
                             this.throwOverflow(typeName);
@@ -11160,8 +12379,8 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
         toBase64_CalculateAndValidateOutputLength: function (inputLength, insertLineBreaks) {
             var base64LineBreakPosition = scope.internal.base64LineBreakPosition;
 
-            var outlen = ~~(inputLength / 3) * 4;           // the base length - we want integer division here. 
-            outlen += ((inputLength % 3) !== 0) ? 4 : 0;    // at most 4 more chars for the remainder
+            var outlen = ~~(inputLength / 3) * 4; // the base length - we want integer division here. 
+            outlen += ((inputLength % 3) !== 0) ? 4 : 0; // at most 4 more chars for the remainder
 
             if (outlen === 0) {
                 return 0;
@@ -11174,7 +12393,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                     --newLines;
                 }
 
-                outlen += newLines * 2;                     // the number of line break chars we'll add, "\r\n"
+                outlen += newLines * 2; // the number of line break chars we'll add, "\r\n"
             }
 
             // If we overflow an int then we cannot allocate enough
@@ -11302,7 +12521,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             var intTab = "\t".charCodeAt(0);
             var intNLn = "\n".charCodeAt(0);
             var intCRt = "\r".charCodeAt(0);
-            var intAtoZ = ("Z".charCodeAt(0) - "A".charCodeAt(0));  // = ('z' - 'a')
+            var intAtoZ = ("Z".charCodeAt(0) - "A".charCodeAt(0)); // = ('z' - 'a')
             var int0To9 = ("9".charCodeAt(0) - "0".charCodeAt(0));
 
             var endInputIndex = inputIndex + inputLength;
@@ -11582,6 +12801,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
     Bridge.define("System.Net.WebSockets.ClientWebSocket", {
         inherits: [System.IDisposable],
         constructor: function () {
+            this.$initialize();
             this.messageBuffer = [];
             this.state = "none";
             this.options = new System.Net.WebSockets.ClientWebSocketOptions();
@@ -11843,6 +13063,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
     Bridge.define("System.Net.WebSockets.ClientWebSocketOptions", {
         constructor: function () {
+            this.$initialize();
             this.isReadOnly = false;
             this.requestedSubProtocols = [];
         },
@@ -11870,6 +13091,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
     Bridge.define("System.Net.WebSockets.WebSocketReceiveResult", {
         constructor: function (count, messageType, endOfMessage, closeStatus, closeStatusDescription) {
+            this.$initialize();
             this.count = count;
             this.messageType = messageType;
             this.endOfMessage = endOfMessage;
@@ -11902,6 +13124,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
 
     Bridge.define("System.Uri", {
         constructor: function (uriString) {
+            this.$initialize();
             this.absoluteUri = uriString;
         },
 
@@ -12072,10 +13295,18 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                 state = State.After;
             }
         };
+
+        this.getCurrent$1 = this.getCurrent;
+        this.System$Collections$IEnumerator$getCurrent = this.getCurrent;
+        this.System$Collections$IEnumerator$moveNext = this.moveNext;
+        this.System$Collections$IEnumerator$reset = this.reset;
     };
     
     System.IDisposable.$$inheritors = System.IDisposable.$$inheritors || [];
     System.IDisposable.$$inheritors.push(IEnumerator);
+
+    System.Collections.IEnumerator.$$inheritors = System.Collections.IEnumerator.$$inheritors || [];
+    System.Collections.IEnumerator.$$inheritors.push(IEnumerator);
 
     // for tryGetNext
     var Yielder = function () {
@@ -12093,6 +13324,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
     // Enumerable constuctor
     var Enumerable = function (getEnumerator) {
         this.getEnumerator = getEnumerator;
+
     };
     System.Collections.IEnumerable.$$inheritors = System.Collections.IEnumerable.$$inheritors || [];
     System.Collections.IEnumerable.$$inheritors.push(Enumerable);
@@ -13340,7 +14572,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             return new IEnumerator(
                 function () {
                     enumerator = source.getEnumerator();
-                    keys = new System.Collections.Generic.Dictionary$2(Object, Object)(null, comparer);
+                    keys = new (System.Collections.Generic.Dictionary$2(Object, Object))(null, comparer);
                     Enumerable.from(second).forEach(function (key) { keys.add(key); });
                 },
                 function () {
@@ -13371,9 +14603,9 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
                 function () {
                     enumerator = source.getEnumerator();
 
-                    keys = new System.Collections.Generic.Dictionary$2(Object, Object)(null, comparer);
+                    keys = new (System.Collections.Generic.Dictionary$2(Object, Object))(null, comparer);
                     Enumerable.from(second).forEach(function (key) { keys.add(key); });
-                    outs = new System.Collections.Generic.Dictionary$2(Object, Object)(null, comparer);
+                    outs = new (System.Collections.Generic.Dictionary$2(Object, Object))(null, comparer);
                 },
                 function () {
                     while (enumerator.moveNext()) {
@@ -13428,7 +14660,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             return new IEnumerator(
                 function () {
                     firstEnumerator = source.getEnumerator();
-                    keys = new System.Collections.Generic.Dictionary$2(Object, Object)(null, comparer);
+                    keys = new (System.Collections.Generic.Dictionary$2(Object, Object))(null, comparer);
                 },
                 function () {
                     var current;
@@ -14144,7 +15376,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
     Enumerable.prototype.toList = function (T) {
         var array = [];
         this.forEach(function (x) { array.push(x); });
-        return new System.Collections.Generic.List$1(T || Object)(array);
+        return new (System.Collections.Generic.List$1(T || Object))(array);
     };
 
     // Overload:function (keySelector)
@@ -14154,7 +15386,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
         keySelector = Utils.createLambda(keySelector);
         elementSelector = Utils.createLambda(elementSelector);
 
-        var dict = new System.Collections.Generic.Dictionary$2(Object, Object)(null, comparer);
+        var dict = new (System.Collections.Generic.Dictionary$2(Object, Object))(null, comparer);
         var order = [];
         this.forEach(function (x) {
             var key = keySelector(x);
@@ -14189,7 +15421,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
         keySelector = Utils.createLambda(keySelector);
         elementSelector = Utils.createLambda(elementSelector);
 
-        var dict = new System.Collections.Generic.Dictionary$2(keyType, valueType)(null, comparer);
+        var dict = new (System.Collections.Generic.Dictionary$2(keyType, valueType))(null, comparer);
         this.forEach(function (x) {
             dict.add(keySelector(x), elementSelector(x));
         });
@@ -14854,10 +16086,12 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             }
         },
         constructor: function () {
-            System.Random.prototype.constructor$1.call(this, System.Int64.clip32(System.Int64((new Date()).getTime()).mul(10000)));
+            this.$initialize();
+            System.Random.$constructor1.call(this, System.Int64.clip32(System.Int64((new Date()).getTime()).mul(10000)));
 
         },
-        constructor$1: function (Seed) {
+        $constructor1: function (Seed) {
+            this.$initialize();
             var ii;
             var mj, mk;
 
@@ -14897,7 +16131,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             var retVal;
             var locINext = this.inext;
             var locINextp = this.inextp;
-    
+
             if (((locINext = (locINext + 1) | 0)) >= 56) {
                 locINext = 1;
             }
@@ -14934,8 +16168,7 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
             var range = System.Int64(maxValue).sub(System.Int64(minValue));
             if (range.lte(System.Int64(2147483647))) {
                 return (((Bridge.Int.clip32(this.sample() * System.Int64.toNumber(range)) + minValue) | 0));
-            }
-            else  {
+            } else {
                 return System.Int64.clip32(Bridge.Int.clip64(this.getSampleForLargeRange() * System.Int64.toNumber(range)).add(System.Int64(minValue)));
             }
         },
@@ -14975,138 +16208,143 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
         }
     });
     // @source Guid.js
-
     Bridge.define("System.Guid", {
         inherits: function () {
             return [System.IComparable$1(System.Guid), System.IEquatable$1(System.Guid), System.IFormattable];
         },
 
+        $kind: "struct",
+
         statics: {
             $valid: /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/ig,
-		    $split: /^(.{8})(.{4})(.{4})(.{4})(.{12})$/,
-		    empty: '00000000-0000-0000-0000-000000000000',
+            $split: /^(.{8})(.{4})(.{4})(.{4})(.{12})$/,
+            empty: '00000000-0000-0000-0000-000000000000',
 
-		    config: {
-		        init: function () {
-		            this.$rng = new System.Random();
-		        }
-		    },
+            config: {
+                alias: [
+                    "equalsT", "System$IEquatable$1$System$Guid$equalsT",
+                    "compareTo", "System$IComparable$1$System$Guid$compareTo",
+                    "format", "System$IFormattable$format"
+                ],
+                init: function () {
+                    this.$rng = new System.Random();
+                }
+            },
 
-		    instanceOf: function (instance) {
-			    return typeof(instance) === 'string' && instance.match(System.Guid.$valid);
-		    },
+            instanceOf: function (instance) {
+                return typeof (instance) === 'string' && instance.match(System.Guid.$valid);
+            },
 
-		    getDefaultValue: function () {
-			    return System.Guid.empty;
-		    },
+            getDefaultValue: function () {
+                return System.Guid.empty;
+            },
 
-		    parse: function (uuid, format) {
-			    var r = {};
+            parse: function (uuid, format) {
+                var r = {};
 
-			    if (System.Guid.tryParse(uuid, format, r)) {
-			        return r.v;
-			    }
+                if (System.Guid.tryParse(uuid, format, r)) {
+                    return r.v;
+                }
 
-			    throw new System.FormatException('Unable to parse UUID');
-		    },
+                throw new System.FormatException('Unable to parse UUID');
+            },
 
-		    tryParse: function (uuid, format, r) {
-		        var m;
-		        r.v = System.Guid.empty;
+            tryParse: function (uuid, format, r) {
+                var m;
+                r.v = System.Guid.empty;
 
-		        if (!Bridge.hasValue(uuid)) {
-			        throw new System.ArgumentNullException('uuid');
-			    } 
-			    
-			    if (!format) {
-			        m = /^[{(]?([0-9a-f]{8})-?([0-9a-f]{4})-?([0-9a-f]{4})-?([0-9a-f]{4})-?([0-9a-f]{12})[)}]?$/ig.exec(uuid);
+                if (!Bridge.hasValue(uuid)) {
+                    throw new System.ArgumentNullException('uuid');
+                }
 
-				    if (m) {
-					    r.v = m.slice(1).join('-').toLowerCase();
+                if (!format) {
+                    m = /^[{(]?([0-9a-f]{8})-?([0-9a-f]{4})-?([0-9a-f]{4})-?([0-9a-f]{4})-?([0-9a-f]{12})[)}]?$/ig.exec(uuid);
 
-					    return true;
-				    }
-			    } else {
+                    if (m) {
+                        r.v = m.slice(1).join('-').toLowerCase();
+
+                        return true;
+                    }
+                } else {
                     format = format.toUpperCase();
 
                     if (format === 'N') {
-					    m = System.Guid.$split.exec(uuid);
+                        m = System.Guid.$split.exec(uuid);
 
-					    if (!m) {
-					        return false;
-					    }
+                        if (!m) {
+                            return false;
+                        }
 
-					    uuid = m.slice(1).join('-');
-				    } else if (format === 'B' || format === 'P') {
-					    var b = format === 'B';
+                        uuid = m.slice(1).join('-');
+                    } else if (format === 'B' || format === 'P') {
+                        var b = format === 'B';
 
-					    if (uuid[0] !== (b ? '{' : '(') || uuid[uuid.length - 1] !== (b ? '}' : ')')) {
-					        return false;
-					    }
-						
-					    uuid = uuid.substr(1, uuid.length - 2);
-				    }
+                        if (uuid[0] !== (b ? '{' : '(') || uuid[uuid.length - 1] !== (b ? '}' : ')')) {
+                            return false;
+                        }
 
-				    if (uuid.match(System.Guid.$valid)) {
-					    r.v = uuid.toLowerCase();
+                        uuid = uuid.substr(1, uuid.length - 2);
+                    }
 
-					    return true;
-				    }
-			    }
-			    return false;
-		    },
+                    if (uuid.match(System.Guid.$valid)) {
+                        r.v = uuid.toLowerCase();
 
-		    format: function (uuid, format) {
-		        switch (format) {
-		            case 'n': 
-			        case 'N': 
-			            return uuid.replace(/-/g, '');
-		            case 'b': 
-		            case 'B': 
-		                return '{' + uuid + '}';
-		            case 'p': 
-		            case 'P': 
-		                return '(' + uuid + ')';
-		            default : 
-		                return uuid;
-			    }
-		    },
+                        return true;
+                    }
+                }
+                return false;
+            },
 
-		    fromBytes: function (b) {
-			    if (!b || b.length !== 16) {
-			        throw new System.ArgumentException('b', 'Must be 16 bytes');
-			    }
-				
-			    var s = b.map(function (x) {
-			        return Bridge.Int.format(x & 0xff, 'x2');
-			    }).join('');
+            format: function (uuid, format) {
+                switch (format) {
+                case 'n':
+                case 'N':
+                    return uuid.replace(/-/g, '');
+                case 'b':
+                case 'B':
+                    return '{' + uuid + '}';
+                case 'p':
+                case 'P':
+                    return '(' + uuid + ')';
+                default:
+                    return uuid;
+                }
+            },
 
-			    return System.Guid.$split.exec(s).slice(1).join('-');
-		    },
+            fromBytes: function (b) {
+                if (!b || b.length !== 16) {
+                    throw new System.ArgumentException('b', 'Must be 16 bytes');
+                }
 
-		    newGuid: function () {
-		        var a = Array(16);
+                var s = b.map(function (x) {
+                    return Bridge.Int.format(x & 0xff, 'x2');
+                }).join('');
 
-			    System.Guid.$rng.nextBytes(a);
-			    a[6] = a[6] & 0x0f | 0x40;
-			    a[8] = a[8] & 0xbf | 0x80;
+                return System.Guid.$split.exec(s).slice(1).join('-');
+            },
 
-			    return System.Guid.fromBytes(a);
-		    },
+            newGuid: function () {
+                var a = Array(16);
 
-		    getBytes: function (uuid) {
-			    var a = Array(16);
-			    var s = uuid.replace(/-/g, '');
+                System.Guid.$rng.nextBytes(a);
+                a[6] = a[6] & 0x0f | 0x40;
+                a[8] = a[8] & 0xbf | 0x80;
 
-			    for (var i = 0; i < 16; i++) {
-				    a[i] = parseInt(s.substr(i * 2, 2), 16);
-			    }
+                return System.Guid.fromBytes(a);
+            },
 
-			    return a;
-		    }
+            getBytes: function (uuid) {
+                var a = Array(16);
+                var s = uuid.replace(/-/g, '');
+
+                for (var i = 0; i < 16; i++) {
+                    a[i] = parseInt(s.substr(i * 2, 2), 16);
+                }
+
+                return a;
+            }
         }
     });
-
 // @source Text/RegularExpressions/Regex.js
 
 Bridge.define("System.Text.RegularExpressions.Regex", {
@@ -15154,7 +16392,7 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
         },
 
         isMatch$2: function (input, pattern, options, matchTimeout) {
-            var regex = new System.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex.$constructor3(pattern, options, matchTimeout, true);
             return regex.isMatch(input);
         },
 
@@ -15169,7 +16407,7 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
         },
 
         match$2: function (input, pattern, options, matchTimeout) {
-            var regex = new System.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex.$constructor3(pattern, options, matchTimeout, true);
             return regex.match(input);
         },
 
@@ -15184,7 +16422,7 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
         },
 
         matches$2: function (input, pattern, options, matchTimeout) {
-            var regex = new System.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex.$constructor3(pattern, options, matchTimeout, true);
             return regex.matches(input);
         },
 
@@ -15199,7 +16437,7 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
         },
 
         replace$2: function (input, pattern, replacement, options, matchTimeout) {
-            var regex = new System.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex.$constructor3(pattern, options, matchTimeout, true);
             return regex.replace(input, replacement);
         },
 
@@ -15214,7 +16452,7 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
         },
 
         replace$5: function (input, pattern, evaluator, options, matchTimeout) {
-            var regex = new System.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex.$constructor3(pattern, options, matchTimeout, true);
             return regex.replace$3(input, evaluator);
         },
 
@@ -15229,7 +16467,7 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
         },
 
         split$2: function (input, pattern, options, matchTimeout) {
-            var regex = new System.Text.RegularExpressions.Regex("constructor$3", pattern, options, matchTimeout, true);
+            var regex = new System.Text.RegularExpressions.Regex.$constructor3(pattern, options, matchTimeout, true);
             return regex.split(input);
         }
     },
@@ -15249,18 +16487,19 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
     },
 
     constructor: function (pattern) {
-        this.constructor$1(pattern, System.Text.RegularExpressions.RegexOptions.None);
+        this.$constructor1(pattern, System.Text.RegularExpressions.RegexOptions.None);
     },
 
-    constructor$1: function (pattern, options) {
-        this.constructor$2(pattern, options, System.TimeSpan.fromMilliseconds(-1));
+    $constructor1: function (pattern, options) {
+        this.$constructor2(pattern, options, System.TimeSpan.fromMilliseconds(-1));
     },
 
-    constructor$2: function (pattern, options, matchTimeout) {
-        this.constructor$3(pattern, options, matchTimeout, false);
+    $constructor2: function (pattern, options, matchTimeout) {
+        this.$constructor3(pattern, options, matchTimeout, false);
     },
 
-    constructor$3: function (pattern, options, matchTimeout, useCache) {
+    $constructor3: function (pattern, options, matchTimeout, useCache) {
+		this.$initialize();
         var scope = System.Text.RegularExpressions;
 
         if (pattern == null) {
@@ -15620,6 +16859,7 @@ Bridge.define("System.Text.RegularExpressions.Capture", {
     _length: 0,
 
     constructor: function (text, i, l) {
+		this.$initialize();
         this._text = text;
         this._index = i;
         this._length = l;
@@ -15660,11 +16900,19 @@ Bridge.define("System.Text.RegularExpressions.CaptureCollection", {
         return [System.Collections.ICollection];
     },
 
+    config: {
+        alias: [
+        "getEnumerator", "System$Collections$IEnumerable$getEnumerator",
+        "getCount", "System$Collections$ICollection$getCount"
+        ]
+    },
+
     _group: null,
     _capcount: 0,
     _captures: null,
 
     constructor: function (group) {
+		this.$initialize();
         this._group = group;
         this._capcount = group._capcount;
     },
@@ -15750,10 +16998,19 @@ Bridge.define("System.Text.RegularExpressions.CaptureEnumerator", {
         return [System.Collections.IEnumerator];
     },
 
+    config: {
+        alias: [
+            "getCurrent", "System$Collections$IEnumerator$getCurrent",
+            "moveNext", "System$Collections$IEnumerator$moveNext",
+            "reset", "System$Collections$IEnumerator$reset"
+        ]
+    },
+
     _captureColl: null,
     _curindex: 0,
 
     constructor: function (captureColl) {
+		this.$initialize();
         this._curindex = -1;
         this._captureColl = captureColl;
     },
@@ -15824,11 +17081,12 @@ Bridge.define("System.Text.RegularExpressions.Group", {
     _capColl: null,
 
     constructor: function (text, caps, capcount) {
+		this.$initialize();
         var scope = System.Text.RegularExpressions;
         var index = capcount === 0 ? 0 : caps[(capcount - 1) * 2];
         var length = capcount === 0 ? 0 : caps[(capcount * 2) - 1];
 
-        scope.Capture.prototype.$constructor.call(this, text, index, length);
+        scope.Capture.$constructor.call(this, text, index, length);
 
         this._caps = caps;
         this._capcount = capcount;
@@ -15853,11 +17111,19 @@ Bridge.define("System.Text.RegularExpressions.GroupCollection", {
         return [System.Collections.ICollection];
     },
 
+    config: {
+        alias: [
+        "getEnumerator", "System$Collections$IEnumerable$getEnumerator",
+        "getCount", "System$Collections$ICollection$getCount"
+        ]
+    },
+
     _match: null,
     _captureMap: null,
     _groups: null,
 
     constructor: function (match, caps) {
+		this.$initialize();
         this._match = match;
         this._captureMap = caps;
     },
@@ -15982,10 +17248,19 @@ Bridge.define("System.Text.RegularExpressions.GroupEnumerator", {
         return [System.Collections.IEnumerator];
     },
 
+    config: {
+        alias: [
+            "getCurrent", "System$Collections$IEnumerator$getCurrent",
+            "moveNext", "System$Collections$IEnumerator$moveNext",
+            "reset", "System$Collections$IEnumerator$reset"
+        ]
+    },
+
     _groupColl: null,
     _curindex: 0,
 
     constructor: function (groupColl) {
+		this.$initialize();
         this._curindex = -1;
         this._groupColl = groupColl;
     },
@@ -16067,10 +17342,11 @@ Bridge.define("System.Text.RegularExpressions.Match", {
     _textpos: 0,
 
     constructor: function (regex, capcount, text, begpos, len, startpos) {
+		this.$initialize();
         var scope = System.Text.RegularExpressions;
         var caps = [0, 0];
 
-        scope.Group.prototype.$constructor.call(this, text, caps, 0);
+        scope.Group.$constructor.call(this, text, caps, 0);
 
         this._regex = regex;
 
@@ -16231,8 +17507,9 @@ Bridge.define("System.Text.RegularExpressions.MatchSparse", {
     _caps: null,
 
     constructor: function (regex, caps, capcount, text, begpos, len, startpos) {
+		this.$initialize();
         var scope = System.Text.RegularExpressions;
-        scope.Match.prototype.$constructor.call(this, regex, capcount, text, begpos, len, startpos);
+        scope.Match.$constructor.call(this, regex, capcount, text, begpos, len, startpos);
 
         this._caps = caps;
     },
@@ -16252,6 +17529,13 @@ Bridge.define("System.Text.RegularExpressions.MatchCollection", {
         return [System.Collections.ICollection];
     },
 
+    config: {
+        alias: [
+        "getEnumerator", "System$Collections$IEnumerable$getEnumerator",
+        "getCount", "System$Collections$ICollection$getCount"
+        ]
+    },
+
     _regex: null,
     _input: null,
     _beginning: 0,
@@ -16262,6 +17546,7 @@ Bridge.define("System.Text.RegularExpressions.MatchCollection", {
     _done: false,
 
     constructor: function (regex, input, beginning, length, startat) {
+		this.$initialize();
         if (startat < 0 || startat > input.Length) {
             throw new System.ArgumentOutOfRangeException("startat");
         }
@@ -16368,12 +17653,21 @@ Bridge.define("System.Text.RegularExpressions.MatchEnumerator", {
         return [System.Collections.IEnumerator];
     },
 
+    config: {
+        alias: [
+            "getCurrent", "System$Collections$IEnumerator$getCurrent",
+            "moveNext", "System$Collections$IEnumerator$moveNext",
+            "reset", "System$Collections$IEnumerator$reset"
+        ]
+    },
+
     _matchcoll: null,
     _match: null,
     _curindex: 0,
     _done: false,
 
     constructor: function (matchColl) {
+		this.$initialize();
         this._matchcoll = matchColl;
     },
 
@@ -16424,7 +17718,7 @@ Bridge.define("System.Text.RegularExpressions.RegexOptions", {
         CultureInvariant: 0x0200
     },
 
-    $enum: true,
+    $kind: "enum",
     $flags: true
 });
 // @source Text/RegularExpressions/RegexRunner.js
@@ -16445,6 +17739,7 @@ Bridge.define("System.Text.RegularExpressions.RegexRunner", {
     _prevlen: 0,
 
     constructor: function (regex) {
+		this.$initialize();
         if (regex == null) {
             throw new System.ArgumentNullException("regex");
         }
@@ -16716,6 +18011,7 @@ Bridge.define("System.Text.RegularExpressions.RegexParser", {
     },
 
     constructor: function (culture) {
+		this.$initialize();
         this._culture = culture;
         this._caps = {};
     },
@@ -17171,6 +18467,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNode", {
     },
 
     constructor: function (type, options, arg) {
+		this.$initialize();
         this._type = type;
         this._options = options;
 
@@ -17511,6 +18808,7 @@ Bridge.define("System.Text.RegularExpressions.RegexReplacement", {
     _rules: [], // negative -> group #, positive -> string #
 
     constructor: function (rep, concat, caps) {
+		this.$initialize();
         this._rep = rep;
 
         if (concat._type !== System.Text.RegularExpressions.RegexNode.Concatenate) {
@@ -17797,6 +19095,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngine", {
     _timeoutTime: -1,
 
     constructor: function (pattern, isCaseInsensitive, isMultiLine, isSingleline, isIgnoreWhitespace, timeoutMs) {
+		this.$initialize();
         if (pattern == null) {
             throw new System.ArgumentNullException("pattern");
         }
@@ -19354,6 +20653,11 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
                 var index = bodyIndex;
                 while (index < endIndex) {
                     ch = pattern[index];
+                    if (ch === "\\") {
+                        index += 2; // skip the escaped char
+                        continue;
+                    }
+
                     if (ch === "(" && !isComment) {
                         ++bracketLvl;
                     } else if (ch === ")") {
@@ -19745,10 +21049,17 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             console.log(obj);
         }
     };
-// @source timer.js
+    // @source timer.js
 
     Bridge.define('System.Threading.Timer', {
         inherits: [System.IDisposable],
+
+        config: {
+            alias: [
+                "dispose", "System$IDisposable$dispose"
+            ]
+        },
+
         statics: {
             MAX_SUPPORTED_TIMEOUT: 4294967294,
             EXC_LESS: "Number must be either non-negative and less than or equal to Int32.MaxValue or -1.",
@@ -19761,22 +21072,27 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         state: null,
         id: null,
         disposed: false,
-        constructor$1: function (callback, state, dueTime, period) {
+        $constructor1: function (callback, state, dueTime, period) {
+            this.$initialize();
             this.timerSetup(callback, state, System.Int64(dueTime), System.Int64(period));
         },
-        constructor$3: function (callback, state, dueTime, period) {
+        $constructor3: function (callback, state, dueTime, period) {
+            this.$initialize();
             var dueTm = Bridge.Int.clip64(dueTime.getTotalMilliseconds());
             var periodTm = Bridge.Int.clip64(period.getTotalMilliseconds());
 
             this.timerSetup(callback, state, dueTm, periodTm);
         },
-        constructor$4: function (callback, state, dueTime, period) {
+        $constructor4: function (callback, state, dueTime, period) {
+            this.$initialize();
             this.timerSetup(callback, state, System.Int64(dueTime), System.Int64(period));
         },
-        constructor$2: function (callback, state, dueTime, period) {
+        $constructor2: function (callback, state, dueTime, period) {
+            this.$initialize();
             this.timerSetup(callback, state, dueTime, period);
         },
         constructor: function (callback) {
+            this.$initialize();
             var dueTime = -1; // we want timer to be registered, but not activated.  Requires caller to call
             var period = -1; // Change after a timer instance is created.  This is to avoid the potential
             // for a timer to be fired before the returned value is assigned to the variable,
@@ -19789,7 +21105,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
                 throw new System.InvalidOperationException(System.Threading.Timer.EXC_DISPOSED);
             }
 
-            if (callback == null) {
+            if (Bridge.staticEquals(callback, null)) {
                 throw new System.ArgumentNullException("TimerCallback");
             }
 
@@ -19819,10 +21135,10 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
                 return;
             }
 
-            if (this.timerCallback != null) {
+            if (!Bridge.staticEquals(this.timerCallback, null)) {
                 var myId = this.id;
                 this.timerCallback(this.state);
-    
+
                 // timerCallback may call Change(). To prevent double call we can check if timer changed
                 if (System.Nullable.eq(this.id, myId)) {
                     this.runTimer(this.period, false);
@@ -19830,7 +21146,9 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             }
         },
         runTimer: function (period, checkDispose) {
-            if (checkDispose === void 0) { checkDispose = true; }
+            if (checkDispose === void 0) {
+                checkDispose = true;
+            }
             if (checkDispose && this.disposed) {
                 throw new System.InvalidOperationException(System.Threading.Timer.EXC_DISPOSED);
             }

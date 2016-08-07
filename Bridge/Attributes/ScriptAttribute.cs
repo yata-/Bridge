@@ -9,6 +9,7 @@ namespace Bridge
     /// </summary>
     [External]
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor)]
+    [NonScriptable]
     public sealed class ScriptAttribute : Attribute
     {
         public ScriptAttribute(params string[] lines)

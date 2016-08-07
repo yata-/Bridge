@@ -31,7 +31,6 @@ namespace Bridge.ClientTest
         public const string MODULE_VERSION = PREFIX_SYSTEM_CLASSES; // + "Version";
 
         public const string MODULE_BASIC_CSHARP = "C#"; // "";
-        public const string MODULE_ISSUES = "Issues"; // "";
         public const string MODULE_LINQ = "LINQ"; // "";
 
         public const string MODULE_DATETIME = "Date and time"; // "DateTime, TimeSpan";
@@ -94,6 +93,9 @@ namespace Bridge.ClientTest
         public const string MODULE_DIAGNOSTICS = "Diagnostics";
         public const string MODULE_CHECKED_UNCKECKED = "Checked/Unckecked";
         public const string MODULE_TYPE_SYSTEM = "Type system";
+        public const string MODULE_REFLECTION = "Reflection";
+        public const string MODULE_ARGUMENTS = "Arguments";
+        public const string MODULE_MIXIN = "Mixin";
 
         public const string IGNORE_DATE = null;
     }

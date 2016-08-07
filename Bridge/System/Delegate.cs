@@ -1,3 +1,4 @@
+using System.Reflection;
 using Bridge;
 
 namespace System
@@ -42,6 +43,9 @@ namespace System
 
         [Template("!Bridge.staticEquals({a}, {b})")]
         public static extern bool operator !=(Delegate a, Delegate b);
+
+        [Template("Bridge.Reflection.midel({method}, {firstArgument})")]
+        public static extern Delegate CreateDelegate(Type type, object firstArgument, MethodInfo method);
     }
 
     [External]

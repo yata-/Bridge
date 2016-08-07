@@ -8,6 +8,8 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineState", {
     groups: null, // captured groups
 
     constructor: function () {
+        this.$initialize();
+
         this.passes = [];
         this.groups = [];
     },

@@ -1,4 +1,4 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("Bridge.Transpiled", function ($asm, globals) {
     "use strict";
 
     Bridge.define('System.Threading.Timer', {
@@ -15,22 +15,32 @@
         state: null,
         id: null,
         disposed: false,
-        constructor$1: function (callback, state, dueTime, period) {
+        config: {
+            alias: [
+            "dispose", "System$IDisposable$dispose"
+            ]
+        },
+        $constructor1: function (callback, state, dueTime, period) {
+            this.$initialize();
             this.timerSetup(callback, state, System.Int64(dueTime), System.Int64(period));
         },
-        constructor$3: function (callback, state, dueTime, period) {
+        $constructor3: function (callback, state, dueTime, period) {
+            this.$initialize();
             var dueTm = Bridge.Int.clip64(dueTime.getTotalMilliseconds());
             var periodTm = Bridge.Int.clip64(period.getTotalMilliseconds());
     
             this.timerSetup(callback, state, dueTm, periodTm);
         },
-        constructor$4: function (callback, state, dueTime, period) {
+        $constructor4: function (callback, state, dueTime, period) {
+            this.$initialize();
             this.timerSetup(callback, state, System.Int64(dueTime), System.Int64(period));
         },
-        constructor$2: function (callback, state, dueTime, period) {
+        $constructor2: function (callback, state, dueTime, period) {
+            this.$initialize();
             this.timerSetup(callback, state, dueTime, period);
         },
         constructor: function (callback) {
+            this.$initialize();
             var dueTime = -1; // we want timer to be registered, but not activated.  Requires caller to call
             var period = -1; // Change after a timer instance is created.  This is to avoid the potential
             // for a timer to be fired before the returned value is assigned to the variable,
@@ -126,4 +136,4 @@
     });
     
     Bridge.init();
-})(this);
+});

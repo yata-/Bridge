@@ -1,4 +1,6 @@
 using Bridge.Contract;
+using Bridge.Contract.Constants;
+
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.TypeSystem;
 using System.Collections.Generic;
@@ -146,7 +148,7 @@ namespace Bridge.Translator
         {
             if (type.Kind == TypeKind.TypeParameter && astType != null)
             {
-                return new RawValue("Bridge.getDefaultValue(" + astType.ToString() + ")");
+                return new RawValue(JS.Funcs.BRIDGE_GETDEFAULTVALUE + "(" + astType.ToString() + ")");
             }
 
             if (type.IsKnownType(KnownTypeCode.Decimal))
@@ -213,7 +215,9 @@ namespace Bridge.Translator
                 return "new Date(-864e13)";
             }
 
-            return "new " + BridgeTypes.ToJsName(type, emitter) + "()";
+            var isGeneric = type.TypeArguments.Count > 0 && !Helpers.IsIgnoreGeneric(type, emitter);
+
+            return string.Concat("new ", isGeneric ? "(" : "", BridgeTypes.ToJsName(type, emitter), isGeneric ? ")" : "", "()");
         }
 
         protected virtual bool IsValidStaticInitializer(Expression expr)

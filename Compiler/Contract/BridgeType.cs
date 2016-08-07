@@ -231,8 +231,56 @@ namespace Bridge.Contract
             return names.Join(".");
         }
 
-        public static string ToJsName(IType type, IEmitter emitter, bool asDefinition = false, bool excludens = false)
+        public static string GetGlobalTarget(ITypeDefinition typeDefinition, AstNode node)
         {
+            string globalTarget = null;
+            var globalMethods = typeDefinition.Attributes.FirstOrDefault(a => a.AttributeType.FullName == "Bridge.GlobalMethodsAttribute");
+
+            if (globalMethods != null)
+            {
+                globalTarget = "Bridge.global";
+            }
+            else
+            {
+                var mixin = typeDefinition.Attributes.FirstOrDefault(a => a.AttributeType.FullName == "Bridge.MixinAttribute");
+
+                if (mixin != null)
+                {
+                    var value = mixin.PositionalArguments.First().ConstantValue;
+                    if (value != null)
+                    {
+                        globalTarget = value.ToString();
+                    }
+
+                    if (string.IsNullOrEmpty(globalTarget))
+                    {
+                        throw new EmitterException(node, string.Format("The argument to the [MixinAttribute] for the type {0} must not be null or empty.", typeDefinition.FullName));
+                    }
+                }
+            }
+
+            return globalTarget;
+        }
+
+        public static string ToJsName(IType type, IEmitter emitter, bool asDefinition = false, bool excludens = false, bool isAlias = false)
+        {
+            var itypeDef = type.GetDefinition();
+
+            if (itypeDef != null)
+            {
+                string globalTarget = BridgeTypes.GetGlobalTarget(itypeDef, null);
+
+                if (globalTarget != null)
+                {
+                    return globalTarget;
+                }
+            }
+
+            if (itypeDef != null && itypeDef.Attributes.Any(a => a.AttributeType.FullName == "Bridge.NonScriptableAttribute"))
+            {
+                throw new EmitterException(emitter.Translator.EmitNode, "Type " + type.FullName + " is marked as not usable from script");
+            }
+
             if (type.Kind == TypeKind.Array)
             {
                 return JS.Types.ARRAY;
@@ -261,6 +309,7 @@ namespace Bridge.Contract
             if (hasTypeDef)
             {
                 var typeDef = bridgeType.TypeDefinition;
+
                 if (typeDef.IsNested && !excludens)
                 {
                     name = (string.IsNullOrEmpty(name) ? "" : (name + ".")) + BridgeTypes.GetParentNames(typeDef);
@@ -294,23 +343,92 @@ namespace Bridge.Contract
                 name += Helpers.PrefixDollar(type.TypeArguments.Count);
             }
 
-            if (!asDefinition && type.TypeArguments.Count > 0 && !Helpers.IsIgnoreGeneric(type, emitter))
+            if (isAlias)
             {
-                StringBuilder sb = new StringBuilder(name);
-                bool needComma = false;
-                sb.Append("(");
-                foreach (var typeArg in type.TypeArguments)
+                name = OverloadsCollection.NormalizeInterfaceName(name);
+            }
+
+            if (type.TypeArguments.Count > 0 && !Helpers.IsIgnoreGeneric(type, emitter))
+            {
+                if (isAlias)
                 {
-                    if (needComma)
+                    StringBuilder sb = new StringBuilder(name);
+                    bool needComma = false;
+                    sb.Append(JS.Vars.D);
+                    bool isStr = false;
+                    foreach (var typeArg in type.TypeArguments)
                     {
-                        sb.Append(",");
+                        if (sb.ToString().EndsWith(")"))
+                        {
+                            sb.Append(" + \"");
+                        }
+
+                        if (needComma && !sb.ToString().EndsWith(JS.Vars.D.ToString()))
+                        {
+                            sb.Append(JS.Vars.D);
+                        }
+
+                        needComma = true;
+                        bool needGet = typeArg.Kind == TypeKind.TypeParameter && !asDefinition;
+                        if (needGet)
+                        {
+                            if (!isStr)
+                            {
+                                sb.Insert(0, "\"");
+                                isStr = true;
+                            }
+                            sb.Append("\" + Bridge.getTypeAlias(");
+                        }
+
+                        var typeArgName = BridgeTypes.ToJsName(typeArg, emitter, false, false, true);
+
+                        if (!needGet && typeArgName.StartsWith("\""))
+                        {
+                            sb.Append(typeArgName.Substring(1));
+
+                            if (!isStr)
+                            {
+                                isStr = true;
+                                sb.Insert(0, "\"");
+                            }
+                        }
+                        else
+                        {
+                            sb.Append(typeArgName);
+                        }
+
+                        if (needGet)
+                        {
+                            sb.Append(")");
+                        }
                     }
 
-                    needComma = true;
-                    sb.Append(BridgeTypes.ToJsName(typeArg, emitter));
+                    if (isStr && !sb.ToString().EndsWith(")"))
+                    {
+                        sb.Append("\"");
+                    }
+
+                    name = sb.ToString();
                 }
-                sb.Append(")");
-                name = sb.ToString();
+                else if(!asDefinition)
+                {
+                    StringBuilder sb = new StringBuilder(name);
+                    bool needComma = false;
+                    sb.Append( "(");
+                    foreach (var typeArg in type.TypeArguments)
+                    {
+                        if (needComma)
+                        {
+                            sb.Append(",");
+                        }
+
+                        needComma = true;
+                        
+                        sb.Append(BridgeTypes.ToJsName(typeArg, emitter));
+                    }
+                    sb.Append(")");
+                    name = sb.ToString();
+                }
             }
 
             return name;
@@ -355,7 +473,10 @@ namespace Bridge.Contract
             }
 
             var resolveResult = emitter.Resolver.ResolveNode(astType, emitter);
-            return BridgeTypes.ToJsName(resolveResult.Type, emitter);
+
+            var symbol = resolveResult.Type as ISymbol;
+            
+            return BridgeTypes.ToJsName(resolveResult.Type, emitter, astType.Parent is TypeOfExpression && symbol != null && symbol.SymbolKind == SymbolKind.TypeDefinition);
         }
 
         public static string AddModule(string name, BridgeType type, out bool isCustomName)

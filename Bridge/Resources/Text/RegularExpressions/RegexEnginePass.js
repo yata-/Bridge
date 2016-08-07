@@ -12,6 +12,8 @@ Bridge.define("System.Text.RegularExpressions.RegexEnginePass", {
     settings: null,
 
     constructor: function (index, tokens, settings) {
+        this.$initialize();
+
         this.index = index;
         this.tokens = tokens;
         this.settings = settings;

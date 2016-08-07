@@ -3,6 +3,7 @@
 Bridge.define('System.Collections.Generic.KeyValuePair$2', function (TKey, TValue) {
     return {
         constructor: function (key, value) {
+			this.$initialize();
             this.key = key;
             this.value = value;
         },
@@ -31,7 +32,23 @@ Bridge.define('System.Collections.Generic.Dictionary$2', function (TKey, TValue)
     return {
         inherits: [System.Collections.Generic.IDictionary$2(TKey, TValue)],
 
+        config: {
+            alias: [
+                "getCount", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$getCount",
+                "getKeys", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$getKeys",
+                "getValues", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$getValues",
+                "get", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$getItem",
+                "set", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$setItem",
+                "add", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$add",
+                "containsKey", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$containsKey",
+                "getEnumerator", "System$Collections$Generic$IEnumerable$1$System$Collections$Generic$KeyValuePair$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$getEnumerator",
+                "remove", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$remove",
+                "tryGetValue", "System$Collections$Generic$IDictionary$2$" + Bridge.getTypeAlias(TKey) + "$" + Bridge.getTypeAlias(TValue) + "$tryGetValue"
+            ]
+        },
+
         constructor: function (obj, comparer) {
+			this.$initialize();
             this.comparer = comparer || System.Collections.Generic.EqualityComparer$1.$default;
             this.clear();
 
@@ -55,11 +72,11 @@ Bridge.define('System.Collections.Generic.Dictionary$2', function (TKey, TValue)
         },
 
         getKeys: function () {
-            return new System.Collections.Generic.DictionaryCollection$1(TKey)(this, true);
+            return new (System.Collections.Generic.DictionaryCollection$1(TKey))(this, true);
         },
 
         getValues: function () {
-            return new System.Collections.Generic.DictionaryCollection$1(TValue)(this, false);
+            return new (System.Collections.Generic.DictionaryCollection$1(TValue))(this, false);
         },
 
         clear: function () {
@@ -133,7 +150,7 @@ Bridge.define('System.Collections.Generic.Dictionary$2', function (TKey, TValue)
             }
 
             hash = this.comparer.getHashCode2(key);
-            entry = new System.Collections.Generic.KeyValuePair$2(TKey, TValue)(key, value);
+            entry = new (System.Collections.Generic.KeyValuePair$2(TKey, TValue))(key, value);
 
             if (this.entries[hash]) {
                 this.entries[hash].push(entry);
@@ -233,7 +250,19 @@ Bridge.define('System.Collections.Generic.DictionaryCollection$1', function (T) 
     return {
         inherits: [System.Collections.Generic.ICollection$1(T)],
 
+        config: {
+            alias: [
+              "getEnumerator", "System$Collections$Generic$IEnumerable$1$" + Bridge.getTypeAlias(T) + "$getEnumerator",
+              "getCount", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$getCount",
+              "add", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$add",
+              "clear", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$clear",
+              "contains", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$contains",
+              "remove", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$remove"
+            ]
+        },
+
         constructor: function (dictionary, keys) {
+			this.$initialize();
             this.dictionary = dictionary;
             this.keys = keys;
         },

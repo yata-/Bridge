@@ -1,9 +1,9 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Bridge.Test")]
-[assembly: AssemblyProduct("Bridge.Test")]
-[assembly: AssemblyDescription("Bridge Test library.")]
+[assembly: AssemblyTitle("Bridge client tests")]
+[assembly: AssemblyProduct("Bridge client tests")]
+[assembly: AssemblyDescription("Bridge Test library - general C# language tests")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

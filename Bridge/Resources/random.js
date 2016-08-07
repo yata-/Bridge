@@ -15,10 +15,12 @@
             }
         },
         constructor: function () {
-            System.Random.prototype.constructor$1.call(this, System.Int64.clip32(System.Int64((new Date()).getTime()).mul(10000)));
+            this.$initialize();
+            System.Random.$constructor1.call(this, System.Int64.clip32(System.Int64((new Date()).getTime()).mul(10000)));
 
         },
-        constructor$1: function (Seed) {
+        $constructor1: function (Seed) {
+            this.$initialize();
             var ii;
             var mj, mk;
 
@@ -58,7 +60,7 @@
             var retVal;
             var locINext = this.inext;
             var locINextp = this.inextp;
-    
+
             if (((locINext = (locINext + 1) | 0)) >= 56) {
                 locINext = 1;
             }
@@ -95,8 +97,7 @@
             var range = System.Int64(maxValue).sub(System.Int64(minValue));
             if (range.lte(System.Int64(2147483647))) {
                 return (((Bridge.Int.clip32(this.sample() * System.Int64.toNumber(range)) + minValue) | 0));
-            }
-            else  {
+            } else {
                 return System.Int64.clip32(Bridge.Int.clip64(this.getSampleForLargeRange() * System.Int64.toNumber(range)).add(System.Int64(minValue)));
             }
         },

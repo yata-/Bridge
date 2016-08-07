@@ -1,4 +1,4 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("TypeScriptTest", function ($asm, globals) {
     "use strict";
 
     Bridge.define('BasicTypes.BasicTypes', {
@@ -29,12 +29,12 @@
     });
     
     Bridge.define('BasicTypes.Color', {
+        $kind: "enum",
         statics: {
             Red: 0,
             Green: 1,
             Blue: 2
-        },
-        $enum: true
+        }
     });
     
     Bridge.define('BasicTypes.Keywords', {
@@ -104,4 +104,4 @@
     
     
     Bridge.init();
-})(this);
+});

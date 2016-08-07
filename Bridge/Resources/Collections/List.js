@@ -3,7 +3,25 @@
 Bridge.define('System.Collections.Generic.List$1', function (T) {
     return {
         inherits: [System.Collections.Generic.ICollection$1(T), System.Collections.ICollection, System.Collections.Generic.IList$1(T)],
+
+        config: {
+            alias: [
+            "getItem", "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$getItem",
+            "setItem", "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$setItem",
+            "getCount", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$getCount",
+            "add", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$add",
+            "clear", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$clear",
+            "contains", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$contains",
+            "getEnumerator", "System$Collections$Generic$IEnumerable$1$" + Bridge.getTypeAlias(T) + "$getEnumerator",
+            "indexOf", "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$indexOf",
+            "insert", "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$insert",
+            "remove", "System$Collections$Generic$ICollection$1$" + Bridge.getTypeAlias(T) + "$remove",
+            "removeAt", "System$Collections$Generic$IList$1$" + Bridge.getTypeAlias(T) + "$removeAt"
+            ]
+        },
+
         constructor: function (obj) {
+			this.$initialize();
             if (Object.prototype.toString.call(obj) === '[object Array]') {
                 this.items = System.Array.clone(obj);
             } else if (Bridge.is(obj, System.Collections.IEnumerable)) {
@@ -106,7 +124,7 @@ Bridge.define('System.Collections.Generic.List$1', function (T) {
         },
 
         getEnumerator: function () {
-            return new Bridge.ArrayEnumerator(this.items);
+            return new Bridge.ArrayEnumerator(this.items, T);
         },
 
         getRange: function (index, count) {
@@ -132,7 +150,7 @@ Bridge.define('System.Collections.Generic.List$1', function (T) {
                 result.push(this.items[i]);
             }
 
-            return new System.Collections.Generic.List$1(T)(result);
+            return new (System.Collections.Generic.List$1(T))(result);
         },
 
         insert: function (index, item) {
@@ -207,7 +225,7 @@ Bridge.define('System.Collections.Generic.List$1', function (T) {
         slice: function (start, end) {
             this.checkReadOnly();
 
-            return new System.Collections.Generic.List$1(this.$$name.substr(this.$$name.lastIndexOf('$')+1))(this.items.slice(start, end));
+            return new (System.Collections.Generic.List$1(this.$$name.substr(this.$$name.lastIndexOf('$')+1)))(this.items.slice(start, end));
         },
 
         sort: function (comparison) {
@@ -268,7 +286,7 @@ Bridge.define('System.Collections.Generic.List$1', function (T) {
                 throw new System.ArgumentNullException("converter is null.");
             }
 
-            var list = new System.Collections.Generic.List$1(TOutput)(this.items.length);
+            var list = new (System.Collections.Generic.List$1(TOutput))(this.items.length);
             for (var i = 0; i < this.items.length; i++) {
                 list.items[i] = converter(this.items[i]);
             }
@@ -282,11 +300,12 @@ Bridge.define('System.Collections.ObjectModel.ReadOnlyCollection$1', function (T
     return {
         inherits: [System.Collections.Generic.List$1(T)],
         constructor: function (list) {
+			this.$initialize();
             if (list == null) {
                 throw new System.ArgumentNullException("list");
             }
 
-            System.Collections.Generic.List$1(T).prototype.$constructor.call(this, list);
+            System.Collections.Generic.List$1(T).$constructor.call(this, list);
             this.readOnly = true;
         }
     };

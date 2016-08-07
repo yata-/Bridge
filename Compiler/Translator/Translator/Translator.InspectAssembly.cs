@@ -248,6 +248,8 @@ namespace Bridge.Translator
         {
             this.Log.Info("Building syntax tree...");
 
+            var rewriter = new SharpSixRewriter(this);
+
             for (int i = 0; i < this.SourceFiles.Count; i++)
             {
                 var fileName = this.SourceFiles[i];
@@ -266,7 +268,8 @@ namespace Bridge.Translator
                         }
                     }
 
-                    var syntaxTree = parser.Parse(reader, fileName);
+                    var syntaxTree = parser.Parse(rewriter.Rewrite(i), fileName);
+                    //var syntaxTree = parser.Parse(reader, fileName);
                     this.Log.Trace("\tParsing syntax tree done");
 
                     if (parser.HasErrors)

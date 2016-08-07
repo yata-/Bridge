@@ -8,6 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.MonoCSharp;
+using AssemblyDefinition = Mono.Cecil.AssemblyDefinition;
 
 namespace Bridge.Translator
 {
@@ -343,7 +345,14 @@ namespace Bridge.Translator
             {
                 var name = file.Key;
                 name = this.NormalizePath(name);
-                var newResource = new EmbeddedResource(name, ManifestResourceAttributes.Public, File.ReadAllBytes(file.Value));
+                var newResource = new EmbeddedResource(name, ManifestResourceAttributes.Private, File.ReadAllBytes(file.Value));
+
+                var existingResource = resources.FirstOrDefault(r => r.Name == name);
+                if (existingResource != null)
+                {
+                    resources.Remove(existingResource);
+                }
+
                 resources.Add(newResource);
                 resourcesList.Add(file.Key + ":" + name);
             }
@@ -355,7 +364,14 @@ namespace Bridge.Translator
             }
             sb.Remove(sb.Length - 1, 1);
 
-            var listResources = new EmbeddedResource(Translator.BridgeResourcesList, ManifestResourceAttributes.Public, OutputEncoding.GetBytes(sb.ToString()));
+            var listResources = new EmbeddedResource(Translator.BridgeResourcesList, ManifestResourceAttributes.Private, Translator.OutputEncoding.GetBytes(sb.ToString()));
+
+            var existingList = resources.FirstOrDefault(r => r.Name == Translator.BridgeResourcesList);
+            if (existingList != null)
+            {
+                resources.Remove(existingList);
+            }
+
             resources.Add(listResources);
 
             assemblyDef.Write(this.AssemblyLocation);

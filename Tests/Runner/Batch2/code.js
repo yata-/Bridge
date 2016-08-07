@@ -1,4 +1,4 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("Bridge.ClientTest.Batch2", function ($asm, globals) {
     "use strict";
 
     Bridge.define('Bridge.ClientTest.Batch2.BridgeIssues.Bridge1385', {
@@ -48,9 +48,9 @@
     Bridge.define('Bridge.ClientTest.Batch2.BridgeIssues.N1204', {
         statics: {
             testStrictNullChecksOptionForNulls: function () {
-                var temp = { };
+                var temp = {  };
                 var temp1 = temp;
-                var temp2 = { };
+                var temp2 = {  };
                 var l = System.Int64(5);
                 var ol = System.Int64(5);
                 var oi = 5;
@@ -200,13 +200,13 @@
         },
         containsWorks: function () {
             var arr = ["x", "y"];
-            Bridge.Test.Assert.true(System.Linq.Enumerable.from(arr).contains("x"));
-            Bridge.Test.Assert.false(System.Linq.Enumerable.from(arr).contains("z"));
+            Bridge.Test.Assert.true(System.Array.contains(arr, "x", String));
+            Bridge.Test.Assert.false(System.Array.contains(arr, "z", String));
         },
         containsUsesEqualsMethod: function () {
             var arr = [new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(1), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(3)];
-            Bridge.Test.Assert.true(System.Linq.Enumerable.from(arr).contains(new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2)));
-            Bridge.Test.Assert.false(System.Linq.Enumerable.from(arr).contains(new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(4)));
+            Bridge.Test.Assert.true(System.Array.contains(arr, new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2), Bridge.ClientTest.Batch2.BridgeIssues.N772.C));
+            Bridge.Test.Assert.false(System.Array.contains(arr, new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(4), Bridge.ClientTest.Batch2.BridgeIssues.N772.C));
         },
         allWithArrayItemFilterCallbackWorks: function () {
             Bridge.Test.Assert.true(System.Linq.Enumerable.from([1, 2, 3]).all($_.Bridge.ClientTest.Batch2.BridgeIssues.N772.f1));
@@ -218,7 +218,7 @@
         },
         foreachWithArrayItemCallbackWorks: function () {
             var result = "";
-            Bridge.Linq.Enumerable.from(["a", "b", "c"]).forEach(function (s) {
+            ["a", "b", "c"].forEach(function (s) {
                 result += s;
             });
             Bridge.Test.Assert.areEqual("abc", result);
@@ -338,47 +338,47 @@
         },
         iCollectionCountWorks: function () {
             var l = ["x", "y", "z"];
-            Bridge.Test.Assert.areEqual(3, System.Array.getCount(l));
+            Bridge.Test.Assert.areEqual(3, System.Array.getCount(l, String));
         },
         iCollectionAddWorks: function () {
             var l = ["x", "y", "z"];
-            System.Array.add(l, "a");
+            System.Array.add(l, "a", String);
             Bridge.Test.Assert.areDeepEqual(["x", "y", "z", "a"], l);
         },
         iCollectionClearWorks: function () {
             var l = ["x", "y", "z"];
             System.Array.clear(l, String);
             Bridge.Test.Assert.areDeepEqual(System.Array.init(3, null), l);
-            Bridge.Test.Assert.areDeepEqual(null, System.Array.getItem(l, 0));
-            Bridge.Test.Assert.areDeepEqual(null, System.Array.getItem(l, 1));
-            Bridge.Test.Assert.areDeepEqual(null, System.Array.getItem(l, 2));
+            Bridge.Test.Assert.areDeepEqual(null, System.Array.getItem(l, 0, String));
+            Bridge.Test.Assert.areDeepEqual(null, System.Array.getItem(l, 1, String));
+            Bridge.Test.Assert.areDeepEqual(null, System.Array.getItem(l, 2, String));
         },
         iCollectionContainsWorks: function () {
             var l = ["x", "y", "z"];
-            Bridge.Test.Assert.true(System.Array.contains(l, "y"));
-            Bridge.Test.Assert.false(System.Array.contains(l, "a"));
+            Bridge.Test.Assert.true(System.Array.contains(l, "y", String));
+            Bridge.Test.Assert.false(System.Array.contains(l, "a", String));
         },
         iCollectionContainsUsesEqualsMethod: function () {
             var l = [new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(1), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(3)];
-            Bridge.Test.Assert.true(System.Array.contains(l, new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2)));
-            Bridge.Test.Assert.false(System.Array.contains(l, new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(4)));
+            Bridge.Test.Assert.true(System.Array.contains(l, new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2), Bridge.ClientTest.Batch2.BridgeIssues.N772.C));
+            Bridge.Test.Assert.false(System.Array.contains(l, new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(4), Bridge.ClientTest.Batch2.BridgeIssues.N772.C));
         },
         iCollectionRemoveWorks: function () {
             var l = ["x", "y", "z"];
-            Bridge.Test.Assert.true(System.Array.remove(l, "y"));
-            Bridge.Test.Assert.false(System.Array.remove(l, "a"));
+            Bridge.Test.Assert.true(System.Array.remove(l, "y", String));
+            Bridge.Test.Assert.false(System.Array.remove(l, "a", String));
             Bridge.Test.Assert.areDeepEqual(["x", "z"], l);
         },
         iListIndexingWorks: function () {
             var l = ["x", "y", "z"];
-            Bridge.Test.Assert.areEqual("y", System.Array.getItem(l, 1));
-            System.Array.setItem(l, 1, "a");
+            Bridge.Test.Assert.areEqual("y", System.Array.getItem(l, 1, String));
+            System.Array.setItem(l, 1, "a", String);
             Bridge.Test.Assert.areDeepEqual(["x", "a", "z"], l);
         },
         iListIndexOfWorks: function () {
             var l = ["x", "y", "z"];
-            Bridge.Test.Assert.areEqual(1, System.Array.indexOf(l, "y"));
-            Bridge.Test.Assert.areEqual(-1, System.Array.indexOf(l, "a"));
+            Bridge.Test.Assert.areEqual(1, System.Array.indexOf(l, "y", 0, null, String));
+            Bridge.Test.Assert.areEqual(-1, System.Array.indexOf(l, "a", 0, null, String));
         },
         iListIndexOfUsesEqualsMethod: function () {
             var arr = [new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(1), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(2), new Bridge.ClientTest.Batch2.BridgeIssues.N772.C(3)];
@@ -387,17 +387,17 @@
         },
         iListInsertWorks: function () {
             var l = ["x", "y", "z"];
-            System.Array.insert(l, 1, "a");
+            System.Array.insert(l, 1, "a", String);
             Bridge.Test.Assert.areDeepEqual(["x", "a", "y", "z"], l);
         },
         iListRemoveAtWorks: function () {
             var l = ["x", "y", "z"];
-            System.Array.removeAt(l, 1);
+            System.Array.removeAt(l, 1, String);
             Bridge.Test.Assert.areDeepEqual(["x", "z"], l);
         },
         issueSpecific: function () {
             var l = ["x", "y", "z"];
-            System.Array.removeAt(l, 1);
+            System.Array.removeAt(l, 1, String);
             Bridge.Test.Assert.areDeepEqual(["x", "z"], l);
         }
     });
@@ -424,6 +424,7 @@
     Bridge.define('Bridge.ClientTest.Batch2.BridgeIssues.N772.C', {
         i: 0,
         constructor: function (i) {
+            this.$initialize();
             this.i = i;
         },
         equals: function (o) {
@@ -436,6 +437,11 @@
     
     Bridge.define('Bridge.ClientTest.Batch2.BridgeIssues.N772.TestReverseComparer', {
         inherits: [System.Collections.Generic.IComparer$1(System.Int32)],
+        config: {
+            alias: [
+            "compare", "System$Collections$Generic$IComparer$1$System$Int32$compare"
+            ]
+        },
         compare: function (x, y) {
             return x === y ? 0 : (x > y ? -1 : 1);
         }
@@ -1522,10 +1528,10 @@
     Bridge.define('Bridge.ClientTest.Batch2.Constants', {
         statics: {
             BATCH_NAME: "Batch2",
-            MODULE_ISSUES: "Issues",
+            MODULE_ISSUES: "Issues2",
             MODULE_CHECKED_UNCKECKED: "Checked/Unckecked"
         }
     });
     
     Bridge.init();
-})(this);
+});

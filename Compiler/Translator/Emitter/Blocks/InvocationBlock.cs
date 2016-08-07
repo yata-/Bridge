@@ -117,7 +117,28 @@ namespace Bridge.Translator
 
             var argsExpressions = argsInfo.ArgumentsExpressions;
             var paramsArg = argsInfo.ParamsExpression;
-            var argsCount = argsExpressions.Count();
+
+            var targetResolve = this.Emitter.Resolver.ResolveNode(invocationExpression, this.Emitter);
+            var csharpInvocation = targetResolve as CSharpInvocationResolveResult;
+            MemberReferenceExpression targetMember = invocationExpression.Target as MemberReferenceExpression;
+
+            var interceptor = this.Emitter.Plugins.OnInvocation(this, this.InvocationExpression, targetResolve as InvocationResolveResult);
+
+            if (interceptor.Cancel)
+            {
+                this.Emitter.SkipSemiColon = true;
+                this.Emitter.ReplaceAwaiterByVar = oldValue;
+                this.Emitter.AsyncExpressionHandling = oldAsyncExpressionHandling;
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(interceptor.Replacement))
+            {
+                this.Write(interceptor.Replacement);
+                this.Emitter.ReplaceAwaiterByVar = oldValue;
+                this.Emitter.AsyncExpressionHandling = oldAsyncExpressionHandling;
+                return;
+            }
 
             if (inlineInfo != null)
             {
@@ -194,17 +215,6 @@ namespace Bridge.Translator
                 }
             }
 
-            var targetResolve = this.Emitter.Resolver.ResolveNode(invocationExpression, this.Emitter);
-
-            var csharpInvocation = targetResolve as CSharpInvocationResolveResult;
-            MemberReferenceExpression targetMember = invocationExpression.Target as MemberReferenceExpression;
-
-            ResolveResult targetMemberResolveResult = null;
-            if (targetMember != null)
-            {
-                targetMemberResolveResult = this.Emitter.Resolver.ResolveNode(targetMember.Target, this.Emitter);
-            }
-
             if (targetMember != null)
             {
                 var member = this.Emitter.Resolver.ResolveNode(targetMember.Target, this.Emitter);
@@ -217,7 +227,7 @@ namespace Bridge.Translator
                     bool isExtensionMethodInvocation = false;
                     if (csharpInvocation != null)
                     {
-                        if (member != null && member.Type.Kind == TypeKind.Delegate && (csharpInvocation.Member.Name == "Invoke" || csharpInvocation.Member.Name == "BeginInvoke" || csharpInvocation.Member.Name == "EndInvoke") && !csharpInvocation.IsExtensionMethodInvocation)
+                        if (member != null && member.Type.Kind == TypeKind.Delegate && (/*csharpInvocation.Member.Name == "Invoke" || */csharpInvocation.Member.Name == "BeginInvoke" || csharpInvocation.Member.Name == "EndInvoke") && !csharpInvocation.IsExtensionMethodInvocation)
                         {
                             throw new EmitterException(invocationExpression, "Delegate's 'Invoke' methods are not supported. Please use direct delegate invoke.");
                         }
@@ -299,7 +309,7 @@ namespace Bridge.Translator
                                     var isIgnoreClass = resolvedMethod.DeclaringTypeDefinition != null && this.Emitter.Validator.IsIgnoreType(resolvedMethod.DeclaringTypeDefinition);
 
                                     this.Write(name);
-                                    
+                                    int openPos = this.Emitter.Output.Length;
                                     this.WriteOpenParentheses();
 
                                     this.Emitter.Comma = false;
@@ -318,7 +328,7 @@ namespace Bridge.Translator
                                         this.WriteComma();
                                     }
 
-                                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, invocationExpression).Emit();
+                                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, invocationExpression, openPos).Emit();
 
                                     this.WriteCloseParentheses();
                                 }
@@ -349,8 +359,9 @@ namespace Bridge.Translator
                                     this.WriteDot();
                                     string name = this.Emitter.GetEntityName(resolvedMethod);
                                     this.Write(name);
+                                    int openPos = this.Emitter.Output.Length;
                                     this.WriteOpenParentheses();
-                                    new ExpressionListBlock(this.Emitter, argsExpressions.Skip(1), paramsArg, invocationExpression).Emit();
+                                    new ExpressionListBlock(this.Emitter, argsExpressions.Skip(1), paramsArg, invocationExpression, openPos).Emit();
                                     this.WriteCloseParentheses();
                                 }
 
@@ -554,7 +565,7 @@ namespace Bridge.Translator
                     {
                         this.Write("." + JS.Funcs.APPLY);
                     }
-
+                    int openPos = this.Emitter.Output.Length;
                     this.WriteOpenParentheses();
 
                     bool isIgnoreGeneric = false;
@@ -587,15 +598,15 @@ namespace Bridge.Translator
                         if (argsExpressions.Length > 1)
                         {
                             this.WriteOpenBracket();
-                            new ExpressionListBlock(this.Emitter, argsExpressions.Take(argsExpressions.Length - 1).ToArray(), paramsArg, invocationExpression).Emit();  
+                            new ExpressionListBlock(this.Emitter, argsExpressions.Take(argsExpressions.Length - 1).ToArray(), paramsArg, invocationExpression, openPos).Emit();  
                             this.WriteCloseBracket();
                             this.Write(".concat(");
-                            new ExpressionListBlock(this.Emitter, new Expression[]{argsExpressions[argsExpressions.Length - 1]}, paramsArg, invocationExpression).Emit();  
+                            new ExpressionListBlock(this.Emitter, new Expression[]{argsExpressions[argsExpressions.Length - 1]}, paramsArg, invocationExpression, openPos).Emit();  
                             this.Write(")");
                         }
                         else
                         {
-                            new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, invocationExpression).Emit();
+                            new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, invocationExpression, -1).Emit();
                         }
                     }
                     else
@@ -611,7 +622,7 @@ namespace Bridge.Translator
                             this.EnsureComma(false);    
                         }
 
-                        new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, invocationExpression).Emit();    
+                        new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, invocationExpression, openPos).Emit();    
                     }
                     
                     this.WriteCloseParentheses();

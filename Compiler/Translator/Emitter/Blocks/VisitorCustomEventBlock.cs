@@ -37,9 +37,8 @@ namespace Bridge.Translator
 
                 this.AddLocals(new ParameterDeclaration[] { new ParameterDeclaration { Name = "value" } }, accessor.Body);
                 XmlToJsDoc.EmitComment(this, this.CustomEventDeclaration);
-                var overloads = OverloadsCollection.Create(this.Emitter, customEventDeclaration, remover);
-
-                this.Write(Helpers.GetAddOrRemove(!remover, overloads.GetOverloadName()));
+                
+                this.Write(Helpers.GetEventRef(customEventDeclaration, this.Emitter, remover, false, false, true));
                 this.WriteColon();
                 this.WriteFunction();
                 this.WriteOpenParentheses();
@@ -57,11 +56,7 @@ namespace Bridge.Translator
                 {
                     this.BeginBlock();
 
-                    foreach (var line in script)
-                    {
-                        this.Write(line);
-                        this.WriteNewLine();
-                    }
+                    this.WriteLines(script);
 
                     this.EndBlock();
                 }

@@ -160,10 +160,18 @@
                 state = State.After;
             }
         };
+
+        this.getCurrent$1 = this.getCurrent;
+        this.System$Collections$IEnumerator$getCurrent = this.getCurrent;
+        this.System$Collections$IEnumerator$moveNext = this.moveNext;
+        this.System$Collections$IEnumerator$reset = this.reset;
     };
     
     System.IDisposable.$$inheritors = System.IDisposable.$$inheritors || [];
     System.IDisposable.$$inheritors.push(IEnumerator);
+
+    System.Collections.IEnumerator.$$inheritors = System.Collections.IEnumerator.$$inheritors || [];
+    System.Collections.IEnumerator.$$inheritors.push(IEnumerator);
 
     // for tryGetNext
     var Yielder = function () {
@@ -181,6 +189,7 @@
     // Enumerable constuctor
     var Enumerable = function (getEnumerator) {
         this.getEnumerator = getEnumerator;
+
     };
     System.Collections.IEnumerable.$$inheritors = System.Collections.IEnumerable.$$inheritors || [];
     System.Collections.IEnumerable.$$inheritors.push(Enumerable);
@@ -1428,7 +1437,7 @@
             return new IEnumerator(
                 function () {
                     enumerator = source.getEnumerator();
-                    keys = new System.Collections.Generic.Dictionary$2(Object, Object)(null, comparer);
+                    keys = new (System.Collections.Generic.Dictionary$2(Object, Object))(null, comparer);
                     Enumerable.from(second).forEach(function (key) { keys.add(key); });
                 },
                 function () {
@@ -1459,9 +1468,9 @@
                 function () {
                     enumerator = source.getEnumerator();
 
-                    keys = new System.Collections.Generic.Dictionary$2(Object, Object)(null, comparer);
+                    keys = new (System.Collections.Generic.Dictionary$2(Object, Object))(null, comparer);
                     Enumerable.from(second).forEach(function (key) { keys.add(key); });
-                    outs = new System.Collections.Generic.Dictionary$2(Object, Object)(null, comparer);
+                    outs = new (System.Collections.Generic.Dictionary$2(Object, Object))(null, comparer);
                 },
                 function () {
                     while (enumerator.moveNext()) {
@@ -1516,7 +1525,7 @@
             return new IEnumerator(
                 function () {
                     firstEnumerator = source.getEnumerator();
-                    keys = new System.Collections.Generic.Dictionary$2(Object, Object)(null, comparer);
+                    keys = new (System.Collections.Generic.Dictionary$2(Object, Object))(null, comparer);
                 },
                 function () {
                     var current;
@@ -2232,7 +2241,7 @@
     Enumerable.prototype.toList = function (T) {
         var array = [];
         this.forEach(function (x) { array.push(x); });
-        return new System.Collections.Generic.List$1(T || Object)(array);
+        return new (System.Collections.Generic.List$1(T || Object))(array);
     };
 
     // Overload:function (keySelector)
@@ -2242,7 +2251,7 @@
         keySelector = Utils.createLambda(keySelector);
         elementSelector = Utils.createLambda(elementSelector);
 
-        var dict = new System.Collections.Generic.Dictionary$2(Object, Object)(null, comparer);
+        var dict = new (System.Collections.Generic.Dictionary$2(Object, Object))(null, comparer);
         var order = [];
         this.forEach(function (x) {
             var key = keySelector(x);
@@ -2277,7 +2286,7 @@
         keySelector = Utils.createLambda(keySelector);
         elementSelector = Utils.createLambda(elementSelector);
 
-        var dict = new System.Collections.Generic.Dictionary$2(keyType, valueType)(null, comparer);
+        var dict = new (System.Collections.Generic.Dictionary$2(keyType, valueType))(null, comparer);
         this.forEach(function (x) {
             dict.add(keySelector(x), elementSelector(x));
         });

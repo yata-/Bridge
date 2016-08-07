@@ -39,5 +39,15 @@
             public const string System_Single = "System.Single";
             public const string System_Double = "System.Double";
         }
+
+        public class Wrappers
+        {
+            public const string CONSTRUCTORWRAPPER = "$ctorWrapper";
+
+            public class Params
+            {
+                public const string BODY = "{body}";
+            }
+        }
     }
 }

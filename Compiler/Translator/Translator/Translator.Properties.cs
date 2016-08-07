@@ -50,6 +50,12 @@ namespace Bridge.Translator
             protected set;
         }
 
+        public string AssemblyName
+        {
+            get;
+            protected set;
+        }
+
         public string BuildArguments
         {
             get;
@@ -197,7 +203,8 @@ namespace Bridge.Translator
 
         public OverflowMode? OverflowMode
         {
-            get; set;
+            get;
+            set;
         }
     }
 }

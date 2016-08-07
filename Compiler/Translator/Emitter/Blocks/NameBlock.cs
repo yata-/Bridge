@@ -8,20 +8,23 @@ namespace Bridge.Translator
     public class NameBlock : AbstractEmitterBlock
     {
         public NameBlock(IEmitter emitter, NamedExpression namedExpression)
-            : this(emitter, namedExpression.Name, namedExpression, namedExpression.Expression)
+            : this(emitter, namedExpression.Name, namedExpression, namedExpression.Expression, null)
         {
         }
 
-        public NameBlock(IEmitter emitter, string name, Expression namedExpression, Expression expression)
+        public NameBlock(IEmitter emitter, string name, Expression namedExpression, Expression expression, bool? isSet)
             : base(emitter, null)
         {
             this.Emitter = emitter;
             this.NamedExpression = namedExpression;
             this.Expression = expression;
             this.Name = name;
+            this.IsSet = isSet;
 
             this.Emitter.Translator.EmitNode = namedExpression ?? expression;
         }
+
+        public bool? IsSet { get; set; }
 
         public string Name
         {
@@ -55,21 +58,24 @@ namespace Bridge.Translator
                 name = Object.Net.Utilities.StringUtils.ToLowerCamelCase(name);
             }
 
-            if (resolveResult != null && resolveResult is MemberResolveResult)
+            if (resolveResult is MemberResolveResult)
             {
                 var member = ((MemberResolveResult)resolveResult).Member;
-                var preserveCase = !this.Emitter.IsNativeMember(member.FullName) ? this.Emitter.AssemblyInfo.PreserveMemberCase : false;
+                var preserveCase = !this.Emitter.IsNativeMember(member.FullName) && this.Emitter.AssemblyInfo.PreserveMemberCase;
                 name = this.Emitter.GetEntityName(member, preserveCase);
 
-                var isProperty = member.SymbolKind == SymbolKind.Property;
-
-                if (!isProperty)
+                bool isSet = this.IsSet ?? !(expression is ArrayInitializerExpression);
+                if (member is IProperty)
                 {
-                    this.Write(name);
+                    this.Write(Helpers.GetPropertyRef(member, this.Emitter, isSet));
+                }
+                else if (member is IEvent)
+                {
+                    this.Write(Helpers.GetEventRef(member, this.Emitter, !isSet));
                 }
                 else
                 {
-                    this.Write(isProperty ? Helpers.GetPropertyRef(member, this.Emitter, !(expression is ArrayInitializerExpression)) : name);
+                    this.Write(name);
                 }
             }
             else

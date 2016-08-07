@@ -5,11 +5,19 @@ Bridge.define("System.Text.RegularExpressions.GroupCollection", {
         return [System.Collections.ICollection];
     },
 
+    config: {
+        alias: [
+        "getEnumerator", "System$Collections$IEnumerable$getEnumerator",
+        "getCount", "System$Collections$ICollection$getCount"
+        ]
+    },
+
     _match: null,
     _captureMap: null,
     _groups: null,
 
     constructor: function (match, caps) {
+		this.$initialize();
         this._match = match;
         this._captureMap = caps;
     },
@@ -134,10 +142,19 @@ Bridge.define("System.Text.RegularExpressions.GroupEnumerator", {
         return [System.Collections.IEnumerator];
     },
 
+    config: {
+        alias: [
+            "getCurrent", "System$Collections$IEnumerator$getCurrent",
+            "moveNext", "System$Collections$IEnumerator$moveNext",
+            "reset", "System$Collections$IEnumerator$reset"
+        ]
+    },
+
     _groupColl: null,
     _curindex: 0,
 
     constructor: function (groupColl) {
+		this.$initialize();
         this._curindex = -1;
         this._groupColl = groupColl;
     },

@@ -7,6 +7,7 @@ namespace Bridge
     /// </summary>
     [External]
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct | AttributeTargets.Interface)]
+    [NonScriptable]
     public sealed class FileNameAttribute : Attribute
     {
         public FileNameAttribute(string filename)
@@ -20,6 +21,7 @@ namespace Bridge
     /// </summary>
     [External]
     [AttributeUsage(AttributeTargets.Assembly)]
+    [NonScriptable]
     public sealed class OutputAttribute : Attribute
     {
         public OutputAttribute(string path)
@@ -33,6 +35,7 @@ namespace Bridge
     /// </summary>
     [External]
     [AttributeUsage(AttributeTargets.Assembly)]
+    [NonScriptable]
     public sealed class OutputByAttribute : Attribute
     {
         public OutputByAttribute(OutputBy outputBy)
@@ -48,6 +51,7 @@ namespace Bridge
     /// The options to manage JavaScript output folders and files.
     /// </summary>
     [External]
+    [NonScriptable] 
     public enum OutputBy
     {
         /// <summary>

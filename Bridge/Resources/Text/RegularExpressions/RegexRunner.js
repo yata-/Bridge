@@ -16,6 +16,7 @@ Bridge.define("System.Text.RegularExpressions.RegexRunner", {
     _prevlen: 0,
 
     constructor: function (regex) {
+		this.$initialize();
         if (regex == null) {
             throw new System.ArgumentNullException("regex");
         }

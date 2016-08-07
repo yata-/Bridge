@@ -1,10 +1,15 @@
 using Bridge.Contract.Constants;
-
+using ICSharpCode.NRefactory.MonoCSharp;
 using Object.Net.Utilities;
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+using Mono.Cecil;
+using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Bridge.Translator
 {
@@ -39,6 +44,7 @@ namespace Bridge.Translator
             this.Log.Trace("Combining outputs...");
 
             Dictionary<string, string> result = new Dictionary<string, string>();
+            bool metaDataWritten = false;
             foreach (var outputPair in this.Outputs)
             {
                 var fileName = outputPair.Key;
@@ -66,7 +72,35 @@ namespace Bridge.Translator
                 {
                     if (isJs)
                     {
-                        tmp.Append("(function (globals) {");
+                        tmp.Append("Bridge.initAssembly(");
+                        if (this.Translator.AssemblyName != null)
+                        {
+                            tmp.Append("\"");
+                            tmp.Append(this.Translator.AssemblyName);
+                            tmp.Append("\"");
+                        }
+                        else
+                        {
+                            tmp.Append("null");
+                        }
+
+                        tmp.Append(", ");
+
+                        if (!metaDataWritten && (this.MetaDataOutputName == null || fileName == this.MetaDataOutputName))
+                        {
+                            var res = this.GetIncludedResources();
+
+                            if (res != null)
+                            {
+                                tmp.Append(res);
+                                tmp.Append(", ");
+                            }
+
+                            metaDataWritten = true;
+                        }
+                        
+                        
+                        tmp.Append("function ($asm, globals) {");
                         tmp.Append("\n");
                         tmp.Append("    ");
                         tmp.Append(this.GetOutputHeader());
@@ -86,7 +120,7 @@ namespace Bridge.Translator
                     if (isJs)
                     {
                         tmp.Append("\n");
-                        tmp.Append("})(this);");
+                        tmp.Append("});");
                         tmp.Append("\n");
                     }
                 }
@@ -103,6 +137,29 @@ namespace Bridge.Translator
             this.Log.Trace("Combining outputs done");
 
             return result;
+        }
+
+        private string GetIncludedResources()
+        {
+            var resources = this.Translator.AssemblyDefinition.MainModule.Resources.Where(r => r.ResourceType == ResourceType.Embedded && r.IsPublic && !r.Name.EndsWith(".dll")).Cast<EmbeddedResource>().ToArray();
+            JObject obj = new JObject();
+
+            foreach (var embeddedResource in resources)
+            {
+                obj.Add(embeddedResource.Name, Convert.ToBase64String(Emitter.ReadResource(embeddedResource)));
+            }
+
+            return obj.Count > 0 ? obj.ToString(Formatting.None) : null;
+        }
+
+        private static byte[] ReadResource(EmbeddedResource r)
+        {
+            using (var ms = new MemoryStream())
+            using (var s = r.GetResourceStream())
+            {
+                s.CopyTo(ms);
+                return ms.ToArray();
+            }
         }
 
         protected string GetOutputHeader()

@@ -1,23 +1,23 @@
-﻿(function (globals) {
+﻿Bridge.initAssembly("TestProject", function ($asm, globals) {
     "use strict";
 
     Bridge.define('Test.BridgeIssues.N1023.Optional$1', function (T) { return {
+        $kind: "struct",
         statics: {
-            getDefaultValue: function () { return new Test.BridgeIssues.N1023.Optional$1(T)(); }
+            getDefaultValue: function () { return new (Test.BridgeIssues.N1023.Optional$1(T))(); }
         },
         config: {
             properties: {
                 Value: Bridge.getDefaultValue(T)
             }
         },
-        constructor$1: function (value) {
-            Test.BridgeIssues.N1023.Optional$1(T).prototype.$constructor.call(this);
-    
+        $constructor1: function (value) {
+            Test.BridgeIssues.N1023.Optional$1(T).$constructor.call(this);
             this.setValue(value);
         },
         constructor: function () {
+            this.$initialize();
         },
-        $struct: true,
         getHashCode: function () {
             var hash = 17;
             hash = hash * 23 + -1412376807;
@@ -31,7 +31,7 @@
             return Bridge.equals(this.Value, o.Value);
         },
         $clone: function (to) {
-            var s = to || new Test.BridgeIssues.N1023.Optional$1(T)();
+            var s = to || new (Test.BridgeIssues.N1023.Optional$1(T))();
             s.Value = this.Value;
             return s;
         }
@@ -43,10 +43,11 @@
                 Name: null
             },
             init: function () {
-                this.Name = new Test.BridgeIssues.N1023.Optional$1(String)();
+                this.Name = new (Test.BridgeIssues.N1023.Optional$1(String))();
             }
         },
         constructor: function (name) {
+            this.$initialize();
             this.setName(name.$clone());
         }
     });
@@ -54,4 +55,4 @@
     
     
     Bridge.init();
-})(this);
+});

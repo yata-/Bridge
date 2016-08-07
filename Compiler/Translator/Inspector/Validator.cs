@@ -92,6 +92,13 @@ namespace Bridge.Translator
             return typeDefinition.Attributes.Any(attr => attr.Constructor != null && ((attr.Constructor.DeclaringType.FullName == ignoreAttr) || (attr.Constructor.DeclaringType.FullName == externalAttr) || (!ignoreLiteral && attr.Constructor.DeclaringType.FullName == objectLiteralAttr)));
         }
 
+        public virtual bool IsExternalInterface(ICSharpCode.NRefactory.TypeSystem.ITypeDefinition typeDefinition)
+        {
+            string externalAttr = Translator.Bridge_ASSEMBLY + ".ExternalInterfaceAttribute";
+
+            return typeDefinition.Attributes.Any(attr => attr.Constructor != null && (attr.Constructor.DeclaringType.FullName == externalAttr));
+        }
+
         public virtual bool IsImmutableType(ICustomAttributeProvider type)
         {
             string attrName = Translator.Bridge_ASSEMBLY + ".ImmutableAttribute";
@@ -488,7 +495,7 @@ namespace Bridge.Translator
 
         protected virtual object GetAttributeArgumentValue(CustomAttribute attr, int index)
         {
-            return attr.ConstructorArguments.Skip(0).Take(1).First().Value;
+            return attr.ConstructorArguments.ElementAt(index).Value;
         }
 
         protected virtual ITypeInfo EnsureTypeInfo(TypeDefinition type, ITranslator translator)

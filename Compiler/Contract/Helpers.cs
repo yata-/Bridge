@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json.Linq;
 
 namespace Bridge.Contract
 {
@@ -203,6 +205,11 @@ namespace Bridge.Contract
             return null;
         }
 
+        public static bool IsIgnoreGeneric(ITypeDefinition type)
+        {
+            return type.Attributes.Any(a => a.AttributeType.FullName == "Bridge.IgnoreGenericAttribute");
+        }
+
         public static bool IsIgnoreGeneric(IType type, IEmitter emitter)
         {
             return emitter.Validator.HasAttribute(type.GetDefinition().Attributes, "Bridge.IgnoreGenericAttribute");
@@ -243,7 +250,19 @@ namespace Bridge.Contract
                 return true;
             }
 
-            return emitter.Validator.HasAttribute(typeDef.Attributes, "Bridge.IgnoreCastAttribute");
+            var ctorAttr = emitter.Validator.GetAttribute(typeDef.Attributes, "Bridge.ConstructorAttribute");
+
+            if (ctorAttr != null)
+            {
+                var inline = ctorAttr.PositionalArguments[0].ConstantValue.ToString();
+                if (Regex.Match(inline, @"\s*\{\s*\}\s*").Success)
+                {
+                    return true;
+                }
+            }
+
+            return emitter.Validator.HasAttribute(typeDef.Attributes, "Bridge.IgnoreCastAttribute") || 
+                   emitter.Validator.HasAttribute(typeDef.Attributes, "Bridge.ObjectLiteralAttribute");
         }
 
         public static bool IsIgnoreCast(ITypeDefinition typeDef, IEmitter emitter)
@@ -263,7 +282,19 @@ namespace Bridge.Contract
                 return true;
             }
 
-            return emitter.Validator.HasAttribute(typeDef.Attributes, "Bridge.IgnoreCastAttribute");
+            var ctorAttr = emitter.Validator.GetAttribute(typeDef.Attributes, "Bridge.ConstructorAttribute");
+
+            if (ctorAttr != null)
+            {
+                var inline = ctorAttr.PositionalArguments[0].ConstantValue.ToString();
+                if (Regex.Match(inline, @"\s*\{\s*\}\s*").Success)
+                {
+                    return true;
+                }
+            }
+
+            return emitter.Validator.HasAttribute(typeDef.Attributes, "Bridge.IgnoreCastAttribute") ||
+                   emitter.Validator.HasAttribute(typeDef.Attributes, "Bridge.ObjectLiteralAttribute");
         }
 
         public static bool IsIntegerType(IType type, IMemberResolver resolver)
@@ -542,7 +573,7 @@ namespace Bridge.Contract
             return (isAdd ? JS.Funcs.Event.ADD : JS.Funcs.Event.REMOVE) + name;
         }
 
-        public static string GetEventRef(CustomEventDeclaration property, IEmitter emitter, bool remove = false, bool noOverload = false, bool ignoreInterface = false)
+        public static string GetEventRef(CustomEventDeclaration property, IEmitter emitter, bool remove = false, bool noOverload = false, bool ignoreInterface = false, bool withoutTypeParams = false)
         {
             ResolveResult resolveResult = emitter.Resolver.ResolveNode(property, emitter) as MemberResolveResult;
             if (resolveResult != null && ((MemberResolveResult)resolveResult).Member != null)
@@ -550,40 +581,41 @@ namespace Bridge.Contract
                 return GetEventRef(((MemberResolveResult)resolveResult).Member, emitter, remove, noOverload, ignoreInterface);
             }
 
-            var name = emitter.GetEntityName(property, true, ignoreInterface);
-
             if (!noOverload)
             {
                 var overloads = OverloadsCollection.Create(emitter, property, remove);
-                name = overloads.HasOverloads ? overloads.GetOverloadName() : name;
-                noOverload = !overloads.HasOverloads;
+                return overloads.GetOverloadName(ignoreInterface, GetAddOrRemove(!remove), withoutTypeParams);
             }
 
+            var name = emitter.GetEntityName(property, true, ignoreInterface);
             return GetAddOrRemove(!remove, name);
         }
 
-        public static string GetEventRef(IMember property, IEmitter emitter, bool remove = false, bool noOverload = false, bool ignoreInterface = false)
+        public static string GetEventRef(IMember property, IEmitter emitter, bool remove = false, bool noOverload = false, bool ignoreInterface = false, bool withoutTypeParams = false)
         {
             var attrName = emitter.GetEntityNameFromAttr(property, remove);
 
             if (!string.IsNullOrEmpty(attrName))
             {
-                return attrName;
+                return Helpers.AddInterfacePrefix(property, emitter, ignoreInterface, attrName, remove);
             }
-
-            var name = emitter.GetEntityName(property, true, ignoreInterface);
 
             if (!noOverload)
             {
                 var overloads = OverloadsCollection.Create(emitter, property, remove);
-                name = overloads.HasOverloads ? overloads.GetOverloadName() : name;
-                noOverload = !overloads.HasOverloads;
+                return overloads.GetOverloadName(ignoreInterface, GetAddOrRemove(!remove), withoutTypeParams);
             }
 
+            var name = emitter.GetEntityName(property, true, ignoreInterface);
             return GetAddOrRemove(!remove, name);
         }
 
-        public static string GetPropertyRef(PropertyDeclaration property, IEmitter emitter, bool isSetter = false, bool noOverload = false, bool ignoreInterface = false)
+        public static string GetSetOrGet(bool isSetter, string name = null)
+        {
+            return (isSetter ? JS.Funcs.Property.SET : JS.Funcs.Property.GET) + name;
+        }
+
+        public static string GetPropertyRef(PropertyDeclaration property, IEmitter emitter, bool isSetter = false, bool noOverload = false, bool ignoreInterface = false, bool withoutTypeParams = false)
         {
             ResolveResult resolveResult = emitter.Resolver.ResolveNode(property, emitter) as MemberResolveResult;
             if (resolveResult != null && ((MemberResolveResult)resolveResult).Member != null)
@@ -591,21 +623,22 @@ namespace Bridge.Contract
                 return GetPropertyRef(((MemberResolveResult)resolveResult).Member, emitter, isSetter, noOverload, ignoreInterface);
             }
 
-            var name = emitter.GetEntityName(property, true, ignoreInterface);
+            string name;
+            bool isFieldProperty = Helpers.IsFieldProperty(property, emitter);
+
+            if (isFieldProperty)
+            {
+                return emitter.GetEntityName(property, false, ignoreInterface);
+            }
 
             if (!noOverload)
             {
                 var overloads = OverloadsCollection.Create(emitter, property, isSetter);
-                name = overloads.HasOverloads ? overloads.GetOverloadName() : name;
-                noOverload = !overloads.HasOverloads;
+                return overloads.GetOverloadName(ignoreInterface, GetSetOrGet(isSetter), withoutTypeParams);
             }
 
-            if (Helpers.IsFieldProperty(property, emitter))
-            {
-                return noOverload ? emitter.GetEntityName(property, false) : name;
-            }
-
-            return (isSetter ? "set" : "get") + name;
+            name = emitter.GetEntityName(property, true, ignoreInterface);
+            return GetSetOrGet(isSetter, name);
         }
 
         public static string GetPropertyRef(IndexerDeclaration property, IEmitter emitter, bool isSetter = false, bool noOverload = false, bool ignoreInterface = false)
@@ -616,16 +649,14 @@ namespace Bridge.Contract
                 return GetIndexerRef(((MemberResolveResult)resolveResult).Member, emitter, isSetter, noOverload, ignoreInterface);
             }
 
-            var name = emitter.GetEntityName(property, true, ignoreInterface);
-
             if (!noOverload)
             {
                 var overloads = OverloadsCollection.Create(emitter, property, isSetter);
-                name = overloads.HasOverloads ? overloads.GetOverloadName() : name;
-                noOverload = !overloads.HasOverloads;
+                return overloads.GetOverloadName(ignoreInterface, GetSetOrGet(isSetter));
             }
 
-            return (isSetter ? "set" : "get") + name;
+            var name = emitter.GetEntityName(property, true, ignoreInterface);
+            return GetSetOrGet(isSetter, name);
         }
 
         public static string GetIndexerRef(IMember property, IEmitter emitter, bool isSetter = false, bool noOverload = false, bool ignoreInterface = false)
@@ -634,45 +665,64 @@ namespace Bridge.Contract
 
             if (!string.IsNullOrEmpty(attrName))
             {
-                return attrName;
+                return Helpers.AddInterfacePrefix(property, emitter, ignoreInterface, attrName, isSetter);
             }
-
-            var name = emitter.GetEntityName(property, true, ignoreInterface);
 
             if (!noOverload)
             {
                 var overloads = OverloadsCollection.Create(emitter, property, isSetter);
-                name = overloads.HasOverloads ? overloads.GetOverloadName() : name;
-                noOverload = !overloads.HasOverloads;
+                return overloads.GetOverloadName(ignoreInterface, GetSetOrGet(isSetter));
             }
 
-            return (isSetter ? "set" : "get") + name;
+            var name = emitter.GetEntityName(property, true, ignoreInterface);
+            return GetSetOrGet(isSetter, name);
         }
 
-        public static string GetPropertyRef(IMember property, IEmitter emitter, bool isSetter = false, bool noOverload = false, bool ignoreInterface = false)
+        public static string GetPropertyRef(IMember property, IEmitter emitter, bool isSetter = false, bool noOverload = false, bool ignoreInterface = false, bool withoutTypeParams = false)
         {
             var attrName = emitter.GetEntityNameFromAttr(property, isSetter);
 
             if (!string.IsNullOrEmpty(attrName))
             {
-                return attrName;
+                return Helpers.AddInterfacePrefix(property, emitter, ignoreInterface, attrName, isSetter);
             }
 
-            var name = emitter.GetEntityName(property, true, ignoreInterface);
+            string name = null;
+            bool isFieldProperty = Helpers.IsFieldProperty(property, emitter);
+
+            if (isFieldProperty)
+            {
+                return emitter.GetEntityName(property, false, ignoreInterface);
+            }
 
             if (!noOverload)
             {
                 var overloads = OverloadsCollection.Create(emitter, property, isSetter);
-                name = overloads.HasOverloads ? overloads.GetOverloadName() : name;
-                noOverload = !overloads.HasOverloads;
+                return overloads.GetOverloadName(ignoreInterface, GetSetOrGet(isSetter), withoutTypeParams);
             }
 
-            if (Helpers.IsFieldProperty(property, emitter))
+            name = emitter.GetEntityName(property, true, ignoreInterface);
+            return GetSetOrGet(isSetter, name);
+        }
+
+        private static string AddInterfacePrefix(IMember property, IEmitter emitter, bool ignoreInterface, string attrName, bool isSetter)
+        {
+            IMember interfaceMember = null;
+            if (property.IsExplicitInterfaceImplementation)
             {
-                return noOverload ? emitter.GetEntityName(property, false) : name;
+                interfaceMember = property.ImplementedInterfaceMembers.First();
+            }
+            else if (property.DeclaringTypeDefinition != null && property.DeclaringTypeDefinition.Kind == TypeKind.Interface)
+            {
+                interfaceMember = property;
             }
 
-            return (isSetter ? "set" : "get") + name;
+            if (interfaceMember != null && !ignoreInterface)
+            {
+                return OverloadsCollection.GetInterfaceMemberName(emitter, interfaceMember, attrName, null, false, isSetter);
+            }
+
+            return attrName;
         }
 
         public static List<MethodDefinition> GetMethods(TypeDefinition typeDef, IEmitter emitter, List<MethodDefinition> list = null)
@@ -968,10 +1018,10 @@ namespace Bridge.Contract
 
             return null;
         }
-
-        public static CustomAttribute GetInheritedAttribute(IEmitter emitter, TypeDefinition type, string attrName)
+        
+        public static IAttribute GetInheritedAttribute(ITypeDefinition typeDef, string attrName)
         {
-            foreach (var attr in type.CustomAttributes)
+            foreach (var attr in typeDef.Attributes)
             {
                 if (attr.AttributeType.FullName == attrName)
                 {
@@ -979,18 +1029,11 @@ namespace Bridge.Contract
                 }
             }
 
-            return null;
-        }
+            var baseType = typeDef.DirectBaseTypes.Where(t => t.Kind != TypeKind.Interface).FirstOrDefault();
 
-        public static IAttribute GetInheritedAttribute(IType type, string attrName)
-        {
-            var typeDef = type.GetDefinition();
-            foreach (var attr in typeDef.Attributes)
+            if (baseType != null)
             {
-                if (attr.AttributeType.FullName == attrName)
-                {
-                    return attr;
-                }
+                return GetInheritedAttribute(baseType.GetDefinition(), attrName);
             }
 
             return null;
@@ -1074,6 +1117,16 @@ namespace Bridge.Contract
             }
 
             return s;
+        }
+
+        public static bool IsNonScriptable(ITypeDefinition type)
+        {
+            return Helpers.GetInheritedAttribute(type, "Bridge.NonScriptableAttribute") != null;
+        }
+
+        public static bool IsNonScriptable(IEntity entity)
+        {
+            return Helpers.GetInheritedAttribute(entity, "Bridge.NonScriptableAttribute") != null;
         }
     }
 }

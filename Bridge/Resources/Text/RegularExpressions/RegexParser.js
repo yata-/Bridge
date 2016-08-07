@@ -153,6 +153,7 @@ Bridge.define("System.Text.RegularExpressions.RegexParser", {
     },
 
     constructor: function (culture) {
+		this.$initialize();
         this._culture = culture;
         this._caps = {};
     },

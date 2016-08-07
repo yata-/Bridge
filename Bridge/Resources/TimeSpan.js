@@ -2,7 +2,14 @@
 
     Bridge.define("System.TimeSpan", {
         inherits: [System.IComparable],
-        $struct: true,
+
+        config: {
+            alias: [
+                "compareTo", "System$IComparable$compareTo"
+            ]
+        },
+
+        $kind: "struct",
         statics: {
             fromDays: function (value) {
                 return new System.TimeSpan(value * 864e9);
@@ -80,6 +87,7 @@
         },
 
         constructor: function () {
+            this.$initialize();
             this.ticks = System.Int64.Zero;
 
             if (arguments.length === 1) {
