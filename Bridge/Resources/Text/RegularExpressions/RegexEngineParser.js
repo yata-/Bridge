@@ -14,6 +14,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
         _whiteSpaceChars: " \r\n\t\v\f\u00A0\uFEFF", //TODO: This is short version of .NET WhiteSpace category.
         _unicodeCategories: ["Lu", "Ll", "Lt", "Lm", "Lo", "L", "Mn", "Mc", "Me", "M", "Nd", "Nl", "No", "N", "Pc", "Pd", "Ps", "Pe", "Pi", "Pf", "Po", "P", "Sm", "Sc", "Sk", "So", "S", "Zs", "Zl", "Zp", "Z", "Cc", "Cf", "Cs", "Co", "Cn", "C"],
         _namedCharBlocks: ["IsBasicLatin", "IsLatin-1Supplement", "IsLatinExtended-A", "IsLatinExtended-B", "IsIPAExtensions", "IsSpacingModifierLetters", "IsCombiningDiacriticalMarks", "IsGreek", "IsGreekandCoptic", "IsCyrillic", "IsCyrillicSupplement", "IsArmenian", "IsHebrew", "IsArabic", "IsSyriac", "IsThaana", "IsDevanagari", "IsBengali", "IsGurmukhi", "IsGujarati", "IsOriya", "IsTamil", "IsTelugu", "IsKannada", "IsMalayalam", "IsSinhala", "IsThai", "IsLao", "IsTibetan", "IsMyanmar", "IsGeorgian", "IsHangulJamo", "IsEthiopic", "IsCherokee", "IsUnifiedCanadianAboriginalSyllabics", "IsOgham", "IsRunic", "IsTagalog", "IsHanunoo", "IsBuhid", "IsTagbanwa", "IsKhmer", "IsMongolian", "IsLimbu", "IsTaiLe", "IsKhmerSymbols", "IsPhoneticExtensions", "IsLatinExtendedAdditional", "IsGreekExtended", "IsGeneralPunctuation", "IsSuperscriptsandSubscripts", "IsCurrencySymbols", "IsCombiningDiacriticalMarksforSymbols", "IsCombiningMarksforSymbols", "IsLetterlikeSymbols", "IsNumberForms", "IsArrows", "IsMathematicalOperators", "IsMiscellaneousTechnical", "IsControlPictures", "IsOpticalCharacterRecognition", "IsEnclosedAlphanumerics", "IsBoxDrawing", "IsBlockElements", "IsGeometricShapes", "IsMiscellaneousSymbols", "IsDingbats", "IsMiscellaneousMathematicalSymbols-A", "IsSupplementalArrows-A", "IsBraillePatterns", "IsSupplementalArrows-B", "IsMiscellaneousMathematicalSymbols-B", "IsSupplementalMathematicalOperators", "IsMiscellaneousSymbolsandArrows", "IsCJKRadicalsSupplement", "IsKangxiRadicals", "IsIdeographicDescriptionCharacters", "IsCJKSymbolsandPunctuation", "IsHiragana", "IsKatakana", "IsBopomofo", "IsHangulCompatibilityJamo", "IsKanbun", "IsBopomofoExtended", "IsKatakanaPhoneticExtensions", "IsEnclosedCJKLettersandMonths", "IsCJKCompatibility", "IsCJKUnifiedIdeographsExtensionA", "IsYijingHexagramSymbols", "IsCJKUnifiedIdeographs", "IsYiSyllables", "IsYiRadicals", "IsHangulSyllables", "IsHighSurrogates", "IsHighPrivateUseSurrogates", "IsLowSurrogates", "IsPrivateUse or IsPrivateUseArea", "IsCJKCompatibilityIdeographs", "IsAlphabeticPresentationForms", "IsArabicPresentationForms-A", "IsVariationSelectors", "IsCombiningHalfMarks", "IsCJKCompatibilityForms", "IsSmallFormVariants", "IsArabicPresentationForms-B", "IsHalfwidthandFullwidthForms", "IsSpecials"],
+        _controlChars: ["@", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "[", "\\", "]", "^", "_"],
 
         tokenTypes: {
             literal: 0,
@@ -36,6 +37,8 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             escBackrefName: 141,
 
             charGroup: 200,
+            charNegativeGroup: 201,
+            charInterval: 202,
 
             anchor: 300,
 
@@ -728,6 +731,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
 
                     extraLength = token.length - octalCharToken.length;
                     scope._modifyPatternToken(token, pattern, tokenTypes.escCharOctal, null, octalCharToken.length);
+                    token.data = octalCharToken.data;
 
                     if (extraLength > 0) {
                         literalToken = scope._createPatternToken(pattern, tokenTypes.literal, token.index + token.length, extraLength);
@@ -931,7 +935,10 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
 
                 if (ch >= "0" && ch <= "7") {
                     var octalDigits = scope._matchChars(pattern, i + 1, endIndex, scope._octSymbols, 3);
-                    return scope._createPatternToken(pattern, tokenTypes.escCharOctal, i, 1 + octalDigits.matchLength); // "\0" or "\nn" or "\nnn"
+                    var octalVal = parseInt(octalDigits.match, 8);
+                    var token = scope._createPatternToken(pattern, tokenTypes.escCharOctal, i, 1 + octalDigits.matchLength); // "\0" or "\nn" or "\nnn"
+                    token.data = { n: octalVal, ch: String.fromCharCode(octalVal) };
+                    return token;
                 }
             }
 
@@ -941,6 +948,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
         _parseEscapedChar: function (pattern, i, endIndex) {
             var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
+            var token;
 
             var ch = pattern[i];
             if (ch !== "\\" || i + 1 >= endIndex) {
@@ -957,15 +965,23 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                         throw new System.ArgumentException("Insufficient hexadecimal digits.");
                     }
 
-                    return scope._createPatternToken(pattern, tokenTypes.escCharHex, i, 4); // "\xnn"
+                    var hexVal = parseInt(hexDigits.match, 16);
+                    token = scope._createPatternToken(pattern, tokenTypes.escCharHex, i, 4); // "\xnn"
+                    token.data = { n: hexVal, ch: String.fromCharCode(hexVal) };
+                    return token;
+
                 } else if (ch === "c") {
                     if (i + 2 >= endIndex) {
                         throw new System.ArgumentException("Missing control character.");
                     }
 
                     var ctrlCh = pattern[i + 2];
-                    if ((ctrlCh >= "a" && ctrlCh <= "z") || (ctrlCh >= "A" && ctrlCh <= "Z")) {
-                        return scope._createPatternToken(pattern, tokenTypes.escCharCtrl, i, 3); // "\cx" or "\cX"
+                    ctrlCh = ctrlCh.toUpperCase();
+                    var ctrlIndex = this._controlChars.indexOf(ctrlCh);
+                    if (ctrlIndex >= 0) {
+                        token = scope._createPatternToken(pattern, tokenTypes.escCharCtrl, i, 3); // "\cx" or "\cX"
+                        token.data = { n: ctrlIndex, ch: String.fromCharCode(ctrlIndex) };
+                        return token;
                     }
 
                     throw new System.ArgumentException("Unrecognized control character.");
@@ -975,11 +991,46 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                         throw new System.ArgumentException("Insufficient hexadecimal digits.");
                     }
 
-                    return scope._createPatternToken(pattern, tokenTypes.escCharUnicode, i, 6); // "\unnnn"
+                    var ucodeVal = parseInt(ucodeDigits.match, 16);
+                    token = scope._createPatternToken(pattern, tokenTypes.escCharUnicode, i, 6); // "\unnnn"
+                    token.data = { n: ucodeVal, ch: String.fromCharCode(ucodeVal) };
+                    return token;
                 }
 
-                return scope._createPatternToken(pattern, tokenTypes.escChar, i, 2); // "\a" or "\b" or "\t" or "\r" or "\v" or "f" or "n" or "e"
+                token = scope._createPatternToken(pattern, tokenTypes.escChar, i, 2); // "\a" or "\b" or "\t" or "\r" or "\v" or "f" or "n" or "e"-
+                var escVal;
+                switch (ch) {
+                    case "a":
+                        escVal = 7;
+                        break;
+                    case "b":
+                        escVal = 8;
+                        break;
+                    case "t":
+                        escVal = 9;
+                        break;
+                    case "r":
+                        escVal = 13;
+                        break;
+                    case "v":
+                        escVal = 11;
+                        break;
+                    case "f":
+                        escVal = 12;
+                        break;
+                    case "n":
+                        escVal = 10;
+                        break;
+                    case "e":
+                        escVal = 27;
+                        break;
 
+                    default:
+                        throw new System.ArgumentException("Unexpected escaped char: '" + ch + "'.");
+                }
+
+                token.data = { n: escVal, ch: String.fromCharCode(escVal) };
+                return token;
             }
 
             // Parse a sequence for an octal character("Character Escapes")
@@ -1014,7 +1065,9 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
 
             // Some other literal
             if (scope._escapedSpecialSymbols.indexOf(ch) >= 0) {
-                return scope._createPatternToken(pattern, tokenTypes.escCharOther, i, 2); // "\." or "\$" or ... "\\"
+                token = scope._createPatternToken(pattern, tokenTypes.escCharOther, i, 2); // "\." or "\$" or ... "\\"
+                token.data = { n: ch.charCodeAt(0), ch: ch };
+                return token;
             }
 
             return null;
@@ -1024,6 +1077,9 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
             var tokens = [];
+            var intervalToken;
+            var token;
+            var isNegative = false;
 
             var ch = pattern[i];
             if (ch !== "[") {
@@ -1031,40 +1087,215 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             }
 
             var index = i + 1;
-            var escapeToken;
-            var literalToken;
             var closeBracketIndex = -1;
+            var toInc;
+
+            if (index < endIndex && pattern[index] === "^") {
+                isNegative = true;
+                index ++;
+            }
 
             while (index < endIndex) {
                 ch = pattern[index];
 
                 if (ch === "\\") {
-                    escapeToken = scope._parseEscapedChar(pattern, index, endIndex);
-                    if (escapeToken == null) {
+                    token = scope._parseEscapedChar(pattern, index, endIndex);
+                    if (token == null) {
                         throw new System.ArgumentException("Unrecognized escape sequence \\" + ch + ".");
                     }
-                    tokens.push(escapeToken);
-                    index += escapeToken.length;
-                    continue;
+                    toInc = token.length;
 
-                }
-
-                if (ch === "]") {
+                } else if (ch === "]") {
                     closeBracketIndex = index;
                     break;
+                } else {
+                    token = scope._createPatternToken(pattern, tokenTypes.literal, index, 1);
+                    toInc = 1;
                 }
 
-                literalToken = scope._createPatternToken(pattern, tokenTypes.literal, index, 1);
-                tokens.push(literalToken);
-                ++index;
+                // Check for interval:
+                if (tokens.length > 1) {
+                    intervalToken = scope._parseCharIntervalToken(pattern, tokens[tokens.length - 2], tokens[tokens.length - 1], token);
+                    if (intervalToken != null) {
+                        tokens.pop(); //pop Dush
+                        tokens.pop(); //pop Interval start
+                        token = intervalToken;
+                    }
+                }
+
+                // Add token:
+                if (token != null) {
+                    tokens.push(token);
+                    index += toInc;
+                }
             }
 
             if (closeBracketIndex < 0 || tokens.length < 1) {
                 throw new System.ArgumentException("Unterminated [] set.");
             }
 
-            var groupToken = scope._createPatternToken(pattern, tokenTypes.charGroup, i, 1 + closeBracketIndex - i, tokens, "[", "]");
+            var groupToken;
+            if (!isNegative) {
+                groupToken = scope._createPatternToken(pattern, tokenTypes.charGroup, i, 1 + closeBracketIndex - i, tokens, "[", "]");
+            } else {
+                groupToken = scope._createPatternToken(pattern, tokenTypes.charNegativeGroup, i, 1 + closeBracketIndex - i, tokens, "[^", "]");
+            }
+
+            // Create full range data:
+            var ranges = scope._tidyCharRange(tokens);
+            groupToken.data = { ranges: ranges };
             return groupToken;
+        },
+
+        _parseCharIntervalToken: function (pattern, intervalStartToken, dashToken, intervalEndToken) {
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
+            var tokenTypes = scope.tokenTypes;
+
+            if (dashToken.type !== tokenTypes.literal || dashToken.value !== "-") {
+                return null;
+            }
+
+            if (intervalStartToken.type !== tokenTypes.literal &&
+                intervalStartToken.type !== tokenTypes.escChar &&
+                intervalStartToken.type !== tokenTypes.escCharOctal &&
+                intervalStartToken.type !== tokenTypes.escCharHex &&
+                intervalStartToken.type !== tokenTypes.escCharCtrl &&
+                intervalStartToken.type !== tokenTypes.escCharUnicode &&
+                intervalStartToken.type !== tokenTypes.escCharOther) {
+                return null;
+            }
+
+            if (intervalEndToken.type !== tokenTypes.literal &&
+                intervalEndToken.type !== tokenTypes.escChar &&
+                intervalEndToken.type !== tokenTypes.escCharOctal &&
+                intervalEndToken.type !== tokenTypes.escCharHex &&
+                intervalEndToken.type !== tokenTypes.escCharCtrl &&
+                intervalEndToken.type !== tokenTypes.escCharUnicode &&
+                intervalEndToken.type !== tokenTypes.escCharOther) {
+                return null;
+            }
+
+            var startN;
+            var startCh;
+            if (intervalStartToken.type === tokenTypes.literal) {
+                startN = intervalStartToken.value.charCodeAt(0);
+                startCh = intervalStartToken.value;
+            } else {
+                startN = intervalStartToken.data.n;
+                startCh = intervalStartToken.data.ch;
+            }
+
+            var endN;
+            var endCh;
+            if (intervalEndToken.type === tokenTypes.literal) {
+                endN = intervalEndToken.value.charCodeAt(0);
+                endCh = intervalEndToken.value;
+            } else {
+                endN = intervalEndToken.data.n;
+                endCh = intervalEndToken.data.ch;
+            }
+
+            if (startN > endN) {
+                throw new System.NotSupportedException("[x-y] range in reverse order.");
+            }
+                
+            var index = intervalStartToken.index;
+            var length = intervalStartToken.length + dashToken.length + intervalEndToken.length;
+            var intervalToken = scope._createPatternToken(pattern, tokenTypes.charInterval, index, length, [intervalStartToken, dashToken, intervalEndToken], "", "");
+
+            intervalToken.data = {
+                startN: startN,
+                startCh: startCh,
+                endN: endN,
+                endCh: endCh
+            };
+
+            return intervalToken;
+        },
+
+        _tidyCharRange: function (tokens) {
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
+            var tokenTypes = scope.tokenTypes;
+
+            var j;
+            var k;
+            var n;
+            var m;
+            var token;
+            var ranges = [];
+            var classTokens = [];
+
+            var range;
+            var nextRange;
+            var toSkip;
+
+            for (j = 0; j < tokens.length; j++) {
+                token = tokens[j];
+
+                if (token.type === tokenTypes.literal) {
+                    n = token.value.charCodeAt(0);
+                    m = n;
+
+                } else if (token.type === tokenTypes.charInterval) {
+                    n = token.data.startN;
+                    m = token.data.endN;
+
+                } else if (token.type === tokenTypes.literal ||
+                    token.type === tokenTypes.escChar ||
+                    token.type === tokenTypes.escCharOctal ||
+                    token.type === tokenTypes.escCharHex ||
+                    token.type === tokenTypes.escCharCtrl ||
+                    token.type === tokenTypes.escCharUnicode ||
+                    token.type === tokenTypes.escCharOther) {
+
+                    n = token.data.n;
+                    m = n;
+                } else {
+                    classTokens.push(token);
+                    continue;
+                }
+
+                if (ranges.length === 0) {
+                    ranges.push({ n: n, m: m });
+                    continue;
+                }
+
+                //TODO: [Performance] Use binary search
+                for (k = 0; k < ranges.length; k++) {
+                    if (ranges[k].n > n) {
+                        break;
+                    }
+                }
+
+                ranges.splice(k, 0, { n: n, m: m });
+            }
+
+            // Combine ranges:
+            for (j = 0; j < ranges.length; j++) {
+                range = ranges[j];
+
+                toSkip = 0;
+                for (k = j + 1; k < ranges.length; k++) {
+                    nextRange = ranges[k];
+                    if (nextRange.n > range.m) {
+                        break;
+                    }
+                    toSkip++;
+                    if (nextRange.m > range.m) {
+                        range.m = nextRange.m;
+                    }
+                }
+                if (toSkip > 0) {
+                    ranges.splice(j + 1, toSkip);
+                }
+            }
+
+            if (classTokens.length > 0) {
+                var charClassStr = "[" + scope._constructPattern(classTokens) + "]";
+                ranges.charClassToken = scope._createPatternToken(charClassStr, tokenTypes.charGroup, 0, charClassStr.length, tokens, "[", "]");
+            }
+
+            return ranges;
         },
 
         _parseDotToken: function (pattern, i) {

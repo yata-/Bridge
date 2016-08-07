@@ -543,13 +543,18 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
                 return this._scanGroupImnsxToken(token.group.constructs, pass.settings);
 
             case tokenTypes.charGroup:
-                return this._scanCharGroupToken(branches, branch, pass, token);
+                return this._scanCharGroupToken(branches, branch, pass, token, false);
+
+            case tokenTypes.charNegativeGroup:
+                return this._scanCharNegativeGroupToken(branches, branch, pass, token);
 
             case tokenTypes.escChar:
             case tokenTypes.escCharOctal:
             case tokenTypes.escCharHex:
-            case tokenTypes.escCharCtrl:
             case tokenTypes.escCharUnicode:
+            case tokenTypes.escCharCtrl:
+                return this._scanLiteral(textEndPos, branches, branch, pass, token.data.ch);
+
             case tokenTypes.escCharOther:
             case tokenTypes.escCharClass:
             case tokenTypes.escCharClassCategory:
@@ -564,7 +569,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
 
             case tokenTypes.escBackrefName:
                 return this._scanBackrefNameToken(textEndPos, branches, branch, pass, token);
-
 
             case tokenTypes.anchor:
             case tokenTypes.escAnchor:
@@ -818,7 +822,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         return resKind.ok;
     },
 
-    _scanWithJsRegex: function (branches, branch, pass, token) {
+    _scanWithJsRegex: function (branches, branch, pass, token, tokenValue) {
         var resKind = this._branchResultKind;
         var index = branch.state.txtIndex;
         var ch = this._text[index];
@@ -830,7 +834,10 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
 
         var rgx = token.rgx;
         if (rgx == null) {
-            rgx = new RegExp(token.value, options);
+            if (tokenValue == null) {
+                tokenValue = token.value;
+            }
+            rgx = new RegExp(tokenValue, options);
             token.rgx = rgx;
         }
 
@@ -857,8 +864,81 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         return resKind.nextBranch;
     },
 
-    _scanCharGroupToken: function (branches, branch, pass, token) {
-        return this._scanWithJsRegex(branches, branch, pass, token);
+    _scanCharGroupToken: function (branches, branch, pass, token, skipLoggingCapture) {
+        var resKind = this._branchResultKind;
+        var index = branch.state.txtIndex;
+        var ch = this._text[index];
+        if (ch == null) {
+            return resKind.nextBranch;
+        }
+
+        var i;
+        var j;
+        var n = ch.charCodeAt(0);
+        var ranges = token.data.ranges;
+        var range;
+        var upperCh;
+
+        // Try first such tokens like: \s \S \d \D
+        if (ranges.charClassToken != null) {
+            if (this._scanWithJsRegex(branches, branch, pass, ranges.charClassToken) === resKind.ok) {
+                return resKind.ok;
+            }
+        }
+
+        // 2 iterations - to handle both cases: upper and lower
+        for (j = 0; j < 2; j++) {
+            //TODO: [Performance] Use binary search
+            for (i = 0; i < ranges.length; i++) {
+                range = ranges[i];
+
+                if (range.n > n) {
+                    break;
+                }
+
+                if (n <= range.m) {
+                    if (!skipLoggingCapture) {
+                        branch.state.logCapture(1);
+                    }
+                    return resKind.ok;
+                }
+            }
+
+            if (upperCh == null && pass.settings.ignoreCase) {
+                upperCh = ch.toUpperCase();
+
+                // Invert case for the 2nd attempt;
+                if (ch === upperCh) {
+                    ch = ch.toLowerCase();
+                } else {
+                    ch = upperCh;
+                }
+
+                n = ch.charCodeAt(0);
+            }
+        }
+
+        return resKind.nextBranch;
+    },
+
+    _scanCharNegativeGroupToken: function (branches, branch, pass, token) {
+        var resKind = this._branchResultKind;
+        var index = branch.state.txtIndex;
+        var ch = this._text[index];
+        if (ch == null) {
+            return resKind.nextBranch;
+        }
+
+        // Get result for positive group:
+        var positiveRes = this._scanCharGroupToken(branches, branch, pass, token, true);
+
+        // Inverse the positive result:
+        if (positiveRes === resKind.ok) {
+            return resKind.nextBranch;
+        }
+
+        branch.state.logCapture(1);
+        return resKind.ok;
     },
 
     _scanEscapeToken: function (branches, branch, pass, token) {
