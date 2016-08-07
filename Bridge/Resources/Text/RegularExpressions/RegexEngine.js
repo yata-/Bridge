@@ -546,7 +546,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
                 return this._scanCharGroupToken(branches, branch, pass, token, false);
 
             case tokenTypes.charNegativeGroup:
-                return this._scanCharNegativeGroupToken(branches, branch, pass, token);
+                return this._scanCharNegativeGroupToken(branches, branch, pass, token, false);
 
             case tokenTypes.escChar:
             case tokenTypes.escCharOctal:
@@ -557,9 +557,13 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
 
             case tokenTypes.escCharOther:
             case tokenTypes.escCharClass:
-            case tokenTypes.escCharClassCategory:
-            case tokenTypes.escCharClassBlock:
                 return this._scanEscapeToken(branches, branch, pass, token);
+
+            case tokenTypes.escCharClassCategory:
+                throw new System.NotSupportedException("Unicode Category constructions are not supported.");
+
+            case tokenTypes.escCharClassBlock:
+                throw new System.NotSupportedException("Unicode Named block constructions are not supported.");
 
             case tokenTypes.escCharClassDot:
                 return this._scanDotToken(textEndPos, branches, branch, pass);
@@ -865,6 +869,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
     },
 
     _scanCharGroupToken: function (branches, branch, pass, token, skipLoggingCapture) {
+        var tokenTypes = System.Text.RegularExpressions.RegexEngineParser.tokenTypes;
         var resKind = this._branchResultKind;
         var index = branch.state.txtIndex;
         var ch = this._text[index];
@@ -879,9 +884,26 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         var range;
         var upperCh;
 
-        // Try first such tokens like: \s \S \d \D
+        // Check susbstruct group:
+        if (token.data.substractToken != null) {
+            var substractRes;
+            if (token.data.substractToken.type === tokenTypes.charGroup) {
+                substractRes = this._scanCharGroupToken(branches, branch, pass, token.data.substractToken, true);
+            } else if (token.data.substractToken.type === tokenTypes.charNegativeGroup) {
+                substractRes = this._scanCharNegativeGroupToken(branches, branch, pass, token.data.substractToken, true);
+            } else {
+                throw new System.InvalidOperationException("Unexpected substuct group token.");
+            }
+
+            if (substractRes === resKind.ok) {
+                return token.type === tokenTypes.charGroup ? resKind.nextBranch : resKind.ok;
+            }
+        }
+
+        // Try CharClass tokens like: \s \S \d \D
         if (ranges.charClassToken != null) {
-            if (this._scanWithJsRegex(branches, branch, pass, ranges.charClassToken) === resKind.ok) {
+            var charClassRes = this._scanWithJsRegex(branches, branch, pass, ranges.charClassToken);
+            if (charClassRes === resKind.ok) {
                 return resKind.ok;
             }
         }
@@ -921,7 +943,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         return resKind.nextBranch;
     },
 
-    _scanCharNegativeGroupToken: function (branches, branch, pass, token) {
+    _scanCharNegativeGroupToken: function (branches, branch, pass, token, skipLoggingCapture) {
         var resKind = this._branchResultKind;
         var index = branch.state.txtIndex;
         var ch = this._text[index];
@@ -937,7 +959,10 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             return resKind.nextBranch;
         }
 
-        branch.state.logCapture(1);
+        if (!skipLoggingCapture) {
+            branch.state.logCapture(1);
+        }
+
         return resKind.ok;
     },
 

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using Bridge.Test;
 
 namespace Bridge.ClientTest.Text.RegularExpressions
@@ -1066,99 +1064,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions
 
             ValidateGroup(ms[31], 0, 93, 1, true, "\u001F", 1);
             ValidateCapture(ms[31], 0, 0, 93, 1, "\u001F");
-        }
-
-        [Test]
-        public void CharClassesInCharGroupTest()
-        {
-            const string pattern = @"([ABC\s]+)";
-            const string text = "AC  D AA";
-            var rgx = new Regex(pattern);
-            var ms = rgx.Matches(text);
-
-            Assert.AreEqual(2, ms.Count, "Matches count is correct.");
-
-            // Match #0:
-            Assert.NotNull(ms[0], "Match[0] is not null.");
-            ValidateMatch(ms[0], 0, 4, "AC  ", 2, true);
-
-            ValidateGroup(ms[0], 0, 0, 4, true, "AC  ", 1);
-            ValidateCapture(ms[0], 0, 0, 0, 4, "AC  ");
-
-            ValidateGroup(ms[0], 1, 0, 4, true, "AC  ", 1);
-            ValidateCapture(ms[0], 1, 0, 0, 4, "AC  ");
-
-            // Match #1:
-            Assert.NotNull(ms[1], "Match[1] is not null.");
-            ValidateMatch(ms[1], 5, 3, " AA", 2, true);
-
-            ValidateGroup(ms[1], 0, 5, 3, true, " AA", 1);
-            ValidateCapture(ms[1], 0, 0, 5, 3, " AA");
-
-            ValidateGroup(ms[1], 1, 5, 3, true, " AA", 1);
-            ValidateCapture(ms[1], 1, 0, 5, 3, " AA");
-        }
-
-        [Test]
-        public void CaretSymbolInCharGroupTest()
-        {
-            const string pattern = @"([abc^d]+)";
-            const string text = "abc d^a";
-            var rgx = new Regex(pattern);
-            var ms = rgx.Matches(text);
-
-            Assert.AreEqual(2, ms.Count, "Matches count is correct.");
-
-            // Match #0:
-            Assert.NotNull(ms[0], "Match[0] is not null.");
-            ValidateMatch(ms[0], 0, 3, "abc", 2, true);
-
-            ValidateGroup(ms[0], 0, 0, 3, true, "abc", 1);
-            ValidateCapture(ms[0], 0, 0, 0, 3, "abc");
-
-            ValidateGroup(ms[0], 1, 0, 3, true, "abc", 1);
-            ValidateCapture(ms[0], 1, 0, 0, 3, "abc");
-
-            // Match #1:
-            Assert.NotNull(ms[1], "Match[1] is not null.");
-            ValidateMatch(ms[1], 4, 3, "d^a", 2, true);
-
-            ValidateGroup(ms[1], 0, 4, 3, true, "d^a", 1);
-            ValidateCapture(ms[1], 0, 0, 4, 3, "d^a");
-
-            ValidateGroup(ms[1], 1, 4, 3, true, "d^a", 1);
-            ValidateCapture(ms[1], 1, 0, 4, 3, "d^a");
-        }
-
-        [Test]
-        public void NegativeCharGroupTest()
-        {
-            const string pattern = @"([^abc]+)";
-            const string text = "def aaa fff";
-            var rgx = new Regex(pattern);
-            var ms = rgx.Matches(text);
-
-            Assert.AreEqual(2, ms.Count, "Matches count is correct.");
-
-            // Match #0:
-            Assert.NotNull(ms[0], "Match[0] is not null.");
-            ValidateMatch(ms[0], 0, 4, "def ", 2, true);
-
-            ValidateGroup(ms[0], 0, 0, 4, true, "def ", 1);
-            ValidateCapture(ms[0], 0, 0, 0, 4, "def ");
-
-            ValidateGroup(ms[0], 1, 0, 4, true, "def ", 1);
-            ValidateCapture(ms[0], 1, 0, 0, 4, "def ");
-
-            // Match #1:
-            Assert.NotNull(ms[1], "Match[1] is not null.");
-            ValidateMatch(ms[1], 7, 4, " fff", 2, true);
-
-            ValidateGroup(ms[1], 0, 7, 4, true, " fff", 1);
-            ValidateCapture(ms[1], 0, 0, 7, 4, " fff");
-
-            ValidateGroup(ms[1], 1, 7, 4, true, " fff", 1);
-            ValidateCapture(ms[1], 1, 0, 7, 4, " fff");
         }
     }
 }

@@ -1043,11 +1043,11 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             if (scope._escapedCharClasses.indexOf(ch) >= 0) {
                 if (ch === "p" || ch === "P") {
                     var catNameChars = scope._matchUntil(pattern, i + 2, endIndex, "}"); // the longest category name is 37 + 2 brackets, but .NET does not limit the value on this step
-                    if (catNameChars.matchLength < 3 || catNameChars.match[0] !== "{" || catNameChars.unmatchLength !== 1) {
+                    if (catNameChars.matchLength < 2 || catNameChars.match[0] !== "{" || catNameChars.unmatchLength !== 1) {
                         throw new System.ArgumentException("Incomplete \p{X} character escape.");
                     }
 
-                    var catName = catNameChars.slice(1);
+                    var catName = catNameChars.match.slice(1);
 
                     if (scope._unicodeCategories.indexOf(catName) >= 0) {
                         return scope._createPatternToken(pattern, tokenTypes.escCharClassCategory, i, 2 + catNameChars.matchLength + 1); // "\p{Name}" or "\P{Name}"
@@ -1078,8 +1078,11 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             var tokenTypes = scope.tokenTypes;
             var tokens = [];
             var intervalToken;
+            var substractToken;
             var token;
             var isNegative = false;
+            var noMoreTokenAllowed = false;
+            var hasSubstractToken = false;
 
             var ch = pattern[i];
             if (ch !== "[") {
@@ -1098,7 +1101,16 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             while (index < endIndex) {
                 ch = pattern[index];
 
-                if (ch === "\\") {
+                noMoreTokenAllowed = hasSubstractToken;
+
+                if (ch === "-" && index + 1 < endIndex && pattern[index + 1] === "[") {
+                    substractToken = scope._parseCharRangeToken(pattern, index + 1, endIndex);
+                    substractToken.childrenPrefix = "-" + substractToken.childrenPrefix;
+                    substractToken.length ++;
+                    token = substractToken;
+                    toInc = substractToken.length;
+                    hasSubstractToken = true;
+                } else if (ch === "\\") {
                     token = scope._parseEscapedChar(pattern, index, endIndex);
                     if (token == null) {
                         throw new System.ArgumentException("Unrecognized escape sequence \\" + ch + ".");
@@ -1111,6 +1123,10 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                 } else {
                     token = scope._createPatternToken(pattern, tokenTypes.literal, index, 1);
                     toInc = 1;
+                }
+
+                if (noMoreTokenAllowed) {
+                    throw new System.ArgumentException("A subtraction must be the last element in a character class.");
                 }
 
                 // Check for interval:
@@ -1144,6 +1160,10 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             // Create full range data:
             var ranges = scope._tidyCharRange(tokens);
             groupToken.data = { ranges: ranges };
+            if (substractToken != null) {
+                groupToken.data.substractToken = substractToken;
+            }
+
             return groupToken;
         },
 
@@ -1233,10 +1253,12 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                 token = tokens[j];
 
                 if (token.type === tokenTypes.literal) {
+
                     n = token.value.charCodeAt(0);
                     m = n;
 
                 } else if (token.type === tokenTypes.charInterval) {
+
                     n = token.data.startN;
                     m = token.data.endN;
 
@@ -1250,9 +1272,18 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
 
                     n = token.data.n;
                     m = n;
+
+                } else if (
+                    token.type === tokenTypes.charGroup ||
+                    token.type === tokenTypes.charNegativeGroup) {
+
+                    continue;
+
                 } else {
+
                     classTokens.push(token);
                     continue;
+
                 }
 
                 if (ranges.length === 0) {
@@ -1277,7 +1308,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                 toSkip = 0;
                 for (k = j + 1; k < ranges.length; k++) {
                     nextRange = ranges[k];
-                    if (nextRange.n > range.m) {
+                    if (nextRange.n > 1 + range.m) {
                         break;
                     }
                     toSkip++;
