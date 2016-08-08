@@ -181,7 +181,8 @@ namespace Bridge.Translator
 
                 if (nullable)
                 {
-                    this.Write("(Bridge.hasValue(");
+                    this.Write(JS.Funcs.BRIDGE_HASVALUE);
+                    this.WriteOpenParentheses();
                     this.Emitter.IsUnaryAccessor = false;
                     unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                     this.Write(") ? ");
@@ -222,7 +223,8 @@ namespace Bridge.Translator
                     case UnaryOperatorType.Decrement:
                         if (nullable)
                         {
-                            this.Write("(Bridge.hasValue(");
+                            this.Write(JS.Funcs.BRIDGE_HASVALUE);
+                            this.WriteOpenParentheses();
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                             this.Write(") ? ");
                             this.Write("--");
@@ -239,7 +241,8 @@ namespace Bridge.Translator
                     case UnaryOperatorType.Increment:
                         if (nullable)
                         {
-                            this.Write("(Bridge.hasValue(");
+                            this.Write(JS.Funcs.BRIDGE_HASVALUE);
+                            this.WriteOpenParentheses();
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                             this.Write(") ? ");
                             this.Write("++");
@@ -298,7 +301,8 @@ namespace Bridge.Translator
                     case UnaryOperatorType.PostDecrement:
                         if (nullable)
                         {
-                            this.Write("(Bridge.hasValue(");
+                            this.Write(JS.Funcs.BRIDGE_HASVALUE);
+                            this.WriteOpenParentheses();
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                             this.Write(") ? ");
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
@@ -315,7 +319,8 @@ namespace Bridge.Translator
                     case UnaryOperatorType.PostIncrement:
                         if (nullable)
                         {
-                            this.Write("(Bridge.hasValue(");
+                            this.Write(JS.Funcs.BRIDGE_HASVALUE);
+                            this.WriteOpenParentheses();
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                             this.Write(") ? ");
                             unaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
@@ -426,7 +431,8 @@ namespace Bridge.Translator
 
                 if (nullable)
                 {
-                    this.Write("(Bridge.hasValue(");
+                    this.Write(JS.Funcs.BRIDGE_HASVALUE);
+                    this.WriteOpenParentheses();
                     this.Emitter.IsUnaryAccessor = false;
                     this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                     this.Write(") ? ");
@@ -480,7 +486,8 @@ namespace Bridge.Translator
 
                     case UnaryOperatorType.Increment:
                     case UnaryOperatorType.Decrement:
-                        this.Write("(Bridge.hasValue(");
+                        this.Write(JS.Funcs.BRIDGE_HASVALUE);
+                        this.WriteOpenParentheses();
                         this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                         this.Write(") ? ");
                         this.WriteOpenParentheses();
@@ -496,7 +503,8 @@ namespace Bridge.Translator
 
                     case UnaryOperatorType.PostIncrement:
                     case UnaryOperatorType.PostDecrement:
-                        this.Write("(Bridge.hasValue(");
+                        this.Write(JS.Funcs.BRIDGE_HASVALUE);
+                        this.WriteOpenParentheses();
                         this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                         this.Write(") ? ");
                         this.WriteOpenParentheses();

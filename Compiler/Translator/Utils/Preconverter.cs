@@ -1,4 +1,5 @@
 using Bridge.Contract;
+using Bridge.Contract.Constants;
 using Bridge.Translator.Utils;
 
 using ICSharpCode.NRefactory.CSharp;
@@ -242,7 +243,7 @@ namespace Bridge.Translator
 
             var finallyBlock = new BlockStatement();
             var dispose = new InvocationExpression(new MemberReferenceExpression(new MemberReferenceExpression(new IdentifierExpression("Bridge"), "Script"), "Write"),
-                                                   new PrimitiveExpression(string.Format("if (Bridge.hasValue({0})) {0}.dispose();", name)));
+                                                   new PrimitiveExpression(string.Format("if (" + JS.Funcs.BRIDGE_HASVALUE + "({0})) {0}.dispose();", name)));
 
             finallyBlock.Statements.Add(dispose);
 

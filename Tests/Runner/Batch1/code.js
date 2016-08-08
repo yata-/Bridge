@@ -6119,6 +6119,7 @@
             Bridge.Test.Assert.areDeepEqual([6, 6, 4, 2, 1], list.toArray());
         },
         sortWithIComparerWorks: function () {
+            var $t;
             var list = Bridge.merge(new (System.Collections.Generic.List$1(System.Int32))(), [
                 [1],
                 [6],
@@ -6126,7 +6127,7 @@
                 [4],
                 [2]
             ] );
-            list.sort(Bridge.fn.bind(new Bridge.ClientTest.Collections.Generic.ListTests.TestReverseComparer(), new Bridge.ClientTest.Collections.Generic.ListTests.TestReverseComparer().compare));
+            ($t=new Bridge.ClientTest.Collections.Generic.ListTests.TestReverseComparer(), list.sort(Bridge.fn.bind($t, $t.compare)));
             Bridge.Test.Assert.areDeepEqual([6, 6, 4, 2, 1], list.toArray());
         },
         foreachWhenCastToIEnumerableWorks: function () {
@@ -6347,6 +6348,7 @@
             MODULE_VERSION: "Simple types",
             MODULE_BASIC_CSHARP: "C#",
             MODULE_LINQ: "LINQ",
+            MODULE_LINQ_EXPRESSIONS: "LINQ Expressions",
             MODULE_DATETIME: "Date and time",
             MODULE_NULLABLE: "Nullable",
             MODULE_STRING: "String",
@@ -10702,6 +10704,2056 @@
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Linq.Expressions.ExpressionTests', {
+        statics: {
+            f: function (f) {
+                return 0;
+            }
+        },
+        expressionProtectedConstructorWorks: function () {
+            var expr = new Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyExpression();
+            Bridge.Test.Assert.areEqual$1(expr.ntype, 9999, "NodeType");
+            Bridge.Test.Assert.areEqual$1(expr.type, String, "Type");
+        },
+        simpleExpressionTreeWorks: function () {
+            var $t, $t1;
+            var f = ($t={ ntype: 9, type: System.Int32, value: 42 }, { ntype: 18, type: Function, returnType: $t.type, body: $t, params: Bridge.toList([]) });
+            Bridge.Test.Assert.areEqual(f.ntype, 18);
+            Bridge.Test.Assert.areEqual(f.type, Function);
+            Bridge.Test.Assert.areEqual(f.returnType, System.Int32);
+            Bridge.Test.Assert.areEqual(f.body.ntype, 9);
+            Bridge.Test.Assert.areEqual(f.body.type, System.Int32);
+            Bridge.Test.Assert.areEqual(($t1 = f.body, Bridge.cast($t1, Bridge.hasValue($t1) && ($t1.ntype === 9))).value, 42);
+        },
+        lambdaWorks: function () {
+            var $t, $t1, $t2, $t3, $t4, $t5, $t6, $t7, $t8, $t9;
+            var asserter = $_.Bridge.ClientTest.Linq.Expressions.ExpressionTests.f1;
+    
+            var f1 = ($t={ ntype: 9, type: System.Int32, value: 42 }, { ntype: 18, type: Function, returnType: $t.type, body: $t, params: Bridge.toList([]) });
+            var f2 = ($t1 = { ntype: 38, type: System.Int32, name: "a" }, ($t2={ ntype: 9, type: String, value: "X" }, { ntype: 18, type: Function, returnType: $t2.type, body: $t2, params: Bridge.toList([$t1]) }));
+            var f3 = ($t3 = { ntype: 38, type: System.Int32, name: "x" }, $t4 = { ntype: 38, type: String, name: "y" }, ($t5={ ntype: 9, type: System.Double, value: 42.0 }, { ntype: 18, type: Function, returnType: $t5.type, body: $t5, params: Bridge.toList([$t3,$t4]) }));
+            var f4 = ($t6={ ntype: 9, type: System.Double, value: 42 }, { ntype: 18, type: Function, returnType: $t6.type, body: $t6, params: Bridge.toList([{ ntype: 38, type: System.Int32, name: "x1" }, { ntype: 38, type: String, name: "x2" }]) });
+            var f5 = ($t7={ ntype: 9, type: System.Double, value: 42 }, { ntype: 18, type: Function, returnType: $t7.type, body: $t7, params: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([{ ntype: 38, type: System.Int32, name: "x1" }, { ntype: 38, type: String, name: "x2" }])) });
+            var f6 = ($t8={ ntype: 9, type: System.Double, value: 42 }, { ntype: 18, type: Function, returnType: $t8.type, body: $t8, params: Bridge.toList([{ ntype: 38, type: System.Int32, name: "x1" }, { ntype: 38, type: String, name: "x2" }]) });
+            var f7 = ($t9={ ntype: 9, type: System.Double, value: 42 }, { ntype: 18, type: Function, returnType: $t9.type, body: $t9, params: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([{ ntype: 38, type: System.Int32, name: "x1" }, { ntype: 38, type: String, name: "x2" }])) });
+    
+            asserter(f1, System.Int32, System.Array.init(0, null), System.Array.init(0, null), "f1");
+            asserter(f2, String, ["a"], [System.Int32], "f2");
+            asserter(f3, System.Double, ["x", "y"], [System.Int32, String], "f3");
+            asserter(f4, System.Double, ["x1", "x2"], [System.Int32, String], "f4");
+            asserter(f5, System.Double, ["x1", "x2"], [System.Int32, String], "f5");
+            asserter(f6, System.Double, ["x1", "x2"], [System.Int32, String], "f6");
+            asserter(f7, System.Double, ["x1", "x2"], [System.Int32, String], "f7");
+        },
+        parameterAndVariableWork: function () {
+            var $t;
+            var p1 = { ntype: 38, type: System.Int32 };
+            var p2 = { ntype: 38, type: String, name: "par" };
+            var p3 = { ntype: 38, type: System.Int32 };
+            var p4 = { ntype: 38, type: String, name: "var" };
+            Bridge.Test.Assert.true$1(($t = p1, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))), "p1 is ParameterExpression");
+            Bridge.Test.Assert.true$1(($t = p2, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))), "p2 is ParameterExpression");
+            Bridge.Test.Assert.true$1(($t = p3, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))), "p3 is ParameterExpression");
+            Bridge.Test.Assert.true$1(($t = p4, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))), "p4 is ParameterExpression");
+            Bridge.Test.Assert.areEqual$1(p1.ntype, 38, "p1.NodeType");
+            Bridge.Test.Assert.areEqual$1(p2.ntype, 38, "p2.NodeType");
+            Bridge.Test.Assert.areEqual$1(p3.ntype, 38, "p3.NodeType");
+            Bridge.Test.Assert.areEqual$1(p4.ntype, 38, "p4.NodeType");
+            Bridge.Test.Assert.areEqual$1(p1.type, System.Int32, "p1.Type");
+            Bridge.Test.Assert.areEqual$1(p2.type, String, "p2.Type");
+            Bridge.Test.Assert.areEqual$1(p3.type, System.Int32, "p3.Type");
+            Bridge.Test.Assert.areEqual$1(p4.type, String, "p4.Type");
+            Bridge.Test.Assert.true$1(p1.name == null, "p1.Name");
+            Bridge.Test.Assert.areEqual$1(p2.name, "par", "p2.Name");
+            Bridge.Test.Assert.true$1(p3.name == null, "p3.Name");
+            Bridge.Test.Assert.areEqual$1(p4.name, "var", "p4.Name");
+    
+            Bridge.Test.Assert.false$1(($t = { ntype: 9, type: System.Int32, value: 0 }, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))), "Constant is ParameterExpression");
+        },
+        constantWorks: function () {
+            var $t;
+            var c1 = { ntype: 9, type: System.Int32, value: 42 };
+            var c2 = { ntype: 9, type: String, value: "Hello, world" };
+            var c3 = { ntype: 9, type: System.Int32, value: 17 };
+    
+            Bridge.Test.Assert.true$1(($t = c1, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 9))), "c1 is ConstantExpression");
+            Bridge.Test.Assert.true$1(($t = c2, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 9))), "c2 is ConstantExpression");
+            Bridge.Test.Assert.true$1(($t = c3, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 9))), "c3 is ConstantExpression");
+            Bridge.Test.Assert.areEqual$1(c1.ntype, 9, "c1.NodeType");
+            Bridge.Test.Assert.areEqual$1(c2.ntype, 9, "c2.NodeType");
+            Bridge.Test.Assert.areEqual$1(c3.ntype, 9, "c3.NodeType");
+            Bridge.Test.Assert.areEqual$1(c1.type, System.Int32, "c1.Type");
+            Bridge.Test.Assert.areEqual$1(c2.type, String, "c2.Type");
+            Bridge.Test.Assert.areEqual$1(c3.type, System.Int32, "c3.Type");
+            Bridge.Test.Assert.areEqual$1(c1.value, 42, "c1.Value");
+            Bridge.Test.Assert.areEqual$1(c2.value, "Hello, world", "c2.Value");
+            Bridge.Test.Assert.areEqual$1(c3.value, 17, "c3.Value");
+    
+            Bridge.Test.Assert.false$1(($t = { ntype: 38, type: System.Int32 }, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 9))), "Parameter is ConstantExpression");
+        },
+        binaryExpressionsWork: function () {
+            var $t, $t1, $t2, $t3, $t4, $t5, $t6, $t7, $t8, $t9, $t10, $t11, $t12, $t13, $t14, $t15, $t16, $t17, $t18, $t19, $t20, $t21, $t22, $t23, $t24, $t25, $t26, $t27, $t28, $t29, $t30, $t31, $t32, $t33, $t34, $t35, $t36, $t37, $t38, $t39, $t40, $t41, $t42, $t43, $t44, $t45, $t46, $t47, $t48, $t49, $t50, $t51, $t52, $t53, $t54, $t55, $t56, $t57, $t58, $t59, $t60, $t61, $t62, $t63, $t64, $t65, $t66, $t67, $t68, $t69, $t70, $t71, $t72, $t73, $t74, $t75, $t76, $t77, $t78, $t79, $t80, $t81, $t82, $t83, $t84, $t85, $t86, $t87, $t88, $t89, $t90, $t91, $t92, $t93, $t94, $t95, $t96, $t97, $t98, $t99, $t100, $t101, $t102, $t103, $t104, $t105, $t106, $t107, $t108, $t109, $t110, $t111, $t112, $t113, $t114, $t115, $t116, $t117, $t118, $t119, $t120, $t121, $t122, $t123, $t124, $t125, $t126, $t127, $t128, $t129, $t130, $t131, $t132, $t133, $t134, $t135, $t136, $t137, $t138, $t139, $t140, $t141, $t142, $t143, $t144, $t145, $t146, $t147, $t148, $t149, $t150, $t151, $t152, $t153, $t154, $t155, $t156, $t157, $t158, $t159, $t160, $t161, $t162, $t163, $t164, $t165, $t166, $t167, $t168, $t169, $t170, $t171, $t172, $t173, $t174, $t175, $t176, $t177;
+            var asserter = $_.Bridge.ClientTest.Linq.Expressions.ExpressionTests.f2;
+    
+            var e1 = ($t = { ntype: 38, type: System.Int32, name: "a" }, $t1 = { ntype: 38, type: System.Int32, name: "b" }, ($t2={ ntype: 26, type: System.Int32, left: $t, right: $t1 }, { ntype: 18, type: Function, returnType: $t2.type, body: $t2, params: Bridge.toList([$t,$t1]) }));
+            var e2 = ($t3 = { ntype: 38, type: System.Int32, name: "a" }, $t4 = { ntype: 38, type: System.Int32, name: "b" }, ($t5={ ntype: 25, type: System.Int32, left: $t3, right: $t4 }, { ntype: 18, type: Function, returnType: $t5.type, body: $t5, params: Bridge.toList([$t3,$t4]) }));
+            var e3 = ($t6 = { ntype: 38, type: System.Int32, name: "a" }, $t7 = { ntype: 38, type: System.Int32, name: "b" }, ($t8={ ntype: 12, type: System.Int32, left: $t6, right: $t7 }, { ntype: 18, type: Function, returnType: $t8.type, body: $t8, params: Bridge.toList([$t6,$t7]) }));
+            var e4 = ($t9 = { ntype: 38, type: System.Int32, name: "a" }, $t10 = { ntype: 38, type: System.Int32, name: "b" }, ($t11={ ntype: 0, type: System.Int32, left: $t9, right: $t10 }, { ntype: 18, type: Function, returnType: $t11.type, body: $t11, params: Bridge.toList([$t9,$t10]) }));
+            var e5 = ($t12 = { ntype: 38, type: System.Int32, name: "a" }, $t13 = { ntype: 38, type: System.Int32, name: "b" }, ($t14={ ntype: 42, type: System.Int32, left: $t12, right: $t13 }, { ntype: 18, type: Function, returnType: $t14.type, body: $t14, params: Bridge.toList([$t12,$t13]) }));
+            var e6 = ($t15 = { ntype: 38, type: System.Int32, name: "a" }, $t16 = { ntype: 38, type: System.Int32, name: "b" }, ($t17={ ntype: 19, type: System.Int32, left: $t15, right: $t16 }, { ntype: 18, type: Function, returnType: $t17.type, body: $t17, params: Bridge.toList([$t15,$t16]) }));
+            var e7 = ($t18 = { ntype: 38, type: System.Int32, name: "a" }, $t19 = { ntype: 38, type: System.Int32, name: "b" }, ($t20={ ntype: 41, type: System.Int32, left: $t18, right: $t19 }, { ntype: 18, type: Function, returnType: $t20.type, body: $t20, params: Bridge.toList([$t18,$t19]) }));
+            var e8 = ($t21 = { ntype: 38, type: System.Int32, name: "a" }, $t22 = { ntype: 38, type: System.Int32, name: "b" }, ($t23={ ntype: 20, type: Boolean, left: $t21, right: $t22 }, { ntype: 18, type: Function, returnType: $t23.type, body: $t23, params: Bridge.toList([$t21,$t22]) }));
+            var e9 = ($t24 = { ntype: 38, type: System.Int32, name: "a" }, $t25 = { ntype: 38, type: System.Int32, name: "b" }, ($t26={ ntype: 15, type: Boolean, left: $t24, right: $t25 }, { ntype: 18, type: Function, returnType: $t26.type, body: $t26, params: Bridge.toList([$t24,$t25]) }));
+            var e10 = ($t27 = { ntype: 38, type: System.Int32, name: "a" }, $t28 = { ntype: 38, type: System.Int32, name: "b" }, ($t29={ ntype: 21, type: Boolean, left: $t27, right: $t28 }, { ntype: 18, type: Function, returnType: $t29.type, body: $t29, params: Bridge.toList([$t27,$t28]) }));
+            var e11 = ($t30 = { ntype: 38, type: System.Int32, name: "a" }, $t31 = { ntype: 38, type: System.Int32, name: "b" }, ($t32={ ntype: 16, type: Boolean, left: $t30, right: $t31 }, { ntype: 18, type: Function, returnType: $t32.type, body: $t32, params: Bridge.toList([$t30,$t31]) }));
+            var e12 = ($t33 = { ntype: 38, type: System.Int32, name: "a" }, $t34 = { ntype: 38, type: System.Int32, name: "b" }, ($t35={ ntype: 13, type: Boolean, left: $t33, right: $t34 }, { ntype: 18, type: Function, returnType: $t35.type, body: $t35, params: Bridge.toList([$t33,$t34]) }));
+            var e13 = ($t36 = { ntype: 38, type: System.Int32, name: "a" }, $t37 = { ntype: 38, type: System.Int32, name: "b" }, ($t38={ ntype: 35, type: Boolean, left: $t36, right: $t37 }, { ntype: 18, type: Function, returnType: $t38.type, body: $t38, params: Bridge.toList([$t36,$t37]) }));
+            var e14 = ($t39 = { ntype: 38, type: System.Int32, name: "a" }, $t40 = { ntype: 38, type: System.Int32, name: "b" }, ($t41={ ntype: 2, type: System.Int32, left: $t39, right: $t40 }, { ntype: 18, type: Function, returnType: $t41.type, body: $t41, params: Bridge.toList([$t39,$t40]) }));
+            var e15 = ($t42 = { ntype: 38, type: System.Int32, name: "a" }, $t43 = { ntype: 38, type: System.Int32, name: "b" }, ($t44={ ntype: 14, type: System.Int32, left: $t42, right: $t43 }, { ntype: 18, type: Function, returnType: $t44.type, body: $t44, params: Bridge.toList([$t42,$t43]) }));
+            var e16 = ($t45 = { ntype: 38, type: System.Int32, name: "a" }, $t46 = { ntype: 38, type: System.Int32, name: "b" }, ($t47={ ntype: 36, type: System.Int32, left: $t45, right: $t46 }, { ntype: 18, type: Function, returnType: $t47.type, body: $t47, params: Bridge.toList([$t45,$t46]) }));
+            var e17 = ($t48 = { ntype: 38, type: Boolean, name: "a" }, $t49 = { ntype: 38, type: Boolean, name: "b" }, ($t50={ ntype: 3, type: Boolean, left: $t48, right: $t49 }, { ntype: 18, type: Function, returnType: $t50.type, body: $t50, params: Bridge.toList([$t48,$t49]) }));
+            var e18 = ($t51 = { ntype: 38, type: Boolean, name: "a" }, $t52 = { ntype: 38, type: Boolean, name: "b" }, ($t53={ ntype: 37, type: Boolean, left: $t51, right: $t52 }, { ntype: 18, type: Function, returnType: $t53.type, body: $t53, params: Bridge.toList([$t51,$t52]) }));
+            var e19 = ($t54 = { ntype: 38, type: System.Int32, name: "a" }, $t55 = { ntype: 38, type: System.Int32, name: "b" }, ($t56={ ntype: 27, type: System.Int32, left: $t54, right: $t55 }, { ntype: 18, type: Function, returnType: $t56.type, body: $t56, params: Bridge.toList([$t54,$t55]) }));
+            var e20 = ($t57 = { ntype: 38, type: System.Int32, name: "a" }, $t58 = { ntype: 38, type: System.Int32, name: "b" }, ($t59={ ntype: 1, type: System.Int32, left: $t57, right: $t58 }, { ntype: 18, type: Function, returnType: $t59.type, body: $t59, params: Bridge.toList([$t57,$t58]) }));
+            var e21 = ($t60 = { ntype: 38, type: System.Int32, name: "a" }, $t61 = { ntype: 38, type: System.Int32, name: "b" }, ($t62={ ntype: 43, type: System.Int32, left: $t60, right: $t61 }, { ntype: 18, type: Function, returnType: $t62.type, body: $t62, params: Bridge.toList([$t60,$t61]) }));
+            var e22 = ($t63 = { ntype: 38, type: System.Int32, name: "a" }, $t64 = { ntype: 38, type: System.Int32, name: "b" }, ($t65={ ntype: 7, type: System.Int32, left: $t63, right: $t64 }, { ntype: 18, type: Function, returnType: $t65.type, body: $t65, params: Bridge.toList([$t63,$t64]) }));
+    
+            var pa = { ntype: 38, type: System.Int32, name: "a" };
+            var pb = { ntype: 38, type: System.Int32, name: "b" };
+            var e31 = { ntype: 26, type: System.Int32, left: pa, right: pb };
+            var e32 = { ntype: 25, type: System.Int32, left: pa, right: pb };
+            var e33 = { ntype: 12, type: System.Int32, left: pa, right: pb };
+            var e34 = { ntype: 0, type: System.Int32, left: pa, right: pb };
+            var e35 = { ntype: 42, type: System.Int32, left: pa, right: pb };
+            var e36 = { ntype: 19, type: System.Int32, left: pa, right: pb };
+            var e37 = { ntype: 41, type: System.Int32, left: pa, right: pb };
+            var e38 = { ntype: 20, type: Boolean, left: pa, right: pb };
+            var e39 = { ntype: 15, type: Boolean, left: pa, right: pb };
+            var e40 = { ntype: 21, type: Boolean, left: pa, right: pb };
+            var e41 = { ntype: 16, type: Boolean, left: pa, right: pb };
+            var e42 = { ntype: 13, type: Boolean, left: pa, right: pb };
+            var e43 = { ntype: 35, type: Boolean, left: pa, right: pb };
+            var e44 = { ntype: 2, type: System.Int32, left: pa, right: pb };
+            var e45 = { ntype: 14, type: System.Int32, left: pa, right: pb };
+            var e46 = { ntype: 36, type: System.Int32, left: pa, right: pb };
+            var e47 = { ntype: 3, type: Boolean, left: { ntype: 38, type: Boolean, name: "a" }, right: { ntype: 38, type: Boolean, name: "b" } };
+            var e48 = { ntype: 37, type: Boolean, left: { ntype: 38, type: Boolean, name: "a" }, right: { ntype: 38, type: Boolean, name: "b" } };
+            var e49 = { ntype: 27, type: System.Int32, left: pa, right: pb };
+            var e50 = { ntype: 1, type: System.Int32, left: pa, right: pb };
+            var e51 = { ntype: 43, type: System.Int32, left: pa, right: pb };
+            var e52 = { ntype: 7, type: System.Int32, left: { ntype: 38, type: System.Int32, name: "a" }, right: pb };
+            var e53 = { ntype: 39, type: System.Int32, left: pa, right: pb };
+    
+            var e61 = ($t66 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, $t67 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "b" }, ($t69=($t68=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[23], { ntype: 26, type: $t68.returnType, left: $t66, right: $t67, method: $t68 }), { ntype: 18, type: Function, returnType: $t69.type, body: $t69, params: Bridge.toList([$t66,$t67]) }));
+            var e62 = ($t70 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, $t71 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "b" }, ($t73=($t72=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[22], { ntype: 25, type: $t72.returnType, left: $t70, right: $t71, method: $t72 }), { ntype: 18, type: Function, returnType: $t73.type, body: $t73, params: Bridge.toList([$t70,$t71]) }));
+            var e63 = ($t74 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, $t75 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "b" }, ($t77=($t76=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[9], { ntype: 12, type: $t76.returnType, left: $t74, right: $t75, method: $t76 }), { ntype: 18, type: Function, returnType: $t77.type, body: $t77, params: Bridge.toList([$t74,$t75]) }));
+            var e64 = ($t78 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, $t79 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "b" }, ($t81=($t80=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[5], { ntype: 0, type: $t80.returnType, left: $t78, right: $t79, method: $t80 }), { ntype: 18, type: Function, returnType: $t81.type, body: $t81, params: Bridge.toList([$t78,$t79]) }));
+            var e65 = ($t82 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, $t83 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "b" }, ($t85=($t84=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[27], { ntype: 42, type: $t84.returnType, left: $t82, right: $t83, method: $t84 }), { ntype: 18, type: Function, returnType: $t85.type, body: $t85, params: Bridge.toList([$t82,$t83]) }));
+            var e66 = ($t86 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, $t87 = { ntype: 38, type: System.Int32, name: "b" }, ($t89=($t88=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[18], { ntype: 19, type: $t88.returnType, left: $t86, right: $t87, method: $t88 }), { ntype: 18, type: Function, returnType: $t89.type, body: $t89, params: Bridge.toList([$t86,$t87]) }));
+            var e67 = ($t90 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, $t91 = { ntype: 38, type: System.Int32, name: "b" }, ($t93=($t92=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[26], { ntype: 41, type: $t92.returnType, left: $t90, right: $t91, method: $t92 }), { ntype: 18, type: Function, returnType: $t93.type, body: $t93, params: Bridge.toList([$t90,$t91]) }));
+            var e68 = ($t94 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, $t95 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "b" }, ($t97=($t96=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[19], { ntype: 20, type: $t96.returnType, left: $t94, right: $t95, method: $t96 }), { ntype: 18, type: Function, returnType: $t97.type, body: $t97, params: Bridge.toList([$t94,$t95]) }));
+            var e69 = ($t98 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, $t99 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "b" }, ($t101=($t100=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[14], { ntype: 15, type: $t100.returnType, left: $t98, right: $t99, method: $t100 }), { ntype: 18, type: Function, returnType: $t101.type, body: $t101, params: Bridge.toList([$t98,$t99]) }));
+            var e70 = ($t102 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, $t103 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "b" }, ($t105=($t104=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[20], { ntype: 21, type: $t104.returnType, left: $t102, right: $t103, method: $t104 }), { ntype: 18, type: Function, returnType: $t105.type, body: $t105, params: Bridge.toList([$t102,$t103]) }));
+            var e71 = ($t106 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, $t107 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "b" }, ($t109=($t108=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[15], { ntype: 16, type: $t108.returnType, left: $t106, right: $t107, method: $t108 }), { ntype: 18, type: Function, returnType: $t109.type, body: $t109, params: Bridge.toList([$t106,$t107]) }));
+            var e72 = ($t110 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, $t111 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "b" }, ($t113=($t112=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[10], { ntype: 13, type: $t112.returnType, left: $t110, right: $t111, method: $t112 }), { ntype: 18, type: Function, returnType: $t113.type, body: $t113, params: Bridge.toList([$t110,$t111]) }));
+            var e73 = ($t114 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, $t115 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "b" }, ($t117=($t116=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[17], { ntype: 35, type: $t116.returnType, left: $t114, right: $t115, method: $t116 }), { ntype: 18, type: Function, returnType: $t117.type, body: $t117, params: Bridge.toList([$t114,$t115]) }));
+            var e74 = ($t118 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, $t119 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "b" }, ($t121=($t120=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[6], { ntype: 2, type: $t120.returnType, left: $t118, right: $t119, method: $t120 }), { ntype: 18, type: Function, returnType: $t121.type, body: $t121, params: Bridge.toList([$t118,$t119]) }));
+            var e75 = ($t122 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, $t123 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "b" }, ($t125=($t124=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[11], { ntype: 14, type: $t124.returnType, left: $t122, right: $t123, method: $t124 }), { ntype: 18, type: Function, returnType: $t125.type, body: $t125, params: Bridge.toList([$t122,$t123]) }));
+            var e76 = ($t126 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, $t127 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "b" }, ($t129=($t128=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[7], { ntype: 36, type: $t128.returnType, left: $t126, right: $t127, method: $t128 }), { ntype: 18, type: Function, returnType: $t129.type, body: $t129, params: Bridge.toList([$t126,$t127]) }));
+            var e79 = ($t130 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, $t131 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "b" }, ($t133=($t132=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[23], { ntype: 27, type: $t132.returnType, left: $t130, right: $t131, method: $t132 }), { ntype: 18, type: Function, returnType: $t133.type, body: $t133, params: Bridge.toList([$t130,$t131]) }));
+            var e80 = ($t134 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, $t135 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "b" }, ($t137=($t136=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[5], { ntype: 1, type: $t136.returnType, left: $t134, right: $t135, method: $t136 }), { ntype: 18, type: Function, returnType: $t137.type, body: $t137, params: Bridge.toList([$t134,$t135]) }));
+            var e81 = ($t138 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, $t139 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "b" }, ($t141=($t140=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[27], { ntype: 43, type: $t140.returnType, left: $t138, right: $t139, method: $t140 }), { ntype: 18, type: Function, returnType: $t141.type, body: $t141, params: Bridge.toList([$t138,$t139]) }));
+    
+            var pa2 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" };
+            var pb2 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "b" };
+            var e91 = ($t142=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Multiply"), { ntype: 26, type: $t142.returnType, left: pa2, right: pb2, method: $t142 });
+            var e92 = ($t143=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Modulus"), { ntype: 25, type: $t143.returnType, left: pa2, right: pb2, method: $t143 });
+            var e93 = ($t144=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Division"), { ntype: 12, type: $t144.returnType, left: pa2, right: pb2, method: $t144 });
+            var e94 = ($t145=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Addition"), { ntype: 0, type: $t145.returnType, left: pa2, right: pb2, method: $t145 });
+            var e95 = ($t146=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Subtraction"), { ntype: 42, type: $t146.returnType, left: pa2, right: pb2, method: $t146 });
+            var e96 = ($t147=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_LeftShift"), { ntype: 19, type: $t147.returnType, left: pa2, right: pb2, method: $t147 });
+            var e97 = ($t148=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_RightShift"), { ntype: 41, type: $t148.returnType, left: pa2, right: pb2, method: $t148 });
+            var e98 = ($t149=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_LessThan"), { ntype: 20, type: $t149.returnType, left: pa2, right: pb2, method: $t149 });
+            var e99 = ($t150=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_GreaterThan"), { ntype: 15, type: $t150.returnType, left: pa2, right: pb2, method: $t150 });
+            var e100 = ($t151=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_LessThanOrEqual"), { ntype: 21, type: $t151.returnType, left: pa2, right: pb2, method: $t151 });
+            var e101 = ($t152=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_GreaterThanOrEqual"), { ntype: 16, type: $t152.returnType, left: pa2, right: pb2, method: $t152 });
+            var e102 = ($t153=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Equality"), { ntype: 13, type: $t153.returnType, left: pa2, right: pb2, method: $t153 });
+            var e103 = ($t154=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Inequality"), { ntype: 35, type: $t154.returnType, left: pa2, right: pb2, method: $t154 });
+            var e104 = ($t155=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_BitwiseAnd"), { ntype: 2, type: $t155.returnType, left: pa2, right: pb2, method: $t155 });
+            var e105 = ($t156=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_ExclusiveOr"), { ntype: 14, type: $t156.returnType, left: pa2, right: pb2, method: $t156 });
+            var e106 = ($t157=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_BitwiseOr"), { ntype: 36, type: $t157.returnType, left: pa2, right: pb2, method: $t157 });
+            var e109 = ($t158=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Multiply"), { ntype: 27, type: $t158.returnType, left: pa2, right: pb2, method: $t158 });
+            var e110 = ($t159=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Addition"), { ntype: 1, type: $t159.returnType, left: pa2, right: pb2, method: $t159 });
+            var e111 = ($t160=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Subtraction"), { ntype: 43, type: $t160.returnType, left: pa2, right: pb2, method: $t160 });
+            var e113 = ($t161=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Power"), { ntype: 39, type: $t161.returnType, left: pa2, right: pb2, method: $t161 });
+    
+            var e121 = { ntype: 69, type: System.Int32, left: pa, right: pb };
+            var e122 = { ntype: 68, type: System.Int32, left: pa, right: pb };
+            var e123 = { ntype: 65, type: System.Int32, left: pa, right: pb };
+            var e124 = { ntype: 63, type: System.Int32, left: pa, right: pb };
+            var e125 = { ntype: 73, type: System.Int32, left: pa, right: pb };
+            var e126 = { ntype: 67, type: System.Int32, left: pa, right: pb };
+            var e127 = { ntype: 72, type: System.Int32, left: pa, right: pb };
+            var e134 = { ntype: 64, type: System.Int32, left: pa, right: pb };
+            var e135 = { ntype: 66, type: System.Int32, left: pa, right: pb };
+            var e136 = { ntype: 70, type: System.Int32, left: pa, right: pb };
+            var e139 = { ntype: 75, type: System.Int32, left: pa, right: pb };
+            var e140 = { ntype: 74, type: System.Int32, left: pa, right: pb };
+            var e141 = { ntype: 76, type: System.Int32, left: pa, right: pb };
+            var e143 = { ntype: 71, type: System.Int32, left: pa, right: pb };
+            var e144 = { ntype: 46, type: pb.type, left: pa, right: pb };
+    
+            var e151 = ($t162=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Multiply"), { ntype: 69, type: $t162.returnType, left: pa2, right: pb2, method: $t162 });
+            var e152 = ($t163=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Modulus"), { ntype: 68, type: $t163.returnType, left: pa2, right: pb2, method: $t163 });
+            var e153 = ($t164=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Division"), { ntype: 65, type: $t164.returnType, left: pa2, right: pb2, method: $t164 });
+            var e154 = ($t165=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Addition"), { ntype: 63, type: $t165.returnType, left: pa2, right: pb2, method: $t165 });
+            var e155 = ($t166=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Subtraction"), { ntype: 73, type: $t166.returnType, left: pa2, right: pb2, method: $t166 });
+            var e156 = ($t167=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_LeftShift"), { ntype: 67, type: $t167.returnType, left: pa2, right: pb2, method: $t167 });
+            var e157 = ($t168=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_RightShift"), { ntype: 72, type: $t168.returnType, left: pa2, right: pb2, method: $t168 });
+            var e164 = ($t169=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_BitwiseAnd"), { ntype: 64, type: $t169.returnType, left: pa2, right: pb2, method: $t169 });
+            var e165 = ($t170=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_ExclusiveOr"), { ntype: 66, type: $t170.returnType, left: pa2, right: pb2, method: $t170 });
+            var e166 = ($t171=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_BitwiseOr"), { ntype: 70, type: $t171.returnType, left: pa2, right: pb2, method: $t171 });
+            var e169 = ($t172=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Multiply"), { ntype: 75, type: $t172.returnType, left: pa2, right: pb2, method: $t172 });
+            var e170 = ($t173=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Addition"), { ntype: 74, type: $t173.returnType, left: pa2, right: pb2, method: $t173 });
+            var e171 = ($t174=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Subtraction"), { ntype: 76, type: $t174.returnType, left: pa2, right: pb2, method: $t174 });
+            var e173 = ($t175=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Power"), { ntype: 71, type: $t175.returnType, left: pa2, right: pb2, method: $t175 });
+    
+            var mkbin1 = { ntype: 42, type: pb.type, left: pa, right: pb };
+            var mkbin2 = ($t176=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_LessThan"), { ntype: 20, type: $t176.returnType, left: pa2, right: pb2, method: $t176 });
+    
+            asserter(e1.body, 26, System.Int32, null, "e1");
+            asserter(e2.body, 25, System.Int32, null, "e2");
+            asserter(e3.body, 12, System.Int32, null, "e3");
+            asserter(e4.body, 0, System.Int32, null, "e4");
+            asserter(e5.body, 42, System.Int32, null, "e5");
+            asserter(e6.body, 19, System.Int32, null, "e6");
+            asserter(e7.body, 41, System.Int32, null, "e7");
+            asserter(e8.body, 20, Boolean, null, "e8");
+            asserter(e9.body, 15, Boolean, null, "e9");
+            asserter(e10.body, 21, Boolean, null, "e10");
+            asserter(e11.body, 16, Boolean, null, "e11");
+            asserter(e12.body, 13, Boolean, null, "e12");
+            asserter(e13.body, 35, Boolean, null, "e13");
+            asserter(e14.body, 2, System.Int32, null, "e14");
+            asserter(e15.body, 14, System.Int32, null, "e15");
+            asserter(e16.body, 36, System.Int32, null, "e16");
+            asserter(e17.body, 3, Boolean, null, "e17");
+            asserter(e18.body, 37, Boolean, null, "e18");
+            asserter(e19.body, 27, System.Int32, null, "e19");
+            asserter(e20.body, 1, System.Int32, null, "e20");
+            asserter(e21.body, 43, System.Int32, null, "e21");
+            asserter(e22.body, 7, System.Int32, null, "e22");
+    
+            asserter(e31, 26, System.Int32, null, "e31");
+            asserter(e32, 25, System.Int32, null, "e32");
+            asserter(e33, 12, System.Int32, null, "e33");
+            asserter(e34, 0, System.Int32, null, "e34");
+            asserter(e35, 42, System.Int32, null, "e35");
+            asserter(e36, 19, System.Int32, null, "e36");
+            asserter(e37, 41, System.Int32, null, "e37");
+            asserter(e38, 20, Boolean, null, "e38");
+            asserter(e39, 15, Boolean, null, "e39");
+            asserter(e40, 21, Boolean, null, "e40");
+            asserter(e41, 16, Boolean, null, "e41");
+            asserter(e42, 13, Boolean, null, "e42");
+            asserter(e43, 35, Boolean, null, "e43");
+            asserter(e44, 2, System.Int32, null, "e44");
+            asserter(e45, 14, System.Int32, null, "e45");
+            asserter(e46, 36, System.Int32, null, "e46");
+            asserter(e47, 3, Boolean, null, "e47");
+            asserter(e48, 37, Boolean, null, "e48");
+            asserter(e49, 27, System.Int32, null, "e49");
+            asserter(e50, 1, System.Int32, null, "e50");
+            asserter(e51, 43, System.Int32, null, "e51");
+            asserter(e52, 7, System.Int32, null, "e52");
+            asserter(e53, 39, System.Int32, null, "e53");
+    
+            asserter(e61.body, 26, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Multiply", "e61");
+            asserter(e62.body, 25, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Modulus", "e62");
+            asserter(e63.body, 12, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Division", "e63");
+            asserter(e64.body, 0, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Addition", "e64");
+            asserter(e65.body, 42, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Subtraction", "e65");
+            asserter(e66.body, 19, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_LeftShift", "e66");
+            asserter(e67.body, 41, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_RightShift", "e67");
+            asserter(e68.body, 20, Boolean, "op_LessThan", "e68");
+            asserter(e69.body, 15, Boolean, "op_GreaterThan", "e69");
+            asserter(e70.body, 21, Boolean, "op_LessThanOrEqual", "e70");
+            asserter(e71.body, 16, Boolean, "op_GreaterThanOrEqual", "e71");
+            asserter(e72.body, 13, Boolean, "op_Equality", "e72");
+            asserter(e73.body, 35, Boolean, "op_Inequality", "e73");
+            asserter(e74.body, 2, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_BitwiseAnd", "e74");
+            asserter(e75.body, 14, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_ExclusiveOr", "e75");
+            asserter(e76.body, 36, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_BitwiseOr", "e76");
+            asserter(e79.body, 27, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Multiply", "e79");
+            asserter(e80.body, 1, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Addition", "e80");
+            asserter(e81.body, 43, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Subtraction", "e81");
+    
+            asserter(e91, 26, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Multiply", "e91");
+            asserter(e92, 25, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Modulus", "e92");
+            asserter(e93, 12, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Division", "e93");
+            asserter(e94, 0, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Addition", "e94");
+            asserter(e95, 42, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Subtraction", "e95");
+            asserter(e96, 19, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_LeftShift", "e96");
+            asserter(e97, 41, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_RightShift", "e97");
+            asserter(e98, 20, Boolean, "op_LessThan", "e98");
+            asserter(e99, 15, Boolean, "op_GreaterThan", "e99");
+            asserter(e100, 21, Boolean, "op_LessThanOrEqual", "e100");
+            asserter(e101, 16, Boolean, "op_GreaterThanOrEqual", "e101");
+            asserter(e102, 13, Boolean, "op_Equality", "e102");
+            asserter(e103, 35, Boolean, "op_Inequality", "e103");
+            asserter(e104, 2, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_BitwiseAnd", "e104");
+            asserter(e105, 14, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_ExclusiveOr", "e105");
+            asserter(e106, 36, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_BitwiseOr", "e106");
+            asserter(e109, 27, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Multiply", "e109");
+            asserter(e110, 1, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Addition", "e110");
+            asserter(e111, 43, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Subtraction", "e111");
+            asserter(e113, 39, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Power", "e113");
+    
+            asserter(e121, 69, System.Int32, null, "e121");
+            asserter(e122, 68, System.Int32, null, "e122");
+            asserter(e123, 65, System.Int32, null, "e123");
+            asserter(e124, 63, System.Int32, null, "e124");
+            asserter(e125, 73, System.Int32, null, "e125");
+            asserter(e126, 67, System.Int32, null, "e126");
+            asserter(e127, 72, System.Int32, null, "e127");
+            asserter(e134, 64, System.Int32, null, "e134");
+            asserter(e135, 66, System.Int32, null, "e135");
+            asserter(e136, 70, System.Int32, null, "e136");
+            asserter(e139, 75, System.Int32, null, "e139");
+            asserter(e140, 74, System.Int32, null, "e140");
+            asserter(e141, 76, System.Int32, null, "e141");
+            asserter(e143, 71, System.Int32, null, "e143");
+            asserter(e144, 46, System.Int32, null, "e143");
+    
+            asserter(e151, 69, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Multiply", "e151");
+            asserter(e152, 68, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Modulus", "e152");
+            asserter(e153, 65, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Division", "e153");
+            asserter(e154, 63, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Addition", "e154");
+            asserter(e155, 73, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Subtraction", "e155");
+            asserter(e156, 67, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_LeftShift", "e156");
+            asserter(e157, 72, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_RightShift", "e157");
+            asserter(e164, 64, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_BitwiseAnd", "e164");
+            asserter(e165, 66, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_ExclusiveOr", "e165");
+            asserter(e166, 70, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_BitwiseOr", "e166");
+            asserter(e169, 75, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Multiply", "e169");
+            asserter(e170, 74, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Addition", "e170");
+            asserter(e171, 76, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Subtraction", "e171");
+            asserter(e173, 71, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Power", "e173");
+    
+            asserter(mkbin1, 42, System.Int32, null, "mkbin1");
+            asserter(mkbin2, 20, Boolean, "op_LessThan", "mkbin2");
+    
+            Bridge.Test.Assert.false$1(($t177 = { ntype: 9, type: Object, value: null }, Bridge.is($t177, Bridge.hasValue($t177) && ([0,1,2,3,5,7,12,13,14,15,16,19,20,21,22,25,26,27,35,36,37,39,41,42,43,46,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80].indexOf($t177.ntype) >= 0))), "Constant should not be BinaryExpression");
+        },
+        unaryExpressionsWork: function () {
+            var $t, $t1, $t2, $t3, $t4, $t5, $t6, $t7, $t8, $t9, $t10, $t11, $t12, $t13, $t14, $t15, $t16, $t17, $t18, $t19, $t20, $t21, $t22, $t23, $t24, $t25, $t26, $t27, $t28, $t29, $t30, $t31, $t32, $t33, $t34, $t35, $t36, $t37, $t38, $t39;
+            var asserter = $_.Bridge.ClientTest.Linq.Expressions.ExpressionTests.f3;
+    
+            var e1 = ($t = { ntype: 38, type: System.Int32, name: "a" }, ($t1={ ntype: 29, type: System.Int32, operand: $t }, { ntype: 18, type: Function, returnType: $t1.type, body: $t1, params: Bridge.toList([$t]) }));
+            var e2 = ($t2 = { ntype: 38, type: System.Int32, name: "a" }, ($t3={ ntype: 28, type: System.Int32, operand: $t2 }, { ntype: 18, type: Function, returnType: $t3.type, body: $t3, params: Bridge.toList([$t2]) }));
+            var e3 = ($t4 = { ntype: 38, type: System.Int32, name: "a" }, ($t5={ ntype: 82, type: System.Int32, operand: $t4 }, { ntype: 18, type: Function, returnType: $t5.type, body: $t5, params: Bridge.toList([$t4]) }));
+            var e4 = ($t6 = { ntype: 38, type: Boolean, name: "a" }, ($t7={ ntype: 34, type: Boolean, operand: $t6 }, { ntype: 18, type: Function, returnType: $t7.type, body: $t7, params: Bridge.toList([$t6]) }));
+            var e5 = ($t8 = { ntype: 38, type: System.Int32, name: "a" }, ($t9={ ntype: 30, type: System.Int32, operand: $t8 }, { ntype: 18, type: Function, returnType: $t9.type, body: $t9, params: Bridge.toList([$t8]) }));
+    
+            var pa = { ntype: 38, type: System.Int32, name: "a" };
+            var e11 = { ntype: 29, type: System.Int32, operand: pa };
+            var e12 = { ntype: 28, type: System.Int32, operand: pa };
+            var e13 = { ntype: 82, type: System.Int32, operand: pa };
+            var e14 = { ntype: 34, type: Boolean, operand: { ntype: 38, type: Boolean, name: "a" } };
+            var e15 = { ntype: 30, type: System.Int32, operand: pa };
+            var e16 = { ntype: 84, type: Boolean, operand: { ntype: 38, type: Boolean, name: "a" } };
+            var e17 = { ntype: 83, type: Boolean, operand: { ntype: 38, type: Boolean, name: "a" } };
+            var e18 = { ntype: 54, type: System.Int32, operand: pa };
+            var e19 = { ntype: 49, type: System.Int32, operand: pa };
+    
+            var e21 = ($t10 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, ($t12=($t11=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[30], { ntype: 29, type: $t11.returnType, operand: $t10, method: $t11 }), { ntype: 18, type: Function, returnType: $t12.type, body: $t12, params: Bridge.toList([$t10]) }));
+            var e22 = ($t13 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, ($t15=($t14=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[29], { ntype: 28, type: $t14.returnType, operand: $t13, method: $t14 }), { ntype: 18, type: Function, returnType: $t15.type, body: $t15, params: Bridge.toList([$t13]) }));
+            var e23 = ($t16 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, ($t18=($t17=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[24], { ntype: 82, type: $t17.returnType, operand: $t16, method: $t17 }), { ntype: 18, type: Function, returnType: $t18.type, body: $t18, params: Bridge.toList([$t16]) }));
+            var e24 = ($t19 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, ($t21=($t20=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[21], { ntype: 34, type: $t20.returnType, operand: $t19, method: $t20 }), { ntype: 18, type: Function, returnType: $t21.type, body: $t21, params: Bridge.toList([$t19]) }));
+            var e25 = ($t22 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, ($t24=($t23=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[29], { ntype: 30, type: $t23.returnType, operand: $t22, method: $t23 }), { ntype: 18, type: Function, returnType: $t24.type, body: $t24, params: Bridge.toList([$t22]) }));
+    
+            var pa2 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" };
+            var e31 = ($t25=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_UnaryPlus"), { ntype: 29, type: $t25.returnType, operand: pa2, method: $t25 });
+            var e32 = ($t26=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_UnaryNegation"), { ntype: 28, type: $t26.returnType, operand: pa2, method: $t26 });
+            var e33 = ($t27=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_OnesComplement"), { ntype: 82, type: $t27.returnType, operand: pa2, method: $t27 });
+            var e34 = ($t28=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_LogicalNot"), { ntype: 34, type: $t28.returnType, operand: pa2, method: $t28 });
+            var e35 = ($t29=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_UnaryNegation"), { ntype: 30, type: $t29.returnType, operand: pa2, method: $t29 });
+            var e36 = ($t30=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_False"), { ntype: 84, type: $t30.returnType, operand: pa2, method: $t30 });
+            var e37 = ($t31=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_True"), { ntype: 83, type: $t31.returnType, operand: pa2, method: $t31 });
+            var e38 = ($t32=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Increment"), { ntype: 54, type: $t32.returnType, operand: pa2, method: $t32 });
+            var e39 = ($t33=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Decrement"), { ntype: 49, type: $t33.returnType, operand: pa2, method: $t33 });
+    
+            var e41 = { ntype: 77, type: System.Int32, operand: pa };
+            var e42 = { ntype: 78, type: System.Int32, operand: pa };
+            var e43 = { ntype: 79, type: System.Int32, operand: pa };
+            var e44 = { ntype: 80, type: System.Int32, operand: pa };
+    
+            var e51 = ($t34=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Increment"), { ntype: 77, type: $t34.returnType, operand: pa, method: $t34 });
+            var e52 = ($t35=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Decrement"), { ntype: 78, type: $t35.returnType, operand: pa, method: $t35 });
+            var e53 = ($t36=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Increment"), { ntype: 79, type: $t36.returnType, operand: pa, method: $t36 });
+            var e54 = ($t37=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Decrement"), { ntype: 80, type: $t37.returnType, operand: pa, method: $t37 });
+    
+            var mkun1 = { ntype: 82, type: System.Int32, operand: pa };
+            var mkun2 = ($t38=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_UnaryNegation"), { ntype: 28, type: null || $t38.returnType, operand: pa2, method: $t38 });
+    
+            asserter(e1.body, 29, System.Int32, null, "e1");
+            asserter(e2.body, 28, System.Int32, null, "e2");
+            asserter(e3.body, 82, System.Int32, null, "e3");
+            asserter(e4.body, 34, Boolean, null, "e4");
+            asserter(e5.body, 30, System.Int32, null, "e5");
+    
+            asserter(e11, 29, System.Int32, null, "e11");
+            asserter(e12, 28, System.Int32, null, "e12");
+            asserter(e13, 82, System.Int32, null, "e13");
+            asserter(e14, 34, Boolean, null, "e14");
+            asserter(e15, 30, System.Int32, null, "e15");
+            asserter(e16, 84, Boolean, null, "e16");
+            asserter(e17, 83, Boolean, null, "e17");
+            asserter(e18, 54, System.Int32, null, "e18");
+            asserter(e19, 49, System.Int32, null, "e19");
+    
+            asserter(e21.body, 29, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_UnaryPlus", "e21");
+            asserter(e22.body, 28, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_UnaryNegation", "e22");
+            asserter(e23.body, 82, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_OnesComplement", "e23");
+            asserter(e24.body, 34, Boolean, "op_LogicalNot", "e24");
+            asserter(e25.body, 30, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_UnaryNegation", "e25");
+    
+            asserter(e31, 29, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_UnaryPlus", "e31");
+            asserter(e32, 28, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_UnaryNegation", "e32");
+            asserter(e33, 82, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_OnesComplement", "e33");
+            asserter(e34, 34, Boolean, "op_LogicalNot", "e34");
+            asserter(e35, 30, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_UnaryNegation", "e35");
+            asserter(e36, 84, Boolean, "op_False", "e36");
+            asserter(e37, 83, Boolean, "op_True", "e37");
+            asserter(e38, 54, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Increment", "e38");
+            asserter(e39, 49, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Decrement", "e39");
+    
+            asserter(e41, 77, System.Int32, null, "e41");
+            asserter(e42, 78, System.Int32, null, "e42");
+            asserter(e43, 79, System.Int32, null, "e43");
+            asserter(e44, 80, System.Int32, null, "e44");
+    
+            asserter(e51, 77, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Increment", "e51");
+            asserter(e52, 78, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Decrement", "e52");
+            asserter(e53, 79, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Increment", "e53");
+            asserter(e54, 80, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_Decrement", "e54");
+    
+            asserter(mkun1, 82, System.Int32, null, "mkun1");
+            asserter(mkun2, 28, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "op_UnaryNegation", "mkun2");
+    
+            Bridge.Test.Assert.false$1(($t39 = { ntype: 9, type: Object, value: null }, Bridge.is($t39, Bridge.hasValue($t39) && ([4,10,11,28,29,30,34,40,44,49,54,60,62,77,78,79,80,82,83,84].indexOf($t39.ntype) >= 0))), "Constant should not be UnaryExpression");
+        },
+        arrayLengthWorks: function () {
+            var $t, $t1, $t2;
+            var e1 = ($t = { ntype: 38, type: Array, name: "a" }, ($t1={ ntype: 4, type: System.Int32, operand: $t }, { ntype: 18, type: Function, returnType: $t1.type, body: $t1, params: Bridge.toList([$t]) }));
+            var e2 = { ntype: 4, type: System.Int32, operand: { ntype: 38, type: Array, name: "a" } };
+    
+            Bridge.Test.Assert.true$1(($t2 = e1.body, Bridge.is($t2, Bridge.hasValue($t2) && ([4,10,11,28,29,30,34,40,44,49,54,60,62,77,78,79,80,82,83,84].indexOf($t2.ntype) >= 0))), "e1 is UnaryExpression");
+            Bridge.Test.Assert.areEqual$1(e1.body.ntype, 4, "e1 node type");
+            Bridge.Test.Assert.areEqual$1(e1.body.type, System.Int32, "e1 type");
+            Bridge.Test.Assert.true$1(($t2 = ($t2 = e1.body, Bridge.cast($t2, Bridge.hasValue($t2) && ([4,10,11,28,29,30,34,40,44,49,54,60,62,77,78,79,80,82,83,84].indexOf($t2.ntype) >= 0))).operand, Bridge.is($t2, Bridge.hasValue($t2) && ($t2.ntype === 38))) && Bridge.referenceEquals(($t2 = ($t2 = e1.body, Bridge.cast($t2, Bridge.hasValue($t2) && ([4,10,11,28,29,30,34,40,44,49,54,60,62,77,78,79,80,82,83,84].indexOf($t2.ntype) >= 0))).operand, Bridge.cast($t2, Bridge.hasValue($t2) && ($t2.ntype === 38))).name, "a"), "e1 operand");
+            Bridge.Test.Assert.true$1(($t2 = e1.body, Bridge.cast($t2, Bridge.hasValue($t2) && ([4,10,11,28,29,30,34,40,44,49,54,60,62,77,78,79,80,82,83,84].indexOf($t2.ntype) >= 0))).method == null, "e1 method");
+    
+            Bridge.Test.Assert.true$1(Bridge.is(e2, Bridge.hasValue(e2) && ([4,10,11,28,29,30,34,40,44,49,54,60,62,77,78,79,80,82,83,84].indexOf(e2.ntype) >= 0)), "e2 is UnaryExpression");
+            Bridge.Test.Assert.areEqual$1(e2.ntype, 4, "e2 node type");
+            Bridge.Test.Assert.areEqual$1(e2.type, System.Int32, "e2 type");
+            Bridge.Test.Assert.true$1(($t2 = Bridge.cast(e2, Bridge.hasValue(e2) && ([4,10,11,28,29,30,34,40,44,49,54,60,62,77,78,79,80,82,83,84].indexOf(e2.ntype) >= 0)).operand, Bridge.is($t2, Bridge.hasValue($t2) && ($t2.ntype === 38))) && Bridge.referenceEquals(($t2 = Bridge.cast(e2, Bridge.hasValue(e2) && ([4,10,11,28,29,30,34,40,44,49,54,60,62,77,78,79,80,82,83,84].indexOf(e2.ntype) >= 0)).operand, Bridge.cast($t2, Bridge.hasValue($t2) && ($t2.ntype === 38))).name, "a"), "e2 operand");
+            Bridge.Test.Assert.true$1(Bridge.cast(e2, Bridge.hasValue(e2) && ([4,10,11,28,29,30,34,40,44,49,54,60,62,77,78,79,80,82,83,84].indexOf(e2.ntype) >= 0)).method == null, "e2 method");
+        },
+        conversionsWork: function () {
+            var $t, $t1, $t2, $t3, $t4, $t5, $t6, $t7, $t8, $t9, $t10, $t11, $t12, $t13;
+            var asserter = $_.Bridge.ClientTest.Linq.Expressions.ExpressionTests.f3;
+    
+            var e1 = ($t = { ntype: 38, type: Object, name: "a" }, ($t1={ ntype: 10, type: System.Int32, operand: $t }, { ntype: 18, type: Function, returnType: $t1.type, body: $t1, params: Bridge.toList([$t]) }));
+            var e2 = ($t2 = { ntype: 38, type: Object, name: "a" }, ($t3={ ntype: 10, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, operand: $t2 }, { ntype: 18, type: Function, returnType: $t3.type, body: $t3, params: Bridge.toList([$t2]) }));
+            var e3 = ($t4 = { ntype: 38, type: System.Double, name: "a" }, ($t5={ ntype: 10, type: System.Int32, operand: $t4 }, { ntype: 18, type: Function, returnType: $t5.type, body: $t5, params: Bridge.toList([$t4]) }));
+            var e4 = ($t6 = { ntype: 38, type: System.Double, name: "a" }, ($t7={ ntype: 11, type: System.Int32, operand: $t6 }, { ntype: 18, type: Function, returnType: $t7.type, body: $t7, params: Bridge.toList([$t6]) }));
+            var e5 = ($t8 = { ntype: 38, type: Object, name: "a" }, ($t9={ ntype: 44, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, operand: $t8 }, { ntype: 18, type: Function, returnType: $t9.type, body: $t9, params: Bridge.toList([$t8]) }));
+            var e6 = ($t10 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, ($t11={ ntype: 10, type: System.Int32, operand: $t10, method: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[12] }, { ntype: 18, type: Function, returnType: $t11.type, body: $t11, params: Bridge.toList([$t10]) }));
+            var e7 = ($t12 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, ($t13={ ntype: 11, type: System.Int32, operand: $t12, method: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[12] }, { ntype: 18, type: Function, returnType: $t13.type, body: $t13, params: Bridge.toList([$t12]) }));
+    
+            var e11 = { ntype: 62, type: System.Int32, operand: { ntype: 38, type: Object, name: "a" } };
+            var e12 = { ntype: 10, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, operand: { ntype: 38, type: Object, name: "a" } };
+            var e13 = { ntype: 10, type: System.Int32, operand: { ntype: 38, type: System.Double, name: "a" } };
+            var e14 = { ntype: 11, type: System.Int32, operand: { ntype: 38, type: System.Double, name: "a" } };
+            var e15 = { ntype: 44, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, operand: { ntype: 38, type: Object, name: "a" } };
+            var e16 = { ntype: 10, type: System.Int32, operand: { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, method: Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Explicit") };
+            var e17 = { ntype: 11, type: System.Int32, operand: { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, method: Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Explicit") };
+    
+            asserter(e1.body, 10, System.Int32, null, "e1");
+            asserter(e2.body, 10, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, null, "e2");
+            asserter(e3.body, 10, System.Int32, null, "e3");
+            asserter(e4.body, 11, System.Int32, null, "e4");
+            asserter(e5.body, 44, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, null, "e5");
+            asserter(e6.body, 10, System.Int32, "op_Explicit", "e6");
+            asserter(e7.body, 11, System.Int32, "op_Explicit", "e7");
+    
+            asserter(e11, 62, System.Int32, null, "e11");
+            asserter(e12, 10, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, null, "e12");
+            asserter(e13, 10, System.Int32, null, "e13");
+            asserter(e14, 11, System.Int32, null, "e14");
+            asserter(e15, 44, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, null, "e15");
+            asserter(e16, 10, System.Int32, "op_Explicit", "e16");
+            asserter(e17, 11, System.Int32, "op_Explicit", "e17");
+        },
+        arrayIndexWorks: function () {
+            var $t, $t1, $t2, $t3;
+            var e1 = ($t = { ntype: 38, type: Array, name: "a" }, $t1 = { ntype: 38, type: System.Int32, name: "b" }, ($t2={ ntype: 5, type: System.Double, left: $t, right: $t1 }, { ntype: 18, type: Function, returnType: $t2.type, body: $t2, params: Bridge.toList([$t,$t1]) }));
+            var e2 = { ntype: 5, type: System.Double, left: { ntype: 38, type: Array, name: "a" }, right: { ntype: 38, type: System.Int32, name: "b" } };
+    
+            Bridge.Test.Assert.true$1(($t3 = e1.body, Bridge.is($t3, Bridge.hasValue($t3) && ([0,1,2,3,5,7,12,13,14,15,16,19,20,21,22,25,26,27,35,36,37,39,41,42,43,46,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80].indexOf($t3.ntype) >= 0))), "e1 is BinaryExpression");
+            Bridge.Test.Assert.areEqual$1(e1.body.ntype, 5, "e1 node type");
+            Bridge.Test.Assert.areEqual$1(e1.body.type, System.Double, "e1 type");
+            Bridge.Test.Assert.true$1(($t3 = ($t3 = e1.body, Bridge.cast($t3, Bridge.hasValue($t3) && ([0,1,2,3,5,7,12,13,14,15,16,19,20,21,22,25,26,27,35,36,37,39,41,42,43,46,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80].indexOf($t3.ntype) >= 0))).left, Bridge.is($t3, Bridge.hasValue($t3) && ($t3.ntype === 38))) && Bridge.referenceEquals(($t3 = ($t3 = e1.body, Bridge.cast($t3, Bridge.hasValue($t3) && ([0,1,2,3,5,7,12,13,14,15,16,19,20,21,22,25,26,27,35,36,37,39,41,42,43,46,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80].indexOf($t3.ntype) >= 0))).left, Bridge.cast($t3, Bridge.hasValue($t3) && ($t3.ntype === 38))).name, "a"), "e1 left");
+            Bridge.Test.Assert.true$1(($t3 = ($t3 = e1.body, Bridge.cast($t3, Bridge.hasValue($t3) && ([0,1,2,3,5,7,12,13,14,15,16,19,20,21,22,25,26,27,35,36,37,39,41,42,43,46,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80].indexOf($t3.ntype) >= 0))).right, Bridge.is($t3, Bridge.hasValue($t3) && ($t3.ntype === 38))) && Bridge.referenceEquals(($t3 = ($t3 = e1.body, Bridge.cast($t3, Bridge.hasValue($t3) && ([0,1,2,3,5,7,12,13,14,15,16,19,20,21,22,25,26,27,35,36,37,39,41,42,43,46,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80].indexOf($t3.ntype) >= 0))).right, Bridge.cast($t3, Bridge.hasValue($t3) && ($t3.ntype === 38))).name, "b"), "e1 right");
+            Bridge.Test.Assert.true$1(($t3 = e1.body, Bridge.cast($t3, Bridge.hasValue($t3) && ([0,1,2,3,5,7,12,13,14,15,16,19,20,21,22,25,26,27,35,36,37,39,41,42,43,46,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80].indexOf($t3.ntype) >= 0))).method == null, "e1 method");
+    
+            Bridge.Test.Assert.true$1(Bridge.is(e2, Bridge.hasValue(e2) && ([0,1,2,3,5,7,12,13,14,15,16,19,20,21,22,25,26,27,35,36,37,39,41,42,43,46,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80].indexOf(e2.ntype) >= 0)), "e2 is BinaryExpression");
+            Bridge.Test.Assert.areEqual$1(e2.ntype, 5, "e2 node type");
+            Bridge.Test.Assert.areEqual$1(e2.type, System.Double, "e2 type");
+            Bridge.Test.Assert.true$1(($t3 = ($t3 = e1.body, Bridge.cast($t3, Bridge.hasValue($t3) && ([0,1,2,3,5,7,12,13,14,15,16,19,20,21,22,25,26,27,35,36,37,39,41,42,43,46,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80].indexOf($t3.ntype) >= 0))).left, Bridge.is($t3, Bridge.hasValue($t3) && ($t3.ntype === 38))) && Bridge.referenceEquals(($t3 = ($t3 = e1.body, Bridge.cast($t3, Bridge.hasValue($t3) && ([0,1,2,3,5,7,12,13,14,15,16,19,20,21,22,25,26,27,35,36,37,39,41,42,43,46,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80].indexOf($t3.ntype) >= 0))).left, Bridge.cast($t3, Bridge.hasValue($t3) && ($t3.ntype === 38))).name, "a"), "e2 left");
+            Bridge.Test.Assert.true$1(($t3 = ($t3 = e1.body, Bridge.cast($t3, Bridge.hasValue($t3) && ([0,1,2,3,5,7,12,13,14,15,16,19,20,21,22,25,26,27,35,36,37,39,41,42,43,46,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80].indexOf($t3.ntype) >= 0))).right, Bridge.is($t3, Bridge.hasValue($t3) && ($t3.ntype === 38))) && Bridge.referenceEquals(($t3 = ($t3 = e1.body, Bridge.cast($t3, Bridge.hasValue($t3) && ([0,1,2,3,5,7,12,13,14,15,16,19,20,21,22,25,26,27,35,36,37,39,41,42,43,46,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80].indexOf($t3.ntype) >= 0))).right, Bridge.cast($t3, Bridge.hasValue($t3) && ($t3.ntype === 38))).name, "b"), "e2 right");
+            Bridge.Test.Assert.true$1(($t3 = e1.body, Bridge.cast($t3, Bridge.hasValue($t3) && ([0,1,2,3,5,7,12,13,14,15,16,19,20,21,22,25,26,27,35,36,37,39,41,42,43,46,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80].indexOf($t3.ntype) >= 0))).method == null, "e2 method");
+        },
+        multiDimensionalArrayIndexWorks: function () {
+            var $t, $t1, $t2, $t3, $t4, $t5, $t6, $t7;
+            var arr = System.Array.create(0, null, 4, 4);
+            arr.set([1, 2], 2.5);
+            var e1 = ($t = { ntype: 38, type: Array, name: "a" }, $t1 = { ntype: 38, type: System.Int32, name: "b" }, $t2 = { ntype: 38, type: System.Int32, name: "c" }, ($t5=($t3=System.Double, $t4=[$t1,$t2], { ntype: 6, type: $t3, obj: $t, method: { type: 8, typeDef: Array, name: 'Get', returnType: $t3, params: System.Array.init($t4.length, System.Int32, true), def: function() { return System.Array.$get.call(this, arguments); } }, args: Bridge.toList($t4) }), { ntype: 18, type: Function, returnType: $t5.type, body: $t5, params: Bridge.toList([$t,$t1,$t2]) }));
+            var e2 = ($t6=System.Double, $t7=[{ ntype: 38, type: System.Int32, name: "b" }, { ntype: 38, type: System.Int32, name: "c" }], { ntype: 6, type: $t6, obj: { ntype: 38, type: Array, name: "a" }, method: { type: 8, typeDef: Array, name: 'Get', returnType: $t6, params: System.Array.init($t7.length, System.Int32, true), def: function() { return System.Array.$get.call(this, arguments); } }, args: Bridge.toList($t7) });
+            var e3 = (function(a, b, c) { return { ntype: 6, type: a, obj: b, method: { type: 8, typeDef: Array, name: 'Get', returnType: a, params: System.Array.init(c.getCount(), System.Int32, true), def: function() { return System.Array.$get.call(this, arguments); } }, args: c }; })(System.Double, { ntype: 38, type: Array, name: "a" }, Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([{ ntype: 38, type: System.Int32, name: "b" }, { ntype: 38, type: System.Int32, name: "c" }])));
+    
+            var asserter = function (expr, title) {
+                var $t8;
+                var me = Bridge.as(expr, Bridge.hasValue(expr) && (expr.ntype === 6));
+                Bridge.Test.Assert.true$1(me != null, title + " is MethodCallExpression");
+                Bridge.Test.Assert.areEqual$1(me.ntype, 6, title + " node type");
+                Bridge.Test.Assert.areEqual$1(me.type, System.Double, title + " type");
+                Bridge.Test.Assert.true$1(($t8 = me.obj, Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))) && Bridge.referenceEquals(($t8 = me.obj, Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))).name, "a"), title + " object");
+                Bridge.Test.Assert.areEqual$1(me.args.getCount(), 2, title + " argument count");
+                Bridge.Test.Assert.true$1(($t8 = me.args.get(0), Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))) && Bridge.referenceEquals(($t8 = me.args.get(0), Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))).name, "b"), title + " argument 0");
+                Bridge.Test.Assert.true$1(($t8 = me.args.get(1), Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))) && Bridge.referenceEquals(($t8 = me.args.get(1), Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))).name, "c"), title + " argument 1");
+                Bridge.Test.Assert.areEqual$1(me.method.type, 8, title + "method type");
+                Bridge.Test.Assert.false$1((me.method.type === 1), title + "method is constructor");
+                Bridge.Test.Assert.false$1((me.method.isStatic || false), title + "method isstatic");
+                Bridge.Test.Assert.areEqual$1(me.method.returnType, System.Double, title + " method return value");
+                Bridge.Test.Assert.areEqual$1(me.method.name, "Get", title + " method name");
+                Bridge.Test.Assert.areEqual$1(me.method.typeDef, Array, title + " method declaring type");
+                Bridge.Test.Assert.areEqual$1((me.method.params || []), [System.Int32, System.Int32], title + " method parameter types");
+                Bridge.Test.Assert.areEqual$1(Bridge.Reflection.midel(me.method, arr)(1, 2), 2.5, title + " method invoke result");
+            };
+    
+            asserter(e1.body, "e1");
+            asserter(e2, "e2");
+            asserter(e3, "e3");
+        },
+        conditionWorks: function () {
+            var $t, $t1, $t2, $t3, $t4;
+            var e1 = ($t = { ntype: 38, type: Boolean, name: "a" }, $t1 = { ntype: 38, type: System.Int32, name: "b" }, $t2 = { ntype: 38, type: System.Int32, name: "c" }, ($t3={ ntype: 8, type: System.Int32, test: $t, ifTrue: $t1, ifFalse: $t2 }, { ntype: 18, type: Function, returnType: $t3.type, body: $t3, params: Bridge.toList([$t,$t1,$t2]) }));
+            var e2 = { ntype: 8, type: System.Int32, test: { ntype: 38, type: Boolean, name: "a" }, ifTrue: { ntype: 38, type: System.Int32, name: "b" }, ifFalse: { ntype: 38, type: System.Int32, name: "c" } };
+    
+            Bridge.Test.Assert.true$1(($t4 = e1.body, Bridge.is($t4, Bridge.hasValue($t4) && ($t4.ntype === 8))), "e1 is ConditionalExpression");
+            Bridge.Test.Assert.areEqual$1(e1.body.ntype, 8, "e1 node type");
+            Bridge.Test.Assert.areEqual$1(e1.body.type, System.Int32, "e1 type");
+            Bridge.Test.Assert.true$1(($t4 = ($t4 = e1.body, Bridge.cast($t4, Bridge.hasValue($t4) && ($t4.ntype === 8))).test, Bridge.is($t4, Bridge.hasValue($t4) && ($t4.ntype === 38))) && Bridge.referenceEquals(($t4 = ($t4 = e1.body, Bridge.cast($t4, Bridge.hasValue($t4) && ($t4.ntype === 8))).test, Bridge.cast($t4, Bridge.hasValue($t4) && ($t4.ntype === 38))).name, "a"), "e1 test");
+            Bridge.Test.Assert.true$1(($t4 = ($t4 = e1.body, Bridge.cast($t4, Bridge.hasValue($t4) && ($t4.ntype === 8))).ifTrue, Bridge.is($t4, Bridge.hasValue($t4) && ($t4.ntype === 38))) && Bridge.referenceEquals(($t4 = ($t4 = e1.body, Bridge.cast($t4, Bridge.hasValue($t4) && ($t4.ntype === 8))).ifTrue, Bridge.cast($t4, Bridge.hasValue($t4) && ($t4.ntype === 38))).name, "b"), "e1 iftrue");
+            Bridge.Test.Assert.true$1(($t4 = ($t4 = e1.body, Bridge.cast($t4, Bridge.hasValue($t4) && ($t4.ntype === 8))).ifFalse, Bridge.is($t4, Bridge.hasValue($t4) && ($t4.ntype === 38))) && Bridge.referenceEquals(($t4 = ($t4 = e1.body, Bridge.cast($t4, Bridge.hasValue($t4) && ($t4.ntype === 8))).ifFalse, Bridge.cast($t4, Bridge.hasValue($t4) && ($t4.ntype === 38))).name, "c"), "e1 iffalse");
+    
+            Bridge.Test.Assert.true$1(Bridge.is(e2, Bridge.hasValue(e2) && (e2.ntype === 8)), "e2 is ConditionalExpression");
+            Bridge.Test.Assert.areEqual$1(e2.ntype, 8, "e2 node type");
+            Bridge.Test.Assert.areEqual$1(e2.type, System.Int32, "e2 type");
+            Bridge.Test.Assert.true$1(($t4 = Bridge.cast(e2, Bridge.hasValue(e2) && (e2.ntype === 8)).test, Bridge.is($t4, Bridge.hasValue($t4) && ($t4.ntype === 38))) && Bridge.referenceEquals(($t4 = Bridge.cast(e2, Bridge.hasValue(e2) && (e2.ntype === 8)).test, Bridge.cast($t4, Bridge.hasValue($t4) && ($t4.ntype === 38))).name, "a"), "e2 test");
+            Bridge.Test.Assert.true$1(($t4 = Bridge.cast(e2, Bridge.hasValue(e2) && (e2.ntype === 8)).ifTrue, Bridge.is($t4, Bridge.hasValue($t4) && ($t4.ntype === 38))) && Bridge.referenceEquals(($t4 = Bridge.cast(e2, Bridge.hasValue(e2) && (e2.ntype === 8)).ifTrue, Bridge.cast($t4, Bridge.hasValue($t4) && ($t4.ntype === 38))).name, "b"), "e2 iftrue");
+            Bridge.Test.Assert.true$1(($t4 = Bridge.cast(e2, Bridge.hasValue(e2) && (e2.ntype === 8)).ifFalse, Bridge.is($t4, Bridge.hasValue($t4) && ($t4.ntype === 38))) && Bridge.referenceEquals(($t4 = Bridge.cast(e2, Bridge.hasValue(e2) && (e2.ntype === 8)).ifFalse, Bridge.cast($t4, Bridge.hasValue($t4) && ($t4.ntype === 38))).name, "c"), "e2 iffalse");
+    
+            Bridge.Test.Assert.false$1(($t4 = { ntype: 9, type: Object, value: null }, Bridge.is($t4, Bridge.hasValue($t4) && ($t4.ntype === 8))), "Constant should not be ConditionalExpression");
+        },
+        callWorks: function () {
+            var $t, $t1, $t2, $t3, $t4, $t5, $t6, $t7, $t8, $t9, $t10, $t11, $t12, $t13, $t14, $t15, $t16, $t17, $t18, $t19, $t20, $t21;
+            var asserter = $_.Bridge.ClientTest.Linq.Expressions.ExpressionTests.f4;
+    
+            var e1 = ($t = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "i" }, $t1 = { ntype: 38, type: System.Int32, name: "a" }, $t2 = { ntype: 38, type: String, name: "b" }, ($t4=($t3=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[2], { ntype: 6, type: $t3.returnType, obj: $t, method: $t3, args: Bridge.toList([$t1,$t2]) }), { ntype: 18, type: Function, returnType: $t4.type, body: $t4, params: Bridge.toList([$t,$t1,$t2]) }));
+            var e2 = ($t5 = { ntype: 38, type: System.Int32, name: "a" }, $t6 = { ntype: 38, type: String, name: "b" }, ($t8=($t7=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[3], { ntype: 6, type: $t7.returnType, obj: null, method: $t7, args: Bridge.toList([$t5,$t6]) }), { ntype: 18, type: Function, returnType: $t8.type, body: $t8, params: Bridge.toList([$t5,$t6]) }));
+            var e3 = ($t9=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "M1"), { ntype: 6, type: $t9.returnType, obj: { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "i" }, method: $t9, args: Bridge.toList([{ ntype: 38, type: System.Int32, name: "a" }, { ntype: 38, type: String, name: "b" }]) });
+            var e4 = ($t10=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "M2"), { ntype: 6, type: $t10.returnType, obj: null, method: $t10, args: Bridge.toList([{ ntype: 38, type: System.Int32, name: "a" }, { ntype: 38, type: String, name: "b" }]) });
+            var e5 = ($t11=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "M1"), { ntype: 6, type: $t11.returnType, obj: { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "i" }, method: $t11, args: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([{ ntype: 38, type: System.Int32, name: "a" }, { ntype: 38, type: String, name: "b" }])) });
+            var e6 = ($t12=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "M2"), { ntype: 6, type: $t12.returnType, obj: null, method: $t12, args: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([{ ntype: 38, type: System.Int32, name: "a" }, { ntype: 38, type: String, name: "b" }])) });
+            var e7 = ($t13=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "M2"), { ntype: 6, type: $t13.returnType, method: $t13, args: Bridge.toList([{ ntype: 38, type: System.Int32, name: "a" }, { ntype: 38, type: String, name: "b" }]) });
+            var e8 = ($t14=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "M2"), { ntype: 6, type: $t14.returnType, method: $t14, args: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([{ ntype: 38, type: System.Int32, name: "a" }, { ntype: 38, type: String, name: "b" }])) });
+            var e9 = ($t15 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, ($t17=($t16=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[2], { ntype: 6, type: $t16.returnType, obj: $t15, method: $t16, args: Bridge.toList([{ ntype: 9, type: System.Int32, value: 0 },{ ntype: 9, type: String, value: null }]) }), { ntype: 18, type: Function, returnType: $t17.type, body: $t17, params: Bridge.toList([$t15]) }));
+            var e10 = ($t18 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, ($t20=($t19={"typeDef":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"accessibility":2,"name":"M3","type":8,"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0}],"sname":"m3","returnType":System.Int32,"params":[System.Int32]}, { ntype: 6, type: $t19.returnType, obj: $t18, method: $t19, args: Bridge.toList([{ ntype: 9, type: System.Int32, value: 0 }]) }), { ntype: 18, type: Function, returnType: $t20.type, body: $t20, params: Bridge.toList([$t18]) }));
+    
+            asserter(e1.body, "M1", false, "e1");
+            asserter(e2.body, "M2", true, "e2");
+            asserter(e3, "M1", false, "e3");
+            asserter(e4, "M2", true, "e4");
+            asserter(e5, "M1", false, "e5");
+            asserter(e6, "M2", true, "e6");
+            asserter(e7, "M2", true, "e7");
+            asserter(e8, "M2", true, "e8");
+    
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(($t21 = e9.body, Bridge.cast($t21, Bridge.hasValue($t21) && ($t21.ntype === 6))).method, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "M1")), "e9 member");
+            Bridge.Test.Assert.areEqual$1(($t21 = e10.body, Bridge.cast($t21, Bridge.hasValue($t21) && ($t21.ntype === 6))).method.name, "M3", "e10 member name");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.midel(($t21 = e10.body, Bridge.cast($t21, Bridge.hasValue($t21) && ($t21.ntype === 6))).method, new Bridge.ClientTest.Linq.Expressions.ExpressionTests.C.$constructor())(39), 73, "e10 member result");
+    
+            Bridge.Test.Assert.false$1(($t21 = { ntype: 9, type: Object, value: null }, Bridge.is($t21, Bridge.hasValue($t21) && ($t21.ntype === 6))), "Constant should not be MethodCallExpression");
+        },
+        methodGroupConversionWorks: function () {
+            var $t, $t1, $t2, $t3;
+            var e1 = ($t = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, ($t2={ ntype: 10, type: Function, operand: ($t1={"typeDef":System.Reflection.MethodInfo,"accessibility":2,"name":"CreateDelegate","type":8,"paramsInfo":[{"name":"delegateType","parameterType":Function,"position":0},{"name":"target","parameterType":Object,"position":1}],"tpcount":0,"def":function (delegateType, target) { return Bridge.Reflection.midel(this, target); },"returnType":Function,"params":[Function,Object]}, { ntype: 6, type: $t1.returnType, obj: { ntype: 9, type: System.Reflection.MethodInfo, value: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[4] }, method: $t1, args: Bridge.toList([Function,$t]) }) }, { ntype: 18, type: Function, returnType: $t2.type, body: $t2, params: Bridge.toList([$t]) }));
+    
+            Bridge.Test.Assert.true$1(e1.body.ntype === 10, "e1 body node type");
+            var e2 = ($t3 = e1.body, Bridge.cast($t3, Bridge.hasValue($t3) && ([4,10,11,28,29,30,34,40,44,49,54,60,62,77,78,79,80,82,83,84].indexOf($t3.ntype) >= 0)));
+            Bridge.Test.Assert.areEqual$1(e2.type, Function, "e2 type");
+            Bridge.Test.Assert.areEqual$1(e2.operand.ntype, 6, "2 operand type");
+            var e3 = ($t3 = e2.operand, Bridge.cast($t3, Bridge.hasValue($t3) && ($t3.ntype === 6)));
+            Bridge.Test.Assert.areEqual$1(e3.obj.ntype, 9, "e3 object node type");
+            var e4 = ($t3 = e3.obj, Bridge.cast($t3, Bridge.hasValue($t3) && ($t3.ntype === 9)));
+            Bridge.Test.Assert.areEqual$1(e4.type, System.Reflection.MethodInfo, "e4 type");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(e4.value, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "M4")), "e4 value");
+            Bridge.Test.Assert.areEqual$1(e3.method.typeDef, System.Reflection.MethodInfo, "e3 method declaring type");
+            Bridge.Test.Assert.areEqual$1(e3.method.name, "CreateDelegate", "e3 method name");
+            Bridge.Test.Assert.areEqual$1((e3.method.params || []), [Function, Object], "e3 method parameters");
+            Bridge.Test.Assert.areEqual$1(e3.args.getCount(), 2, "e3 arguments");
+            Bridge.Test.Assert.areEqual$1(e3.args.get(0), Function, "e3 argument 0");
+            Bridge.Test.Assert.true$1(($t3 = e3.args.get(1), Bridge.is($t3, Bridge.hasValue($t3) && ($t3.ntype === 38))) && Bridge.referenceEquals(($t3 = e3.args.get(1), Bridge.cast($t3, Bridge.hasValue($t3) && ($t3.ntype === 38))).name, "a"), "e3 argument 1");
+        },
+        invokeWorks: function () {
+            var $t, $t1, $t2, $t3, $t4;
+            var e1 = ($t = { ntype: 38, type: Function, name: "a" }, $t1 = { ntype: 38, type: System.Int32, name: "b" }, $t2 = { ntype: 38, type: String, name: "c" }, ($t3={ ntype: 17, type: String, expression: $t, args: Bridge.toList([$t1,$t2]) }, { ntype: 18, type: Function, returnType: $t3.type, body: $t3, params: Bridge.toList([$t,$t1,$t2]) }));
+            var e2 = { ntype: 17, type: String, expression: { ntype: 38, type: Function, name: "a" }, args: Bridge.toList([{ ntype: 38, type: System.Int32, name: "b" }, { ntype: 38, type: String, name: "c" }]) };
+            var e3 = { ntype: 17, type: String, expression: { ntype: 38, type: Function, name: "a" }, args: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([{ ntype: 38, type: System.Int32, name: "b" }, { ntype: 38, type: String, name: "c" }])) };
+    
+            var asserter = $_.Bridge.ClientTest.Linq.Expressions.ExpressionTests.f5;
+    
+            asserter(e1.body, "e1");
+            asserter(e2, "e2");
+            asserter(e3, "e3");
+    
+            Bridge.Test.Assert.false$1(($t4 = { ntype: 9, type: Object, value: null }, Bridge.is($t4, Bridge.hasValue($t4) && ($t4.ntype === 17))), "Constant should not be InvocationExpression");
+        },
+        arrayCreationWorks: function () {
+            var $t, $t1, $t2, $t3, $t4, $t5, $t6, $t7, $t8;
+            var e1 = ($t = { ntype: 38, type: System.Int32, name: "a" }, ($t1={ ntype: 33, type: Array, expressions: Bridge.toList([$t]) }, { ntype: 18, type: Function, returnType: $t1.type, body: $t1, params: Bridge.toList([$t]) }));
+            var e2 = ($t2 = { ntype: 38, type: System.Int32, name: "a" }, $t3 = { ntype: 38, type: System.Int32, name: "b" }, ($t4={ ntype: 33, type: Array, expressions: Bridge.toList([$t2,$t3]) }, { ntype: 18, type: Function, returnType: $t4.type, body: $t4, params: Bridge.toList([$t2,$t3]) }));
+            var e3 = ($t5 = { ntype: 38, type: System.Int32, name: "a" }, $t6 = { ntype: 38, type: System.Int32, name: "b" }, ($t7={ ntype: 32, type: Array, expressions: Bridge.toList([$t5,$t6]) }, { ntype: 18, type: Function, returnType: $t7.type, body: $t7, params: Bridge.toList([$t5,$t6]) }));
+            var e4 = { ntype: 33, type: Array, expressions: Bridge.toList([{ ntype: 38, type: System.Int32, name: "a" }, { ntype: 38, type: System.Int32, name: "b" }]) };
+            var e5 = { ntype: 33, type: Array, expressions: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([{ ntype: 38, type: System.Int32, name: "a" }, { ntype: 38, type: System.Int32, name: "b" }])) };
+            var e6 = { ntype: 32, type: Array, expressions: Bridge.toList([{ ntype: 38, type: System.Int32, name: "a" }, { ntype: 38, type: System.Int32, name: "b" }]) };
+            var e7 = { ntype: 32, type: Array, expressions: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([{ ntype: 38, type: System.Int32, name: "a" }, { ntype: 38, type: System.Int32, name: "b" }])) };
+    
+            Bridge.Test.Assert.true$1(($t8 = e1.body, Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 32 || $t8.ntype === 33))), "e1 is NewArrayExpression");
+            Bridge.Test.Assert.areEqual$1(e1.body.ntype, 33, "e1 node type");
+            Bridge.Test.Assert.areEqual$1(e1.body.type, Array, "e1 type");
+            Bridge.Test.Assert.areEqual$1(($t8 = e1.body, Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 32 || $t8.ntype === 33))).expressions.getCount(), 1, "e1 expression count");
+            Bridge.Test.Assert.true$1(($t8 = ($t8 = e1.body, Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 32 || $t8.ntype === 33))).expressions.get(0), Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))) && Bridge.referenceEquals(($t8 = ($t8 = e1.body, Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 32 || $t8.ntype === 33))).expressions.get(0), Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))).name, "a"), "e1 expression 0");
+    
+            Bridge.Test.Assert.true$1(($t8 = e2.body, Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 32 || $t8.ntype === 33))), "e2 is NewArrayExpression");
+            Bridge.Test.Assert.areEqual$1(e2.body.ntype, 33, "e2 node type");
+            Bridge.Test.Assert.areEqual$1(e2.body.type, Array, "e2 type");
+            Bridge.Test.Assert.areEqual$1(($t8 = e2.body, Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 32 || $t8.ntype === 33))).expressions.getCount(), 2, "e2 expression count");
+            Bridge.Test.Assert.true$1(($t8 = ($t8 = e2.body, Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 32 || $t8.ntype === 33))).expressions.get(0), Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))) && Bridge.referenceEquals(($t8 = ($t8 = e2.body, Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 32 || $t8.ntype === 33))).expressions.get(0), Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))).name, "a"), "e2 expression 0");
+            Bridge.Test.Assert.true$1(($t8 = ($t8 = e2.body, Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 32 || $t8.ntype === 33))).expressions.get(1), Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))) && Bridge.referenceEquals(($t8 = ($t8 = e2.body, Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 32 || $t8.ntype === 33))).expressions.get(1), Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))).name, "b"), "e2 expression 1");
+    
+            Bridge.Test.Assert.true$1(($t8 = e3.body, Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 32 || $t8.ntype === 33))), "e3 is NewArrayExpression");
+            Bridge.Test.Assert.areEqual$1(e3.body.ntype, 32, "e3 node type");
+            Bridge.Test.Assert.areEqual$1(e3.body.type, Array, "e3 type");
+            Bridge.Test.Assert.areEqual$1(($t8 = e3.body, Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 32 || $t8.ntype === 33))).expressions.getCount(), 2, "e3 expression count");
+            Bridge.Test.Assert.true$1(($t8 = ($t8 = e3.body, Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 32 || $t8.ntype === 33))).expressions.get(0), Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))) && Bridge.referenceEquals(($t8 = ($t8 = e3.body, Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 32 || $t8.ntype === 33))).expressions.get(0), Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))).name, "a"), "e3 expression 0");
+            Bridge.Test.Assert.true$1(($t8 = ($t8 = e3.body, Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 32 || $t8.ntype === 33))).expressions.get(1), Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))) && Bridge.referenceEquals(($t8 = ($t8 = e3.body, Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 32 || $t8.ntype === 33))).expressions.get(1), Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))).name, "b"), "e3 expression 1");
+    
+            Bridge.Test.Assert.true$1(Bridge.is(e4, Bridge.hasValue(e4) && (e4.ntype === 32 || e4.ntype === 33)), "e4 is NewArrayExpression");
+            Bridge.Test.Assert.areEqual$1(e4.ntype, 33, "e4 node type");
+            Bridge.Test.Assert.areEqual$1(e4.type, Array, "e4 type");
+            Bridge.Test.Assert.areEqual$1(Bridge.cast(e4, Bridge.hasValue(e4) && (e4.ntype === 32 || e4.ntype === 33)).expressions.getCount(), 2, "e4 expression count");
+            Bridge.Test.Assert.true$1(($t8 = Bridge.cast(e4, Bridge.hasValue(e4) && (e4.ntype === 32 || e4.ntype === 33)).expressions.get(0), Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))) && Bridge.referenceEquals(($t8 = Bridge.cast(e4, Bridge.hasValue(e4) && (e4.ntype === 32 || e4.ntype === 33)).expressions.get(0), Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))).name, "a"), "e4 expression 0");
+            Bridge.Test.Assert.true$1(($t8 = Bridge.cast(e4, Bridge.hasValue(e4) && (e4.ntype === 32 || e4.ntype === 33)).expressions.get(1), Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))) && Bridge.referenceEquals(($t8 = Bridge.cast(e4, Bridge.hasValue(e4) && (e4.ntype === 32 || e4.ntype === 33)).expressions.get(1), Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))).name, "b"), "e4 expression 1");
+    
+            Bridge.Test.Assert.true$1(Bridge.is(e5, Bridge.hasValue(e5) && (e5.ntype === 32 || e5.ntype === 33)), "e5 is NewArrayExpression");
+            Bridge.Test.Assert.areEqual$1(e5.ntype, 33, "e5 node type");
+            Bridge.Test.Assert.areEqual$1(e5.type, Array, "e5 type");
+            Bridge.Test.Assert.areEqual$1(Bridge.cast(e5, Bridge.hasValue(e5) && (e5.ntype === 32 || e5.ntype === 33)).expressions.getCount(), 2, "e5 expression count");
+            Bridge.Test.Assert.true$1(($t8 = Bridge.cast(e5, Bridge.hasValue(e5) && (e5.ntype === 32 || e5.ntype === 33)).expressions.get(0), Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))) && Bridge.referenceEquals(($t8 = Bridge.cast(e5, Bridge.hasValue(e5) && (e5.ntype === 32 || e5.ntype === 33)).expressions.get(0), Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))).name, "a"), "e5 expression 0");
+            Bridge.Test.Assert.true$1(($t8 = Bridge.cast(e5, Bridge.hasValue(e5) && (e5.ntype === 32 || e5.ntype === 33)).expressions.get(1), Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))) && Bridge.referenceEquals(($t8 = Bridge.cast(e5, Bridge.hasValue(e5) && (e5.ntype === 32 || e5.ntype === 33)).expressions.get(1), Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))).name, "b"), "e5 expression 1");
+    
+            Bridge.Test.Assert.true$1(Bridge.is(e6, Bridge.hasValue(e6) && (e6.ntype === 32 || e6.ntype === 33)), "e6 is NewArrayExpression");
+            Bridge.Test.Assert.areEqual$1(e6.ntype, 32, "e6 node type");
+            Bridge.Test.Assert.areEqual$1(e6.type, Array, "e6 type");
+            Bridge.Test.Assert.areEqual$1(Bridge.cast(e6, Bridge.hasValue(e6) && (e6.ntype === 32 || e6.ntype === 33)).expressions.getCount(), 2, "e6 expression count");
+            Bridge.Test.Assert.true$1(($t8 = Bridge.cast(e6, Bridge.hasValue(e6) && (e6.ntype === 32 || e6.ntype === 33)).expressions.get(0), Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))) && Bridge.referenceEquals(($t8 = Bridge.cast(e6, Bridge.hasValue(e6) && (e6.ntype === 32 || e6.ntype === 33)).expressions.get(0), Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))).name, "a"), "e6 expression 0");
+            Bridge.Test.Assert.true$1(($t8 = Bridge.cast(e6, Bridge.hasValue(e6) && (e6.ntype === 32 || e6.ntype === 33)).expressions.get(1), Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))) && Bridge.referenceEquals(($t8 = Bridge.cast(e6, Bridge.hasValue(e6) && (e6.ntype === 32 || e6.ntype === 33)).expressions.get(1), Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))).name, "b"), "e6 expression 1");
+    
+            Bridge.Test.Assert.true$1(Bridge.is(e7, Bridge.hasValue(e7) && (e7.ntype === 32 || e7.ntype === 33)), "e7 is NewArrayExpression");
+            Bridge.Test.Assert.areEqual$1(e7.ntype, 32, "e7 node type");
+            Bridge.Test.Assert.areEqual$1(e7.type, Array, "e7 type");
+            Bridge.Test.Assert.areEqual$1(Bridge.cast(e7, Bridge.hasValue(e7) && (e7.ntype === 32 || e7.ntype === 33)).expressions.getCount(), 2, "e7 expression count");
+            Bridge.Test.Assert.true$1(($t8 = Bridge.cast(e7, Bridge.hasValue(e7) && (e7.ntype === 32 || e7.ntype === 33)).expressions.get(0), Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))) && Bridge.referenceEquals(($t8 = Bridge.cast(e7, Bridge.hasValue(e7) && (e7.ntype === 32 || e7.ntype === 33)).expressions.get(0), Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))).name, "a"), "e7 expression 0");
+            Bridge.Test.Assert.true$1(($t8 = Bridge.cast(e7, Bridge.hasValue(e7) && (e7.ntype === 32 || e7.ntype === 33)).expressions.get(1), Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))) && Bridge.referenceEquals(($t8 = Bridge.cast(e7, Bridge.hasValue(e7) && (e7.ntype === 32 || e7.ntype === 33)).expressions.get(1), Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))).name, "b"), "e7 expression 1");
+    
+            Bridge.Test.Assert.false$1(($t8 = { ntype: 9, type: Object, value: null }, Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 32 || $t8.ntype === 33))), "Constant should not be NewArrayExpression");
+        },
+        propertiesAndFieldsWork: function () {
+            var $t, $t1, $t2, $t3, $t4, $t5, $t6, $t7, $t8, $t9, $t10, $t11, $t12, $t13, $t14, $t15, $t16, $t17, $t18, $t19, $t20, $t21, $t22;
+            var e1 = ($t = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, ($t2=($t1=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[36], { ntype: 23, type: $t1.returnType, expression: $t, member: $t1 }), { ntype: 18, type: Function, returnType: $t2.type, body: $t2, params: Bridge.toList([$t]) }));
+            var e2 = ($t3 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, ($t5=($t4={"typeDef":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"accessibility":2,"name":"F2","type":4,"returnType":System.Int32,"sname":"f2","isReadOnly":false}, { ntype: 23, type: $t4.returnType, expression: $t3, member: $t4 }), { ntype: 18, type: Function, returnType: $t5.type, body: $t5, params: Bridge.toList([$t3]) }));
+            var e3 = ($t6 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, ($t8=($t7=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[34], { ntype: 23, type: $t7.returnType, expression: $t6, member: $t7 }), { ntype: 18, type: Function, returnType: $t8.type, body: $t8, params: Bridge.toList([$t6]) }));
+            var e4 = ($t9 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, ($t11=($t10={"typeDef":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"accessibility":2,"name":"P2","type":16,"returnType":System.Int32,"getter":{"typeDef":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"accessibility":2,"name":"get_P2","type":8,"sname":"getP2","returnType":System.Int32},"setter":{"typeDef":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"accessibility":2,"name":"set_P2","type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setP2","returnType":Object,"params":[System.Int32]}}, { ntype: 23, type: $t10.returnType, expression: $t9, member: $t10 }), { ntype: 18, type: Function, returnType: $t11.type, body: $t11, params: Bridge.toList([$t9]) }));
+            var e5 = ($t12=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "F1"), { ntype: 23, type: $t12.returnType, expression: { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, member: $t12 });
+            var e6 = ($t13=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "P1"), { ntype: 23, type: $t13.returnType, expression: { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, member: $t13 });
+            var e7 = ($t14={ ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, { ntype: 23, type: Bridge.Reflection.getMembers($t14.type, 4, 284, "F1").returnType, expression: $t14, member: Bridge.Reflection.getMembers($t14.type, 4, 284, "F1") });
+            var e8 = ($t15={ ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, { ntype: 23, type: Bridge.Reflection.getMembers($t15.type, 16, 284, "P1").returnType, expression: $t15, member: Bridge.Reflection.getMembers($t15.type, 16, 284, "P1") });
+            var e9 = ($t16={ ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, { ntype: 23, type: System.Int32, expression: $t16, member: Bridge.Reflection.getMembers($t16.type, 4, 284, "F1") });
+            var e10 = ($t17={ ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, { ntype: 23, type: System.Int32, expression: $t17, member: Bridge.Reflection.getMembers($t17.type, 16, 284, "P1") });
+            var e11 = ($t18={ ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, { ntype: 23, type: Bridge.Reflection.getMembers($t18.type, 20, 284, "F1").returnType, expression: $t18, member: Bridge.Reflection.getMembers($t18.type, 20, 284, "F1") });
+            var e12 = ($t19={ ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, { ntype: 23, type: Bridge.Reflection.getMembers($t19.type, 20, 284, "P1").returnType, expression: $t19, member: Bridge.Reflection.getMembers($t19.type, 20, 284, "P1") });
+            var e13 = ($t20=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "F1"), { ntype: 23, type: $t20.returnType, expression: { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, member: $t20 });
+            var e14 = ($t21=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "P1"), { ntype: 23, type: $t21.returnType, expression: { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, member: $t21 });
+    
+            var asserter = $_.Bridge.ClientTest.Linq.Expressions.ExpressionTests.f6;
+    
+            asserter(e1.body, "F1", 234, "e1");
+            asserter(e2.body, "F2", 24, "e2");
+            asserter(e3.body, "P1", 42, "e3");
+            asserter(e4.body, "P2", 17, "e4");
+            asserter(e5, "F1", 234, "e5");
+            asserter(e6, "P1", 42, "e6");
+            asserter(e7, "F1", 234, "e7");
+            asserter(e8, "P1", 42, "e8");
+            asserter(e9, "F1", 234, "e9");
+            asserter(e10, "P1", 42, "e10");
+            asserter(e11, "F1", 234, "e11");
+            asserter(e12, "P1", 42, "e12");
+            asserter(e13, "F1", 234, "e11");
+            asserter(e14, "P1", 42, "e12");
+    
+            Bridge.Test.Assert.false$1(($t22 = { ntype: 9, type: Object, value: null }, Bridge.is($t22, Bridge.hasValue($t22) && ($t22.ntype === 23))), "Constant should not be MemberExpression");
+        },
+        indexersWork: function () {
+            var $t, $t1, $t2, $t3, $t4, $t5;
+            var e1 = ($t = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" }, $t1 = { ntype: 38, type: System.Int32, name: "b" }, $t2 = { ntype: 38, type: String, name: "c" }, ($t4=($t3=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[32].getter, { ntype: 6, type: $t3.returnType, obj: $t, method: $t3, args: Bridge.toList([$t1,$t2]) }), { ntype: 18, type: Function, returnType: $t4.type, body: $t4, params: Bridge.toList([$t,$t1,$t2]) }));
+    
+            var ie = ($t5 = e1.body, Bridge.as($t5, Bridge.hasValue($t5) && ($t5.ntype === 6)));
+            Bridge.Test.Assert.true$1(ie != null, "is MethodCallExpression");
+            Bridge.Test.Assert.areEqual$1(ie.ntype, 6, "node type");
+            Bridge.Test.Assert.areEqual$1(ie.type, String, "type");
+            Bridge.Test.Assert.true$1(($t5 = ie.obj, Bridge.is($t5, Bridge.hasValue($t5) && ($t5.ntype === 38))) && Bridge.referenceEquals(($t5 = ie.obj, Bridge.cast($t5, Bridge.hasValue($t5) && ($t5.ntype === 38))).name, "a"), "expression");
+            Bridge.Test.Assert.areEqual$1(ie.args.getCount(), 2, "argument count");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ie.method, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "Item").getter), "get method");
+            Bridge.Test.Assert.true$1(($t5 = ie.args.get(0), Bridge.is($t5, Bridge.hasValue($t5) && ($t5.ntype === 38))) && Bridge.referenceEquals(($t5 = ie.args.get(0), Bridge.cast($t5, Bridge.hasValue($t5) && ($t5.ntype === 38))).name, "b"), "argument 0");
+            Bridge.Test.Assert.true$1(($t5 = ie.args.get(1), Bridge.is($t5, Bridge.hasValue($t5) && ($t5.ntype === 38))) && Bridge.referenceEquals(($t5 = ie.args.get(1), Bridge.cast($t5, Bridge.hasValue($t5) && ($t5.ntype === 38))).name, "c"), "argument 1");
+        },
+        indexExpressionsWork: function () {
+            var $t, $t1, $t2;
+            var pa1 = { ntype: 38, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, name: "a" };
+            var pb1 = { ntype: 38, type: System.Int32, name: "b" };
+            var pc1 = { ntype: 38, type: String, name: "c" };
+            var pa2 = { ntype: 38, type: Array, name: "a" };
+            var pb2 = { ntype: 38, type: System.Int32, name: "b" };
+            var pc2 = { ntype: 38, type: System.Int32, name: "c" };
+    
+            var asserter = $_.Bridge.ClientTest.Linq.Expressions.ExpressionTests.f7;
+    
+            var e1 = ($t=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "Item"), { ntype: 55, type: $t.returnType, obj: pa1, indexer: $t, arguments: Bridge.toList([pb1, pc1]) });
+            var e2 = ($t1=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "Item"), { ntype: 55, type: $t1.returnType, obj: pa1, indexer: $t1, arguments: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([pb1, pc1])) });
+            var e3 = { ntype: 55, type: System.Double, obj: pa2, arguments: Bridge.toList([pb2, pc2]) };
+            var e4 = { ntype: 55, type: System.Double, obj: pa2, arguments: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([pb2, pc2])) };
+    
+            asserter(e1, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "Item"), String, "e1");
+            asserter(e2, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "Item"), String, "e2");
+            asserter(e3, null, System.Double, "e3");
+            asserter(e4, null, System.Double, "e4");
+    
+            Bridge.Test.Assert.false$1(($t2 = { ntype: 9, type: Object, value: null }, Bridge.is($t2, Bridge.hasValue($t2) && ($t2.ntype === 55))), "Constant should not be IndexExpression");
+        },
+        objectConstructionWorks: function () {
+            var $t, $t1, $t2, $t3, $t4, $t5, $t6, $t7, $t8, $t9, $t10, $t11, $t12, $t13;
+            var asserter = $_.Bridge.ClientTest.Linq.Expressions.ExpressionTests.f8;
+    
+            var e1 = ($t1=($t=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[0], { ntype: 31, type: $t.typeDef, constructor: $t, arguments: Bridge.toList([]) }), { ntype: 18, type: Function, returnType: $t1.type, body: $t1, params: Bridge.toList([]) });
+            var e2 = ($t2 = { ntype: 38, type: System.Int32, name: "a" }, $t3 = { ntype: 38, type: System.Int32, name: "b" }, ($t5=($t4=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[1], { ntype: 31, type: $t4.typeDef, constructor: $t4, arguments: Bridge.toList([$t2,$t3]) }), { ntype: 18, type: Function, returnType: $t5.type, body: $t5, params: Bridge.toList([$t2,$t3]) }));
+            var e3 = ($t6 = { ntype: 38, type: System.Int32, name: "a" }, $t7 = { ntype: 38, type: String, name: "b" }, ($t9=($t8={"typeDef":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"accessibility":2,"name":".ctor","type":1,"params":[System.Int32,String],"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","parameterType":String,"position":1}],"sname":"$constructor2"}, { ntype: 31, type: $t8.typeDef, constructor: $t8, arguments: Bridge.toList([$t6,$t7]) }), { ntype: 18, type: Function, returnType: $t9.type, body: $t9, params: Bridge.toList([$t6,$t7]) }));
+            var e4 = ($t10=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 1, 284, null, [System.Int32, System.Int32]), { ntype: 31, type: $t10.typeDef, constructor: $t10, arguments: Bridge.toList([{ ntype: 38, type: System.Int32, name: "a" }, { ntype: 38, type: System.Int32, name: "b" }]) });
+            var e5 = ($t11=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 1, 284, null, [System.Int32, System.Int32]), { ntype: 31, type: $t11.typeDef, constructor: $t11, arguments: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([{ ntype: 38, type: System.Int32, name: "a" }, { ntype: 38, type: System.Int32, name: "b" }])) });
+            var e6 = ($t12=Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, { ntype: 31, type: $t12, constructor: Bridge.Reflection.getMembers($t12, 1, 284, null, []), arguments: Bridge.toList([]) });
+    
+            asserter(e1.body, System.Array.init(0, null), true, "e1");
+            asserter(e2.body, [System.Int32, System.Int32], true, "e2");
+            asserter(e3.body, [System.Int32, String], false, "e3");
+            asserter(e4, [System.Int32, System.Int32], true, "e4");
+            asserter(e5, [System.Int32, System.Int32], true, "e5");
+            asserter(e6, System.Array.init(0, null), true, "e6");
+    
+            Bridge.Test.Assert.false$1(($t13 = { ntype: 9, type: Object, value: null }, Bridge.is($t13, Bridge.hasValue($t13) && ($t13.ntype === 31))), "Constant should not be NewExpression");
+        },
+        anonymousTypeConstructionWorks: function () {
+            var $t, $t1, $t2, $t3, $t4;
+            var e = ($t = { ntype: 38, type: System.Int32, name: "a" }, $t1 = { ntype: 38, type: System.Int32, name: "b" }, ($t3={ ntype: 10, type: Object, operand: ($t2={"typeDef":$_.$AnonymousType$1,"accessibility":2,"isSynthetic":true,"name":".ctor","type":1,"sname":"$constructor"}, { ntype: 31, type: $t2.typeDef, constructor: $t2, arguments: Bridge.toList([$t,$t1]), members: Bridge.toList([{"typeDef":$_.$AnonymousType$1,"accessibility":2,"name":"A","type":16,"returnType":System.Int32,"getter":{"typeDef":$_.$AnonymousType$1,"accessibility":2,"name":"get_A","type":8,"sname":"getA","returnType":System.Int32}},{"typeDef":$_.$AnonymousType$1,"accessibility":2,"name":"B","type":16,"returnType":System.Int32,"getter":{"typeDef":$_.$AnonymousType$1,"accessibility":2,"name":"get_B","type":8,"sname":"getB","returnType":System.Int32}}]) }) }, { ntype: 18, type: Function, returnType: $t3.type, body: $t3, params: Bridge.toList([$t,$t1]) }));
+            Bridge.Test.Assert.areEqual(e.body.ntype, 10);
+    
+            var ne = ($t4 = ($t4 = e.body, Bridge.cast($t4, Bridge.hasValue($t4) && ([4,10,11,28,29,30,34,40,44,49,54,60,62,77,78,79,80,82,83,84].indexOf($t4.ntype) >= 0))).operand, Bridge.as($t4, Bridge.hasValue($t4) && ($t4.ntype === 31)));
+            Bridge.Test.Assert.true$1(ne != null, "is NewExpression");
+            Bridge.Test.Assert.areEqual$1(ne.ntype, 31, "node type");
+            Bridge.Test.Assert.true$1(System.String.contains(Bridge.Reflection.getTypeFullName(ne.type),"$AnonymousType$"), "type");
+            Bridge.Test.Assert.areEqual$1(ne.arguments.getCount(), 2, "argument count");
+            Bridge.Test.Assert.true$1(($t4 = ne.arguments.get(0), Bridge.is($t4, Bridge.hasValue($t4) && ($t4.ntype === 38))) && Bridge.referenceEquals(($t4 = ne.arguments.get(0), Bridge.cast($t4, Bridge.hasValue($t4) && ($t4.ntype === 38))).name, "a"), "argument 0");
+            Bridge.Test.Assert.true$1(($t4 = ne.arguments.get(1), Bridge.is($t4, Bridge.hasValue($t4) && ($t4.ntype === 38))) && Bridge.referenceEquals(($t4 = ne.arguments.get(1), Bridge.cast($t4, Bridge.hasValue($t4) && ($t4.ntype === 38))).name, "b"), "argument 1");
+            Bridge.Test.Assert.areEqual$1(ne.members.getCount(), 2, "member count");
+            var propA = ne.members.get(0);
+            var propB = ne.members.get(1);
+            Bridge.Test.Assert.true$1(Bridge.is(propA, System.Reflection.PropertyInfo), "A should be property");
+            Bridge.Test.Assert.areEqual$1(propA.name, "A", "A name");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.midel(Bridge.cast(propA, System.Reflection.PropertyInfo).getter, new $_.$AnonymousType$1(42, 17))(null), 42, "A getter result");
+            Bridge.Test.Assert.true$1(Bridge.is(propB, System.Reflection.PropertyInfo), "B should be property");
+            Bridge.Test.Assert.areEqual$1(propB.name, "B", "B name");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.midel(Bridge.cast(propB, System.Reflection.PropertyInfo).getter, new $_.$AnonymousType$1(42, 17))(null), 17, "B getter result");
+    
+            var instance = Bridge.Reflection.invokeCI(ne.constructor, [42, 17]);
+            Bridge.Test.Assert.areEqual$1(instance.a, 42, "Constructor invocation result A");
+            Bridge.Test.Assert.areEqual$1(instance.b, 17, "Constructor invocation result B");
+        },
+        transparentIdentifiersWork: function () {
+            var $t, $t1, $t2, $t3, $t4, $t5, $t6, $t7, $t8, $t9, $t10;
+            var c = new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.ClassWithQueryPattern$1(System.Int32))(42);
+            var f = ($t9=($t8={"typeDef":Bridge.ClientTest.Linq.Expressions.ExpressionTests.ClassWithQueryPattern$1($_.$AnonymousType$2),"accessibility":2,"name":"Select","type":8,"paramsInfo":[{"name":"f","parameterType":Function,"position":0}],"tpcount":1,"sname":"select","returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.ClassWithQueryPattern$1(System.Int32),"params":[Function]}, { ntype: 6, type: $t8.returnType, obj: ($t3={"typeDef":Bridge.ClientTest.Linq.Expressions.ExpressionTests.ClassWithQueryPattern$1(System.Int32),"accessibility":2,"name":"Select","type":8,"paramsInfo":[{"name":"f","parameterType":Function,"position":0}],"tpcount":1,"sname":"select","returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.ClassWithQueryPattern$1(Object),"params":[Function]}, { ntype: 6, type: $t3.returnType, obj: {"ntype":23,"type":Bridge.ClientTest.Linq.Expressions.ExpressionTests.ClassWithQueryPattern$1(System.Int32),"expression":{"ntype":9,"type":Bridge.ClientTest.Linq.Expressions.ExpressionTests.ClassWithQueryPattern$1(System.Int32),"value":{}},"member":{"typeDef":Object,"name":"c","type":16,"returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.ClassWithQueryPattern$1(System.Int32),"getter":{"typeDef":Object,"name":"getc","type":8,"returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.ClassWithQueryPattern$1(System.Int32),"params":[],"def":function(){ return c}},"setter":{"typeDef":Object,"name":"setc","type":8,"returnType":Object,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.ClassWithQueryPattern$1(System.Int32)],"def":function($){ c = $; }}}}, method: $t3, args: Bridge.toList([($t = { ntype: 38, type: System.Int32, name: "a" }, ($t2=($t1={"typeDef":$_.$AnonymousType$2,"accessibility":2,"isSynthetic":true,"name":".ctor","type":1,"sname":"$constructor"}, { ntype: 31, type: $t1.typeDef, constructor: $t1, arguments: Bridge.toList([$t,{ ntype: 0, type: System.Int32, left: $t, right: { ntype: 9, type: System.Int32, value: 1 } }]), members: Bridge.toList([{"typeDef":$_.$AnonymousType$2,"accessibility":2,"name":"a","type":16,"returnType":System.Int32,"getter":{"typeDef":$_.$AnonymousType$2,"accessibility":2,"name":"get_a","type":8,"sname":"geta","returnType":System.Int32}},{"typeDef":$_.$AnonymousType$2,"accessibility":2,"name":"b","type":16,"returnType":System.Int32,"getter":{"typeDef":$_.$AnonymousType$2,"accessibility":2,"name":"get_b","type":8,"sname":"getb","returnType":System.Int32}}]) }), { ntype: 18, type: Function, returnType: $t2.type, body: $t2, params: Bridge.toList([$t]) }))]) }), method: $t8, args: Bridge.toList([($t4 = { ntype: 38, type: $_.$AnonymousType$2, name: "x0" }, ($t7={ ntype: 0, type: System.Int32, left: ($t5={"typeDef":$_.$AnonymousType$2,"accessibility":2,"name":"a","type":16,"returnType":System.Int32,"getter":{"typeDef":$_.$AnonymousType$2,"accessibility":2,"name":"get_a","type":8,"sname":"geta","returnType":System.Int32}}, { ntype: 23, type: $t5.returnType, expression: $t4, member: $t5 }), right: ($t6={"typeDef":$_.$AnonymousType$2,"accessibility":2,"name":"b","type":16,"returnType":System.Int32,"getter":{"typeDef":$_.$AnonymousType$2,"accessibility":2,"name":"get_b","type":8,"sname":"getb","returnType":System.Int32}}, { ntype: 23, type: $t6.returnType, expression: $t4, member: $t6 }) }, { ntype: 18, type: Function, returnType: $t7.type, body: $t7, params: Bridge.toList([$t4]) }))]) }), { ntype: 18, type: Function, returnType: $t9.type, body: $t9, params: Bridge.toList([]) });
+            var outer = ($t10 = f.body, Bridge.cast($t10, Bridge.hasValue($t10) && ($t10.ntype === 6)));
+            //var outerLambda = (LambdaExpression)outer.Arguments[0];
+            var inner = ($t10 = outer.obj, Bridge.cast($t10, Bridge.hasValue($t10) && ($t10.ntype === 6)));
+            Bridge.Test.Assert.areEqual(inner.method.name, "Select");
+            var innerLambda = ($t10 = inner.args.get(0), Bridge.cast($t10, Bridge.hasValue($t10) && ($t10.ntype === 18)));
+            var ne = ($t10 = innerLambda.body, Bridge.cast($t10, Bridge.hasValue($t10) && ($t10.ntype === 31)));
+    
+            Bridge.Test.Assert.true$1(ne != null, "is NewExpression");
+            Bridge.Test.Assert.areEqual$1(ne.ntype, 31, "node type");
+            Bridge.Test.Assert.true$1(System.String.contains(Bridge.Reflection.getTypeFullName(ne.type),"$AnonymousType$"), "type");
+            Bridge.Test.Assert.areEqual$1(ne.arguments.getCount(), 2, "argument count");
+            Bridge.Test.Assert.true$1(($t10 = ne.arguments.get(0), Bridge.is($t10, Bridge.hasValue($t10) && ($t10.ntype === 38))) && Bridge.referenceEquals(($t10 = ne.arguments.get(0), Bridge.cast($t10, Bridge.hasValue($t10) && ($t10.ntype === 38))).name, "a"), "argument 0");
+            Bridge.Test.Assert.areEqual$1(ne.arguments.get(1).ntype, 0, "argument 1");
+            Bridge.Test.Assert.areEqual$1(ne.members.getCount(), 2, "member count");
+            var propA = ne.members.get(0);
+            var propB = ne.members.get(1);
+            Bridge.Test.Assert.true$1(Bridge.is(propA, System.Reflection.PropertyInfo), "A should be property");
+            Bridge.Test.Assert.areEqual$1(propA.name, "a", "a name");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.midel(Bridge.cast(propA, System.Reflection.PropertyInfo).getter, new $_.$AnonymousType$2(42, 17))(null), 42, "a getter result");
+            Bridge.Test.Assert.true$1(Bridge.is(propB, System.Reflection.PropertyInfo), "B should be property");
+            Bridge.Test.Assert.areEqual$1(propB.name, "b", "b name");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.midel(Bridge.cast(propB, System.Reflection.PropertyInfo).getter, new $_.$AnonymousType$2(42, 17))(null), 17, "b getter result");
+    
+            var instance = Bridge.Reflection.invokeCI(ne.constructor, [42, 17]);
+            Bridge.Test.Assert.areEqual$1(instance.a, 42, "Constructor invocation result a");
+            Bridge.Test.Assert.areEqual$1(instance.b, 17, "Constructor invocation result b");
+        },
+        newExpressionWithMembersWork: function () {
+            var $t, $t1, $t2;
+            var a = { ntype: 38, type: System.Int32, name: "a" };
+            var b = { ntype: 38, type: System.Int32, name: "b" };
+    
+            var asserter = function (expr, title) {
+                var ne = Bridge.as(expr, Bridge.hasValue(expr) && (expr.ntype === 31));
+                Bridge.Test.Assert.true$1(ne != null, title + " is NewExpression");
+                Bridge.Test.Assert.areEqual$1(ne.ntype, 31, title + " node type");
+                Bridge.Test.Assert.areEqual$1(ne.type, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, title + " type");
+                Bridge.Test.Assert.areEqual$1(ne.arguments.getCount(), 2, title + " argument count");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(ne.constructor, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 1, 284, null, [System.Int32, System.Int32])), title + " constructor reference");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(ne.arguments.get(0), a), title + " argument 0");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(ne.arguments.get(1), b), title + " argument 1");
+                Bridge.Test.Assert.areEqual$1(ne.members.getCount(), 2, title + " member count");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(ne.members.get(0), Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "F1")), title + " member 0");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(ne.members.get(1), Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "P1").getter), title + " member 1");
+            };
+    
+            var e1 = ($t=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 1, 284, null, [System.Int32, System.Int32]), { ntype: 31, type: $t.typeDef, constructor: $t, arguments: Bridge.toList([a, b]), members: Bridge.toList([Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "F1"), Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "P1").getter]) });
+            var e2 = ($t1=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 1, 284, null, [System.Int32, System.Int32]), { ntype: 31, type: $t1.typeDef, constructor: $t1, arguments: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([a, b])), members: Bridge.toList([Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "F1"), Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "P1").getter]) });
+            var e3 = ($t2=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 1, 284, null, [System.Int32, System.Int32]), { ntype: 31, type: $t2.typeDef, constructor: $t2, arguments: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([a, b])), members: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "F1"), Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "P1").getter])) });
+    
+            asserter(e1, "e1");
+            asserter(e2, "e2");
+            asserter(e3, "e3");
+        },
+        bindWorks: function () {
+            var $t, $t1, $t2, $t3, $t4, $t5, $t6, $t7, $t8;
+            var pa = { ntype: 38, type: System.Int32, name: "a" };
+            var e1 = ($t = { ntype: 38, type: System.Int32, name: "a" }, ($t3=($t2=($t1=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[0], { ntype: 31, type: $t1.typeDef, constructor: $t1, arguments: Bridge.toList([]) }), { ntype: 24, type: $t2.type, newExpression: $t2, bindings: Bridge.toList([{ btype: 0, member: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[36], expression: $t }]) }), { ntype: 18, type: Function, returnType: $t3.type, body: $t3, params: Bridge.toList([$t]) }));
+            var e2 = ($t4 = { ntype: 38, type: System.Int32, name: "a" }, ($t7=($t6=($t5=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[0], { ntype: 31, type: $t5.typeDef, constructor: $t5, arguments: Bridge.toList([]) }), { ntype: 24, type: $t6.type, newExpression: $t6, bindings: Bridge.toList([{ btype: 0, member: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[34], expression: $t4 }]) }), { ntype: 18, type: Function, returnType: $t7.type, body: $t7, params: Bridge.toList([$t4]) }));
+    
+            var b1 = ($t8 = e1.body, Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 24))).bindings.get(0);
+            var b2 = ($t8 = e2.body, Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 24))).bindings.get(0);
+            var b3 = { btype: 0, member: Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "F1"), expression: pa };
+            var b4 = { btype: 0, member: Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "P1"), expression: pa };
+    
+            var ma1 = Bridge.as(b1, Bridge.hasValue(b1) && (b1.btype === 0));
+            Bridge.Test.Assert.true$1(ma1 != null, "b1 should be MemberAssignment");
+            Bridge.Test.Assert.areEqual$1(ma1.btype, 0, "b1 BindingType");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ma1.member, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "F1")), "b1 member");
+            Bridge.Test.Assert.true$1(($t8 = ma1.expression, Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))) && Bridge.referenceEquals(($t8 = ma1.expression, Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))).name, "a"), "b1 expression");
+    
+            var ma2 = Bridge.as(b2, Bridge.hasValue(b2) && (b2.btype === 0));
+            Bridge.Test.Assert.true$1(ma2 != null, "b2 should be MemberAssignment");
+            Bridge.Test.Assert.areEqual$1(ma2.btype, 0, "b2 BindingType");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ma2.member, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "P1")), "b2 member");
+            Bridge.Test.Assert.true$1(($t8 = ma2.expression, Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))) && Bridge.referenceEquals(($t8 = ma2.expression, Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))).name, "a"), "b2 expression");
+    
+            var ma3 = Bridge.as(b3, Bridge.hasValue(b3) && (b3.btype === 0));
+            Bridge.Test.Assert.true$1(ma3 != null, "b3 should be MemberAssignment");
+            Bridge.Test.Assert.areEqual$1(ma3.btype, 0, "b3 BindingType");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ma3.member, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "F1")), "b3 member");
+            Bridge.Test.Assert.true$1(($t8 = ma3.expression, Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))) && Bridge.referenceEquals(($t8 = ma3.expression, Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))).name, "a"), "b3 expression");
+    
+            var ma4 = Bridge.as(b4, Bridge.hasValue(b4) && (b4.btype === 0));
+            Bridge.Test.Assert.true$1(ma4 != null, "b4 should be MemberAssignment");
+            Bridge.Test.Assert.areEqual$1(ma4.btype, 0, "b4 BindingType");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ma4.member, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "P1")), "b4 member");
+            Bridge.Test.Assert.true$1(($t8 = ma4.expression, Bridge.is($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))) && Bridge.referenceEquals(($t8 = ma4.expression, Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 38))).name, "a"), "b4 expression");
+    
+            Bridge.Test.Assert.false$1(($t8 = { btype: 2, member: Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "LF"), initializers: Bridge.toList([null]) }, Bridge.is($t8, Bridge.hasValue($t8) && ($t8.btype === 0))), "ListBinding should not be MemberAssignment");
+        },
+        elementInitWorks: function () {
+            var add1 = Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList, 8, 284, "Add", [System.Int32]);
+            var add2 = Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList, 8, 284, "Add", [System.Int32, System.Int32]);
+            var pa = { ntype: 38, type: System.Int32, name: "a" };
+            var pb = { ntype: 38, type: System.Int32, name: "b" };
+    
+            var i1 = { addMethod: add1, arguments: Bridge.toList([pa]) };
+            var i2 = { addMethod: add1, arguments: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([pa])) };
+            var i3 = { addMethod: add2, arguments: Bridge.toList([pa, pb]) };
+            var i4 = { addMethod: add2, arguments: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([pa, pb])) };
+    
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(i1.addMethod, add1), "i1 add method");
+            Bridge.Test.Assert.areEqual$1(i1.arguments.getCount(), 1, "i1 argument count");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(i1.arguments.get(0), pa), "i1 argument");
+    
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(i2.addMethod, add1), "i2 add method");
+            Bridge.Test.Assert.areEqual$1(i2.arguments.getCount(), 1, "i2 argument count");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(i2.arguments.get(0), pa), "i2 argument");
+    
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(i3.addMethod, add2), "i3 add method");
+            Bridge.Test.Assert.areEqual$1(i3.arguments.getCount(), 2, "i3 argument count");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(i3.arguments.get(0), pa), "i3 argument 0");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(i3.arguments.get(1), pb), "i3 argument 1");
+    
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(i4.addMethod, add2), "i4 add method");
+            Bridge.Test.Assert.areEqual$1(i4.arguments.getCount(), 2, "i4 argument count");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(i4.arguments.get(0), pa), "i4 argument 0");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(i4.arguments.get(1), pb), "i4 argument 1");
+        },
+        listBindWorks: function () {
+            var $t, $t1, $t2, $t3, $t4, $t5, $t6, $t7, $t8, $t9, $t10, $t11, $t12, $t13, $t14, $t15;
+            var add1 = Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList, 8, 284, "Add", [System.Int32]);
+            var add2 = Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList, 8, 284, "Add", [System.Int32, System.Int32]);
+            var asserter = function (binding, member, title) {
+                var $t;
+                var mlb = Bridge.as(binding, Bridge.hasValue(binding) && (binding.btype === 2));
+                Bridge.Test.Assert.true$1(mlb != null, title + " is MemberListBinding");
+                Bridge.Test.Assert.areEqual$1(binding.btype, 2, title + " node type");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(binding.member, member), title + " member");
+                Bridge.Test.Assert.areEqual$1(mlb.initializers.getCount(), 2, title + " initializer count");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(mlb.initializers.get(0).addMethod, add1), title + " initializer 0 add method");
+                Bridge.Test.Assert.areEqual$1(mlb.initializers.get(0).arguments.getCount(), 1, title + " initializer 0 argument count");
+                Bridge.Test.Assert.true$1(($t = mlb.initializers.get(0).arguments.get(0), Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))) && Bridge.referenceEquals(($t = mlb.initializers.get(0).arguments.get(0), Bridge.cast($t, Bridge.hasValue($t) && ($t.ntype === 38))).name, "a"), title + " initializer 0 argument");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(mlb.initializers.get(0).addMethod, add1), title + " initializer 1 add method");
+                Bridge.Test.Assert.areEqual$1(mlb.initializers.get(1).arguments.getCount(), 1, title + " initializer 1 argument count");
+                Bridge.Test.Assert.true$1(($t = mlb.initializers.get(1).arguments.get(0), Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))) && Bridge.referenceEquals(($t = mlb.initializers.get(1).arguments.get(0), Bridge.cast($t, Bridge.hasValue($t) && ($t.ntype === 38))).name, "b"), title + " initializer 1 argument");
+            };
+    
+            var pa = { ntype: 38, type: System.Int32, name: "a" };
+            var pb = { ntype: 38, type: System.Int32, name: "b" };
+            var e1 = ($t = { ntype: 38, type: System.Int32, name: "a" }, $t1 = { ntype: 38, type: System.Int32, name: "b" }, ($t4=($t3=($t2=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[0], { ntype: 31, type: $t2.typeDef, constructor: $t2, arguments: Bridge.toList([]) }), { ntype: 24, type: $t3.type, newExpression: $t3, bindings: Bridge.toList([{ btype: 2, member: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[37], initializers: Bridge.toList([{ addMethod: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList).members[1], arguments: Bridge.toList([$t]) },{ addMethod: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList).members[1], arguments: Bridge.toList([$t1]) }]) }]) }), { ntype: 18, type: Function, returnType: $t4.type, body: $t4, params: Bridge.toList([$t,$t1]) }));
+            var e2 = ($t5 = { ntype: 38, type: System.Int32, name: "a" }, $t6 = { ntype: 38, type: System.Int32, name: "b" }, ($t9=($t8=($t7=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[0], { ntype: 31, type: $t7.typeDef, constructor: $t7, arguments: Bridge.toList([]) }), { ntype: 24, type: $t8.type, newExpression: $t8, bindings: Bridge.toList([{ btype: 2, member: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[33], initializers: Bridge.toList([{ addMethod: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList).members[1], arguments: Bridge.toList([$t5]) },{ addMethod: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList).members[1], arguments: Bridge.toList([$t6]) }]) }]) }), { ntype: 18, type: Function, returnType: $t9.type, body: $t9, params: Bridge.toList([$t5,$t6]) }));
+            var e3 = ($t10 = { ntype: 38, type: System.Int32, name: "a" }, $t11 = { ntype: 38, type: System.Int32, name: "b" }, ($t14=($t13=($t12=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[0], { ntype: 31, type: $t12.typeDef, constructor: $t12, arguments: Bridge.toList([]) }), { ntype: 24, type: $t13.type, newExpression: $t13, bindings: Bridge.toList([{ btype: 2, member: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[37], initializers: Bridge.toList([{ addMethod: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList).members[1], arguments: Bridge.toList([$t10]) },{ addMethod: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList).members[2], arguments: Bridge.toList([$t10,$t11]) }]) }]) }), { ntype: 18, type: Function, returnType: $t14.type, body: $t14, params: Bridge.toList([$t10,$t11]) }));
+            var b1 = ($t15 = e1.body, Bridge.cast($t15, Bridge.hasValue($t15) && ($t15.ntype === 24))).bindings.get(0);
+            var b2 = ($t15 = e2.body, Bridge.cast($t15, Bridge.hasValue($t15) && ($t15.ntype === 24))).bindings.get(0);
+            var b3 = { btype: 2, member: Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "LF"), initializers: Bridge.toList([{ addMethod: add1, arguments: Bridge.toList([pa]) }, { addMethod: add1, arguments: Bridge.toList([pb]) }]) };
+            var b4 = { btype: 2, member: Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "LP"), initializers: Bridge.toList([{ addMethod: add1, arguments: Bridge.toList([pa]) }, { addMethod: add1, arguments: Bridge.toList([pb]) }]) };
+            var b5 = { btype: 2, member: Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "LF"), initializers: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([{ addMethod: add1, arguments: Bridge.toList([pa]) }, { addMethod: add1, arguments: Bridge.toList([pb]) }])) };
+            var b6 = { btype: 2, member: Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "LP"), initializers: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([{ addMethod: add1, arguments: Bridge.toList([pa]) }, { addMethod: add1, arguments: Bridge.toList([pb]) }])) };
+            var b7 = ($t15 = e3.body, Bridge.cast($t15, Bridge.hasValue($t15) && ($t15.ntype === 24))).bindings.get(0);
+    
+            asserter(b1, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "LF"), "b1");
+            asserter(b2, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "LP"), "b2");
+            asserter(b3, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "LF"), "b3");
+            asserter(b4, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "LP"), "b4");
+            asserter(b5, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "LF"), "b5");
+            asserter(b6, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "LP"), "b6");
+    
+            var mlb7 = Bridge.as(b7, Bridge.hasValue(b7) && (b7.btype === 2));
+            Bridge.Test.Assert.true$1(mlb7 != null, "b7 is MemberListBinding");
+            Bridge.Test.Assert.areEqual$1(b7.btype, 2, "b7 node type");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(b7.member, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "LF")), "b7 member");
+            Bridge.Test.Assert.areEqual$1(mlb7.initializers.getCount(), 2, "b7 initializer count");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(mlb7.initializers.get(0).addMethod, add1), "b7 initializer 0 add method");
+            Bridge.Test.Assert.areEqual$1(mlb7.initializers.get(0).arguments.getCount(), 1, "b7 initializer 0 argument count");
+            Bridge.Test.Assert.true$1(($t15 = mlb7.initializers.get(0).arguments.get(0), Bridge.is($t15, Bridge.hasValue($t15) && ($t15.ntype === 38))) && Bridge.referenceEquals(($t15 = mlb7.initializers.get(0).arguments.get(0), Bridge.cast($t15, Bridge.hasValue($t15) && ($t15.ntype === 38))).name, "a"), "b7 initializer 0 argument");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(mlb7.initializers.get(1).addMethod, add2), "b7 initializer 1 add method");
+            Bridge.Test.Assert.areEqual$1(mlb7.initializers.get(1).arguments.getCount(), 2, "b7 initializer 1 argument count");
+            Bridge.Test.Assert.true$1(($t15 = mlb7.initializers.get(1).arguments.get(0), Bridge.is($t15, Bridge.hasValue($t15) && ($t15.ntype === 38))) && Bridge.referenceEquals(($t15 = mlb7.initializers.get(1).arguments.get(0), Bridge.cast($t15, Bridge.hasValue($t15) && ($t15.ntype === 38))).name, "a"), "b7 initializer 1 argument 0");
+            Bridge.Test.Assert.true$1(($t15 = mlb7.initializers.get(1).arguments.get(1), Bridge.is($t15, Bridge.hasValue($t15) && ($t15.ntype === 38))) && Bridge.referenceEquals(($t15 = mlb7.initializers.get(1).arguments.get(1), Bridge.cast($t15, Bridge.hasValue($t15) && ($t15.ntype === 38))).name, "b"), "b7 initializer 1 argument 1");
+    
+            Bridge.Test.Assert.false$1(($t15 = { btype: 0, member: Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "F1"), expression: { ntype: 38, type: System.Int32, name: "a" } }, Bridge.is($t15, Bridge.hasValue($t15) && ($t15.btype === 2))), "MemberAssignment should not be list binding");
+        },
+        memberBindWorks: function () {
+            var $t, $t1, $t2, $t3, $t4, $t5, $t6, $t7, $t8;
+            var pa = { ntype: 38, type: System.Int32, name: "a" };
+            var e1 = ($t = { ntype: 38, type: System.Int32, name: "a" }, ($t3=($t2=($t1=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[0], { ntype: 31, type: $t1.typeDef, constructor: $t1, arguments: Bridge.toList([]) }), { ntype: 24, type: $t2.type, newExpression: $t2, bindings: Bridge.toList([{ btype: 1, member: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[35], bindings: Bridge.toList([{ btype: 0, member: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[36], expression: $t },{ btype: 0, member: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[34], expression: $t }]) }]) }), { ntype: 18, type: Function, returnType: $t3.type, body: $t3, params: Bridge.toList([$t]) }));
+            var e2 = ($t4 = { ntype: 38, type: System.Int32, name: "a" }, ($t7=($t6=($t5=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[0], { ntype: 31, type: $t5.typeDef, constructor: $t5, arguments: Bridge.toList([]) }), { ntype: 24, type: $t6.type, newExpression: $t6, bindings: Bridge.toList([{ btype: 1, member: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[31], bindings: Bridge.toList([{ btype: 0, member: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[36], expression: $t4 },{ btype: 0, member: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[34], expression: $t4 }]) }]) }), { ntype: 18, type: Function, returnType: $t7.type, body: $t7, params: Bridge.toList([$t4]) }));
+    
+            var bindings = [{ btype: 0, member: Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "F1"), expression: pa }, { btype: 0, member: Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "P1"), expression: pa }];
+            var b1 = ($t8 = e1.body, Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 24))).bindings.get(0);
+            var b2 = ($t8 = e2.body, Bridge.cast($t8, Bridge.hasValue($t8) && ($t8.ntype === 24))).bindings.get(0);
+            var b3 = { btype: 1, member: Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "CF"), bindings: Bridge.toList(bindings) };
+            var b4 = { btype: 1, member: Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "CP"), bindings: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))(bindings)) };
+    
+            var mb1 = Bridge.as(b1, Bridge.hasValue(b1) && (b1.btype === 1));
+            Bridge.Test.Assert.true$1(mb1 != null, "b1 should be MemberMemberBinding");
+            Bridge.Test.Assert.areEqual$1(mb1.btype, 1, "b1 BindingType");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(mb1.member, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "CF")), "b1 member");
+            Bridge.Test.Assert.areEqual$1(mb1.bindings.getCount(), 2, "b1 binding count");
+            Bridge.Test.Assert.true$1(($t8 = mb1.bindings.get(0), Bridge.is($t8, Bridge.hasValue($t8) && ($t8.btype === 0))) && Bridge.referenceEquals(mb1.bindings.get(0).member, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "F1")), "b1 binding 0");
+            Bridge.Test.Assert.true$1(($t8 = mb1.bindings.get(1), Bridge.is($t8, Bridge.hasValue($t8) && ($t8.btype === 0))) && Bridge.referenceEquals(mb1.bindings.get(1).member, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "P1")), "b1 binding 1");
+    
+            var mb2 = Bridge.as(b2, Bridge.hasValue(b2) && (b2.btype === 1));
+            Bridge.Test.Assert.true$1(mb2 != null, "b2 should be MemberMemberBinding");
+            Bridge.Test.Assert.areEqual$1(mb2.btype, 1, "b2 BindingType");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(mb2.member, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "CP")), "b2 member");
+            Bridge.Test.Assert.areEqual$1(mb2.bindings.getCount(), 2, "b2 binding count");
+            Bridge.Test.Assert.true$1(($t8 = mb2.bindings.get(0), Bridge.is($t8, Bridge.hasValue($t8) && ($t8.btype === 0))) && Bridge.referenceEquals(mb2.bindings.get(0).member, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "F1")), "b1 binding 0");
+            Bridge.Test.Assert.true$1(($t8 = mb2.bindings.get(1), Bridge.is($t8, Bridge.hasValue($t8) && ($t8.btype === 0))) && Bridge.referenceEquals(mb2.bindings.get(1).member, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "P1")), "b1 binding 1");
+    
+            var mb3 = Bridge.as(b3, Bridge.hasValue(b3) && (b3.btype === 1));
+            Bridge.Test.Assert.true$1(mb3 != null, "b3 should be MemberMemberBinding");
+            Bridge.Test.Assert.areEqual$1(mb3.btype, 1, "b3 BindingType");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(mb3.member, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "CF")), "b3 member");
+            Bridge.Test.Assert.areEqual$1(mb3.bindings.getCount(), 2, "b3 binding count");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(mb3.bindings.get(0), bindings[0]), "b3 binding 0");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(mb3.bindings.get(1), bindings[1]), "b3 binding 1");
+    
+            var mb4 = Bridge.as(b4, Bridge.hasValue(b4) && (b4.btype === 1));
+            Bridge.Test.Assert.true$1(mb4 != null, "b4 should be MemberMemberBinding");
+            Bridge.Test.Assert.areEqual$1(mb4.btype, 1, "b4 BindingType");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(mb4.member, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "CP")), "b4 member");
+            Bridge.Test.Assert.areEqual$1(mb4.bindings.getCount(), 2, "b4 binding count");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(mb4.bindings.get(0), bindings[0]), "b4 binding 0");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(mb4.bindings.get(1), bindings[1]), "b4 binding 1");
+    
+            Bridge.Test.Assert.false$1(($t8 = { btype: 2, member: Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "LF"), initializers: Bridge.toList([null]) }, Bridge.is($t8, Bridge.hasValue($t8) && ($t8.btype === 1))), "ListBinding should not be MemberMemberBinding");
+        },
+        memberInitWorks: function () {
+            var $t, $t1, $t2, $t3, $t4, $t5, $t6, $t7, $t8, $t9;
+            var asserter = $_.Bridge.ClientTest.Linq.Expressions.ExpressionTests.f9;
+    
+            var pa = { ntype: 38, type: System.Int32, name: "a" };
+            var pb = { ntype: 38, type: System.Int32, name: "b" };
+            var e1 = ($t = { ntype: 38, type: System.Int32, name: "a" }, $t1 = { ntype: 38, type: System.Int32, name: "b" }, ($t4=($t3=($t2=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[0], { ntype: 31, type: $t2.typeDef, constructor: $t2, arguments: Bridge.toList([]) }), { ntype: 24, type: $t3.type, newExpression: $t3, bindings: Bridge.toList([{ btype: 0, member: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[36], expression: $t },{ btype: 0, member: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C).members[34], expression: $t1 }]) }), { ntype: 18, type: Function, returnType: $t4.type, body: $t4, params: Bridge.toList([$t,$t1]) }));
+            var e2 = ($t6=($t5=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 1, 284, null, System.Array.init(0, null)), { ntype: 31, type: $t5.typeDef, constructor: $t5, arguments: Bridge.toList([null]) }), { ntype: 24, type: $t6.type, newExpression: $t6, bindings: Bridge.toList([{ btype: 0, member: Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "F1"), expression: pa }, { btype: 0, member: Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "P1"), expression: pb }]) });
+            var e3 = ($t8=($t7=Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 1, 284, null, System.Array.init(0, null)), { ntype: 31, type: $t7.typeDef, constructor: $t7, arguments: Bridge.toList([null]) }), { ntype: 24, type: $t8.type, newExpression: $t8, bindings: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([{ btype: 0, member: Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "F1"), expression: pa }, { btype: 0, member: Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "P1"), expression: pb }])) });
+    
+            asserter(e1.body, "e1");
+            asserter(e2, "e2");
+            asserter(e3, "e3");
+    
+            Bridge.Test.Assert.false$1(($t9 = { ntype: 9, type: System.Int32, value: 0 }, Bridge.is($t9, Bridge.hasValue($t9) && ($t9.ntype === 24))), "Constant is MemberInitExpression");
+        },
+        listInitWorks: function () {
+            var $t, $t1, $t2, $t3, $t4, $t5, $t6, $t7, $t8, $t9, $t10, $t11, $t12, $t13, $t14, $t15, $t16, $t17, $t18;
+            var add1 = Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList, 8, 284, "Add", [System.Int32]);
+            var add2 = Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList, 8, 284, "Add", [System.Int32, System.Int32]);
+    
+            var asserter = function (expr, title) {
+                var $t;
+                var lie = Bridge.as(expr, Bridge.hasValue(expr) && (expr.ntype === 22));
+                Bridge.Test.Assert.true$1(lie != null, title + " is ListInitExpression");
+                Bridge.Test.Assert.areEqual$1(expr.ntype, 22, title + " node type");
+                Bridge.Test.Assert.areEqual$1(expr.type, Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList, title + " type");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(lie.newExpression.constructor, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList, 1, 284, null, System.Array.init(0, null))), title + " new expression");
+                Bridge.Test.Assert.areEqual$1(lie.initializers.getCount(), 2, title + " initializer count");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(lie.initializers.get(0).addMethod, add1), title + " initializer 0 add method");
+                Bridge.Test.Assert.areEqual$1(lie.initializers.get(0).arguments.getCount(), 1, title + " initializer 0 argument count");
+                Bridge.Test.Assert.true$1(($t = lie.initializers.get(0).arguments.get(0), Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))) && Bridge.referenceEquals(($t = lie.initializers.get(0).arguments.get(0), Bridge.cast($t, Bridge.hasValue($t) && ($t.ntype === 38))).name, "a"), title + " initializer 0 argument");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(lie.initializers.get(1).addMethod, add1), title + " initializer 1 add method");
+                Bridge.Test.Assert.areEqual$1(lie.initializers.get(1).arguments.getCount(), 1, title + " initializer 1 argument count");
+                Bridge.Test.Assert.true$1(($t = lie.initializers.get(1).arguments.get(0), Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))) && Bridge.referenceEquals(($t = lie.initializers.get(1).arguments.get(0), Bridge.cast($t, Bridge.hasValue($t) && ($t.ntype === 38))).name, "b"), title + " initializer 1 argument");
+            };
+    
+            var pa = { ntype: 38, type: System.Int32, name: "a" };
+            var pb = { ntype: 38, type: System.Int32, name: "b" };
+            var e1 = ($t = { ntype: 38, type: System.Int32, name: "a" }, $t1 = { ntype: 38, type: System.Int32, name: "b" }, ($t4=($t3=($t2=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList).members[0], { ntype: 31, type: $t2.typeDef, constructor: $t2, arguments: Bridge.toList([]) }), { ntype: 22, type: $t3.type, newExpression: $t3, initializers: Bridge.toList([{ addMethod: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList).members[1], arguments: Bridge.toList([$t]) },{ addMethod: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList).members[1], arguments: Bridge.toList([$t1]) }]) }), { ntype: 18, type: Function, returnType: $t4.type, body: $t4, params: Bridge.toList([$t,$t1]) }));
+            var e2 = ($t6=($t5=Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList, { ntype: 31, type: $t5, constructor: Bridge.Reflection.getMembers($t5, 1, 284, null, []), arguments: Bridge.toList([]) }), { ntype: 22, type: $t6.type, newExpression: $t6, initializers: Bridge.toList([{ addMethod: add1, arguments: Bridge.toList([pa]) }, { addMethod: add1, arguments: Bridge.toList([pb]) }]) });
+            var e3 = ($t8=($t7=Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList, { ntype: 31, type: $t7, constructor: Bridge.Reflection.getMembers($t7, 1, 284, null, []), arguments: Bridge.toList([]) }), { ntype: 22, type: $t8.type, newExpression: $t8, initializers: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([{ addMethod: add1, arguments: Bridge.toList([pa]) }, { addMethod: add1, arguments: Bridge.toList([pb]) }])) });
+            var e4 = ($t10=($t9=Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList, { ntype: 31, type: $t9, constructor: Bridge.Reflection.getMembers($t9, 1, 284, null, []), arguments: Bridge.toList([]) }), { ntype: 22, type: $t10.type, newExpression: $t10, initializers: Bridge.toList([pa, pb].map(function(i) { return { addMethod: add1, arguments: Bridge.toList([i]) }; })) });
+            var e5 = ($t12=($t11=Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList, { ntype: 31, type: $t11, constructor: Bridge.Reflection.getMembers($t11, 1, 284, null, []), arguments: Bridge.toList([]) }), { ntype: 22, type: $t12.type, newExpression: $t12, initializers: Bridge.toList(Bridge.toArray(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([pa, pb])).map(function(i) { return { addMethod: add1, arguments: Bridge.toList([i]) }; })) });
+            var e6 = ($t13 = { ntype: 38, type: System.Int32, name: "a" }, $t14 = { ntype: 38, type: System.Int32, name: "b" }, ($t17=($t16=($t15=Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList).members[0], { ntype: 31, type: $t15.typeDef, constructor: $t15, arguments: Bridge.toList([]) }), { ntype: 22, type: $t16.type, newExpression: $t16, initializers: Bridge.toList([{ addMethod: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList).members[1], arguments: Bridge.toList([$t13]) },{ addMethod: Bridge.getMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList).members[2], arguments: Bridge.toList([$t13,$t14]) }]) }), { ntype: 18, type: Function, returnType: $t17.type, body: $t17, params: Bridge.toList([$t13,$t14]) }));
+    
+            asserter(e1.body, "e1");
+            asserter(e2, "e2");
+            asserter(e3, "e3");
+            asserter(e4, "e4");
+            asserter(e5, "e5");
+    
+            var lie6 = ($t18 = e6.body, Bridge.as($t18, Bridge.hasValue($t18) && ($t18.ntype === 22)));
+            Bridge.Test.Assert.true$1(lie6 != null, "e6 is ListInitExpression");
+            Bridge.Test.Assert.areEqual$1(lie6.ntype, 22, "e6 node type");
+            Bridge.Test.Assert.areEqual$1(lie6.type, Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList, "e6 type");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(lie6.newExpression.constructor, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList, 1, 284, null, System.Array.init(0, null))), "e6 new expression");
+            Bridge.Test.Assert.areEqual$1(lie6.initializers.getCount(), 2, "e6 initializer count");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(lie6.initializers.get(0).addMethod, add1), "e6 initializer 0 add method");
+            Bridge.Test.Assert.areEqual$1(lie6.initializers.get(0).arguments.getCount(), 1, "e6 initializer 0 argument count");
+            Bridge.Test.Assert.true$1(($t18 = lie6.initializers.get(0).arguments.get(0), Bridge.is($t18, Bridge.hasValue($t18) && ($t18.ntype === 38))) && Bridge.referenceEquals(($t18 = lie6.initializers.get(0).arguments.get(0), Bridge.cast($t18, Bridge.hasValue($t18) && ($t18.ntype === 38))).name, "a"), "e6 initializer 0 argument");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(lie6.initializers.get(1).addMethod, add2), "e6 initializer 1 add method");
+            Bridge.Test.Assert.areEqual$1(lie6.initializers.get(1).arguments.getCount(), 2, "e6 initializer 1 argument count");
+            Bridge.Test.Assert.true$1(($t18 = lie6.initializers.get(1).arguments.get(0), Bridge.is($t18, Bridge.hasValue($t18) && ($t18.ntype === 38))) && Bridge.referenceEquals(($t18 = lie6.initializers.get(1).arguments.get(0), Bridge.cast($t18, Bridge.hasValue($t18) && ($t18.ntype === 38))).name, "a"), "e6 initializer 1 argument 0");
+            Bridge.Test.Assert.true$1(($t18 = lie6.initializers.get(1).arguments.get(1), Bridge.is($t18, Bridge.hasValue($t18) && ($t18.ntype === 38))) && Bridge.referenceEquals(($t18 = lie6.initializers.get(1).arguments.get(1), Bridge.cast($t18, Bridge.hasValue($t18) && ($t18.ntype === 38))).name, "b"), "e6 initializer 1 argument 1");
+    
+            Bridge.Test.Assert.false$1(($t18 = { ntype: 9, type: System.Int32, value: 0 }, Bridge.is($t18, Bridge.hasValue($t18) && ($t18.ntype === 22))), "Constant is ListInitExpression");
+        },
+        typeIsAndTypeEqualWork: function () {
+            var $t, $t1, $t2;
+            var e1 = ($t = { ntype: 38, type: Object, name: "a" }, ($t1={ ntype: 45, type: Boolean, expression: $t, typeOperand: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C }, { ntype: 18, type: Function, returnType: $t1.type, body: $t1, params: Bridge.toList([$t]) }));
+            var e2 = { ntype: 45, type: Boolean, expression: { ntype: 38, type: Object, name: "a" }, typeOperand: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C };
+            var e3 = { ntype: 81, type: Boolean, expression: { ntype: 38, type: Object, name: "a" }, typeOperand: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C };
+    
+            Bridge.Test.Assert.true$1(($t2 = e1.body, Bridge.is($t2, Bridge.hasValue($t2) && ($t2.ntype === 45 || $t2.ntype === 81))), "e1 is TypeBinaryExpression");
+            Bridge.Test.Assert.areEqual$1(e1.body.ntype, 45, "e1 node type");
+            Bridge.Test.Assert.areEqual$1(e1.body.type, Boolean, "e1 type");
+            Bridge.Test.Assert.true$1(($t2 = ($t2 = e1.body, Bridge.cast($t2, Bridge.hasValue($t2) && ($t2.ntype === 45 || $t2.ntype === 81))).expression, Bridge.is($t2, Bridge.hasValue($t2) && ($t2.ntype === 38))) && Bridge.referenceEquals(($t2 = ($t2 = e1.body, Bridge.cast($t2, Bridge.hasValue($t2) && ($t2.ntype === 45 || $t2.ntype === 81))).expression, Bridge.cast($t2, Bridge.hasValue($t2) && ($t2.ntype === 38))).name, "a"), "e1 expression");
+            Bridge.Test.Assert.areEqual$1(($t2 = e1.body, Bridge.cast($t2, Bridge.hasValue($t2) && ($t2.ntype === 45 || $t2.ntype === 81))).typeOperand, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "e1 type operand");
+    
+            Bridge.Test.Assert.true$1(Bridge.is(e2, Bridge.hasValue(e2) && (e2.ntype === 45 || e2.ntype === 81)), "e2 is TypeBinaryExpression");
+            Bridge.Test.Assert.areEqual$1(e2.ntype, 45, "e2 node type");
+            Bridge.Test.Assert.areEqual$1(e2.type, Boolean, "e2 type");
+            Bridge.Test.Assert.true$1(($t2 = Bridge.cast(e2, Bridge.hasValue(e2) && (e2.ntype === 45 || e2.ntype === 81)).expression, Bridge.is($t2, Bridge.hasValue($t2) && ($t2.ntype === 38))) && Bridge.referenceEquals(($t2 = Bridge.cast(e2, Bridge.hasValue(e2) && (e2.ntype === 45 || e2.ntype === 81)).expression, Bridge.cast($t2, Bridge.hasValue($t2) && ($t2.ntype === 38))).name, "a"), "e2 expression");
+            Bridge.Test.Assert.areEqual$1(Bridge.cast(e2, Bridge.hasValue(e2) && (e2.ntype === 45 || e2.ntype === 81)).typeOperand, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "e2 type operand");
+    
+            Bridge.Test.Assert.true$1(Bridge.is(e3, Bridge.hasValue(e3) && (e3.ntype === 45 || e3.ntype === 81)), "e3 is TypeBinaryExpression");
+            Bridge.Test.Assert.areEqual$1(e3.ntype, 81, "e3 node type");
+            Bridge.Test.Assert.areEqual$1(e3.type, Boolean, "e3 type");
+            Bridge.Test.Assert.true$1(($t2 = Bridge.cast(e3, Bridge.hasValue(e3) && (e3.ntype === 45 || e3.ntype === 81)).expression, Bridge.is($t2, Bridge.hasValue($t2) && ($t2.ntype === 38))) && Bridge.referenceEquals(($t2 = Bridge.cast(e2, Bridge.hasValue(e2) && (e2.ntype === 45 || e2.ntype === 81)).expression, Bridge.cast($t2, Bridge.hasValue($t2) && ($t2.ntype === 38))).name, "a"), "e3 expression");
+            Bridge.Test.Assert.areEqual$1(Bridge.cast(e3, Bridge.hasValue(e3) && (e3.ntype === 45 || e3.ntype === 81)).typeOperand, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, "e3 type operand");
+    
+            Bridge.Test.Assert.false$1(($t2 = { ntype: 9, type: System.Int32, value: 0 }, Bridge.is($t2, Bridge.hasValue($t2) && ($t2.ntype === 45 || $t2.ntype === 81))), "Constant is TypeBinaryExpression");
+        },
+        quoteWorks: function () {
+            var $t, $t1, $t2, $t3, $t4, $t5;
+            var p = { ntype: 38, type: System.Int32, name: "x" };
+            var e1 = ($t = { ntype: 38, type: System.Int32, name: "a" }, ($t4=($t3={"typeDef":Bridge.ClientTest.Linq.Expressions.ExpressionTests,"accessibility":1,"name":"F","isStatic":true,"type":8,"paramsInfo":[{"name":"f","parameterType":Object(Function),"position":0}],"sname":"f","returnType":System.Int32,"params":[Object(Function)]}, { ntype: 6, type: $t3.returnType, obj: null, method: $t3, args: Bridge.toList([{ ntype: 40, type: Object, operand: ($t1 = { ntype: 38, type: System.Int32, name: "x" }, ($t2={ ntype: 0, type: System.Int32, left: $t1, right: $t }, { ntype: 18, type: Function, returnType: $t2.type, body: $t2, params: Bridge.toList([$t1]) })) }]) }), { ntype: 18, type: Function, returnType: $t4.type, body: $t4, params: Bridge.toList([$t]) }));
+            var e2 = { ntype: 40, type: Object, operand: { ntype: 18, type: Function, returnType: p.type, body: p, params: Bridge.toList([p]) } };
+    
+            var q1 = ($t5 = e1.body, Bridge.cast($t5, Bridge.hasValue($t5) && ($t5.ntype === 6))).args.get(0);
+            Bridge.Test.Assert.true$1(Bridge.is(q1, Bridge.hasValue(q1) && ([4,10,11,28,29,30,34,40,44,49,54,60,62,77,78,79,80,82,83,84].indexOf(q1.ntype) >= 0)), "e1 is UnaryExpression");
+            Bridge.Test.Assert.areEqual$1(q1.ntype, 40, "e1 node type");
+            Bridge.Test.Assert.areEqual$1(q1.type, Object, "e1 type");
+            var l1 = ($t5 = Bridge.cast(q1, Bridge.hasValue(q1) && ([4,10,11,28,29,30,34,40,44,49,54,60,62,77,78,79,80,82,83,84].indexOf(q1.ntype) >= 0)).operand, Bridge.as($t5, Bridge.hasValue($t5) && ($t5.ntype === 18)));
+            Bridge.Test.Assert.true$1(l1 != null, "e1 operand should be LambdaExpression");
+            Bridge.Test.Assert.areEqual$1(l1.params.getCount(), 1, "e1 lambda parameter count");
+            Bridge.Test.Assert.areEqual$1(l1.params.get(0).name, "x", "e1 lambda parameter name");
+    
+            Bridge.Test.Assert.true$1(Bridge.is(e2, Bridge.hasValue(e2) && ([4,10,11,28,29,30,34,40,44,49,54,60,62,77,78,79,80,82,83,84].indexOf(e2.ntype) >= 0)), "e2 is UnaryExpression");
+            Bridge.Test.Assert.areEqual$1(e2.ntype, 40, "e2 node type");
+            Bridge.Test.Assert.areEqual$1(e2.type, Object, "e2 type");
+            var l2 = ($t5 = Bridge.cast(e2, Bridge.hasValue(e2) && ([4,10,11,28,29,30,34,40,44,49,54,60,62,77,78,79,80,82,83,84].indexOf(e2.ntype) >= 0)).operand, Bridge.as($t5, Bridge.hasValue($t5) && ($t5.ntype === 18)));
+            Bridge.Test.Assert.true$1(l2 != null, "e2 operand should be LambdaExpression");
+            Bridge.Test.Assert.areEqual$1(l2.params.getCount(), 1, "e2 lambda parameter count");
+            Bridge.Test.Assert.areEqual$1(l2.params.get(0).name, "x", "e2 lambda parameter name");
+        },
+        localVariableReferenceWorks: function () {
+            var $t, $t1;
+            var a = 42;
+            var e = ($t={"ntype":23,"type":System.Int32,"expression":{"ntype":9,"type":System.Int32,"value":{}},"member":{"typeDef":Object,"name":"a","type":16,"returnType":System.Int32,"getter":{"typeDef":Object,"name":"geta","type":8,"returnType":System.Int32,"params":[],"def":function(){ return a}},"setter":{"typeDef":Object,"name":"seta","type":8,"returnType":Object,"params":[System.Int32],"def":function($){ a = $; }}}}, { ntype: 18, type: Function, returnType: $t.type, body: $t, params: Bridge.toList([]) });
+            var me = ($t1 = e.body, Bridge.as($t1, Bridge.hasValue($t1) && ($t1.ntype === 23)));
+            Bridge.Test.Assert.true$1(me != null, "e is MemberExpression");
+            Bridge.Test.Assert.areEqual$1(me.ntype, 23, "e node type");
+            Bridge.Test.Assert.areEqual$1(me.type, System.Int32, "e type");
+    
+            var expr = ($t1 = me.expression, Bridge.as($t1, Bridge.hasValue($t1) && ($t1.ntype === 9)));
+            Bridge.Test.Assert.true$1(expr != null, "expression should be ConstantExpression");
+            Bridge.Test.Assert.areEqual$1(expr.ntype, 9, "expression node type");
+            Bridge.Test.Assert.areEqual$1(expr.type, System.Int32, "expression type");
+            Bridge.Test.Assert.true$1(expr.value != null, "expression value");
+    
+            var prop = Bridge.as(($t1 = e.body, Bridge.cast($t1, Bridge.hasValue($t1) && ($t1.ntype === 23))).member, System.Reflection.PropertyInfo);
+            Bridge.Test.Assert.true$1(prop != null, "property not null");
+    
+            Bridge.Test.Assert.areEqual$1(prop.type, 16, "property member type");
+            Bridge.Test.Assert.areEqual$1(prop.name, "a", "property name");
+            Bridge.Test.Assert.true$1(prop.typeDef != null, "property declaring type");
+            Bridge.Test.Assert.false$1((prop.isStatic || false), "property is static");
+            Bridge.Test.Assert.areEqual$1(prop.returnType, System.Int32, "property type");
+            Bridge.Test.Assert.areEqual$1((prop.params || []).length, 0, "property indexer parameters");
+            Bridge.Test.Assert.true$1((!!prop.getter), "property can read");
+            Bridge.Test.Assert.true$1((!!prop.setter), "property can write");
+    
+            Bridge.Test.Assert.areEqual$1(prop.getter.type, 8, "getter member type");
+            Bridge.Test.Assert.areEqual$1(prop.getter.name, "geta", "getter name");
+            Bridge.Test.Assert.true$1(prop.getter.typeDef != null, "getter declaring type");
+            Bridge.Test.Assert.false$1((prop.getter.isStatic || false), "getter is static");
+            Bridge.Test.Assert.areEqual$1((prop.getter.params || []).length, 0, "getter parameters");
+            Bridge.Test.Assert.false$1((prop.getter.type === 1), "getter is constructor");
+            Bridge.Test.Assert.areEqual$1(prop.getter.returnType, System.Int32, "getter return type");
+            Bridge.Test.Assert.areEqual$1((prop.getter.tpcount || 0), 0, "getter type parameter count");
+    
+            Bridge.Test.Assert.areEqual$1(prop.setter.type, 8, "setter member type");
+            Bridge.Test.Assert.areEqual$1(prop.setter.name, "seta", "setter name");
+            Bridge.Test.Assert.true$1(prop.setter.typeDef != null, "setter declaring type");
+            Bridge.Test.Assert.false$1((prop.setter.isStatic || false), "setter is static");
+            Bridge.Test.Assert.areEqual$1((prop.setter.params || []).length, 1, "setter parameter count");
+            Bridge.Test.Assert.areEqual$1((prop.setter.params || [])[0], System.Int32, "setter parameter type");
+            Bridge.Test.Assert.false$1((prop.setter.type === 1), "setter is constructor");
+            Bridge.Test.Assert.areEqual$1(prop.setter.returnType, Object, "setter return type");
+            Bridge.Test.Assert.areEqual$1((prop.setter.tpcount || 0), 0, "setter type parameter count");
+    
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.midel(prop.getter, expr.value)(), 42, "property get");
+            Bridge.Reflection.midel(prop.setter, expr.value)(120);
+            Bridge.Test.Assert.areEqual$1(a, 120, "property set");
+        },
+        throwAndRethrowWork: function () {
+            var a = { ntype: 38, type: System.NotSupportedException, name: "a" };
+            var e1 = { ntype: 60, type: Object, operand: a };
+            var e2 = { ntype: 60, type: System.Exception, operand: a };
+            var e3 = { ntype: 60, type: Object };
+            var e4 = { ntype: 60, type: System.Exception };
+    
+            var asserter = $_.Bridge.ClientTest.Linq.Expressions.ExpressionTests.f10;
+    
+            asserter(e1, Object, true, "e1");
+            asserter(e2, System.Exception, true, "e2");
+            asserter(e3, Object, false, "e3");
+            asserter(e4, System.Exception, false, "e4");
+        },
+        defaultAndEmptyWork: function () {
+            var $t;
+            var e1 = { ntype: 51, type: Object };
+            var e2 = { ntype: 51, type: String };
+    
+            Bridge.Test.Assert.true$1(Bridge.is(e1, Bridge.hasValue(e1) && (e1.ntype === 51)), "e1 is DefaultExpression");
+            Bridge.Test.Assert.areEqual$1(e1.ntype, 51, "e1 node type");
+            Bridge.Test.Assert.areEqual$1(e1.type, Object, "e1 type");
+    
+            Bridge.Test.Assert.true$1(Bridge.is(e2, Bridge.hasValue(e2) && (e2.ntype === 51)), "e2 is DefaultExpression");
+            Bridge.Test.Assert.areEqual$1(e2.ntype, 51, "e2 node type");
+            Bridge.Test.Assert.areEqual$1(e2.type, String, "e2 type");
+    
+            Bridge.Test.Assert.false$1(($t = { ntype: 9, type: System.Int32, value: 0 }, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 45 || $t.ntype === 81))), "Constant is DefaultExpression");
+        },
+        blockWorks: function () {
+            var $t, $t1, $t2, $t3;
+            var c1 = { ntype: 9, type: System.Int32, value: 2 };
+            var c2 = { ntype: 9, type: String, value: "X" };
+            var v1 = { ntype: 38, type: System.Int32, name: "v1" };
+            var v2 = { ntype: 38, type: String, name: "v2" };
+    
+            var e1 = ($t=[c1, c2], { ntype: 47, type: $t[$t.length - 1].type, expressions: Bridge.toList($t) });
+            var e2 = (function(a) { return { ntype: 47, type: a.get(a.getCount() - 1).type, expressions: a }; })(Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([c1, c2])));
+            var e3 = { ntype: 47, type: Object, expressions: Bridge.toList([c1, c2]) };
+            var e4 = { ntype: 47, type: Object, expressions: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([c1, c2])) };
+            var e5 = ($t1=[c1, c2], { ntype: 47, type: $t1[$t1.length - 1].type, variables: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([v1, v2])), expressions: Bridge.toList($t1) });
+            var e6 = (function(a, b) { return { ntype: 47, type: b.get(b.getCount() - 1).type, variables: a, expressions: b }; })(Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([v1, v2])), Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([c1, c2])));
+            var e7 = { ntype: 47, type: Object, variables: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([v1, v2])), expressions: Bridge.toList([c1, c2]) };
+            var e8 = { ntype: 47, type: Object, variables: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([v1, v2])), expressions: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([c1, c2])) };
+            var e9 = ($t2=[c1, c2], { ntype: 47, type: $t2[$t2.length - 1].type, variables: Bridge.toList([v1, v2]), expressions: Bridge.toList($t2) });
+            var e10 = (function(a, b) { return { ntype: 47, type: b.get(b.getCount() - 1).type, variables: a, expressions: b }; })(Bridge.toList([v1, v2]), Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([c1, c2])));
+            var e11 = { ntype: 47, type: Object, variables: Bridge.toList([v1, v2]), expressions: Bridge.toList([c1, c2]) };
+            var e12 = { ntype: 47, type: Object, variables: Bridge.toList([v1, v2]), expressions: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([c1, c2])) };
+    
+            var asserter = function (expr, type, hasVariables, title) {
+                var be = Bridge.as(expr, Bridge.hasValue(expr) && (expr.ntype === 47));
+                Bridge.Test.Assert.true$1(be != null, title + " is BlockExpression");
+                Bridge.Test.Assert.areEqual$1(be.ntype, 47, title + " node type");
+                Bridge.Test.Assert.areEqual$1(be.type, type, title + " type");
+                Bridge.Test.Assert.areEqual$1(be.expressions.getCount(), 2, title + " expression count");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(be.expressions.get(0), c1), title + " expression 0");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(be.expressions.get(1), c2), title + " expression 1");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(be.expressions.get(be.expressions.getCount() - 1), c2), title + " result");
+                if (hasVariables) {
+                    Bridge.Test.Assert.areEqual$1((be.variables || Bridge.toList([])).getCount(), 2, title + " variable count");
+                    Bridge.Test.Assert.true$1(Bridge.referenceEquals((be.variables || Bridge.toList([])).get(0), v1), title + " variable 0");
+                    Bridge.Test.Assert.true$1(Bridge.referenceEquals((be.variables || Bridge.toList([])).get(1), v2), title + " variable 1");
+                }
+                else  {
+                    Bridge.Test.Assert.areEqual$1((be.variables || Bridge.toList([])).getCount(), 0, title + " variable count");
+                }
+            };
+    
+            asserter(e1, String, false, "e1");
+            asserter(e2, String, false, "e2");
+            asserter(e3, Object, false, "e3");
+            asserter(e4, Object, false, "e4");
+            asserter(e5, String, true, "e5");
+            asserter(e6, String, true, "e6");
+            asserter(e7, Object, true, "e7");
+            asserter(e8, Object, true, "e8");
+            asserter(e9, String, true, "e9");
+            asserter(e10, String, true, "e10");
+            asserter(e11, Object, true, "e11");
+            asserter(e12, Object, true, "e12");
+    
+            Bridge.Test.Assert.false$1(($t3 = { ntype: 9, type: System.Int32, value: 0 }, Bridge.is($t3, Bridge.hasValue($t3) && ($t3.ntype === 47))), "Constant is BlockExpression");
+        },
+        ifThenWorks: function () {
+            var a = { ntype: 38, type: Boolean, name: "a" };
+            var b = { ntype: 38, type: Boolean, name: "a" };
+            var c = { ntype: 38, type: Boolean, name: "a" };
+    
+            var e1 = { ntype: 8, type: Object, test: a, ifTrue: b, ifFalse: { ntype: 51, type: Object } };
+            var e2 = { ntype: 8, type: Object, test: a, ifTrue: b, ifFalse: c };
+    
+            var ce1 = Bridge.as(e1, Bridge.hasValue(e1) && (e1.ntype === 8));
+            Bridge.Test.Assert.true$1(ce1 != null, "e1 is ConditionalExpression");
+            Bridge.Test.Assert.areEqual$1(ce1.ntype, 8, "e1 node type");
+            Bridge.Test.Assert.areEqual$1(ce1.type, Object, "e1 type");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ce1.test, a), "e1 test");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ce1.ifTrue, b), "e1 iftrue");
+            Bridge.Test.Assert.areEqual$1(ce1.ifFalse.ntype, 51, "e1 iffalse node type");
+            Bridge.Test.Assert.areEqual$1(ce1.ifFalse.type, Object, "e1 iffalse type");
+    
+            var ce2 = Bridge.as(e2, Bridge.hasValue(e2) && (e2.ntype === 8));
+            Bridge.Test.Assert.true$1(ce2 != null, "e2 is ConditionalExpression");
+            Bridge.Test.Assert.areEqual$1(ce2.ntype, 8, "e2 node type");
+            Bridge.Test.Assert.areEqual$1(ce2.type, Object, "e2 type");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ce2.test, a), "e2 test");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ce2.ifTrue, b), "e2 iftrue");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ce2.ifFalse, c), "e2 iffalse");
+        },
+        labelTargetWorks: function () {
+            var l1 = { type: Object };
+            var l2 = { type: Object, name: "name1" };
+            var l3 = { type: System.Int32 };
+            var l4 = { type: String, name: "name2" };
+    
+            Bridge.Test.Assert.true$1(l1.name == null, "l1 name");
+            Bridge.Test.Assert.areEqual$1(l1.type, Object, "l1 type");
+            Bridge.Test.Assert.areEqual$1(l2.name, "name1", "l2 name");
+            Bridge.Test.Assert.areEqual$1(l2.type, Object, "l2 type");
+            Bridge.Test.Assert.true$1(l3.name == null, "l3 name");
+            Bridge.Test.Assert.areEqual$1(l3.type, System.Int32, "l3 type");
+            Bridge.Test.Assert.areEqual$1(l4.name, "name2", "l4 name");
+            Bridge.Test.Assert.areEqual$1(l4.type, String, "l4 type");
+        },
+        gotoWorks: function () {
+            var $t;
+            var lbl1 = { type: Object };
+            var lbl2 = { type: String };
+            var c = { ntype: 9, type: String, value: "X" };
+            var e1 = { ntype: 53, type: Object, kind: 2, target: lbl1 };
+            var e2 = { ntype: 53, type: Object, kind: 2, target: lbl2, value: c };
+            var e3 = { ntype: 53, type: System.Int32, kind: 2, target: lbl1 };
+            var e4 = { ntype: 53, type: String, kind: 2, target: lbl1, value: c };
+            var e5 = { ntype: 53, type: Object, kind: 3, target: lbl1 };
+            var e6 = { ntype: 53, type: System.Int32, kind: 3, target: lbl1 };
+            var e7 = { ntype: 53, type: Object, kind: 1, target: lbl1 };
+            var e8 = { ntype: 53, type: Object, kind: 1, target: lbl2, value: c };
+            var e9 = { ntype: 53, type: System.Int32, kind: 1, target: lbl1 };
+            var e10 = { ntype: 53, type: String, kind: 1, target: lbl1, value: c };
+            var e11 = { ntype: 53, type: Object, kind: 0, target: lbl1 };
+            var e12 = { ntype: 53, type: Object, kind: 0, target: lbl2, value: c };
+            var e13 = { ntype: 53, type: System.Int32, kind: 0, target: lbl1 };
+            var e14 = { ntype: 53, type: String, kind: 0, target: lbl2, value: c };
+            var e15 = { ntype: 53, type: String, kind: 2, target: lbl2, value: c };
+    
+            var asserter = $_.Bridge.ClientTest.Linq.Expressions.ExpressionTests.f11;
+    
+            asserter(e1, Object, 2, lbl1, null, "e1");
+            asserter(e2, Object, 2, lbl2, c, "e2");
+            asserter(e3, System.Int32, 2, lbl1, null, "e3");
+            asserter(e4, String, 2, lbl1, c, "e4");
+            asserter(e5, Object, 3, lbl1, null, "e5");
+            asserter(e6, System.Int32, 3, lbl1, null, "e6");
+            asserter(e7, Object, 1, lbl1, null, "e7");
+            asserter(e8, Object, 1, lbl2, c, "e8");
+            asserter(e9, System.Int32, 1, lbl1, null, "e9");
+            asserter(e10, String, 1, lbl1, c, "e10");
+            asserter(e11, Object, 0, lbl1, null, "e11");
+            asserter(e12, Object, 0, lbl2, c, "e12");
+            asserter(e13, System.Int32, 0, lbl1, null, "e13");
+            asserter(e14, String, 0, lbl2, c, "e14");
+            asserter(e15, String, 2, lbl2, c, "e15");
+    
+            Bridge.Test.Assert.false$1(($t = { ntype: 9, type: System.Int32, value: 0 }, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 53))), "Constant is GotoExpression");
+        },
+        labelExpressionWorks: function () {
+            var $t;
+            var lbl1 = { type: Object };
+            var lbl2 = { type: String };
+            var v = { ntype: 9, type: String, value: "X" };
+            var e1 = { ntype: 56, type: lbl1.type, target: lbl1 };
+            var e2 = { ntype: 56, type: lbl1.type, target: lbl1, defaultValue: v };
+            var e3 = { ntype: 56, type: lbl2.type, target: lbl2, defaultValue: v };
+    
+            Bridge.Test.Assert.true$1(Bridge.is(e1, Bridge.hasValue(e1) && (e1.ntype === 56)), "e1 is LabelExpression");
+            Bridge.Test.Assert.areEqual$1(e1.ntype, 56, "e1 node type");
+            Bridge.Test.Assert.areEqual$1(e1.type, Object, "e1 type");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(Bridge.cast(e1, Bridge.hasValue(e1) && (e1.ntype === 56)).target, lbl1), "e1 target");
+            Bridge.Test.Assert.true$1(Bridge.cast(e1, Bridge.hasValue(e1) && (e1.ntype === 56)).defaultValue == null, "e1 default value");
+    
+            Bridge.Test.Assert.true$1(Bridge.is(e2, Bridge.hasValue(e2) && (e2.ntype === 56)), "e2 is LabelExpression");
+            Bridge.Test.Assert.areEqual$1(e2.ntype, 56, "e2 node type");
+            Bridge.Test.Assert.areEqual$1(e2.type, Object, "e2 type");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(Bridge.cast(e2, Bridge.hasValue(e2) && (e2.ntype === 56)).target, lbl1), "e2 target");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(Bridge.cast(e2, Bridge.hasValue(e2) && (e2.ntype === 56)).defaultValue, v), "e2 default value");
+    
+            Bridge.Test.Assert.true$1(Bridge.is(e3, Bridge.hasValue(e3) && (e3.ntype === 56)), "e3 is LabelExpression");
+            Bridge.Test.Assert.areEqual$1(e3.ntype, 56, "e3 node type");
+            Bridge.Test.Assert.areEqual$1(e3.type, String, "e3 type");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(Bridge.cast(e3, Bridge.hasValue(e3) && (e3.ntype === 56)).target, lbl2), "e3 target");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(Bridge.cast(e3, Bridge.hasValue(e3) && (e3.ntype === 56)).defaultValue, v), "e3 default value");
+    
+            Bridge.Test.Assert.false$1(($t = { ntype: 9, type: System.Int32, value: 0 }, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 56))), "Constant is LabelExpression");
+        },
+        loopWorks: function () {
+            var $t, $t1;
+            var c = { ntype: 9, type: System.Int32, value: 1 };
+            var lb = { type: String };
+            var lc = { type: Object };
+    
+            var e1 = { ntype: 58, type: Object, body: c };
+            var e2 = { ntype: 58, type: lb.type, body: c, breakLabel: lb };
+            var e3 = { ntype: 58, type: lb ? lb.type : Object, body: c, breakLabel: lb, continueLabel: lc };
+            var e4 = ($t=null, { ntype: 58, type: $t ? $t.type : Object, body: c, breakLabel: $t, continueLabel: null });
+    
+            Bridge.Test.Assert.true$1(Bridge.is(e1, Bridge.hasValue(e1) && (e1.ntype === 58)), "e1 is LoopExpression");
+            Bridge.Test.Assert.areEqual$1(e1.ntype, 58, "e1 node type");
+            Bridge.Test.Assert.areEqual$1(e1.type, Object, "e1 type");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(Bridge.cast(e1, Bridge.hasValue(e1) && (e1.ntype === 58)).body, c), "e1 body");
+            Bridge.Test.Assert.true$1(Bridge.cast(e1, Bridge.hasValue(e1) && (e1.ntype === 58)).breakLabel == null, "e1 break label");
+            Bridge.Test.Assert.true$1(Bridge.cast(e1, Bridge.hasValue(e1) && (e1.ntype === 58)).continueLabel == null, "e1 continue label");
+    
+            Bridge.Test.Assert.true$1(Bridge.is(e2, Bridge.hasValue(e2) && (e2.ntype === 58)), "e2 is LoopExpression");
+            Bridge.Test.Assert.areEqual$1(e2.ntype, 58, "e2 node type");
+            Bridge.Test.Assert.areEqual$1(e2.type, String, "e2 type");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(Bridge.cast(e2, Bridge.hasValue(e2) && (e2.ntype === 58)).body, c), "e2 target");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(Bridge.cast(e2, Bridge.hasValue(e2) && (e2.ntype === 58)).breakLabel, lb), "e2 break label");
+            Bridge.Test.Assert.true$1(Bridge.cast(e2, Bridge.hasValue(e2) && (e2.ntype === 58)).continueLabel == null, "e1 continue label");
+    
+            Bridge.Test.Assert.true$1(Bridge.is(e3, Bridge.hasValue(e3) && (e3.ntype === 58)), "e3 is LoopExpression");
+            Bridge.Test.Assert.areEqual$1(e3.ntype, 58, "e3 node type");
+            Bridge.Test.Assert.areEqual$1(e3.type, String, "e3 type");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(Bridge.cast(e3, Bridge.hasValue(e3) && (e3.ntype === 58)).body, c), "e3 target");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(Bridge.cast(e3, Bridge.hasValue(e3) && (e3.ntype === 58)).breakLabel, lb), "e3 break label");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(Bridge.cast(e3, Bridge.hasValue(e3) && (e3.ntype === 58)).continueLabel, lc), "e3 continue label");
+    
+            Bridge.Test.Assert.true$1(Bridge.is(e4, Bridge.hasValue(e4) && (e4.ntype === 58)), "e4 is LoopExpression");
+            Bridge.Test.Assert.areEqual$1(e4.ntype, 58, "e4 node type");
+            Bridge.Test.Assert.areEqual$1(e4.type, Object, "e4 type");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(Bridge.cast(e4, Bridge.hasValue(e4) && (e4.ntype === 58)).body, c), "e4 body");
+            Bridge.Test.Assert.true$1(Bridge.cast(e4, Bridge.hasValue(e4) && (e4.ntype === 58)).breakLabel == null, "e4 break label");
+            Bridge.Test.Assert.true$1(Bridge.cast(e4, Bridge.hasValue(e4) && (e4.ntype === 58)).continueLabel == null, "e4 continue label");
+    
+            Bridge.Test.Assert.false$1(($t1 = { ntype: 9, type: System.Int32, value: 0 }, Bridge.is($t1, Bridge.hasValue($t1) && ($t1.ntype === 58))), "Constant is LoopExpression");
+        },
+        switchCaseWorks: function () {
+            var v1 = { ntype: 9, type: System.Int32, value: 1 };
+            var v2 = { ntype: 9, type: System.Int32, value: 2 };
+            var v3 = { ntype: 9, type: System.Int32, value: 3 };
+    
+            var sc1 = { body: v1, testValues: Bridge.toList([v2, v3]) };
+            var sc2 = { body: v1, testValues: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([v2, v3])) };
+    
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(sc1.body, v1), "sc1 body");
+            Bridge.Test.Assert.areEqual$1(sc1.testValues.getCount(), 2, "sc1 test values count");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(sc1.testValues.get(0), v2), "sc1 test value 0");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(sc1.testValues.get(1), v3), "sc1 test value 1");
+    
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(sc2.body, v1), "sc2 body");
+            Bridge.Test.Assert.areEqual$1(sc2.testValues.getCount(), 2, "sc2 test values count");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(sc2.testValues.get(0), v2), "sc2 test value 0");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(sc2.testValues.get(1), v3), "sc2 test value 1");
+        },
+        switchWorks: function () {
+            var $t, $t1, $t2, $t3;
+            var c1 = { ntype: 9, type: System.Int32, value: 1 };
+            var d = { ntype: 9, type: String, value: "T" };
+            var c2 = { ntype: 9, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, value: new Bridge.ClientTest.Linq.Expressions.ExpressionTests.C.$constructor() };
+            var sc1 = { body: { ntype: 9, type: String, value: "X" }, testValues: Bridge.toList([{ ntype: 9, type: System.Int32, value: 1 }]) };
+            var sc2 = { body: { ntype: 9, type: String, value: "Y" }, testValues: Bridge.toList([{ ntype: 9, type: System.Int32, value: 2 }]) };
+            var sc3 = { body: { ntype: 9, type: String, value: "X" }, testValues: Bridge.toList([{ ntype: 9, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, value: new Bridge.ClientTest.Linq.Expressions.ExpressionTests.C.$constructor() }]) };
+            var sc4 = { body: { ntype: 9, type: String, value: "Y" }, testValues: Bridge.toList([{ ntype: 9, type: Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, value: new Bridge.ClientTest.Linq.Expressions.ExpressionTests.C.$constructor() }]) };
+            var op = Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 8, 284, "op_Equality");
+    
+            var e1 = ($t=[sc1, sc2], { ntype: 59, type: $t[0].body.type, switchValue: c1, cases: Bridge.toList($t) });
+            var e2 = ($t1=[sc1, sc2], { ntype: 59, type: $t1[0].body.type, switchValue: c1, defaultBody: d, cases: Bridge.toList($t1) });
+            var e3 = ($t2=[sc3, sc4], { ntype: 59, type: $t2[0].body.type, switchValue: c2, defaultBody: d, comparison: op, cases: Bridge.toList($t2) });
+            var e4 = { ntype: 59, type: Object, switchValue: c2, defaultBody: d, comparison: op, cases: Bridge.toList([sc3, sc4]) };
+            var e5 = (function(a, b, c, d) { return { ntype: 59, type: d.get(0).body.type, switchValue: a, defaultBody: b, comparison: c, cases: d }; })(c2, d, op, Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([sc3, sc4])));
+            var e6 = { ntype: 59, type: Object, switchValue: c2, defaultBody: d, comparison: op, cases: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([sc3, sc4])) };
+    
+            var asserter = $_.Bridge.ClientTest.Linq.Expressions.ExpressionTests.f12;
+    
+            asserter(e1, String, c1, null, [sc1, sc2], null, "e1");
+            asserter(e2, String, c1, d, [sc1, sc2], null, "e2");
+            asserter(e3, String, c2, d, [sc3, sc4], op, "e3");
+            asserter(e4, Object, c2, d, [sc3, sc4], op, "e4");
+            asserter(e5, String, c2, d, [sc3, sc4], op, "e5");
+            asserter(e6, Object, c2, d, [sc3, sc4], op, "e6");
+    
+            Bridge.Test.Assert.false$1(($t3 = { ntype: 9, type: System.Int32, value: 0 }, Bridge.is($t3, Bridge.hasValue($t3) && ($t3.ntype === 59))), "Constant is SwitchExpression");
+        },
+        catchBlockWorks: function () {
+            var $t;
+            var ex = { ntype: 38, type: System.NotSupportedException, name: "ex" };
+            var b = { ntype: 51, type: Object };
+            var f = { ntype: 9, type: Boolean, value: true };
+    
+            var b1 = { test: System.NotSupportedException, body: b };
+            var b2 = { test: ex.type, variable: ex, body: b };
+            var b3 = { test: System.NotSupportedException, body: b, filter: f };
+            var b4 = { test: ex.type, variable: ex, body: b, filter: f };
+            var b5 = { test: null || ex.type, variable: ex, body: b, filter: f };
+            var b6 = ($t=null, { test: System.NotSupportedException || $t.type, variable: $t, body: b, filter: f });
+    
+            var asserter = function (block, variable, filter, title) {
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(block.variable, variable), title + " variable");
+                Bridge.Test.Assert.areEqual$1(block.test, System.NotSupportedException, title + " test");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(block.body, b), title + " body");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(block.filter, filter), title + " filter");
+            };
+    
+            asserter(b1, null, null, "b1");
+            asserter(b2, ex, null, "b2");
+            asserter(b3, null, f, "b3");
+            asserter(b4, ex, f, "b4");
+            asserter(b5, ex, f, "b5");
+            asserter(b6, null, f, "b6");
+        },
+        tryWorks: function () {
+            var $t;
+            var b1 = { ntype: 51, type: String };
+            var b2 = { ntype: 51, type: Object };
+            var b3 = { ntype: 51, type: Object };
+            var cs = [{ test: System.NotSupportedException, body: { ntype: 51, type: Object } }, { test: Object, body: { ntype: 51, type: Object } }];
+    
+            var e1 = { ntype: 61, type: b1.type, body: b1, handlers: Bridge.toList([]), fault: b2 };
+            var e2 = { ntype: 61, type: b1.type, body: b1, handlers: Bridge.toList([]), finallyExpr: b3 };
+            var e3 = { ntype: 61, type: b1.type, body: b1, handlers: Bridge.toList(cs) };
+            var e4 = { ntype: 61, type: b1.type, body: b1, finallyExpr: b3, handlers: Bridge.toList(cs) };
+            var e5 = { ntype: 61, type: Object || b1.type, body: b1, finallyExpr: b3, fault: null, handlers: Bridge.toList(cs || []) };
+            var e6 = { ntype: 61, type: Object || b1.type, body: b1, finallyExpr: null, fault: b2, handlers: Bridge.toList(null || []) };
+    
+            var asserter = function (expr, type, fault, $finally, hasHandlers, title) {
+                var te = Bridge.as(expr, Bridge.hasValue(expr) && (expr.ntype === 61));
+                Bridge.Test.Assert.true$1(te != null, title + " is TryExpression");
+                Bridge.Test.Assert.areEqual$1(te.ntype, 61, title + " node type");
+                Bridge.Test.Assert.areEqual$1(te.type, type, title + " type");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(te.body, b1), title + " body");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(te.fault, fault), title + " fault");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(te.finallyExpr, $finally), title + " finally");
+                if (hasHandlers) {
+                    Bridge.Test.Assert.areEqual$1(te.handlers.getCount(), 2, title + " handler count");
+                    Bridge.Test.Assert.true$1(Bridge.referenceEquals(te.handlers.get(0), cs[0]), title + " handler 0");
+                    Bridge.Test.Assert.true$1(Bridge.referenceEquals(te.handlers.get(1), cs[1]), title + " handler 1");
+                }
+                else  {
+                    Bridge.Test.Assert.areEqual$1(te.handlers.getCount(), 0, title + " handler count");
+                }
+            };
+    
+            asserter(e1, String, b2, null, false, "e1");
+            asserter(e2, String, null, b3, false, "e2");
+            asserter(e3, String, null, null, true, "e3");
+            asserter(e4, String, null, b3, true, "e4");
+            asserter(e5, Object, null, b3, true, "e5");
+            asserter(e6, Object, b2, null, false, "e6");
+    
+            Bridge.Test.Assert.false$1(($t = { ntype: 9, type: System.Int32, value: 0 }, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 61))), "Constant is TryExpression");
+        },
+        dynamicWorks: function () {
+            var $t;
+            var a = { ntype: 38, type: String, name: "a" };
+            var b = { ntype: 38, type: String, name: "b" };
+            var c = { ntype: 38, type: String, name: "c" };
+    
+            var e1 = { ntype: 50, type: Object, dtype: 0, expression: a, member: "member1" };
+            var e2 = { ntype: 50, type: System.Int32, dtype: 0, expression: a, member: "member1" };
+            var e3 = { ntype: 50, type: Object, dtype: 1, expression: a, arguments: Bridge.toList([b, c]) };
+            var e4 = { ntype: 50, type: Object, dtype: 1, expression: a, arguments: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([b, c])) };
+            var e5 = { ntype: 50, type: System.Int32, dtype: 1, expression: a, arguments: Bridge.toList([b, c]) };
+            var e6 = { ntype: 50, type: System.Int32, dtype: 1, expression: a, arguments: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([b, c])) };
+            var e7 = { ntype: 50, type: Object, dtype: 2, expression: a, argument: b };
+            var e8 = { ntype: 50, type: System.Int32, dtype: 2, expression: a, argument: b };
+    
+            var assertMember = function (expr, type, title) {
+                var dme = Bridge.as(expr, Bridge.hasValue(expr) && (expr.ntype == 50 && expr.dtype === 0));
+                Bridge.Test.Assert.true$1(Bridge.is(expr, Bridge.hasValue(expr) && (expr.ntype == 50)), title + " is DynamicExpression");
+                Bridge.Test.Assert.true$1(dme != null, title + " is DynamicMemberExpression");
+                Bridge.Test.Assert.areEqual$1(dme.ntype, 50, title + " node type");
+                Bridge.Test.Assert.areEqual$1(dme.type, type, title + " type");
+                Bridge.Test.Assert.areEqual$1(dme.dtype, 0, title + " dynamic type");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(dme.expression, a), title + " expression");
+                Bridge.Test.Assert.areEqual$1(dme.member, "member1", title + " member name");
+            };
+    
+            var assertInvocation = function (expr, type, title) {
+                var dme = Bridge.as(expr, Bridge.hasValue(expr) && (expr.ntype == 50 && expr.dtype === 1));
+                Bridge.Test.Assert.true$1(Bridge.is(expr, Bridge.hasValue(expr) && (expr.ntype == 50)), title + " is DynamicExpression");
+                Bridge.Test.Assert.true$1(dme != null, title + " is DynamicInvocationExpression");
+                Bridge.Test.Assert.areEqual$1(dme.ntype, 50, title + " node type");
+                Bridge.Test.Assert.areEqual$1(dme.type, type, title + " type");
+                Bridge.Test.Assert.areEqual$1(dme.dtype, 1, title + " dynamic type");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(dme.expression, a), title + " expression");
+                Bridge.Test.Assert.areEqual$1(dme.arguments.getCount(), 2, title + " argument count");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(dme.arguments.get(0), b), title + " argument 0");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(dme.arguments.get(1), c), title + " argument 1");
+            };
+    
+            var assertIndex = function (expr, type, title) {
+                var dme = Bridge.as(expr, Bridge.hasValue(expr) && (expr.ntype == 50 && expr.dtype === 2));
+                Bridge.Test.Assert.true$1(Bridge.is(expr, Bridge.hasValue(expr) && (expr.ntype == 50)), title + " is DynamicExpression");
+                Bridge.Test.Assert.true$1(dme != null, title + " is DynamicIndexExpression");
+                Bridge.Test.Assert.areEqual$1(dme.ntype, 50, title + " node type");
+                Bridge.Test.Assert.areEqual$1(dme.type, type, title + " type");
+                Bridge.Test.Assert.areEqual$1(dme.dtype, 2, title + " dynamic type");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(dme.expression, a), title + " expression");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(dme.argument, b), title + " argument");
+            };
+    
+            assertMember(e1, Object, "e1");
+            assertMember(e2, System.Int32, "e2");
+            assertInvocation(e3, Object, "e3");
+            assertInvocation(e4, Object, "e4");
+            assertInvocation(e5, System.Int32, "e5");
+            assertInvocation(e6, System.Int32, "e6");
+            assertIndex(e7, Object, "e7");
+            assertIndex(e8, System.Int32, "e8");
+    
+            Bridge.Test.Assert.false$1(($t = { ntype: 9, type: System.Int32, value: 0 }, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype == 50))), "Constant is DynamicExpression");
+            Bridge.Test.Assert.false$1(($t = { ntype: 50, type: Object, dtype: 1, expression: a, arguments: Bridge.toList([null]) }, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype == 50 && $t.dtype === 0))), "DynamicInvocation is DynamicMember");
+            Bridge.Test.Assert.false$1(($t = { ntype: 50, type: Object, dtype: 0, expression: a, member: "x" }, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype == 50 && $t.dtype === 1))), "DynamicIndex is DynamicInvocation");
+            Bridge.Test.Assert.false$1(($t = { ntype: 50, type: Object, dtype: 1, expression: a, arguments: Bridge.toList([null]) }, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype == 50 && $t.dtype === 2))), "DynamicInvocation is DynamicIndex");
+        }
+    });
+    
+    Bridge.define("$AnonymousType$1", $_, {
+        $kind: "anonymous",
+        constructor: function (a, b) {
+            this.a = a;
+            this.b = b;
+        },
+        getA : function () {
+            return this.a;
+        },
+        getB : function () {
+            return this.b;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o, $_.$AnonymousType$1)) {
+                return false;
+            }
+            return Bridge.equals(this.a, o.a) && Bridge.equals(this.b, o.b);
+        },
+        getHashCode: function () {
+            var hash = 17;
+            hash = hash * 23 + 1276122535;
+            hash = hash * 23 + (this.a == null ? 0 : Bridge.getHashCode(this.a));
+            hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
+            return hash;
+        },
+        toJSON: function () {
+            return {
+                a : this.a,
+                b : this.b
+            };
+        }
+    });
+    
+    Bridge.define("$AnonymousType$2", $_, {
+        $kind: "anonymous",
+        constructor: function (a, b) {
+            this.a = a;
+            this.b = b;
+        },
+        geta : function () {
+            return this.a;
+        },
+        getb : function () {
+            return this.b;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o, $_.$AnonymousType$2)) {
+                return false;
+            }
+            return Bridge.equals(this.a, o.a) && Bridge.equals(this.b, o.b);
+        },
+        getHashCode: function () {
+            var hash = 17;
+            hash = hash * 23 + 1276122536;
+            hash = hash * 23 + (this.a == null ? 0 : Bridge.getHashCode(this.a));
+            hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
+            return hash;
+        },
+        toJSON: function () {
+            return {
+                a : this.a,
+                b : this.b
+            };
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.Linq.Expressions.ExpressionTests", $_);
+    
+    Bridge.apply($_.Bridge.ClientTest.Linq.Expressions.ExpressionTests, {
+        f1: function (expr, returnType, parmNames, parmTypes, title) {
+            var $t;
+            Bridge.Test.Assert.true$1(($t = expr, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 18))), title + " is lambda");
+            Bridge.Test.Assert.false$1(($t = expr.body, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 18))), title + " body is lambda");
+            Bridge.Test.Assert.areEqual$1(expr.ntype, 18, title + " node type");
+            Bridge.Test.Assert.areEqual$1(expr.type, Function, title + " type");
+            Bridge.Test.Assert.areEqual$1(expr.returnType, returnType, title + " return type");
+            Bridge.Test.Assert.areEqual$1(expr.params.getCount(), parmTypes.length, title + " param count");
+            for (var i = 0; i < expr.params.getCount(); i = (i + 1) | 0) {
+                Bridge.Test.Assert.areEqual$1(expr.params.get(i).ntype, 38, title + " parameter " + i + " node type");
+                Bridge.Test.Assert.areEqual$1(expr.params.get(i).name, parmNames[i], title + " parameter " + i + " name");
+                Bridge.Test.Assert.areEqual$1(expr.params.get(i).type, parmTypes[i], title + " parameter " + i + " type");
+            }
+        },
+        f2: function (expr, nodeType, type, method, title) {
+            var $t;
+            var be = Bridge.as(expr, Bridge.hasValue(expr) && ([0,1,2,3,5,7,12,13,14,15,16,19,20,21,22,25,26,27,35,36,37,39,41,42,43,46,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80].indexOf(expr.ntype) >= 0));
+            Bridge.Test.Assert.true$1(be != null, title + " is BinaryExpression");
+            Bridge.Test.Assert.false$1(Bridge.is(expr, Bridge.hasValue(expr) && (expr.ntype === 9)), title + " is ConstantExpression");
+            Bridge.Test.Assert.areEqual$1(be.ntype, nodeType, title + " node type");
+            Bridge.Test.Assert.areEqual$1(be.type, type, title + " type");
+            Bridge.Test.Assert.true$1(($t = be.left, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))) && Bridge.referenceEquals(($t = be.left, Bridge.cast($t, Bridge.hasValue($t) && ($t.ntype === 38))).name, "a"), title + " left");
+            Bridge.Test.Assert.true$1(($t = be.right, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))) && Bridge.referenceEquals(($t = be.right, Bridge.cast($t, Bridge.hasValue($t) && ($t.ntype === 38))).name, "b"), title + " right");
+            if (method == null) {
+                Bridge.Test.Assert.true$1(be.method == null, title + " method should be null");
+            }
+            else  {
+                Bridge.Test.Assert.true$1(be.method != null, title + " method should not be null");
+                Bridge.Test.Assert.areEqual$1(be.method.typeDef, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, title + " method declaring type should be correct");
+                Bridge.Test.Assert.areEqual$1(be.method.name, method, title + " method name should be correct");
+            }
+        },
+        f3: function (expr, nodeType, type, method, title) {
+            var $t;
+            var ue = Bridge.as(expr, Bridge.hasValue(expr) && ([4,10,11,28,29,30,34,40,44,49,54,60,62,77,78,79,80,82,83,84].indexOf(expr.ntype) >= 0));
+            Bridge.Test.Assert.true$1(ue != null, title + " is UnaryExpression");
+            Bridge.Test.Assert.areEqual$1(ue.ntype, nodeType, title + " node type");
+            Bridge.Test.Assert.areEqual$1(ue.type, type, title + " type");
+            Bridge.Test.Assert.true$1(($t = ue.operand, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))) && Bridge.referenceEquals(($t = ue.operand, Bridge.cast($t, Bridge.hasValue($t) && ($t.ntype === 38))).name, "a"), title + " operand");
+            if (method == null) {
+                Bridge.Test.Assert.true$1(ue.method == null, title + " method should be null");
+            }
+            else  {
+                Bridge.Test.Assert.true$1(ue.method != null, title + " method should not be null");
+                Bridge.Test.Assert.areEqual$1(ue.method.typeDef, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, title + " method declaring type should be correct");
+                Bridge.Test.Assert.areEqual$1(ue.method.name, method, title + " method name should be correct");
+            }
+        },
+        f4: function (expr, method, isStatic, title) {
+            var $t;
+            var ce = Bridge.as(expr, Bridge.hasValue(expr) && (expr.ntype === 6));
+            Bridge.Test.Assert.true$1(ce != null, title + " is CallExpression");
+            Bridge.Test.Assert.areEqual$1(ce.ntype, 6, title + " node type");
+            Bridge.Test.Assert.areEqual$1(ce.type, System.Int32, title + " type");
+            Bridge.Test.Assert.areEqual$1(ce.args.getCount(), 2, title + " argument count");
+            Bridge.Test.Assert.true$1(($t = ce.args.get(0), Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))) && Bridge.referenceEquals(($t = ce.args.get(0), Bridge.cast($t, Bridge.hasValue($t) && ($t.ntype === 38))).name, "a"), title + " argument 0");
+            Bridge.Test.Assert.true$1(($t = ce.args.get(1), Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))) && Bridge.referenceEquals(($t = ce.args.get(1), Bridge.cast($t, Bridge.hasValue($t) && ($t.ntype === 38))).name, "b"), title + " argument 1");
+            Bridge.Test.Assert.areEqual$1(ce.method.typeDef, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, title + " method declaring type");
+            Bridge.Test.Assert.areEqual$1(ce.method.name, method, title + " method name");
+            if (isStatic) {
+                Bridge.Test.Assert.true$1(ce.obj == null, title + " object should be null");
+            }
+            else  {
+                Bridge.Test.Assert.true(($t = ce.obj, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))) && Bridge.referenceEquals(($t = ce.obj, Bridge.cast($t, Bridge.hasValue($t) && ($t.ntype === 38))).name, "i"));
+            }
+        },
+        f5: function (expr, title) {
+            var $t4;
+            var ie = Bridge.as(expr, Bridge.hasValue(expr) && (expr.ntype === 17));
+            Bridge.Test.Assert.true$1(ie != null, title + " is InvocationExpression");
+            Bridge.Test.Assert.areEqual$1(ie.ntype, 17, title + " node type");
+            Bridge.Test.Assert.areEqual$1(ie.type, String, title + " type");
+            Bridge.Test.Assert.true$1(($t4 = ie.expression, Bridge.is($t4, Bridge.hasValue($t4) && ($t4.ntype === 38))) && Bridge.referenceEquals(($t4 = ie.expression, Bridge.cast($t4, Bridge.hasValue($t4) && ($t4.ntype === 38))).name, "a"), title + " expression");
+            Bridge.Test.Assert.areEqual$1(ie.args.getCount(), 2, title + " argument count");
+            Bridge.Test.Assert.true$1(($t4 = ie.args.get(0), Bridge.is($t4, Bridge.hasValue($t4) && ($t4.ntype === 38))) && Bridge.referenceEquals(($t4 = ie.args.get(0), Bridge.cast($t4, Bridge.hasValue($t4) && ($t4.ntype === 38))).name, "b"), title + " argument 0");
+            Bridge.Test.Assert.true$1(($t4 = ie.args.get(1), Bridge.is($t4, Bridge.hasValue($t4) && ($t4.ntype === 38))) && Bridge.referenceEquals(($t4 = ie.args.get(1), Bridge.cast($t4, Bridge.hasValue($t4) && ($t4.ntype === 38))).name, "c"), title + " argument 1");
+        },
+        f6: function (expr, memberName, result, title) {
+            var $t22;
+            var me = Bridge.as(expr, Bridge.hasValue(expr) && (expr.ntype === 23));
+            Bridge.Test.Assert.true$1(me != null, title + " is MemberExpression");
+            Bridge.Test.Assert.areEqual$1(me.ntype, 23, title + " node type");
+            Bridge.Test.Assert.areEqual$1(me.type, System.Int32, title + " type");
+            Bridge.Test.Assert.true$1(($t22 = me.expression, Bridge.is($t22, Bridge.hasValue($t22) && ($t22.ntype === 38))) && Bridge.referenceEquals(($t22 = me.expression, Bridge.cast($t22, Bridge.hasValue($t22) && ($t22.ntype === 38))).name, "a"), title + " expression");
+            if (Bridge.referenceEquals(memberName, "F1") || Bridge.referenceEquals(memberName, "P1")) {
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(me.member, System.String.startsWith(memberName, "F") ? Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, memberName) : Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, memberName)), title + " member");
+            }
+            else  {
+                Bridge.Test.Assert.areEqual$1(me.member.type, System.String.startsWith(memberName, "F") ? 4 : 16, title + " member type");
+                Bridge.Test.Assert.areEqual$1(me.member.name, memberName, title + " name");
+            }
+            Bridge.Test.Assert.areEqual$1(Bridge.is(me.member, System.Reflection.FieldInfo) ? Bridge.Reflection.fieldAccess(Bridge.cast(me.member, System.Reflection.FieldInfo), new Bridge.ClientTest.Linq.Expressions.ExpressionTests.C.$constructor()) : Bridge.Reflection.midel(Bridge.cast(me.member, System.Reflection.PropertyInfo).getter, new Bridge.ClientTest.Linq.Expressions.ExpressionTests.C.$constructor())(null), result, title + " member result");
+        },
+        f7: function (expr, member, type, title) {
+            var $t;
+            var ie = Bridge.as(expr, Bridge.hasValue(expr) && (expr.ntype === 55));
+            Bridge.Test.Assert.true$1(ie != null, title + " is IndexExpression");
+            Bridge.Test.Assert.areEqual$1(ie.ntype, 55, title + " node type");
+            Bridge.Test.Assert.areEqual$1(ie.type, type, title + " type");
+            Bridge.Test.Assert.true$1(($t = ie.obj, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))) && Bridge.referenceEquals(($t = ie.obj, Bridge.cast($t, Bridge.hasValue($t) && ($t.ntype === 38))).name, "a"), title + " object");
+            Bridge.Test.Assert.areEqual$1(ie.arguments.getCount(), 2, title + " argument count");
+            Bridge.Test.Assert.true$1(($t = ie.arguments.get(0), Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))) && Bridge.referenceEquals(($t = ie.arguments.get(0), Bridge.cast($t, Bridge.hasValue($t) && ($t.ntype === 38))).name, "b"), title + " argument 0");
+            Bridge.Test.Assert.true$1(($t = ie.arguments.get(1), Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))) && Bridge.referenceEquals(($t = ie.arguments.get(1), Bridge.cast($t, Bridge.hasValue($t) && ($t.ntype === 38))).name, "c"), title + " argument 1");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ie.indexer, member), title + " member");
+        },
+        f8: function (expr, argTypes, checkReference, title) {
+            var $t;
+            var ne = Bridge.as(expr, Bridge.hasValue(expr) && (expr.ntype === 31));
+            Bridge.Test.Assert.true$1(ne != null, title + " is NewExpression");
+            Bridge.Test.Assert.areEqual$1(ne.ntype, 31, title + " node type");
+            Bridge.Test.Assert.areEqual$1(ne.type, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, title + " type");
+            Bridge.Test.Assert.areEqual$1(ne.arguments.getCount(), argTypes.length, title + " argument count");
+            for (var i = 0; i < ne.arguments.getCount(); i = (i + 1) | 0) {
+                Bridge.Test.Assert.true$1(($t = ne.arguments.get(i), Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))) && Bridge.referenceEquals(($t = ne.arguments.get(i), Bridge.cast($t, Bridge.hasValue($t) && ($t.ntype === 38))).name, String.fromCharCode((((((97 + i) | 0))) & 65535))), title + " argument " + i);
+            }
+            Bridge.Test.Assert.areEqual$1((ne.constructor.params || []).length, argTypes.length, title + " constructor argument length");
+            for (var i1 = 0; i1 < (ne.constructor.params || []).length; i1 = (i1 + 1) | 0) {
+                Bridge.Test.Assert.areEqual$1((ne.constructor.params || [])[i1], argTypes[i1], title + " constructor parameter type " + i1);
+            }
+            if (checkReference) {
+                var ctor = Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 1, 284, null, argTypes);
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(ctor, ne.constructor), title + " constructor reference");
+            }
+        },
+        f9: function (expr, title) {
+            var $t;
+            var mie = Bridge.as(expr, Bridge.hasValue(expr) && (expr.ntype === 24));
+            Bridge.Test.Assert.true$1(mie != null, title + " is MemberInitExpression");
+            Bridge.Test.Assert.areEqual$1(expr.ntype, 24, title + " node type");
+            Bridge.Test.Assert.areEqual$1(expr.type, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, title + " type");
+            Bridge.Test.Assert.areEqual$1(mie.bindings.getCount(), 2, title + " binding count");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(mie.newExpression.constructor, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 1, 284, null, System.Array.init(0, null))), title + " new expression");
+            Bridge.Test.Assert.true$1(($t = mie.bindings.get(0), Bridge.is($t, Bridge.hasValue($t) && ($t.btype === 0))), title + " binding 0 type");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(mie.bindings.get(0).member, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 4, 284, "F1")), title + " binding 0 member");
+            Bridge.Test.Assert.true$1(($t = ($t = mie.bindings.get(0), Bridge.cast($t, Bridge.hasValue($t) && ($t.btype === 0))).expression, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))) && Bridge.referenceEquals(($t = ($t = mie.bindings.get(0), Bridge.cast($t, Bridge.hasValue($t) && ($t.btype === 0))).expression, Bridge.cast($t, Bridge.hasValue($t) && ($t.ntype === 38))).name, "a"), title + " binding 0 expression");
+            Bridge.Test.Assert.true$1(($t = mie.bindings.get(1), Bridge.is($t, Bridge.hasValue($t) && ($t.btype === 0))), title + " binding 1 type");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(mie.bindings.get(1).member, Bridge.Reflection.getMembers(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, 16, 284, "P1")), title + " binding 1 member");
+            Bridge.Test.Assert.true$1(($t = ($t = mie.bindings.get(1), Bridge.cast($t, Bridge.hasValue($t) && ($t.btype === 0))).expression, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))) && Bridge.referenceEquals(($t = ($t = mie.bindings.get(1), Bridge.cast($t, Bridge.hasValue($t) && ($t.btype === 0))).expression, Bridge.cast($t, Bridge.hasValue($t) && ($t.ntype === 38))).name, "b"), title + " binding 1 expression");
+        },
+        f10: function (expr, type, hasOperand, title) {
+            var $t;
+            var ue = Bridge.as(expr, Bridge.hasValue(expr) && ([4,10,11,28,29,30,34,40,44,49,54,60,62,77,78,79,80,82,83,84].indexOf(expr.ntype) >= 0));
+            Bridge.Test.Assert.true$1(ue != null, title + " is UnaryExpression");
+            Bridge.Test.Assert.areEqual$1(ue.ntype, 60, title + " node type");
+            Bridge.Test.Assert.areEqual$1(ue.type, type, title + " type");
+            if (hasOperand) {
+                Bridge.Test.Assert.true$1(($t = ue.operand, Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))) && Bridge.referenceEquals(($t = ue.operand, Bridge.cast($t, Bridge.hasValue($t) && ($t.ntype === 38))).name, "a"), title + " operand");
+            }
+            else  {
+                Bridge.Test.Assert.true$1(ue.operand == null, title + " operand");
+            }
+            Bridge.Test.Assert.true$1(ue.method == null, title + " method should be null");
+        },
+        f11: function (expr, type, kind, target, value, title) {
+            var ge = Bridge.as(expr, Bridge.hasValue(expr) && (expr.ntype === 53));
+            Bridge.Test.Assert.true$1(ge != null, title + " is GotoExpression");
+            Bridge.Test.Assert.areEqual$1(ge.ntype, 53, title + " node type");
+            Bridge.Test.Assert.areEqual$1(ge.type, type, title + " type");
+            Bridge.Test.Assert.areEqual$1(ge.kind, kind, title + " kind");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ge.target, target), title + " target");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(ge.value, value), title + " target");
+        },
+        f12: function (expr, type, switchValue, defaultBody, cases, comparison, title) {
+            var se = Bridge.as(expr, Bridge.hasValue(expr) && (expr.ntype === 59));
+            Bridge.Test.Assert.true$1(se != null, title + " is SwitchExpression");
+            Bridge.Test.Assert.areEqual$1(se.ntype, 59, title + " node type");
+            Bridge.Test.Assert.areEqual$1(se.type, type, title + " type");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(se.comparison, comparison), title + " comparison");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(se.switchValue, switchValue), title + " switch value");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(se.defaultBody, defaultBody), title + " default value");
+            Bridge.Test.Assert.areEqual$1(se.cases.getCount(), cases.length, title + " cases count");
+            for (var i = 0; i < se.cases.getCount(); i = (i + 1) | 0) {
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(se.cases.get(i), cases[i]), title + " case " + i);
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Linq.Expressions.ExpressionTests.C', {
+        statics: {
+            op_Power: function (a, b) {
+                return null;
+            },
+            m2: function (a, b) {
+                return 0;
+            },
+            op_Multiply: function (a, b) {
+                return null;
+            },
+            op_Modulus: function (a, b) {
+                return null;
+            },
+            op_Division: function (a, b) {
+                return null;
+            },
+            op_Addition: function (a, b) {
+                return null;
+            },
+            op_Subtraction: function (a, b) {
+                return null;
+            },
+            op_LeftShift: function (a, b) {
+                return null;
+            },
+            op_RightShift: function (a, b) {
+                return null;
+            },
+            op_LessThan: function (a, b) {
+                return false;
+            },
+            op_GreaterThan: function (a, b) {
+                return false;
+            },
+            op_LessThanOrEqual: function (a, b) {
+                return false;
+            },
+            op_GreaterThanOrEqual: function (a, b) {
+                return false;
+            },
+            op_Equality: function (a, b) {
+                return false;
+            },
+            op_Inequality: function (a, b) {
+                return false;
+            },
+            op_BitwiseAnd: function (a, b) {
+                return null;
+            },
+            op_ExclusiveOr: function (a, b) {
+                return null;
+            },
+            op_BitwiseOr: function (a, b) {
+                return null;
+            },
+            op_UnaryPlus: function (a) {
+                return null;
+            },
+            op_UnaryNegation: function (a) {
+                return null;
+            },
+            op_OnesComplement: function (a) {
+                return null;
+            },
+            op_LogicalNot: function (a) {
+                return false;
+            },
+            op_Increment: function (a) {
+                return null;
+            },
+            op_Decrement: function (a) {
+                return null;
+            },
+            op_True: function (a) {
+                return false;
+            },
+            op_False: function (a) {
+                return false;
+            },
+            op_Explicit: function (a) {
+                return 0;
+            }
+        },
+        f1: 0,
+        f2: 0,
+        lF: null,
+        cF: null,
+        config: {
+            properties: {
+                P1: 0,
+                P2: 0,
+                LP: null,
+                CP: null
+            }
+        },
+        constructor: function () {
+            this.$initialize();
+            this.f1 = 234;
+            this.f2 = 24;
+            this.setP1(42);
+            this.setP2(17);
+        },
+        $constructor1: function (a, b) {
+            this.$initialize();
+        },
+        $constructor2: function (a, b) {
+            this.$initialize();
+        },
+        getItem: function (a, b) {
+            return this.f1 + " " + a + " " + b;
+        },
+        m1: function (a, b) {
+            return 0;
+        },
+        m3: function (a) {
+            return ((a + 34) | 0);
+        },
+        m4: function (a) {
+            return ((a + 34) | 0);
+        },
+        equals: function (o) {
+            return false;
+        },
+        getHashCode: function () {
+            return 0;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Linq.Expressions.ExpressionTests.ClassWithQueryPattern$1', function (T) { return {
+        data: Bridge.getDefaultValue(T),
+        constructor: function (data) {
+            this.$initialize();
+            this.data = data;
+        },
+        select: function (TResult, f) {
+            return new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.ClassWithQueryPattern$1(TResult))(f(this.data));
+        }
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1', function (T) { return {
+        inherits: [System.Collections.Generic.IEnumerable$1(T)],
+        _hasEnumerated: false,
+        _items: null,
+        config: {
+            alias: [
+            "getEnumerator", "System$Collections$Generic$IEnumerable$1$" + Bridge.getTypeAlias(T) + "$getEnumerator"
+            ]
+        },
+        constructor: function (items) {
+            this.$initialize();
+            this._items = items;
+        },
+        System$Collections$IEnumerable$getEnumerator: function () {
+            return this.getEnumerator();
+        },
+        getEnumerator: function () {
+            if (this._hasEnumerated) {
+                throw new System.Exception("Already enumerated");
+            }
+            this._hasEnumerated = true;
+            return Bridge.getEnumerator(this._items, "$1", T);
+        }
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyExpression', {
+        constructor: function () {
+            this.$initialize();
+            Bridge.merge(this, { ntype: 9999, type: String });
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList', {
+        inherits: [System.Collections.IEnumerable],
+        config: {
+            alias: [
+            "getEnumerator", "System$Collections$IEnumerable$getEnumerator"
+            ]
+        },
+        constructor: function () {
+            this.$initialize();
+        },
+        add: function (i) {
+        },
+        add$1: function (i, j) {
+        },
+        getEnumerator: function () {
+            throw new System.Exception();
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Linq.TestLinqAggregateOperators', {
         statics: {
             test: function () {
@@ -10720,14 +12772,14 @@
                 // TEST
                 var groupJoin = (System.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Group.getGroups()).groupJoin(Bridge.ClientTest.Utilities.Person.getPersons(), $_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f2, $_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f3, $_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f4)).toArray();
     
-                var groupJoinExpected = [new $_.$AnonymousType$1("A", 1), new $_.$AnonymousType$1("B", 4), new $_.$AnonymousType$1("C", 2), new $_.$AnonymousType$1("D", 0)];
+                var groupJoinExpected = [new $_.$AnonymousType$3("A", 1), new $_.$AnonymousType$3("B", 4), new $_.$AnonymousType$3("C", 2), new $_.$AnonymousType$3("D", 0)];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupJoinExpected, groupJoin, "Count() within joint collections");
     
                 // TEST
                 var grouped = (System.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f3).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f5)).toArray();
     
-                var groupedExpected = [new $_.$AnonymousType$1("A", 1), new $_.$AnonymousType$1("C", 2), new $_.$AnonymousType$1("B", 4), new $_.$AnonymousType$1(null, 1)];
+                var groupedExpected = [new $_.$AnonymousType$3("A", 1), new $_.$AnonymousType$3("C", 2), new $_.$AnonymousType$3("B", 4), new $_.$AnonymousType$3(null, 1)];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupedExpected, grouped, "Count() within group");
     
@@ -10742,7 +12794,7 @@
                 // TEST
                 var groupedSum = (System.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f3).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f8)).toArray();
     
-                var groupedSumExpected = [new $_.$AnonymousType$2("A", 300), new $_.$AnonymousType$2("C", 600), new $_.$AnonymousType$2("B", 2000), new $_.$AnonymousType$2(null, 3000)];
+                var groupedSumExpected = [new $_.$AnonymousType$4("A", 300), new $_.$AnonymousType$4("C", 600), new $_.$AnonymousType$4("B", 2000), new $_.$AnonymousType$4(null, 3000)];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupedSumExpected, groupedSum, "Sum() within group");
     
@@ -10757,14 +12809,14 @@
                 // TEST
                 var groupedMin = (System.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f3).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f9)).toArray();
     
-                var groupedMinExpected = [new $_.$AnonymousType$3("A", 300), new $_.$AnonymousType$3("C", 100), new $_.$AnonymousType$3("B", 50), new $_.$AnonymousType$3(null, 3000)];
+                var groupedMinExpected = [new $_.$AnonymousType$5("A", 300), new $_.$AnonymousType$5("C", 100), new $_.$AnonymousType$5("B", 50), new $_.$AnonymousType$5(null, 3000)];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupedMinExpected, groupedMin, "Min() within group");
     
                 // TEST
                 var groupedMinWithLet = (System.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f3).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f10).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f12)).toArray();
     
-                var groupedMinWithLetExpected = [new $_.$AnonymousType$5("A", ["Frank"]), new $_.$AnonymousType$5("C", ["Zeppa"]), new $_.$AnonymousType$5("B", ["Dora"]), new $_.$AnonymousType$5(null, ["Nemo"])];
+                var groupedMinWithLetExpected = [new $_.$AnonymousType$7("A", ["Frank"]), new $_.$AnonymousType$7("C", ["Zeppa"]), new $_.$AnonymousType$7("B", ["Dora"]), new $_.$AnonymousType$7(null, ["Nemo"])];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupedMinWithLetExpected, groupedMinWithLet, "Min() within group with let");
     
@@ -10779,14 +12831,14 @@
                 // TEST
                 var groupedMax = (System.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f3).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f13)).toArray();
     
-                var groupedMaxExpected = [new $_.$AnonymousType$6("A", 300), new $_.$AnonymousType$6("C", 500), new $_.$AnonymousType$6("B", 700), new $_.$AnonymousType$6(null, 3000)];
+                var groupedMaxExpected = [new $_.$AnonymousType$8("A", 300), new $_.$AnonymousType$8("C", 500), new $_.$AnonymousType$8("B", 700), new $_.$AnonymousType$8(null, 3000)];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupedMaxExpected, groupedMax, "Max() within group");
     
                 // TEST
                 var groupedMaxWithLet = (System.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f3).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f14).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f15)).toArray();
     
-                var groupedMaxWithLetExpected = [new $_.$AnonymousType$5("A", ["Frank"]), new $_.$AnonymousType$5("C", ["Billy"]), new $_.$AnonymousType$5("B", ["John", "Mary"]), new $_.$AnonymousType$5(null, ["Nemo"])];
+                var groupedMaxWithLetExpected = [new $_.$AnonymousType$7("A", ["Frank"]), new $_.$AnonymousType$7("C", ["Billy"]), new $_.$AnonymousType$7("B", ["John", "Mary"]), new $_.$AnonymousType$7(null, ["Nemo"])];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupedMaxWithLetExpected, groupedMaxWithLet, "Max() within group with let");
     
@@ -10827,7 +12879,7 @@
         }
     });
     
-    Bridge.define("$AnonymousType$1", $_, {
+    Bridge.define("$AnonymousType$3", $_, {
         $kind: "anonymous",
         constructor: function (group, personCount) {
             this.group = group;
@@ -10840,14 +12892,14 @@
             return this.personCount;
         },
         equals: function (o) {
-            if (!Bridge.is(o, $_.$AnonymousType$1)) {
+            if (!Bridge.is(o, $_.$AnonymousType$3)) {
                 return false;
             }
             return Bridge.equals(this.group, o.group) && Bridge.equals(this.personCount, o.personCount);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 1276122535;
+            hash = hash * 23 + 1276122537;
             hash = hash * 23 + (this.group == null ? 0 : Bridge.getHashCode(this.group));
             hash = hash * 23 + (this.personCount == null ? 0 : Bridge.getHashCode(this.personCount));
             return hash;
@@ -10860,7 +12912,7 @@
         }
     });
     
-    Bridge.define("$AnonymousType$2", $_, {
+    Bridge.define("$AnonymousType$4", $_, {
         $kind: "anonymous",
         constructor: function (group, sum) {
             this.group = group;
@@ -10873,14 +12925,14 @@
             return this.sum;
         },
         equals: function (o) {
-            if (!Bridge.is(o, $_.$AnonymousType$2)) {
+            if (!Bridge.is(o, $_.$AnonymousType$4)) {
                 return false;
             }
             return Bridge.equals(this.group, o.group) && Bridge.equals(this.sum, o.sum);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 1276122536;
+            hash = hash * 23 + 1276122538;
             hash = hash * 23 + (this.group == null ? 0 : Bridge.getHashCode(this.group));
             hash = hash * 23 + (this.sum == null ? 0 : Bridge.getHashCode(this.sum));
             return hash;
@@ -10893,7 +12945,7 @@
         }
     });
     
-    Bridge.define("$AnonymousType$3", $_, {
+    Bridge.define("$AnonymousType$5", $_, {
         $kind: "anonymous",
         constructor: function (group, min) {
             this.group = group;
@@ -10906,14 +12958,14 @@
             return this.min;
         },
         equals: function (o) {
-            if (!Bridge.is(o, $_.$AnonymousType$3)) {
+            if (!Bridge.is(o, $_.$AnonymousType$5)) {
                 return false;
             }
             return Bridge.equals(this.group, o.group) && Bridge.equals(this.min, o.min);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 1276122537;
+            hash = hash * 23 + 1276122539;
             hash = hash * 23 + (this.group == null ? 0 : Bridge.getHashCode(this.group));
             hash = hash * 23 + (this.min == null ? 0 : Bridge.getHashCode(this.min));
             return hash;
@@ -10926,7 +12978,7 @@
         }
     });
     
-    Bridge.define("$AnonymousType$4", $_, {
+    Bridge.define("$AnonymousType$6", $_, {
         $kind: "anonymous",
         constructor: function (g, minCount) {
             this.g = g;
@@ -10939,14 +12991,14 @@
             return this.minCount;
         },
         equals: function (o) {
-            if (!Bridge.is(o, $_.$AnonymousType$4)) {
+            if (!Bridge.is(o, $_.$AnonymousType$6)) {
                 return false;
             }
             return Bridge.equals(this.g, o.g) && Bridge.equals(this.minCount, o.minCount);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 1276122538;
+            hash = hash * 23 + 1276122540;
             hash = hash * 23 + (this.g == null ? 0 : Bridge.getHashCode(this.g));
             hash = hash * 23 + (this.minCount == null ? 0 : Bridge.getHashCode(this.minCount));
             return hash;
@@ -10959,7 +13011,7 @@
         }
     });
     
-    Bridge.define("$AnonymousType$5", $_, {
+    Bridge.define("$AnonymousType$7", $_, {
         $kind: "anonymous",
         constructor: function (group, name) {
             this.group = group;
@@ -10972,14 +13024,14 @@
             return this.name;
         },
         equals: function (o) {
-            if (!Bridge.is(o, $_.$AnonymousType$5)) {
+            if (!Bridge.is(o, $_.$AnonymousType$7)) {
                 return false;
             }
             return Bridge.equals(this.group, o.group) && Bridge.equals(this.name, o.name);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 1276122539;
+            hash = hash * 23 + 1276122541;
             hash = hash * 23 + (this.group == null ? 0 : Bridge.getHashCode(this.group));
             hash = hash * 23 + (this.name == null ? 0 : Bridge.getHashCode(this.name));
             return hash;
@@ -10992,7 +13044,7 @@
         }
     });
     
-    Bridge.define("$AnonymousType$6", $_, {
+    Bridge.define("$AnonymousType$8", $_, {
         $kind: "anonymous",
         constructor: function (group, max) {
             this.group = group;
@@ -11005,14 +13057,14 @@
             return this.max;
         },
         equals: function (o) {
-            if (!Bridge.is(o, $_.$AnonymousType$6)) {
+            if (!Bridge.is(o, $_.$AnonymousType$8)) {
                 return false;
             }
             return Bridge.equals(this.group, o.group) && Bridge.equals(this.max, o.max);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 1276122540;
+            hash = hash * 23 + 1276122526;
             hash = hash * 23 + (this.group == null ? 0 : Bridge.getHashCode(this.group));
             hash = hash * 23 + (this.max == null ? 0 : Bridge.getHashCode(this.max));
             return hash;
@@ -11025,7 +13077,7 @@
         }
     });
     
-    Bridge.define("$AnonymousType$7", $_, {
+    Bridge.define("$AnonymousType$9", $_, {
         $kind: "anonymous",
         constructor: function (g, maxCount) {
             this.g = g;
@@ -11038,14 +13090,14 @@
             return this.maxCount;
         },
         equals: function (o) {
-            if (!Bridge.is(o, $_.$AnonymousType$7)) {
+            if (!Bridge.is(o, $_.$AnonymousType$9)) {
                 return false;
             }
             return Bridge.equals(this.g, o.g) && Bridge.equals(this.maxCount, o.maxCount);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 1276122541;
+            hash = hash * 23 + 1276122527;
             hash = hash * 23 + (this.g == null ? 0 : Bridge.getHashCode(this.g));
             hash = hash * 23 + (this.maxCount == null ? 0 : Bridge.getHashCode(this.maxCount));
             return hash;
@@ -11071,10 +13123,10 @@
             return p.getGroup();
         },
         f4: function (g, pg) {
-            return new $_.$AnonymousType$1(g.getName(), System.Linq.Enumerable.from(pg).count());
+            return new $_.$AnonymousType$3(g.getName(), System.Linq.Enumerable.from(pg).count());
         },
         f5: function (g) {
-            return new $_.$AnonymousType$1(g.key(), g.count());
+            return new $_.$AnonymousType$3(g.key(), g.count());
         },
         f6: function (w) {
             return w.length;
@@ -11083,30 +13135,30 @@
             return x.getCount();
         },
         f8: function (g) {
-            return new $_.$AnonymousType$2(g.key(), g.sum($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f7));
+            return new $_.$AnonymousType$4(g.key(), g.sum($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f7));
         },
         f9: function (g) {
-            return new $_.$AnonymousType$3(g.key(), g.min($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f7));
+            return new $_.$AnonymousType$5(g.key(), g.min($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f7));
         },
         f10: function (g) {
-            return new $_.$AnonymousType$4(g, g.min($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f7));
+            return new $_.$AnonymousType$6(g, g.min($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f7));
         },
         f11: function (x) {
             return x.getName();
         },
         f12: function (x0) {
-            return new $_.$AnonymousType$5(x0.g.key(), x0.g.where(function (x) {
+            return new $_.$AnonymousType$7(x0.g.key(), x0.g.where(function (x) {
                 return x.getCount() === x0.minCount;
             }).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f11).toArray());
         },
         f13: function (g) {
-            return new $_.$AnonymousType$6(g.key(), g.max($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f7));
+            return new $_.$AnonymousType$8(g.key(), g.max($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f7));
         },
         f14: function (g) {
-            return new $_.$AnonymousType$7(g, g.max($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f7));
+            return new $_.$AnonymousType$9(g, g.max($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f7));
         },
         f15: function (x1) {
-            return new $_.$AnonymousType$5(x1.g.key(), x1.g.where(function (x) {
+            return new $_.$AnonymousType$7(x1.g.key(), x1.g.where(function (x) {
                 return x.getCount() === x1.maxCount;
             }).select($_.Bridge.ClientTest.Linq.TestLinqAggregateOperators.f11).toArray());
         },
@@ -11384,7 +13436,7 @@
             test: function () {
                 // TEST
                 var numbers = (System.Linq.Enumerable.range(0, 6).select($_.Bridge.ClientTest.Linq.TestLinqGenerationOperators.f1)).toArray();
-                var numbersExpected = [new $_.$AnonymousType$8(0, false), new $_.$AnonymousType$8(1, true), new $_.$AnonymousType$8(2, false), new $_.$AnonymousType$8(3, true), new $_.$AnonymousType$8(4, false), new $_.$AnonymousType$8(5, true)];
+                var numbersExpected = [new $_.$AnonymousType$10(0, false), new $_.$AnonymousType$10(1, true), new $_.$AnonymousType$10(2, false), new $_.$AnonymousType$10(3, true), new $_.$AnonymousType$10(4, false), new $_.$AnonymousType$10(5, true)];
     
                 Bridge.Test.Assert.areDeepEqual$1(numbersExpected, numbers, "Range() 6 items from 0");
     
@@ -11397,7 +13449,7 @@
         }
     });
     
-    Bridge.define("$AnonymousType$8", $_, {
+    Bridge.define("$AnonymousType$10", $_, {
         $kind: "anonymous",
         constructor: function (number, isOdd) {
             this.number = number;
@@ -11410,14 +13462,14 @@
             return this.isOdd;
         },
         equals: function (o) {
-            if (!Bridge.is(o, $_.$AnonymousType$8)) {
+            if (!Bridge.is(o, $_.$AnonymousType$10)) {
                 return false;
             }
             return Bridge.equals(this.number, o.number) && Bridge.equals(this.isOdd, o.isOdd);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 1276122526;
+            hash = hash * 23 + 784520983;
             hash = hash * 23 + (this.number == null ? 0 : Bridge.getHashCode(this.number));
             hash = hash * 23 + (this.isOdd == null ? 0 : Bridge.getHashCode(this.isOdd));
             return hash;
@@ -11434,7 +13486,7 @@
     
     Bridge.apply($_.Bridge.ClientTest.Linq.TestLinqGenerationOperators, {
         f1: function (n) {
-            return new $_.$AnonymousType$8(n, n % 2 === 1);
+            return new $_.$AnonymousType$10(n, n % 2 === 1);
         }
     });
     
@@ -11447,21 +13499,21 @@
     
                 var numberGroups = (System.Linq.Enumerable.from(numbers).groupBy($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f1).select($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f2)).toArray();
     
-                var numberGroupsExpected = [new $_.$AnonymousType$9(2, [2]), new $_.$AnonymousType$9(0, [10, 5, 30, -15]), new $_.$AnonymousType$9(3, [3]), new $_.$AnonymousType$9(1, [1])];
+                var numberGroupsExpected = [new $_.$AnonymousType$11(2, [2]), new $_.$AnonymousType$11(0, [10, 5, 30, -15]), new $_.$AnonymousType$11(3, [3]), new $_.$AnonymousType$11(1, [1])];
     
                 Bridge.Test.Assert.areDeepEqual$1(numberGroupsExpected, numberGroups, "Group numbers by remainders");
     
                 // TEST
                 var wordGroups = (System.Linq.Enumerable.from(words).groupBy($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f3).select($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f4)).toArray();
     
-                var wordGroupsExpected = [new $_.$AnonymousType$10(49, ["1.one", "11.eleven"]), new $_.$AnonymousType$10(51, ["3.three", "30.thirty"]), new $_.$AnonymousType$10(50, ["2.two", "22.twentytwo"])];
+                var wordGroupsExpected = [new $_.$AnonymousType$12(49, ["1.one", "11.eleven"]), new $_.$AnonymousType$12(51, ["3.three", "30.thirty"]), new $_.$AnonymousType$12(50, ["2.two", "22.twentytwo"])];
     
                 Bridge.Test.Assert.areDeepEqual$1(wordGroupsExpected, wordGroups, "Group words by first letters");
     
                 // TEST
                 var personGroups = (System.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).groupBy($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f5).select($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f7)).toArray();
     
-                var personGroupsExpected = [new $_.$AnonymousType$11("A", ["Frank"]), new $_.$AnonymousType$11("C", ["Zeppa", "Billy"]), new $_.$AnonymousType$11("B", ["John", "Dora", "Ian", "Mary"]), new $_.$AnonymousType$11(null, ["Nemo"])];
+                var personGroupsExpected = [new $_.$AnonymousType$13("A", ["Frank"]), new $_.$AnonymousType$13("C", ["Zeppa", "Billy"]), new $_.$AnonymousType$13("B", ["John", "Dora", "Ian", "Mary"]), new $_.$AnonymousType$13(null, ["Nemo"])];
     
                 Bridge.Test.Assert.areDeepEqual$1(personGroupsExpected, personGroups, "Person group by Group field");
             },
@@ -11485,13 +13537,13 @@
     
                 var anagramsGroups = System.Linq.Enumerable.from(anagrams).groupBy($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f11, null, null, new Bridge.ClientTest.Linq.AnagramEqualityComparer()).select($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f12).toArray();
     
-                var anagramsGroupsExpected = [new $_.$AnonymousType$12("from", [" from ", " form "]), new $_.$AnonymousType$12("salt", [" salt ", " last "]), new $_.$AnonymousType$12("earn", [" earn ", " near "])];
+                var anagramsGroupsExpected = [new $_.$AnonymousType$14("from", [" from ", " form "]), new $_.$AnonymousType$14("salt", [" salt ", " last "]), new $_.$AnonymousType$14("earn", [" earn ", " near "])];
     
                 Bridge.Test.Assert.areDeepEqual$1(anagramsGroupsExpected, anagramsGroups, "Anagram grouping with equality comparer");
     
                 // TEST
                 var anagramsGroups1 = System.Linq.Enumerable.from(anagrams).groupBy($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f11, $_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f13, null, new Bridge.ClientTest.Linq.AnagramEqualityComparer()).select($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f12).toArray();
-                var anagramsGroupsExpected1 = [new $_.$AnonymousType$12("from", [" FROM ", " FORM "]), new $_.$AnonymousType$12("salt", [" SALT ", " LAST "]), new $_.$AnonymousType$12("earn", [" EARN ", " NEAR "])];
+                var anagramsGroupsExpected1 = [new $_.$AnonymousType$14("from", [" FROM ", " FORM "]), new $_.$AnonymousType$14("salt", [" SALT ", " LAST "]), new $_.$AnonymousType$14("earn", [" EARN ", " NEAR "])];
     
                 Bridge.Test.Assert.areDeepEqual$1(anagramsGroupsExpected1, anagramsGroups1, "Anagram grouping with equality compare and upper case");
             },
@@ -11503,7 +13555,7 @@
         }
     });
     
-    Bridge.define("$AnonymousType$9", $_, {
+    Bridge.define("$AnonymousType$11", $_, {
         $kind: "anonymous",
         constructor: function (remainder, numbers) {
             this.remainder = remainder;
@@ -11516,14 +13568,14 @@
             return this.numbers;
         },
         equals: function (o) {
-            if (!Bridge.is(o, $_.$AnonymousType$9)) {
+            if (!Bridge.is(o, $_.$AnonymousType$11)) {
                 return false;
             }
             return Bridge.equals(this.remainder, o.remainder) && Bridge.equals(this.numbers, o.numbers);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 1276122527;
+            hash = hash * 23 + -1944362372;
             hash = hash * 23 + (this.remainder == null ? 0 : Bridge.getHashCode(this.remainder));
             hash = hash * 23 + (this.numbers == null ? 0 : Bridge.getHashCode(this.numbers));
             return hash;
@@ -11536,7 +13588,7 @@
         }
     });
     
-    Bridge.define("$AnonymousType$10", $_, {
+    Bridge.define("$AnonymousType$12", $_, {
         $kind: "anonymous",
         constructor: function (firstLetter, words) {
             this.firstLetter = firstLetter;
@@ -11549,14 +13601,14 @@
             return this.words;
         },
         equals: function (o) {
-            if (!Bridge.is(o, $_.$AnonymousType$10)) {
+            if (!Bridge.is(o, $_.$AnonymousType$12)) {
                 return false;
             }
             return Bridge.equals(this.firstLetter, o.firstLetter) && Bridge.equals(this.words, o.words);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 784520983;
+            hash = hash * 23 + 1947320397;
             hash = hash * 23 + (this.firstLetter == null ? 0 : Bridge.getHashCode(this.firstLetter));
             hash = hash * 23 + (this.words == null ? 0 : Bridge.getHashCode(this.words));
             return hash;
@@ -11569,7 +13621,7 @@
         }
     });
     
-    Bridge.define("$AnonymousType$11", $_, {
+    Bridge.define("$AnonymousType$13", $_, {
         $kind: "anonymous",
         constructor: function (group, persons) {
             this.group = group;
@@ -11582,14 +13634,14 @@
             return this.persons;
         },
         equals: function (o) {
-            if (!Bridge.is(o, $_.$AnonymousType$11)) {
+            if (!Bridge.is(o, $_.$AnonymousType$13)) {
                 return false;
             }
             return Bridge.equals(this.group, o.group) && Bridge.equals(this.persons, o.persons);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + -1944362372;
+            hash = hash * 23 + -781562958;
             hash = hash * 23 + (this.group == null ? 0 : Bridge.getHashCode(this.group));
             hash = hash * 23 + (this.persons == null ? 0 : Bridge.getHashCode(this.persons));
             return hash;
@@ -11602,7 +13654,7 @@
         }
     });
     
-    Bridge.define("$AnonymousType$12", $_, {
+    Bridge.define("$AnonymousType$14", $_, {
         $kind: "anonymous",
         constructor: function (key, words) {
             this.key = key;
@@ -11615,14 +13667,14 @@
             return this.words;
         },
         equals: function (o) {
-            if (!Bridge.is(o, $_.$AnonymousType$12)) {
+            if (!Bridge.is(o, $_.$AnonymousType$14)) {
                 return false;
             }
             return Bridge.equals(this.key, o.key) && Bridge.equals(this.words, o.words);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 1947320397;
+            hash = hash * 23 + -1184847485;
             hash = hash * 23 + (this.key == null ? 0 : Bridge.getHashCode(this.key));
             hash = hash * 23 + (this.words == null ? 0 : Bridge.getHashCode(this.words));
             return hash;
@@ -11642,13 +13694,13 @@
             return n % 5;
         },
         f2: function (g) {
-            return new $_.$AnonymousType$9(g.key(), g.toArray());
+            return new $_.$AnonymousType$11(g.key(), g.toArray());
         },
         f3: function (w) {
             return w.charCodeAt(0);
         },
         f4: function (g) {
-            return new $_.$AnonymousType$10(g.key(), g.toArray());
+            return new $_.$AnonymousType$12(g.key(), g.toArray());
         },
         f5: function (p) {
             return p.getGroup();
@@ -11657,7 +13709,7 @@
             return x.getName();
         },
         f7: function (g) {
-            return new $_.$AnonymousType$11(g.key(), g.select($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f6).toArray());
+            return new $_.$AnonymousType$13(g.key(), g.select($_.Bridge.ClientTest.Linq.TestLinqGroupingOperators.f6).toArray());
         },
         f8: function (l) {
             return l;
@@ -11672,7 +13724,7 @@
             return w.trim();
         },
         f12: function (x) {
-            return new $_.$AnonymousType$12(x.key(), x.toArray());
+            return new $_.$AnonymousType$14(x.key(), x.toArray());
         },
         f13: function (a) {
             return a.toUpperCase();
@@ -11685,42 +13737,42 @@
                 // TEST
                 var persons = (System.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).join(Bridge.ClientTest.Utilities.Group.getGroups(), $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f1, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f2, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f3)).toArray();
     
-                var personsExpected = [new $_.$AnonymousType$13("Frank", 1000), new $_.$AnonymousType$13("Zeppa", 800), new $_.$AnonymousType$13("John", 400), new $_.$AnonymousType$13("Billy", 800), new $_.$AnonymousType$13("Dora", 400), new $_.$AnonymousType$13("Ian", 400), new $_.$AnonymousType$13("Mary", 400)];
+                var personsExpected = [new $_.$AnonymousType$15("Frank", 1000), new $_.$AnonymousType$15("Zeppa", 800), new $_.$AnonymousType$15("John", 400), new $_.$AnonymousType$15("Billy", 800), new $_.$AnonymousType$15("Dora", 400), new $_.$AnonymousType$15("Ian", 400), new $_.$AnonymousType$15("Mary", 400)];
     
                 Bridge.Test.Assert.areDeepEqual$1(personsExpected, persons, "Join Persons and Groups");
     
                 // TEST
                 var personsByLambda = System.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Person.getPersons()).join(Bridge.ClientTest.Utilities.Group.getGroups(), $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f1, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f2, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f3).toArray();
     
-                var personsByLambdaExpected = [new $_.$AnonymousType$13("Frank", 1000), new $_.$AnonymousType$13("Zeppa", 800), new $_.$AnonymousType$13("John", 400), new $_.$AnonymousType$13("Billy", 800), new $_.$AnonymousType$13("Dora", 400), new $_.$AnonymousType$13("Ian", 400), new $_.$AnonymousType$13("Mary", 400)];
+                var personsByLambdaExpected = [new $_.$AnonymousType$15("Frank", 1000), new $_.$AnonymousType$15("Zeppa", 800), new $_.$AnonymousType$15("John", 400), new $_.$AnonymousType$15("Billy", 800), new $_.$AnonymousType$15("Dora", 400), new $_.$AnonymousType$15("Ian", 400), new $_.$AnonymousType$15("Mary", 400)];
     
                 Bridge.Test.Assert.areDeepEqual$1(personsByLambdaExpected, personsByLambda, "Join Persons and Groups by lambda");
     
                 // TEST
                 var groupJoin = (System.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Group.getGroups()).groupJoin(Bridge.ClientTest.Utilities.Person.getPersons(), $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f2, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f1, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f5)).toArray();
     
-                var groupJoinExpected = [new $_.$AnonymousType$11("A", ["Frank"]), new $_.$AnonymousType$11("B", ["John", "Dora", "Ian", "Mary"]), new $_.$AnonymousType$11("C", ["Zeppa", "Billy"]), new $_.$AnonymousType$11("D", [])];
+                var groupJoinExpected = [new $_.$AnonymousType$13("A", ["Frank"]), new $_.$AnonymousType$13("B", ["John", "Dora", "Ian", "Mary"]), new $_.$AnonymousType$13("C", ["Zeppa", "Billy"]), new $_.$AnonymousType$13("D", [])];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupJoinExpected, groupJoin, "Grouped join Persons and Groups");
     
                 // TEST
                 var groupJoinWithDefault = (System.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Group.getGroups()).groupJoin(Bridge.ClientTest.Utilities.Person.getPersons(), $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f2, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f1, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f6).selectMany($_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f7, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f8)).toArray();
     
-                var groupJoinWithDefaultExpected = [new $_.$AnonymousType$15("A", "Frank"), new $_.$AnonymousType$15("B", "John"), new $_.$AnonymousType$15("B", "Dora"), new $_.$AnonymousType$15("B", "Ian"), new $_.$AnonymousType$15("B", "Mary"), new $_.$AnonymousType$15("C", "Zeppa"), new $_.$AnonymousType$15("C", "Billy"), new $_.$AnonymousType$15("D", "")];
+                var groupJoinWithDefaultExpected = [new $_.$AnonymousType$17("A", "Frank"), new $_.$AnonymousType$17("B", "John"), new $_.$AnonymousType$17("B", "Dora"), new $_.$AnonymousType$17("B", "Ian"), new $_.$AnonymousType$17("B", "Mary"), new $_.$AnonymousType$17("C", "Zeppa"), new $_.$AnonymousType$17("C", "Billy"), new $_.$AnonymousType$17("D", "")];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupJoinWithDefaultExpected, groupJoinWithDefault, "Grouped join Persons and Groups with DefaultIfEmpty");
     
                 // TEST
                 var groupJoinWithDefaultAndComplexEquals = (System.Linq.Enumerable.from(Bridge.ClientTest.Utilities.Group.getGroups()).groupJoin(Bridge.ClientTest.Utilities.Person.getPersons(), $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f9, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f10, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f6).selectMany($_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f11, $_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f12).orderByDescending($_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f13).select($_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f14)).toArray();
     
-                var groupJoinWithDefaultAndComplexEqualsExpected = [new $_.$AnonymousType$15("C", "Zeppa"), new $_.$AnonymousType$15("B", "Mary"), new $_.$AnonymousType$15("B", "John"), new $_.$AnonymousType$15("B", "Ian"), new $_.$AnonymousType$15("A", "Frank"), new $_.$AnonymousType$15("B", "Dora"), new $_.$AnonymousType$15("C", "Billy"), new $_.$AnonymousType$15("D", null)];
+                var groupJoinWithDefaultAndComplexEqualsExpected = [new $_.$AnonymousType$17("C", "Zeppa"), new $_.$AnonymousType$17("B", "Mary"), new $_.$AnonymousType$17("B", "John"), new $_.$AnonymousType$17("B", "Ian"), new $_.$AnonymousType$17("A", "Frank"), new $_.$AnonymousType$17("B", "Dora"), new $_.$AnonymousType$17("C", "Billy"), new $_.$AnonymousType$17("D", null)];
     
                 Bridge.Test.Assert.areDeepEqual$1(groupJoinWithDefaultAndComplexEqualsExpected, groupJoinWithDefaultAndComplexEquals, "Issue #209. Grouped join Persons and Groups with DefaultIfEmpty, complex equals and ordering");
             }
         }
     });
     
-    Bridge.define("$AnonymousType$13", $_, {
+    Bridge.define("$AnonymousType$15", $_, {
         $kind: "anonymous",
         constructor: function (name, limit) {
             this.name = name;
@@ -11733,14 +13785,14 @@
             return this.limit;
         },
         equals: function (o) {
-            if (!Bridge.is(o, $_.$AnonymousType$13)) {
+            if (!Bridge.is(o, $_.$AnonymousType$15)) {
                 return false;
             }
             return Bridge.equals(this.name, o.name) && Bridge.equals(this.limit, o.limit);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + -781562958;
+            hash = hash * 23 + 381236456;
             hash = hash * 23 + (this.name == null ? 0 : Bridge.getHashCode(this.name));
             hash = hash * 23 + (this.limit == null ? 0 : Bridge.getHashCode(this.limit));
             return hash;
@@ -11753,7 +13805,7 @@
         }
     });
     
-    Bridge.define("$AnonymousType$14", $_, {
+    Bridge.define("$AnonymousType$16", $_, {
         $kind: "anonymous",
         constructor: function (g, pg) {
             this.g = g;
@@ -11766,14 +13818,14 @@
             return this.pg;
         },
         equals: function (o) {
-            if (!Bridge.is(o, $_.$AnonymousType$14)) {
+            if (!Bridge.is(o, $_.$AnonymousType$16)) {
                 return false;
             }
             return Bridge.equals(this.g, o.g) && Bridge.equals(this.pg, o.pg);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + -1184847485;
+            hash = hash * 23 + -22048071;
             hash = hash * 23 + (this.g == null ? 0 : Bridge.getHashCode(this.g));
             hash = hash * 23 + (this.pg == null ? 0 : Bridge.getHashCode(this.pg));
             return hash;
@@ -11786,7 +13838,7 @@
         }
     });
     
-    Bridge.define("$AnonymousType$15", $_, {
+    Bridge.define("$AnonymousType$17", $_, {
         $kind: "anonymous",
         constructor: function (groupName, personName) {
             this.groupName = groupName;
@@ -11799,14 +13851,14 @@
             return this.personName;
         },
         equals: function (o) {
-            if (!Bridge.is(o, $_.$AnonymousType$15)) {
+            if (!Bridge.is(o, $_.$AnonymousType$17)) {
                 return false;
             }
             return Bridge.equals(this.groupName, o.groupName) && Bridge.equals(this.personName, o.personName);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 381236456;
+            hash = hash * 23 + 1544035870;
             hash = hash * 23 + (this.groupName == null ? 0 : Bridge.getHashCode(this.groupName));
             hash = hash * 23 + (this.personName == null ? 0 : Bridge.getHashCode(this.personName));
             return hash;
@@ -11819,7 +13871,7 @@
         }
     });
     
-    Bridge.define("$AnonymousType$16", $_, {
+    Bridge.define("$AnonymousType$18", $_, {
         $kind: "anonymous",
         constructor: function (name, digit) {
             this.name = name;
@@ -11832,14 +13884,14 @@
             return this.digit;
         },
         equals: function (o) {
-            if (!Bridge.is(o, $_.$AnonymousType$16)) {
+            if (!Bridge.is(o, $_.$AnonymousType$18)) {
                 return false;
             }
             return Bridge.equals(this.name, o.name) && Bridge.equals(this.digit, o.digit);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + -22048071;
+            hash = hash * 23 + 428290623;
             hash = hash * 23 + (this.name == null ? 0 : Bridge.getHashCode(this.name));
             hash = hash * 23 + (this.digit == null ? 0 : Bridge.getHashCode(this.digit));
             return hash;
@@ -11852,7 +13904,7 @@
         }
     });
     
-    Bridge.define("$AnonymousType$17", $_, {
+    Bridge.define("$AnonymousType$19", $_, {
         $kind: "anonymous",
         constructor: function (x3, ep) {
             this.x3 = x3;
@@ -11865,14 +13917,14 @@
             return this.ep;
         },
         equals: function (o) {
-            if (!Bridge.is(o, $_.$AnonymousType$17)) {
+            if (!Bridge.is(o, $_.$AnonymousType$19)) {
                 return false;
             }
             return Bridge.equals(this.x3, o.x3) && Bridge.equals(this.ep, o.ep);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 1544035870;
+            hash = hash * 23 + 1994374564;
             hash = hash * 23 + (this.x3 == null ? 0 : Bridge.getHashCode(this.x3));
             hash = hash * 23 + (this.ep == null ? 0 : Bridge.getHashCode(this.ep));
             return hash;
@@ -11895,40 +13947,40 @@
             return g.getName();
         },
         f3: function (p, g) {
-            return new $_.$AnonymousType$13(p.getName(), g.getLimit());
+            return new $_.$AnonymousType$15(p.getName(), g.getLimit());
         },
         f4: function (x) {
             return x.getName();
         },
         f5: function (g, pg) {
-            return new $_.$AnonymousType$11(g.getName(), System.Linq.Enumerable.from(pg).select($_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f4).toArray());
+            return new $_.$AnonymousType$13(g.getName(), System.Linq.Enumerable.from(pg).select($_.Bridge.ClientTest.Linq.TestLinqJoinOperators.f4).toArray());
         },
         f6: function (g, pg) {
-            return new $_.$AnonymousType$14(g, pg);
+            return new $_.$AnonymousType$16(g, pg);
         },
         f7: function (x0) {
             return System.Linq.Enumerable.from(x0.pg).defaultIfEmpty(null);
         },
         f8: function (x1, ep) {
-            return new $_.$AnonymousType$15(x1.g.getName(), ep != null ? ep.getName() : "");
+            return new $_.$AnonymousType$17(x1.g.getName(), ep != null ? ep.getName() : "");
         },
         f9: function (g) {
-            return new $_.$AnonymousType$16(g.getName(), 1);
+            return new $_.$AnonymousType$18(g.getName(), 1);
         },
         f10: function (p) {
-            return new $_.$AnonymousType$16(p.getGroup(), 1);
+            return new $_.$AnonymousType$18(p.getGroup(), 1);
         },
         f11: function (x2) {
             return System.Linq.Enumerable.from(x2.pg).defaultIfEmpty(null);
         },
         f12: function (x3, ep) {
-            return new $_.$AnonymousType$17(x3, ep);
+            return new $_.$AnonymousType$19(x3, ep);
         },
         f13: function (x4) {
             return x4.ep != null ? x4.ep.getName() : null;
         },
         f14: function (x5) {
-            return new $_.$AnonymousType$15(x5.x3.g != null ? x5.x3.g.getName() : null, x5.ep != null ? x5.ep.getName() : null);
+            return new $_.$AnonymousType$17(x5.x3.g != null ? x5.x3.g.getName() : null, x5.ep != null ? x5.ep.getName() : null);
         }
     });
     
@@ -12125,7 +14177,7 @@
                 // TEST
                 var anonimNames = (System.Linq.Enumerable.from(persons).select($_.Bridge.ClientTest.Linq.TestLinqProjectionOperators.f3)).toArray();
     
-                var anonimNamesToCompare = [new $_.$AnonymousType$18("Frank"), new $_.$AnonymousType$18("Zeppa"), new $_.$AnonymousType$18("John"), new $_.$AnonymousType$18("Billy"), new $_.$AnonymousType$18("Dora"), new $_.$AnonymousType$18("Ian"), new $_.$AnonymousType$18("Mary"), new $_.$AnonymousType$18("Nemo")];
+                var anonimNamesToCompare = [new $_.$AnonymousType$20("Frank"), new $_.$AnonymousType$20("Zeppa"), new $_.$AnonymousType$20("John"), new $_.$AnonymousType$20("Billy"), new $_.$AnonymousType$20("Dora"), new $_.$AnonymousType$20("Ian"), new $_.$AnonymousType$20("Mary"), new $_.$AnonymousType$20("Nemo")];
     
                 Bridge.Test.Assert.areDeepEqual$1(anonimNamesToCompare, anonimNames, "Selects names as an anonymous type");
     
@@ -12134,7 +14186,7 @@
     
                 var numberssInPlace = System.Linq.Enumerable.from(numbers).select($_.Bridge.ClientTest.Linq.TestLinqProjectionOperators.f4).toArray();
     
-                var anonimNumbersToCompare = [new $_.$AnonymousType$19(0, true), new $_.$AnonymousType$19(1, true), new $_.$AnonymousType$19(3, false), new $_.$AnonymousType$19(3, true)];
+                var anonimNumbersToCompare = [new $_.$AnonymousType$21(0, true), new $_.$AnonymousType$21(1, true), new $_.$AnonymousType$21(3, false), new $_.$AnonymousType$21(3, true)];
     
                 Bridge.Test.Assert.areDeepEqual$1(anonimNumbersToCompare, numberssInPlace, "Selects numbers as an anonymous type");
     
@@ -12145,7 +14197,7 @@
                     return numbersB;
                 }, $_.Bridge.ClientTest.Linq.TestLinqProjectionOperators.f5).where($_.Bridge.ClientTest.Linq.TestLinqProjectionOperators.f6).select($_.Bridge.ClientTest.Linq.TestLinqProjectionOperators.f7)).toArray();
     
-                var expectedSimplePairs = [new $_.$AnonymousType$21(1, 3), new $_.$AnonymousType$21(1, 4), new $_.$AnonymousType$21(1, 2), new $_.$AnonymousType$21(2, 3), new $_.$AnonymousType$21(2, 4)];
+                var expectedSimplePairs = [new $_.$AnonymousType$1(1, 3), new $_.$AnonymousType$1(1, 4), new $_.$AnonymousType$1(1, 2), new $_.$AnonymousType$1(2, 3), new $_.$AnonymousType$1(2, 4)];
     
                 Bridge.Test.Assert.areDeepEqual$1(expectedSimplePairs, simplePairs, "Join two numeric arrays with one where clause");
     
@@ -12180,7 +14232,7 @@
         }
     });
     
-    Bridge.define("$AnonymousType$18", $_, {
+    Bridge.define("$AnonymousType$20", $_, {
         $kind: "anonymous",
         constructor: function (name) {
             this.name = name;
@@ -12189,14 +14241,14 @@
             return this.name;
         },
         equals: function (o) {
-            if (!Bridge.is(o, $_.$AnonymousType$18)) {
+            if (!Bridge.is(o, $_.$AnonymousType$20)) {
                 return false;
             }
             return Bridge.equals(this.name, o.name);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 428290623;
+            hash = hash * 23 + 784520984;
             hash = hash * 23 + (this.name == null ? 0 : Bridge.getHashCode(this.name));
             return hash;
         },
@@ -12207,7 +14259,7 @@
         }
     });
     
-    Bridge.define("$AnonymousType$19", $_, {
+    Bridge.define("$AnonymousType$21", $_, {
         $kind: "anonymous",
         constructor: function (number, isIndex) {
             this.number = number;
@@ -12220,14 +14272,14 @@
             return this.isIndex;
         },
         equals: function (o) {
-            if (!Bridge.is(o, $_.$AnonymousType$19)) {
+            if (!Bridge.is(o, $_.$AnonymousType$21)) {
                 return false;
             }
             return Bridge.equals(this.number, o.number) && Bridge.equals(this.isIndex, o.isIndex);
         },
         getHashCode: function () {
             var hash = 17;
-            hash = hash * 23 + 1994374564;
+            hash = hash * 23 + -1944362371;
             hash = hash * 23 + (this.number == null ? 0 : Bridge.getHashCode(this.number));
             hash = hash * 23 + (this.isIndex == null ? 0 : Bridge.getHashCode(this.isIndex));
             return hash;
@@ -12236,72 +14288,6 @@
             return {
                 number : this.number,
                 isIndex : this.isIndex
-            };
-        }
-    });
-    
-    Bridge.define("$AnonymousType$20", $_, {
-        $kind: "anonymous",
-        constructor: function (a, b) {
-            this.a = a;
-            this.b = b;
-        },
-        geta : function () {
-            return this.a;
-        },
-        getb : function () {
-            return this.b;
-        },
-        equals: function (o) {
-            if (!Bridge.is(o, $_.$AnonymousType$20)) {
-                return false;
-            }
-            return Bridge.equals(this.a, o.a) && Bridge.equals(this.b, o.b);
-        },
-        getHashCode: function () {
-            var hash = 17;
-            hash = hash * 23 + 784520984;
-            hash = hash * 23 + (this.a == null ? 0 : Bridge.getHashCode(this.a));
-            hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
-            return hash;
-        },
-        toJSON: function () {
-            return {
-                a : this.a,
-                b : this.b
-            };
-        }
-    });
-    
-    Bridge.define("$AnonymousType$21", $_, {
-        $kind: "anonymous",
-        constructor: function (a, b) {
-            this.a = a;
-            this.b = b;
-        },
-        getA : function () {
-            return this.a;
-        },
-        getB : function () {
-            return this.b;
-        },
-        equals: function (o) {
-            if (!Bridge.is(o, $_.$AnonymousType$21)) {
-                return false;
-            }
-            return Bridge.equals(this.a, o.a) && Bridge.equals(this.b, o.b);
-        },
-        getHashCode: function () {
-            var hash = 17;
-            hash = hash * 23 + -1944362371;
-            hash = hash * 23 + (this.a == null ? 0 : Bridge.getHashCode(this.a));
-            hash = hash * 23 + (this.b == null ? 0 : Bridge.getHashCode(this.b));
-            return hash;
-        },
-        toJSON: function () {
-            return {
-                a : this.a,
-                b : this.b
             };
         }
     });
@@ -12382,19 +14368,19 @@
             return p.getName();
         },
         f3: function (p) {
-            return new $_.$AnonymousType$18(p.getName());
+            return new $_.$AnonymousType$20(p.getName());
         },
         f4: function (n, index) {
-            return new $_.$AnonymousType$19(n, n === index);
+            return new $_.$AnonymousType$21(n, n === index);
         },
         f5: function (a, b) {
-            return new $_.$AnonymousType$20(a, b);
+            return new $_.$AnonymousType$2(a, b);
         },
         f6: function (x0) {
             return x0.a < x0.b;
         },
         f7: function (x1) {
-            return new $_.$AnonymousType$21(x1.a, x1.b);
+            return new $_.$AnonymousType$1(x1.a, x1.b);
         },
         f8: function (a) {
             return a > 1;
@@ -17687,11 +19673,11 @@
             Bridge.Test.Assert.null$1(Bridge.as(0, String, true), "#8");
         },
         defaultValueOfNamedValuesEnumIsNull: function () {
-            Bridge.Test.Assert.null$1(Bridge.getDefaultValue(Bridge.ClientTest.Reflection.TypeSystemTests.NamedValuesEnum), "#1");
+            Bridge.Test.Assert.null$1(null, "#1");
             Bridge.Test.Assert.null$1(this.getDefault(Bridge.ClientTest.Reflection.TypeSystemTests.NamedValuesEnum), "#2");
         },
         defaultValueOfImportedNamedValuesEnumIsNull: function () {
-            Bridge.Test.Assert.null$1(Bridge.getDefaultValue(Bridge.ClientTest.Reflection.TypeSystemTests.ImportedNamedValuesEnum), "#1");
+            Bridge.Test.Assert.null$1(null, "#1");
             Bridge.Test.Assert.null$1(this.getDefault(Bridge.ClientTest.Reflection.TypeSystemTests.ImportedNamedValuesEnum), "#2");
         }
     });
@@ -19026,7 +21012,7 @@
             Bridge.Test.Assert.areStrictEqual(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.FirstValue, Bridge.createInstance(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum));
         },
         defaultExpressionWithEnumReturnsZero: function () {
-            Bridge.Test.Assert.areStrictEqual(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.FirstValue, Bridge.getDefaultValue(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum));
+            Bridge.Test.Assert.areStrictEqual(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.FirstValue, 0);
         },
         getHashCodeWorks: function () {
             Bridge.Test.Assert.areEqual(Bridge.getHashCode(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.FirstValue), Bridge.getHashCode(Bridge.ClientTest.SimpleTypes.EnumTests.TestEnum.FirstValue));
@@ -36879,6 +38865,8 @@
         inherits: [Bridge.ClientTest.TypeSystemTests.B,Bridge.ClientTest.TypeSystemTests.I4]
     });
     
+    Bridge.setMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, function () { return {"members":[{"accessibility":2,"name":".ctor","type":1,"sname":"$constructor"},{"accessibility":2,"name":".ctor","type":1,"params":[System.Int32,System.Int32],"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","parameterType":System.Int32,"position":1}],"sname":"$constructor1"},{"accessibility":2,"name":"M1","type":8,"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","parameterType":String,"position":1}],"sname":"m1","returnType":System.Int32,"params":[System.Int32,String]},{"accessibility":2,"name":"M2","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","parameterType":String,"position":1}],"sname":"m2","returnType":System.Int32,"params":[System.Int32,String]},{"accessibility":2,"name":"M4","type":8,"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0}],"sname":"m4","returnType":System.Int32,"params":[System.Int32]},{"accessibility":2,"name":"op_Addition","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0},{"name":"b","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":1}],"sname":"op_Addition","returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"op_BitwiseAnd","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0},{"name":"b","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":1}],"sname":"op_BitwiseAnd","returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"op_BitwiseOr","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0},{"name":"b","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":1}],"sname":"op_BitwiseOr","returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"op_Decrement","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0}],"sname":"op_Decrement","returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"op_Division","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0},{"name":"b","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":1}],"sname":"op_Division","returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"op_Equality","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0},{"name":"b","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":1}],"sname":"op_Equality","returnType":Boolean,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"op_ExclusiveOr","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0},{"name":"b","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":1}],"sname":"op_ExclusiveOr","returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"op_Explicit","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0}],"sname":"op_Explicit","returnType":System.Int32,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"op_False","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0}],"sname":"op_False","returnType":Boolean,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"op_GreaterThan","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0},{"name":"b","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":1}],"sname":"op_GreaterThan","returnType":Boolean,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"op_GreaterThanOrEqual","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0},{"name":"b","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":1}],"sname":"op_GreaterThanOrEqual","returnType":Boolean,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"op_Increment","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0}],"sname":"op_Increment","returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"op_Inequality","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0},{"name":"b","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":1}],"sname":"op_Inequality","returnType":Boolean,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"op_LeftShift","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0},{"name":"b","parameterType":System.Int32,"position":1}],"sname":"op_LeftShift","returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,System.Int32]},{"accessibility":2,"name":"op_LessThan","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0},{"name":"b","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":1}],"sname":"op_LessThan","returnType":Boolean,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"op_LessThanOrEqual","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0},{"name":"b","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":1}],"sname":"op_LessThanOrEqual","returnType":Boolean,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"op_LogicalNot","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0}],"sname":"op_LogicalNot","returnType":Boolean,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"op_Modulus","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0},{"name":"b","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":1}],"sname":"op_Modulus","returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"op_Multiply","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0},{"name":"b","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":1}],"sname":"op_Multiply","returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"op_OnesComplement","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0}],"sname":"op_OnesComplement","returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"op_Power","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0},{"name":"b","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":1}],"sname":"op_Power","returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"op_RightShift","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0},{"name":"b","parameterType":System.Int32,"position":1}],"sname":"op_RightShift","returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,System.Int32]},{"accessibility":2,"name":"op_Subtraction","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0},{"name":"b","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":1}],"sname":"op_Subtraction","returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"op_True","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0}],"sname":"op_True","returnType":Boolean,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"op_UnaryNegation","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0}],"sname":"op_UnaryNegation","returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"op_UnaryPlus","isStatic":true,"type":8,"paramsInfo":[{"name":"a","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0}],"sname":"op_UnaryPlus","returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]},{"accessibility":2,"name":"CP","type":16,"returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"getter":{"accessibility":2,"name":"get_CP","type":8,"sname":"getCP","returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C},"setter":{"accessibility":2,"name":"set_CP","type":8,"paramsInfo":[{"name":"value","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"position":0}],"sname":"setCP","returnType":Object,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.C]}},{"accessibility":2,"name":"Item","type":16,"returnType":String,"params":[System.Int32,String],"isIndexer":true,"indexParamsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","parameterType":String,"position":1}],"getter":{"accessibility":2,"name":"get_Item","type":8,"paramsInfo":[{"name":"a","parameterType":System.Int32,"position":0},{"name":"b","parameterType":String,"position":1}],"sname":"getItem","returnType":String,"params":[System.Int32,String]}},{"accessibility":2,"name":"LP","type":16,"returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList,"getter":{"accessibility":2,"name":"get_LP","type":8,"sname":"getLP","returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList},"setter":{"accessibility":2,"name":"set_LP","type":8,"paramsInfo":[{"name":"value","parameterType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList,"position":0}],"sname":"setLP","returnType":Object,"params":[Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList]}},{"accessibility":2,"name":"P1","type":16,"returnType":System.Int32,"getter":{"accessibility":2,"name":"get_P1","type":8,"sname":"getP1","returnType":System.Int32},"setter":{"accessibility":2,"name":"set_P1","type":8,"paramsInfo":[{"name":"value","parameterType":System.Int32,"position":0}],"sname":"setP1","returnType":Object,"params":[System.Int32]}},{"accessibility":2,"name":"CF","type":4,"returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.C,"sname":"cF","isReadOnly":false},{"accessibility":2,"name":"F1","type":4,"returnType":System.Int32,"sname":"f1","isReadOnly":false},{"accessibility":2,"name":"LF","type":4,"returnType":Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList,"sname":"lF","isReadOnly":false}]}; });
+    Bridge.setMetadata(Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyList, function () { return {"members":[{"accessibility":2,"name":".ctor","type":1,"sname":"$constructor"},{"accessibility":2,"name":"Add","type":8,"paramsInfo":[{"name":"i","parameterType":System.Int32,"position":0}],"sname":"add","returnType":Object,"params":[System.Int32]},{"accessibility":2,"name":"Add","type":8,"paramsInfo":[{"name":"i","parameterType":System.Int32,"position":0},{"name":"j","parameterType":System.Int32,"position":1}],"sname":"add$1","returnType":Object,"params":[System.Int32,System.Int32]}]}; });
     Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.A2Attribute, function () { return {"attrAllowMultiple":true}; });
     Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.A5Attribute, function () { return {"attrNoInherit":true}; });
     Bridge.setMetadata(Bridge.ClientTest.Reflection.AttributeTests.C10$2, function (T1, T2) { return {"attr":[new Bridge.ClientTest.Reflection.AttributeTests.A1Attribute(11)]}; });

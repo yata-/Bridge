@@ -101,6 +101,7 @@
     <Compile Include="Exceptions\CultureNotFoundExceptionTests.cs" />
     <Compile Include="Exceptions\TimeoutExceptionTests.cs" />
     <Compile Include="GuidTests.cs" />
+    <Compile Include="Linq\Expressions\ExpressionTests.cs" />
     <Compile Include="Linq\TestLinqGroupingOperators.cs" />
     <Compile Include="Linq\TestLinqConversionOperators.cs" />
     <Compile Include="Linq\TestLinqAggregateOperators.cs" />
@@ -245,10 +246,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Bridge.Collections, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Bridge.Collections.Dev.1.3.0\lib\net40\Bridge.Collections.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Bridge.Test, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Bridge.Testing.1.0.0\lib\net40\Bridge.Test.dll</HintPath>
       <Private>True</Private>

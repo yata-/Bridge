@@ -400,6 +400,10 @@
         },
 
         is: function (obj, type, ignoreFn, allowNull) {
+            if (typeof type === "boolean") {
+                return type;
+            }
+
             if (typeof type === "string") {
                 type = Bridge.unroll(type);
             }
@@ -647,6 +651,10 @@
             }
 
             return result;
+        },
+
+        toList: function (ienumerable, T) {
+            return new (System.Collections.Generic.List$1(T || Object))(ienumerable);
         },
 
         isArray: function (obj) {
@@ -1199,6 +1207,10 @@
                     break;
                 }
             }
+        },
+
+        getMetadata: function (t) {
+            return t.$getMetadata ? t.$getMetadata() : t.$metadata;
         }
     };
 
@@ -3274,7 +3286,7 @@
 
                     for (i = 0; i < a.length; i++) {
                         t = Bridge.getType(a[i]);
-                        md = t.$getMetadata ? t.$getMetadata() : t.$metadata;
+                        md = Bridge.getMetadata(t);
 
                         if (!md || !md.attrNoInherit) {
                             result.push(a[i]);
@@ -3283,7 +3295,7 @@
                 }
             }
 
-            type_md = type.$getMetadata ? type.$getMetadata() : type.$metadata;
+            type_md = Bridge.getMetadata(type);
 
             if (type_md && type_md.attr) {
                 for (i = 0; i < type_md.attr.length; i++) {
@@ -3291,7 +3303,7 @@
 
                     if (attrType == null || Bridge.Reflection.isInstanceOfType(a, attrType)) {
                         t = Bridge.getType(a);
-                        md = t.$getMetadata ? t.$getMetadata() : t.$metadata;
+                        md = Bridge.getMetadata(t);
 
                         if (!md || !md.attrAllowMultiple) {
                             for (var j = result.length - 1; j >= 0; j--) {
@@ -3337,7 +3349,7 @@
                 }
             };
 
-            var type_md = type.$getMetadata ? type.$getMetadata() : type.$metadata;
+            var type_md = Bridge.getMetadata(type);
 
             if (type_md && type_md.members) {
                 var mNames = ['getter', 'setter', 'adder', 'remover'];
@@ -8440,9 +8452,9 @@ Bridge.define("System.Text.StringBuilder", {
             return arr;
         },
 
-        init: function (size, value) {
+        init: function (size, value, addFn) {
             var arr = new Array(size),
-                isFn = Bridge.isFunction(value);
+                isFn = addFn !== true && Bridge.isFunction(value);
 
             for (var i = 0; i < size; i++) {
                 arr[i] = isFn ? value() : value;

@@ -109,7 +109,7 @@ namespace Bridge.Translator
             this.WriteCloseParentheses();
         }
 
-        protected virtual IAnonymousTypeConfig CreateAnonymousType(AnonymousType type)
+        public virtual IAnonymousTypeConfig CreateAnonymousType(AnonymousType type)
         {
             var config = new AnonymousTypeConfig();
             config.Name = JS.Types.BRIDGE_ANONYMOUS + (this.Emitter.AnonymousTypes.Count + 1);

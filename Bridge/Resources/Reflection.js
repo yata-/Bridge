@@ -514,7 +514,7 @@
 
                     for (i = 0; i < a.length; i++) {
                         t = Bridge.getType(a[i]);
-                        md = t.$getMetadata ? t.$getMetadata() : t.$metadata;
+                        md = Bridge.getMetadata(t);
 
                         if (!md || !md.attrNoInherit) {
                             result.push(a[i]);
@@ -523,7 +523,7 @@
                 }
             }
 
-            type_md = type.$getMetadata ? type.$getMetadata() : type.$metadata;
+            type_md = Bridge.getMetadata(type);
 
             if (type_md && type_md.attr) {
                 for (i = 0; i < type_md.attr.length; i++) {
@@ -531,7 +531,7 @@
 
                     if (attrType == null || Bridge.Reflection.isInstanceOfType(a, attrType)) {
                         t = Bridge.getType(a);
-                        md = t.$getMetadata ? t.$getMetadata() : t.$metadata;
+                        md = Bridge.getMetadata(t);
 
                         if (!md || !md.attrAllowMultiple) {
                             for (var j = result.length - 1; j >= 0; j--) {
@@ -577,7 +577,7 @@
                 }
             };
 
-            var type_md = type.$getMetadata ? type.$getMetadata() : type.$metadata;
+            var type_md = Bridge.getMetadata(type);
 
             if (type_md && type_md.members) {
                 var mNames = ['getter', 'setter', 'adder', 'remover'];

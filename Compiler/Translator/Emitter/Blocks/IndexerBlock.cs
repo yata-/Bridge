@@ -347,14 +347,14 @@ namespace Bridge.Translator
                            (memberTargetrr.TargetResult is ThisResolveResult ||
                             memberTargetrr.TargetResult is LocalResolveResult);
 
-            if (isInterfaceMember && (!this.Emitter.IsUnaryAccessor || isStatement) && !(targetrr is ThisResolveResult || targetrr is LocalResolveResult || isField))
+            if (isInterfaceMember && (!this.Emitter.IsUnaryAccessor || isStatement) && !(targetrr is ThisResolveResult || targetrr is LocalResolveResult || targetrr is ConstantResolveResult || isField))
             {
                 this.WriteOpenParentheses();
             }
 
             if (writeTargetVar)
             {
-                if (!(targetrr is ThisResolveResult || targetrr is LocalResolveResult || isField))
+                if (!(targetrr is ThisResolveResult || targetrr is LocalResolveResult || targetrr is ConstantResolveResult || isField))
                 {
                     targetVar = this.GetTempVarName();
                     this.Write(targetVar);

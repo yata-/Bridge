@@ -442,5 +442,10 @@ namespace Bridge.Translator
         {
             get; set;
         }
+
+        public IType[] ReflectableTypes
+        {
+            get; set;
+        }
     }
 }

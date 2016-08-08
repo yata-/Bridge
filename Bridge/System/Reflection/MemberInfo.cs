@@ -4,7 +4,8 @@ using Bridge;
 namespace System.Reflection
 {
 	[External]
-	public class MemberInfo
+    [Name("Object")]
+    public class MemberInfo
     {
 	    [Name("type")]
 	    [FieldProperty]

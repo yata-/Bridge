@@ -251,7 +251,8 @@ namespace Bridge.Translator
             var metas = new Dictionary<IType, JObject>();
 
             this.Emitter.Translator.Plugins.BeforeTypesEmit(this.Emitter, this.Emitter.Types);
-            var reflectedTypes = this.GetReflectableTypes();
+            this.Emitter.ReflectableTypes = this.GetReflectableTypes();
+            var reflectedTypes = this.Emitter.ReflectableTypes;
 
             foreach (var type in this.Emitter.Types)
             {

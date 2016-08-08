@@ -1,13 +1,11 @@
 using Bridge.Contract;
 using Bridge.Contract.Constants;
-
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using Object.Net.Utilities;
-
 using System;
 using System.Linq;
 using System.Text;
@@ -243,6 +241,12 @@ namespace Bridge.Translator
 
             MemberResolveResult member = resolveResult as MemberResolveResult;
             var globalTarget = member != null ? this.Emitter.IsGlobalTarget(member.Member) : null;
+
+            if (member != null &&
+                member.Member.Attributes.Any(a => a.AttributeType.FullName == "Bridge.NonScriptableAttribute"))
+            {
+                throw new EmitterException(this.MemberReferenceExpression, "Member " + member.ToString() + " is marked as not usable from script");
+            }
 
             if (!(resolveResult is InvocationResolveResult) && member != null && member.Member is IMethod)
             {

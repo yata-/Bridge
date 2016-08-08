@@ -444,5 +444,10 @@ namespace Bridge.Contract
         {
             get; set;
         }
+
+        IType[] ReflectableTypes
+        {
+            get; set;
+        }
     }
 }

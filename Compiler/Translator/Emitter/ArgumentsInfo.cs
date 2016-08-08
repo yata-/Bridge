@@ -92,6 +92,11 @@ namespace Bridge.Translator
 
         public IAttribute Attribute { get; set; }
 
+        public string[] StringArguments
+        {
+            get; set;
+        }
+
         public ArgumentsInfo(IEmitter emitter, IMethod method)
         {
             this.Emitter = emitter;
@@ -104,6 +109,13 @@ namespace Bridge.Translator
             this.Emitter = emitter;
             this.Expression = null;
             this.Attribute = attr;
+        }
+
+        public ArgumentsInfo(IEmitter emitter, string[] args)
+        {
+            this.Emitter = emitter;
+            this.Expression = null;
+            this.StringArguments = args;
         }
 
         public ArgumentsInfo(IEmitter emitter, ConstructorInitializer initializer)

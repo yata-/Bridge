@@ -439,7 +439,7 @@ namespace Bridge.Translator
                                (memberTargetrr.TargetResult is ThisResolveResult ||
                                 memberTargetrr.TargetResult is LocalResolveResult);
 
-                    if (rr is ThisResolveResult || rr is LocalResolveResult || isField)
+                    if (rr is ThisResolveResult || rr is LocalResolveResult || rr is ConstantResolveResult || isField)
                     {
                         skipInnerWrap = true;
                     }
