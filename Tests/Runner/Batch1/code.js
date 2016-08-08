@@ -3258,15 +3258,15 @@
             Bridge.Test.Assert.areEqual($asm.name, "Bridge.ClientTest");
         },
         getAssemblyForTypeWorks: function () {
-            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(System.Int32).name, "System");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(System.Int32).name, "mscorlib");
             Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).name, "Bridge.ClientTest");
         },
         fullNameWorks: function () {
-            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(System.Int32).name, "System");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(System.Int32).name, "mscorlib");
             Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).name, "Bridge.ClientTest");
         },
         toStringWorks: function () {
-            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(System.Int32).toString(), "System");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(System.Int32).toString(), "mscorlib");
             Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Bridge.ClientTest.Batch1.Reflection.AssemblyTests).toString(), "Bridge.ClientTest");
         },
         getTypesWorks: function () {
@@ -3305,12 +3305,12 @@
             Bridge.Test.Assert.true$1(Bridge.Reflection.getType("Foo.Bar", asm) == null, "#4");
         },
         assemblyOfBuiltInTypes: function () {
-            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Date).name, "System");
-            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(System.Double).name, "System");
-            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Boolean).name, "System");
-            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(String).name, "System");
-            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Function).name, "System");
-            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Array).name, "System");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Date).name, "mscorlib");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(System.Double).name, "mscorlib");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Boolean).name, "mscorlib");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(String).name, "mscorlib");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Function).name, "mscorlib");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Array).name, "mscorlib");
         },
         createInstanceWorks: function () {
             Bridge.Test.Assert.true$1(Bridge.is(Bridge.Reflection.createAssemblyInstance(Bridge.Reflection.getTypeAssembly(Bridge.ClientTest.Batch1.Reflection.AssemblyTests.C), Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Batch1.Reflection.AssemblyTests.C)), Bridge.ClientTest.Batch1.Reflection.AssemblyTests.C), "#1");
@@ -3345,7 +3345,7 @@
         },
         loadCanReturnReferenceToLoadedAssembly: function () {
             Bridge.Test.Assert.true$1(Bridge.referenceEquals(Bridge.Reflection.load("Bridge.ClientTest"), $asm), "ClientTest");
-            Bridge.Test.Assert.true$1(Bridge.referenceEquals(Bridge.Reflection.load("System"), Bridge.Reflection.getTypeAssembly(System.Int32)), "System");
+            Bridge.Test.Assert.true$1(Bridge.referenceEquals(Bridge.Reflection.load("mscorlib"), Bridge.Reflection.getTypeAssembly(System.Int32)), "mscorlib");
         },
         getManifestResourceNamesWorks: function () {
             var names = $asm.getManifestResourceNames();
@@ -4637,7 +4637,7 @@
     
     Bridge.define('Bridge.ClientTest.Collections.Generic.GenericDictionaryTests', {
         typePropertiesAreCorrect: function () {
-            Bridge.Test.Assert.areEqual$1("System.Collections.Generic.Dictionary$2[[System.Int32, System],[String]]", Bridge.getTypeName(System.Collections.Generic.Dictionary$2(System.Int32,String)), "FullName should be correct");
+            Bridge.Test.Assert.areEqual$1("System.Collections.Generic.Dictionary$2[[System.Int32, mscorlib],[String]]", Bridge.getTypeName(System.Collections.Generic.Dictionary$2(System.Int32,String)), "FullName should be correct");
             var dict = new (System.Collections.Generic.Dictionary$2(System.Int32,String))();
             Bridge.Test.Assert.true$1(Bridge.is(dict, System.Collections.Generic.Dictionary$2(System.Int32,String)), "is Dictionary<int,string> should be true");
             Bridge.Test.Assert.true$1(Bridge.is(dict, System.Collections.Generic.IDictionary$2(System.Int32,String)), "is IDictionary<int,string> should be true");
@@ -5751,7 +5751,7 @@
     
     Bridge.define('Bridge.ClientTest.Collections.Generic.ListTests', {
         typePropertiesAreCorrect: function () {
-            Bridge.Test.Assert.areEqual$1("System.Collections.Generic.List$1[[System.Int32, System]]", Bridge.getTypeName(System.Collections.Generic.List$1(System.Int32)), "GetClassName()");
+            Bridge.Test.Assert.areEqual$1("System.Collections.Generic.List$1[[System.Int32, mscorlib]]", Bridge.getTypeName(System.Collections.Generic.List$1(System.Int32)), "GetClassName()");
             var list = new (System.Collections.Generic.List$1(System.Int32))();
             Bridge.Test.Assert.true$1(Bridge.is(list, System.Collections.Generic.List$1(System.Int32)), "is int[] should be true");
             Bridge.Test.Assert.true$1(Bridge.is(list, System.Collections.Generic.IList$1(System.Int32)), "is IList<int> should be true");
@@ -16486,8 +16486,6 @@
         statics: {
             canConvert: function (T, arg) {
                 try { /// The variable `x' is assigned but its value is never used
-    
-    
                     var x = System.Nullable.getValue(Bridge.cast(arg, T));
                     return true;
                 }
@@ -16920,7 +16918,7 @@
         getTypeWorksOnObjects: function () {
             var a = $_.Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.f1;
             Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.getType(new Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C1())), "Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C1");
-            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.getType(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1(System.Int32))())), "Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1[[System.Int32, System]]");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.getType(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1(System.Int32))())), "Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1[[System.Int32, mscorlib]]");
             Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.getType(new (Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1(String))())), "Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1[[String]]");
             Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(System.Int32), "System.Int32");
             Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(String), "String");
@@ -17017,7 +17015,7 @@
         assemblyQualifiedNameReturnsTheNameWithTheNamespaceAndAssemblyName: function () {
             Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeQName(Bridge.ClientTest.Reflection.TypeSystemTests), "Bridge.ClientTest.Reflection.TypeSystemTests, Bridge.ClientTest");
             Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeQName(Bridge.ClientTest.Reflection.TypeSystemTests.BX$1), "Bridge.ClientTest.Reflection.TypeSystemTests.BX$1, Bridge.ClientTest");
-            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeQName(Bridge.ClientTest.Reflection.TypeSystemTests.BX$1(System.Int32)), "Bridge.ClientTest.Reflection.TypeSystemTests.BX$1[[System.Int32, System]], Bridge.ClientTest");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeQName(Bridge.ClientTest.Reflection.TypeSystemTests.BX$1(System.Int32)), "Bridge.ClientTest.Reflection.TypeSystemTests.BX$1[[System.Int32, mscorlib]], Bridge.ClientTest");
         },
         assemblyPropertyWorks: function () {
             Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeAssembly(Bridge.ClientTest.Reflection.TypeSystemTests.B).name, "Bridge.ClientTest");
@@ -17045,8 +17043,8 @@
         },
         namePropertyRemovesTheNamespace: function () {
             Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getTypeName(Bridge.ClientTest.Reflection.TypeSystemTests), "TypeSystemTests", "non-generic");
-            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getTypeName(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,String)), "G$2[[System.Int32, System],[String]]", "generic");
-            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getTypeName(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(Bridge.ClientTest.Reflection.TypeSystemTests.BX$1(System.Double),String)), "G$2[[Bridge.ClientTest.Reflection.TypeSystemTests.BX$1[[System.Double, System]], Bridge.ClientTest],[String]]", "nested generic");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getTypeName(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,String)), "G$2[[System.Int32, mscorlib],[String]]", "generic");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getTypeName(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(Bridge.ClientTest.Reflection.TypeSystemTests.BX$1(System.Double),String)), "G$2[[Bridge.ClientTest.Reflection.TypeSystemTests.BX$1[[System.Double, mscorlib]], Bridge.ClientTest],[String]]", "nested generic");
         },
         gettingBaseTypeWorks: function () {
             Bridge.Test.Assert.areEqual(Bridge.Reflection.getBaseType(Bridge.ClientTest.Reflection.TypeSystemTests.B), Object);
@@ -17068,10 +17066,10 @@
             Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1), "Bridge.ClientTest.Reflection.TypeSystemTests.IG$1");
         },
         typeOfInstantiatedGenericClassWorks: function () {
-            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,Bridge.ClientTest.Reflection.TypeSystemTests.C)), "Bridge.ClientTest.Reflection.TypeSystemTests.G$2[[System.Int32, System],[Bridge.ClientTest.Reflection.TypeSystemTests.C, Bridge.ClientTest]]");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,Bridge.ClientTest.Reflection.TypeSystemTests.C)), "Bridge.ClientTest.Reflection.TypeSystemTests.G$2[[System.Int32, mscorlib],[Bridge.ClientTest.Reflection.TypeSystemTests.C, Bridge.ClientTest]]");
         },
         typeOfInstantiatedGenericInterfaceWorks: function () {
-            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1(System.Int32)), "Bridge.ClientTest.Reflection.TypeSystemTests.IG$1[[System.Int32, System]]");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1(System.Int32)), "Bridge.ClientTest.Reflection.TypeSystemTests.IG$1[[System.Int32, mscorlib]]");
         },
         constructingAGenericTypeTwiceWithTheSameArgumentsReturnsTheSameInstance: function () {
             var t1 = Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,Bridge.ClientTest.Reflection.TypeSystemTests.C);
@@ -17083,13 +17081,13 @@
         accessingAStaticMemberInAGenericClassWorks: function () {
             Bridge.Test.Assert.areEqual(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,Bridge.ClientTest.Reflection.TypeSystemTests.C).field, "System.Int32 Bridge.ClientTest.Reflection.TypeSystemTests.C");
             Bridge.Test.Assert.areEqual(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(Bridge.ClientTest.Reflection.TypeSystemTests.C,System.Int32).field, "Bridge.ClientTest.Reflection.TypeSystemTests.C System.Int32");
-            Bridge.Test.Assert.areEqual(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(Bridge.ClientTest.Reflection.TypeSystemTests.C,System.Int32),Bridge.ClientTest.Reflection.TypeSystemTests.G$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.C)).field, "Bridge.ClientTest.Reflection.TypeSystemTests.G$2[[Bridge.ClientTest.Reflection.TypeSystemTests.C, Bridge.ClientTest],[System.Int32, System]] Bridge.ClientTest.Reflection.TypeSystemTests.G$2[[String],[Bridge.ClientTest.Reflection.TypeSystemTests.C, Bridge.ClientTest]]");
+            Bridge.Test.Assert.areEqual(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(Bridge.ClientTest.Reflection.TypeSystemTests.C,System.Int32),Bridge.ClientTest.Reflection.TypeSystemTests.G$2(String,Bridge.ClientTest.Reflection.TypeSystemTests.C)).field, "Bridge.ClientTest.Reflection.TypeSystemTests.G$2[[Bridge.ClientTest.Reflection.TypeSystemTests.C, Bridge.ClientTest],[System.Int32, mscorlib]] Bridge.ClientTest.Reflection.TypeSystemTests.G$2[[String],[Bridge.ClientTest.Reflection.TypeSystemTests.C, Bridge.ClientTest]]");
         },
         typeOfNestedGenericClassWorks: function () {
-            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,Bridge.ClientTest.Reflection.TypeSystemTests.G$2(Bridge.ClientTest.Reflection.TypeSystemTests.C,Bridge.ClientTest.Reflection.TypeSystemTests.IG$1(String)))), "Bridge.ClientTest.Reflection.TypeSystemTests.G$2[[System.Int32, System],[Bridge.ClientTest.Reflection.TypeSystemTests.G$2[[Bridge.ClientTest.Reflection.TypeSystemTests.C, Bridge.ClientTest],[Bridge.ClientTest.Reflection.TypeSystemTests.IG$1[[String]], Bridge.ClientTest]], Bridge.ClientTest]]");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,Bridge.ClientTest.Reflection.TypeSystemTests.G$2(Bridge.ClientTest.Reflection.TypeSystemTests.C,Bridge.ClientTest.Reflection.TypeSystemTests.IG$1(String)))), "Bridge.ClientTest.Reflection.TypeSystemTests.G$2[[System.Int32, mscorlib],[Bridge.ClientTest.Reflection.TypeSystemTests.G$2[[Bridge.ClientTest.Reflection.TypeSystemTests.C, Bridge.ClientTest],[Bridge.ClientTest.Reflection.TypeSystemTests.IG$1[[String]], Bridge.ClientTest]], Bridge.ClientTest]]");
         },
         baseTypeAndImplementedInterfacesForGenericTypeWorks: function () {
-            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.Reflection.getBaseType(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,Bridge.ClientTest.Reflection.TypeSystemTests.G$2(Bridge.ClientTest.Reflection.TypeSystemTests.C,Bridge.ClientTest.Reflection.TypeSystemTests.IG$1(String))))), "Bridge.ClientTest.Reflection.TypeSystemTests.BX$1[[Bridge.ClientTest.Reflection.TypeSystemTests.G$2[[System.Int32, System],[Bridge.ClientTest.Reflection.TypeSystemTests.C, Bridge.ClientTest]], Bridge.ClientTest]]");
+            Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.Reflection.getBaseType(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,Bridge.ClientTest.Reflection.TypeSystemTests.G$2(Bridge.ClientTest.Reflection.TypeSystemTests.C,Bridge.ClientTest.Reflection.TypeSystemTests.IG$1(String))))), "Bridge.ClientTest.Reflection.TypeSystemTests.BX$1[[Bridge.ClientTest.Reflection.TypeSystemTests.G$2[[System.Int32, mscorlib],[Bridge.ClientTest.Reflection.TypeSystemTests.C, Bridge.ClientTest]], Bridge.ClientTest]]");
             Bridge.Test.Assert.areEqual(Bridge.Reflection.getTypeFullName(Bridge.Reflection.getInterfaces(Bridge.ClientTest.Reflection.TypeSystemTests.G$2(System.Int32,Bridge.ClientTest.Reflection.TypeSystemTests.G$2(Bridge.ClientTest.Reflection.TypeSystemTests.C,Bridge.ClientTest.Reflection.TypeSystemTests.IG$1(String))))[0]), "Bridge.ClientTest.Reflection.TypeSystemTests.IG$1[[Bridge.ClientTest.Reflection.TypeSystemTests.G$2[[Bridge.ClientTest.Reflection.TypeSystemTests.G$2[[Bridge.ClientTest.Reflection.TypeSystemTests.C, Bridge.ClientTest],[Bridge.ClientTest.Reflection.TypeSystemTests.IG$1[[String]], Bridge.ClientTest]], Bridge.ClientTest],[String]], Bridge.ClientTest]]");
         },
         isGenericTypeDefinitionWorksAsExpected: function () {
@@ -17631,18 +17629,18 @@
         staticGetTypeMethodWorks: function () {
             Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("Bridge.ClientTest.Reflection.TypeSystemTests"), Bridge.ClientTest.Reflection.TypeSystemTests, "#1");
             Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("Bridge.ClientTest.Reflection.TypeSystemTests, Bridge.ClientTest"), Bridge.ClientTest.Reflection.TypeSystemTests, "#2");
-            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("Bridge.ClientTest.Reflection.TypeSystemTests, System"), null, "#3");
-            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2, System"), System.Collections.Generic.Dictionary$2, "#4");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("Bridge.ClientTest.Reflection.TypeSystemTests, mscorlib"), null, "#3");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2, mscorlib"), System.Collections.Generic.Dictionary$2, "#4");
             Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2, NotLoaded.Assembly"), null, "#5");
         },
         staticGetTypeMethodWithGenericsWorks: function () {
             Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2[[String],[Bridge.ClientTest.Reflection.TypeSystemTests, Bridge.ClientTest]]"), System.Collections.Generic.Dictionary$2(String,Bridge.ClientTest.Reflection.TypeSystemTests), "#1");
             Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2[[Bridge.ClientTest.Reflection.TypeSystemTests, Bridge.ClientTest],[String]]"), System.Collections.Generic.Dictionary$2(Bridge.ClientTest.Reflection.TypeSystemTests,String), "#2");
-            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2[[System.Int32, System],[Bridge.ClientTest.Reflection.TypeSystemTests, Bridge.ClientTest]]"), System.Collections.Generic.Dictionary$2(System.Int32,Bridge.ClientTest.Reflection.TypeSystemTests), "#3");
-            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2[[String],[Bridge.ClientTest.Reflection.TypeSystemTests, Bridge.ClientTest]], System"), System.Collections.Generic.Dictionary$2(String,Bridge.ClientTest.Reflection.TypeSystemTests), "#4");
-            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2[[Bridge.ClientTest.Reflection.TypeSystemTests, Bridge.ClientTest],[String]], System"), System.Collections.Generic.Dictionary$2(Bridge.ClientTest.Reflection.TypeSystemTests,String), "#5");
-            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2[[Bridge.ClientTest.Reflection.TypeSystemTests, Bridge.ClientTest],[Bridge.ClientTest.Reflection.TypeSystemTests, Bridge.ClientTest]], System"), System.Collections.Generic.Dictionary$2(Bridge.ClientTest.Reflection.TypeSystemTests,Bridge.ClientTest.Reflection.TypeSystemTests), "#6");
-            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2[[String],[System.Collections.Generic.Dictionary$2[[System.Collections.Generic.Dictionary$2[[System.Int32, System],[Date]], System],[System.Collections.Generic.Dictionary$2[[System.Int32, System],[System.Double]], System]], System]], System"), System.Collections.Generic.Dictionary$2(String,System.Collections.Generic.Dictionary$2(System.Collections.Generic.Dictionary$2(System.Int32,Date),System.Collections.Generic.Dictionary$2(System.Int32,System.Double))), "#7");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2[[System.Int32, mscorlib],[Bridge.ClientTest.Reflection.TypeSystemTests, Bridge.ClientTest]]"), System.Collections.Generic.Dictionary$2(System.Int32,Bridge.ClientTest.Reflection.TypeSystemTests), "#3");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2[[String],[Bridge.ClientTest.Reflection.TypeSystemTests, Bridge.ClientTest]], mscorlib"), System.Collections.Generic.Dictionary$2(String,Bridge.ClientTest.Reflection.TypeSystemTests), "#4");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2[[Bridge.ClientTest.Reflection.TypeSystemTests, Bridge.ClientTest],[String]], mscorlib"), System.Collections.Generic.Dictionary$2(Bridge.ClientTest.Reflection.TypeSystemTests,String), "#5");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2[[Bridge.ClientTest.Reflection.TypeSystemTests, Bridge.ClientTest],[Bridge.ClientTest.Reflection.TypeSystemTests, Bridge.ClientTest]], mscorlib"), System.Collections.Generic.Dictionary$2(Bridge.ClientTest.Reflection.TypeSystemTests,Bridge.ClientTest.Reflection.TypeSystemTests), "#6");
+            Bridge.Test.Assert.areEqual$1(Bridge.Reflection.getType("System.Collections.Generic.Dictionary$2[[String],[System.Collections.Generic.Dictionary$2[[System.Collections.Generic.Dictionary$2[[System.Int32, mscorlib],[Date]], mscorlib],[System.Collections.Generic.Dictionary$2[[System.Int32, mscorlib],[System.Double]], mscorlib]], mscorlib]], mscorlib"), System.Collections.Generic.Dictionary$2(String,System.Collections.Generic.Dictionary$2(System.Collections.Generic.Dictionary$2(System.Int32,Date),System.Collections.Generic.Dictionary$2(System.Int32,System.Double))), "#7");
         },
         doesItThrow: function (a) {
             try {
