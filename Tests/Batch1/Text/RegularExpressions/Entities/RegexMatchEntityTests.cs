@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Bridge.Test;
 
-namespace Bridge.ClientTest.Text.RegularExpressions
+namespace Bridge.ClientTest.Text.RegularExpressions.Entities
 {
     [Category(Constants.MODULE_REGEX)]
     [TestFixture(TestNameFormat = "Match Entity - {0}")]
@@ -129,7 +129,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions
 
             ValidateCollection(expected, actual.ToArray(), "Result");
         }
-
 
         [Test]
         public void MatchSearchGroupByNameTest()

@@ -2,10 +2,10 @@ using System;
 using System.Text.RegularExpressions;
 using Bridge.Test;
 
-namespace Bridge.ClientTest.Text.RegularExpressions
+namespace Bridge.ClientTest.Text.RegularExpressions.Entities
 {
     [Category(Constants.MODULE_REGEX)]
-    [TestFixture(TestNameFormat = "RegexMatchCollection - {0}")]
+    [TestFixture(TestNameFormat = "RegexMatchCollection Entity - {0}")]
     public class RegexMatchCollectionTests : RegexTestBase
     {
         #region Test data

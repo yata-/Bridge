@@ -30,10 +30,11 @@ Bridge.define("System.Text.RegularExpressions.RegexRunner", {
         var isMultiline = (options & optionsEnum.Multiline) === optionsEnum.Multiline;
         var isSingleline = (options & optionsEnum.Singleline) === optionsEnum.Singleline;
         var isIgnoreWhitespace = (options & optionsEnum.IgnorePatternWhitespace) === optionsEnum.IgnorePatternWhitespace;
+        var isExplicitCapture = (options & optionsEnum.ExplicitCapture) === optionsEnum.ExplicitCapture;
 
         var timeoutMs = regex._matchTimeout.getTotalMilliseconds();
 
-        this._netEngine = new System.Text.RegularExpressions.RegexNetEngine(regex._pattern, isCaseInsensitive, isMultiline, isSingleline, isIgnoreWhitespace, timeoutMs);
+        this._netEngine = new System.Text.RegularExpressions.RegexEngine(regex._pattern, isCaseInsensitive, isMultiline, isSingleline, isIgnoreWhitespace, isExplicitCapture, timeoutMs);
 
     },
 
@@ -52,7 +53,6 @@ Bridge.define("System.Text.RegularExpressions.RegexRunner", {
         this._runtextstart = startat;
         this._quick = quick;
         this._prevlen = prevlen;
-        //TODO: internalMatchTimeout
 
         var stoppos;
         var bump;
@@ -74,7 +74,7 @@ Bridge.define("System.Text.RegularExpressions.RegexRunner", {
         }
 
         // Execute Regex:
-        var jsMatch = this._netEngine.match(this._runtext, this._runtextstart, this._prevlen);
+        var jsMatch = this._netEngine.match(this._runtext, this._runtextstart);
 
         // Convert the results:
         var result = this._convertNetEngineResults(jsMatch);
@@ -87,8 +87,6 @@ Bridge.define("System.Text.RegularExpressions.RegexRunner", {
     },
 
     _convertNetEngineResults: function (jsMatch) {
-        //TODO: var stopPos = this._runregex.getRightToLeft() ? this._runtextbeg : this._runtextend;
-
         if (jsMatch.success && this._quick) {
             return null; // in quick mode, a successful match returns null
         }
@@ -101,7 +99,7 @@ Bridge.define("System.Text.RegularExpressions.RegexRunner", {
         var match;
 
         if (patternInfo.sparseSettings.isSparse) {
-            match = new System.Text.RegularExpressions.MatchSparse(this._runregex, patternInfo.sparseSettings.sparseSlotNumberMap, jsMatch.groups.length, this._runtext, 0, this._runtext.length, this._runtextstart);
+            match = new System.Text.RegularExpressions.MatchSparse(this._runregex, patternInfo.sparseSettings.sparseSlotMap, jsMatch.groups.length, this._runtext, 0, this._runtext.length, this._runtextstart);
         } else {
             match = new System.Text.RegularExpressions.Match(this._runregex, jsMatch.groups.length, this._runtext, 0, this._runtext.length, this._runtextstart);
         }

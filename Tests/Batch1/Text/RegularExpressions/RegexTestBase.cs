@@ -162,5 +162,24 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             }
         }
 
+        protected void ValidateMatchResults(Regex rgx, string[] inputs, string[] expected)
+        {
+            for (int i = 0; i < inputs.Length; i++)
+            {
+                var m = rgx.Match(inputs[i]);
+                if (expected[i] == null)
+                {
+                    Assert.False(m.Success);
+                }
+                else
+                {
+                    Assert.True(m.Success);
+                    if (m.Success)
+                    {
+                        Assert.AreEqual(expected[i], m.Value);
+                    }
+                }
+            }
+        }
     }
 }

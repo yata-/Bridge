@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 using Bridge.Test;
 
-namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
+namespace Bridge.ClientTest.Text.RegularExpressions.Methods
 {
     [Category(Constants.MODULE_REGEX)]
     [TestFixture(TestNameFormat = "Regex.Split - {0}")]
@@ -259,9 +259,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
 
             string pattern = "[a-z]+";
             string input = "Abc1234Def5678Ghi9012Jklm";
-            //TODO: check timeout
             string[] substrings = Regex.Split(input, pattern, RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(500));
-
 
             ValidateResult(expected, substrings);
         }

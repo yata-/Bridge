@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Bridge.Test;
 
-namespace Bridge.ClientTest.Text.RegularExpressions
+namespace Bridge.ClientTest.Text.RegularExpressions.Entities
 {
     [Category(Constants.MODULE_REGEX)]
     [TestFixture(TestNameFormat = "Regex Entity - {0}")]
@@ -244,7 +244,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
                 {RegexOptions.None, true},
                 {RegexOptions.IgnoreCase, true},
                 {RegexOptions.Multiline, true},
-                {(RegexOptions) 0x0004, false},
+                {RegexOptions.ExplicitCapture, true},
                 {(RegexOptions) 0x0008, false},
                 {RegexOptions.Singleline, true},
                 {RegexOptions.IgnorePatternWhitespace, true},
