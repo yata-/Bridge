@@ -45,6 +45,8 @@
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="MixinTests.cs" />
+    <Compile Include="ArgumentsTests.cs" />
     <Compile Include="BasicCSharp\TestMethodParametersClass.cs" />
     <Compile Include="BasicCSharp\TestInterfaces.cs" />
     <Compile Include="BasicCSharp\TestOverloadInstanceMethods.cs" />
