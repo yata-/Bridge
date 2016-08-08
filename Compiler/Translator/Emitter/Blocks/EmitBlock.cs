@@ -395,7 +395,7 @@ namespace Bridge.Translator
             var config = this.Emitter.AssemblyInfo.Reflection;
             var configInternal = ((AssemblyInfo) this.Emitter.AssemblyInfo).ReflectionInternal;
 
-            bool? enable = config.Enable.HasValue ? config.Enable : (configInternal.Enable.HasValue ? configInternal.Enable : null);
+            bool? enable = config.Enabled.HasValue ? config.Enabled : (configInternal.Enabled.HasValue ? configInternal.Enabled : null);
             TypeAccessibility? typeAccessibility = config.TypeAccessibility.HasValue ? config.TypeAccessibility : (configInternal.TypeAccessibility.HasValue ? configInternal.TypeAccessibility : null);
             string filter = !string.IsNullOrEmpty(config.Filter) ? config.Filter : (!string.IsNullOrEmpty(configInternal.Filter) ? configInternal.Filter : null);
             

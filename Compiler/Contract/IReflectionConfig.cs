@@ -7,7 +7,7 @@ namespace Bridge.Contract
 {
     public interface IReflectionConfig
     {
-        bool? Enable
+        bool? Enabled
         {
             get; set;
         }
