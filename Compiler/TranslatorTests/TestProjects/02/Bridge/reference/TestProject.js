@@ -2856,7 +2856,7 @@
         }
     });
 
-    Bridge.$currentAssembly = new System.Reflection.Assembly("System");
+    Bridge.$currentAssembly = new System.Reflection.Assembly("mscorlib");
     Bridge.SystemAssembly = Bridge.$currentAssembly;
     Bridge.SystemAssembly.$types["System.Reflection.Assembly"] = System.Reflection.Assembly;
     System.Reflection.Assembly.$assembly = Bridge.SystemAssembly;
@@ -3051,7 +3051,7 @@
                     return t;
                 }
 
-                if (asm.name === "System") {
+                if (asm.name === "mscorlib") {
                     asm = Bridge.global;
                 } else {
                     return null;

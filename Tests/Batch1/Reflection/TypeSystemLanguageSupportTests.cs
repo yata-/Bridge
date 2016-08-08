@@ -522,7 +522,7 @@ namespace Bridge.ClientTest.Reflection
 		public void GetTypeWorksOnObjects() {
 			Action a = () => {};
 			Assert.AreEqual(new C1().GetType().FullName, "Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C1");
-			Assert.AreEqual(new C2<int>().GetType().FullName, "Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1[[System.Int32, System]]");
+			Assert.AreEqual(new C2<int>().GetType().FullName, "Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1[[System.Int32, mscorlib]]");
 			Assert.AreEqual(new C2<string>().GetType().FullName, "Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.C2$1[[String]]");
 			Assert.AreEqual((1).GetType().FullName, "System.Int32");
 			Assert.AreEqual("X".GetType().FullName, "String");

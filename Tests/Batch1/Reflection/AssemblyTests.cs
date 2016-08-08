@@ -120,19 +120,19 @@ namespace Bridge.ClientTest.Batch1.Reflection
 
 		[Test]
 		public void GetAssemblyForTypeWorks() {
-			Assert.AreEqual(Assembly.GetAssembly(typeof(int)).FullName, "System");
+			Assert.AreEqual(Assembly.GetAssembly(typeof(int)).FullName, "mscorlib");
 			Assert.AreEqual(Assembly.GetAssembly(typeof(AssemblyTests)).FullName, "Bridge.ClientTest");
 		}
 
 		[Test]
 		public void FullNameWorks() {
-			Assert.AreEqual(typeof(int).Assembly.FullName, "System");
+			Assert.AreEqual(typeof(int).Assembly.FullName, "mscorlib");
 			Assert.AreEqual(typeof(AssemblyTests).Assembly.FullName, "Bridge.ClientTest");
 		}
 
 		[Test]
 		public void ToStringWorks() {
-			Assert.AreEqual(typeof(int).Assembly.ToString(), "System");
+			Assert.AreEqual(typeof(int).Assembly.ToString(), "mscorlib");
 			Assert.AreEqual(typeof(AssemblyTests).Assembly.ToString(), "Bridge.ClientTest");
 		}
 
@@ -179,12 +179,12 @@ namespace Bridge.ClientTest.Batch1.Reflection
 
 		[Test]
 		public void AssemblyOfBuiltInTypes() {
-			Assert.AreEqual(typeof(DateTime).Assembly.FullName, "System");
-			Assert.AreEqual(typeof(double).Assembly.FullName, "System");
-			Assert.AreEqual(typeof(bool).Assembly.FullName, "System");
-			Assert.AreEqual(typeof(string).Assembly.FullName, "System");
-			Assert.AreEqual(typeof(Delegate).Assembly.FullName, "System");
-			Assert.AreEqual(typeof(int[]).Assembly.FullName, "System");
+			Assert.AreEqual(typeof(DateTime).Assembly.FullName, "mscorlib");
+			Assert.AreEqual(typeof(double).Assembly.FullName, "mscorlib");
+			Assert.AreEqual(typeof(bool).Assembly.FullName, "mscorlib");
+			Assert.AreEqual(typeof(string).Assembly.FullName, "mscorlib");
+			Assert.AreEqual(typeof(Delegate).Assembly.FullName, "mscorlib");
+			Assert.AreEqual(typeof(int[]).Assembly.FullName, "mscorlib");
 		}
 
 		[Test]
@@ -220,7 +220,7 @@ namespace Bridge.ClientTest.Batch1.Reflection
 		[Test]
 		public void LoadCanReturnReferenceToLoadedAssembly() {
 			Assert.True(Assembly.Load("Bridge.ClientTest") == Assembly.GetExecutingAssembly(), "ClientTest");
-			Assert.True(Assembly.Load("System") == typeof(int).Assembly, "System");
+			Assert.True(Assembly.Load("mscorlib") == typeof(int).Assembly, "mscorlib");
 		}
 
 		[Test]
