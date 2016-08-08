@@ -389,6 +389,10 @@
         },
 
         is: function (obj, type, ignoreFn, allowNull) {
+            if (typeof type === "boolean") {
+                return type;
+            }
+
             if (typeof type === "string") {
                 type = Bridge.unroll(type);
             }
@@ -636,6 +640,10 @@
             }
 
             return result;
+        },
+
+        toList: function (ienumerable, T) {
+            return new (System.Collections.Generic.List$1(T || Object))(ienumerable);
         },
 
         isArray: function (obj) {
@@ -1188,6 +1196,10 @@
                     break;
                 }
             }
+        },
+
+        getMetadata: function (t) {
+            return t.$getMetadata ? t.$getMetadata() : t.$metadata;
         }
     };
 

@@ -1067,6 +1067,52 @@
                 QUnit.test("Query - Test", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_TestLinqQueryExecution.test);
                 QUnit.test("Restriction- Test", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_TestLinqRestrictionOperators.test);
                 QUnit.test("Set - Test", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_TestLinqSetOperators.test);
+                QUnit.module("LINQ Expressions");
+                QUnit.test("LINQ Expressions - ExpressionProtectedConstructorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.expressionProtectedConstructorWorks);
+                QUnit.test("LINQ Expressions - SimpleExpressionTreeWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.simpleExpressionTreeWorks);
+                QUnit.test("LINQ Expressions - LambdaWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.lambdaWorks);
+                QUnit.test("LINQ Expressions - ParameterAndVariableWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.parameterAndVariableWork);
+                QUnit.test("LINQ Expressions - ConstantWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.constantWorks);
+                QUnit.test("LINQ Expressions - BinaryExpressionsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.binaryExpressionsWork);
+                QUnit.test("LINQ Expressions - UnaryExpressionsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.unaryExpressionsWork);
+                QUnit.test("LINQ Expressions - ArrayLengthWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.arrayLengthWorks);
+                QUnit.test("LINQ Expressions - ConversionsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.conversionsWork);
+                QUnit.test("LINQ Expressions - ArrayIndexWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.arrayIndexWorks);
+                QUnit.test("LINQ Expressions - MultiDimensionalArrayIndexWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.multiDimensionalArrayIndexWorks);
+                QUnit.test("LINQ Expressions - ConditionWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.conditionWorks);
+                QUnit.test("LINQ Expressions - CallWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.callWorks);
+                QUnit.test("LINQ Expressions - MethodGroupConversionWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.methodGroupConversionWorks);
+                QUnit.test("LINQ Expressions - InvokeWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.invokeWorks);
+                QUnit.test("LINQ Expressions - ArrayCreationWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.arrayCreationWorks);
+                QUnit.test("LINQ Expressions - PropertiesAndFieldsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.propertiesAndFieldsWork);
+                QUnit.test("LINQ Expressions - IndexersWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.indexersWork);
+                QUnit.test("LINQ Expressions - IndexExpressionsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.indexExpressionsWork);
+                QUnit.test("LINQ Expressions - ObjectConstructionWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.objectConstructionWorks);
+                QUnit.test("LINQ Expressions - AnonymousTypeConstructionWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.anonymousTypeConstructionWorks);
+                QUnit.test("LINQ Expressions - TransparentIdentifiersWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.transparentIdentifiersWork);
+                QUnit.test("LINQ Expressions - NewExpressionWithMembersWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.newExpressionWithMembersWork);
+                QUnit.test("LINQ Expressions - BindWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.bindWorks);
+                QUnit.test("LINQ Expressions - ElementInitWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.elementInitWorks);
+                QUnit.test("LINQ Expressions - ListBindWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.listBindWorks);
+                QUnit.test("LINQ Expressions - MemberBindWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.memberBindWorks);
+                QUnit.test("LINQ Expressions - MemberInitWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.memberInitWorks);
+                QUnit.test("LINQ Expressions - ListInitWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.listInitWorks);
+                QUnit.test("LINQ Expressions - TypeIsAndTypeEqualWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.typeIsAndTypeEqualWork);
+                QUnit.test("LINQ Expressions - QuoteWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.quoteWorks);
+                QUnit.test("LINQ Expressions - LocalVariableReferenceWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.localVariableReferenceWorks);
+                QUnit.test("LINQ Expressions - ThrowAndRethrowWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.throwAndRethrowWork);
+                QUnit.test("LINQ Expressions - DefaultAndEmptyWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.defaultAndEmptyWork);
+                QUnit.test("LINQ Expressions - BlockWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.blockWorks);
+                QUnit.test("LINQ Expressions - IfThenWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.ifThenWorks);
+                QUnit.test("LINQ Expressions - LabelTargetWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.labelTargetWorks);
+                QUnit.test("LINQ Expressions - GotoWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.gotoWorks);
+                QUnit.test("LINQ Expressions - LabelExpressionWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.labelExpressionWorks);
+                QUnit.test("LINQ Expressions - LoopWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.loopWorks);
+                QUnit.test("LINQ Expressions - SwitchCaseWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.switchCaseWorks);
+                QUnit.test("LINQ Expressions - SwitchWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.switchWorks);
+                QUnit.test("LINQ Expressions - CatchBlockWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.catchBlockWorks);
+                QUnit.test("LINQ Expressions - TryWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.tryWorks);
+                QUnit.test("LINQ Expressions - DynamicWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.dynamicWorks);
                 QUnit.module("Math");
                 QUnit.test("Math - ConstantsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MathTests.constantsWork);
                 QUnit.test("Math - AbsOfDoubleWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MathTests.absOfDoubleWorks);
@@ -5864,6 +5910,192 @@
             callingMethodThroughIComparableInterfaceInvokesImplementingMethod: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.IEquatableTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_IEquatableTests);
                 t.getFixture().callingMethodThroughIComparableInterfaceInvokesImplementingMethod();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests)],
+        statics: {
+            expressionProtectedConstructorWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().expressionProtectedConstructorWorks();
+            },
+            simpleExpressionTreeWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().simpleExpressionTreeWorks();
+            },
+            lambdaWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().lambdaWorks();
+            },
+            parameterAndVariableWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().parameterAndVariableWork();
+            },
+            constantWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().constantWorks();
+            },
+            binaryExpressionsWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().binaryExpressionsWork();
+            },
+            unaryExpressionsWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().unaryExpressionsWork();
+            },
+            arrayLengthWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().arrayLengthWorks();
+            },
+            conversionsWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().conversionsWork();
+            },
+            arrayIndexWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().arrayIndexWorks();
+            },
+            multiDimensionalArrayIndexWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().multiDimensionalArrayIndexWorks();
+            },
+            conditionWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().conditionWorks();
+            },
+            callWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().callWorks();
+            },
+            methodGroupConversionWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().methodGroupConversionWorks();
+            },
+            invokeWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().invokeWorks();
+            },
+            arrayCreationWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().arrayCreationWorks();
+            },
+            propertiesAndFieldsWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().propertiesAndFieldsWork();
+            },
+            indexersWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().indexersWork();
+            },
+            indexExpressionsWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().indexExpressionsWork();
+            },
+            objectConstructionWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().objectConstructionWorks();
+            },
+            anonymousTypeConstructionWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().anonymousTypeConstructionWorks();
+            },
+            transparentIdentifiersWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().transparentIdentifiersWork();
+            },
+            newExpressionWithMembersWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().newExpressionWithMembersWork();
+            },
+            bindWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().bindWorks();
+            },
+            elementInitWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().elementInitWorks();
+            },
+            listBindWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().listBindWorks();
+            },
+            memberBindWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().memberBindWorks();
+            },
+            memberInitWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().memberInitWorks();
+            },
+            listInitWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().listInitWorks();
+            },
+            typeIsAndTypeEqualWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().typeIsAndTypeEqualWork();
+            },
+            quoteWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().quoteWorks();
+            },
+            localVariableReferenceWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().localVariableReferenceWorks();
+            },
+            throwAndRethrowWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().throwAndRethrowWork();
+            },
+            defaultAndEmptyWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().defaultAndEmptyWork();
+            },
+            blockWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().blockWorks();
+            },
+            ifThenWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().ifThenWorks();
+            },
+            labelTargetWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().labelTargetWorks();
+            },
+            gotoWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().gotoWorks();
+            },
+            labelExpressionWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().labelExpressionWorks();
+            },
+            loopWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().loopWorks();
+            },
+            switchCaseWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().switchCaseWorks();
+            },
+            switchWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().switchWorks();
+            },
+            catchBlockWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().catchBlockWorks();
+            },
+            tryWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().tryWorks();
+            },
+            dynamicWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().dynamicWorks();
             }
         }
     });

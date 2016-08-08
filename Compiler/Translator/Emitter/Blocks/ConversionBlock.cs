@@ -117,10 +117,10 @@ namespace Bridge.Translator
                     return level;
                 }
 
-                /*if (expression is ParenthesizedExpression && expression.Parent is CastExpression)
+                if (expression is ParenthesizedExpression && ((ParenthesizedExpression)expression).Expression is CastExpression)
                 {
                     return level;
-                }*/
+                }
 
                 if (conversion.IsUserDefined && expression.Parent is CastExpression && ((CastExpression)expression.Parent).Expression == expression)
                 {

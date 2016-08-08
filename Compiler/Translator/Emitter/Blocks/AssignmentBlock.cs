@@ -180,7 +180,7 @@ namespace Bridge.Translator
             var memberTargetrr = leftResolverResult as MemberResolveResult;
             bool isField = (memberTargetrr != null && memberTargetrr.Member is IField &&
                            (memberTargetrr.TargetResult is ThisResolveResult ||
-                            memberTargetrr.TargetResult is LocalResolveResult)) || leftResolverResult is ThisResolveResult || leftResolverResult is LocalResolveResult;
+                            memberTargetrr.TargetResult is LocalResolveResult)) || leftResolverResult is ThisResolveResult || leftResolverResult is LocalResolveResult || leftResolverResult is ConstantResolveResult;
 
             var rightMemberTargetrr = rightResolverResult as MemberResolveResult;
             bool isRightSimple = (rightMemberTargetrr != null && rightMemberTargetrr.Member is IField &&

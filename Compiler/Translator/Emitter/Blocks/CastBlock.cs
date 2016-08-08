@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Bridge.Contract;
 using Bridge.Contract.Constants;
 using ICSharpCode.NRefactory.CSharp;
@@ -5,6 +6,7 @@ using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using System.Linq;
 using System.Text;
+using ICSharpCode.NRefactory.TypeSystem.Implementation;
 
 namespace Bridge.Translator
 {
@@ -197,13 +199,13 @@ namespace Bridge.Translator
                 return;
             }
 
-            bool isInlineCast;
-            string castCode = this.GetCastCode(expression, type, out isInlineCast);
+            bool isCastAttr;
+            string castCode = this.GetCastCode(expression, type, out isCastAttr);
             bool isResultNullable = NullableType.IsNullable(typerr.Type);
 
-            if (isInlineCast)
+            if (castCode != null)
             {
-                this.EmitInlineCast(expression, type, castCode);
+                this.EmitInlineCast(expressionrr, expression, type, castCode, isCastAttr, method);
                 return;
             }
 
@@ -253,15 +255,7 @@ namespace Bridge.Translator
             if (!hasValue)
             {
                 this.WriteComma();
-
-                if (castCode != null)
-                {
-                    this.Write(castCode);
-                }
-                else
-                {
-                    this.EmitCastType(itype);
-                }
+                this.EmitCastType(itype);
             }
 
             if (isResultNullable && method != CS.Ops.IS)
@@ -353,12 +347,19 @@ namespace Bridge.Translator
             }
         }
 
-        protected virtual string GetCastCode(Expression expression, AstType astType, out bool isInline)
+        protected virtual string GetCastCode(Expression expression, AstType astType, out bool isCastAttr)
         {
             var resolveResult = this.Emitter.Resolver.ResolveNode(astType, this.Emitter) as TypeResolveResult;
+            isCastAttr = false;
+
+            if (resolveResult == null)
+            {
+                return null;
+            }
+
             var exprResolveResult = this.Emitter.Resolver.ResolveNode(expression, this.Emitter);
             string inline = null;
-            isInline = false;
+            
 
             var method = this.GetCastMethod(exprResolveResult.Type, resolveResult.Type, out inline);
 
@@ -371,8 +372,35 @@ namespace Bridge.Translator
             if (inline != null)
             {
                 this.InlineMethod = method;
-                isInline = true;
                 return inline;
+            }
+
+            IEnumerable<IAttribute> attributes = null;
+            var type = resolveResult.Type.GetDefinition();
+
+            if (type != null)
+            {
+                attributes = type.Attributes;
+            }
+            else
+            {
+                ParameterizedType paramType = resolveResult.Type as ParameterizedType;
+
+                if (paramType != null)
+                {
+                    attributes = paramType.GetDefinition().Attributes;
+                }
+            }
+
+            if (attributes != null)
+            {
+                var attribute = this.Emitter.GetAttribute(attributes, Translator.Bridge_ASSEMBLY + ".CastAttribute");
+
+                if (attribute != null)
+                {
+                    isCastAttr = true;
+                    return attribute.PositionalArguments[0].ConstantValue.ToString();
+                }
             }
 
             return null;
@@ -458,34 +486,69 @@ namespace Bridge.Translator
             return method;
         }
 
-        protected virtual void EmitInlineCast(Expression expression, AstType astType, string castCode)
+        protected virtual void EmitInlineCast(ResolveResult expressionrr, Expression expression, AstType astType, string castCode, bool isCastAttr, string method)
         {
             this.Write("");
-            var name = "{" + this.InlineMethod.Parameters[0].Name + "}";
+            string name;
 
-            if (!castCode.Contains(name))
+            if (this.InlineMethod == null)
             {
                 name = "{this}";
+            }
+            else
+            {
+                name = "{" + this.InlineMethod.Parameters[0].Name + "}";
+                if (!castCode.Contains(name))
+                {
+                    name = "{this}";
+                }
+            }
+
+            string tempVar = null;
+            string expressionStr;
+            var memberTargetrr = expressionrr as MemberResolveResult;
+            bool isField = memberTargetrr != null && memberTargetrr.Member is IField &&
+                           (memberTargetrr.TargetResult is ThisResolveResult ||
+                            memberTargetrr.TargetResult is LocalResolveResult);
+
+            var oldBuilder = this.SaveWriter();
+            var sb = this.NewWriter();
+
+            expression.AcceptVisitor(this.Emitter);
+
+            expressionStr = sb.ToString();
+            this.RestoreWriter(oldBuilder);
+
+            if (!(expressionrr is ThisResolveResult || expressionrr is ConstantResolveResult || expressionrr is LocalResolveResult || isField) && isCastAttr)
+            {
+                tempVar = this.GetTempVarName();
             }
 
             if (castCode.Contains(name))
             {
-                var oldBuilder = this.Emitter.Output;
-                this.Emitter.Output = new StringBuilder();
-
-                expression.AcceptVisitor(this.Emitter);
-
-                castCode = castCode.Replace(name, this.Emitter.Output.ToString());
-                this.Emitter.Output = oldBuilder;
+                castCode = castCode.Replace(name, tempVar ?? expressionStr);
             }
 
             if (castCode.Contains("{0}"))
             {
-                var oldBuilder = this.Emitter.Output;
-                this.Emitter.Output = new StringBuilder();
+                oldBuilder = this.SaveWriter();
+                sb = this.NewWriter();
                 this.EmitCastType(astType);
-                castCode = castCode.Replace("{0}", this.Emitter.Output.ToString());
-                this.Emitter.Output = oldBuilder;
+                castCode = castCode.Replace("{0}", sb.ToString());
+                this.RestoreWriter(oldBuilder);
+            }
+
+            if (isCastAttr)
+            {
+                if (tempVar != null)
+                {
+                    castCode = string.Format("({0} = {1}, Bridge.{2}({0}, Bridge.hasValue({0}) && ({3})))", tempVar, expressionStr, method, castCode);
+                    this.RemoveTempVar(tempVar);
+                }
+                else
+                {
+                    castCode = string.Format("Bridge.{1}({0}, Bridge.hasValue({0}) && ({2}))", expressionStr, method, castCode);
+                }
             }
 
             this.Write(castCode);

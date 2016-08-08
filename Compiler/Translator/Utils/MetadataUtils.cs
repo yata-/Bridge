@@ -336,7 +336,7 @@ namespace Bridge.Translator
             return result;
         }
 
-        private static JObject ConstructMemberInfo(IMember m, IEmitter emitter, bool includeDeclaringType, bool isGenericSpecialization, SyntaxTree tree)
+        public static JObject ConstructMemberInfo(IMember m, IEmitter emitter, bool includeDeclaringType, bool isGenericSpecialization, SyntaxTree tree)
         {
             if (m is IMethod && ((IMethod)m).IsConstructor)
             {
@@ -713,6 +713,7 @@ namespace Bridge.Translator
             {
                 return "Object";
             }
+
             return BridgeTypes.ToJsName(type, emitter);
         }
     }

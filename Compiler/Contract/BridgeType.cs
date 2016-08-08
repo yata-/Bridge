@@ -260,6 +260,19 @@ namespace Bridge.Contract
                 return BridgeTypes.ToJsName(NullableType.GetUnderlyingType(type), emitter);
             }
 
+            if (type.Kind == TypeKind.Anonymous)
+            {
+                var at = type as AnonymousType;
+                if (at != null && emitter.AnonymousTypes.ContainsKey(at))
+                {
+                    return emitter.AnonymousTypes[at].Name;
+                }
+                else
+                {
+                    return "Object";
+                }
+            }
+
             BridgeType bridgeType = emitter.BridgeTypes.Get(type, true);
 
             var name = excludens ? "" : type.Namespace;

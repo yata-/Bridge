@@ -32,6 +32,7 @@ namespace Bridge.ClientTest
 
         public const string MODULE_BASIC_CSHARP = "C#"; // "";
         public const string MODULE_LINQ = "LINQ"; // "";
+        public const string MODULE_LINQ_EXPRESSIONS = "LINQ Expressions"; // "";
 
         public const string MODULE_DATETIME = "Date and time"; // "DateTime, TimeSpan";
         public const string MODULE_NULLABLE = "Nullable";

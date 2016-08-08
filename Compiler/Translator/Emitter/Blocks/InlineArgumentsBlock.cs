@@ -1,12 +1,10 @@
 using Bridge.Contract;
 using Bridge.Contract.Constants;
-
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using Object.Net.Utilities;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -102,6 +100,32 @@ namespace Bridge.Translator
             }
 
             return new List<ResolveResult>();
+        }
+
+        protected virtual IList<string> GetStringArgumentByKey(string key)
+        {
+            if (this.ArgumentsInfo.StringArguments.Length == 0)
+            {
+                return new List<string>();
+            }
+
+            if (Regex.IsMatch(key, "^\\d+$"))
+            {
+                var i = int.Parse(key);
+                var p1 = this.Method.Parameters[i];
+
+                return p1.IsParams ? this.ArgumentsInfo.StringArguments.Skip(i).ToList() : this.ArgumentsInfo.StringArguments.Skip(i).Take(1).ToList();
+            }
+
+            var p = this.Method.Parameters.FirstOrDefault(cp => cp.Name == key);
+
+            if (p != null)
+            {
+                var idx = this.Method.Parameters.IndexOf(p);
+                return p.IsParams ? this.ArgumentsInfo.StringArguments.Skip(idx).ToList() : new List<string> { this.ArgumentsInfo.StringArguments[idx] };
+            }
+
+            return new List<string>();
         }
 
         protected virtual AstType GetAstTypeByKey(IEnumerable<TypeParamExpression> types, string key)
@@ -322,6 +346,16 @@ namespace Bridge.Translator
                 }
             }
 
+            var r = InlineArgumentsBlock._formatArg.Matches(inline);
+            List<Match> keyMatches = new List<Match>();
+            foreach (Match keyMatch in r)
+            {
+                keyMatches.Add(keyMatch);
+            }
+
+            var tempVars = new Dictionary<string, string>();
+            var tempMap = new Dictionary<string, string>();
+
             inline = _formatArg.Replace(inline, delegate(Match m)
             {
                 if (this.IgnoreRange != null && m.Index >= this.IgnoreRange[0] && m.Index <= this.IgnoreRange[1])
@@ -334,7 +368,13 @@ namespace Bridge.Translator
                 bool isRaw = m.Groups[1].Success && m.Groups[1].Value == "*";
                 bool ignoreArray = isRaw || argsInfo.ParamsExpression == null;
                 string modifier = m.Groups[1].Success ? m.Groups[4].Value : null;
-                
+                bool isSimple = false;
+
+                var tempKey = key + ":" + modifier ?? "";
+                if (tempMap.ContainsKey(tempKey))
+                {
+                    return tempMap[tempKey];
+                }
 
                 if (modifier == "array")
                 {
@@ -361,10 +401,12 @@ namespace Bridge.Translator
                     {
                         if (isNull)
                         {
+                            isSimple = true;
                             this.Write(JS.Vars.T);
                         }
                         else if (this.Method.IsExtensionMethod && this.TargetResolveResult is TypeResolveResult)
                         {
+                            isSimple = true;
                             this.WriteParamName(this.Method.Parameters.First().Name);
                         }
                         else if (argsInfo.Expression is MemberReferenceExpression)
@@ -373,10 +415,12 @@ namespace Bridge.Translator
 
                             if (trg is BaseReferenceExpression)
                             {
+                                isSimple = true;
                                 this.Write("this");
                             }
                             else
                             {
+                                isSimple = this.IsSimpleExpression(trg);
                                 trg.AcceptVisitor(this.Emitter);
                             }
                         }
@@ -389,6 +433,7 @@ namespace Bridge.Translator
                     {
                         if (this.TargetResolveResult is TypeResolveResult)
                         {
+                            isSimple = true;
                             this.WriteParamName(key);
                         }
                         else if (argsInfo.Expression is MemberReferenceExpression)
@@ -397,25 +442,30 @@ namespace Bridge.Translator
 
                             if (trg is BaseReferenceExpression)
                             {
+                                isSimple = true;
                                 this.Write("this");
                             }
                             else
                             {
+                                isSimple = this.IsSimpleExpression(trg);
                                 trg.AcceptVisitor(this.Emitter);
                             }
                         }
                         else
                         {
+                            isSimple = true;
                             this.WriteParamName(key);
                         }
                     }
                     else if (paramsName == key && !ignoreArray)
                     {
+                        isSimple = true;
                         this.Write(JS.Types.ARRAY + "." + JS.Fields.PROTOTYPE + "." + JS.Funcs.SLICE);
                         this.WriteCall("(" + JS.Vars.ARGUMENTS + ", " + paramsIndex + ")");
                     }
                     else
                     {
+                        isSimple = true;
                         this.WriteParamName(key);
                     }
 
@@ -451,6 +501,7 @@ namespace Bridge.Translator
 
                             if (needName)
                             {
+                                isSimple = true;
                                 this.Write(BridgeTypes.ToJsName(type, this.Emitter));
                             }
                             else
@@ -470,6 +521,7 @@ namespace Bridge.Translator
 
                         if (thisValue != null)
                         {
+                            isSimple = true;
                             this.Write(thisValue);
                         }    
                     }
@@ -495,6 +547,7 @@ namespace Bridge.Translator
 
                             bool needName = this.NeedName(type);
                             this.WriteGetType(needName, type, exprs[0], modifier);
+                            isSimple = true;
                         }
                         else if (modifier == "tmp")
                         {
@@ -508,6 +561,7 @@ namespace Bridge.Translator
 
                             Emitter.NamedTempVariables[nameExpr.LiteralValue] = tmpVarName;
                             Write(tmpVarName);
+                            isSimple = true;
                         }
                         else if (modifier == "gettmp")
                         {
@@ -525,6 +579,7 @@ namespace Bridge.Translator
 
                             var tmpVarName = Emitter.NamedTempVariables[nameExpr.LiteralValue];
                             Write(tmpVarName);
+                            isSimple = true;
                         }
                         else if (modifier == "body")
                         {
@@ -558,6 +613,7 @@ namespace Bridge.Translator
 
                             if (exprs.Count == 1 && exprs[0] == null)
                             {
+                                isSimple = true;
                                 this.Write("null");
                             }
                             else
@@ -621,6 +677,7 @@ namespace Bridge.Translator
                                 }
                                 else
                                 {
+                                    isSimple = this.IsSimpleExpression(exprs[0]);
                                     exprs[0].AcceptVisitor(this.Emitter);
                                 }
                                 
@@ -634,6 +691,7 @@ namespace Bridge.Translator
                             }
                             else
                             {
+                                isSimple = true;
                                 s = "null";
                             }
 
@@ -658,6 +716,7 @@ namespace Bridge.Translator
 
                             if (exprs.Count == 1 && results[0].IsCompileTimeConstant && results[0].ConstantValue == null)
                             {
+                                isSimple = true;
                                 this.Write("null");
                             }
                             else
@@ -672,6 +731,7 @@ namespace Bridge.Translator
 
                                     needComma = true;
 
+                                    isSimple = this.IsSimpleResolveResult(item);
                                     AttributeCreateBlock.WriteResolveResult(item, this);
                                 }
                             }
@@ -689,6 +749,7 @@ namespace Bridge.Translator
                                 var writer = this.SaveWriter();
                                 this.NewWriter();
 
+                                isSimple = this.IsSimpleResolveResult(results[0]);
                                 AttributeCreateBlock.WriteResolveResult(results[0], this);
 
                                 s = this.Emitter.Output.ToString();
@@ -705,6 +766,60 @@ namespace Bridge.Translator
                             }
 
                             this.Write(this.WriteIndentToString(s));
+                        }
+                    }
+                    else if (this.ArgumentsInfo.StringArguments != null)
+                    {
+                        var results = this.GetStringArgumentByKey(key);
+
+                        if (results.Count > 1 || paramsName == key)
+                        {
+                            if (needExpand)
+                            {
+                                ignoreArray = true;
+                            }
+
+                            if (!ignoreArray)
+                            {
+                                this.Write("[");
+                            }
+
+                            bool needComma = false;
+                            foreach (string item in results)
+                            {
+                                if (needComma)
+                                {
+                                    this.WriteComma();
+                                }
+
+                                needComma = true;
+
+                                this.Write(item);
+                            }
+
+                            if (!ignoreArray)
+                            {
+                                this.Write("]");
+                            }
+                        }
+                        else
+                        {
+                            string s;
+                            if (results[0] != null)
+                            {
+                                s = results[0];
+
+                                if (modifier == "raw")
+                                {
+                                    s = s.Trim('"');
+                                }
+                            }
+                            else
+                            {
+                                s = "null";
+                            }
+
+                            this.Write(s);
                         }
                     }
                     else if (typeParams != null)
@@ -751,9 +866,42 @@ namespace Bridge.Translator
                 string replacement = this.Emitter.Output.ToString();
                 this.Emitter.Output = oldSb;
 
+                if (!isSimple && keyMatches.Count(keyMatch =>
+                {
+                    string key1 = keyMatch.Groups[2].Value;
+                    string modifier1 = keyMatch.Groups[1].Success ? keyMatch.Groups[4].Value : null;
+                    return key == key1 && modifier1 == modifier;
+                }) > 1)
+                {
+                    var t = this.GetTempVarName();
+                    tempVars.Add(t, replacement);
+                    tempMap[tempKey] = t;
+                    return t;
+                }
+
                 return replacement;
             });
 
+            if (tempVars.Count > 0)
+            {
+                StringBuilder sb = new StringBuilder();
+
+                sb.Append("(");
+
+                foreach (var tempVar in tempVars)
+                {
+                    sb.Append(tempVar.Key);
+                    sb.Append("=");
+                    sb.Append(tempVar.Value);
+                    sb.Append(", ");
+                }
+
+                sb.Append(inline);
+                sb.Append(")");
+
+                inline = sb.ToString();
+
+            }
             this.Write(inline);
 
             if (asRef)
@@ -911,6 +1059,22 @@ namespace Bridge.Translator
         public virtual void EmitNullableReference()
         {
             this.EmitInlineExpressionList(this.ArgumentsInfo, this.InlineCode, true, true);
+        }
+
+        public bool IsSimpleExpression(Expression expression)
+        {
+            var rr = this.Emitter.Resolver.ResolveNode(expression, this.Emitter);
+            return this.IsSimpleResolveResult(rr);
+        }
+
+        private bool IsSimpleResolveResult(ResolveResult rr)
+        {
+            var memberTargetrr = rr as MemberResolveResult;
+            bool isField = memberTargetrr != null && memberTargetrr.Member is IField &&
+                           (memberTargetrr.TargetResult is ThisResolveResult ||
+                            memberTargetrr.TargetResult is LocalResolveResult);
+
+            return rr is ThisResolveResult || rr is ConstantResolveResult || rr is LocalResolveResult || isField;
         }
     }
 }
