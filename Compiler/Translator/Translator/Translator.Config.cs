@@ -1,5 +1,3 @@
-using Bridge.Contract;
-using Bridge.Translator.Utils;
 using System.Diagnostics;
 using System.IO;
 

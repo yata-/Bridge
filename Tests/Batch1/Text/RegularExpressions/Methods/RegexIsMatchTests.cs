@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Bridge.Test;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Bridge.Test;
 
 namespace Bridge.ClientTest.Text.RegularExpressions.Methods
 {
@@ -57,7 +57,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Methods
             }
         }
 
-        #endregion
+        #endregion Instance methods
 
         #region Static methods
 
@@ -103,6 +103,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Methods
             }
         }
 
-        #endregion
+        #endregion Static methods
     }
 }

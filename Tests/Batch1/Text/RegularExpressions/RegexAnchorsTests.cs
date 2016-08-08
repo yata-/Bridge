@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Bridge.Test;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Bridge.Test;
 
 namespace Bridge.ClientTest.Text.RegularExpressions
 {
@@ -23,7 +23,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             const string pattern = @"^((\w+(\s?)){2,}),\s(\w+\s\w+),(\s\d{4}(-(\d{4}|present))?,?)+";
 
             var actuals = new List<string>();
-            var expecteds = new[] {"The Brooklyn Dodgers played in the National League in 1911, 1912, 1932-1957."};
+            var expecteds = new[] { "The Brooklyn Dodgers played in the National League in 1911, 1912, 1932-1957." };
 
             if (input.Substring(startPos, endPos).Contains(","))
             {
@@ -162,7 +162,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
                 "The Washington Senators played in the American League in 1901-1960."
             };
 
-            var teams = input.Split(new[] {cr}, StringSplitOptions.RemoveEmptyEntries);
+            var teams = input.Split(new[] { cr }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var team in teams)
             {
                 if (team.Length > 70) continue;
@@ -454,7 +454,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             ValidateCollection(expecteds, actuals.ToArray(), "Result");
         }
 
-        #endregion
+        #endregion MSDN
 
         [Test]
         public void StartAndEndOfStringCustomTest1()

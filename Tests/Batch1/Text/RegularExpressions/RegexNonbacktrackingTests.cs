@@ -1,5 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using Bridge.Test;
+﻿using Bridge.Test;
+using System.Text.RegularExpressions;
 
 namespace Bridge.ClientTest.Text.RegularExpressions
 {
@@ -12,8 +12,8 @@ namespace Bridge.ClientTest.Text.RegularExpressions
         [Test]
         public void MsdnNonBacktrackingTest1()
         {
-            string[] inputs = {"cccd.", "aaad", "aaaa"};
-            string[] expected = {"cccd", "aaad", "aaaa"};
+            string[] inputs = { "cccd.", "aaad", "aaaa" };
+            string[] expected = { "cccd", "aaad", "aaaa" };
 
             const string pattern = @"(\w)\1+.\b";
             var rgx = new Regex(pattern);
@@ -24,8 +24,8 @@ namespace Bridge.ClientTest.Text.RegularExpressions
         [Test]
         public void MsdnNonBacktrackingTest2()
         {
-            string[] inputs = {"cccd.", "aaad", "aaaa"};
-            string[] expected = {"cccd", "aaad", null};
+            string[] inputs = { "cccd.", "aaad", "aaaa" };
+            string[] expected = { "cccd", "aaad", null };
 
             const string pattern = @"(?>(\w)\1+).\b";
             var rgx = new Regex(pattern);
@@ -33,7 +33,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             ValidateMatchResults(rgx, inputs, expected);
         }
 
-        #endregion
+        #endregion MSDN
 
         [Test]
         public void NonBacktrackingTest1()
@@ -67,7 +67,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
         [Test]
         public void NonBacktrackingTest3()
         {
-            string[] inputs = { "abcc", "abc"};
+            string[] inputs = { "abcc", "abc" };
             string[] expected = { "abcc", null };
 
             const string pattern = @"a(?>bc|b)c";

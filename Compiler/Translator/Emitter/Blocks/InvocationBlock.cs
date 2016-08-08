@@ -58,39 +58,39 @@ namespace Bridge.Translator
         }
 
         public static bool IsConditionallyRemoved(InvocationExpression invocationExpression, IEntity entity)
- 		{
+        {
             if (entity == null)
             {
                 return false;
             }
- 			var result = new List<string>();
- 			foreach (var a in entity.Attributes)
- 			{
- 				var type = a.AttributeType.GetDefinition();
- 				if (type != null && type.FullName.Equals("System.Diagnostics.ConditionalAttribute", StringComparison.Ordinal))
+            var result = new List<string>();
+            foreach (var a in entity.Attributes)
+            {
+                var type = a.AttributeType.GetDefinition();
+                if (type != null && type.FullName.Equals("System.Diagnostics.ConditionalAttribute", StringComparison.Ordinal))
                 {
- 					if (a.PositionalArguments.Count > 0)
+                    if (a.PositionalArguments.Count > 0)
                     {
- 						var symbol = a.PositionalArguments[0].ConstantValue as string;
+                        var symbol = a.PositionalArguments[0].ConstantValue as string;
                         if (symbol != null)
                         {
                             result.Add(symbol);
                         }
- 					}
- 				}
- 			}
+                    }
+                }
+            }
 
             if (result.Count > 0)
             {
                 var syntaxTree = invocationExpression.GetParent<SyntaxTree>();
                 if (syntaxTree != null)
                 {
-                    return !result.Intersect(syntaxTree.ConditionalSymbols).Any();    
+                    return !result.Intersect(syntaxTree.ConditionalSymbols).Any();
                 }
             }
 
- 			return false;
- 		}
+            return false;
+        }
 
         protected void VisitInvocationExpression()
         {
@@ -457,7 +457,7 @@ namespace Bridge.Translator
                 {
                     new TypeExpressionListBlock(this.Emitter, argsInfo.TypeArguments).Emit();
                 }
-                
+
                 needComma = false;
 
                 foreach (var arg in argsExpressions)
@@ -545,10 +545,10 @@ namespace Bridge.Translator
                     }
                     else if (writer.ThisArg != null)
                     {
-                        argsInfo.ThisArgument = writer.ThisArg;    
+                        argsInfo.ThisArgument = writer.ThisArg;
                     }
-                    
-                    new InlineArgumentsBlock(this.Emitter, argsInfo, writer.InlineCode){IgnoreRange = writer.IgnoreRange}.Emit();
+
+                    new InlineArgumentsBlock(this.Emitter, argsInfo, writer.InlineCode) { IgnoreRange = writer.IgnoreRange }.Emit();
                     var result = this.Emitter.Output.ToString();
                     this.Emitter.Output = writer.Output;
                     this.Emitter.IsNewLine = writer.IsNewLine;
@@ -585,23 +585,23 @@ namespace Bridge.Translator
                         this.Emitter.Output = savedBuilder;
 
                         this.Write(thisArg);
-                        
+
                         this.Emitter.Comma = true;
 
                         if (!isIgnore && !isIgnoreGeneric && argsInfo.HasTypeArguments)
                         {
                             new TypeExpressionListBlock(this.Emitter, argsInfo.TypeArguments).Emit();
                         }
-                        
+
                         this.EnsureComma(false);
 
                         if (argsExpressions.Length > 1)
                         {
                             this.WriteOpenBracket();
-                            new ExpressionListBlock(this.Emitter, argsExpressions.Take(argsExpressions.Length - 1).ToArray(), paramsArg, invocationExpression, openPos).Emit();  
+                            new ExpressionListBlock(this.Emitter, argsExpressions.Take(argsExpressions.Length - 1).ToArray(), paramsArg, invocationExpression, openPos).Emit();
                             this.WriteCloseBracket();
                             this.Write(".concat(");
-                            new ExpressionListBlock(this.Emitter, new Expression[]{argsExpressions[argsExpressions.Length - 1]}, paramsArg, invocationExpression, openPos).Emit();  
+                            new ExpressionListBlock(this.Emitter, new Expression[] { argsExpressions[argsExpressions.Length - 1] }, paramsArg, invocationExpression, openPos).Emit();
                             this.Write(")");
                         }
                         else
@@ -619,12 +619,12 @@ namespace Bridge.Translator
 
                         if (invocationExpression.Arguments.Count > 0)
                         {
-                            this.EnsureComma(false);    
+                            this.EnsureComma(false);
                         }
 
-                        new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, invocationExpression, openPos).Emit();    
+                        new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, invocationExpression, openPos).Emit();
                     }
-                    
+
                     this.WriteCloseParentheses();
                 }
             }

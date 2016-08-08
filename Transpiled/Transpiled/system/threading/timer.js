@@ -44,7 +44,7 @@
             var dueTime = -1; // we want timer to be registered, but not activated.  Requires caller to call
             var period = -1; // Change after a timer instance is created.  This is to avoid the potential
             // for a timer to be fired before the returned value is assigned to the variable,
-            // potentially causing the callback to reference a bogus value (if passing the timer to the callback). 
+            // potentially causing the callback to reference a bogus value (if passing the timer to the callback).
     
             this.timerSetup(callback, this, System.Int64(dueTime), System.Int64(period));
         },

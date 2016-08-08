@@ -1,5 +1,4 @@
-﻿using System;
-using Bridge.Contract;
+﻿using Bridge.Contract;
 
 namespace Bridge.Translator
 {

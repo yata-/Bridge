@@ -1,5 +1,6 @@
-using System;
 using Bridge.Test;
+using System;
+
 #pragma warning disable 649
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues

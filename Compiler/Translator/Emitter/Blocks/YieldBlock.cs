@@ -1,9 +1,8 @@
-using System.Linq;
 using Bridge.Contract;
 using Bridge.Contract.Constants;
-
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.TypeSystem;
+using System.Linq;
 
 namespace Bridge.Translator
 {
@@ -89,7 +88,7 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    block.Write(JS.Types.SYSTEM_ARRAY + "." + JS.Funcs.TO_ENUMERATOR + "(" + JS.Vars.YIELD +")");
+                    block.Write(JS.Types.SYSTEM_ARRAY + "." + JS.Funcs.TO_ENUMERATOR + "(" + JS.Vars.YIELD + ")");
                 }
             }
             else

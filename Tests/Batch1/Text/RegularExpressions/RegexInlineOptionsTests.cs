@@ -1,5 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using Bridge.Test;
+﻿using Bridge.Test;
+using System.Text.RegularExpressions;
 
 namespace Bridge.ClientTest.Text.RegularExpressions
 {
@@ -137,7 +137,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions
 
             ValidateGroup(ms[3], 2, 33, 3, true, "171", 1);
             ValidateCapture(ms[3], 2, 0, 33, 3, "171");
-
         }
 
         [Test]
@@ -172,7 +171,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions
 
             ValidateGroup(m, 2, 37, 3, true, "dog", 1);
             ValidateCapture(m, 2, 0, 37, 3, "dog");
-
         }
 
         [Test]
@@ -301,7 +299,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions
 
             ValidateGroup(ms[3], 0, 88, 39, true, "Instead, it is a nonsensical paragraph.", 1);
             ValidateCapture(ms[3], 0, 0, 88, 39, "Instead, it is a nonsensical paragraph.");
-
         }
 
         [Test]
@@ -341,10 +338,9 @@ namespace Bridge.ClientTest.Text.RegularExpressions
 
             ValidateGroup(ms[3], 0, 88, 39, true, "Instead, it is a nonsensical paragraph.", 1);
             ValidateCapture(ms[3], 0, 0, 88, 39, "Instead, it is a nonsensical paragraph.");
-
         }
 
-        #endregion
+        #endregion MSDN
 
         [Test]
         public void IgnoreCaseInlineOptionTest1()
@@ -397,7 +393,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             ValidateMatch(m, 0, 0, "", 1, false);
 
             ValidateGroup(m, 0, 0, 0, false, "", 0);
-
         }
 
         [Test]
@@ -423,7 +418,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions
 
             ValidateGroup(ms[1], 0, 4, 3, true, "abc", 1);
             ValidateCapture(ms[1], 0, 0, 4, 3, "abc");
-
         }
 
         [Test]
@@ -527,7 +521,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions
 
             ValidateGroup(m, 1, 5, 3, true, "abc", 1);
             ValidateCapture(m, 1, 0, 5, 3, "abc");
-
         }
 
         [Test]
@@ -608,7 +601,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions
 
             ValidateGroup(m, 0, 0, 6, true, "abcdef", 1);
             ValidateCapture(m, 0, 0, 0, 6, "abcdef");
-
         }
 
         [Test]

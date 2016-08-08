@@ -1,5 +1,5 @@
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -11,6 +11,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             return "A.Test1";
         }
     }
+
     public class Bridge635B : Bridge635A
     {
         protected override string Test1()

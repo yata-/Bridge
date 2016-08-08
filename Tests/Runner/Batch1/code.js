@@ -2166,7 +2166,6 @@
                 Bridge.Test.Assert.areEqual$1("24", System.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Pets, 24, "D"), "Format Pets.Rabbit | Pets.Other D");
                 Bridge.Test.Assert.areEqual$1("16", System.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Pets, Bridge.ClientTest.BasicCSharp.TestEnum.Pets.Other, "d"), "Format Pets.Other d");
     
-    
                 Bridge.Test.Assert.areEqual$1("Dog, Cat", System.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Pets1, 3, "F"), "Format Pets1.Cat | Pets1.Dog F");
                 Bridge.Test.Assert.areEqual$1("Dog, Cat", System.Enum.format(Bridge.ClientTest.BasicCSharp.TestEnum.Pets1, 3, "f"), "Format Pets1.Cat | Pets1.Dog f");
             },
@@ -3402,7 +3401,6 @@
         constructor: function () {
             this.$initialize();
             System.Attribute.$constructor.call(this);
-    
         },
         $constructor1: function (x) {
             this.$initialize();
@@ -3422,7 +3420,6 @@
         constructor: function () {
             this.$initialize();
             System.Attribute.$constructor.call(this);
-    
         },
         $constructor1: function (x) {
             this.$initialize();
@@ -6612,11 +6609,9 @@
                 Bridge.Test.Assert.throws$1(function () {
                     System.Convert.fromBase64CharArray(inputChars, 1, inputChars.length);
                 }, $_.Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests.f2);
-    
             },
             invalidInput: function () {
                 Bridge.Test.Assert.throws$1($_.Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests.f3, $_.Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests.f4);
-    
     
                 // Input must be at least 4 characters long
                 Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests.verifyInvalidInput("No");
@@ -6676,7 +6671,6 @@
                 Bridge.Test.Assert.throws$1(function () {
                     System.Convert.fromBase64String(input);
                 }, $_.Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests.f5);
-    
             },
             verify: function (input, action) {
                 if (action === void 0) { action = null; }
@@ -7070,7 +7064,6 @@
     
                 var c2 = System.Convert.toBase64CharArray(inputBuffer, 0, 2, ouputBuffer, 0, null);
                 Bridge.Test.Assert.areEqual(4, c2);
-    
             },
             validOffsetOut: function () {
                 // Regression test for bug where offsetOut parameter was ignored
@@ -7175,7 +7168,7 @@
                 // The sequence of bits for this byte array is
                 // 00000101000001100000011100001000
                 // Encoding adds 16 bits of trailing bits to make this a multiple of 24 bits.
-                // |        +         +         +         +    
+                // |        +         +         +         +
                 // 000001010000011000000111000010000000000000000000
                 // which is, (Interesting, how do we distinguish between '=' and 'A'?)
                 // 000001 010000 011000 000111 000010 000000 000000 000000
@@ -7888,7 +7881,6 @@
             return s.toString();
         },
         method2: function () {
-    
         }
     });
     
@@ -14866,7 +14858,6 @@
             this.assertIsDecimalAndEqualTo(System.Decimal.round(System.Decimal(-3.5), 6), -4, "-3.5");
             this.assertIsDecimalAndEqualTo(System.Decimal.round(System.Decimal(-3.8), 6), -4, "-3.8m");
     
-    
             this.assertIsDecimalAndEqualTo(System.Decimal.round(System.Decimal(3.8), 0), 4, "Up 3.8m");
             this.assertIsDecimalAndEqualTo(System.Decimal.round(System.Decimal(3.5), 0), 4, "Up 3.5m");
             this.assertIsDecimalAndEqualTo(System.Decimal.round(System.Decimal(3.2), 0), 4, "Up 3.2m");
@@ -16209,7 +16200,6 @@
     
     Bridge.define('Bridge.ClientTest.Reflection.AttributeTests.C22', {
         m: function () {
-    
         }
     });
     
@@ -21057,7 +21047,6 @@
             Bridge.Test.Assert.true(Bridge.is(s, System.IComparable$1(System.Int16)));
             Bridge.Test.Assert.true(Bridge.is(s, System.IEquatable$1(System.Int16)));
             Bridge.Test.Assert.true(Bridge.is(s, System.IFormattable));
-    
         },
         castsWork: function () {
             var i1 = -32769, i2 = -32768, i3 = 5754, i4 = 32767, i5 = 32768;
@@ -24757,7 +24746,6 @@
     
             var result = System.Text.RegularExpressions.Regex.replace$3(words, pattern, evaluator);
             Bridge.Test.Assert.areEqual(expected, result);
-    
         },
         replaceStaticWithEvaluatorAndOptionsTest: function () {
             var expected1 = "LETTER lacitebahpla gnissim kcal esaeler tnahcnep kcals cillyrca yrdnual esaec";
@@ -26067,7 +26055,6 @@
             Bridge.Test.Assert.false$1(continuationRun, "Continuation should not be run too early.");
             Bridge.Test.Assert.areEqual$1(System.Threading.Tasks.TaskStatus.running, task.status, "Task should be running before promise is completed.");
             promise.reject([42, "result 123", 101]);
-    
     
             task1.continueWith(function (x) {
                 Bridge.Test.Assert.areEqual$1(System.Threading.Tasks.TaskStatus.faulted, task.status, "Task should have faulted after the promise was rejected.");
@@ -28082,7 +28069,6 @@
                                 timer.dispose();
                                 
                                 Bridge.Test.Assert.areEqual$1(count, ts.getCounter(), "Timer disposed");
-                                
                                 
                                 Bridge.Test.Assert.throws$7(System.InvalidOperationException, function () {
                                     copy.change(1, 1);
@@ -30755,7 +30741,6 @@
                 var capture = Bridge.as(en.System$Collections$IEnumerator$getCurrent(), System.Text.RegularExpressions.Capture);
                 this.capturesAreEqual(captures.get(i), capture, "Captures[" + i + "]");
                 i = (i + 1) | 0;
-    
             } while (en.System$Collections$IEnumerator$moveNext());
     
             Bridge.Test.Assert.areEqual$1(captures.getCount(), i, "Captures.Count");
@@ -30936,7 +30921,6 @@
             Bridge.Test.Assert.areEqual$1("0", rgx.groupNameFromNumber(0), "NameGroup1.GroupNameFromNumber(0)");
             Bridge.Test.Assert.areEqual$1("name1", rgx.groupNameFromNumber(1), "NameGroup1.GroupNameFromNumber(1)");
     
-    
             rgx = new System.Text.RegularExpressions.Regex.$constructor("(?<name1>)(?'name2')");
             Bridge.Test.Assert.areEqual$1("0", rgx.groupNameFromNumber(0), "NameGroup2.GroupNameFromNumber(0)");
             Bridge.Test.Assert.areEqual$1("name1", rgx.groupNameFromNumber(1), "NameGroup2.GroupNameFromNumber(1)");
@@ -30986,7 +30970,6 @@
             Bridge.Test.Assert.areEqual$1(0, rgx.groupNumberFromName("0"), "NameGroup2.GroupNumberFromName(\"0\")");
             Bridge.Test.Assert.areEqual$1(1, rgx.groupNumberFromName("name1"), "NameGroup2.GroupNumberFromName(\"name1\")");
             Bridge.Test.Assert.areEqual$1(2, rgx.groupNumberFromName("name2"), "NameGroup2.GroupNumberFromName(\"name2\")");
-    
     
             rgx = new System.Text.RegularExpressions.Regex.$constructor("(?<name1>(?'inner1'))(?'name2')");
             Bridge.Test.Assert.areEqual$1(0, rgx.groupNumberFromName("0"), "NameGroup3.GroupNumberFromName(\"0\")");
@@ -31181,7 +31164,6 @@
             this.validateGroup(m, 1, 0, 0, true, "", 1);
             this.validateCapture(m, 1, 0, 0, 0, "");
     
-    
             // Case 2:
             pattern = "(B?)";
             text = "ABC";
@@ -31195,7 +31177,6 @@
     
             this.validateGroup(m, 1, 0, 0, true, "", 1);
             this.validateCapture(m, 1, 0, 0, 0, "");
-    
     
             // Case 3:
             pattern = "(B)?";
@@ -31226,7 +31207,6 @@
     
             this.validateGroup(m, 2, 1, 1, true, "A", 1);
             this.validateCapture(m, 2, 0, 1, 1, "A");
-    
         }
     });
     
@@ -31309,7 +31289,6 @@
                 var group = Bridge.as(en.System$Collections$IEnumerator$getCurrent(), System.Text.RegularExpressions.Group);
                 this.groupsAreEqual(groups.get(i), group, "Groups[" + i + "]");
                 i = (i + 1) | 0;
-    
             } while (en.System$Collections$IEnumerator$moveNext());
     
             Bridge.Test.Assert.areEqual$1(groups.getCount(), i, "Groups.Count");
@@ -31445,7 +31424,6 @@
                 var match = Bridge.as(en.System$Collections$IEnumerator$getCurrent(), System.Text.RegularExpressions.Match);
                 this.matchesAreEqual(expected[i], match, "Matches[" + i + "]");
                 i = (i + 1) | 0;
-    
             } while (en.System$Collections$IEnumerator$moveNext());
     
             Bridge.Test.Assert.areEqual$1(expected.length, i, "Matches.Count");
@@ -31661,7 +31639,6 @@
     
             this.validateGroup(m, 5, 3, 1, true, "d", 1);
             this.validateCapture(m, 5, 0, 3, 1, "d");
-    
         },
         groupOrderingTest3: function () {
             var pattern = "(a)(b)(?<5>c)(?<name>d)(e)";
@@ -31757,7 +31734,6 @@
             var expected2 = ["[what kind?]", "[by whom?]"];
             var actual2 = new (System.Collections.Generic.List$1(String))();
     
-    
             var pattern = "[(.*?)]";
             var input = "The animal [what kind?] was visible [by whom?] from the window";
     
@@ -31778,7 +31754,6 @@
             }
     
             this.validateCollection(String, expected2, actual2.toArray(), "MatchValues2");
-    
         },
         msdnUnescapeTest: function () {
             var pattern = "\n\r\t\f[](){}!123abc \\, *, +, ?, |, {, [, (,), ^, $,., #,  \u0007, \b, \t, and \u000b";
@@ -33706,7 +33681,6 @@
     
             this.validateGroup(m, 3, 6, 3, true, "abc", 1);
             this.validateCapture(m, 3, 0, 6, 3, "abc");
-    
         },
         namedBackrefInGroupTest: function () {
             var pattern = "((?<name>abc)def)(\\k<name>)";
@@ -33901,7 +33875,6 @@
     
             this.validateGroup(m, 2, 1, 1, true, "b", 1);
             this.validateCapture(m, 2, 0, 1, 1, "b");
-    
         },
         balancingGroupWithoutName1Test: function () {
             var pattern = "(?<g1>a)+b(?<-g1>c)?";
@@ -34893,7 +34866,6 @@
             this.validateMatch(m, 0, 0, "", 1, false);
     
             this.validateGroup(m, 0, 0, 0, false, "", 0);
-    
         },
         msdnSubstactGroupTest4: function () {
             var pattern = "^[0-9-[2468]]+$";
@@ -35568,9 +35540,6 @@
     
             this.validateGroup(ms.get(10), 1, 30, 1, true, "K", 1);
             this.validateCapture(ms.get(10), 1, 0, 30, 1, "K");
-    
-    
-    
         },
         rangeWithCharEscapesTest: function () {
             var pattern = "([\\a\\b\\t\\r\\v\\f\\n\\e\\115\\x4e\\cC\\u004b])+";
@@ -35931,9 +35900,6 @@
     
             this.validateGroup(ms.get(31), 0, 93, 1, true, "\u001f", 1);
             this.validateCapture(ms.get(31), 0, 0, 93, 1, "\u001f");
-    
-    
-    
         },
         controlCharsTestLowerTest: function () {
             var pattern = "[\\c@\\ca\\cb\\cc\\cd\\ce\\cf\\cg\\ch\\ci\\cj\\ck\\cl\\cm\\cn\\co\\cp\\cq\\cr\\cs\\ct\\cu\\cv\\cw\\cx\\cy\\cz\\c[\\c\\\\c]\\c^\\c_]";
@@ -36497,7 +36463,6 @@
     
             this.validateGroup(ms.get(3), 2, 33, 3, true, "171", 1);
             this.validateCapture(ms.get(3), 2, 0, 33, 3, "171");
-    
         },
         msdnSinglelineInlineOptionTest: function () {
             var pattern = "(?s)^.+";
@@ -36526,7 +36491,6 @@
     
             this.validateGroup(m, 2, 37, 3, true, "dog", 1);
             this.validateCapture(m, 2, 0, 37, 3, "dog");
-    
         },
         msdnIngoreWhitespaceInlineOptionTest2: function () {
             var pattern = "\\{\\d+(,-*\\d+)*(\\:\\w{1,4}?)*\\}(?x) # Looks for a composite format item.";
@@ -36646,7 +36610,6 @@
     
             this.validateGroup(ms.get(3), 0, 88, 39, true, "Instead, it is a nonsensical paragraph.", 1);
             this.validateCapture(ms.get(3), 0, 0, 88, 39, "Instead, it is a nonsensical paragraph.");
-    
         },
         msdnExplicitCaptureInlineOptionTest2: function () {
             var pattern = "\\b\\(?(?n:(?>\\w+),?\\s?)+[\\.!?]\\)?";
@@ -36683,7 +36646,6 @@
     
             this.validateGroup(ms.get(3), 0, 88, 39, true, "Instead, it is a nonsensical paragraph.", 1);
             this.validateCapture(ms.get(3), 0, 0, 88, 39, "Instead, it is a nonsensical paragraph.");
-    
         },
         ignoreCaseInlineOptionTest1: function () {
             var rgx = new System.Text.RegularExpressions.Regex.$constructor("(?i)Case Is Ignored");
@@ -36719,7 +36681,6 @@
             this.validateMatch(m, 0, 0, "", 1, false);
     
             this.validateGroup(m, 0, 0, 0, false, "", 0);
-    
         },
         multilineInlineOptionTest2: function () {
             var pattern = "(?m)^abc$";
@@ -36742,7 +36703,6 @@
     
             this.validateGroup(ms.get(1), 0, 4, 3, true, "abc", 1);
             this.validateCapture(ms.get(1), 0, 0, 4, 3, "abc");
-    
         },
         multilineInlineOptionTest3: function () {
             var pattern = "(?m)^abc(?-m)$";
@@ -36831,7 +36791,6 @@
     
             this.validateGroup(m, 1, 5, 3, true, "abc", 1);
             this.validateCapture(m, 1, 0, 5, 3, "abc");
-    
         },
         singlelineInlineOptionTest1: function () {
             var pattern = "(?s).+";
@@ -36897,7 +36856,6 @@
     
             this.validateGroup(m, 0, 0, 6, true, "abcdef", 1);
             this.validateCapture(m, 0, 0, 0, 6, "abcdef");
-    
         },
         ingoreWhitespaceInlineOptionTest3: function () {
             var pattern = "(?x)abc def(?-x) hij";
@@ -37328,7 +37286,6 @@
     
             this.validateGroup(m, 0, 0, 6, true, "abcdef", 1);
             this.validateCapture(m, 0, 0, 0, 6, "abcdef");
-    
         },
         positiveLookbehindTest2: function () {
             var pattern = "abc(?<=bx)def";
@@ -37339,7 +37296,6 @@
             this.validateMatch(m, 0, 0, "", 1, false);
     
             this.validateGroup(m, 0, 0, 0, false, "", 0);
-    
         },
         positiveLookbehindTest3: function () {
             var pattern = "bc(?<=abc)def";
@@ -37372,7 +37328,6 @@
             this.validateMatch(m, 0, 0, "", 1, false);
     
             this.validateGroup(m, 0, 0, 0, false, "", 0);
-    
         },
         negativeLookbehindTest2: function () {
             var pattern = "abc(?<!bx)def";
@@ -37384,7 +37339,6 @@
     
             this.validateGroup(m, 0, 0, 6, true, "abcdef", 1);
             this.validateCapture(m, 0, 0, 0, 6, "abcdef");
-    
         },
         positiveLookbehindWithGroupTest: function () {
             var pattern = "(abc)(?<=(b)c)(def)";
@@ -37405,7 +37359,6 @@
     
             this.validateGroup(m, 3, 3, 3, true, "def", 1);
             this.validateCapture(m, 3, 0, 3, 3, "def");
-    
         },
         negativeLookbehindWithGroupTest: function () {
             var pattern = "(abc)(?<!(b)x)(def)";
@@ -37425,7 +37378,6 @@
     
             this.validateGroup(m, 3, 3, 3, true, "def", 1);
             this.validateCapture(m, 3, 0, 3, 3, "def");
-    
         },
         positiveLookbehindWithOffsetTest: function () {
             var pattern = "(?<=cd)(.)";
@@ -38039,7 +37991,6 @@
     
             this.validateGroup(m, 0, 49, 1, true, ".", 1);
             this.validateCapture(m, 0, 0, 49, 1, ".");
-    
         },
         multilineAndSinglelineOptionsTest: function () {
             var pattern = ".+$";
@@ -38435,7 +38386,6 @@
         },
         regexReplaceWorksWithShortTimeout: function () {
             Bridge.Test.Assert.throws$6(System.RegexMatchTimeoutException, $_.Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.f2);
-    
         },
         regexReplaceWorksWithLongTimeout: function () {
             System.Text.RegularExpressions.Regex.replace$2(Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.shortText, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.pattern, "fakeReplacement", 0, Bridge.ClientTest.Text.RegularExpressions.RegexTimeoutTests.longTimeoutMs);

@@ -50,4 +50,3 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         }
     }
 }
-

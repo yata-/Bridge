@@ -10,12 +10,10 @@
 
         public DragEvent(string type)
         {
-
         }
 
         public DragEvent(string type, DragEventInit eventInit)
         {
-
         }
 
         /// <summary>
@@ -29,7 +27,7 @@
     public class DragEventInit : MouseEventInit
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public DataTransfer DataTransfer;
     }

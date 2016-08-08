@@ -11,7 +11,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         public static void TestUseCase()
         {
             var z = 0;
-            for (; ; )
+            for (;;)
             {
                 z++;
                 if (z == 10) break;
@@ -22,7 +22,6 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             int j;
             for (i = 0, j = 1; i < 10; i++, j++)
             {
-
             }
             Assert.AreEqual(10, i, "Bridge818 i");
             Assert.AreEqual(11, j, "Bridge818 j");

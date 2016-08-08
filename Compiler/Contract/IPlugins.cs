@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
+using System.Collections.Generic;
 
 namespace Bridge.Contract
 {

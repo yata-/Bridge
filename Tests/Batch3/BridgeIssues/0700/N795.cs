@@ -16,16 +16,19 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         {
             return x.Equals(y);
         }
+
         public static bool operator !=(Bridge795A x, Bridge795A y)
         {
             return !(x == y);
         }
+
         public override bool Equals(object o)
         {
             if (!(o is Bridge795A))
                 return false;
             return ((Bridge795A)o).Value == Value;
         }
+
         public override int GetHashCode()
         {
             return Value;

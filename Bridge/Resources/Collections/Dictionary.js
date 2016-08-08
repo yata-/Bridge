@@ -10,7 +10,7 @@ Bridge.define('System.Collections.Generic.KeyValuePair$2', function (TKey, TValu
 
         toString: function () {
             var s = "[";
-            
+
             if (this.key != null) {
                 s += this.key.toString();
             }

@@ -36,7 +36,7 @@ namespace Bridge.Translator
             }
             else
             {
-                this.WriteScript(this.PrimitiveExpression.Value);    
+                this.WriteScript(this.PrimitiveExpression.Value);
             }
         }
     }

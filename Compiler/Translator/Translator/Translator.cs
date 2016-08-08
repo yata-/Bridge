@@ -1,4 +1,5 @@
 using Bridge.Contract;
+using ICSharpCode.NRefactory.CSharp;
 using Microsoft.Ajax.Utilities;
 using Mono.Cecil;
 using Object.Net.Utilities;
@@ -7,8 +8,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using ICSharpCode.NRefactory.CSharp;
-using ICSharpCode.NRefactory.MonoCSharp;
 using AssemblyDefinition = Mono.Cecil.AssemblyDefinition;
 
 namespace Bridge.Translator
@@ -49,7 +48,7 @@ namespace Bridge.Translator
             this.DefineConstants = new List<string>() { "BRIDGE" };
         }
 
-        public Translator(string location, bool fromTask = false): this(location)
+        public Translator(string location, bool fromTask = false) : this(location)
         {
             this.FromTask = fromTask;
         }
@@ -627,7 +626,6 @@ namespace Bridge.Translator
             this.Log.Trace("Output script length is " + contentMinified.Length + " symbols. Done.");
 
             return contentMinified;
-
         }
 
         private CodeSettings GetMinifierSettings(string fileName)

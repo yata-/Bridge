@@ -25,6 +25,7 @@ namespace System.Collections.Generic
         }
 
         public virtual extern bool Equals(T x, T y);
+
         public virtual extern int GetHashCode(T obj);
     }
 }

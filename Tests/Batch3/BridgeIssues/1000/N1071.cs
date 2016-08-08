@@ -1,5 +1,5 @@
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -20,8 +20,9 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 
         public abstract class A
         {
-            readonly B _b;
+            private readonly B _b;
             public readonly Type[] _argumentTypes;
+
             public A(B b, params Type[] argumentTypes)
             {
                 _b = b;
@@ -41,12 +42,13 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             public A(B b)
                 : base(b, typeof(T), typeof(T2))
             {
-
             }
         }
 
         public class B { }
+
         public class C { }
+
         public class D { }
     }
 }

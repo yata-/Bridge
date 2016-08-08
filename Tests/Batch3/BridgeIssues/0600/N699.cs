@@ -1,5 +1,5 @@
-using Bridge.Test;
 using Bridge.Html5;
+using Bridge.Test;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -20,7 +20,6 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             var blob2 = new Blob(new BlobDataObject[] { "data2" });
             Assert.AreNotEqual(null, blob2, "blob2 is not null");
             Assert.AreEqual(5, blob2.Size, "blob2.Size equals 5");
-
         }
     }
 }

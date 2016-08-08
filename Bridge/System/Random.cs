@@ -3,7 +3,7 @@
 namespace System
 {
     using Bridge;
-    
+
     [External]
     //[Name("System.Random")]
     public class Random

@@ -117,7 +117,6 @@ Bridge.define("System.Text.RegularExpressions.MatchCollection", {
 
             this._prevLen = match._length;
             this._startat = match._textpos;
-
         } while (this._matches.length <= i);
 
         return match;

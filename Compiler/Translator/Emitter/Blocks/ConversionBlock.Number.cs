@@ -9,7 +9,7 @@ using System;
 
 namespace Bridge.Translator
 {
-    public abstract partial class ConversionBlock 
+    public abstract partial class ConversionBlock
     {
         private static readonly bool[,] _needNarrowingConversion = {
             /*                 Char    SByte     Byte    Int16   UInt16    Int32   UInt32    Int64   UInt64   Single   Double  Decimal
@@ -81,8 +81,8 @@ namespace Bridge.Translator
                 }
             }
             else if (((!Helpers.Is64Type(expectedType, block.Emitter.Resolver) && Helpers.IsIntegerType(expectedType, block.Emitter.Resolver)) ||
-                     (rr is OperatorResolveResult && !Helpers.Is64Type(rr.Type, block.Emitter.Resolver) && Helpers.IsIntegerType(rr.Type, block.Emitter.Resolver))) && 
-                     (expression is BinaryOperatorExpression || expression is UnaryOperatorExpression || expression.Parent is AssignmentExpression) && 
+                     (rr is OperatorResolveResult && !Helpers.Is64Type(rr.Type, block.Emitter.Resolver) && Helpers.IsIntegerType(rr.Type, block.Emitter.Resolver))) &&
+                     (expression is BinaryOperatorExpression || expression is UnaryOperatorExpression || expression.Parent is AssignmentExpression) &&
                      IsInCheckedContext(block.Emitter, expression))
             {
                 var needCheck = false;
@@ -92,7 +92,7 @@ namespace Bridge.Translator
                 if ((Helpers.IsKnownType(KnownTypeCode.Int32, expectedType, block.Emitter.Resolver) && isBitwiseOperator) || (Helpers.IsKnownType(KnownTypeCode.UInt32, expectedType, block.Emitter.Resolver) && be != null && be.Operator == BinaryOperatorType.ShiftRight))
                 {
                     // Don't need to check even in checked context and don't need to clip
-                } 
+                }
                 else if (be != null && (be.Operator == BinaryOperatorType.Add ||
                     be.Operator == BinaryOperatorType.Divide ||
                     be.Operator == BinaryOperatorType.Multiply ||
@@ -105,13 +105,13 @@ namespace Bridge.Translator
                     }
                     else
                     {
-                        needCheck = true;    
+                        needCheck = true;
                     }
                 }
                 else
                 {
                     var ue = expression as UnaryOperatorExpression;
-                    
+
                     if (ue != null && (ue.Operator == UnaryOperatorType.Minus ||
                                        ue.Operator == UnaryOperatorType.Increment ||
                                        ue.Operator == UnaryOperatorType.Decrement ||
@@ -185,7 +185,7 @@ namespace Bridge.Translator
                 if ((Helpers.IsKnownType(KnownTypeCode.Int32, expectedType, block.Emitter.Resolver) && isBitwiseOperator) || (Helpers.IsKnownType(KnownTypeCode.UInt32, expectedType, block.Emitter.Resolver) && be != null && be.Operator == BinaryOperatorType.ShiftRight))
                 {
                     // Don't need to check even in checked context and don't need to clip
-                } 
+                }
                 else if (be != null && !(be.Left is PrimitiveExpression && be.Right is PrimitiveExpression) && (be.Operator == BinaryOperatorType.Add ||
                     be.Operator == BinaryOperatorType.Divide ||
                     be.Operator == BinaryOperatorType.Multiply ||
@@ -424,7 +424,7 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    var skipOuterWrap = (expression.Parent is VariableInitializer) || 
+                    var skipOuterWrap = (expression.Parent is VariableInitializer) ||
                                         (expression.Parent is AssignmentExpression) ||
                                         targetType.IsKnownType(KnownTypeCode.Int64) ||
                                         targetType.IsKnownType(KnownTypeCode.UInt64) ||

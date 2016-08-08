@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 
-
 namespace Bridge.ClientTest
 {
     [Category(Constants.MODULE_ARRAY)]
@@ -75,7 +74,6 @@ namespace Bridge.ClientTest
             Assert.AreEqual("e", arr[2, 0]);
             Assert.AreEqual("f", arr[2, 1]);
         }
-
 
         private int[,] SetUpArray(params object[] values)
         {

@@ -1,5 +1,5 @@
-using Bridge.Test;
 using Bridge.ClientTest.Utilities;
+using Bridge.Test;
 using System.Linq;
 
 namespace Bridge.ClientTest.Linq

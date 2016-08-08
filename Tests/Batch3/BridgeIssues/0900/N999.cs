@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
     // Bridge[#999]
@@ -23,7 +22,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 
             Func<string> f2 = () =>
             {
-                return string.Join(", ", new[] {4, 5, 6}.Select(value => value + offset));
+                return string.Join(", ", new[] { 4, 5, 6 }.Select(value => value + offset));
             };
 
             Func<string> f3 = () =>

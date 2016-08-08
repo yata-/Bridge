@@ -1,7 +1,7 @@
+using Bridge.Text.RegularExpressions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bridge.Text.RegularExpressions;
 
 namespace Bridge.Linq
 {

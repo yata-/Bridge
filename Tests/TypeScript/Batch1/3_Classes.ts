@@ -33,7 +33,6 @@ QUnit.test("Inheritance", function (assert) {
     // TODO #292 Should not require optional parameters
     assert.deepEqual(animal.move(), 1, "Dog as Animal move");
 
-
     var employee = new Classes.Employee("E", 1);
     assert.deepEqual(employee.getName(), "E", "Employee name");
     // TODO #292 Should not require optional parameters
@@ -44,7 +43,6 @@ QUnit.test("Inheritance", function (assert) {
     // TODO #292 Should not require optional parameters
     assert.deepEqual(animal.move(), 1, "Employee as Animal move");
 });
-
 
 QUnit.test("Static", function (assert) {
     var point1: Classes.Point = new Classes.Point.$constructor1(10, 20);

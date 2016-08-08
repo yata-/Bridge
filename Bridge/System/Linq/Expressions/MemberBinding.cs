@@ -1,6 +1,5 @@
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using Bridge;
+using System.Reflection;
 
 namespace System.Linq.Expressions
 {
@@ -8,12 +7,13 @@ namespace System.Linq.Expressions
     [Name("Object")]
     public abstract class MemberBinding
     {
-		[Name("btype")]
+        [Name("btype")]
         [FieldProperty]
-		public extern MemberBindingType BindingType { get; private set; }
-        [FieldProperty]
-		public extern MemberInfo Member { get; private set; }
+        public extern MemberBindingType BindingType { get; private set; }
 
-		internal extern MemberBinding();
-	}
+        [FieldProperty]
+        public extern MemberInfo Member { get; private set; }
+
+        internal extern MemberBinding();
+    }
 }

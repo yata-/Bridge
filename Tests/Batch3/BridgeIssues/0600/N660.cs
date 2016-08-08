@@ -9,7 +9,10 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         private readonly T value;
         private readonly bool isDefined;
 
-        public Bridge660Optional(T value) : this(value, value != null) { }
+        public Bridge660Optional(T value) : this(value, value != null)
+        {
+        }
+
         private Bridge660Optional(T value, bool isDefined)
         {
             this.isDefined = (value != null);
@@ -20,20 +23,24 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 
         public bool IsDefined { get { return this.isDefined; } }
     }
+
     public sealed class Bridge660MessageStore
     {
         // If this static field is removed then it works, otherwise there's a runtime error:
         //   "Cannot read property '$clone' of undefined"
         public static readonly Bridge660MessageEditState _initialEditState = new Bridge660MessageEditState(new Bridge660TextInputState("Message"));
     }
+
     public class Bridge660MessageEditState
     {
         public Bridge660MessageEditState(Bridge660TextInputState content)
         {
             Content = content;
         }
+
         public Bridge660TextInputState Content { get; private set; }
     }
+
     public class Bridge660TextInputState
     {
         public string Text { get; set; }
@@ -47,7 +54,6 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             this.Text = text;
         }
     }
-
 
     // Bridge[#660]
     [Category(Constants.MODULE_ISSUES)]

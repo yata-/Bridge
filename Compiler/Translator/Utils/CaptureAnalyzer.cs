@@ -1,27 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ICSharpCode.NRefactory.CSharp;
+﻿using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Bridge.Translator
 {
     public class TypeVariable : IVariable, IEquatable<TypeVariable>, IEquatable<IVariable>
     {
         private readonly IType typeVar;
+
         public TypeVariable(IType type)
         {
             this.typeVar = type;
         }
+
         public ISymbolReference ToReference()
         {
             throw new NotImplementedException();
         }
 
-        public SymbolKind SymbolKind 
+        public SymbolKind SymbolKind
         {
             get
             {
@@ -102,7 +103,7 @@ namespace Bridge.Translator
         {
             this.resolver = resolver;
         }
-        
+
         public void Analyze(AstNode node, IEnumerable<string> parameters = null)
         {
             _usesThis = false;
@@ -200,7 +201,6 @@ namespace Bridge.Translator
 
             base.VisitIdentifierExpression(identifierExpression);
         }
-
 
         public override void VisitVariableDeclarationStatement(VariableDeclarationStatement variableDeclarationStatement)
         {
@@ -335,5 +335,4 @@ namespace Bridge.Translator
             base.VisitAssignmentExpression(assignmentExpression);
         }
     }
-
 }

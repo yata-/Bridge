@@ -1,7 +1,5 @@
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Runtime.CompilerServices;
 using Bridge;
+using System.Collections.ObjectModel;
 
 namespace System.Linq.Expressions
 {
@@ -10,10 +8,11 @@ namespace System.Linq.Expressions
     public sealed class SwitchCase
     {
         [FieldProperty]
-		public extern ReadOnlyCollection<Expression> TestValues { get; private set; }
-        [FieldProperty]
-		public extern Expression Body { get; private set; }
+        public extern ReadOnlyCollection<Expression> TestValues { get; private set; }
 
-		internal extern SwitchCase();
-	}
+        [FieldProperty]
+        public extern Expression Body { get; private set; }
+
+        internal extern SwitchCase();
+    }
 }

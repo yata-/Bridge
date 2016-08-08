@@ -1,7 +1,5 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using Bridge.Test;
-using Bridge.ClientTest;
+﻿using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.SimpleTypes
 {
@@ -48,7 +46,7 @@ namespace Bridge.ClientTest.SimpleTypes
 
             checked
             {
-                Assert.Throws(()=> { var b = (byte) i1; }, err=> err is OverflowException);
+                Assert.Throws(() => { var b = (byte)i1; }, err => err is OverflowException);
                 Assert.AreStrictEqual(0, (byte)i2, "0 checked");
                 Assert.AreStrictEqual(234, (byte)i3, "234 checked");
                 Assert.AreStrictEqual(255, (byte)i4, "256 checked");

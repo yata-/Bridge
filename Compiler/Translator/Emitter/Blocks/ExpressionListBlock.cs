@@ -1,12 +1,11 @@
 ﻿using Bridge.Contract;
 using Bridge.Contract.Constants;
-
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
-using System.Collections.Generic;
-using System.Linq;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Bridge.Translator
 {
@@ -122,10 +121,10 @@ namespace Bridge.Translator
                         var pos = this.OpenBracketPosition;
                         this.Emitter.Output.Insert(pos, ".apply");
                         pos += 7;
-                        
+
                         this.Emitter.Output.Insert(pos, scope + ", " + (needConcat ? "[" : ""));
                     }
-                    
+
                     isApply = needConcat;
                 }
             }
@@ -136,7 +135,7 @@ namespace Bridge.Translator
                 {
                     continue;
                 }
-                
+
                 this.Emitter.Translator.EmitNode = expr;
                 var isParamsArg = expr == paramArg;
 
@@ -146,7 +145,7 @@ namespace Bridge.Translator
                 }
 
                 needComma = true;
-                
+
                 var directExpr = expr as DirectionExpression;
                 if (directExpr != null)
                 {
@@ -172,19 +171,19 @@ namespace Bridge.Translator
                         continue;
                     }
                 }
-                
+
                 if (isParamsArg)
                 {
                     if (wrapByBrackets)
                     {
                         this.WriteOpenBracket();
                     }
-                    else if(isApply)
+                    else if (isApply)
                     {
                         this.Write("].concat(");
                     }
                 }
-                
+
                 int pos = this.Emitter.Output.Length;
 
                 if (expandParams && isParamsArg && expr is ArrayCreateExpression)

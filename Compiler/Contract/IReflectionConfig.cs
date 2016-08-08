@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Bridge.Contract
+﻿namespace Bridge.Contract
 {
     public interface IReflectionConfig
     {

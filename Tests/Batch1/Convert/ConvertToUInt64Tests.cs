@@ -2,8 +2,8 @@
 // https://github.com/dotnet/corefx/blob/master/src/System.Runtime.Extensions/tests/System/Convert.ToUInt64.cs
 // https://github.com/dotnet/corefx/blob/master/LICENSE
 
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.ConvertTests
 {
@@ -128,8 +128,8 @@ namespace Bridge.ClientTest.ConvertTests
         {
             var ushortMaxValue = ushort.MaxValue;
             var uintMaxValue = uint.MaxValue;
-            
-            string[] testValues = { "1000", "0", ushortMaxValue.ToString(), uintMaxValue.ToString(), null};
+
+            string[] testValues = { "1000", "0", ushortMaxValue.ToString(), uintMaxValue.ToString(), null };
             ulong[] expectedValues = { 1000, 0, ushort.MaxValue, uint.MaxValue, 0 };
             VerifyFromString(Convert.ToUInt64, Convert.ToUInt64, testValues, expectedValues);
 

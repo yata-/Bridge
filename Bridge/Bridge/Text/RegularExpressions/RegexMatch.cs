@@ -1,5 +1,3 @@
-using Bridge;
-
 namespace Bridge.Text.RegularExpressions
 {
     [External]

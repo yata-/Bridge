@@ -60,7 +60,6 @@ namespace Bridge.Translator
 
                 string accName = null;
 
-                
                 if (prop != null)
                 {
                     accName = this.Emitter.GetEntityNameFromAttr(prop, setter);

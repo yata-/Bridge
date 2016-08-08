@@ -15,7 +15,6 @@ namespace Bridge.Html5
         /// </summary>
         public readonly int Length;
 
-
         //public virtual extern Touch Item(int index);
 
         /// <summary>

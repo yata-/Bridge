@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-
 [assembly: AssemblyTitle("Bridge TypeScript Html test project")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]

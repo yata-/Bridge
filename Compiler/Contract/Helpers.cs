@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json.Linq;
 
 namespace Bridge.Contract
 {
@@ -261,7 +260,7 @@ namespace Bridge.Contract
                 }
             }
 
-            return emitter.Validator.HasAttribute(typeDef.Attributes, "Bridge.IgnoreCastAttribute") || 
+            return emitter.Validator.HasAttribute(typeDef.Attributes, "Bridge.IgnoreCastAttribute") ||
                    emitter.Validator.HasAttribute(typeDef.Attributes, "Bridge.ObjectLiteralAttribute");
         }
 
@@ -1018,7 +1017,7 @@ namespace Bridge.Contract
 
             return null;
         }
-        
+
         public static IAttribute GetInheritedAttribute(ITypeDefinition typeDef, string attrName)
         {
             foreach (var attr in typeDef.Attributes)

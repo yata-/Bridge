@@ -1,15 +1,13 @@
 using Bridge.Contract.Constants;
-using ICSharpCode.NRefactory.MonoCSharp;
+using Mono.Cecil;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Object.Net.Utilities;
-
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Mono.Cecil;
-using System;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Bridge.Translator
 {
@@ -98,8 +96,7 @@ namespace Bridge.Translator
 
                             metaDataWritten = true;
                         }
-                        
-                        
+
                         tmp.Append("function ($asm, globals) {");
                         tmp.Append("\n");
                         tmp.Append("    ");

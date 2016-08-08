@@ -2,7 +2,6 @@ using Bridge.Contract;
 using Bridge.Translator;
 using Bridge.Translator.Logging;
 
-
 using System;
 using System.IO;
 using System.Linq;

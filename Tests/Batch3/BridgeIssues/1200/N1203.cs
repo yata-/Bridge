@@ -1,5 +1,5 @@
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -23,7 +23,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         public static void TestLiftedFunctionsInsideInitMethod()
         {
             dynamic scope = Script.Get("$_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge1203");
-            Assert.Null(scope, "scope should not exists");  
+            Assert.Null(scope, "scope should not exists");
         }
     }
 }

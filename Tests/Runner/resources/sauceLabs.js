@@ -16,10 +16,9 @@ QUnit.done(function (test_results) {
 
   // delaying results a bit cause in real-world scenario you won't get them immediately
   setTimeout(function () {
-	  window.global_test_results = test_results; 
+	  window.global_test_results = test_results;
 	  }, 2000);
 });
-
 
   QUnit.log(function (details) {
     if (!details.result) {

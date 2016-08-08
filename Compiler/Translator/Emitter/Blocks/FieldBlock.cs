@@ -6,7 +6,6 @@ using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Bridge.Translator
 {
@@ -212,12 +211,12 @@ namespace Bridge.Translator
                     }
                     else
                     {
-                        this.Injectors.Add(string.Format(name.StartsWith("\"") ? interfaceFormat : format, name, value + defValue));    
+                        this.Injectors.Add(string.Format(name.StartsWith("\"") ? interfaceFormat : format, name, value + defValue));
                     }
 
                     if (needContinue)
                     {
-                        continue;    
+                        continue;
                     }
                 }
 

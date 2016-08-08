@@ -210,7 +210,7 @@ namespace Bridge.Translator
 
             if (!forStatement.Condition.IsNull)
             {
-                forStatement.Condition.AcceptVisitor(this.Emitter);    
+                forStatement.Condition.AcceptVisitor(this.Emitter);
             }
 
             this.WriteSemiColon();

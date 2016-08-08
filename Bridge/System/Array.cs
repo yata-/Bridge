@@ -14,7 +14,7 @@ namespace System
             [Template("{this}.length")]
             get;
         }
-    
+
         private extern Array();
 
         public extern object this[int index]

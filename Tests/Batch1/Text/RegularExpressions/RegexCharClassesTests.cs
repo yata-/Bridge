@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Bridge.Test;
+using System;
 using System.Text.RegularExpressions;
-using Bridge.Test;
 
 namespace Bridge.ClientTest.Text.RegularExpressions
 {
@@ -1160,7 +1160,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             ValidateMatch(m, 0, 0, "", 1, false);
 
             ValidateGroup(m, 0, 0, 0, false, "", 0);
-
         }
 
         [Test]
@@ -1177,7 +1176,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             ValidateCapture(m, 0, 0, 0, 9, "335599901");
         }
 
-        #endregion
+        #endregion MSDN
 
         [Test]
         public void CharClassesInCharGroupTest()

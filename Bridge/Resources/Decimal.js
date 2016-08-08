@@ -72,7 +72,7 @@
 
     System.Decimal.lift = function (d) {
         return d == null ? null : System.Decimal.create(d);
-    }; 
+    };
 
     System.Decimal.prototype.toString = function (format, provider) {
         if (!format && !provider) {
@@ -444,8 +444,7 @@
 
             d = this.value.toFormat(dp, rm);
         }
-        
-        
+
         Bridge.$Decimal.format = old;
         return d;
     };

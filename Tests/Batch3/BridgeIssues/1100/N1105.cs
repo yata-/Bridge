@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using Bridge.Test;
+using System.Collections.Generic;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -14,12 +14,14 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             Assert.AreEqual("Value1", Foo1.DefaultItem);
         }
 
-        class Foo
+        private class Foo
         {
             public static readonly List<Item> Items = new List<Item>() { new Item("test") };
+
             public class Item
             {
                 public string Value;
+
                 public Item(string value)
                 {
                     Value = value;
@@ -27,10 +29,10 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             }
         }
 
-
-        class Foo1
+        private class Foo1
         {
             public static string DefaultItem = Item.Value;
+
             public class Item
             {
                 public static string Value = "Value1";

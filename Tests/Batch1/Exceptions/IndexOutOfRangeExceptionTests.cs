@@ -2,7 +2,6 @@
 
 using System;
 
-
 namespace Bridge.ClientTest.Exceptions
 {
     [Category(Constants.MODULE_INDEXOUTOFRANGEEXCEPTION)]

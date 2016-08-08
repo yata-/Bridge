@@ -1,4 +1,3 @@
-using Bridge;
 using Bridge.Test;
 
 namespace Bridge.ClientTest.BasicCSharp

@@ -1,14 +1,15 @@
-﻿using System.Runtime.CompilerServices;
-using Bridge;
+﻿using Bridge;
+using System.Runtime.CompilerServices;
 
 namespace System
 {
     [External]
     [Name("Boolean")]
-    public struct Boolean: IComparable, IComparable<bool>, IEquatable<bool>
+    public struct Boolean : IComparable, IComparable<bool>, IEquatable<bool>
     {
         [Template("System.Boolean.trueString")]
         public static readonly string TrueString = "True";
+
         [Template("System.Boolean.falseString")]
         public static readonly string FalseString = "False";
 

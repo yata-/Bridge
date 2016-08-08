@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using Bridge.Test;
+using System.Collections.Generic;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -19,7 +19,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         {
             var dict = new Dictionary<int, int>();
             int i = 0;
-            
+
             dict[0] = i = 1;
             Assert.AreEqual(dict[0], 1);
             Assert.AreEqual(i, 1);

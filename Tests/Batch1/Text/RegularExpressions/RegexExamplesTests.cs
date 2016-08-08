@@ -1,5 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using Bridge.Test;
+﻿using Bridge.Test;
+using System.Text.RegularExpressions;
 
 namespace Bridge.ClientTest.Text.RegularExpressions
 {

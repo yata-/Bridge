@@ -1,9 +1,9 @@
 ﻿// http://referencesource.microsoft.com/#mscorlib/system/random.cs,bb77e610694e64ca
 
 // ==++==
-// 
+//
 //   Copyright (c) Microsoft Corporation.  All rights reserved.
-// 
+//
 // ==--==
 /*============================================================
 **
@@ -12,12 +12,10 @@
 **
 ** Purpose: A random number generator.
 **
-** 
+**
 ===========================================================*/
+
 using System;
-using System.Runtime;
-using System.Runtime.CompilerServices;
-using System.Globalization;
 using System.Diagnostics.Contracts;
 
 namespace Transpiled.System
@@ -28,17 +26,18 @@ namespace Transpiled.System
     public class Random
     {
         //
-        // Private Constants 
+        // Private Constants
         //
         private const int MBIG = Int32.MaxValue;
+
         private const int MSEED = 161803398;
         private const int MZ = 0;
-
 
         //
         // Member Variables
         //
         private int inext;
+
         private int inextp;
         private int[] SeedArray = new int[56];
 
@@ -107,6 +106,7 @@ namespace Transpiled.System
         **Arguments: None
         **Exceptions: None
         ==============================================================================*/
+
         protected virtual double Sample()
         {
             //Including this division at the end gives us significantly improved
@@ -152,14 +152,14 @@ namespace Transpiled.System
 
         //
         // Public Instance Methods
-        // 
-
+        //
 
         /*=====================================Next=====================================
         **Returns: An int [0..Int32.MaxValue)
         **Arguments: None
         **Exceptions: None.
         ==============================================================================*/
+
         public virtual int Next()
         {
             return InternalSample();
@@ -167,7 +167,7 @@ namespace Transpiled.System
 
         private double GetSampleForLargeRange()
         {
-            // The distribution of double value returned by Sample 
+            // The distribution of double value returned by Sample
             // is not distributed well enough for a large range.
             // If we use Sample for a range [Int32.MinValue..Int32.MaxValue)
             // We will end up getting even numbers only.
@@ -185,13 +185,13 @@ namespace Transpiled.System
             return d;
         }
 
-
         /*=====================================Next=====================================
         **Returns: An int [minvalue..maxvalue)
         **Arguments: minValue -- the least legal value for the Random number.
         **           maxValue -- One greater than the greatest legal return value.
         **Exceptions: None.
         ==============================================================================*/
+
         public virtual int Next(int minValue, int maxValue)
         {
             if (minValue > maxValue)
@@ -211,12 +211,12 @@ namespace Transpiled.System
             }
         }
 
-
         /*=====================================Next=====================================
         **Returns: An int [0..maxValue)
         **Arguments: maxValue -- One more than the greatest legal return value.
         **Exceptions: None.
         ==============================================================================*/
+
         public virtual int Next(int maxValue)
         {
             if (maxValue < 0)
@@ -227,17 +227,16 @@ namespace Transpiled.System
             return (int)(Sample() * maxValue);
         }
 
-
         /*=====================================Next=====================================
         **Returns: A double [0..1)
         **Arguments: None
         **Exceptions: None
         ==============================================================================*/
+
         public virtual double NextDouble()
         {
             return Sample();
         }
-
 
         /*==================================NextBytes===================================
         **Action:  Fills the byte array with random bytes [0..0x7f].  The entire array is filled.
@@ -245,6 +244,7 @@ namespace Transpiled.System
         **Arugments:  buffer -- the array to be filled.
         **Exceptions: None
         ==============================================================================*/
+
         public virtual void NextBytes(byte[] buffer)
         {
             if (buffer == null)

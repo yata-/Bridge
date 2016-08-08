@@ -27,7 +27,6 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         {
             public DerivedClass1()
             {
-
             }
         }
 
@@ -37,7 +36,6 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 
             public DerivedClass2()
             {
-
             }
         }
 

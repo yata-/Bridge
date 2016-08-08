@@ -1,11 +1,9 @@
-using System;
 using Microsoft.Build.Evaluation;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
-using Bridge.Contract;
 
 namespace Bridge.Translator
 {
@@ -13,7 +11,7 @@ namespace Bridge.Translator
     {
         protected virtual void ReadProjectFile()
         {
-            this.Log.Info("Reading project file at " + ( Location ?? "") + " ...");
+            this.Log.Info("Reading project file at " + (Location ?? "") + " ...");
 
             var doc = XDocument.Load(Location, LoadOptions.SetLineInfo);
 
@@ -136,7 +134,7 @@ namespace Bridge.Translator
                 }
 
                 this.AssemblyName = this.GetAssemblyName(doc);
-                this.AssemblyLocation = Path.Combine(outputPath, this.AssemblyName  + ".dll");
+                this.AssemblyLocation = Path.Combine(outputPath, this.AssemblyName + ".dll");
 
                 if (!File.Exists(this.AssemblyLocation) && !this.Rebuild)
                 {
@@ -192,7 +190,7 @@ namespace Bridge.Translator
                 // This constructor below works on Windows and does NOT break #531
                 project = new Project(this.Location, null, null, new ProjectCollection());
             }
-            
+
             var sourceFiles = new List<string>();
 
             foreach (var projectItem in project.GetItems("Compile"))

@@ -80,7 +80,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineState", {
         cloned.capIndex = this.capIndex;
         cloned.capLength = this.capLength;
 
-
         // Clone passes:
         var clonedPasses = cloned.passes;
         var thisPasses = this.passes;
@@ -102,7 +101,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineState", {
             clonedItem = thisGroups[i];
             clonedGroups.push(clonedItem);
         }
-
 
         return cloned;
     }

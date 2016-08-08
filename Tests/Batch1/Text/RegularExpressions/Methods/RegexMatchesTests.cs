@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Bridge.Test;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Bridge.Test;
 
 namespace Bridge.ClientTest.Text.RegularExpressions.Methods
 {
@@ -37,7 +37,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Methods
         public void MatchesAtPositionTest()
         {
             var expectedMatchValues = new[] { "writes", "notes", "uses" };
-            var expectedMatchIndexes = new[] { 4, 17 , 27};
+            var expectedMatchIndexes = new[] { 4, 17, 27 };
 
             var actualMatchValues = new List<string>();
             var actualMatchIndexes = new List<int>();

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Bridge.Test;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Bridge.Test;
 
 namespace Bridge.ClientTest.Text.RegularExpressions.Methods
 {
@@ -19,7 +19,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Methods
 
             var expected2 = new[] { "[what kind?]", "[by whom?]" };
             var actual2 = new List<string>();
-
 
             string pattern = "[(.*?)]";
             string input = "The animal [what kind?] was visible [by whom?] from the window";
@@ -39,7 +38,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Methods
             }
 
             ValidateCollection(expected2, actual2.ToArray(), "MatchValues2");
-
         }
 
         [Test]
@@ -52,9 +50,9 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Methods
             Assert.AreEqual(pattern, unescaped);
         }
 
-        #endregion
+        #endregion MSDN
 
-        [Test(ExpectedCount=0)]
+        [Test(ExpectedCount = 0)]
         public void EscapeCharSetTest()
         {
             var escapable = "!\"#%&'()*,-./:;?@ABDGSWZ[\\]abdefnrstvwz{}";

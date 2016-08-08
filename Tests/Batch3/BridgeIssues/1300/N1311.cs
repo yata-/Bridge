@@ -24,8 +24,6 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 
             var e3 = Enum.Parse(typeof(SimpleEnum), "3");
             Assert.AreEqual(3, e3, "3");
-
-            
         }
     }
 }

@@ -1,6 +1,6 @@
+using Bridge.Test;
 using System.Collections.Generic;
 using System.Linq;
-using Bridge.Test;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -10,6 +10,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     public class Bridge722
     {
         private int lastItem;
+
         public new int this[string item]
         {
             get

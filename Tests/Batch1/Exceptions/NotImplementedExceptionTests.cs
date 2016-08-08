@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Runtime.CompilerServices;
-using Bridge.Test;
-using Bridge.ClientTest;
+﻿using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.Exceptions
 {

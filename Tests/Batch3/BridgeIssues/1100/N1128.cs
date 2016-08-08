@@ -19,9 +19,8 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             Assert.AreEqual("abc", res);
         }
 
-        class Foo1
+        private class Foo1
         {
-
             public static readonly Item[] Items = new Item[] {
                 new Item("test"),
                 new Item("xyz"),
@@ -31,6 +30,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             public struct Item : IComparable<Item>
             {
                 public string Value;
+
                 public Item(string value)
                 {
                     Value = value;
@@ -42,7 +42,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
                 }
             }
 
-            class Comparer : IComparer<Item>
+            private class Comparer : IComparer<Item>
             {
                 public int Compare(Item x, Item y)
                 {
@@ -54,18 +54,18 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             {
                 Array.Sort(Items, new Comparer()); // throws
             }
-
         }
 
-        class Foo
+        private class Foo
         {
-
             public static readonly Item[] Items = new Item[] {
                 new Item("test") // ctor throws
             };
+
             public struct Item : IComparable<Item>
             {
                 public string Value;
+
                 public Item(string value)
                 {
                     Value = value;

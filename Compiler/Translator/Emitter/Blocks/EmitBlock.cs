@@ -1,4 +1,7 @@
 using Bridge.Contract;
+using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.TypeSystem;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Object.Net.Utilities;
 using System;
@@ -6,10 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using ICSharpCode.NRefactory;
-using ICSharpCode.NRefactory.CSharp;
-using ICSharpCode.NRefactory.TypeSystem;
-using Newtonsoft.Json;
 
 namespace Bridge.Translator
 {
@@ -290,7 +289,7 @@ namespace Bridge.Translator
                 {
                     this.Indent();
                 }
-                
+
                 new ClassBlock(this.Emitter, this.Emitter.TypeInfo).Emit();
                 this.Emitter.Translator.Plugins.AfterTypeEmit(this.Emitter, type);
             }
@@ -301,7 +300,7 @@ namespace Bridge.Translator
                 bool isGlobal = false;
                 if (typeDef != null)
                 {
-                    isGlobal = typeDef.Attributes.Any(a => a.AttributeType.FullName == "Bridge.GlobalMethodsAttribute" ||a.AttributeType.FullName == "Bridge.MixinAttribute");
+                    isGlobal = typeDef.Attributes.Any(a => a.AttributeType.FullName == "Bridge.GlobalMethodsAttribute" || a.AttributeType.FullName == "Bridge.MixinAttribute");
                 }
 
                 if (reflectedTypes.Any(t => t == type.Type) || isGlobal)
@@ -336,7 +335,7 @@ namespace Bridge.Translator
                 {
                     meta = MetadataUtils.ConstructITypeMetadata(reflectedType, this.Emitter);
                 }
-                
+
                 if (meta != null)
                 {
                     metas.Add(reflectedType, meta);
@@ -371,7 +370,7 @@ namespace Bridge.Translator
                         arr_sb.Append(typeArgument.Name);
                         comma = true;
                     }
-                    
+
                     typeArgs = arr_sb.ToString();
                 }
 
@@ -401,16 +400,16 @@ namespace Bridge.Translator
         private IType[] GetReflectableTypes()
         {
             var config = this.Emitter.AssemblyInfo.Reflection;
-            var configInternal = ((AssemblyInfo) this.Emitter.AssemblyInfo).ReflectionInternal;
+            var configInternal = ((AssemblyInfo)this.Emitter.AssemblyInfo).ReflectionInternal;
 
             bool? enable = config.Enabled.HasValue ? config.Enabled : (configInternal.Enabled.HasValue ? configInternal.Enabled : null);
             TypeAccessibility? typeAccessibility = config.TypeAccessibility.HasValue ? config.TypeAccessibility : (configInternal.TypeAccessibility.HasValue ? configInternal.TypeAccessibility : null);
             string filter = !string.IsNullOrEmpty(config.Filter) ? config.Filter : (!string.IsNullOrEmpty(configInternal.Filter) ? configInternal.Filter : null);
-            
-            var hasSettings = !string.IsNullOrEmpty(config.Filter) || 
+
+            var hasSettings = !string.IsNullOrEmpty(config.Filter) ||
                               config.MemberAccessibility.HasValue ||
-                              config.TypeAccessibility.HasValue || 
-                              !string.IsNullOrEmpty(configInternal.Filter) || 
+                              config.TypeAccessibility.HasValue ||
+                              !string.IsNullOrEmpty(configInternal.Filter) ||
                               configInternal.MemberAccessibility.HasValue ||
                               configInternal.TypeAccessibility.HasValue;
 
@@ -553,6 +552,6 @@ namespace Bridge.Translator
             }
 
             return reflectTypes.ToArray();
-        } 
+        }
     }
 }

@@ -131,7 +131,7 @@ namespace Bridge.Translator
             bool isUint = resolveOperator.Type.IsKnownType(KnownTypeCode.UInt16) ||
                           resolveOperator.Type.IsKnownType(KnownTypeCode.UInt32) ||
                           resolveOperator.Type.IsKnownType(KnownTypeCode.UInt64);
-            
+
             var isFloatResult = Helpers.IsFloatType(resolveOperator.Type, this.Emitter.Resolver);
             var leftExpected = this.Emitter.Resolver.Resolver.GetExpectedType(binaryOperatorExpression.Left);
             var rightExpected = this.Emitter.Resolver.Resolver.GetExpectedType(binaryOperatorExpression.Right);
@@ -166,16 +166,16 @@ namespace Bridge.Translator
                 this.HandleDecimal(resolveOperator);
                 return;
             }
-            
+
             var isLeftLong = Helpers.Is64Type(leftExpected, this.Emitter.Resolver);
             var isRightLong = Helpers.Is64Type(rightExpected, this.Emitter.Resolver);
 
             if (!((expectedType.IsKnownType(KnownTypeCode.String) || resolveOperator.Type.IsKnownType(KnownTypeCode.String)) && binaryOperatorExpression.Operator == BinaryOperatorType.Add) && (isLeftLong || isRightLong))
             {
                 isLong = true;
-                isLongExpected = true;    
+                isLongExpected = true;
             }
-            
+
             if (isLong && isLongExpected && binaryOperatorExpression.Operator != BinaryOperatorType.NullCoalescing)
             {
                 if (!isFloatResult || binaryOperatorExpression.Operator == BinaryOperatorType.Divide && isLeftLong)
@@ -254,7 +254,7 @@ namespace Bridge.Translator
                     (binaryOperatorExpression.Operator == BinaryOperatorType.InEquality || binaryOperatorExpression.Operator == BinaryOperatorType.Equality) &&
                     leftExpected.IsReferenceType.HasValue && leftExpected.IsReferenceType.Value &&
                     rightExpected.IsReferenceType.HasValue && rightExpected.IsReferenceType.Value;
-            
+
             if (rootSpecial)
             {
                 this.Write(root);
@@ -312,7 +312,7 @@ namespace Bridge.Translator
                 {
                     this.WriteSpace();
                 }
-                
+
                 switch (binaryOperatorExpression.Operator)
                 {
                     case BinaryOperatorType.Add:
@@ -361,9 +361,9 @@ namespace Bridge.Translator
                     case BinaryOperatorType.Equality:
                         if (!isRefEquals)
                         {
-                            this.Write(rootSpecial ? "eq" : "===");    
+                            this.Write(rootSpecial ? "eq" : "===");
                         }
-                        
+
                         break;
 
                     case BinaryOperatorType.ExclusiveOr:
@@ -499,7 +499,7 @@ namespace Bridge.Translator
                     this.WriteScript(op_name);
                     this.WriteComma();
                     new ExpressionListBlock(this.Emitter,
-                        new Expression[] {this.BinaryOperatorExpression.Left, this.BinaryOperatorExpression.Right}, null, null, 0)
+                        new Expression[] { this.BinaryOperatorExpression.Left, this.BinaryOperatorExpression.Right }, null, null, 0)
                         .Emit();
                     this.AddOveflowFlag(typeCode, op_name);
                     this.WriteCloseParentheses();
@@ -519,7 +519,7 @@ namespace Bridge.Translator
                     this.WriteOpenParentheses();
 
                     new ExpressionListBlock(this.Emitter,
-                        new Expression[] {this.BinaryOperatorExpression.Left, this.BinaryOperatorExpression.Right}, null, null, 0)
+                        new Expression[] { this.BinaryOperatorExpression.Left, this.BinaryOperatorExpression.Right }, null, null, 0)
                         .Emit();
                     this.AddOveflowFlag(typeCode, op_name);
                     this.WriteCloseParentheses();
@@ -548,7 +548,7 @@ namespace Bridge.Translator
                     this.WriteOpenParentheses();
                     this.BinaryOperatorExpression.Right.AcceptVisitor(this.Emitter);
                     this.AddOveflowFlag(typeCode, op_name);
-                    this.WriteCloseParentheses();    
+                    this.WriteCloseParentheses();
                 }
             }
         }
@@ -625,7 +625,7 @@ namespace Bridge.Translator
                     throw new ArgumentOutOfRangeException();
             }
 
-            this.HandleType(resolveOperator, KnownTypeCode.Decimal,  op_name, action);
+            this.HandleType(resolveOperator, KnownTypeCode.Decimal, op_name, action);
         }
 
         private void HandleLong(ResolveResult resolveOperator, bool isUint)
@@ -713,7 +713,7 @@ namespace Bridge.Translator
                     throw new ArgumentOutOfRangeException();
             }
 
-            this.HandleType(resolveOperator, isUint ? KnownTypeCode.UInt64  : KnownTypeCode.Int64, op_name, action);
+            this.HandleType(resolveOperator, isUint ? KnownTypeCode.UInt64 : KnownTypeCode.Int64, op_name, action);
         }
     }
 }

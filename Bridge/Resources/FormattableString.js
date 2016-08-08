@@ -6,7 +6,7 @@
 
         toString: function () {
             return this.fmt(System.Globalization.CultureInfo.getCurrentCulture());
-        }            
+        }
     });
 
     Bridge.define('System.FormattableStringImpl', {
@@ -39,5 +39,5 @@
             create: function (fmt, args) {
                 return new System.FormattableStringImpl(fmt, args);
             }
-        }        
+        }
     });

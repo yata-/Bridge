@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Bridge.Test;
+using System;
 using System.Threading;
-
-using Bridge.Test;
 
 namespace Bridge.ClientTest.Exceptions
 {

@@ -1,4 +1,3 @@
-using Bridge;
 using Bridge.Test;
 using System;
 
@@ -208,6 +207,7 @@ namespace Bridge.ClientTest.BasicCSharp
         {
             return default(int);
         }
+
         // due to [#73] needs priority to be generated after the parent class
         // [Priority(-1)]
         public class Aux1
@@ -230,6 +230,7 @@ namespace Bridge.ClientTest.BasicCSharp
             }
         }
     }
+
     // [#68] Multiple field declaration renders incorrectly
     public class Class68
     {

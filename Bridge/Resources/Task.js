@@ -367,7 +367,6 @@
         }
     });
 
-
     Bridge.define("System.Threading.Tasks.TaskCompletionSource", {
         constructor: function () {
             this.$initialize();
@@ -560,7 +559,6 @@
             if (x.length > 0 && throwFirst !== -1) {
                 throw new System.AggregateException(null, x);
             }
-
         },
 
         cancelAfter: function (delay) {

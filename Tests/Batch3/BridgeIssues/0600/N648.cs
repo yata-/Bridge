@@ -1,5 +1,5 @@
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -9,8 +9,10 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         {
             Value = value;
         }
+
         public string Value { get; private set; }
-        public static implicit operator string(Bridge648A value)
+
+        public static implicit operator string (Bridge648A value)
         {
             return value.Value;
         }

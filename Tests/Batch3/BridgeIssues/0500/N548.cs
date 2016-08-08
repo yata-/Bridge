@@ -1,7 +1,6 @@
-﻿using Bridge.Html5;
+﻿using Bridge.ClientTest.Batch3.Utilities;
+using Bridge.Html5;
 using Bridge.Test;
-
-using Bridge.ClientTest.Batch3.Utilities;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {

@@ -1,7 +1,6 @@
+using Bridge.Test;
 using System;
 using System.Collections.Generic;
-
-using Bridge.Test;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {

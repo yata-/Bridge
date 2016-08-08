@@ -1,5 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using Bridge.Test;
+﻿using Bridge.Test;
+using System.Text.RegularExpressions;
 
 namespace Bridge.ClientTest.Text.RegularExpressions
 {
@@ -334,7 +334,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             ValidateCapture(ms[4], 2, 0, 123, 10, "11,372,613");
         }
 
-        #endregion
+        #endregion MSDN
 
         [Test]
         public void CharEscapesTest()
@@ -457,9 +457,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions
 
             ValidateGroup(ms[10], 1, 30, 1, true, "K", 1);
             ValidateCapture(ms[10], 1, 0, 30, 1, "K");
-
-
-
         }
 
         [Test]
@@ -826,9 +823,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions
 
             ValidateGroup(ms[31], 0, 93, 1, true, "\u001F", 1);
             ValidateCapture(ms[31], 0, 0, 93, 1, "\u001F");
-
-
-
         }
 
         [Test]

@@ -1,5 +1,5 @@
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -50,7 +50,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             s = Int16.MinValue.ToString();
             s = Int32.MinValue.ToString();
             s = Int64.MinValue.ToString();
-                                         
+
             Assert.AreEqual("-9223372036854775808", s);
         }
     }

@@ -1,7 +1,6 @@
 using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using Mono.Cecil;
-using System;
 using System.Collections.Generic;
 
 namespace Bridge.Translator

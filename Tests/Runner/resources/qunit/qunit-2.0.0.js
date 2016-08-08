@@ -10,7 +10,6 @@
  */
 
 ( function( global ) {
-
 var QUnit = {};
 
 var Date = global.Date;
@@ -203,7 +202,6 @@ function sourceFromStacktrace( offset ) {
  * `config` initialized at top of scope
  */
 var config = {
-
 	// The queue of tests to run
 	queue: [],
 
@@ -337,7 +335,6 @@ QUnit.isLocal = !( defined.document && window.location.protocol !== "file:" );
 QUnit.version = "2.0.0";
 
 extend( QUnit, {
-
 	// Call on start of module test to prepend name to all tests
 	module: function( name, testEnvironment, executeNow ) {
 		var module, moduleFns;
@@ -407,7 +404,6 @@ extend( QUnit, {
 		function setCurrentModule( module ) {
 			config.currentModule = module;
 		}
-
 	},
 
 	test: test,
@@ -430,7 +426,6 @@ extend( QUnit, {
 				throw new Error( "Called start() outside of a test context when " +
 					"QUnit.config.autostart was true" );
 			} else if ( !config.pageLoaded ) {
-
 				// The page isn't completely loaded yet, so bail out and let `QUnit.load` handle it
 				config.autostart = true;
 				return;
@@ -488,7 +483,6 @@ function begin() {
 
 	// If the test run hasn't officially begun yet
 	if ( !config.started ) {
-
 		// Record the time of the test run's beginning
 		config.started = now();
 
@@ -527,7 +521,6 @@ function process( last ) {
 		if ( !defined.setTimeout || config.updateRate <= 0 ||
 				( ( now() - start ) < config.updateRate ) ) {
 			if ( config.current ) {
-
 				// Reset async tracking for each phase of the Test lifecycle
 				config.current.usedAsync = false;
 			}
@@ -653,7 +646,6 @@ function Test( settings ) {
 	} );
 
 	if ( settings.skip ) {
-
 		// Skipped tests will fully ignore any sent callback
 		this.callback = function() {};
 		this.async = false;
@@ -880,7 +872,6 @@ Test.prototype = {
 		}
 
 		function run() {
-
 			// Each of these can by async
 			synchronize( [
 				function() {
@@ -920,7 +911,6 @@ Test.prototype = {
 	},
 
 	pushResult: function( resultInfo ) {
-
 		// Destructure of resultInfo = { result, actual, expected, message, negative }
 		var source,
 			details = {
@@ -1035,13 +1025,11 @@ Test.prototype = {
 
 		if ( config.moduleId && config.moduleId.length > 0 &&
 			!moduleChainIdMatch( this.module ) ) {
-
 			return false;
 		}
 
 		if ( config.testId && config.testId.length > 0 &&
 			inArray( this.testId, config.testId ) < 0 ) {
-
 			return false;
 		}
 
@@ -1151,7 +1139,6 @@ function synchronize( callback, priority, seed ) {
 }
 
 function unitSamplerGenerator( seed ) {
-
 	// 32-bit xorshift, requires only a nonzero seed
 	// http://excamera.com/sphinx/article-xorshift.html
 	var sample = parseInt( generateHash( seed ), 16 ) || -1;
@@ -1175,7 +1162,6 @@ function saveGlobal() {
 	if ( config.noglobals ) {
 		for ( var key in global ) {
 			if ( hasOwn.call( global, key ) ) {
-
 				// In Opera sometimes DOM element ids show up here, ignore them
 				if ( /^qunit-test-output/.test( key ) ) {
 					continue;
@@ -1248,7 +1234,6 @@ function only( testName, callback ) {
 }
 
 function internalStop( test ) {
-
 	// If a test is running, adjust its semaphore
 	test.semaphore += 1;
 
@@ -1256,7 +1241,6 @@ function internalStop( test ) {
 }
 
 function internalStart( test ) {
-
 	// If a test is running, adjust its semaphore
 	test.semaphore -= 1;
 
@@ -1311,7 +1295,6 @@ function Assert( testContext ) {
 
 // Assert helpers
 QUnit.assert = Assert.prototype = {
-
 	// Specify the number of expected assertions to guarantee that failed test
 	// (no assertions are run at all) don't slip through.
 	expect: function( asserts ) {
@@ -1338,7 +1321,6 @@ QUnit.assert = Assert.prototype = {
 		pauseProcessing( test );
 
 		return function done() {
-
 			if ( popped ) {
 				test.pushFailure( "Too many calls to the `assert.async` callback",
 					sourceFromStacktrace( 2 ) );
@@ -1369,7 +1351,6 @@ QUnit.assert = Assert.prototype = {
 	},
 
 	pushResult: function( resultInfo ) {
-
 		// Destructure of resultInfo = { result, actual, expected, message, negative }
 		var assert = this,
 			currentTest = ( assert instanceof Assert && assert.test ) || QUnit.config.current;
@@ -1597,7 +1578,6 @@ function errorString( error ) {
 // Test for equality any JavaScript type.
 // Author: Philippe Rathé <prathe@gmail.com>
 QUnit.equiv = ( function() {
-
 	// Stack to decide between skip/abort functions
 	var callers = [];
 
@@ -1606,13 +1586,11 @@ QUnit.equiv = ( function() {
 	var parentsB = [];
 
 	var getProto = Object.getPrototypeOf || function( obj ) {
-
 		/*jshint proto: true */
 		return obj.__proto__;
 	};
 
 	function useStrictEquality( b, a ) {
-
 		// To catch short annotation VS 'new' annotation of a declaration. e.g.:
 		// `var i = 1;`
 		// `var j = new Number(1);`
@@ -1692,7 +1670,6 @@ QUnit.equiv = ( function() {
 
 			len = a.length;
 			if ( len !== b.length ) {
-
 				// Safe and faster
 				return false;
 			}
@@ -1824,7 +1801,6 @@ QUnit.equiv = ( function() {
 			callers.pop();
 
 			for ( i in b ) {
-
 				// Collect b's properties
 				bProperties.push( i );
 			}
@@ -1841,7 +1817,6 @@ QUnit.equiv = ( function() {
 
 	// The real equiv function
 	function innerEquiv( a, b ) {
-
 		// We're done when there's nothing more to compare
 		if ( arguments.length < 2 ) {
 			return true;
@@ -1911,7 +1886,6 @@ QUnit.dump = ( function() {
 
 	var reName = /^function (\w+)/,
 		dump = {
-
 			// The objType is used mostly internally, you can fix a (custom) type in advance
 			parse: function( obj, objType, stack ) {
 				stack = stack || [];
@@ -2098,7 +2072,6 @@ QUnit.dump = ( function() {
 
 					args = new Array( l );
 					while ( l-- ) {
-
 						// 97 is 'a'
 						args[ l ] = String.fromCharCode( 97 + l );
 					}
@@ -2232,7 +2205,6 @@ if ( typeof define === "function" && define.amd ) {
 }() ) ) );
 
 ( function() {
-
 if ( typeof window === "undefined" || !window.document ) {
 	return;
 }
@@ -2242,7 +2214,6 @@ var config = QUnit.config,
 
 // Stores fixture HTML for resetting later
 function storeFixture() {
-
 	// Avoid overwriting user-defined values
 	if ( hasOwn.call( config, "fixture" ) ) {
 		return;
@@ -2269,11 +2240,9 @@ function resetFixture() {
 }
 
 QUnit.testStart( resetFixture );
-
 }() );
 
 ( function() {
-
 // Only interact with URLs via window.location
 var location = typeof window !== "undefined" && window.location;
 if ( !location ) {
@@ -2296,7 +2265,6 @@ QUnit.config.filter = urlParams.filter;
 
 // Test order randomization
 if ( urlParams.seed === true ) {
-
 	// Generate a random seed if the option is specified without a value
 	QUnit.config.seed = Math.random().toString( 36 ).slice( 2 );
 } else if ( urlParams.seed ) {
@@ -2329,7 +2297,6 @@ QUnit.begin( function() {
 		urlConfig = QUnit.config.urlConfig;
 
 	for ( i = 0; i < urlConfig.length; i++ ) {
-
 		// Options can be either strings or objects with nonempty "id" properties
 		option = QUnit.config.urlConfig[ i ];
 		if ( typeof option !== "string" ) {
@@ -2494,7 +2461,6 @@ function getUrlConfigHtml() {
 		urlConfigHtml = "";
 
 	for ( i = 0; i < urlConfig.length; i++ ) {
-
 		// Options can be either strings or objects with nonempty "id" properties
 		val = config.urlConfig[ i ];
 		if ( typeof val === "string" ) {
@@ -2589,10 +2555,8 @@ function setUrl( params ) {
 	params = QUnit.extend( QUnit.extend( {}, QUnit.urlParams ), params );
 
 	for ( key in params ) {
-
 		// Skip inherited or undefined properties
 		if ( hasOwn.call( params, key ) && params[ key ] !== undefined ) {
-
 			// Output a parameter for each value of this key (but usually just one)
 			arrValue = [].concat( params[ key ] );
 			for ( i = 0; i < arrValue.length; i++ ) {
@@ -2734,7 +2698,6 @@ function toolbarModuleFilter () {
 	moduleFilter.appendChild( dropDown ) ;
 	addEvent( moduleFilter, "submit", interceptNavigation );
 	addEvent( moduleFilter, "reset", function() {
-
 		// Let the reset happen, then update styles
 		window.setTimeout( selectionChange );
 	} );
@@ -3001,7 +2964,6 @@ QUnit.done( function( details ) {
 	}
 
 	if ( config.altertitle && document.title ) {
-
 		// Show ✖ for good, ✔ for bad suite result in title
 		// use escape sequences in case file gets loaded with non-utf-8-charset
 		document.title = [
@@ -3045,7 +3007,6 @@ QUnit.testStart( function( details ) {
 	if ( testBlock ) {
 		testBlock.className = "running";
 	} else {
-
 		// Report later registered tests
 		appendTest( details.name, details.testId, details.module );
 	}
@@ -3060,11 +3021,9 @@ QUnit.testStart( function( details ) {
 			"Running: <br />" ) +
 			getNameHtml( details.name, details.module );
 	}
-
 } );
 
 function stripHtml( string ) {
-
 	// Strip tags, html entity and whitespaces
 	return string.replace( /<\/?[^>]+(>|$)/g, "" ).replace( /\&quot;/g, "" ).replace( /\s+/g, "" );
 }
@@ -3099,7 +3058,6 @@ QUnit.log( function( details ) {
 			"</pre></td></tr>";
 
 		if ( actual !== expected ) {
-
 			message += "<tr class='test-actual'><th>Result: </th><td><pre>" +
 				escapeText( actual ) + "</pre></td></tr>";
 
@@ -3180,15 +3138,12 @@ QUnit.testDone( function( details ) {
 	}
 
 	if ( bad === 0 ) {
-
 		// Collapse the passing tests
 		addClass( assertList, "qunit-collapsed" );
 	} else if ( bad && config.collapse && !collapseNext ) {
-
 		// Skip collapsing the first failing test
 		collapseNext = true;
 	} else {
-
 		// Collapse remaining tests
 		addClass( assertList, "qunit-collapsed" );
 	}
@@ -3384,18 +3339,15 @@ QUnit.diff = ( function() {
 		// Is there a deletion operation after the last equality.
 		postDel = false;
 		while ( pointer < diffs.length ) {
-
 			// Equality found.
 			if ( diffs[ pointer ][ 0 ] === DIFF_EQUAL ) {
 				if ( diffs[ pointer ][ 1 ].length < 4 && ( postIns || postDel ) ) {
-
 					// Candidate found.
 					equalities[ equalitiesLength++ ] = pointer;
 					preIns = postIns;
 					preDel = postDel;
 					lastequality = diffs[ pointer ][ 1 ];
 				} else {
-
 					// Not a candidate, and can never become one.
 					equalitiesLength = 0;
 					lastequality = null;
@@ -3404,7 +3356,6 @@ QUnit.diff = ( function() {
 
 			// An insertion or deletion.
 			} else {
-
 				if ( diffs[ pointer ][ 0 ] === DIFF_DELETE ) {
 					postDel = true;
 				} else {
@@ -3422,7 +3373,6 @@ QUnit.diff = ( function() {
 				if ( lastequality && ( ( preIns && preDel && postIns && postDel ) ||
 						( ( lastequality.length < 2 ) &&
 						( preIns + preDel + postIns + postDel ) === 3 ) ) ) {
-
 					// Duplicate record.
 					diffs.splice(
 						equalities[ equalitiesLength - 1 ],
@@ -3435,7 +3385,6 @@ QUnit.diff = ( function() {
 					equalitiesLength--; // Throw away the equality we just deleted;
 					lastequality = null;
 					if ( preIns && preDel ) {
-
 						// No changes made which could affect previous entry, keep going.
 						postIns = postDel = true;
 						equalitiesLength = 0;
@@ -3569,7 +3518,6 @@ QUnit.diff = ( function() {
 			midCommon, diffsA, diffsB;
 
 		if ( !text1 ) {
-
 			// Just add some text (speedup).
 			return [
 				[ DIFF_INSERT, text2 ]
@@ -3577,7 +3525,6 @@ QUnit.diff = ( function() {
 		}
 
 		if ( !text2 ) {
-
 			// Just delete some text (speedup).
 			return [
 				[ DIFF_DELETE, text1 ]
@@ -3588,7 +3535,6 @@ QUnit.diff = ( function() {
 		shorttext = text1.length > text2.length ? text2 : text1;
 		i = longtext.indexOf( shorttext );
 		if ( i !== -1 ) {
-
 			// Shorter text is inside the longer text (speedup).
 			diffs = [
 				[ DIFF_INSERT, longtext.substring( 0, i ) ],
@@ -3604,7 +3550,6 @@ QUnit.diff = ( function() {
 		}
 
 		if ( shorttext.length === 1 ) {
-
 			// Single character string.
 			// After the previous speedup, the character can't be an equality.
 			return [
@@ -3616,7 +3561,6 @@ QUnit.diff = ( function() {
 		// Check to see if the problem can be split in two.
 		hm = this.diffHalfMatch( text1, text2 );
 		if ( hm ) {
-
 			// A half-match was found, sort out the return data.
 			text1A = hm[ 0 ];
 			text1B = hm[ 1 ];
@@ -3721,7 +3665,6 @@ QUnit.diff = ( function() {
 		} else if ( !hm1 ) {
 			hm = hm2;
 		} else {
-
 			// Both matched.  Select the longest.
 			hm = hm1[ 4 ].length > hm2[ 4 ].length ? hm1 : hm2;
 		}
@@ -3793,7 +3736,6 @@ QUnit.diff = ( function() {
 
 				// Upon reaching an equality, check for prior redundancies.
 				if ( countDelete >= 1 && countInsert >= 1 ) {
-
 					// Delete the offending records and add the merged ones.
 					diffs.splice( pointer - countDelete - countInsert,
 						countDelete + countInsert );
@@ -3862,7 +3804,6 @@ QUnit.diff = ( function() {
 		k2start = 0;
 		k2end = 0;
 		for ( d = 0; d < maxD; d++ ) {
-
 			// Bail out if deadline is reached.
 			if ( ( new Date() ).getTime() > deadline ) {
 				break;
@@ -3884,21 +3825,17 @@ QUnit.diff = ( function() {
 				}
 				v1[ k1Offset ] = x1;
 				if ( x1 > text1Length ) {
-
 					// Ran off the right of the graph.
 					k1end += 2;
 				} else if ( y1 > text2Length ) {
-
 					// Ran off the bottom of the graph.
 					k1start += 2;
 				} else if ( front ) {
 					k2Offset = vOffset + delta - k1;
 					if ( k2Offset >= 0 && k2Offset < vLength && v2[ k2Offset ] !== -1 ) {
-
 						// Mirror x2 onto top-left coordinate system.
 						x2 = text1Length - v2[ k2Offset ];
 						if ( x1 >= x2 ) {
-
 							// Overlap detected.
 							return this.diffBisectSplit( text1, text2, x1, y1, deadline );
 						}
@@ -3923,11 +3860,9 @@ QUnit.diff = ( function() {
 				}
 				v2[ k2Offset ] = x2;
 				if ( x2 > text1Length ) {
-
 					// Ran off the left of the graph.
 					k2end += 2;
 				} else if ( y2 > text2Length ) {
-
 					// Ran off the top of the graph.
 					k2start += 2;
 				} else if ( !front ) {
@@ -3939,7 +3874,6 @@ QUnit.diff = ( function() {
 						// Mirror x2 onto top-left coordinate system.
 						x2 = text1Length - x2;
 						if ( x1 >= x2 ) {
-
 							// Overlap detected.
 							return this.diffBisectSplit( text1, text2, x1, y1, deadline );
 						}
@@ -4026,7 +3960,6 @@ QUnit.diff = ( function() {
 						Math.max( lengthInsertions1, lengthDeletions1 ) ) &&
 						( lastequality.length <= Math.max( lengthInsertions2,
 							lengthDeletions2 ) ) ) {
-
 					// Duplicate record.
 					diffs.splice(
 						equalities[ equalitiesLength - 1 ],
@@ -4078,7 +4011,6 @@ QUnit.diff = ( function() {
 				if ( overlapLength1 >= overlapLength2 ) {
 					if ( overlapLength1 >= deletion.length / 2 ||
 							overlapLength1 >= insertion.length / 2 ) {
-
 						// Overlap found.  Insert an equality and trim the surrounding edits.
 						diffs.splice(
 							pointer,
@@ -4093,7 +4025,6 @@ QUnit.diff = ( function() {
 				} else {
 					if ( overlapLength2 >= deletion.length / 2 ||
 							overlapLength2 >= insertion.length / 2 ) {
-
 						// Reverse overlap found.
 						// Insert an equality and swap and trim the surrounding edits.
 						diffs.splice(
@@ -4291,7 +4222,6 @@ QUnit.diff = ( function() {
 				// Upon reaching an equality, check for prior redundancies.
 				if ( countDelete + countInsert > 1 ) {
 					if ( countDelete !== 0 && countInsert !== 0 ) {
-
 						// Factor out any common prefixes.
 						commonlength = this.diffCommonPrefix( textInsert, textDelete );
 						if ( commonlength !== 0 ) {
@@ -4339,7 +4269,6 @@ QUnit.diff = ( function() {
 					pointer = pointer - countDelete - countInsert +
 						( countDelete ? 1 : 0 ) + ( countInsert ? 1 : 0 ) + 1;
 				} else if ( pointer !== 0 && diffs[ pointer - 1 ][ 0 ] === DIFF_EQUAL ) {
-
 					// Merge this equality with the previous one.
 					diffs[ pointer - 1 ][ 1 ] += diffs[ pointer ][ 1 ];
 					diffs.splice( pointer, 1 );
@@ -4367,7 +4296,6 @@ QUnit.diff = ( function() {
 		while ( pointer < diffs.length - 1 ) {
 			if ( diffs[ pointer - 1 ][ 0 ] === DIFF_EQUAL &&
 					diffs[ pointer + 1 ][ 0 ] === DIFF_EQUAL ) {
-
 				diffPointer = diffs[ pointer ][ 1 ];
 				position = diffPointer.substring(
 					diffPointer.length - diffs[ pointer - 1 ][ 1 ].length
@@ -4375,7 +4303,6 @@ QUnit.diff = ( function() {
 
 				// This is a single edit surrounded by equalities.
 				if ( position === diffs[ pointer - 1 ][ 1 ] ) {
-
 					// Shift the edit over the previous equality.
 					diffs[ pointer ][ 1 ] = diffs[ pointer - 1 ][ 1 ] +
 						diffs[ pointer ][ 1 ].substring( 0, diffs[ pointer ][ 1 ].length -
@@ -4386,7 +4313,6 @@ QUnit.diff = ( function() {
 					changes = true;
 				} else if ( diffPointer.substring( 0, diffs[ pointer + 1 ][ 1 ].length ) ===
 						diffs[ pointer + 1 ][ 1 ] ) {
-
 					// Shift the edit over the next equality.
 					diffs[ pointer - 1 ][ 1 ] += diffs[ pointer + 1 ][ 1 ];
 					diffs[ pointer ][ 1 ] =
@@ -4415,5 +4341,4 @@ QUnit.diff = ( function() {
 		return text;
 	};
 }() );
-
 }() );

@@ -2,9 +2,9 @@
 // https://github.com/dotnet/corefx/blob/master/src/System.Runtime.Extensions/tests/System/Convert.ToDateTime.cs
 // https://github.com/dotnet/corefx/blob/master/LICENSE
 
+using Bridge.Test;
 using System;
 using System.Globalization;
-using Bridge.Test;
 
 namespace Bridge.ClientTest.ConvertTests
 {

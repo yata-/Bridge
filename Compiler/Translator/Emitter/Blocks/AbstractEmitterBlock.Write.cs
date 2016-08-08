@@ -85,19 +85,19 @@ namespace Bridge.Translator
 
             if (value is char)
             {
-                s = emitter.ToJavaScript((int) (char) value);
+                s = emitter.ToJavaScript((int)(char)value);
             }
             else if (value is decimal)
             {
-                s = JS.Types.SYSTEM_DECIMAL + "(" + AbstractEmitterBlock.DecimalConstant((decimal) value, emitter) + ")";
+                s = JS.Types.SYSTEM_DECIMAL + "(" + AbstractEmitterBlock.DecimalConstant((decimal)value, emitter) + ")";
             }
             else if (value is long)
             {
-                s = JS.Types.SYSTEM_INT64 + "(" + AbstractEmitterBlock.LongConstant((long) value, emitter) + ")";
+                s = JS.Types.SYSTEM_INT64 + "(" + AbstractEmitterBlock.LongConstant((long)value, emitter) + ")";
             }
             else if (value is ulong)
             {
-                s = JS.Types.SYSTEM_UInt64 + "(" + AbstractEmitterBlock.ULongConstant((ulong) value, emitter) + ")";
+                s = JS.Types.SYSTEM_UInt64 + "(" + AbstractEmitterBlock.ULongConstant((ulong)value, emitter) + ")";
             }
             else
             {
@@ -156,7 +156,7 @@ namespace Bridge.Translator
                 int l1 = (int)(value & uint.MaxValue);
                 int l2 = (int)(value >> 32);
 
-                return emitter.ToJavaScript(new int[] { l1, l2 });    
+                return emitter.ToJavaScript(new int[] { l1, l2 });
             }
 
             return emitter.ToJavaScript(value);
@@ -424,7 +424,7 @@ namespace Bridge.Translator
 
         public virtual void PushWriter(string format, Action callback = null, string thisArg = null, int[] ignoreRange = null)
         {
-            this.Emitter.Writers.Push(new Writer{InlineCode = format, Output = this.Emitter.Output, IsNewLine = this.Emitter.IsNewLine, Callback = callback, ThisArg = thisArg, IgnoreRange = ignoreRange});
+            this.Emitter.Writers.Push(new Writer { InlineCode = format, Output = this.Emitter.Output, IsNewLine = this.Emitter.IsNewLine, Callback = callback, ThisArg = thisArg, IgnoreRange = ignoreRange });
             this.Emitter.IsNewLine = false;
             this.Emitter.Output = new StringBuilder();
         }
@@ -474,13 +474,13 @@ namespace Bridge.Translator
             StringBuilder output = new StringBuilder();
             string indentWhiteSpaces = new string(' ', offset);
 
-            int level = offset/4;
+            int level = offset / 4;
             for (var i = 0; i < level; i++)
             {
                 output.Append("\t");
             }
 
-            var needSpaces = offset%4;
+            var needSpaces = offset % 4;
             if (needSpaces > 0)
             {
                 output.Append(new string(' ', needSpaces));

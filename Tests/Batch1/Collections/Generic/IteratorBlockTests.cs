@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Bridge.Test;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Bridge.Test;
-using Bridge.ClientTest;
 using System.Text;
 
 #pragma warning disable 162	// CS0162: Unreachable code detected. Disable because we want to assert that code does not reach unreachable parts
@@ -157,7 +156,7 @@ namespace Bridge.ClientTest.Collections.Generic
             }
             enm.Dispose();
 
-            AssertEqual(sb.ToString(),"yielding 0\nyielding 1\nyielding 2\nyielding 3\nyielding 4\nyielding -1\nin finally\ngot 0\ngot 1\n");
+            AssertEqual(sb.ToString(), "yielding 0\nyielding 1\nyielding 2\nyielding 3\nyielding 4\nyielding -1\nin finally\ngot 0\ngot 1\n");
         }
 
         [Test(Name = "IteratorBlock - {0} Exception thrown not caught")]

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Bridge.Contract;
 using Bridge.Contract.Constants;
 using ICSharpCode.NRefactory.CSharp;
@@ -63,7 +62,7 @@ namespace Bridge.Translator
                     {
                         arrayCreateExpression.Arguments.First().AcceptVisitor(this.Emitter);
                     }
-                    
+
                     this.Write(")");
                 }
                 else
@@ -92,9 +91,9 @@ namespace Bridge.Translator
                         }
                         else
                         {
-                            this.Write(Inspector.GetStructDefaultValue(at.ElementType, this.Emitter));    
+                            this.Write(Inspector.GetStructDefaultValue(at.ElementType, this.Emitter));
                         }
-                        
+
                         this.WriteSemiColon();
                         this.WriteNewLine();
                         this.EndBlock();

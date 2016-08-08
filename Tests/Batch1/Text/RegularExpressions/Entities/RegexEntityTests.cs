@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Bridge.Test;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Bridge.Test;
 
 namespace Bridge.ClientTest.Text.RegularExpressions.Entities
 {
@@ -56,46 +56,46 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
             ValidateCapture(m2, 1, 3, 36, 9, "sentance.");
         }
 
-        #endregion
+        #endregion Test data
 
         [Test]
         public void GetGroupNamesTest()
         {
             var rgx = new Regex("");
             var names = rgx.GetGroupNames();
-            ValidateCollection(new[] {"0"}, names, "EmptyRegex");
+            ValidateCollection(new[] { "0" }, names, "EmptyRegex");
 
             rgx = new Regex("()");
             names = rgx.GetGroupNames();
-            ValidateCollection(new[] {"0", "1"}, names, "EmptyGroup");
+            ValidateCollection(new[] { "0", "1" }, names, "EmptyGroup");
 
             rgx = new Regex("(group1)");
             names = rgx.GetGroupNames();
-            ValidateCollection(new[] {"0", "1"}, names, "Group1");
+            ValidateCollection(new[] { "0", "1" }, names, "Group1");
 
             rgx = new Regex("(group1)(group2)");
             names = rgx.GetGroupNames();
-            ValidateCollection(new[] {"0", "1", "2"}, names, "Group2");
+            ValidateCollection(new[] { "0", "1", "2" }, names, "Group2");
 
             rgx = new Regex("(group1())(group2)");
             names = rgx.GetGroupNames();
-            ValidateCollection(new[] {"0", "1", "2", "3"}, names, "Group3");
+            ValidateCollection(new[] { "0", "1", "2", "3" }, names, "Group3");
 
             rgx = new Regex("(?<name1>)");
             names = rgx.GetGroupNames();
-            ValidateCollection(new[] {"0", "name1"}, names, "NameGroup1");
+            ValidateCollection(new[] { "0", "name1" }, names, "NameGroup1");
 
             rgx = new Regex("(?<name1>)(?'name2')");
             names = rgx.GetGroupNames();
-            ValidateCollection(new[] {"0", "name1", "name2"}, names, "NameGroup2");
+            ValidateCollection(new[] { "0", "name1", "name2" }, names, "NameGroup2");
 
             rgx = new Regex("(?<name1>(?'inner1'))(?'name2')");
             names = rgx.GetGroupNames();
-            ValidateCollection(new[] {"0", "name1", "inner1", "name2"}, names, "NameGroup3");
+            ValidateCollection(new[] { "0", "name1", "inner1", "name2" }, names, "NameGroup3");
 
             rgx = new Regex("(?<test>)()");
             names = rgx.GetGroupNames();
-            ValidateCollection(new[] {"0", "1", "test"}, names, "NameGroupAndNoname1");
+            ValidateCollection(new[] { "0", "1", "test" }, names, "NameGroupAndNoname1");
         }
 
         [Test]
@@ -103,39 +103,39 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
         {
             var rgx = new Regex("");
             var numbers = rgx.GetGroupNumbers();
-            ValidateCollection(new[] {0}, numbers, "EmptyRegex");
+            ValidateCollection(new[] { 0 }, numbers, "EmptyRegex");
 
             rgx = new Regex("()");
             numbers = rgx.GetGroupNumbers();
-            ValidateCollection(new[] {0, 1}, numbers, "EmptyGroup");
+            ValidateCollection(new[] { 0, 1 }, numbers, "EmptyGroup");
 
             rgx = new Regex("(group1)");
             numbers = rgx.GetGroupNumbers();
-            ValidateCollection(new[] {0, 1}, numbers, "Group1");
+            ValidateCollection(new[] { 0, 1 }, numbers, "Group1");
 
             rgx = new Regex("(group1)(group2)");
             numbers = rgx.GetGroupNumbers();
-            ValidateCollection(new[] {0, 1, 2}, numbers, "Group2");
+            ValidateCollection(new[] { 0, 1, 2 }, numbers, "Group2");
 
             rgx = new Regex("(group1())(group2)");
             numbers = rgx.GetGroupNumbers();
-            ValidateCollection(new[] {0, 1, 2, 3}, numbers, "Group3");
+            ValidateCollection(new[] { 0, 1, 2, 3 }, numbers, "Group3");
 
             rgx = new Regex("(?<name1>)");
             numbers = rgx.GetGroupNumbers();
-            ValidateCollection(new[] {0, 1}, numbers, "NameGroup1");
+            ValidateCollection(new[] { 0, 1 }, numbers, "NameGroup1");
 
             rgx = new Regex("(?<name1>)(?'name2')");
             numbers = rgx.GetGroupNumbers();
-            ValidateCollection(new[] {0, 1, 2}, numbers, "NameGroup2");
+            ValidateCollection(new[] { 0, 1, 2 }, numbers, "NameGroup2");
 
             rgx = new Regex("(?<name1>(?'inner1'))(?'name2')");
             numbers = rgx.GetGroupNumbers();
-            ValidateCollection(new[] {0, 1, 2, 3}, numbers, "NameGroup3");
+            ValidateCollection(new[] { 0, 1, 2, 3 }, numbers, "NameGroup3");
 
             rgx = new Regex("(?<test>)()");
             numbers = rgx.GetGroupNumbers();
-            ValidateCollection(new[] {0, 1, 2}, numbers, "NameGroupAndNoname1");
+            ValidateCollection(new[] { 0, 1, 2 }, numbers, "NameGroupAndNoname1");
         }
 
         [Test]
@@ -166,7 +166,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
             rgx = new Regex("(?<name1>)");
             Assert.AreEqual("0", rgx.GroupNameFromNumber(0), "NameGroup1.GroupNameFromNumber(0)");
             Assert.AreEqual("name1", rgx.GroupNameFromNumber(1), "NameGroup1.GroupNameFromNumber(1)");
-
 
             rgx = new Regex("(?<name1>)(?'name2')");
             Assert.AreEqual("0", rgx.GroupNameFromNumber(0), "NameGroup2.GroupNameFromNumber(0)");
@@ -220,7 +219,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
             Assert.AreEqual(0, rgx.GroupNumberFromName("0"), "NameGroup2.GroupNumberFromName(\"0\")");
             Assert.AreEqual(1, rgx.GroupNumberFromName("name1"), "NameGroup2.GroupNumberFromName(\"name1\")");
             Assert.AreEqual(2, rgx.GroupNumberFromName("name2"), "NameGroup2.GroupNumberFromName(\"name2\")");
-
 
             rgx = new Regex("(?<name1>(?'inner1'))(?'name2')");
             Assert.AreEqual(0, rgx.GroupNumberFromName("0"), "NameGroup3.GroupNumberFromName(\"0\")");
@@ -431,7 +429,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
             ValidateGroup(m, 1, 0, 0, true, "", 1);
             ValidateCapture(m, 1, 0, 0, 0, "");
 
-
             // Case 2:
             pattern = @"(B?)";
             text = @"ABC";
@@ -445,7 +442,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
 
             ValidateGroup(m, 1, 0, 0, true, "", 1);
             ValidateCapture(m, 1, 0, 0, 0, "");
-
 
             // Case 3:
             pattern = @"(B)?";
@@ -479,7 +475,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
 
             ValidateGroup(m, 2, 1, 1, true, "A", 1);
             ValidateCapture(m, 2, 0, 1, 1, "A");
-
         }
     }
 }

@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Bridge.Contract;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Bridge.Contract;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis;
 
 namespace Bridge.Translator
 {
@@ -93,7 +93,7 @@ namespace Bridge.Translator
         /// Generates the extension method.
         /// </summary>
         public static MethodDeclarationSyntax GenerateExtensionMethod(string methodName, string returnTypeName, ParameterSyntax[] parameters, AttributeSyntax[] attributes = null)
-        {            
+        {
             var methodDeclaration = SyntaxFactory.MethodDeclaration(SyntaxFactory.ParseTypeName(returnTypeName ?? "void"), methodName)
                 .WithModifiers(SyntaxTokenList.Create(SyntaxFactory.Token(SyntaxKind.PublicKeyword)).Add(SyntaxFactory.Token(SyntaxKind.StaticKeyword)))
                 .WithParameterList(
@@ -153,7 +153,7 @@ namespace Bridge.Translator
         /// </summary>
         public static NamespaceDeclarationSyntax GenerateNamespace(string namespaceName, MemberDeclarationSyntax[] members, IEnumerable<string> usings = null)
         {
-            var builtinUsings = new List<string>() { "System", "System.Collections.Generic"};
+            var builtinUsings = new List<string>() { "System", "System.Collections.Generic" };
             if (usings != null)
             {
                 builtinUsings.AddRange(usings);
@@ -322,7 +322,7 @@ namespace Bridge.Translator
             return true;
         }
 
-        public static T RemoveSemicolon<T>(T node, SyntaxToken semicolonToken, Func<SyntaxToken, T> withSemicolonToken) where T: SyntaxNode
+        public static T RemoveSemicolon<T>(T node, SyntaxToken semicolonToken, Func<SyntaxToken, T> withSemicolonToken) where T : SyntaxNode
         {
             if (semicolonToken.Kind() != SyntaxKind.None)
             {
@@ -381,7 +381,7 @@ namespace Bridge.Translator
         {
             var isVoid = false;
             var predefined = method.ReturnType as PredefinedTypeSyntax;
-            if(predefined != null && predefined.Keyword.Kind() == SyntaxKind.VoidKeyword)
+            if (predefined != null && predefined.Keyword.Kind() == SyntaxKind.VoidKeyword)
             {
                 isVoid = true;
             }
@@ -447,8 +447,8 @@ namespace Bridge.Translator
                 symbol = si.CandidateSymbols.First();
             }
 
-            var name = (string) semanticModel.GetConstantValue(node).Value;
-            
+            var name = (string)semanticModel.GetConstantValue(node).Value;
+
             if (symbol != null && symbol.Kind != SymbolKind.Namespace)
             {
                 bool preserveMemberChange = !(symbol.Kind == SymbolKind.Method || symbol.Kind == SymbolKind.Property);
@@ -517,7 +517,6 @@ namespace Bridge.Translator
                 {
                     name = !preserveMemberChange ? Object.Net.Utilities.StringUtils.ToLowerCamelCase(name) : name;
                 }
-
 
                 if (!isIgnore && symbol.IsStatic && Emitter.IsReservedStaticName(name))
                 {

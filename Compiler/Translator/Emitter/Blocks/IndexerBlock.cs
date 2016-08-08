@@ -15,13 +15,13 @@ namespace Bridge.Translator
     {
         public IAttribute InlineAttr
         {
-            get; 
+            get;
             set;
         }
 
         public string InlineCode
         {
-            get; 
+            get;
             set;
         }
 
@@ -86,7 +86,7 @@ namespace Bridge.Translator
 
             var isIgnore = true;
             var isAccessorsIndexer = false;
-            
+
             IProperty member = null;
 
             IndexerAccessor current = null;
@@ -389,7 +389,7 @@ namespace Bridge.Translator
 
                     this.Write(targetVar);
                 }
-                else if(!isInterfaceMember)
+                else if (!isInterfaceMember)
                 {
                     this.WriteSemiColon();
                     this.WriteNewLine();
@@ -401,7 +401,7 @@ namespace Bridge.Translator
             {
                 this.WriteDot();
             }
-            
+
             var argsInfo = new ArgumentsInfo(this.Emitter, indexerExpression);
             var argsExpressions = argsInfo.ArgumentsExpressions;
             var paramsArg = argsInfo.ParamsExpression;
@@ -418,7 +418,7 @@ namespace Bridge.Translator
                     this.RestoreWriter(oldWriter);
 
                     bool isDecimal = Helpers.IsDecimalType(member.ReturnType, this.Emitter.Resolver);
-					bool isLong = Helpers.Is64Type(member.ReturnType, this.Emitter.Resolver);
+                    bool isLong = Helpers.Is64Type(member.ReturnType, this.Emitter.Resolver);
                     bool isNullable = NullableType.IsNullable(member.ReturnType);
                     if (isStatement)
                     {
@@ -470,7 +470,7 @@ namespace Bridge.Translator
                                 {
                                     this.WriteInterfaceMember(targetVar, memberResolveResult, false, JS.Funcs.Property.GET);
                                 }
-                                
+
                                 this.WriteOpenParentheses();
                                 this.Write(paramsStr);
                                 this.WriteCloseParentheses();
@@ -701,7 +701,7 @@ namespace Bridge.Translator
                     {
                         this.WriteInterfaceMember(targetVar, memberResolveResult, this.Emitter.IsAssignment, Helpers.GetSetOrGet(this.Emitter.IsAssignment));
                     }
-                    
+
                     this.WriteOpenParentheses();
                     new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, null, 0).Emit();
                     this.WriteCloseParentheses();
@@ -906,9 +906,8 @@ namespace Bridge.Translator
             }
             else
             {
-                this.WriteDot();    
+                this.WriteDot();
             }
-            
 
             var argsInfo = new ArgumentsInfo(this.Emitter, indexerExpression);
             var argsExpressions = argsInfo.ArgumentsExpressions;
@@ -919,7 +918,7 @@ namespace Bridge.Translator
                 if (this.Emitter.IsUnaryAccessor)
                 {
                     bool isDecimal = Helpers.IsDecimalType(resolveResult.Type, this.Emitter.Resolver);
-					bool isLong = Helpers.Is64Type(resolveResult.Type, this.Emitter.Resolver);
+                    bool isLong = Helpers.Is64Type(resolveResult.Type, this.Emitter.Resolver);
                     bool isNullable = NullableType.IsNullable(resolveResult.Type);
 
                     if (isStatement)
@@ -1185,9 +1184,9 @@ namespace Bridge.Translator
                     if (!this.isRefArg)
                     {
                         this.Write(JS.Funcs.Property.GET);
-                        this.WriteOpenParentheses();    
+                        this.WriteOpenParentheses();
                     }
-                    
+
                     this.WriteOpenBracket();
                     new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, null, 0).Emit();
                     this.WriteCloseBracket();
@@ -1284,12 +1283,12 @@ namespace Bridge.Translator
                 if (this.isRefArg)
                 {
                     this.WriteComma();
-                    this.WriteScript(primitive.Value);    
+                    this.WriteScript(primitive.Value);
                 }
                 else
                 {
                     this.WriteDot();
-                    this.Write(primitive.Value);    
+                    this.Write(primitive.Value);
                 }
             }
             else
@@ -1298,20 +1297,20 @@ namespace Bridge.Translator
                 this.Emitter.IsUnaryAccessor = false;
                 if (this.isRefArg)
                 {
-                   this.WriteComma(); 
+                    this.WriteComma();
                 }
                 else
                 {
                     this.WriteOpenBracket();
                 }
-                
+
                 index.AcceptVisitor(this.Emitter);
 
                 if (!this.isRefArg)
                 {
                     this.WriteCloseBracket();
                 }
-                
+
                 this.Emitter.IsAssignment = oldIsAssignment;
                 this.Emitter.IsUnaryAccessor = oldUnary;
             }

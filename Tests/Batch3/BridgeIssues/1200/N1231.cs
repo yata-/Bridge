@@ -19,6 +19,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
                 {
                     this.field = field;
                 }
+
                 public int field;
             }
         }

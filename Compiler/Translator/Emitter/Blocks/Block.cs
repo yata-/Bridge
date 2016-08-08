@@ -351,11 +351,11 @@ namespace Bridge.Translator
 
                     if (this.OldReplaceJump.HasValue && this.OldReplaceJump.Value && this.Emitter.JumpStatements == null)
                     {
-                        this.Write("{jump: 3, v: " + this.LoopVar + ".v};");    
+                        this.Write("{jump: 3, v: " + this.LoopVar + ".v};");
                     }
                     else
                     {
-                        this.Write(this.LoopVar + ".v;");    
+                        this.Write(this.LoopVar + ".v;");
                     }
                 }
 

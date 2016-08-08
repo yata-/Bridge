@@ -2,8 +2,8 @@
 // https://github.com/dotnet/corefx/blob/master/src/System.Runtime.Extensions/tests/System/Convert.ToUInt16.cs
 // https://github.com/dotnet/corefx/blob/master/LICENSE
 
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.ConvertTests
 {
@@ -147,7 +147,7 @@ namespace Bridge.ClientTest.ConvertTests
             ushort[] expectedValues = { 0, 0, 0, 0, ushort.MaxValue, ushort.MaxValue, ushort.MaxValue, ushort.MaxValue, ushort.MinValue, ushort.MinValue, ushort.MinValue, ushort.MinValue };
             VerifyFromStringWithBase(Convert.ToUInt16, testValues, testBases, expectedValues);
 
-            string[] overflowValues = { ConvertConstants.UINT16_OVERFLOW_MAX_STRING, ConvertConstants.UINT16_OVERFLOW_MIN_STRING,ConvertConstants.UINT16_OVERFLOW_MAX_STRING_BASE_2, ConvertConstants.UINT16_OVERFLOW_MAX_STRING_BASE_16, ConvertConstants.UINT16_OVERFLOW_MAX_STRING_BASE_8 };
+            string[] overflowValues = { ConvertConstants.UINT16_OVERFLOW_MAX_STRING, ConvertConstants.UINT16_OVERFLOW_MIN_STRING, ConvertConstants.UINT16_OVERFLOW_MAX_STRING_BASE_2, ConvertConstants.UINT16_OVERFLOW_MAX_STRING_BASE_16, ConvertConstants.UINT16_OVERFLOW_MAX_STRING_BASE_8 };
             int[] overflowBases = { 10, 10, 2, 16, 8 };
             VerifyFromStringWithBaseThrows<OverflowException>(Convert.ToUInt16, overflowValues, overflowBases);
 

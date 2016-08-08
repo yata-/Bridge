@@ -57,7 +57,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             return CurrentInt = await Task.FromResult(10);
         }
 
-        class DataClass
+        private class DataClass
         {
             public int Value { get; set; }
         }
@@ -67,7 +67,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             return CurrentDataClass = await Task.FromResult(new DataClass() { Value = 11 });
         }
 
-        class DataStruct
+        private class DataStruct
         {
             public int Value { get; set; }
         }

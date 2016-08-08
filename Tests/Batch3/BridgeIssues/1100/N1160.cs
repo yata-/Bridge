@@ -15,7 +15,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 
             var processor = x.Processor;
             Assert.AreEqual("Hello", processor("Hello"));
-            Assert.AreEqual("Hello", x.Processor("Hello")); 
+            Assert.AreEqual("Hello", x.Processor("Hello"));
         }
     }
 

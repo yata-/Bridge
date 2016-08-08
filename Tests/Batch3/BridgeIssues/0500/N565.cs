@@ -1,7 +1,3 @@
-using Bridge.Test;
-
-using System;
-
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
     // Bridge[#565]

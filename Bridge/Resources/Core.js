@@ -312,7 +312,7 @@
         getHashCode: function (value, safe) {
             // In CLR: mutable object should keep on returning same value
             // Bridge.NET goals: make it deterministic (to make testing easier) without breaking CLR contracts
-            //     for value types it returns deterministic values (f.e. for int 3 it returns 3) 
+            //     for value types it returns deterministic values (f.e. for int 3 it returns 3)
             //     for reference types it returns random value
 
             if (Bridge.isEmpty(value, true)) {
@@ -483,12 +483,12 @@
         },
 
         merge: function (to, from, callback, elemFactory) {
-            // Maps instance of plain JS value or Object into Bridge object. 
-            // Used for deserialization. Proper deserialization requires reflection that is currently not supported in Bridge. 
+            // Maps instance of plain JS value or Object into Bridge object.
+            // Used for deserialization. Proper deserialization requires reflection that is currently not supported in Bridge.
             // It currently is only capable to deserialize:
             // -instance of single class or primitive
-            // -array of primitives 
-            // -array of single class            
+            // -array of primitives
+            // -array of single class
             if (to instanceof System.Decimal && Bridge.isNumber(from)) {
                 return new System.Decimal(from);
             }
@@ -1139,7 +1139,6 @@
             },
 
             getInvocationList: function () {
-
             },
 
             remove: function (fn1, fn2) {

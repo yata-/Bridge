@@ -2,8 +2,8 @@
 // https://github.com/dotnet/corefx/blob/master/src/System.Runtime.Extensions/tests/System/Convert.ToBase64String.cs
 // https://github.com/dotnet/corefx/blob/master/LICENSE
 
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.ConvertTests
 {
@@ -21,7 +21,7 @@ namespace Bridge.ClientTest.ConvertTests
             // The sequence of bits for this byte array is
             // 00000101000001100000011100001000
             // Encoding adds 16 bits of trailing bits to make this a multiple of 24 bits.
-            // |        +         +         +         +    
+            // |        +         +         +         +
             // 000001010000011000000111000010000000000000000000
             // which is, (Interesting, how do we distinguish between '=' and 'A'?)
             // 000001 010000 011000 000111 000010 000000 000000 000000

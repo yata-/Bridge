@@ -10,7 +10,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         [Test(ExpectedCount = 1)]
         public static void TestUseCase()
         {
-            object o = new {};
+            object o = new { };
             Assert.True(o["__foo"] == null, "Bridge782");
         }
     }

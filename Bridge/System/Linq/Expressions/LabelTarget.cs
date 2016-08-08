@@ -1,5 +1,3 @@
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Bridge;
 
 namespace System.Linq.Expressions
@@ -9,10 +7,11 @@ namespace System.Linq.Expressions
     public sealed class LabelTarget
     {
         [FieldProperty]
-		public extern string Name { get; }
+        public extern string Name { get; }
+
         [FieldProperty]
         public extern Type Type { get; }
 
-		internal extern LabelTarget();
-	}
+        internal extern LabelTarget();
+    }
 }

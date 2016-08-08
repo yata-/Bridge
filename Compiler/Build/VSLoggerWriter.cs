@@ -4,7 +4,6 @@ using Microsoft.Build.Utilities;
 
 using System;
 
-
 namespace Bridge.Build
 {
     public class VSLoggerWriter : ILogger
@@ -27,7 +26,6 @@ namespace Bridge.Build
 
         public void Flush()
         {
-
         }
 
         public void Error(string message)
@@ -52,12 +50,10 @@ namespace Bridge.Build
 
         public void Info(string message)
         {
-
         }
 
         public void Trace(string message)
         {
-
         }
 
         private bool CheckLoggerLevel(LoggerLevel level)

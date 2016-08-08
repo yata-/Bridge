@@ -6,23 +6,24 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     [TestFixture(TestNameFormat = "#1448 - {0}")]
     public class Bridge1448
     {
-        class A
+        private class A
         {
             public int Data;
+
             public int DoSomething()
             {
                 return Data;
             }
         }
 
-        class Plainer
+        private class Plainer
         {
             [Template("{o:plain}")]
             public static extern T ToPlainObject<T>(T o);
         }
 
         [ObjectLiteral]
-        class Literal
+        private class Literal
         {
             public object V { get; set; }
         }

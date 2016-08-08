@@ -123,10 +123,10 @@
                 public const string SHRU = "shru";
                 public const string SHR = "shr";
                 public const string BAND = "band";
-                public const string BOR =  "bor";
-                public const string SL =   "sl";
-                public const string SRR =  "srr";
-                public const string SR =   "sr";
+                public const string BOR = "bor";
+                public const string SL = "sl";
+                public const string SRR = "srr";
+                public const string SR = "sr";
                 public const string DEC = "dec";
                 public const string INC = "inc";
                 public const string NEG = "neg";
@@ -182,7 +182,7 @@
             public const string ASYNC_RETURN_VALUE = "$returnValue";
 
             public const string FIX_ARGUMENT_NAME = "__autofix__";
-            public const string ARGUMENTS = "arguments"; 
+            public const string ARGUMENTS = "arguments";
         }
 
         public class Reserved

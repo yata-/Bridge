@@ -6,6 +6,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     {
         public object Data { get; set; }
     }
+
     internal struct Bridge603A
     {
         public string value;
@@ -21,6 +22,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             return new Bridge603A(value);
         }
     }
+
     internal struct Bridge603B
     {
         public string value;

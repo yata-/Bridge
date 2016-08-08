@@ -8,17 +8,20 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         {
             return 1;
         }
+
         public virtual int zz(string a)
         {
             return 2;
         }
     }
+
     public class Bridge558B : Bridge558A
     {
         public override int zz(int a)
         {
             return base.zz(a);
         }
+
         public override int zz(string a)
         {
             return base.zz(a);

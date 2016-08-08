@@ -4,7 +4,6 @@
 
 QUnit.module("TypeScript - Generics");
 QUnit.test("Check predefined generic instances", function (assert) {
-
     var g1 = Generics.implementation.simpleGenericInt;
     assert.deepEqual(g1.getSomething(5), 5, "simpleGenericInt");
 
@@ -59,7 +58,6 @@ QUnit.test("Check predefined generic instances", function (assert) {
 });
 
 QUnit.test("Create generic instances", function (assert) {
-
     var name = "My name is Named Entity";
     var namedEntity = new Generics.NamedEntity();
     namedEntity.setName$1(name);

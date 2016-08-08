@@ -96,7 +96,7 @@ namespace Bridge.Translator.Tests
                 FromTask = false,
                 NoLoggerSetUp = true
             };
-            
+
             var processor = new TranslatorProcessor(bridgeOptions, this.Logger as Bridge.Translator.Logging.Logger);
 
             var result = processor.PreProcess();
@@ -107,7 +107,7 @@ namespace Bridge.Translator.Tests
             }
 
             var translator = processor.Translator;
-            
+
             translator.BuildArguments = WrapBuildArguments(configuration);
             translator.Log.Info("\t Adjusted BuildArguments:" + translator.BuildArguments ?? "");
 

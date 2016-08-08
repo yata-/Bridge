@@ -1,5 +1,7 @@
 using Bridge.Contract;
-
+using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.Semantics;
+using Mono.Cecil;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -8,9 +10,6 @@ using System.ComponentModel.Composition.Primitives;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using ICSharpCode.NRefactory.CSharp;
-using ICSharpCode.NRefactory.Semantics;
-using Mono.Cecil;
 
 namespace Bridge.Translator
 {
@@ -201,7 +200,6 @@ namespace Bridge.Translator
                         {
                             logger.Error("Could not load assembly from resources: " + ex.ToString());
                         }
-
                     }
                 }
             }
@@ -229,7 +227,7 @@ namespace Bridge.Translator
             }
             catch (System.Exception ex)
             {
-                logger.Error("Could not compose Plugin parts: " +  ex.ToString());
+                logger.Error("Could not compose Plugin parts: " + ex.ToString());
             }
 
             if (plugins.Parts != null)
@@ -318,7 +316,6 @@ namespace Bridge.Translator
             }
 
             return null;
-
         }
 
         public static Assembly CheckIfAssemblyLoaded(ILogger logger, byte[] ba, AssemblyName assemblyName, string trimmedName)
@@ -411,7 +408,7 @@ namespace Bridge.Translator
                 var answer = plugin.GetConstructorInjectors(constructorBlock);
                 if (answer != null)
                 {
-                    result = result.Concat(answer);    
+                    result = result.Concat(answer);
                 }
             }
 
@@ -419,6 +416,7 @@ namespace Bridge.Translator
         }
 
         private InvocationInterceptor defaultInvocationInterceptor;
+
         private InvocationInterceptor GetInvocationInterceptor()
         {
             if (this.defaultInvocationInterceptor == null)
@@ -434,7 +432,7 @@ namespace Bridge.Translator
         public IInvocationInterceptor OnInvocation(IAbstractEmitterBlock block, InvocationExpression expression, InvocationResolveResult resolveResult)
         {
             InvocationInterceptor interceptor = this.GetInvocationInterceptor();
-            
+
             interceptor.Block = block;
             interceptor.Expression = expression;
             interceptor.ResolveResult = resolveResult;
@@ -445,13 +443,14 @@ namespace Bridge.Translator
                 if (interceptor.Cancel)
                 {
                     return interceptor;
-                }                
+                }
             }
 
             return interceptor;
         }
 
         private ReferenceInterceptor defaultReferenceInterceptor;
+
         private ReferenceInterceptor GetReferenceInterceptor()
         {
             if (this.defaultReferenceInterceptor == null)

@@ -264,7 +264,7 @@ namespace Bridge.Contract
 
         OverflowMode? OverflowMode
         {
-            get; 
+            get;
             set;
         }
 
@@ -283,7 +283,7 @@ namespace Bridge.Contract
     {
         public LoggerLevel? Level { get; set; }
         public bool? TimeStamps { get; set; }
-        public long?  MaxSize { get; set; }
+        public long? MaxSize { get; set; }
         public string Folder { get; set; }
         public string FileName { get; set; }
     }

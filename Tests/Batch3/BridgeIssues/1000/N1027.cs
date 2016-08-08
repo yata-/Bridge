@@ -6,7 +6,9 @@ namespace SomeExternalNamespace
     [External]
     public class SomeNonBridgeClass
     {
-        public SomeNonBridgeClass() { }
+        public SomeNonBridgeClass()
+        {
+        }
 
         public virtual int Foo()
         {
@@ -45,8 +47,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             /*@
             var SomeExternalNamespace = {
                 SomeNonBridgeClass: function () {
-                    
-                }               
+                }
             };
             SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
             */

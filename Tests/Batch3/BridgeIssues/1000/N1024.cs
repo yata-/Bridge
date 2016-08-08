@@ -22,6 +22,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         public class ClassC
         {
             public string a;
+
             public ClassC(string b)
             {
                 a = b;

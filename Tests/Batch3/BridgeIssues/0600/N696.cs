@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using Bridge.Test;
+using System.Collections.Generic;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {

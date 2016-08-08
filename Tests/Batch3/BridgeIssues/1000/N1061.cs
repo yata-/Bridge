@@ -1,5 +1,5 @@
-using System.Linq;
 using Bridge.Test;
+using System.Linq;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {

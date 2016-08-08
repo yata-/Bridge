@@ -108,7 +108,7 @@ namespace Bridge.Translator
                 throw new EmitterException(this.TypeInfo.TypeDeclaration, string.Format("The type {0} can contain only methods in order to be decorated with a [MixinAttribute] or [GlobalMethodsAttribute]", this.TypeInfo.Type.FullName));
             }
         }
-        
+
         protected virtual void EmitClassHeader()
         {
             this.WriteTopInitMethods();
@@ -252,8 +252,10 @@ namespace Bridge.Translator
             {
                 case VarianceModifier.Covariant:
                     return 1;
+
                 case VarianceModifier.Contravariant:
                     return 2;
+
                 default:
                     return 0;
             }
@@ -270,14 +272,14 @@ namespace Bridge.Translator
 
         protected virtual void WriteKind()
         {
-            if(this.TypeInfo.Type.Kind != TypeKind.Class)
+            if (this.TypeInfo.Type.Kind != TypeKind.Class)
             {
                 this.EnsureComma();
                 this.Write(JS.Fields.KIND);
                 this.WriteColon();
                 this.WriteScript(this.TypeInfo.Type.Kind.ToString().ToLowerInvariant());
                 this.Emitter.Comma = true;
-            }            
+            }
         }
 
         protected virtual void EmitStaticBlock()
@@ -334,7 +336,7 @@ namespace Bridge.Translator
                     this.Emitter.Comma = true;
                 }
             }
-            
+
             if (this.HasEntryPoint)
             {
                 this.EnsureComma();
@@ -371,7 +373,6 @@ namespace Bridge.Translator
 
             this.WriteCloseParentheses();
             this.WriteSemiColon();
-
 
             this.EmitAnonymousTypes();
             this.EmitNamedFunctions();
@@ -438,7 +439,7 @@ namespace Bridge.Translator
                 this.IntroducePrivateVar();
 
                 var name = BridgeTypes.ToJsName(this.Emitter.TypeInfo.Type, this.Emitter, true);
-                var parts = name.Split(new[]{'.'}, StringSplitOptions.RemoveEmptyEntries);
+                var parts = name.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
 
                 this.WriteNewLine();
                 this.WriteNewLine();
@@ -447,7 +448,7 @@ namespace Bridge.Translator
                 this.WriteScript(name);
                 this.Write(", " + JS.Vars.D_ + ")");
                 this.WriteSemiColon();
-                
+
                 this.WriteNewLine();
                 this.WriteNewLine();
                 this.Write(JS.Funcs.BRIDGE_APPLY + "(" + JS.Vars.D_ + ".");
@@ -491,12 +492,15 @@ namespace Bridge.Translator
                 case "After":
                     value = 0;
                     break;
+
                 case "Before":
                     value = 1;
                     break;
+
                 case "Top":
                     value = 2;
                     break;
+
                 case "Bottom":
                     value = 3;
                     break;

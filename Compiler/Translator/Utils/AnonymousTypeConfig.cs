@@ -19,7 +19,6 @@ namespace Bridge.Contract
             get; set;
         }
 
-
         public bool Emitted
         {
             get; set;

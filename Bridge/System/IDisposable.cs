@@ -1,5 +1,3 @@
-using Bridge;
-
 namespace System
 {
     public interface IDisposable

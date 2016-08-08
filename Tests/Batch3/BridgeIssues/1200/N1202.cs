@@ -6,26 +6,26 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     [TestFixture(TestNameFormat = "#1202 - {0}")]
     public class Bridge1202
     {
-        static decimal decimalField;
-        static int intField;
-        static int[] array;
+        private static decimal decimalField;
+        private static int intField;
+        private static int[] array;
 
-        static void OutMethod(out int value)
+        private static void OutMethod(out int value)
         {
             value = 3;
         }
 
-        static void RefMethod(ref int value)
+        private static void RefMethod(ref int value)
         {
             value++;
         }
 
-        static void OutMethod(out decimal value)
+        private static void OutMethod(out decimal value)
         {
             value = 7;
         }
 
-        static void RefMethod(ref decimal value)
+        private static void RefMethod(ref decimal value)
         {
             value++;
         }

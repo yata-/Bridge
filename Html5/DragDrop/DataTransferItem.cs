@@ -8,7 +8,6 @@ namespace Bridge.Html5
     {
         private DataTransferItem()
         {
-
         }
 
         /// <summary>

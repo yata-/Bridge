@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Bridge;
 
 namespace System.Linq.Expressions
@@ -6,11 +5,11 @@ namespace System.Linq.Expressions
     [External]
     [Name("Object")]
     [Cast("{this}.ntype == 50 && {this}.dtype === 0")]
-	public sealed class DynamicMemberExpression : DynamicExpression
+    public sealed class DynamicMemberExpression : DynamicExpression
     {
         [FieldProperty]
-		public extern string Member { get; private set; }
+        public extern string Member { get; private set; }
 
-		internal extern DynamicMemberExpression();
-	}
+        internal extern DynamicMemberExpression();
+    }
 }

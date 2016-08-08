@@ -34,7 +34,7 @@ namespace Bridge.ClientTest.Format
 
             s = String.Format("{0,6} {1,15:N0}", years[0], population[0]);
             Assert.AreEqual("  2013       1,025,632", s);
-            
+
             s = String.Format("{0,6} {1,15:N0}", years[1], population[1]);
             Assert.AreEqual("  2014       1,105,967", s);
 
@@ -46,16 +46,16 @@ namespace Bridge.ClientTest.Format
         public void Aligment()
         {
             // Create array of 5-tuples with population data for three U.S. cities, 1940-1950.
-            Tuple<string, DateTime, int, DateTime, int>[] cities = 
+            Tuple<string, DateTime, int, DateTime, int>[] cities =
             {
                 Tuple.Create("Los Angeles", new DateTime(1940, 1, 1), 1504277, new DateTime(1950, 1, 1), 1970358),
-                Tuple.Create("New York", new DateTime(1940, 1, 1), 7454995, new DateTime(1950, 1, 1), 7891957),  
-                Tuple.Create("Chicago", new DateTime(1940, 1, 1), 3396808, new DateTime(1950, 1, 1), 3620962),  
-                Tuple.Create("Detroit", new DateTime(1940, 1, 1), 1623452, new DateTime(1950, 1, 1), 1849568) 
+                Tuple.Create("New York", new DateTime(1940, 1, 1), 7454995, new DateTime(1950, 1, 1), 7891957),
+                Tuple.Create("Chicago", new DateTime(1940, 1, 1), 3396808, new DateTime(1950, 1, 1), 3620962),
+                Tuple.Create("Detroit", new DateTime(1940, 1, 1), 1623452, new DateTime(1950, 1, 1), 1849568)
             };
 
             // Display header
-            string header = String.Format("{0,-12}{1,8}{2,12}{1,8}{2,12}{3,14}","City", "Year", "Population", "Change (%)");
+            string header = String.Format("{0,-12}{1,8}{2,12}{1,8}{2,12}{3,14}", "City", "Year", "Population", "Change (%)");
             Assert.AreEqual("City            Year  Population    Year  Population    Change (%)", header);
 
             string output = String.Format("{0,-12}{1,8:yyyy}{2,12:N0}{3,8:yyyy}{4,12:N0}{5,14:P1}",
@@ -78,7 +78,6 @@ namespace Bridge.ClientTest.Format
                                       (cities[3].Item5 - cities[3].Item3) / (double)cities[3].Item3);
             Assert.AreEqual("Detroit         1940   1,623,452    1950   1,849,568        13.9 %", output);
         }
-
 
         [Test]
         public void PadIntegerWithLeadingZeros()
@@ -123,7 +122,7 @@ namespace Bridge.ClientTest.Format
             string formatString = " {0,15:" + fmt + "}";
             Assert.AreEqual("        01053240", string.Format(formatString, intValue));
             Assert.AreEqual("     00103932.52", string.Format(formatString, decValue));
-            Assert.AreEqual("   9034521202.93", string.Format(formatString, dblValue)); 
+            Assert.AreEqual("   9034521202.93", string.Format(formatString, dblValue));
         }
 
         [Test]

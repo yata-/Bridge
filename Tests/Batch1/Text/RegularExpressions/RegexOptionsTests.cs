@@ -1,5 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using Bridge.Test;
+﻿using Bridge.Test;
+using System.Text.RegularExpressions;
 
 namespace Bridge.ClientTest.Text.RegularExpressions
 {
@@ -138,7 +138,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             var m = rgx.Match(text);
 
             ValidateMatch(m, 0, 41, "This is one line and\r\nthis is the second.", 1, true);
-            
+
             ValidateGroup(m, 0, 0, 41, true, "This is one line and\r\nthis is the second.", 1);
             ValidateCapture(m, 0, 0, 0, 41, "This is one line and\r\nthis is the second.");
         }
@@ -320,7 +320,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             ValidateCapture(ms[3], 0, 0, 88, 39, "Instead, it is a nonsensical paragraph.");
         }
 
-        #endregion
+        #endregion MSDN
 
         [Test]
         public void IgnoreCaseOptionTest1()
@@ -485,7 +485,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             var m = rgx.Match(text);
 
             ValidateMatch(m, 0, 50, "The first line.\r\nThe second line.\r\nThe third line.", 1, true);
-            
+
             ValidateGroup(m, 0, 0, 50, true, "The first line.\r\nThe second line.\r\nThe third line.", 1);
             ValidateCapture(m, 0, 0, 0, 50, "The first line.\r\nThe second line.\r\nThe third line.");
         }
@@ -502,7 +502,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions
 
             ValidateGroup(m, 0, 49, 1, true, ".", 1);
             ValidateCapture(m, 0, 0, 49, 1, ".");
-
         }
 
         [Test]

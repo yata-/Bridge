@@ -147,7 +147,7 @@ namespace Bridge.Translator
             {
                 node.AcceptVisitor(this.Emitter);
             }
-            
+
             this.Emitter.ReplaceAwaiterByVar = oldValue;
 
             this.WriteSemiColon();
@@ -181,7 +181,7 @@ namespace Bridge.Translator
         {
             var method = awaiterMethod.Member;
             var inline = this.Emitter.GetInline(method);
-            
+
             if (!string.IsNullOrWhiteSpace(inline))
             {
                 var argsInfo = new ArgumentsInfo(this.Emitter, node as Expression, awaiterMethod);
@@ -195,7 +195,7 @@ namespace Bridge.Translator
                     this.WriteDot();
                     this.Write(OverloadsCollection.Create(this.Emitter, method).GetOverloadName());
                     this.WriteOpenParentheses();
-                    new ExpressionListBlock(this.Emitter, new Expression[] {(Expression)node}, null, null, 0).Emit();
+                    new ExpressionListBlock(this.Emitter, new Expression[] { (Expression)node }, null, null, 0).Emit();
                     this.WriteCloseParentheses();
                 }
                 else

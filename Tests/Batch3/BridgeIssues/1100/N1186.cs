@@ -1,5 +1,5 @@
-using System;
 using Bridge.Test;
+using System;
 using System.Collections.Generic;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
@@ -8,7 +8,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     [TestFixture(TestNameFormat = "#1186 - {0}")]
     public class Bridge1186
     {
-        List<Func<int, int>> list = new List<Func<int, int>>
+        private List<Func<int, int>> list = new List<Func<int, int>>
         {
             value => value,
             value => value + 1

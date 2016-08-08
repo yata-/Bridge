@@ -1,6 +1,4 @@
-using Bridge;
 using Bridge.Test;
-using System;
 
 namespace Bridge.ClientTest.CSharp6
 {

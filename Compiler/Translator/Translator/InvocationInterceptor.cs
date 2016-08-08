@@ -14,13 +14,13 @@ namespace Bridge.Translator
 
         public InvocationExpression Expression
         {
-            get; 
+            get;
             internal set;
         }
 
         public InvocationResolveResult ResolveResult
         {
-            get; 
+            get;
             internal set;
         }
 

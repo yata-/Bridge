@@ -151,7 +151,7 @@ namespace Bridge.Translator
 
             if (memberArgResolverResult != null && memberArgResolverResult.Member is IProperty)
             {
-                var prop = (IProperty) memberArgResolverResult.Member;
+                var prop = (IProperty)memberArgResolverResult.Member;
                 var isIgnore = this.Emitter.Validator.IsIgnoreType(memberArgResolverResult.Member.DeclaringTypeDefinition);
                 var inlineAttr = this.Emitter.GetAttribute(prop.Getter.Attributes, Translator.Bridge_ASSEMBLY + ".TemplateAttribute");
                 var ignoreAccessor = this.Emitter.Validator.IsIgnoreType(prop.Getter);
@@ -576,16 +576,16 @@ namespace Bridge.Translator
                     case UnaryOperatorType.Decrement:
                         if (!isStatement)
                         {
-                            this.WriteOpenParentheses();    
+                            this.WriteOpenParentheses();
                         }
-                        
+
                         this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                         this.Write(" = ");
                         this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                         this.Write("." + (op == UnaryOperatorType.Decrement ? JS.Funcs.Math.DEC : JS.Funcs.Math.INC) + "(");
                         this.AddOveflowFlag(typeCode, JS.Funcs.Math.DEC, false);
                         this.Write(")");
-                        
+
                         if (!isStatement)
                         {
                             this.WriteCloseParentheses();
@@ -639,9 +639,9 @@ namespace Bridge.Translator
                         {
                             if (!isStatement)
                             {
-                                this.WriteOpenParentheses();    
+                                this.WriteOpenParentheses();
                             }
-                            
+
                             this.UnaryOperatorExpression.Expression.AcceptVisitor(this.Emitter);
                             this.Write(" = ");
                             new InlineArgumentsBlock(this.Emitter,
@@ -649,7 +649,7 @@ namespace Bridge.Translator
                                 ();
                             if (!isStatement)
                             {
-                                this.WriteCloseParentheses();    
+                                this.WriteCloseParentheses();
                             }
                         }
                         else

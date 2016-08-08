@@ -43,7 +43,7 @@ namespace Bridge.Translator
 
         public IEnumerable<IAssemblyReference> Assemblies
         {
-            get; 
+            get;
             private set;
         }
 
@@ -90,7 +90,7 @@ namespace Bridge.Translator
                 {
                     unresolvedFile = syntaxTree.ToTypeSystem();
                 }
-                
+
                 this.resolver = new CSharpAstResolver(compilation, syntaxTree, unresolvedFile);
             }
         }

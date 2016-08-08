@@ -1,11 +1,9 @@
-using System;
 using Bridge.Contract;
 using Bridge.Contract.Constants;
-
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
+using System;
 using System.Collections.Generic;
-
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -477,7 +475,7 @@ namespace Bridge.Translator
                         sb.Append("    ");
                     }
                 }
-                else if(sb.ToString().Substring(sb.Length - 4) == "    ")
+                else if (sb.ToString().Substring(sb.Length - 4) == "    ")
                 {
                     sb.Length -= 4;
                 }
@@ -578,7 +576,7 @@ namespace Bridge.Translator
                 var argsExpressions = argsInfo.ArgumentsExpressions;
                 var paramsArg = argsInfo.ParamsExpression;
 
-                new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, ctor.Initializer, openPos).Emit();    
+                new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, ctor.Initializer, openPos).Emit();
             }
 
             this.WriteCloseParentheses();

@@ -1,7 +1,5 @@
 ﻿using Bridge.Test;
 
-using System;
-
 namespace Bridge.ClientTest.Batch2.BridgeIssues
 {
     // Bridge[#1204]

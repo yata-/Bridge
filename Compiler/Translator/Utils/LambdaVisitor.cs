@@ -1,7 +1,7 @@
+using Bridge.Contract;
 using ICSharpCode.NRefactory.CSharp;
 using System.Collections.Generic;
 using System.Linq;
-using Bridge.Contract;
 
 namespace Bridge.Translator
 {
@@ -9,6 +9,7 @@ namespace Bridge.Translator
     {
         private bool captureOnly;
         private IEmitter emitter;
+
         public LambdaVisitor(bool captureOnly = false, IEmitter emitter = null)
         {
             this.emitter = emitter;
@@ -38,7 +39,7 @@ namespace Bridge.Translator
             {
                 this.LambdaExpression.Add(anonymousMethodExpression);
             }
-            
+
             base.VisitAnonymousMethodExpression(anonymousMethodExpression);
         }
 
@@ -66,6 +67,7 @@ namespace Bridge.Translator
     public class ContinueBreakVisitor : DepthFirstAstVisitor
     {
         private bool findReturn;
+
         public ContinueBreakVisitor(bool findReturn)
         {
             this.findReturn = findReturn;
@@ -77,7 +79,7 @@ namespace Bridge.Translator
             else
             {
                 this.Continue = new List<ContinueStatement>();
-                this.Break = new List<BreakStatement>();    
+                this.Break = new List<BreakStatement>();
             }
         }
 
@@ -157,9 +159,9 @@ namespace Bridge.Translator
         {
             if (!findReturn && !this.InsideSwitch)
             {
-                this.Break.Add(breakStatement);    
+                this.Break.Add(breakStatement);
             }
-            
+
             base.VisitBreakStatement(breakStatement);
         }
 

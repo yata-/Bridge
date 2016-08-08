@@ -566,9 +566,7 @@ System.Int64.Zero = System.Int64(Bridge.$Long.ZERO);
 System.Int64.MinValue = System.Int64(Bridge.$Long.MIN_VALUE);
 System.Int64.MaxValue = System.Int64(Bridge.$Long.MAX_VALUE);
 
-
 /* ULONG */
-
 
 System.UInt64 = function (l) {
     if (this.constructor !== System.UInt64) {

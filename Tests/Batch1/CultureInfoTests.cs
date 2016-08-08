@@ -1,7 +1,5 @@
-﻿using System;
+﻿using Bridge.Test;
 using System.Globalization;
-using Bridge.Test;
-using Bridge.ClientTest;
 
 namespace Bridge.ClientTest
 {

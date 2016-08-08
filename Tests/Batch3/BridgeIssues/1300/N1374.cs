@@ -8,7 +8,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     [TestFixture(TestNameFormat = "#1374 - {0}")]
     public class Bridge1374
     {
-        class ScopeContainer
+        private class ScopeContainer
         {
             public int Value { get; set; }
 
@@ -20,7 +20,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 
         public static int Value { get; set; }
 
-        static string StaticIntConverter(int i)
+        private static string StaticIntConverter(int i)
         {
             return (Value + i).ToString();
         }

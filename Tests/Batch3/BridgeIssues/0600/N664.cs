@@ -1,12 +1,15 @@
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
     [External]
     internal sealed class Bridge664A
     {
-        private Bridge664A() { }
+        private Bridge664A()
+        {
+        }
+
         public static implicit operator Bridge664A(string text)
         {
             return null;
@@ -16,7 +19,10 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     [External]
     internal class Bridge664B
     {
-        public Bridge664B() { }
+        public Bridge664B()
+        {
+        }
+
         //public static implicit operator Bridge664B(string text)
         //{
         //    return null;
@@ -26,7 +32,6 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     [External]
     internal class Bridge664C : Bridge664B
     {
-
     }
 
     // Bridge[#664]
@@ -42,8 +47,6 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             Assert.AreEqual("test", f("test"), "Bridge664");
 
             Assert.Throws(() => { Bridge664C b = Script.Write<Bridge664C>("{ }"); var s = (Bridge664B)b; }, "Bridge664 Should throw exception");
-
-
         }
     }
 }

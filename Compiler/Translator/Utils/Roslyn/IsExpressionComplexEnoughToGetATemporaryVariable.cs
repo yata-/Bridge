@@ -1,7 +1,6 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Collections.Generic;
 
 namespace Bridge.Translator
 {
@@ -9,7 +8,8 @@ namespace Bridge.Translator
     {
         private class Analyzer : CSharpSyntaxWalker
         {
-            SemanticModel _semanticModel;
+            private SemanticModel _semanticModel;
+
             public bool IsComplex
             {
                 get;

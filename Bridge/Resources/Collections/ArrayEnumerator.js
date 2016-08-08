@@ -13,7 +13,7 @@ Bridge.define('Bridge.ArrayEnumerator', {
     },
 
     constructor: function (array, T) {
-		this.$initialize();
+        this.$initialize();
         this.array = array;
         this.reset();
 
@@ -21,7 +21,7 @@ Bridge.define('Bridge.ArrayEnumerator', {
             this["System$Collections$Generic$IEnumerator$1$" + Bridge.getTypeAlias(T) + "$getCurrent$1"] = this.getCurrent;
         }
     },
-    
+
     moveNext: function () {
         this.index++;
 
@@ -53,7 +53,7 @@ Bridge.define('Bridge.ArrayEnumerable', {
     },
 
     constructor: function (array) {
-		this.$initialize();
+        this.$initialize();
         this.array = array;
     },
 

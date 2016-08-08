@@ -5,6 +5,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     public class Bridge559A1
     {
         public string result = "";
+
         public Bridge559A1()
         {
             result += " -> Bridge559A1";
@@ -16,6 +17,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             result += " -> Bridge559A1$1";
         }
     }
+
     public class Bridge559B1 : Bridge559A1
     {
         public Bridge559B1()
@@ -29,9 +31,11 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             result += " -> Bridge559B1$1";
         }
     }
+
     public class Bridge559A2
     {
         public string result = "";
+
         public Bridge559A2()
         {
             result += " ClassA";
@@ -42,6 +46,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             result += " ClassA$1";
         }
     }
+
     public class Bridge559B2 : Bridge559A2
     {
         public Bridge559B2()
@@ -54,6 +59,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             result += " ClassB$1";
         }
     }
+
     public class Bridge559A3
     {
         public Bridge559A3(string value)
@@ -68,7 +74,6 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 
         public string Data { get; set; }
     }
-
 
     // Bridge[#559]
     [Category(Constants.MODULE_ISSUES)]

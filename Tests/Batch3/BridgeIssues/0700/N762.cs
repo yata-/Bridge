@@ -5,6 +5,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     internal struct Bridge762A
     {
     }
+
     internal struct Bridge762B
     {
         public int Data { get; set; }

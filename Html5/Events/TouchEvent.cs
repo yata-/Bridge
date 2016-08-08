@@ -86,5 +86,4 @@ namespace Bridge.Html5
         /// </summary>
         public readonly TouchList Touches;
     }
-
 }

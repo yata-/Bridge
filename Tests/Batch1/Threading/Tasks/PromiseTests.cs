@@ -1,5 +1,3 @@
-using Bridge;
-using Bridge.Html5;
 using Bridge.Test;
 
 using System;
@@ -21,7 +19,7 @@ namespace Bridge.ClientTest.Threading
                 public PromiseDelegate Progress { get; set; }
             }
 
-            enum Which
+            private enum Which
             {
                 Resolve, Reject
             }
@@ -223,7 +221,6 @@ namespace Bridge.ClientTest.Threading
             Assert.False(continuationRun, "Continuation should not be run too early.");
             Assert.AreEqual(TaskStatus.Running, task.Status, "Task should be running before promise is completed.");
             promise.Reject(42, "result 123", 101);
-
 
             task1.ContinueWith(x =>
                 {

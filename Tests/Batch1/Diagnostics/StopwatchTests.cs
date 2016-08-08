@@ -1,7 +1,6 @@
+using Bridge.Test;
 using System;
 using System.Diagnostics;
-using Bridge;
-using Bridge.Test;
 
 namespace Bridge.ClientTest.Diagnostics
 {

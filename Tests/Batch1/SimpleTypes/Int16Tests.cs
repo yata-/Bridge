@@ -1,7 +1,5 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using Bridge.Test;
-using Bridge.ClientTest;
+﻿using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.SimpleTypes
 {
@@ -23,7 +21,6 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.True(s is IComparable<short>);
             Assert.True(s is IEquatable<short>);
             Assert.True(s is IFormattable);
-
         }
 
         [Test]

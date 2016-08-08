@@ -1,6 +1,6 @@
+using Bridge.Test;
 using System;
 using System.Text.RegularExpressions;
-using Bridge.Test;
 
 namespace Bridge.ClientTest.Text.RegularExpressions.Entities
 {
@@ -55,7 +55,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
             ValidateCapture(m2, 1, 3, 36, 9, "sentance.");
         }
 
-        #endregion
+        #endregion Test data
 
         [Test]
         public void CaptureCollectionFieldsTest()
@@ -103,7 +103,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
                 var capture = en.Current as Capture;
                 CapturesAreEqual(captures[i], capture, "Captures[" + i + "]");
                 ++i;
-
             } while (en.MoveNext());
 
             Assert.AreEqual(captures.Count, i, "Captures.Count");

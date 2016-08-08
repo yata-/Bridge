@@ -1,13 +1,11 @@
 using Bridge.Contract;
 using Bridge.Contract.Constants;
-
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
-
+using ICSharpCode.NRefactory.TypeSystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ICSharpCode.NRefactory.TypeSystem;
 
 namespace Bridge.Translator
 {
@@ -66,9 +64,9 @@ namespace Bridge.Translator
 
                 if (!ignored)
                 {
-                    this.IgnoredTypes.Add(fullName);    
+                    this.IgnoredTypes.Add(fullName);
                 }
-                
+
                 return;
             }
 
@@ -187,7 +185,7 @@ namespace Bridge.Translator
 
                                 if (derivedMember != null && !derivedMember.ImplementedInterfaceMembers.Contains(interfaceMember))
                                 {
-                                    this.CurrentType.InstanceConfig.Alias.Add(new TypeConfigItem { Entity = typeDeclaration, InterfaceMember = interfaceMember, DerivedMember = derivedMember});
+                                    this.CurrentType.InstanceConfig.Alias.Add(new TypeConfigItem { Entity = typeDeclaration, InterfaceMember = interfaceMember, DerivedMember = derivedMember });
                                     break;
                                 }
                             }
@@ -278,7 +276,7 @@ namespace Bridge.Translator
                     var config = isStatic
                     ? CurrentType.StaticConfig
                     : CurrentType.InstanceConfig;
-                    config.Alias.Add(new TypeConfigItem { Entity = fieldDeclaration, VarInitializer = item});
+                    config.Alias.Add(new TypeConfigItem { Entity = fieldDeclaration, VarInitializer = item });
                 }
             }
         }
@@ -494,7 +492,7 @@ namespace Bridge.Translator
 
                 var autoInitializer = info.AutoPropertyInitializers.FirstOrDefault(f => f.Name == key);
 
-                if(autoInitializer != null)
+                if (autoInitializer != null)
                 {
                     initializer = autoInitializer.Initializer;
                 }
@@ -572,7 +570,6 @@ namespace Bridge.Translator
                     }
                 }
             }
-
         }
 
         public override void VisitDelegateDeclaration(DelegateDeclaration delegateDeclaration)
@@ -588,7 +585,7 @@ namespace Bridge.Translator
             {
                 var validator = new Validator();
                 var enumMode = validator.EnumEmitMode(member.Member.DeclaringTypeDefinition);
-                
+
                 if (enumMode >= 3 && enumMode < 7)
                 {
                     initializerIsString = true;
@@ -701,7 +698,7 @@ namespace Bridge.Translator
                     var config = rr.Member.IsStatic
                     ? CurrentType.StaticConfig
                     : CurrentType.InstanceConfig;
-                    config.Alias.Add(new TypeConfigItem { Entity = eventDeclaration, VarInitializer = item});
+                    config.Alias.Add(new TypeConfigItem { Entity = eventDeclaration, VarInitializer = item });
                 }
             }
         }
@@ -758,7 +755,7 @@ namespace Bridge.Translator
 
                         if (t.FullName == "Bridge.TypeAccessibility")
                         {
-                            config.TypeAccessibility = (TypeAccessibility) (int) v;
+                            config.TypeAccessibility = (TypeAccessibility)(int)v;
                         }
                         else
                         {
@@ -944,4 +941,3 @@ namespace Bridge.Translator
         }
     }
 }
-

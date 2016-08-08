@@ -2,13 +2,12 @@
 // https://github.com/dotnet/corefx/blob/master/src/System.Runtime.Extensions/tests/System/Convert.TestBase.cs
 // https://github.com/dotnet/corefx/blob/master/LICENSE
 
-
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.ConvertTests
 {
-    class ConvertConstants
+    internal class ConvertConstants
     {
         public const string UINT64_MAX_STRING_BASE_16 = "ffffffffffffffff";
         public const string UINT64_MAX_STRING_BASE_8 = "1777777777777777777777";
@@ -132,7 +131,7 @@ namespace Bridge.ClientTest.ConvertTests
                         Assert.AreEqual(expected, result);
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Assert.Fail("Exception occurred while Verify " + testValue + " Exception: " + ex.ToString());
                 }
@@ -257,7 +256,7 @@ namespace Bridge.ClientTest.ConvertTests
         /// <summary>
         /// Verify that the provided convert delegate throws an exception of type TException given testValues
         /// </summary>
-        protected void VerifyThrows<TException, TInput>(Func<TInput, TOutput> convert, TInput[] testValues) 
+        protected void VerifyThrows<TException, TInput>(Func<TInput, TOutput> convert, TInput[] testValues)
             where TException : Exception
         {
             for (int i = 0; i < testValues.Length; i++)
@@ -278,7 +277,7 @@ namespace Bridge.ClientTest.ConvertTests
         /// Verify that the provided convert delegate throws an exception of type TException given testValues
         /// The overloading should be used to test methods accepting objects.
         /// </summary>
-        protected void VerifyThrowsViaObj<TException, TInput>(Func<object, TOutput> convert, TInput[] testValues) 
+        protected void VerifyThrowsViaObj<TException, TInput>(Func<object, TOutput> convert, TInput[] testValues)
             where TException : Exception
         {
             for (int i = 0; i < testValues.Length; i++)
@@ -298,7 +297,7 @@ namespace Bridge.ClientTest.ConvertTests
         /// <summary>
         /// Verify that the provided convert delegates throws an exception of type TException given testValues
         /// </summary>
-        protected void VerifyFromStringThrows<TException>(Func<string, TOutput> convert, Func<string, IFormatProvider, TOutput> convertWithFormatProvider, string[] testValues) 
+        protected void VerifyFromStringThrows<TException>(Func<string, TOutput> convert, Func<string, IFormatProvider, TOutput> convertWithFormatProvider, string[] testValues)
             where TException : Exception
         {
             VerifyThrows<TException, string>(convert, testValues);

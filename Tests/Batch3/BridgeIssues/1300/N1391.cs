@@ -9,7 +9,8 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     [TestFixture(TestNameFormat = "#1391 - {0}")]
     public class Bridge1391
     {
-        static StringBuilder builder;
+        private static StringBuilder builder;
+
         public static StringBuilder Builder
         {
             get
@@ -18,7 +19,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             }
         }
 
-        class Foo
+        private class Foo
         {
             static Foo()
             {
@@ -26,11 +27,11 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             }
         }
 
-        class Bar
+        private class Bar
         {
-            static int i = Init();
+            private static int i = Init();
 
-            static int Init()
+            private static int Init()
             {
                 Builder.Append("Bar");
                 return 0;
@@ -66,7 +67,8 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 
     public class Bridge1391ToRunInitializationOnReady
     {
-        static StringBuilder builder;
+        private static StringBuilder builder;
+
         public static StringBuilder Builder
         {
             get
@@ -75,7 +77,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             }
         }
 
-        class FooReady
+        private class FooReady
         {
             static FooReady()
             {
@@ -83,17 +85,16 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             }
         }
 
-        class BarReady
+        private class BarReady
         {
-            static int i = InitReady();
+            private static int i = InitReady();
 
-            static int InitReady()
+            private static int InitReady()
             {
                 Builder.Append("BarReady");
                 return 0;
             }
         }
-    
 
         [Ready]
         public static void RunMe()

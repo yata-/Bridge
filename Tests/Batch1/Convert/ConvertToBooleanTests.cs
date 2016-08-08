@@ -2,8 +2,8 @@
 // https://github.com/dotnet/corefx/blob/master/src/System.Runtime.Extensions/tests/System/Convert.ToBoolean.cs
 // https://github.com/dotnet/corefx/blob/master/LICENSE
 
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.ConvertTests
 {

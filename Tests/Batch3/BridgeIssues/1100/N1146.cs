@@ -13,16 +13,16 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             Assert.True(Precedence(), "Correct order for `a += b >> 1` -> `(a + (b >>> 1))`");
         }
 
-        static bool IntUintEquality(int a, uint b)
+        private static bool IntUintEquality(int a, uint b)
         {
             return a == b;
         }
 
-        static bool Precedence()
+        private static bool Precedence()
         {
             uint a = 1;
             uint b = 2;
-            a += b >> 1;    
+            a += b >> 1;
             return a == 2;
         }
     }

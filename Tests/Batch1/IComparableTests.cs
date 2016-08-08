@@ -1,6 +1,5 @@
-﻿using System;
-using Bridge.Test;
-using Bridge.ClientTest;
+﻿using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest
 {
@@ -8,7 +7,7 @@ namespace Bridge.ClientTest
     [TestFixture(TestNameFormat = "IComparable - {0}")]
     public class IComparableTests
     {
-        class MyComparable : IComparable<MyComparable>
+        private class MyComparable : IComparable<MyComparable>
         {
             public int result;
             public MyComparable other;

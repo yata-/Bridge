@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Bridge;
 
 namespace System.Linq.Expressions
@@ -8,8 +7,8 @@ namespace System.Linq.Expressions
     [Enum(Emit.Value)]
     public enum MemberBindingType
     {
-		Assignment,
-		MemberBinding,
-		ListBinding,
-	}
+        Assignment,
+        MemberBinding,
+        ListBinding,
+    }
 }

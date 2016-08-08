@@ -1,13 +1,11 @@
 using Bridge.Contract;
 using Bridge.Contract.Constants;
-
 using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
-
 using System.Text;
-using ICSharpCode.NRefactory.CSharp.Resolver;
 
 namespace Bridge.Translator
 {
@@ -84,7 +82,7 @@ namespace Bridge.Translator
                 {
                     this.Write("Bridge.get(" + BridgeTypes.ToJsName(resolveResult.Type, this.Emitter) + ")");
                 }*/
-                
+
                 return;
             }
 
@@ -247,7 +245,7 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    var resolvedMethod = (IMethod) memberResult.Member;
+                    var resolvedMethod = (IMethod)memberResult.Member;
                     bool isStatic = resolvedMethod != null && resolvedMethod.IsStatic;
 
                     if (!isStatic)
@@ -267,7 +265,7 @@ namespace Bridge.Translator
                 this.WriteScript(memberResult.ConstantValue);
                 return;
             }
-            
+
             if (memberResult != null && memberResult.Member.SymbolKind == SymbolKind.Property && memberResult.TargetResult.Type.Kind != TypeKind.Anonymous)
             {
                 bool isStatement = false;
@@ -590,7 +588,7 @@ namespace Bridge.Translator
         }
 
         protected void WriteTarget(MemberResolveResult memberResult)
-        {            
+        {
             if (memberResult.Member.IsStatic)
             {
                 this.Write(BridgeTypes.ToJsName(memberResult.Member.DeclaringType, this.Emitter));
@@ -606,9 +604,8 @@ namespace Bridge.Translator
             }
             else
             {
-                this.WriteDot();    
+                this.WriteDot();
             }
-            
         }
     }
 }

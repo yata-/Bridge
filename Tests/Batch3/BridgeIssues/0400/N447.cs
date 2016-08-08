@@ -13,8 +13,10 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 
         [InlineConst]
         public const int InlineFifteen = 15;
+
         [InlineConst]
         public const string InlineSome = "Some";
+
         [InlineConst]
         public const decimal InlineHalf = 0.5m;
 

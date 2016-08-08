@@ -89,7 +89,7 @@ namespace Bridge.Translator
 
                     if (!found)
                     {
-                        this.Write("return {jump:2}");    
+                        this.Write("return {jump:2}");
                     }
                     else
                     {

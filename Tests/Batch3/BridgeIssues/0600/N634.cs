@@ -26,6 +26,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             }
         }
     }
+
     [Namespace("ClientTestLibraryCustom")]
     public class Bridge634B<T>
     {
@@ -51,6 +52,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             }
         }
     }
+
     public class Bridge634C
     {
         public class Nested
@@ -75,6 +77,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             }
         }
     }
+
     [Namespace(false)]
     public class Bridge634D
     {

@@ -226,7 +226,6 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
             throw new System.ArgumentNullException("input");
         }
 
-
         var match = this._runner.run(true, -1, input, 0, input.length, startat);
 
         return match == null;
@@ -322,7 +321,6 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
     },
 
     groupNameFromNumber: function (i) {
-
         if (this._capslist == null) {
             if (i >= 0 && i < this._capsize) {
                 var invariantCulture = System.Globalization.CultureInfo.invariantCulture;

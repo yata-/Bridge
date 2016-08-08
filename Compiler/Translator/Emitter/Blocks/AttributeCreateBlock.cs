@@ -1,16 +1,16 @@
 using Bridge.Contract;
 using Bridge.Contract.Constants;
 using ICSharpCode.NRefactory.CSharp;
+using ICSharpCode.NRefactory.CSharp.Refactoring;
+using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
+using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using Mono.Cecil;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using ICSharpCode.NRefactory.CSharp.Refactoring;
-using ICSharpCode.NRefactory.CSharp.Resolver;
-using ICSharpCode.NRefactory.TypeSystem.Implementation;
 
 namespace Bridge.Translator
 {
@@ -183,7 +183,7 @@ namespace Bridge.Translator
         {
             if (rr is ConversionResolveResult)
             {
-                rr = ((ConversionResolveResult) rr).Input;
+                rr = ((ConversionResolveResult)rr).Input;
             }
 
             if (rr is TypeOfResolveResult)
@@ -195,11 +195,11 @@ namespace Bridge.Translator
                 TypeSystemAstBuilder typeBuilder =
                     new TypeSystemAstBuilder(new CSharpResolver(block.Emitter.Resolver.Compilation));
                 var expression = typeBuilder.ConvertConstantValue(rr) as ArrayCreateExpression;
-                new ArrayCreateBlock(block.Emitter, expression, (ArrayCreateResolveResult) rr).Emit();
+                new ArrayCreateBlock(block.Emitter, expression, (ArrayCreateResolveResult)rr).Emit();
             }
-            else if(rr is MemberResolveResult)
+            else if (rr is MemberResolveResult)
             {
-                var mrr = (MemberResolveResult) rr;
+                var mrr = (MemberResolveResult)rr;
 
                 if (mrr.IsCompileTimeConstant && mrr.Member.DeclaringType.Kind == TypeKind.Enum)
                 {

@@ -78,70 +78,70 @@ namespace System
         public extern int ComparedTo(decimal d);
 
         //[Template("System.Decimal.lift({value})")]
-        public static extern implicit operator decimal(byte value);
+        public static extern implicit operator decimal (byte value);
 
         //[Template("System.Decimal.lift({value})")]
-        public static extern implicit operator decimal(sbyte value);
+        public static extern implicit operator decimal (sbyte value);
 
         //[Template("System.Decimal.lift({value})")]
-        public static extern implicit operator decimal(short value);
+        public static extern implicit operator decimal (short value);
 
         //[Template("System.Decimal.lift({value})")]
-        public static extern implicit operator decimal(ushort value);
+        public static extern implicit operator decimal (ushort value);
 
         //[Template("System.Decimal.lift({value})")]
-        public static extern implicit operator decimal(char value);
+        public static extern implicit operator decimal (char value);
 
         //[Template("System.Decimal.lift({value})")]
-        public static extern implicit operator decimal(int value);
+        public static extern implicit operator decimal (int value);
 
         //[Template("System.Decimal.lift({value})")]
-        public static extern implicit operator decimal(uint value);
+        public static extern implicit operator decimal (uint value);
 
         //[Template("System.Decimal.lift({value})")]
-        public static extern implicit operator decimal(long value);
+        public static extern implicit operator decimal (long value);
 
         //[Template("System.Decimal.lift({value})")]
-        public static extern implicit operator decimal(ulong value);
+        public static extern implicit operator decimal (ulong value);
 
         //[Template("System.Decimal.lift({value})")]
-        public static extern explicit operator decimal(float value);
+        public static extern explicit operator decimal (float value);
 
         //[Template("System.Decimal.lift({value})")]
-        public static extern explicit operator decimal(double value);
+        public static extern explicit operator decimal (double value);
 
         //[Template("System.Decimal.toInt({value}, System.Byte)")]
-        public static extern explicit operator byte(decimal value);
+        public static extern explicit operator byte (decimal value);
 
         //[Template("System.Decimal.toInt({value}, System.SByte)")]
-        public static extern explicit operator sbyte(decimal value);
+        public static extern explicit operator sbyte (decimal value);
 
         //[Template("System.Decimal.toInt({value}, Bridge.Char)")]
-        public static extern explicit operator char(decimal value);
+        public static extern explicit operator char (decimal value);
 
         //[Template("System.Decimal.toInt({value}, System.Int16)")]
-        public static extern explicit operator short(decimal value);
+        public static extern explicit operator short (decimal value);
 
         //[Template("System.Decimal.toInt({value}, System.UInt16)")]
-        public static extern explicit operator ushort(decimal value);
+        public static extern explicit operator ushort (decimal value);
 
         //[Template("System.Decimal.toInt({value}, System.Int32)")]
-        public static extern explicit operator int(decimal value);
+        public static extern explicit operator int (decimal value);
 
         //[Template("System.Decimal.toInt({value}, System.UInt32)")]
-        public static extern explicit operator uint(decimal value);
+        public static extern explicit operator uint (decimal value);
 
         //[Template("System.Decimal.toInt({value}, System.Int64)")]
-        public static extern explicit operator long(decimal value);
+        public static extern explicit operator long (decimal value);
 
         //[Template("System.Decimal.toInt({value}, System.UInt64)")]
-        public static extern explicit operator ulong(decimal value);
+        public static extern explicit operator ulong (decimal value);
 
         //[Template("System.Decimal.toFloat({value})")]
-        public static extern explicit operator float(decimal value);
+        public static extern explicit operator float (decimal value);
 
         //[Template("System.Decimal.toFloat({value})")]
-        public static extern explicit operator double(decimal value);
+        public static extern explicit operator double (decimal value);
 
         [Template("{d}.clone()")]
         public static extern decimal operator +(decimal d);

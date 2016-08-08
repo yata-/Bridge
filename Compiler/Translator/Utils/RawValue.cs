@@ -1,5 +1,4 @@
-﻿using System;
-namespace Bridge.Translator
+﻿namespace Bridge.Translator
 {
     public class RawValue
     {

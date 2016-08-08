@@ -2,8 +2,8 @@
 // https://github.com/dotnet/corefx/blob/master/src/System.Runtime.Extensions/tests/System/Convert.ToInt32.cs
 // https://github.com/dotnet/corefx/blob/master/LICENSE
 
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.ConvertTests
 {
@@ -151,19 +151,19 @@ namespace Bridge.ClientTest.ConvertTests
                 int.MaxValue, int.MaxValue, int.MaxValue, int.MaxValue,
                 int.MinValue, int.MinValue, int.MinValue, int.MinValue
             };
-            VerifyFromStringWithBase( Convert.ToInt32, testValues, testBases, expectedValues);
+            VerifyFromStringWithBase(Convert.ToInt32, testValues, testBases, expectedValues);
 
             string[] overflowValues = { ConvertConstants.INT32_OVERFLOW_MAX_STRING, ConvertConstants.INT32_OVERFLOW_MIN_STRING, ConvertConstants.INT32_OVERFLOW_MAX_STRING_BASE_2, ConvertConstants.INT32_OVERFLOW_MAX_STRING_BASE_16, ConvertConstants.INT32_OVERFLOW_MAX_STRING_BASE_8 };
             int[] overflowBases = { 10, 10, 2, 16, 8 };
-            VerifyFromStringWithBaseThrows<OverflowException>( Convert.ToInt32, overflowValues, overflowBases);
+            VerifyFromStringWithBaseThrows<OverflowException>(Convert.ToInt32, overflowValues, overflowBases);
 
             string[] formatExceptionValues = { "12", "ffffffffffffffffffff" };
             int[] formatExceptionBases = { 2, 8 };
-            VerifyFromStringWithBaseThrows<FormatException>( Convert.ToInt32, formatExceptionValues, formatExceptionBases);
+            VerifyFromStringWithBaseThrows<FormatException>(Convert.ToInt32, formatExceptionValues, formatExceptionBases);
 
             string[] argumentExceptionValues = { "10", "11", "abba", "-ab" };
             int[] argumentExceptionBases = { -1, 3, 0, 16 };
-            VerifyFromStringWithBaseThrows<ArgumentException>( Convert.ToInt32, argumentExceptionValues, argumentExceptionBases);
+            VerifyFromStringWithBaseThrows<ArgumentException>(Convert.ToInt32, argumentExceptionValues, argumentExceptionBases);
         }
 
         [Test]

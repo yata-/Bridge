@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Bridge.Contract;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-
-using Bridge.Contract;
 
 namespace Bridge.Translator.Logging
 {
@@ -13,6 +12,7 @@ namespace Bridge.Translator.Logging
         public bool UseTimeStamp { get; set; }
 
         private bool bufferedMode;
+
         public bool BufferedMode
         {
             get { return bufferedMode; }
@@ -24,6 +24,7 @@ namespace Bridge.Translator.Logging
         }
 
         private LoggerLevel loggerLevel;
+
         public LoggerLevel LoggerLevel
         {
             get { return loggerLevel; }
@@ -55,7 +56,6 @@ namespace Bridge.Translator.Logging
             : this(name, useTimeStamp, LoggerLevel.None, false, loggers)
         {
         }
-
 
         public FileLoggerWriter GetFileLogger()
         {

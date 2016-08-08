@@ -1,6 +1,6 @@
+using Bridge.Test;
 using System;
 using System.Threading.Tasks;
-using Bridge.Test;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -9,7 +9,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     [TestFixture(TestNameFormat = "#930 - {0}")]
     public class Bridge930
     {
-        static async Task Test()
+        private static async Task Test()
         {
             await Task.FromResult(1);
             throw new Exception("test");

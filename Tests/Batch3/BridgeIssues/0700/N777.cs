@@ -9,7 +9,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     {
         private static object SomeProperty
         {
-            get; 
+            get;
             set;
         }
 
@@ -29,7 +29,6 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         {
             return null;
         }
-
 
         [Test(ExpectedCount = 4)]
         public static void TestUseCase()

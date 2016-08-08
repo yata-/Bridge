@@ -402,6 +402,7 @@ namespace Bridge.Contract
             get;
             set;
         }
+
         Dictionary<string, string> NamedFunctions
         {
             get; set;

@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Bridge.Test;
+using System;
 using System.Reflection;
-using Bridge;
-using Bridge.Test;
-
 
 #pragma warning disable 169, 649
 
@@ -12,39 +10,59 @@ namespace Bridge.ClientTest.Reflection
     [TestFixture(TestNameFormat = "Reflection - Reflection {0}")]
     public class ReflectionTests
     {
-        class A1Attribute : Attribute
+        private class A1Attribute : Attribute
         {
             public int X { get; private set; }
-            public A1Attribute() { }
-            public A1Attribute(int x) { X = x; }
+
+            public A1Attribute()
+            {
+            }
+
+            public A1Attribute(int x)
+            {
+                X = x;
+            }
         }
 
         [NonScriptable]
         [External]
-        class A2Attribute : Attribute { }
+        private class A2Attribute : Attribute
+        { }
 
-        class A3Attribute : Attribute { }
+        private class A3Attribute : Attribute
+        { }
 
-        class A4Attribute : Attribute { }
+        private class A4Attribute : Attribute
+        { }
 
         public class C1
         {
-            public void M1() { }
+            public void M1()
+            {
+            }
+
             [A1]
             public void M2() { }
+
             [Reflectable]
             public void M3() { }
+
             [A2]
             public void M4() { }
         }
 
         public struct S1
         {
-            public void M1() { }
+            public void M1()
+            {
+            }
+
             [A1]
             public void M2() { }
+
             [Reflectable]
             public void M3() { }
+
             [A2]
             public void M4() { }
         }
@@ -53,6 +71,7 @@ namespace Bridge.ClientTest.Reflection
         {
             [Reflectable]
             public void M1() { }
+
             [Reflectable]
             public static void M2() { }
         }
@@ -61,10 +80,13 @@ namespace Bridge.ClientTest.Reflection
         {
             [Reflectable]
             public int M1() { return 0; }
+
             [Reflectable]
             public int M2(string x) { return 0; }
+
             [Reflectable]
             public int M3(string x, int y) { return 0; }
+
             [Reflectable]
             public void M4() { }
         }
@@ -73,8 +95,10 @@ namespace Bridge.ClientTest.Reflection
         {
             [Reflectable]
             public void M() { }
+
             [Reflectable]
             public void M(int i) { }
+
             [Reflectable, Name("x")]
             public void M(int i, string s) { }
         }
@@ -83,6 +107,7 @@ namespace Bridge.ClientTest.Reflection
         {
             [Reflectable]
             public T1 M(T2 t2, string s) { return default(T1); }
+
             [Reflectable]
             public object M2() { return null; }
         }
@@ -91,8 +116,10 @@ namespace Bridge.ClientTest.Reflection
         {
             [Reflectable]
             public T1 M1<T1, T2>(T2 t2, string s) { return default(T1); }
+
             [Reflectable]
             public T1 M2<T1>(string s) { return default(T1); }
+
             [Reflectable]
             public void M3(string s) { }
         }
@@ -100,10 +127,13 @@ namespace Bridge.ClientTest.Reflection
         public class C7
         {
             public int x;
+
             [Reflectable]
             public int M1(int x) { return this.x + x; }
+
             [Reflectable]
             public static void M2(string x) { }
+
             [Reflectable]
             public string M3<T1, T2>(string s) { return x.ToString() + " " + typeof(T1).FullName + " " + typeof(T2).FullName + " " + s; }
         }
@@ -111,16 +141,21 @@ namespace Bridge.ClientTest.Reflection
         public class C8
         {
             private string s;
+
             public C8(string s)
             {
                 this.s = s;
             }
+
             [Reflectable]
             public string M1(string a, string b) { return s + " " + a + " " + b; }
+
             [Reflectable]
             public static string M2(string a, string b) { return a + " " + b; }
+
             [Reflectable]
             public string M3<T1, T2>(string a) { return s + " " + typeof(T1).FullName + " " + typeof(T2).FullName + " " + a; }
+
             [Reflectable]
             public static string M4<T1, T2>(string a) { return typeof(T1).FullName + " " + typeof(T2).FullName + " " + a; }
         }
@@ -138,6 +173,7 @@ namespace Bridge.ClientTest.Reflection
 
             [Reflectable]
             public C10(int x) { X = x; S = "X"; }
+
             [Reflectable]
             public C10(int x, string s) { X = x; S = s; }
         }
@@ -146,6 +182,7 @@ namespace Bridge.ClientTest.Reflection
         {
             [Name(false)]
             public DateTime D;
+
             [Reflectable]
             public C11(DateTime dt) { D = dt; }
         }
@@ -154,8 +191,10 @@ namespace Bridge.ClientTest.Reflection
         {
             [Reflectable]
             public int F1;
+
             [Reflectable, Name("renamedF2")]
             public DateTime F2;
+
             [Reflectable]
             public static string F3;
         }
@@ -164,62 +203,86 @@ namespace Bridge.ClientTest.Reflection
         {
             [Name(false)]
             public Action addedE3Handler;
+
             [Name(false)]
             public Action removedE3Handler;
+
             [Name(false)]
             public static Action addedE4Handler;
+
             [Name(false)]
             public static Action removedE4Handler;
 
             [Reflectable]
             public event Action E1;
+
             [Reflectable]
             public static event Action E2;
+
             [Reflectable]
             public event Action E3 {[Template("{this}.addedE3Handler = {value}")] add { }[Template("{this}.removedE3Handler = {value}")] remove { } }
+
             [Reflectable]
             public static event Action E4 {[Template("Bridge.ClientTest.Reflection.ReflectionTests.C13.addedE4Handler = {value}")] add { }[Template("Bridge.ClientTest.Reflection.ReflectionTests.C13.removedE4Handler = {value}")] remove { } }
 
-            public void RaiseE1() { if (E1 != null) E1(); }
-            public static void RaiseE2() { if (E2 != null) E2(); }
+            public void RaiseE1()
+            {
+                if (E1 != null) E1();
+            }
+
+            public static void RaiseE2()
+            {
+                if (E2 != null) E2();
+            }
         }
 
         public class C14
         {
             [Name(false)]
             public int p13Field;
+
             [Name(false)]
             public static int p14Field;
 
             [Reflectable]
             public int P1 { get; set; }
+
             [Reflectable, FieldProperty]
             public string P2 { get; set; }
+
             [Reflectable]
             public static DateTime P3 { get; set; }
+
             [Reflectable, FieldProperty]
             public static double P4 { get; set; }
 
             [Reflectable]
             public int P5 { get { return 0; } }
+
             [Reflectable, FieldProperty]
             public string P6 { get; set; }
+
             [Reflectable]
             public static DateTime P7 { get { return default(DateTime); } }
+
             [Reflectable, FieldProperty]
             public static double P8 { get; set; }
 
             [Reflectable]
             public int P9 { set { } }
+
             [Reflectable, FieldProperty]
             public string P10 { get; set; }
+
             [Reflectable]
             public static DateTime P11 { set { } }
+
             [Reflectable, FieldProperty]
             public static double P12 { get; set; }
 
             [Reflectable]
             public int P13 {[Template("{this}.p13Field")] get;[Template("{this}.p13Field = {value}")] set; }
+
             [Reflectable]
             public static int P14 {[Template("Bridge.ClientTest.Reflection.ReflectionTests.C14.p14Field")] get;[Template("Bridge.ClientTest.Reflection.ReflectionTests.C14.p14Field = {value}")] set; }
         }
@@ -229,6 +292,7 @@ namespace Bridge.ClientTest.Reflection
             public int x;
             public string s;
             public string v;
+
             [Reflectable]
             public string this[int x, string s] { get { return v + " " + x + " " + s; } set { this.x = x; this.s = s; this.v = value; } }
         }
@@ -249,12 +313,16 @@ namespace Bridge.ClientTest.Reflection
         {
             [A1(1), A3]
             public C18() { }
+
             [A1(2), A3]
             public void M() { }
+
             [A1(3), A3]
             public int F;
+
             [A1(4), A3]
             public int P {[A1(5), A3] get;[A1(6), A3] set; }
+
             [A1(7), A3]
             public event Action E {[A1(8), A3] add { }[A1(9), A3] remove { } }
         }
@@ -264,6 +332,7 @@ namespace Bridge.ClientTest.Reflection
         {
             [Name(false)]
             public int A;
+
             [Name(false)]
             public string B;
 
@@ -277,6 +346,7 @@ namespace Bridge.ClientTest.Reflection
         {
             [Name(false)]
             public int A;
+
             [Name(false)]
             public string B;
 
@@ -290,6 +360,7 @@ namespace Bridge.ClientTest.Reflection
         {
             [Name(false)]
             public int X;
+
             public C21(int x)
             {
                 X = x;
@@ -316,6 +387,7 @@ namespace Bridge.ClientTest.Reflection
                 this.a = a;
                 this.b = b;
             }
+
             [Reflectable, ExpandParams]
             public C22(string a, params string[] b)
             {
@@ -347,6 +419,7 @@ namespace Bridge.ClientTest.Reflection
                 this.a = a;
                 this.b = b;
             }
+
             [Reflectable, ExpandParams]
             public C23(string a, params string[] b)
             {
@@ -371,10 +444,13 @@ namespace Bridge.ClientTest.Reflection
         {
             [Name(false)]
             public int x;
+
             [Name(false)]
             public string s;
+
             [Name(false)]
             public string v;
+
             [Reflectable]
             public string this[int x, string s] {[Template("{this}.v + ' ' + {x} + ' ' + {s}")] get { return null; }[Template("(function(t, x, s) { t.x = x; t.s = s; t.v = {value}; })({this}, {x}, {s})")] set { } }
         }
@@ -383,38 +459,57 @@ namespace Bridge.ClientTest.Reflection
         public class C25
         {
             public int A1;
+
             [Reflectable]
             public int B1;
+
             [Reflectable(true)]
             public int C1;
+
             [Reflectable(false)]
             public int D1;
+
             internal int A2;
+
             [Reflectable]
             internal int B2;
+
             [Reflectable(true)]
             internal int C2;
+
             [Reflectable(false)]
             internal int D2;
+
             protected int A3;
+
             [Reflectable]
             protected int B3;
+
             [Reflectable(true)]
             protected int C3;
+
             [Reflectable(false)]
             protected int D3;
+
             protected internal int A4;
+
             [Reflectable]
             protected internal int B4;
+
             [Reflectable(true)]
             protected internal int C4;
+
             [Reflectable(false)]
             protected internal int D4;
+
             private int A5;
+
             [Reflectable]
             private int B5;
+
             [Reflectable(true)]
             private int C5;
+
             [Reflectable(false)]
             private int D5;
         }
@@ -423,38 +518,57 @@ namespace Bridge.ClientTest.Reflection
         public class C26
         {
             public int A1;
+
             [Reflectable]
             public int B1;
+
             [Reflectable(true)]
             public int C1;
+
             [Reflectable(false)]
             public int D1;
+
             internal int A2;
+
             [Reflectable]
             internal int B2;
+
             [Reflectable(true)]
             internal int C2;
+
             [Reflectable(false)]
             internal int D2;
+
             protected int A3;
+
             [Reflectable]
             protected int B3;
+
             [Reflectable(true)]
             protected int C3;
+
             [Reflectable(false)]
             protected int D3;
+
             protected internal int A4;
+
             [Reflectable]
             protected internal int B4;
+
             [Reflectable(true)]
             protected internal int C4;
+
             [Reflectable(false)]
             protected internal int D4;
+
             private int A5;
+
             [Reflectable]
             private int B5;
+
             [Reflectable(true)]
             private int C5;
+
             [Reflectable(false)]
             private int D5;
         }
@@ -463,38 +577,57 @@ namespace Bridge.ClientTest.Reflection
         public class C27
         {
             public int A1;
+
             [Reflectable]
             public int B1;
+
             [Reflectable(true)]
             public int C1;
+
             [Reflectable(false)]
             public int D1;
+
             internal int A2;
+
             [Reflectable]
             internal int B2;
+
             [Reflectable(true)]
             internal int C2;
+
             [Reflectable(false)]
             internal int D2;
+
             protected int A3;
+
             [Reflectable]
             protected int B3;
+
             [Reflectable(true)]
             protected int C3;
+
             [Reflectable(false)]
             protected int D3;
+
             protected internal int A4;
+
             [Reflectable]
             protected internal int B4;
+
             [Reflectable(true)]
             protected internal int C4;
+
             [Reflectable(false)]
             protected internal int D4;
+
             private int A5;
+
             [Reflectable]
             private int B5;
+
             [Reflectable(true)]
             private int C5;
+
             [Reflectable(false)]
             private int D5;
         }
@@ -503,38 +636,57 @@ namespace Bridge.ClientTest.Reflection
         public class C28
         {
             public int A1;
+
             [Reflectable]
             public int B1;
+
             [Reflectable(true)]
             public int C1;
+
             [Reflectable(false)]
             public int D1;
+
             internal int A2;
+
             [Reflectable]
             internal int B2;
+
             [Reflectable(true)]
             internal int C2;
+
             [Reflectable(false)]
             internal int D2;
+
             protected int A3;
+
             [Reflectable]
             protected int B3;
+
             [Reflectable(true)]
             protected int C3;
+
             [Reflectable(false)]
             protected int D3;
+
             protected internal int A4;
+
             [Reflectable]
             protected internal int B4;
+
             [Reflectable(true)]
             protected internal int C4;
+
             [Reflectable(false)]
             protected internal int D4;
+
             private int A5;
+
             [Reflectable]
             private int B5;
+
             [Reflectable(true)]
             private int C5;
+
             [Reflectable(false)]
             private int D5;
         }

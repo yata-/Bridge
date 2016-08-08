@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Bridge.Test;
+using System;
 using System.Text.RegularExpressions;
-using Bridge.Test;
 
 namespace Bridge.ClientTest.Text.RegularExpressions
 {
@@ -40,7 +40,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
         private void ValidateGroupImpl(Group group, int index, int length, bool success, string value, int captureCount, string descr)
         {
             ValidateCaptureImpl(group, index, length, value, descr);
-            Assert.AreEqual(success, group.Success, descr +".Success");
+            Assert.AreEqual(success, group.Success, descr + ".Success");
 
             Assert.NotNull(group.Captures, descr + ".Captures is not NULL");
             Assert.AreEqual(captureCount, group.Captures.Count, descr + ".Captures.Count");

@@ -1,6 +1,5 @@
-using System;
-using Bridge;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.CSharp6
 {
@@ -8,16 +7,28 @@ namespace Bridge.ClientTest.CSharp6
     [TestFixture(TestNameFormat = "Interpolated Strings - {0}")]
     public class TestInterpolatedStrings
     {
-        class Person
+        private class Person
         {
             public string Name { get; set; } = "Jane";
             public int Age { get; set; } = 10;
         }
 
         public static int P { get; set; }
-        public static int F1() { return 0; }
-        public static int F2() { return 0; }
-        public static int F3() { return 0; }
+
+        public static int F1()
+        {
+            return 0;
+        }
+
+        public static int F2()
+        {
+            return 0;
+        }
+
+        public static int F3()
+        {
+            return 0;
+        }
 
         [Test]
         public static void TestBasic()

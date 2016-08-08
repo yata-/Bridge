@@ -2,7 +2,6 @@
 
 using System.Globalization;
 
-
 namespace Bridge.ClientTest.Format
 {
     [Category(Constants.MODULE_DATETIME)]

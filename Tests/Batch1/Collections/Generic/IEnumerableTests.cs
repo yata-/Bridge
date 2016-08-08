@@ -1,12 +1,6 @@
-﻿using System;
+﻿using Bridge.Test;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Linq;
-using Bridge;
-using Bridge.Linq;
-using Bridge.Test;
-using Bridge.ClientTest;
 
 namespace Bridge.ClientTest.Collections.Generic
 {
@@ -23,7 +17,10 @@ namespace Bridge.ClientTest.Collections.Generic
                 yield return "z";
             }
 
-            IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
         }
 
         [Test]

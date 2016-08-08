@@ -136,7 +136,6 @@ Bridge.define("System.Text.RegularExpressions.GroupCollection", {
     }
 });
 
-
 Bridge.define("System.Text.RegularExpressions.GroupEnumerator", {
     inherits: function () {
         return [System.Collections.IEnumerator];

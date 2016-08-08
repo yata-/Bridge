@@ -1,5 +1,5 @@
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -10,7 +10,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         [Test]
         public static void TestExternalEnum()
         {
-            // simulate declaration of external enum 
+            // simulate declaration of external enum
             Script.Write("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1083.Foo = {};");
             Script.Write("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1083.Foo.OK = 'OK';");
             Script.Write("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1083.Foo.FAIL = 'FAIL';");

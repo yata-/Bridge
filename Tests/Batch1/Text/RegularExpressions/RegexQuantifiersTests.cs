@@ -1,5 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using Bridge.Test;
+﻿using Bridge.Test;
+using System.Text.RegularExpressions;
 
 namespace Bridge.ClientTest.Text.RegularExpressions
 {
@@ -24,7 +24,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
         [Test]
         public void MsdnOneOrMoreTimesTest()
         {
-            string[] inputs = { "been", "bent", "bf", "beee", "aabe"  };
+            string[] inputs = { "been", "bent", "bf", "beee", "aabe" };
             string[] expected = { "bee", "be", null, "beee", "be" };
 
             const string pattern = @"be+";
@@ -165,7 +165,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             ValidateMatchResults(rgx, inputs, expected);
         }
 
-        #endregion
+        #endregion MSDN
 
         [Test]
         public void ZeroOrMoreTimesTest()
@@ -185,7 +185,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
 
             ValidateGroup(m, 2, 2, 3, true, "abc", 1);
             ValidateCapture(m, 2, 0, 2, 3, "abc");
-            }
+        }
 
         [Test]
         public void OneOrMoreTimesTest1()

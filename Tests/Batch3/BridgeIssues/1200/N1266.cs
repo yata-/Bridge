@@ -1,5 +1,5 @@
-using System.Linq;
 using Bridge.Test;
+using System.Linq;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -10,7 +10,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         [Test]
         public static void TestArrayToEnumerable()
         {
-            var arr = new[] {1, 2, 3};
+            var arr = new[] { 1, 2, 3 };
             var x = arr.ToArray().ToEnumerable();
             var index = 0;
             foreach (var i in x)

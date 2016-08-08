@@ -74,9 +74,9 @@ namespace Bridge.Translator
 
                 if (!valuesOnly)
                 {
-                    this.Write(name, ": ");    
+                    this.Write(name, ": ");
                 }
-                
+
                 expression.AcceptVisitor(this.Emitter);
             }
         }

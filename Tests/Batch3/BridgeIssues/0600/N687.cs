@@ -27,14 +27,17 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             Assert.AreEqual(true, case2, "Bridge687 case2");
         }
     }
+
     internal class Bridge687A
     {
         public Bridge687A(string value)
         {
             Value = value;
         }
+
         public string Value { get; private set; }
-        public static implicit operator string(Bridge687A value)
+
+        public static implicit operator string (Bridge687A value)
         {
             return value.Value;
         }

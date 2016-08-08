@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Bridge.Test;
+using System;
 using System.Text.RegularExpressions;
-using Bridge.Test;
 
 namespace Bridge.ClientTest.Text.RegularExpressions.Methods
 {
@@ -127,7 +127,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Methods
             Assert.AreEqual(expected, result);
         }
 
-        #endregion
+        #endregion Instance methods
 
         #region Static methods
 
@@ -247,7 +247,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Methods
 
             var result = Regex.Replace(words, pattern, evaluator);
             Assert.AreEqual(expected, result);
-
         }
 
         [Test]
@@ -280,6 +279,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Methods
             Assert.AreEqual(expected, result);
         }
 
-        #endregion
+        #endregion Static methods
     }
 }

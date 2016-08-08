@@ -2,9 +2,9 @@
 // https://github.com/dotnet/corefx/blob/master/src/System.Runtime.Extensions/tests/System/Convert.ToString.cs
 // https://github.com/dotnet/corefx/blob/master/LICENSE
 
+using Bridge.Test;
 using System;
 using System.Globalization;
-using Bridge.Test;
 
 namespace Bridge.ClientTest.ConvertTests
 {
@@ -425,13 +425,13 @@ namespace Bridge.ClientTest.ConvertTests
                 Assert.AreEqual(expectedValues[i], Convert.ToString(testValues[i], 10));
             }
         }
-        
+
         [Test]
         public static void FromInt64Base16()
         {
             long[] testValues = { long.MinValue, 0, long.MaxValue };
             string[] expectedValues = { ConvertConstants.INT64_MIN_STRING_BASE_16, "0", ConvertConstants.INT64_MAX_STRING_BASE_16 };
-                                                                  
+
             for (int i = 0; i < testValues.Length; i++)
             {
                 Assert.AreEqual(expectedValues[i], Convert.ToString(testValues[i], 16));
@@ -448,7 +448,7 @@ namespace Bridge.ClientTest.ConvertTests
         public static void FromBoolean()
         {
             bool[] testValues = new[] { true, false };
-            string[] expectedValues = new[] { "True", "False"};
+            string[] expectedValues = new[] { "True", "False" };
 
             for (int i = 0; i < testValues.Length; i++)
             {
@@ -680,7 +680,11 @@ namespace Bridge.ClientTest.ConvertTests
         private class FooFormattable : IFormattable
         {
             private int _value;
-            public FooFormattable(int value) { _value = value; }
+
+            public FooFormattable(int value)
+            {
+                _value = value;
+            }
 
             public string ToString(string format, IFormatProvider formatProvider)
             {
@@ -703,7 +707,11 @@ namespace Bridge.ClientTest.ConvertTests
         private class Foo
         {
             private int _value;
-            public Foo(int value) { _value = value; }
+
+            public Foo(int value)
+            {
+                _value = value;
+            }
 
             public string ToString(IFormatProvider provider)
             {

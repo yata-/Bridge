@@ -15,7 +15,6 @@ QUnit.test("Four methods", function (assert) {
     TestInstance1(assert, instance);
 
     TestInstance2(assert, instance);
-
 });
 
 QUnit.test("Fifth method through Interface3", function (assert) {
@@ -92,7 +91,7 @@ function TestInstance4(assert: QUnitAssert, instance: Interfaces.Class4) {
     instance.method8(stringRef);
     assert.deepEqual(stringRef.v, "ABC_Method8", "Method8() ref string parameter");
 
-    stringRef.v  = "ABC_";
+    stringRef.v = "ABC_";
     instance.method9(1, stringRef);
     assert.deepEqual(stringRef.v, "ABC_1", "Method9() int, ref string parameter");
 
@@ -121,6 +120,4 @@ function TestInstance6(assert: QUnitAssert, instance: Interfaces.Class6) {
 
     //var interface61: Interfaces.Interface61 = instance;
     //var interface62: Interfaces.Interface62 = instance;
-
-
 }

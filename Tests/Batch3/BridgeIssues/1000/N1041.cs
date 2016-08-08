@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using Bridge.Test;
+using System.Collections.Generic;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -142,6 +142,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             }
 
             private Dictionary<int, int> dict = new Dictionary<int, int>();
+
             public int this[int i]
             {
                 get
@@ -291,6 +292,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             }
 
             private Dictionary<int, decimal> dict = new Dictionary<int, decimal>();
+
             public decimal this[int i]
             {
                 get

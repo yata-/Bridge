@@ -6,7 +6,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     [TestFixture(TestNameFormat = "#1253 - {0}")]
     public class Bridge1253
     {
-        enum Numbers
+        private enum Numbers
         {
             // Emitted as ONE by default
             ONE = 1,

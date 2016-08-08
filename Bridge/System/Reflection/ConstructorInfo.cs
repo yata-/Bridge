@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Bridge;
 
 namespace System.Reflection
@@ -46,7 +45,6 @@ namespace System.Reflection
 		/// Whether the [ExpandParams] attribute was specified on the constructor.
 		/// </summary>
 		public extern bool IsExpandParams {[Template("{this}.exp || false")] get;[Template("{this}.exp = {value}")] private set; }
-
 
         internal extern ConstructorInfo();
     }

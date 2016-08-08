@@ -1,7 +1,6 @@
-﻿using System.Collections;
+﻿using Bridge.Test;
+using System.Collections;
 using System.Collections.Generic;
-using Bridge.Test;
-using Bridge.ClientTest;
 
 namespace Bridge.ClientTest.Collections.Generic
 {
@@ -16,15 +15,39 @@ namespace Bridge.ClientTest.Collections.Generic
                 Items = new List<string>(items);
             }
 
-            IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
+
             public List<string> Items { get; private set; }
 
-            public IEnumerator<string> GetEnumerator() { return Items.GetEnumerator(); }
+            public IEnumerator<string> GetEnumerator()
+            {
+                return Items.GetEnumerator();
+            }
+
             public int Count { get { return Items.Count; } }
-            public void Add(string item) { Items.Add(item); }
-            public void Clear() { Items.Clear(); }
-            public bool Contains(string item) { return Items.Contains(item); }
-            public bool Remove(string item) { return Items.Remove(item); }
+
+            public void Add(string item)
+            {
+                Items.Add(item);
+            }
+
+            public void Clear()
+            {
+                Items.Clear();
+            }
+
+            public bool Contains(string item)
+            {
+                return Items.Contains(item);
+            }
+
+            public bool Remove(string item)
+            {
+                return Items.Remove(item);
+            }
         }
 
         private class C
@@ -40,6 +63,7 @@ namespace Bridge.ClientTest.Collections.Generic
             {
                 return o is C && _i == ((C)o)._i;
             }
+
             public override int GetHashCode()
             {
                 return _i;

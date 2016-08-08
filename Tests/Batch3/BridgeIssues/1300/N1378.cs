@@ -6,7 +6,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     [TestFixture(TestNameFormat = "#1378 - {0}")]
     public class Bridge1378
     {
-        class IntWrapper
+        private class IntWrapper
         {
             public int value;
 

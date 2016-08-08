@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Bridge.Contract;
+﻿using Bridge.Contract;
+using System;
 
 namespace Bridge.Translator.Logging
 {
@@ -15,7 +11,6 @@ namespace Bridge.Translator.Logging
 
         public void Flush()
         {
-
         }
 
         public void Error(string message)

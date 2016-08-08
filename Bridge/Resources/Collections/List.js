@@ -145,7 +145,7 @@ Bridge.define('System.Collections.Generic.List$1', function (T) {
             var result = [],
                 i,
 				maxIndex = index + count;
-				
+
             for (i = index; i < maxIndex; i++) {
                 result.push(this.items[i]);
             }

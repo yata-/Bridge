@@ -1,5 +1,5 @@
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -17,7 +17,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         [Test(ExpectedCount = 1)]
         public static void TestUseCase()
         {
-           Assert.AreEqual("Test One Two", Test("Test {0} {1}", "One", "Two"));
+            Assert.AreEqual("Test One Two", Test("Test {0} {1}", "One", "Two"));
         }
     }
 }

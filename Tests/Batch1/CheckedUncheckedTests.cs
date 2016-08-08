@@ -2,7 +2,6 @@
 
 using System;
 
-
 namespace Bridge.ClientTest
 {
     public class CheckedUncheckedTests
@@ -954,4 +953,3 @@ namespace Bridge.ClientTest
         }
     }
 }
-

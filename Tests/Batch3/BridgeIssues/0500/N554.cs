@@ -1,6 +1,5 @@
 using Bridge.Test;
 
-
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
     // Bridge[#554]

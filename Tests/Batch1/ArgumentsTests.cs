@@ -1,7 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using Bridge;
-using Bridge.Test;
+﻿using Bridge.Test;
 
 namespace Bridge.ClientTest
 {

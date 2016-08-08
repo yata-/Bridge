@@ -2,8 +2,8 @@
 // https://github.com/dotnet/corefx/blob/master/src/System.Runtime.Extensions/tests/System/Convert.ToBase64CharArray.cs
 // https://github.com/dotnet/corefx/blob/master/LICENSE
 
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.ConvertTests
 {
@@ -32,7 +32,6 @@ namespace Bridge.ClientTest.ConvertTests
 
             var c2 = Convert.ToBase64CharArray(inputBuffer, 0, 2, ouputBuffer, 0);
             Assert.AreEqual(4, c2);
-
         }
 
         [Test]

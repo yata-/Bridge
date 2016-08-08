@@ -591,7 +591,6 @@ namespace Bridge.Translator
                 }
 
                 this.Write("case " + i + ": ");
-                
 
                 this.BeginBlock();
 

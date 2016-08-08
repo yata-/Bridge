@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Bridge.Test;
+using System;
 using System.Text.RegularExpressions;
-using Bridge.Test;
 
 namespace Bridge.ClientTest.Text.RegularExpressions
 {
@@ -101,7 +101,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             ValidateGroup(ms[1], 5, 0, 0, false, "", 0);
         }
 
-        #endregion
+        #endregion MSDN
 
         [Test]
         public void BalancingGroupTest()
@@ -120,7 +120,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions
 
             ValidateGroup(m, 2, 1, 1, true, "b", 1);
             ValidateCapture(m, 2, 0, 1, 1, "b");
-
         }
 
         [Test]

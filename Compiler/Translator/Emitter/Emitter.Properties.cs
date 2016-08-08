@@ -394,8 +394,8 @@ namespace Bridge.Translator
             get;
             set;
         }
-		
-		public bool StaticBlock
+
+        public bool StaticBlock
         {
             get;
             set;

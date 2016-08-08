@@ -1,5 +1,4 @@
 ﻿using Bridge.Test;
-using Bridge.ClientTest;
 using System.Text;
 
 namespace Bridge.ClientTest.Text

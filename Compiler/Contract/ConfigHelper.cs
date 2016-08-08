@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
-using Newtonsoft.Json.Linq;
 
 namespace Bridge.Contract
 {
@@ -72,10 +72,9 @@ namespace Bridge.Contract
                 }
                 else
                 {
-                    config = JsonConvert.DeserializeObject<T>(json);    
+                    config = JsonConvert.DeserializeObject<T>(json);
                 }
-                
-                
+
                 if (config == null)
                 {
                     return default(T);

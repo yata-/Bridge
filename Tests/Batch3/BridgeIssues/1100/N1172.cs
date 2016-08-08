@@ -18,9 +18,10 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             Assert.AreEqual(7, c.Prop1);
         }
 
-        class Class1
+        private class Class1
         {
             private int data;
+
             public int Prop1
             {
                 [Name("getAccessor")]

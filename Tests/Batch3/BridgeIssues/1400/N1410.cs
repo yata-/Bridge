@@ -1,5 +1,5 @@
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -15,7 +15,6 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             }
             set
             {
-
             }
         }
 
@@ -34,7 +33,6 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             }
             set
             {
-                
             }
         }
 

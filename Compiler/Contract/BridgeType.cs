@@ -423,11 +423,11 @@ namespace Bridge.Contract
 
                     name = sb.ToString();
                 }
-                else if(!asDefinition)
+                else if (!asDefinition)
                 {
                     StringBuilder sb = new StringBuilder(name);
                     bool needComma = false;
-                    sb.Append( "(");
+                    sb.Append("(");
                     foreach (var typeArg in type.TypeArguments)
                     {
                         if (needComma)
@@ -436,7 +436,7 @@ namespace Bridge.Contract
                         }
 
                         needComma = true;
-                        
+
                         sb.Append(BridgeTypes.ToJsName(typeArg, emitter));
                     }
                     sb.Append(")");
@@ -488,7 +488,7 @@ namespace Bridge.Contract
             var resolveResult = emitter.Resolver.ResolveNode(astType, emitter);
 
             var symbol = resolveResult.Type as ISymbol;
-            
+
             return BridgeTypes.ToJsName(resolveResult.Type, emitter, astType.Parent is TypeOfExpression && symbol != null && symbol.SymbolKind == SymbolKind.TypeDefinition);
         }
 

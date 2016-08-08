@@ -1,5 +1,5 @@
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -45,7 +45,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             Func<TNavigator> navigatorGenerator)
                 where TNavigator : Navigator
         {
-            return typeof (TNavigator).FullName;
+            return typeof(TNavigator).FullName;
         }
 
         private static string GetNavigatorToTest2<TNavigator>(
@@ -58,6 +58,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         }
 
         public class Navigator { }
+
         public class DemoNavigator : Navigator { }
     }
 }

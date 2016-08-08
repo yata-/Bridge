@@ -27,7 +27,8 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             {
                 get { return false; }
                 [Template("setBar({value})")]
-                set { }
+                set
+                { }
             }
         }
     }

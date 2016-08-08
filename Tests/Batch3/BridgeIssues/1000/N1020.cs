@@ -1,5 +1,5 @@
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -26,7 +26,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         [Test(ExpectedCount = 1)]
         public static void TestFlagEnumWithReference()
         {
-           Assert.AreEqual(TestEnum.FlagAlias, 1);
+            Assert.AreEqual(TestEnum.FlagAlias, 1);
         }
 
         [Test(ExpectedCount = 1)]

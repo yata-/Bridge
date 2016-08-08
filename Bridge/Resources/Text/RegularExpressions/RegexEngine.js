@@ -25,7 +25,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         nextBranch: 4
     },
 
-
     // ============================================================================================
     // Public functions
     // ============================================================================================
@@ -45,7 +44,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             ignoreWhitespace: isIgnoreWhitespace,
             explicitCapture: isExplicitCapture
         };
-
     },
 
     match: function (text, textStart) {
@@ -81,7 +79,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         }
         return this._patternInfo;
     },
-
 
     // ============================================================================================
     // Engine main logic
@@ -159,7 +156,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
 
             if (pass.tokens == null || pass.tokens.length === 0) {
                 res = resKind.endPass;
-
             } else {
                 // Add alternation branches before scanning:
                 if (this._addAlternationBranches(branches, branch, pass) === resKind.nextBranch) {
@@ -254,7 +250,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
     },
 
     _addAlternationBranches: function (branches, branch, pass) {
-
         var tokenTypes = System.Text.RegularExpressions.RegexEngineParser.tokenTypes;
         var branchTypes = this._branchType;
         var passEndIndex = pass.tokens.length;
@@ -276,7 +271,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             }
 
             if (orIndexes.length > 1) {
-
                 for (i = 0; i < orIndexes.length; i++) {
                     newBranch = new System.Text.RegularExpressions.RegexEngineBranch(branchTypes.or, i, 0, orIndexes.length, branch.state);
                     newBranch.isNotFailing = true;
@@ -294,7 +288,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
 
                 pass.alternationHandled = true;
                 return resKind.nextBranch;
-
             } else {
                 pass.tokens.noAlternation = true;
             }
@@ -407,7 +400,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             throw new System.InvalidOperationException("Current branch is supposed to be the last one.");
         }
 
-
         if (branches.length === 1 && branch.type === this._branchType.offset) {
             branch.value++;
             branch.state.txtIndex = branch.value;
@@ -423,7 +415,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             if (branch.value > branch.max) {
                 branches.pop();
             }
-
         } else {
             branches.pop();
 
@@ -527,7 +518,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         return match;
     },
 
-
     // ============================================================================================
     // Token processing
     // ============================================================================================
@@ -609,9 +599,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
         var textIndex = branch.state.txtIndex;
 
         if (pass.onHold) {
-
             if (token.type === tokenTypes.group) {
-
                 var rawIndex = token.group.rawIndex;
                 var capIndex = pass.onHoldTextIndex;
                 var capLength = textIndex - capIndex;
@@ -646,7 +634,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
 
         if (token.type === tokenTypes.group ||
             token.type === tokenTypes.groupImnsx) {
-
             var constructs = token.group.constructs;
 
             // Update Pass settings:
@@ -655,12 +642,9 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
             // Scan Grouping constructs:
             if (constructs.isPositiveLookahead || constructs.isNegativeLookahead ||
                 constructs.isPositiveLookbehind || constructs.isNegativeLookbehind) {
-
                 var scanLookRes = this._scanLook(branch, textIndex, textEndPos, token);
                 return scanLookRes;
-
             } else if (constructs.isNonbacktracking) {
-
                 var scanNonBacktrackingRes = this._scanNonBacktracking(branch, textIndex, textEndPos, token);
                 return scanNonBacktrackingRes;
             }
@@ -709,7 +693,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
 
         if (token.type === tokenTypes.alternationGroupRefNameCondition ||
             token.type === tokenTypes.alternationGroupRefNumberCondition) {
-
             var grCapture = branch.state.resolveBackref(token.data.packedSlotId);
             if (grCapture != null) {
                 res = resKind.ok;
@@ -815,7 +798,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
                     return resKind.nextBranch;
                 }
             }
-
         } else {
             for (i = 0; i < literal.length; i++) {
                 if (this._text[index + i] !== literal[i]) {
@@ -1060,7 +1042,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngine", {
 
         return resKind.nextBranch;
     },
-
 
     // ============================================================================================
     // Auxiliary functions

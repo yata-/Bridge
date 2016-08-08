@@ -1,6 +1,7 @@
+using Bridge.Test;
 using System;
 using System.Threading.Tasks;
-using Bridge.Test;
+
 #pragma warning disable 162
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues

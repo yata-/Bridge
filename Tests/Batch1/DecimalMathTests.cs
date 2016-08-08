@@ -1,7 +1,4 @@
-﻿using Bridge.Html5;
-using Bridge.Test;
-
-using Bridge.ClientTest;
+﻿using Bridge.Test;
 
 using System;
 using System.Text;
@@ -82,6 +79,7 @@ namespace Bridge.ClientTest
                 { NoDotNetDiff, null, DecimalMathTests.MaxValue, decimal.One, DecimalMathTests.MaxValue },
                 { NoDotNetDiff, null, DecimalMathTests.MinValue, decimal.MinusOne, DecimalMathTests.MaxValue }
             };
+
         private static object[,] InputDivide = new object[,]
             {
                 { NoDotNetDiff, null, 0m, 47m, 0m },
@@ -127,7 +125,7 @@ namespace Bridge.ClientTest
                 { NoDotNetDiff, null, DecimalMathTests.MinValue, decimal.MinusOne, 0m }
             };
 
-        #endregion Inputs
+        #endregion Common Inputs
 
         #region Tests
 
@@ -461,6 +459,4 @@ namespace Bridge.ClientTest
 
         #endregion TestHelpers
     }
-
 }
-

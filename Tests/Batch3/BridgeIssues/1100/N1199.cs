@@ -8,9 +8,10 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     {
         public delegate string SomeDel();
 
-        class NotWorking<T>
+        private class NotWorking<T>
         {
             public event SomeDel IsNotWorking;
+
             public string Validate()
             {
                 return IsNotWorking == null ? "no subscribers" : IsNotWorking();

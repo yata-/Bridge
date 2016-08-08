@@ -130,7 +130,7 @@ namespace Bridge.Translator
 
             return WrapNullableMember(info, member, node);
         }
-        
+
         public virtual Tuple<bool, bool, string> GetInlineCode(InvocationExpression node)
         {
             var target = node.Target as MemberReferenceExpression;
@@ -159,7 +159,6 @@ namespace Bridge.Translator
                 member = memberResolveResult.Member;
             }
 
-
             bool isInlineMethod = this.IsInlineMethod(member);
             var inlineCode = isInlineMethod ? null : this.GetInline(member);
             var isStatic = member.IsStatic;
@@ -176,7 +175,7 @@ namespace Bridge.Translator
         {
             if (member != null && !string.IsNullOrEmpty(info.Item3))
             {
-                IMethod method = (IMethod) member;
+                IMethod method = (IMethod)member;
 
                 StringBuilder savedBuilder = this.Output;
                 this.Output = new StringBuilder();
@@ -189,7 +188,7 @@ namespace Bridge.Translator
 
                 if (member.Name == CS.Methods.EQUALS)
                 {
-                    tpl = string.Format(JS.Types.SYSTEM_NULLABLE + "." + JS.Funcs.EQUALS + "({{this}}, {{{0}}}, {1})", method.Parameters.First().Name, tpl);    
+                    tpl = string.Format(JS.Types.SYSTEM_NULLABLE + "." + JS.Funcs.EQUALS + "({{this}}, {{{0}}}, {1})", method.Parameters.First().Name, tpl);
                 }
                 else if (member.Name == CS.Methods.TOSTRING)
                 {
@@ -234,7 +233,7 @@ namespace Bridge.Translator
 
                 if (name != null)
                 {
-                    var type = ((ParameterizedType) targetrr.Type).TypeArguments[0];
+                    var type = ((ParameterizedType)targetrr.Type).TypeArguments[0];
                     var methods = type.GetMethods(null, GetMemberOptions.IgnoreInheritedMembers);
 
                     if (count == 0)
@@ -251,7 +250,6 @@ namespace Bridge.Translator
                             member = methods.FirstOrDefault(m => m.Name == name && m.Parameters.Count == count && m.Parameters.First().Type.GetDefinition().IsDerivedFrom(typeDef));
                         }
                     }
-                    
                 }
             }
             return member;
@@ -365,7 +363,7 @@ namespace Bridge.Translator
 
                 preserveMemberCase = !(bool)value;
             }
-            
+
             if (name.Contains("."))
             {
                 name = Object.Net.Utilities.StringUtils.RightOfRightmostOf(name, '.');
@@ -433,7 +431,6 @@ namespace Bridge.Translator
                 enumMode = this.Validator.EnumEmitMode(member.DeclaringType);
             }
 
-
             if (member is IMember && this.IsMemberConst((IMember)member) || member is IEvent)
             {
                 preserveMemberChange = true;
@@ -483,7 +480,6 @@ namespace Bridge.Translator
             {
                 name = !preserveMemberChange && !forcePreserveMemberCase ? Object.Net.Utilities.StringUtils.ToLowerCamelCase(name) : name;
             }
-            
 
             if (!isIgnore && ((member.IsStatic && Emitter.IsReservedStaticName(name))/* || Helpers.IsReservedWord(name)*/))
             {

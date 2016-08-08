@@ -1,6 +1,5 @@
 ﻿using Bridge.Contract;
 using Bridge.Contract.Constants;
-
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Semantics;
@@ -8,12 +7,10 @@ using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using Mono.Cecil;
 using Object.Net.Utilities;
-using ICustomAttributeProvider = Mono.Cecil.ICustomAttributeProvider;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using ICustomAttributeProvider = Mono.Cecil.ICustomAttributeProvider;
 
 namespace Bridge.Translator
 {
@@ -221,7 +218,8 @@ namespace Bridge.Translator
             return this.HasAttribute(type.Attributes, Translator.Bridge_ASSEMBLY + ".ObjectLiteralAttribute");
         }
 
-        private Stack<TypeDefinition> _stack = new Stack<TypeDefinition>(); 
+        private Stack<TypeDefinition> _stack = new Stack<TypeDefinition>();
+
         public virtual string GetCustomTypeName(TypeDefinition type, IEmitter emitter)
         {
             if (this._stack.Contains(type))
@@ -279,7 +277,7 @@ namespace Bridge.Translator
             {
                 return name;
             }
-            
+
             if (hasNs)
             {
                 var arg = nsAtrr.ConstructorArguments[0];
@@ -289,7 +287,7 @@ namespace Bridge.Translator
                     name = arg.Value.ToString();
                 }
 
-                if (arg.Value is bool && ((bool) arg.Value))
+                if (arg.Value is bool && ((bool)arg.Value))
                 {
                     return null;
                 }

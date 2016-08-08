@@ -24,6 +24,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             buffer.Append("Render1");
         }
     }
+
     public class Bridge595B
     {
         private StringBuilder buffer;

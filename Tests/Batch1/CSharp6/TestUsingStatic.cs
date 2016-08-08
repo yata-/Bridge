@@ -1,9 +1,8 @@
-using Bridge;
 using Bridge.Test;
-using static System.Math;
-using static System.DayOfWeek;
 using static Bridge.Test.Assert;
+using static System.DayOfWeek;
 using static System.Linq.Enumerable;
+using static System.Math;
 
 namespace Bridge.ClientTest.CSharp6
 {

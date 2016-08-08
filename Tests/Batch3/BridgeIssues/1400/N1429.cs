@@ -8,8 +8,15 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     public class Bridge1429
 #pragma warning restore 660,661
     {
-        public static bool operator ==(Bridge1429 a, object b) { return true; }
-        public static bool operator !=(Bridge1429 a, object b) { return true; }
+        public static bool operator ==(Bridge1429 a, object b)
+        {
+            return true;
+        }
+
+        public static bool operator !=(Bridge1429 a, object b)
+        {
+            return true;
+        }
 
         [Test]
         public static void TestEqOperatorWithNull()

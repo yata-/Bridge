@@ -7,9 +7,11 @@ namespace System
     {
         protected extern FormattableString();
 
-        public abstract int ArgumentCount { [Name("getArgumentCount")] get; }
-        public abstract string Format { [Name("getFormat")] get; }
+        public abstract int ArgumentCount {[Name("getArgumentCount")] get; }
+        public abstract string Format {[Name("getFormat")] get; }
+
         public abstract object GetArgument(int index);
+
         public abstract object[] GetArguments();
 
         public override extern string ToString();

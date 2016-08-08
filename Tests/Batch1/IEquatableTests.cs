@@ -1,6 +1,5 @@
-﻿using System;
-using Bridge.Test;
-using Bridge.ClientTest;
+﻿using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest
 {
@@ -8,7 +7,7 @@ namespace Bridge.ClientTest
     [TestFixture(TestNameFormat = "IEquatable - {0}")]
     public class IEquatableTests
     {
-        class MyEquatable : IEquatable<MyEquatable>
+        private class MyEquatable : IEquatable<MyEquatable>
         {
             public bool result;
             public MyEquatable other;

@@ -1,6 +1,6 @@
+using Bridge.Test;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Bridge.Test;
 
 namespace Bridge.ClientTest.Text.RegularExpressions.Entities
 {
@@ -55,7 +55,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
             ValidateCapture(m2, 1, 3, 36, 9, "sentance.");
         }
 
-        #endregion
+        #endregion Test data
 
         [Test]
         public void MatchEmptyPatternTest()

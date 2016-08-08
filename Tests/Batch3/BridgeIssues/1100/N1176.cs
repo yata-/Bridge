@@ -12,7 +12,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         public static void TestFunctionLifting()
         {
             dynamic scope = Script.Get("$_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge1176");
-            Assert.Null(scope, "scope should not exists"); 
+            Assert.Null(scope, "scope should not exists");
 
             var items = new[]
             {
@@ -32,7 +32,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 
         public class Item<TValue>
         {
-            public static implicit operator string(Item<TValue> item)
+            public static implicit operator string (Item<TValue> item)
             {
                 return "Item";
             }

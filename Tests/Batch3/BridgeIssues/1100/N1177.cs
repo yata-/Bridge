@@ -10,18 +10,20 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         public static void TestImplicitCast()
         {
             var item = new Item("Test1");
-            var s = (string) item;
+            var s = (string)item;
             Assert.AreEqual("Test1", s);
         }
 
         public class Item
         {
             private string value;
+
             public Item(string value)
             {
                 this.value = value;
             }
-            public static implicit operator string(Item item)
+
+            public static implicit operator string (Item item)
             {
                 return item.value;
             }

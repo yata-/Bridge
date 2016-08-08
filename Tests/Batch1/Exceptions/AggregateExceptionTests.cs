@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Bridge.Test;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Bridge.Test;
-
 
 namespace Bridge.ClientTest.Exceptions
 {

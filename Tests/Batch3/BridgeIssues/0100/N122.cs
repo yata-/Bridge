@@ -7,6 +7,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     public class Bridge122
     {
         private static int nx = 1;
+
         private static int[,] breaker = new int[,]
         {
             { 1, 2 },
@@ -23,6 +24,5 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 
             Assert.AreEqual(2, retval);
         }
-
     }
 }

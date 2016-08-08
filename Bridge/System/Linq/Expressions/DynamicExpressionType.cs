@@ -1,14 +1,13 @@
-using System.Runtime.CompilerServices;
 using Bridge;
 
 namespace System.Linq.Expressions
 {
-	[External]
+    [External]
     [Enum(Emit.Value)]
     public enum DynamicExpressionType
     {
-		MemberAccess,
-		Invocation,
-		Index
-	}
+        MemberAccess,
+        Invocation,
+        Index
+    }
 }

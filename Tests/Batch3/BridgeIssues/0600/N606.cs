@@ -4,12 +4,12 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
     public static class Bridge606A
     {
-
         public static string Example2(this string source, string x, string y)
         {
             return source + " - " + x + " - " + y;
         }
     }
+
     public class Bridge606B
     {
         public string X { get; set; }
@@ -21,6 +21,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             Y = y;
         }
     }
+
     public class Bridge606C
     {
         public string X { get; set; }

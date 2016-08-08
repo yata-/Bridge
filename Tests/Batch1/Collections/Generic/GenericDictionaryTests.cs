@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Bridge.Test;
+using System;
 using System.Collections.Generic;
-using Bridge.Test;
-using Bridge.ClientTest;
 
 namespace Bridge.ClientTest.Collections.Generic
 {
@@ -9,7 +8,7 @@ namespace Bridge.ClientTest.Collections.Generic
     [TestFixture(TestNameFormat = "GenericDictionary - {0}")]
     public class GenericDictionaryTests
     {
-        class TestEqualityComparer : EqualityComparer<string>
+        private class TestEqualityComparer : EqualityComparer<string>
         {
             public override bool Equals(string x, string y)
             {

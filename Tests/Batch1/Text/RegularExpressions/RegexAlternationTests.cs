@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Bridge.Test;
+using System;
 using System.Text.RegularExpressions;
-using Bridge.Test;
 
 namespace Bridge.ClientTest.Text.RegularExpressions
 {
@@ -13,8 +13,8 @@ namespace Bridge.ClientTest.Text.RegularExpressions
         [Test]
         public void MsdnSimpleAlternationTest1()
         {
-            string[] inputs = {"the", "sample: this is the day"};
-            string[] expected = {"the", "this"};
+            string[] inputs = { "the", "sample: this is the day" };
+            string[] expected = { "the", "this" };
 
             const string pattern = @"th(e|is|at)";
             var rgx = new Regex(pattern);
@@ -218,7 +218,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             ValidateGroup(ms[1], 1, 0, 0, false, "", 0);
         }
 
-        #endregion
+        #endregion MSDN
 
         [Test]
         public void SimpleAlternationTest()

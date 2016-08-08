@@ -106,7 +106,7 @@ namespace Bridge.ClientTest.SimpleTypes
             uint ui = 5;
             int si = 6;
             ulong ul = 7;
-            
+
             long l1 = (long)byte.MaxValue + 1;
             long l2 = (long)sbyte.MaxValue + 1;
             long l3 = (long)ushort.MaxValue + 1;

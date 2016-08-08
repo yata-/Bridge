@@ -1,11 +1,12 @@
-using System.Threading.Tasks;
 using Bridge.Test;
+using System.Threading.Tasks;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
     public class Bridge690A
     {
         private int i3 = 3;
+
         public async Task<int> AsyncSum(int i1, int i2)
         {
             await Task.Delay(100);
@@ -17,9 +18,11 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             return await this.AsyncSum(2, 3);
         }
     }
+
     public class Bridge690B
     {
         private static int i3 = 17;
+
         public static async Task<int> AsyncSum(int i1, int i2)
         {
             await Task.Delay(100);

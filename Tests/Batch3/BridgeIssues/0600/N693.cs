@@ -4,14 +4,20 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
     public abstract class Bridge693A<T>
     {
-        protected Bridge693A(T props) { }
+        protected Bridge693A(T props)
+        {
+        }
     }
+
     public class Bridge693B : Bridge693A<Bridge693B.Bridge693C>
     {
-        public Bridge693B() : base(new Bridge693C()) { }
+        public Bridge693B() : base(new Bridge693C())
+        {
+        }
 
         public class Bridge693C : IBridge693D { }
     }
+
     public interface IBridge693D { }
 
     // Bridge[#708]

@@ -1,19 +1,18 @@
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using Bridge;
+using System.Reflection;
 
 namespace System
 {
-	[External]
-	public sealed class AppDomain
+    [External]
+    public sealed class AppDomain
     {
-		private extern AppDomain();
+        private extern AppDomain();
 
-		public extern Assembly[] GetAssemblies();
+        public extern Assembly[] GetAssemblies();
 
-	    public static extern AppDomain CurrentDomain
-	    {
+        public static extern AppDomain CurrentDomain
+        {
             get;
-	    }
-	}
+        }
+    }
 }

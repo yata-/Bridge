@@ -22,6 +22,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             return true;
         }
     }
+
     [External]
     internal class Bridge586B
     {

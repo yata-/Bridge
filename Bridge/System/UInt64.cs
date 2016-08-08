@@ -38,63 +38,63 @@ namespace System
         public extern bool Equals(ulong other);
 
         //[Template("System.UInt64.lift({value})")]
-        public static extern implicit operator ulong(byte value);
+        public static extern implicit operator ulong (byte value);
 
         //[Template("System.UInt64.lift({value})")]
-        public static extern implicit operator ulong(sbyte value);
+        public static extern implicit operator ulong (sbyte value);
 
         //[Template("System.UInt64.lift({value})")]
-        public static extern implicit operator ulong(short value);
+        public static extern implicit operator ulong (short value);
 
         //[Template("System.UInt64.lift({value})")]
-        public static extern implicit operator ulong(ushort value);
+        public static extern implicit operator ulong (ushort value);
 
         //[Template("System.UInt64.lift({value})")]
-        public static extern implicit operator ulong(char value);
+        public static extern implicit operator ulong (char value);
 
         //[Template("System.UInt64.lift({value})")]
-        public static extern implicit operator ulong(int value);
+        public static extern implicit operator ulong (int value);
 
         //[Template("System.UInt64.lift({value})")]
-        public static extern implicit operator ulong(uint value);
+        public static extern implicit operator ulong (uint value);
 
         //[Template("System.UInt64.lift(Bridge.Int.clipu64({value}))")]
-        public static extern explicit operator ulong(float value);
+        public static extern explicit operator ulong (float value);
 
         //[Template("System.UInt64.lift(Bridge.Int.clipu64({value}))")]
-        public static extern explicit operator ulong(double value);
+        public static extern explicit operator ulong (double value);
 
         //[Template("System.Int64.lift({value})")]
         //public static extern explicit operator ulong(long value);
 
         //[Template("System.Int64.clip8({value})")]
-        public static extern explicit operator byte(ulong value);
+        public static extern explicit operator byte (ulong value);
 
         //[Template("System.Int64.clipu8({value})")]
-        public static extern explicit operator sbyte(ulong value);
+        public static extern explicit operator sbyte (ulong value);
 
         //[Template("System.Int64.clipu16({value})")]
-        public static extern explicit operator char(ulong value);
+        public static extern explicit operator char (ulong value);
 
         //[Template("System.Int64.clip16({value})")]
-        public static extern explicit operator short(ulong value);
+        public static extern explicit operator short (ulong value);
 
         //[Template("System.Int64.clipu16({value})")]
-        public static extern explicit operator ushort(ulong value);
+        public static extern explicit operator ushort (ulong value);
 
         //[Template("System.Int64.clip32({value})")]
-        public static extern explicit operator int(ulong value);
+        public static extern explicit operator int (ulong value);
 
         //[Template("System.Int64.clipu32({value})")]
-        public static extern explicit operator uint(ulong value);
+        public static extern explicit operator uint (ulong value);
 
         //[Template("System.UInt64.lift({value})")]
         //public static extern explicit operator long(ulong value);
 
         //[Template("System.UInt64.toNumber({value})")]
-        public static extern explicit operator float(ulong value);
+        public static extern explicit operator float (ulong value);
 
         //[Template("System.UInt64.toNumber({value})")]
-        public static extern explicit operator double(ulong value);
+        public static extern explicit operator double (ulong value);
     }
 }

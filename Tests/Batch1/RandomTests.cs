@@ -2,7 +2,6 @@
 
 using System;
 
-
 namespace Bridge.ClientTest
 {
     [Category(Constants.MODULE_RANDOM)]

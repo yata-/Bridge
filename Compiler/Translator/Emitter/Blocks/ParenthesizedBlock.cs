@@ -40,7 +40,7 @@ namespace Bridge.Translator
                 this.WriteCloseParentheses();
             }
         }
-        
+
         protected bool IgnoreParentheses(Expression expression)
         {
             if (expression is CastExpression)

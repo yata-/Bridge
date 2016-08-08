@@ -1,7 +1,5 @@
-﻿using Bridge;
-using Bridge.Linq;
+﻿using Bridge.Linq;
 using Bridge.Test;
-using Bridge.ClientTest;
 
 using System;
 using System.Collections.Generic;
@@ -25,6 +23,7 @@ namespace Bridge.ClientTest.Collections.Generic
             {
                 return o is C && i == ((C)o).i;
             }
+
             public override int GetHashCode()
             {
                 return i;
@@ -187,7 +186,6 @@ namespace Bridge.ClientTest.Collections.Generic
             l.Clear();
             Assert.AreEqual(l.Count, 0);
         }
-
 
         [Test]
         public void ContainsWorks()

@@ -13,9 +13,13 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 
         protected abstract string GetName();
     }
+
     public class Bridge566B : Bridge566A
     {
-        protected override string GetName() { return "Ted"; }
+        protected override string GetName()
+        {
+            return "Ted";
+        }
     }
 
     // Bridge[#566]

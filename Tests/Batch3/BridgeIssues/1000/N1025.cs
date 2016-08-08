@@ -1,5 +1,5 @@
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -37,8 +37,8 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 
         public class C2 : I1, I2
         {
-            int i1;
-            int i2;
+            private int i1;
+            private int i2;
 
             int I1.Prop1
             {
@@ -104,7 +104,6 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         {
             T Foo();
         }
-
 
         public interface I6<T>
         {
@@ -212,6 +211,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             }
 
             public string Prop2 { get; set; }
+
             public event Action Event1;
 
             public void Invoke()
@@ -222,7 +222,6 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 
         public class C15 : C14, I9<int>
         {
-
         }
 
         public interface I10
@@ -266,7 +265,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             }
         }
 
-        public class C20: I10
+        public class C20 : I10
         {
             public string log;
 
@@ -296,12 +295,10 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 
         public class C23 : C22
         {
-
         }
 
         public class C24 : C23, I10
         {
-
         }
 
         [External]
@@ -309,7 +306,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         public interface I11
         {
             [AccessorsIndexer]
-            int this[string index] { [Name("get")] get; [Name("set")] set; }
+            int this[string index] {[Name("get")] get;[Name("set")] set; }
 
             string this[int index] { get; set; }
 
@@ -396,7 +393,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             I4 i = a;
             Assert.AreEqual("C7", a.Foo());
             Assert.AreEqual("C7", i.Foo());
-            Assert.AreEqual("C6", ((C6) a).Foo());
+            Assert.AreEqual("C6", ((C6)a).Foo());
         }
 
         [Test]

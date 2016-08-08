@@ -1,19 +1,17 @@
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Bridge;
 
 namespace System.Reflection
 {
-	[External]
+    [External]
     [Name("Object")]
     public class ParameterInfo
     {
-	    [Name("sname")]
-	    [FieldProperty]
-	    public extern string ScriptName
-	    {
-	        get;
-	    }
+        [Name("sname")]
+        [FieldProperty]
+        public extern string ScriptName
+        {
+            get;
+        }
 
         [FieldProperty]
         public extern string Name

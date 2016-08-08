@@ -7,6 +7,7 @@
     {
         [Name("")]
         None,
+
         [Name("standard")]
         Standard
     }

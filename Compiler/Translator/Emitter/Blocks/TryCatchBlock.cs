@@ -70,7 +70,7 @@ namespace Bridge.Translator
 
                 this.Emitter.IgnoreBlock = clause.Body;
                 clause.Body.AcceptVisitor(this.Emitter);
-				Write(JS.Vars.ASYNC_E + " = null;");
+                Write(JS.Vars.ASYNC_E + " = null;");
                 this.PopLocals();
                 this.WriteNewLine();
 
@@ -172,7 +172,7 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    this.Write(JS.Vars.ASYNC_TCS + "." + JS.Funcs.SET_RESULT + "(" + JS.Vars.ASYNC_RETURN_VALUE +");");
+                    this.Write(JS.Vars.ASYNC_TCS + "." + JS.Funcs.SET_RESULT + "(" + JS.Vars.ASYNC_RETURN_VALUE + ");");
                     this.WriteNewLine();
                     this.WriteReturn(false);
                     this.WriteSemiColon();

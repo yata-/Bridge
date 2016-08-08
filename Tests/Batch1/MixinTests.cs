@@ -1,10 +1,6 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using Bridge;
-using Bridge.Test;
+﻿using Bridge.Test;
 
 #pragma warning disable 626	// CS0626  Method, operator, or accessor 'MixinTests.GlobalWrapper.IsNaN(object)' is marked external and has no attributes on it. Consider adding a DllImport attribute to specify the external implementation.
-
 
 namespace Bridge.ClientTest
 {
@@ -14,7 +10,7 @@ namespace Bridge.ClientTest
     {
         [External]
         [GlobalMethods]
-        class GlobalWrapper
+        private class GlobalWrapper
         {
             public static extern bool IsNaN(object o);
         }
@@ -28,7 +24,7 @@ namespace Bridge.ClientTest
 
         [External]
         [Mixin("System.Byte")]
-        class MixinWrapper
+        private class MixinWrapper
         {
             public static extern byte Parse(string s);
         }

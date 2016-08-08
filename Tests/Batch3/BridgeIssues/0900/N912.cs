@@ -1,5 +1,5 @@
-using System.Threading.Tasks;
 using Bridge.Test;
+using System.Threading.Tasks;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -13,7 +13,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             await Task.Delay(1);
             return 1;
         }
-        
+
         [Test(ExpectedCount = 1)]
         public static async void TestAsyncMethodInBlock()
         {

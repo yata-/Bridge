@@ -1,6 +1,5 @@
-﻿using System;
-using Bridge.Test;
-using Bridge.ClientTest;
+﻿using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest
 {
@@ -27,7 +26,6 @@ namespace Bridge.ClientTest
             Assert.AreStrictEqual(true, v is double, message);
             Assert.AreStrictEqual(d.ToString(), v.ToString(), message);
         }
-
 
         [Test]
         public void ConstantsWork()
@@ -357,7 +355,6 @@ namespace Bridge.ClientTest
             AssertIsDecimalAndEqualTo(Math.Round(-3.2m), -3, "-3.2m");
             AssertIsDecimalAndEqualTo(Math.Round(-3.5m), -4, "-3.5");
             AssertIsDecimalAndEqualTo(Math.Round(-3.8m), -4, "-3.8m");
-
 
             AssertIsDecimalAndEqualTo(Math.Round(3.8m, MidpointRounding.Up), 4, "Up 3.8m");
             AssertIsDecimalAndEqualTo(Math.Round(3.5m, MidpointRounding.Up), 4, "Up 3.5m");

@@ -1,5 +1,4 @@
 using Bridge.Contract;
-using Bridge.Contract.Constants;
 
 using ICSharpCode.NRefactory.CSharp;
 
@@ -60,7 +59,7 @@ namespace Bridge.Translator.TypeScript
                         var name = ev.GetName(this.Emitter);
                         name = Helpers.ReplaceFirstDollar(name);
 
-                        this.WriteEvent(ev, Helpers.GetAddOrRemove(true,  name));
+                        this.WriteEvent(ev, Helpers.GetAddOrRemove(true, name));
                         this.WriteEvent(ev, Helpers.GetAddOrRemove(false, name));
                     }
                 }

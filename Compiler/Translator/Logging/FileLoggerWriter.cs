@@ -1,21 +1,20 @@
+using Bridge.Contract;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 
-using Bridge.Contract;
-
 namespace Bridge.Translator.Logging
 {
     public class FileLoggerWriter : ILogger, IDisposable
     {
-        class BufferedMessage
+        private class BufferedMessage
         {
             public LoggerLevel LoggerLevel;
             public string Message;
             public bool UseWriteLine;
-        }        
+        }
 
         private const string LoggerFileName = "bridge.log";
         private const int LoggerFileMaxLength = 16 * 1024 * 1024;
@@ -32,21 +31,19 @@ namespace Bridge.Translator.Logging
 
         public bool BufferedMode { get; set; }
         public LoggerLevel LoggerLevel { get; set; }
-        
+
         public FileLoggerWriter(string baseDir, string fileName, long? maxSize)
         {
             Buffer = new Queue<BufferedMessage>();
             SetParameters(baseDir, fileName, maxSize);
         }
 
-        public FileLoggerWriter(): this(null, null, null)
+        public FileLoggerWriter() : this(null, null, null)
         {
-            
         }
 
         public FileLoggerWriter(string baseDir) : this(baseDir, null, null)
         {
-
         }
 
         public void SetParameters(string baseDir, string fileName, long? maxSize)
@@ -143,7 +140,7 @@ namespace Bridge.Translator.Logging
 
             Flush();
         }
-        
+
         private void WriteOrBufferLine(LoggerLevel level, string s)
         {
             WriteOrBuffer(level, s, true);
@@ -163,7 +160,6 @@ namespace Bridge.Translator.Logging
 
             if (Buffer.Any(x => CheckLoggerLevel(x.LoggerLevel)))
             {
-
                 try
                 {
                     FileInfo file = new FileInfo(this.FullName);
@@ -237,7 +233,6 @@ namespace Bridge.Translator.Logging
 
         protected virtual void Dispose(bool disposing)
         {
-
             return;
         }
 

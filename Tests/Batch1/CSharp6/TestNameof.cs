@@ -1,6 +1,4 @@
-using Bridge;
 using Bridge.Test;
-using System;
 using Stuff = System.ComponentModel;
 
 namespace Bridge.ClientTest.CSharp6
@@ -9,20 +7,23 @@ namespace Bridge.ClientTest.CSharp6
     [TestFixture(TestNameFormat = "NameOf - {0}")]
     public class TestNameOf
     {
-        class C
+        private class C
         {
             public static string Method1(string x, int y)
             {
                 return nameof(x);
             }
+
             public static string Method1(string x, string Y)
             {
                 return nameof(Y);
             }
+
             public string Method2(int z)
             {
                 return nameof(z);
             }
+
             public string f<T>() => nameof(T);
         }
 
@@ -30,7 +31,7 @@ namespace Bridge.ClientTest.CSharp6
         public static void TestBasic()
         {
             var c = new C();
-            
+
             Assert.AreEqual("C", nameof(C));
             Assert.AreEqual("method1", nameof(C.Method1));
             Assert.AreEqual("method2", nameof(C.Method2));

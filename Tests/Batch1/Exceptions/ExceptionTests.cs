@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Runtime.CompilerServices;
-using Bridge.Test;
-using Bridge.ClientTest;
+﻿using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.Exceptions
 {
@@ -11,7 +7,7 @@ namespace Bridge.ClientTest.Exceptions
     [TestFixture(TestNameFormat = "Exception - {0}")]
     public class ExceptionTests
     {
-        class MyException : Exception
+        private class MyException : Exception
         {
             private readonly string _message;
             private readonly Exception _innerException;

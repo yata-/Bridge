@@ -19,6 +19,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
                     myValue = 2;
                     */
                     break;
+
                 case 1:
                     /*@
                     myValue = 3;

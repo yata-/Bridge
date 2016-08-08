@@ -1,6 +1,4 @@
-﻿using Bridge;
-
-namespace System.Text.RegularExpressions
+﻿namespace System.Text.RegularExpressions
 {
     public sealed class Regex
     {
@@ -127,32 +125,32 @@ namespace System.Text.RegularExpressions
         /// </summary>
         public extern string[] Split(string input, int count, int startat);
 
-        #endregion
+        #endregion Instance members
 
         #region Static members
 
-//TODO: Enable when Cache is implemented.
+        //TODO: Enable when Cache is implemented.
         ///// <summary>
         ///// Gets or sets the maximum number of entries in the current static cache of compiled regular expressions.
         ///// </summary>
         //public static extern int CacheSize { get; set; }
 
-//#if !SILVERLIGHT
-//        /// <summary>
-//        /// Compiles one or more specified Regex objects to a named assembly.
-//        /// </summary>
-//        public static extern void CompileToAssembly(RegexCompilationInfo[] regexinfos, AssemblyName assemblyname);
+        //#if !SILVERLIGHT
+        //        /// <summary>
+        //        /// Compiles one or more specified Regex objects to a named assembly.
+        //        /// </summary>
+        //        public static extern void CompileToAssembly(RegexCompilationInfo[] regexinfos, AssemblyName assemblyname);
 
-//        /// <summary>
-//        /// Compiles one or more specified Regex objects to a named assembly with the specified attributes.
-//        /// </summary>
-//        public static extern void CompileToAssembly(RegexCompilationInfo[] regexinfos, AssemblyName assemblyname, CustomAttributeBuilder[] attributes);
+        //        /// <summary>
+        //        /// Compiles one or more specified Regex objects to a named assembly with the specified attributes.
+        //        /// </summary>
+        //        public static extern void CompileToAssembly(RegexCompilationInfo[] regexinfos, AssemblyName assemblyname, CustomAttributeBuilder[] attributes);
 
-//        /// <summary>
-//        /// Compiles one or more specified Regex objects and a specified resource file to a named assembly with the specified attributes.
-//        /// </summary>
-//        public static extern void CompileToAssembly(RegexCompilationInfo[] regexinfos, AssemblyName assemblyname, CustomAttributeBuilder[] attributes, String resourceFile);
-//#endif
+        //        /// <summary>
+        //        /// Compiles one or more specified Regex objects and a specified resource file to a named assembly with the specified attributes.
+        //        /// </summary>
+        //        public static extern void CompileToAssembly(RegexCompilationInfo[] regexinfos, AssemblyName assemblyname, CustomAttributeBuilder[] attributes, String resourceFile);
+        //#endif
 
         /// <summary>
         /// Determines whether the specified object is equal to the current object.(Inherited from Object.)
@@ -254,6 +252,6 @@ namespace System.Text.RegularExpressions
         /// </summary>
         public static extern string[] Split(string input, string pattern, RegexOptions options, TimeSpan matchTimeout);
 
-        #endregion
+        #endregion Static members
     }
 }

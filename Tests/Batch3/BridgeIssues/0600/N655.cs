@@ -1,9 +1,9 @@
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
-    static class Bridge655A
+    internal static class Bridge655A
     {
         internal static bool IsNullOrUndefined(this object subject)
         {

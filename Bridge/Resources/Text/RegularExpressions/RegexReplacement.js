@@ -113,10 +113,8 @@ Bridge.define("System.Text.RegularExpressions.RegexReplacement", {
             var match = regex.match$1(input, startat);
 
             if (!match.getSuccess()) {
-
                 result.push(input);
             } else {
-
                 var i;
                 var prevat;
                 var matchIndex;
@@ -156,7 +154,6 @@ Bridge.define("System.Text.RegularExpressions.RegexReplacement", {
                     }
 
                     result.push(input.slice(prevat, input.length));
-
                 } else {
                     prevat = input.length;
 
@@ -360,11 +357,9 @@ Bridge.define("System.Text.RegularExpressions.RegexReplacement", {
             if (r >= 0) {
                 // string lookup
                 sb += this._strings[r];
-
             } else if (r < -specials) {
                 // group lookup
                 sb += match._groupToStringImpl(-specials - 1 - r);
-
             } else {
                 // special insertion patterns
                 switch (-specials - 1 - r) {
@@ -398,11 +393,9 @@ Bridge.define("System.Text.RegularExpressions.RegexReplacement", {
             if (r >= 0) {
                 // string lookup
                 al.push(this._strings[r]);
-
             } else if (r < -specials) {
                 // group lookup
                 al.push(match._groupToStringImpl(-specials - 1 - r));
-
             } else {
                 // special insertion patterns
                 switch (-specials - 1 - r) {

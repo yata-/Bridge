@@ -65,7 +65,6 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             Assert.AreEqual("default", C1.Default.Value.Name, "Bridge588 C1.Default.Value.Name");
             Assert.True(C2.Default != null, "Bridge588 C2.Default");
             Assert.True(C2.Default.Name != null, "Bridge588 C2.Default.Name");
-
         }
     }
 

@@ -1,5 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using Bridge.Test;
+﻿using Bridge.Test;
+using System.Text.RegularExpressions;
 
 namespace Bridge.ClientTest.Text.RegularExpressions
 {
@@ -60,7 +60,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             ValidateMatchResults(rgx, inputs, expected);
         }
 
-        #endregion
+        #endregion MSDN
 
         [Test]
         public void PositiveLookbehindTest1()
@@ -74,7 +74,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions
 
             ValidateGroup(m, 0, 0, 6, true, "abcdef", 1);
             ValidateCapture(m, 0, 0, 0, 6, "abcdef");
-
         }
 
         [Test]
@@ -88,7 +87,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             ValidateMatch(m, 0, 0, "", 1, false);
 
             ValidateGroup(m, 0, 0, 0, false, "", 0);
-
         }
 
         [Test]
@@ -130,7 +128,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             ValidateMatch(m, 0, 0, "", 1, false);
 
             ValidateGroup(m, 0, 0, 0, false, "", 0);
-
         }
 
         [Test]
@@ -145,7 +142,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions
 
             ValidateGroup(m, 0, 0, 6, true, "abcdef", 1);
             ValidateCapture(m, 0, 0, 0, 6, "abcdef");
-
         }
 
         [Test]
@@ -169,7 +165,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions
 
             ValidateGroup(m, 3, 3, 3, true, "def", 1);
             ValidateCapture(m, 3, 0, 3, 3, "def");
-
         }
 
         [Test]
@@ -192,7 +187,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions
 
             ValidateGroup(m, 3, 3, 3, true, "def", 1);
             ValidateCapture(m, 3, 0, 3, 3, "def");
-
         }
 
         [Test]

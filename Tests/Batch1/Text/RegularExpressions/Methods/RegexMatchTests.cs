@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Bridge.Test;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Bridge.Test;
 
 namespace Bridge.ClientTest.Text.RegularExpressions.Methods
 {
@@ -96,7 +96,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Methods
         [Test]
         public void MatchAtPositionAndLengthTest()
         {
-            var expectedGroupValues = new[] {  "red", "car" };
+            var expectedGroupValues = new[] { "red", "car" };
             var expectedCaptureValues = new[] { "red", "car" };
             var expectedCaptureIndexes = new[] { 8, 12 };
 

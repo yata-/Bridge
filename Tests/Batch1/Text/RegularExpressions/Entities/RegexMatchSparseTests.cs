@@ -1,5 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using Bridge.Test;
+﻿using Bridge.Test;
+using System.Text.RegularExpressions;
 
 namespace Bridge.ClientTest.Text.RegularExpressions.Entities
 {
@@ -60,7 +60,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
 
             ValidateGroup(m, 5, 3, 1, true, "d", 1);
             ValidateCapture(m, 5, 0, 3, 1, "d");
-
         }
 
         [Test]

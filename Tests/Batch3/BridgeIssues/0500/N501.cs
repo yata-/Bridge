@@ -9,6 +9,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         // internal List<> uses items, conflict here
         public string Items = "12";
     }
+
     public class Bridge501B : List<int>
     {
         // just empty

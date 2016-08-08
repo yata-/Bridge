@@ -17,7 +17,6 @@
         constructor: function () {
             this.$initialize();
             System.Random.$constructor1.call(this, System.Int64.clip32(System.Int64((new Date()).getTime()).mul(10000)));
-
         },
         $constructor1: function (Seed) {
             this.$initialize();
@@ -108,7 +107,7 @@
             return Bridge.Int.clip32(this.sample() * maxValue);
         },
         getSampleForLargeRange: function () {
-            // The distribution of double value returned by Sample 
+            // The distribution of double value returned by Sample
             // is not distributed well enough for a large range.
             // If we use Sample for a range [Int32.MinValue..Int32.MaxValue)
             // We will end up getting even numbers only.

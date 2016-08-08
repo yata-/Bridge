@@ -1,12 +1,10 @@
-using System.Collections.Generic;
 using Bridge.Contract;
 using Bridge.Contract.Constants;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
+using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using ICSharpCode.NRefactory.TypeSystem.Implementation;
 
 namespace Bridge.Translator
 {
@@ -153,7 +151,7 @@ namespace Bridge.Translator
                 if (cast_rr is ConstantResolveResult)
                 {
                     var expectedType = this.Emitter.Resolver.Resolver.GetExpectedType(this.CastExpression);
-                    var value = ((ConstantResolveResult) cast_rr).ConstantValue;
+                    var value = ((ConstantResolveResult)cast_rr).ConstantValue;
 
                     this.WriteCastValue(value, expectedType);
                     return;
@@ -312,7 +310,6 @@ namespace Bridge.Translator
             }
         }
 
-
         protected virtual void EmitCastType(AstType astType)
         {
             var resolveResult = this.Emitter.Resolver.ResolveNode(astType, this.Emitter);
@@ -371,7 +368,6 @@ namespace Bridge.Translator
 
             var exprResolveResult = this.Emitter.Resolver.ResolveNode(expression, this.Emitter);
             string inline = null;
-            
 
             var method = this.GetCastMethod(exprResolveResult.Type, resolveResult.Type, out inline);
 

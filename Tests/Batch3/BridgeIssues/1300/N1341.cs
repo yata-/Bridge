@@ -160,7 +160,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             var o5 = o1;
             var o6 = o3;
 
-            object[] values = new object[] { o1, o2, o3, o4, o5, o6};
+            object[] values = new object[] { o1, o2, o3, o4, o5, o6 };
 
             Test(values);
         }
@@ -213,7 +213,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         [Test]
         public static void Test5AnonymousType()
         {
-            var o1 = new { A = 1, B = new SomeClassB() { Value1 = 1, Value2 = new SomeStructA() { Value1 = 1} } };
+            var o1 = new { A = 1, B = new SomeClassB() { Value1 = 1, Value2 = new SomeStructA() { Value1 = 1 } } };
             var o2 = o1;
             var o3 = new { A = 1, B = new SomeClassB() { Value1 = 1, Value2 = new SomeStructA() { Value1 = 1 } } };
             var o4 = new { B = 1, C = new SomeClassB() { Value1 = 1, Value2 = new SomeStructA() { Value1 = 1 } } };
@@ -225,27 +225,27 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             Test(values);
         }
 
-        class SomeClassA
+        private class SomeClassA
         {
             public int Value1 { get; set; }
         }
 
-        struct SomeStructA
+        private struct SomeStructA
         {
             public int Value1 { get; set; }
         }
 
-        struct SomeStructA1
+        private struct SomeStructA1
         {
             public int Value1 { get; set; }
         }
 
-        struct SomeStructA2
+        private struct SomeStructA2
         {
             public int Value2 { get; set; }
         }
 
-        class SomeClassB
+        private class SomeClassB
         {
             public int Value1 { get; set; }
             public SomeStructA Value2 { get; set; }

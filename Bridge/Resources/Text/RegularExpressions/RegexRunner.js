@@ -35,7 +35,6 @@ Bridge.define("System.Text.RegularExpressions.RegexRunner", {
         var timeoutMs = regex._matchTimeout.getTotalMilliseconds();
 
         this._netEngine = new System.Text.RegularExpressions.RegexEngine(regex._pattern, isCaseInsensitive, isMultiline, isSingleline, isIgnoreWhitespace, isExplicitCapture, timeoutMs);
-
     },
 
     run: function (quick, prevlen, input, beginning, length, startat) {

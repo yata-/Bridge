@@ -23,4 +23,3 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineProbe", {
         return cloned;
     }
 });
-

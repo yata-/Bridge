@@ -1,7 +1,5 @@
-using Bridge;
 using Bridge.Test;
 using System;
-using Stuff = System.ComponentModel;
 
 namespace Bridge.ClientTest.CSharp6
 {
@@ -9,7 +7,7 @@ namespace Bridge.ClientTest.CSharp6
     [TestFixture(TestNameFormat = "Exception filter - {0}")]
     public class TestExceptionFilter
     {
-        static MyException LogParameter;
+        private static MyException LogParameter;
 
         [Test]
         public static void TestFalseFilter()
@@ -64,7 +62,7 @@ namespace Bridge.ClientTest.CSharp6
             return result;
         }
 
-        public class MyException : Exception 
+        public class MyException : Exception
         {
         }
     }

@@ -5,8 +5,6 @@ using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.TypeSystem;
 using System.Collections.Generic;
 using System.Linq;
-using ICSharpCode.NRefactory.Semantics;
-
 
 namespace Bridge.Translator
 {
@@ -107,7 +105,7 @@ namespace Bridge.Translator
             var oldParentVariables = this.Emitter.ParentTempVariables;
             if (this.Emitter.ParentTempVariables == null)
             {
-                this.Emitter.ParentTempVariables = new Dictionary<string,bool>(this.Emitter.TempVariables);
+                this.Emitter.ParentTempVariables = new Dictionary<string, bool>(this.Emitter.TempVariables);
             }
             else
             {
@@ -202,7 +200,7 @@ namespace Bridge.Translator
 
                 if (lrr == null || lrr.ReturnType.Kind != TypeKind.Void)
                 {
-                    this.WriteReturn(true);    
+                    this.WriteReturn(true);
                 }
             }
 
@@ -243,9 +241,9 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    this.Emitter.NamedFunctions.Add(name, code);    
+                    this.Emitter.NamedFunctions.Add(name, code);
                 }
-                
+
                 this.Emitter.Output.Remove(savedPos, this.Emitter.Output.Length - savedPos);
                 this.Emitter.Output.Insert(savedPos, JS.Vars.D_ + "." + BridgeTypes.ToJsName(this.Emitter.TypeInfo.Type, this.Emitter, true) + "." + name);
                 this.Emitter.Level = oldLevel;

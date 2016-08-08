@@ -2,7 +2,6 @@
 
 Bridge.define("System.Text.RegularExpressions.RegexParser", {
     statics: {
-
         _Q: 5, // quantifier
         _S: 4, // ordinary stoppper
         _Z: 3, // ScanBlank stopper
@@ -12,11 +11,11 @@ Bridge.define("System.Text.RegularExpressions.RegexParser", {
         _category: [
             //0 1 2  3  4  5  6  7  8  9  A  B  C  D  E  F  0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F
             0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            //! " #  $  %  &  '  (  )  *  +  ,  -  .  /  0  1  2  3  4  5  6  7  8  9  :  ;  <  =  >  ?  
+            //! " #  $  %  &  '  (  )  *  +  ,  -  .  /  0  1  2  3  4  5  6  7  8  9  :  ;  <  =  >  ?
             2, 0, 0, 3, 4, 0, 0, 0, 4, 4, 5, 5, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5,
             //@ A B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U  V  W  X  Y  Z  [  \  ]  ^  _
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 4, 0,
-            //' a b  c  d  e  f  g  h  i  j  k  l  m  n  o  p  q  r  s  t  u  v  w  x  y  z  {  |  }  ~  
+            //' a b  c  d  e  f  g  h  i  j  k  l  m  n  o  p  q  r  s  t  u  v  w  x  y  z  {  |  }  ~
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 4, 0, 0, 0
         ],
 
@@ -66,7 +65,6 @@ Bridge.define("System.Text.RegularExpressions.RegexParser", {
                         }
 
                         sb += input.slice(lastpos, i);
-
                     } while (i < input.length);
 
                     return sb;
@@ -108,7 +106,6 @@ Bridge.define("System.Text.RegularExpressions.RegexParser", {
                         }
 
                         sb += input.slice(lastpos, i);
-
                     } while (i < input.length);
 
                     return sb;
@@ -260,9 +257,7 @@ Bridge.define("System.Text.RegularExpressions.RegexParser", {
         var digit;
 
         if (ch >= "0" && ch <= "9") {
-
             if (!angled && this._useOptionE()) {
-
                 capnum = -1;
                 var newcapnum = ch - "0";
 
@@ -409,7 +404,7 @@ Bridge.define("System.Text.RegularExpressions.RegexParser", {
         }
 
         // Octal codes only go up to 255.  Any larger and the behavior that Perl follows
-        // is simply to truncate the high bits. 
+        // is simply to truncate the high bits.
         i &= 0xFF;
 
         return i;
@@ -552,7 +547,7 @@ Bridge.define("System.Text.RegularExpressions.RegexParser", {
     },
 
     _isWordChar: function (ch) {
-        // Partial implementation, 
+        // Partial implementation,
         // see the link for more details (http://referencesource.microsoft.com/#System/regex/system/text/regularexpressions/RegexParser.cs,1156)
         return System.Char.isLetter(ch);
     },

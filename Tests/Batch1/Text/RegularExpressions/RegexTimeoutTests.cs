@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Bridge.Test;
+using System;
 using System.Text.RegularExpressions;
-using Bridge.Test;
 
 namespace Bridge.ClientTest.Text.RegularExpressions
 {
@@ -104,7 +104,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             {
                 Regex.Replace(LongText, Pattern, "fakeReplacement", RegexOptions.None, ShortTimeoutMs);
             });
-
         }
 
         [Test]

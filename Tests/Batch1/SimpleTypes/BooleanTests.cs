@@ -1,7 +1,5 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using Bridge.Test;
-using Bridge.ClientTest;
+﻿using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.SimpleTypes
 {
@@ -9,7 +7,7 @@ namespace Bridge.ClientTest.SimpleTypes
     [TestFixture(TestNameFormat = "Boolean - {0}")]
     public class BooleanTests
     {
-        class Counter
+        private class Counter
         {
             public int Count { get; set; }
 
@@ -272,36 +270,36 @@ namespace Bridge.ClientTest.SimpleTypes
         public void TryParseWorks()
         {
             // Success cases
-	        VerifyBooleanTryParse(1, "True", true, true);
+            VerifyBooleanTryParse(1, "True", true, true);
             VerifyBooleanTryParse(2, "true", true, true);
-	        VerifyBooleanTryParse(3, "TRUE", true, true);
-	        VerifyBooleanTryParse(4, "tRuE", true, true);
-	        VerifyBooleanTryParse(5, "False", false, true);
-	        VerifyBooleanTryParse(6, "false", false, true);
-	        VerifyBooleanTryParse(7, "FALSE", false, true);
-	        VerifyBooleanTryParse(8, "fAlSe", false, true);
-	        VerifyBooleanTryParse(9, "  True  ", true, true);
-	        VerifyBooleanTryParse(10, "False  ", false, true);
+            VerifyBooleanTryParse(3, "TRUE", true, true);
+            VerifyBooleanTryParse(4, "tRuE", true, true);
+            VerifyBooleanTryParse(5, "False", false, true);
+            VerifyBooleanTryParse(6, "false", false, true);
+            VerifyBooleanTryParse(7, "FALSE", false, true);
+            VerifyBooleanTryParse(8, "fAlSe", false, true);
+            VerifyBooleanTryParse(9, "  True  ", true, true);
+            VerifyBooleanTryParse(10, "False  ", false, true);
             VerifyBooleanTryParse(11, "True\0", true, true);
             VerifyBooleanTryParse(12, "False\0", false, true);
             VerifyBooleanTryParse(13, "True\0    ", true, true);
             VerifyBooleanTryParse(14, " \0 \0  True   \0 ", true, true);
             VerifyBooleanTryParse(15, "  False \0\0\0  ", false, true);
 
-	        // Fail cases
-	        VerifyBooleanTryParse(16, null, false, false);
-	        VerifyBooleanTryParse(17, "", false, false);
-	        VerifyBooleanTryParse(18, " ", false, false);
-	        VerifyBooleanTryParse(19, "Garbage", false, false);
-	        VerifyBooleanTryParse(20, "True\0Garbage", false, false);
-	        VerifyBooleanTryParse(21, "True\0True", false, false);
-	        VerifyBooleanTryParse(22, "True True", false, false);
-	        VerifyBooleanTryParse(23, "True False", false, false);
-	        VerifyBooleanTryParse(24, "False True", false, false);
-	        VerifyBooleanTryParse(25, "Fa lse", false, false);
-	        VerifyBooleanTryParse(26, "T", false, false);
-	        VerifyBooleanTryParse(27, "0", false, false);
-	        VerifyBooleanTryParse(28, "1", false, false);
+            // Fail cases
+            VerifyBooleanTryParse(16, null, false, false);
+            VerifyBooleanTryParse(17, "", false, false);
+            VerifyBooleanTryParse(18, " ", false, false);
+            VerifyBooleanTryParse(19, "Garbage", false, false);
+            VerifyBooleanTryParse(20, "True\0Garbage", false, false);
+            VerifyBooleanTryParse(21, "True\0True", false, false);
+            VerifyBooleanTryParse(22, "True True", false, false);
+            VerifyBooleanTryParse(23, "True False", false, false);
+            VerifyBooleanTryParse(24, "False True", false, false);
+            VerifyBooleanTryParse(25, "Fa lse", false, false);
+            VerifyBooleanTryParse(26, "T", false, false);
+            VerifyBooleanTryParse(27, "0", false, false);
+            VerifyBooleanTryParse(28, "1", false, false);
         }
 
         [Test] //#1405

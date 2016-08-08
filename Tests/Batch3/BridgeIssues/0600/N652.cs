@@ -1,5 +1,5 @@
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -9,9 +9,11 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     public class Bridge652
     {
         private static string log;
+
         internal class Bridge652A1 : Bridge652C<Bridge652B1>
         {
         }
+
         internal class Bridge652B1
         {
             public Bridge652B1()
@@ -19,6 +21,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
                 log = "Bridge652B1";
             }
         }
+
         internal class Bridge652C<T> where T : new()
         {
             public T Bar;
@@ -28,9 +31,11 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
                 Bar = new T();
             }
         }
+
         internal class Bridge652A2 : Bridge652D<Bridge652B2>
         {
         }
+
         internal class Bridge652B2 : IComparable
         {
             public int CompareTo(Object obj)
@@ -43,6 +48,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
                 log = "Bridge652B2";
             }
         }
+
         internal class Bridge652D<T> where T : IComparable, new()
         {
             public T Bar;

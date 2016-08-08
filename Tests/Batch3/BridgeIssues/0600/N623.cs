@@ -1,5 +1,5 @@
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -19,9 +19,10 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             return this.func();
         }
     }
-    public class Bridge623B1: Bridge623A
+
+    public class Bridge623B1 : Bridge623A
     {
-        public Bridge623B1(int foo, Func<int> func): base(foo, func)
+        public Bridge623B1(int foo, Func<int> func) : base(foo, func)
         {
         }
 
@@ -30,9 +31,10 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             return 2 * this.foo;
         }
     }
+
     public class Bridge623B2 : Bridge623B1
     {
-        public Bridge623B2(int foo, Func<int> func): base(foo, func)
+        public Bridge623B2(int foo, Func<int> func) : base(foo, func)
         {
         }
 

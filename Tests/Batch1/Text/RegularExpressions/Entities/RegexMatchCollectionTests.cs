@@ -1,6 +1,6 @@
+using Bridge.Test;
 using System;
 using System.Text.RegularExpressions;
-using Bridge.Test;
 
 namespace Bridge.ClientTest.Text.RegularExpressions.Entities
 {
@@ -62,7 +62,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
             ValidateCapture(m2, 1, 3, 36, 9, "sentance.");
         }
 
-        #endregion
+        #endregion Test data
 
         [Test]
         public void MatchCollectionFieldsTest()
@@ -127,7 +127,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
                 var match = en.Current as Match;
                 MatchesAreEqual(expected[i], match, "Matches[" + i + "]");
                 ++i;
-
             } while (en.MoveNext());
 
             Assert.AreEqual(expected.Length, i, "Matches.Count");
@@ -169,6 +168,5 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Entities
                 Assert.AreEqual(0, matches[i].Length, "Matches[" + i + "].Length");
             }
         }
-
     }
 }

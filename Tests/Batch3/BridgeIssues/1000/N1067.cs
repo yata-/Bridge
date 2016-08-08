@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using Bridge.Test;
+using System.Collections.Generic;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -10,15 +10,15 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         [Test]
         public static void TestInlinePopertyWithValue()
         {
-           var dict1 = new MyDictionary1();
-           var dict2 = new MyDictionary2();
-           Assert.Null(dict1["getAccessor"]);
-           Assert.Null(dict1["setAccessor"]);
-           Assert.Null(dict2["getAccessor"]);
-           Assert.Null(dict2["setAccessor"]);
+            var dict1 = new MyDictionary1();
+            var dict2 = new MyDictionary2();
+            Assert.Null(dict1["getAccessor"]);
+            Assert.Null(dict1["setAccessor"]);
+            Assert.Null(dict2["getAccessor"]);
+            Assert.Null(dict2["setAccessor"]);
         }
 
-        class MyDictionary1 : Dictionary<int, int>
+        private class MyDictionary1 : Dictionary<int, int>
         {
             public new int this[int key]
             {
@@ -32,12 +32,11 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
                 [Name("setAccessor")]
                 set
                 {
-
                 }
             }
         }
 
-        class MyDictionary2 : Dictionary<int, int>
+        private class MyDictionary2 : Dictionary<int, int>
         {
             [External]
             public new int this[int key]
@@ -50,7 +49,6 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
                 [Name("setAccessor")]
                 set
                 {
-
                 }
             }
         }

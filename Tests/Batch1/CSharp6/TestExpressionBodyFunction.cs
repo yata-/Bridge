@@ -46,7 +46,8 @@ namespace Bridge.ClientTest.CSharp6
             public string First { get; } = "Jane";
             public string Last { get; } = "Doe";
 
-            public static implicit operator string(Person p) => p.First + " " + p.Last;
+            public static implicit operator string (Person p) => p.First + " " + p.Last;
+
             public string Name => First + " " + Last;
             public Person this[int id] => id > 0 ? new Person() : null;
         }
@@ -54,6 +55,7 @@ namespace Bridge.ClientTest.CSharp6
         public class Complex
         {
             public int v;
+
             public Complex(int v)
             {
                 this.v = v;

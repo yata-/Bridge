@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Bridge.Test;
+using System;
 using System.Collections.Generic;
-using Bridge.Test;
-using Bridge.ClientTest;
 
 namespace Bridge.ClientTest.Collections.Generic
 {
@@ -9,7 +8,7 @@ namespace Bridge.ClientTest.Collections.Generic
     [TestFixture]
     public class ComparerTests
     {
-        class C : IComparable<C>
+        private class C : IComparable<C>
         {
             public int value;
 

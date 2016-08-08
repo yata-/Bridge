@@ -142,7 +142,7 @@ namespace Bridge.Translator
             config.Code = this.Emitter.Output.ToString();
 
             this.RestoreWriter(oldWriter);
-            
+
             return config;
         }
 

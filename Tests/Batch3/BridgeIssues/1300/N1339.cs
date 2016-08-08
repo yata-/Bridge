@@ -17,7 +17,6 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 
         public class Foo2 : Foo1
         {
-
         }
 
         public class Foo3 : Foo2

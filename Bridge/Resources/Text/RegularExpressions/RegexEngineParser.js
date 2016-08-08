@@ -131,7 +131,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                 }
 
                 if (token.type === tokenTypes.escBackrefNumber) {
-
                     groupNumber = token.data.number;
                     packedSlotId = sparseSettings.getPackedSlotIdBySlotNumber(groupNumber);
                     if (packedSlotId == null) {
@@ -143,9 +142,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                     }
 
                     token.data.slotId = packedSlotId;
-
                 } else if (token.type === tokenTypes.escBackrefName) {
-
                     value = token.data.name;
                     packedSlotId = sparseSettings.getPackedSlotIdBySlotName(value);
                     if (packedSlotId == null) {
@@ -167,9 +164,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                     }
 
                     token.data.slotId = packedSlotId;
-
                 } else if (token.type === tokenTypes.anchor || token.type === tokenTypes.escAnchor) {
-
                     if (token.value === "\\G") {
                         if (nestingLevel === 0 && i === 0) {
                             settings.isContiguous = true;
@@ -181,21 +176,16 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                         --i;
                         continue;
                     }
-
                 } else if (token.type === tokenTypes.commentInline || token.type === tokenTypes.commentXMode) {
-
                     // We can safely remove comments from the pattern
                     tokens.splice(i, 1);
                     --i;
                     continue;
-
                 } else if (token.type === tokenTypes.literal) {
-
                     // Combine literal tokens for better performance:
                     if (i > 0 && !token.qtoken) {
                         prevToken = tokens[i - 1];
                         if (prevToken.type === tokenTypes.literal && !prevToken.qtoken) {
-
                             prevToken.value += token.value;
                             prevToken.length += token.length;
 
@@ -204,9 +194,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                             continue;
                         }
                     }
-
                 } else if (token.type === tokenTypes.alternationGroupCondition) {
-
                     if (token.data != null) {
                         if (token.data.number != null) {
                             packedSlotId = sparseSettings.getPackedSlotIdBySlotNumber(token.data.number);
@@ -225,7 +213,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                             }
                         }
                     }
-
                 }
 
                 // Update children tokens:
@@ -402,7 +389,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             };
             explNumberedGroupKeys.sort(sortNum);
 
-
             // Add group without names first (emptyCapture = false first, than emptyCapture = true):
             var allowEmptyCapture = false;
             for (j = 0; j < 2; j++) {
@@ -502,10 +488,9 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
         },
 
         _addSparseSlot: function (group, slotNumber, sparseSlotMap, sparseSlotNameMap) {
-
             var packedSlotId = sparseSlotNameMap.keys.length; // 0-based index. Raw Slot number, 0,1..n (without gaps)
 
-            group.packedSlotId = packedSlotId;  
+            group.packedSlotId = packedSlotId;
 
             sparseSlotMap[slotNumber] = packedSlotId;
             sparseSlotNameMap[group.name] = packedSlotId;
@@ -602,7 +587,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                     default:
                         throw new System.ArgumentException("Unrecognized grouping construct.");
                 }
-
             } else if (childToken.type === tokenTypes.groupConstructName) {
                 // ?<name1>
                 // ?'name1'
@@ -626,7 +610,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                     var nameRes2 = scope._validateGroupName(groupNames[1]);
                     constructs.isNumberName2 = nameRes2.isNumberName;
                 }
-
             } else if (childToken.type === tokenTypes.groupConstructImnsx || childToken.type === tokenTypes.groupConstructImnsxMisc) {
                 // ?imnsx-imnsx:
                 var imnsxPostfixLen = childToken.type === tokenTypes.groupConstructImnsx ? 1 : 0;
@@ -712,8 +695,8 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                     groupNumber = token.data.number;
 
                     if (groupNumber >= 1 && sparseSettings.getPackedSlotIdBySlotNumber(groupNumber) != null) {
-                        // Expressions from \10 and greater are considered backreferences 
-                        // if there is a group corresponding to that number; 
+                        // Expressions from \10 and greater are considered backreferences
+                        // if there is a group corresponding to that number;
                         // otherwise, they are interpreted as octal codes.
                         continue; // validated
                     }
@@ -782,7 +765,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                         if (quantCandidateToken.type === tokenTypes.quantifier ||
                             quantCandidateToken.type === tokenTypes.quantifierN ||
                             quantCandidateToken.type === tokenTypes.quantifierNM) {
-
                             group.quantifier = quantCandidateToken.value;
                         }
                     }
@@ -930,7 +912,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
 
             var ch = pattern[i];
             if (ch === "\\" && i + 1 < endIndex) {
-
                 ch = pattern[i + 1];
 
                 if (ch >= "0" && ch <= "7") {
@@ -969,7 +950,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                     token = scope._createPatternToken(pattern, tokenTypes.escCharHex, i, 4); // "\xnn"
                     token.data = { n: hexVal, ch: String.fromCharCode(hexVal) };
                     return token;
-
                 } else if (ch === "c") {
                     if (i + 2 >= endIndex) {
                         throw new System.ArgumentException("Missing control character.");
@@ -1116,7 +1096,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                         throw new System.ArgumentException("Unrecognized escape sequence \\" + ch + ".");
                     }
                     toInc = token.length;
-
                 } else if (ch === "]") {
                     closeBracketIndex = index;
                     break;
@@ -1218,7 +1197,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             if (startN > endN) {
                 throw new System.NotSupportedException("[x-y] range in reverse order.");
             }
-                
+
             var index = intervalStartToken.index;
             var length = intervalStartToken.length + dashToken.length + intervalEndToken.length;
             var intervalToken = scope._createPatternToken(pattern, tokenTypes.charInterval, index, length, [intervalStartToken, dashToken, intervalEndToken], "", "");
@@ -1253,15 +1232,11 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                 token = tokens[j];
 
                 if (token.type === tokenTypes.literal) {
-
                     n = token.value.charCodeAt(0);
                     m = n;
-
                 } else if (token.type === tokenTypes.charInterval) {
-
                     n = token.data.startN;
                     m = token.data.endN;
-
                 } else if (token.type === tokenTypes.literal ||
                     token.type === tokenTypes.escChar ||
                     token.type === tokenTypes.escCharOctal ||
@@ -1269,21 +1244,15 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                     token.type === tokenTypes.escCharCtrl ||
                     token.type === tokenTypes.escCharUnicode ||
                     token.type === tokenTypes.escCharOther) {
-
                     n = token.data.n;
                     m = n;
-
                 } else if (
                     token.type === tokenTypes.charGroup ||
                     token.type === tokenTypes.charNegativeGroup) {
-
                     continue;
-
                 } else {
-
                     classTokens.push(token);
                     continue;
-
                 }
 
                 if (ranges.length === 0) {
@@ -1440,7 +1409,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                 }
 
                 result = scope._createPatternToken(pattern, tokenTypes.commentInline, i, 1 + closeBracketIndex - i);
-
             } else {
                 if (closeBracketIndex < 0) {
                     throw new System.ArgumentException("Not enough )'s.");
@@ -1578,24 +1546,17 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             var ch = pattern[i];
 
             if (ch === "*" || ch === "+" || ch === "?") {
-
                 token = scope._createPatternToken(pattern, tokenTypes.quantifier, i, 1);
                 token.data = { val: ch };
-
             } else if (ch === "{") {
-
                 var dec1Chars = scope._matchChars(pattern, i + 1, endIndex, scope._decSymbols);
                 if (dec1Chars.matchLength !== 0) {
-
                     if (dec1Chars.unmatchCh === "}") {
-
                         token = scope._createPatternToken(pattern, tokenTypes.quantifierN, i, 1 + dec1Chars.matchLength + 1);
                         token.data = {
                             n: parseInt(dec1Chars.match, 10)
                         };
-
                     } else if (dec1Chars.unmatchCh === ",") {
-
                         var dec2Chars = scope._matchChars(pattern, dec1Chars.unmatchIndex + 1, endIndex, scope._decSymbols);
                         if (dec2Chars.unmatchCh === "}") {
                             token = scope._createPatternToken(pattern, tokenTypes.quantifierNM, i, 1 + dec1Chars.matchLength + 1 + dec2Chars.matchLength + 1);
@@ -1615,7 +1576,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
             }
 
             if (token != null) {
-
                 var nextChIndex = i + token.length;
                 if (nextChIndex < endIndex) {
                     var nextCh = pattern[nextChIndex];
@@ -1624,7 +1584,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                         token.data.isLazy = true;
                     }
                 }
-
             }
 
             return token;
@@ -1669,7 +1628,7 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                 if (constructToken.type === tokenTypes.groupConstructName) {
                     throw new System.ArgumentException("Alternation conditions do not capture and cannot be named.");
                 }
-                
+
                 if (constructToken.type === tokenTypes.groupConstruct || constructToken.type === tokenTypes.groupConstructImnsx) {
                     childToken = scope._findFirstGroupWithoutConstructs(children);
                     if (childToken != null) {
@@ -1677,7 +1636,6 @@ Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
                     }
                 }
 
-                
                 if (constructToken.type === tokenTypes.literal) {
                     var literalVal = expr.value.slice(1, expr.value.length - 1);
                     var isDigit = literalVal[0] >= "0" && literalVal[0] <= "9";

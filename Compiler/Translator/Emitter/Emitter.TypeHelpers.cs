@@ -1,16 +1,13 @@
 using Bridge.Contract;
 using Bridge.Contract.Constants;
-
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using Mono.Cecil;
-using TopologicalSorting;
-
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using TopologicalSorting;
 
 namespace Bridge.Translator
 {
@@ -104,7 +101,6 @@ namespace Bridge.Translator
             int j = r;
             while (i <= j)
             {
-
                 while (this.CompareTypeInfosByPriority(list[i], x) == -1)
                 {
                     i++;
@@ -123,7 +119,7 @@ namespace Bridge.Translator
                         list[i] = list[j];
                         list[j] = temp;
                     }
-                    
+
                     i++;
                     j--;
                 }
@@ -133,7 +129,6 @@ namespace Bridge.Translator
             {
                 this.QuickSort(list, i, r);
             }
-
 
             if (l < j)
             {
@@ -166,6 +161,7 @@ namespace Bridge.Translator
         }
 
         private Stack<IType> activeTypes;
+
         public IList<ITypeInfo> GetParents(IType type, IList<ITypeInfo> list = null, bool includeSelf = false)
         {
             if (list == null)

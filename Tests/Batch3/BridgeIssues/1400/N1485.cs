@@ -20,7 +20,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             Assert.AreEqual(5, t2.Constructor());
         }
 
-        class TestName
+        private class TestName
         {
             public int Data { get; set; }
 

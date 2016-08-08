@@ -51,7 +51,7 @@ namespace Bridge
     /// The options to manage JavaScript output folders and files.
     /// </summary>
     [External]
-    [NonScriptable] 
+    [NonScriptable]
     public enum OutputBy
     {
         /// <summary>

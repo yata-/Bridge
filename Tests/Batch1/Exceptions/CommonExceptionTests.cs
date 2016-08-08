@@ -1,8 +1,7 @@
-﻿using Bridge;
-using Bridge.Test;
-using Bridge.ClientTest;
+﻿using Bridge.Test;
 
 using System;
+
 #pragma warning disable 162	// CS0162: Unreachable code detected. Disable because we want to assert that code does not reach unreachable parts
 
 namespace Bridge.ClientTest.Exceptions
@@ -13,11 +12,16 @@ namespace Bridge.ClientTest.Exceptions
     {
         public class E1 : Exception
         {
-            public E1(string message) : base(message) { }
+            public E1(string message) : base(message)
+            {
+            }
         }
+
         public class E2 : E1
         {
-            public E2(string message) : base(message) { }
+            public E2(string message) : base(message)
+            {
+            }
         }
 
         [Test]

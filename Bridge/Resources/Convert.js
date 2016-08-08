@@ -671,7 +671,7 @@
         },
 
         convertToType: function (typeCode, value, formatProvider) {
-            //TODO: #822 IConvertible 
+            //TODO: #822 IConvertible
             throw new System.NotSupportedException("IConvertible interface is not supported.");
         }
     };
@@ -1009,7 +1009,6 @@
 
             if (typeCode === typeCodes.Single ||
                 typeCode === typeCodes.Double) {
-
                 if (!denyInfinity && (value === Infinity || value === -Infinity)) {
                     return;
                 }
@@ -1108,7 +1107,7 @@
         toBase64_CalculateAndValidateOutputLength: function (inputLength, insertLineBreaks) {
             var base64LineBreakPosition = scope.internal.base64LineBreakPosition;
 
-            var outlen = ~~(inputLength / 3) * 4; // the base length - we want integer division here. 
+            var outlen = ~~(inputLength / 3) * 4; // the base length - we want integer division here.
             outlen += ((inputLength % 3) !== 0) ? 4 : 0; // at most 4 more chars for the remainder
 
             if (outlen === 0) {
@@ -1261,7 +1260,7 @@
 
             // This 4-byte integer will contain the 4 codes of the current 4-char group.
             // Eeach char codes for 6 bits = 24 bits.
-            // The remaining byte will be FF, we use it as a marker when 4 chars have been processed.            
+            // The remaining byte will be FF, we use it as a marker when 4 chars have been processed.
             var currBlockCodes = 0x000000FF;
 
             var allInputConsumed = false;
@@ -1325,7 +1324,6 @@
 
                 // Last bit in currBlockCodes will be on after in shifted right 4 times:
                 if ((currBlockCodes & 0x80000000) !== 0) {
-
                     if ((endDestIndex - destIndex) < 3) {
                         return -1;
                     }
@@ -1337,7 +1335,6 @@
 
                     currBlockCodes = 0x000000FF;
                 }
-
             } // end of while
 
             if (!allInputConsumed && !equalityCharEncountered) {
@@ -1352,7 +1349,6 @@
                 // Recall that inputIndex is now one position past where '=' was read.
                 // '=' can only be at the last input pos:
                 if (inputIndex === endInputIndex) {
-
                     // Code is zero for trailing '=':
                     currBlockCodes <<= 6;
 
@@ -1372,9 +1368,7 @@
                     destIndex += 2;
 
                     currBlockCodes = 0x000000FF;
-
                 } else { // '=' can also be at the pre-last position iff the last is also a '=' excluding the white spaces:
-
                     // We need to get rid of any intermediate white spaces.
                     // Otherwise we would be rejecting input such as "abc= =":
                     while (inputIndex < (endInputIndex - 1)) {
@@ -1406,13 +1400,11 @@
                         destIndex++;
 
                         currBlockCodes = 0x000000FF;
-
                     } else {
                         // '=' is not ok at places other than the end:
                         throw new System.FormatException("The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.");
                     }
                 }
-
             }
 
             // We get here either from above or by jumping out of the loop:
@@ -1423,7 +1415,6 @@
 
             // Return how many bytes were actually recovered:
             return (destIndex - startDestIndex);
-
         },
 
         fromBase64_ComputeResultLength: function (input, startIndex, inputLength) {
@@ -1439,7 +1430,6 @@
             var padding = 0;
 
             while (startIndex < endIndex) {
-
                 var c = input[startIndex];
                 startIndex++;
 

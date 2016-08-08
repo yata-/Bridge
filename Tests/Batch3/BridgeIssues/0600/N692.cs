@@ -27,6 +27,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             {
                 field1 = f;
             }
+
             public readonly int field1;
 
             public int Prop1
@@ -49,6 +50,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             {
                 field1 = i;
             }
+
             public int field1;
 
             public int Prop1
@@ -71,7 +73,6 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
                 get { return field1; }
                 set
                 {
-
                 }
             }
         }

@@ -190,7 +190,7 @@ namespace Bridge.Translator
                 }
 
                 var fileLoggerWriter = logger.GetFileLogger();
-                
+
                 if (fileLoggerWriter != null)
                 {
                     var logFileFolder = assemblyConfig.Logging.Folder;

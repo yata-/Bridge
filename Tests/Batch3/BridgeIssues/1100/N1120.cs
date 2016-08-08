@@ -8,7 +8,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     [TestFixture(TestNameFormat = "#1120 - {0}")]
     public class Bridge1120
     {
-        enum Test
+        private enum Test
         {
             M1 = -10,
             M2,

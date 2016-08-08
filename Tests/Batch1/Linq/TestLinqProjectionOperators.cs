@@ -1,5 +1,5 @@
-using Bridge.Test;
 using Bridge.ClientTest.Utilities;
+using Bridge.Test;
 using System.Linq;
 
 namespace Bridge.ClientTest.Linq
@@ -54,10 +54,10 @@ namespace Bridge.ClientTest.Linq
 
             var numberssInPlace = numbers
                                     .Select((n, index) => new
-                                        {
-                                            Number = n,
-                                            IsIndex = n == index
-                                        })
+                                    {
+                                        Number = n,
+                                        IsIndex = n == index
+                                    })
                                     .ToArray();
 
             object[] anonimNumbersToCompare = { new { Number = 0, IsIndex = true },

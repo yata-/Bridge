@@ -10,7 +10,7 @@ namespace Bridge.ClientTest.Threading
     [TestFixture(TestNameFormat = "TimerTests - {0}")]
     public class TimerTests
     {
-        class TimerState
+        private class TimerState
         {
             public int Counter { get; set; }
             public object Data { get; set; }
@@ -170,7 +170,6 @@ namespace Bridge.ClientTest.Threading
 
             Assert.AreEqual(count, ts.Counter, "Timer disposed");
 
-
             Assert.Throws<InvalidOperationException>(() => { copy.Change(1, 1); }, "No change after Dispose allowed");
 
             done();
@@ -193,6 +192,5 @@ namespace Bridge.ClientTest.Threading
 
             done();
         }
-
     }
 }

@@ -49,7 +49,6 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             string s32 = String.Join("|", values);
             Assert.AreEqual("|Cobb|4189|11434|0.366", s32, "Join32");
 
-
             string[] sArr = new string[10];
             for (int i = 0; i < 10; i++)
                 sArr[i] = String.Format("{0,-3}", i * 5);

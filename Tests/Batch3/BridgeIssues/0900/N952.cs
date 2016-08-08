@@ -7,7 +7,6 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     [TestFixture(TestNameFormat = "#952 - {0}")]
     public class Bridge952
     {
-
         [Test(ExpectedCount = 2)]
         public static void TestDoubleMinValue()
         {

@@ -1,5 +1,3 @@
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using Bridge;
 
 namespace System.Linq.Expressions
@@ -7,13 +5,14 @@ namespace System.Linq.Expressions
     [External]
     [Name("Object")]
     [Cast("{this}.ntype === 56")]
-	public sealed class LabelExpression : Expression
+    public sealed class LabelExpression : Expression
     {
         [FieldProperty]
-		public extern Expression DefaultValue { get; private set; }
+        public extern Expression DefaultValue { get; private set; }
+
         [FieldProperty]
         public extern LabelTarget Target { get; private set; }
 
-		internal extern LabelExpression();
-	}
+        internal extern LabelExpression();
+    }
 }

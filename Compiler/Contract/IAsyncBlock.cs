@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using ICSharpCode.NRefactory.CSharp;
+using System.Collections.Generic;
 
 namespace Bridge.Contract
 {

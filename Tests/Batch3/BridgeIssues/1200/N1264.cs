@@ -8,7 +8,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     {
         public class Bar { }
 
-        class Foo
+        private class Foo
         {
             private object _bck = new Bar();
         }

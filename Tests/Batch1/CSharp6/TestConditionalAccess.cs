@@ -1,4 +1,3 @@
-using Bridge;
 using Bridge.Test;
 using System;
 using System.Linq;
@@ -13,7 +12,7 @@ namespace Bridge.ClientTest.CSharp6
         public static void TestBasic()
         {
             Customer[] customers1 = null;
-            Customer[] customers2 = new Customer[] {new Customer(null), new Customer(new [] {"1", "2"}), null };
+            Customer[] customers2 = new Customer[] { new Customer(null), new Customer(new[] { "1", "2" }), null };
 
             Assert.Null(customers1?[0].Method1(customers1?[0].Orders.Count())?.Length);
             Assert.Null(customers2[2]?.Method1(customers2?[0].Orders.Count())?.Length);
@@ -112,7 +111,6 @@ namespace Bridge.ClientTest.CSharp6
 
             public void Method2()
             {
-
             }
         }
     }

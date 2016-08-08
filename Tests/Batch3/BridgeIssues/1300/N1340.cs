@@ -274,12 +274,10 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 
         public class DataClass1<T, K> : DataClass<T, K>
         {
-
         }
 
         public class DataClass2<T, K> : DataClass1<int, string>
         {
-
         }
 
         public class DataClass3<T, K> : DataClass2<int, string>
@@ -373,12 +371,10 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 
         public class StaticDataClass1<T, K> : StaticDataClass<T, K>
         {
-
         }
 
         public class StaticDataClass2<T, K> : StaticDataClass1<int, string>
         {
-
         }
 
         public class StaticDataClass3<T, K> : StaticDataClass2<int, string>

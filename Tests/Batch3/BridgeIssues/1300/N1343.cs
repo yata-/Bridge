@@ -24,7 +24,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             Assert.AreEqual(s1, s2);
         }
 
-        class M
+        private class M
         {
             public override int GetHashCode()
             {

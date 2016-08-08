@@ -1,7 +1,6 @@
 using Bridge.Contract;
 using Bridge.Contract.Constants;
 
-
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
@@ -10,7 +9,6 @@ using Mono.Cecil;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Bridge.Translator
@@ -100,7 +98,7 @@ namespace Bridge.Translator
 
                 if (inlineCode == null)
                 {
-                    inlineCode = this.Emitter.GetInline(invocationResolveResult.Member);    
+                    inlineCode = this.Emitter.GetInline(invocationResolveResult.Member);
                 }
             }
 
@@ -161,7 +159,7 @@ namespace Bridge.Translator
                         {
                             this.WriteNew();
                         }
-                        
+
                         var typerr = this.Emitter.Resolver.ResolveNode(objectCreateExpression.Type, this.Emitter).Type;
                         var isGeneric = typerr.TypeArguments.Count > 0 && !Helpers.IsIgnoreGeneric(typerr, this.Emitter);
 
@@ -180,7 +178,7 @@ namespace Bridge.Translator
                     else
                     {
                         this.Write(customCtor);
-                    }   
+                    }
 
                     if (!isTypeParam && !this.Emitter.Validator.IsIgnoreType(type) && type.Methods.Count(m => m.IsConstructor && !m.IsStatic) > (type.IsValueType ? 0 : 1))
                     {
@@ -201,7 +199,6 @@ namespace Bridge.Translator
                     {
                         this.WriteOpenParentheses();
                     }
-                    
 
                     new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, objectCreateExpression, -1).Emit();
                     this.WriteCloseParentheses();
@@ -293,7 +290,7 @@ namespace Bridge.Translator
                             this.Write(init);
                             this.WriteNewLine();
                         }
-                        
+
                         this.EndBlock();
                     }
 
@@ -324,7 +321,7 @@ namespace Bridge.Translator
             if (expr != null && rr is MemberResolveResult)
             {
                 var member = ((MemberResolveResult)rr).Member;
-                
+
                 if (member is IProperty)
                 {
                     var setter = ((IProperty)member).Setter;
@@ -420,7 +417,7 @@ namespace Bridge.Translator
                     Expression expression = args[i];
                     var p = rr.Member.Parameters[i < rr.Member.Parameters.Count ? i : (rr.Member.Parameters.Count - 1)];
                     var name = p.Name;
-                    
+
                     if (needComma)
                     {
                         this.WriteComma();
@@ -433,7 +430,7 @@ namespace Bridge.Translator
                         arrIsOpen = true;
                         this.Write("[");
                     }
-                    
+
                     this.Write(name, ": ");
                     expression.AcceptVisitor(this.Emitter);
 

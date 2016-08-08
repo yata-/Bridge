@@ -1,10 +1,8 @@
 #define CONTRACTS_FULL
 
-using System;
-using System.Diagnostics;
-using System.Diagnostics.Contracts;
-using Bridge;
 using Bridge.Test;
+using System;
+using System.Diagnostics.Contracts;
 
 namespace Bridge.ClientTest.Diagnostics.Contracts
 {

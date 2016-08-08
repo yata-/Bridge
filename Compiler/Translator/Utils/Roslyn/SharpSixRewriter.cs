@@ -1,16 +1,13 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using Bridge.Contract;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Collections.Immutable;
 using System.Globalization;
 using System.IO;
-using System.Collections.Immutable;
-using Bridge.Contract;
-using ICSharpCode.NRefactory.MonoCSharp;
+using System.Linq;
 using LanguageVersion = Microsoft.CodeAnalysis.CSharp.LanguageVersion;
 
 namespace Bridge.Translator
@@ -30,7 +27,7 @@ namespace Bridge.Translator
         {
             this.translator = translator;
             this.logger = translator.Log;
-            this.compilation = this.CreateCompilation();            
+            this.compilation = this.CreateCompilation();
         }
 
         public string Rewrite(int index)
@@ -38,7 +35,7 @@ namespace Bridge.Translator
             var syntaxTree = this.compilation.SyntaxTrees[index];
             this.semanticModel = this.compilation.GetSemanticModel(syntaxTree, true);
             var result = this.Visit(syntaxTree.GetRoot());
-            
+
             return result.ToFullString();
         }
 
@@ -59,7 +56,7 @@ namespace Bridge.Translator
         }
 
         private string GetAssemblyName()
-        {            
+        {
             if (this.translator.AssemblyLocation != null)
             {
                 return Path.GetFileNameWithoutExtension(this.translator.AssemblyLocation);
@@ -181,7 +178,7 @@ namespace Bridge.Translator
 
         public override SyntaxNode VisitUsingDirective(UsingDirectiveSyntax node)
         {
-            if(node.StaticKeyword.RawKind == (int)SyntaxKind.StaticKeyword)
+            if (node.StaticKeyword.RawKind == (int)SyntaxKind.StaticKeyword)
             {
                 return null;
             }
@@ -197,7 +194,7 @@ namespace Bridge.Translator
             {
                 return SyntaxFactory.IdentifierName(SyntaxFactory.Identifier(node.GetLeadingTrivia(), symbol.FullyQualifiedName(), node.GetTrailingTrivia()));
             }
-            
+
             return node;
         }
 
@@ -227,7 +224,7 @@ namespace Bridge.Translator
             if (node.IsAutoProperty() && node.AccessorList != null)
             {
                 var setter = node.AccessorList.Accessors.SingleOrDefault(a => a.Keyword.Kind() == SyntaxKind.SetKeyword);
-                
+
                 if (setter == null)
                 {
                     var getter = node.AccessorList.Accessors.Single(a => a.Keyword.Kind() == SyntaxKind.GetKeyword);
@@ -248,9 +245,9 @@ namespace Bridge.Translator
                     if (node.Modifiers.Any(m => m.Kind() == SyntaxKind.StaticKeyword))
                     {
                         modifiers = modifiers.Add(SyntaxFactory.Token(SyntaxKind.StaticKeyword).WithTrailingTrivia(SyntaxFactory.Space));
-                    }                    
+                    }
 
-                    var field = SyntaxFactory.FieldDeclaration(SyntaxFactory.List<AttributeListSyntax>(), 
+                    var field = SyntaxFactory.FieldDeclaration(SyntaxFactory.List<AttributeListSyntax>(),
                         modifiers,
                         SyntaxFactory.VariableDeclaration(
                             node.Type,
@@ -272,7 +269,7 @@ namespace Bridge.Translator
 
                 return newNode;
             }
-            
+
             return newNode.Equals(node) ? node : newNode;
         }
 
@@ -282,7 +279,7 @@ namespace Bridge.Translator
 
             var c = base.VisitClassDeclaration(node) as ClassDeclarationSyntax;
 
-            if(c != null && fields.Count > 0)
+            if (c != null && fields.Count > 0)
             {
                 c = c.AddMembers(this.fields.ToArray());
             }
@@ -336,13 +333,14 @@ namespace Bridge.Translator
 
         public override SyntaxNode VisitObjectCreationExpression(ObjectCreationExpressionSyntax node)
         {
-            node = (ObjectCreationExpressionSyntax) base.VisitObjectCreationExpression(node);
+            node = (ObjectCreationExpressionSyntax)base.VisitObjectCreationExpression(node);
 
-            if (node.Initializer != null && node.Initializer.Expressions.Any(init => {
+            if (node.Initializer != null && node.Initializer.Expressions.Any(init =>
+            {
                 if (init.Kind() == SyntaxKind.SimpleAssignmentExpression)
                 {
                     var be = (AssignmentExpressionSyntax)init;
-                    if(be.Left is ImplicitElementAccessSyntax)
+                    if (be.Left is ImplicitElementAccessSyntax)
                     {
                         return true;
                     }
@@ -355,7 +353,7 @@ namespace Bridge.Translator
                 ExpressionSyntax[] args = new ExpressionSyntax[2];
                 var target = node.WithInitializer(null).WithoutTrivia();
 
-                if(target.ArgumentList == null)
+                if (target.ArgumentList == null)
                 {
                     target = target.WithArgumentList(SyntaxFactory.ArgumentList());
                 }
@@ -369,7 +367,7 @@ namespace Bridge.Translator
                     var be = (AssignmentExpressionSyntax)init;
                     var indexerKeys = be.Left as ImplicitElementAccessSyntax;
 
-                    if(indexerKeys != null)
+                    if (indexerKeys != null)
                     {
                         be = be.WithLeft(SyntaxFactory.ElementAccessExpression(SyntaxFactory.IdentifierName("o"), indexerKeys.ArgumentList.WithoutTrivia()));
                     }
@@ -425,7 +423,7 @@ namespace Bridge.Translator
             return replace ? node.WithCatches(SyntaxFactory.List(catches)) : node;
         }
 
-        class ConditionalAccessInfo
+        private class ConditionalAccessInfo
         {
             public ConditionalAccessInfo(SemanticModel semanticModel, ConditionalAccessExpressionSyntax node)
             {
@@ -455,7 +453,7 @@ namespace Bridge.Translator
                 return base.VisitConditionalAccessExpression(node);
             }
 
-            var infos = new List<ConditionalAccessInfo> {new ConditionalAccessInfo(semanticModel, node)};
+            var infos = new List<ConditionalAccessInfo> { new ConditionalAccessInfo(semanticModel, node) };
 
             var conditionNode = node.WhenNotNull as ConditionalAccessExpressionSyntax;
             while (conditionNode != null)
@@ -490,7 +488,6 @@ namespace Bridge.Translator
 
                     leftForCondition = SyntaxFactory.InvocationExpression(methodIdentifier,
                         SyntaxFactory.ArgumentList(SyntaxFactory.SeparatedList(new[] { SyntaxFactory.Argument(keyArg), SyntaxFactory.Argument(arg) })));
-
 
                     var parentMethodIdentifier = SyntaxFactory.GenericName(SyntaxFactory.Identifier("Bridge.Script.FromTemp"),
                                                                  SyntaxFactory.TypeArgumentList(SyntaxFactory.SeparatedList(new[] { info.ExpressionType })));

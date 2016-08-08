@@ -1,5 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using Bridge.Test;
+﻿using Bridge.Test;
+using System.Text.RegularExpressions;
 
 namespace Bridge.ClientTest.Text.RegularExpressions
 {
@@ -246,7 +246,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             ValidateCapture(m, 3, 0, 2, 2, "BB");
         }
 
-        #endregion
+        #endregion MSDN
 
         [Test]
         public void NamedBackrefToUnreachableGroupTest()
@@ -338,7 +338,6 @@ namespace Bridge.ClientTest.Text.RegularExpressions
 
             ValidateGroup(m, 3, 6, 3, true, "abc", 1);
             ValidateCapture(m, 3, 0, 6, 3, "abc");
-
         }
 
         [Test]

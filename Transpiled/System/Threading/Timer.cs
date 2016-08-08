@@ -2,7 +2,6 @@
 
 using System;
 
-
 namespace Transpiled.System.Threading
 {
     public delegate void TimerCallback(Object state);
@@ -58,7 +57,7 @@ namespace Transpiled.System.Threading
             int dueTime = -1;    // we want timer to be registered, but not activated.  Requires caller to call
             int period = -1;    // Change after a timer instance is created.  This is to avoid the potential
                                 // for a timer to be fired before the returned value is assigned to the variable,
-                                // potentially causing the callback to reference a bogus value (if passing the timer to the callback). 
+                                // potentially causing the callback to reference a bogus value (if passing the timer to the callback).
 
             TimerSetup(callback, this, dueTime, period);
         }

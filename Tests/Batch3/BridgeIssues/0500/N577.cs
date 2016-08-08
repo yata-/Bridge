@@ -10,6 +10,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         public struct Bridge577UnitA
         {
         }
+
         public struct Bridge577UnitB
         {
             public int Number { get; set; }

@@ -1,5 +1,5 @@
-﻿using System;
-using Bridge.Test;
+﻿using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.Exceptions
 {

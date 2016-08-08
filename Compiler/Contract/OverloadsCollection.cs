@@ -3,13 +3,10 @@ using Bridge.Contract.Constants;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
-
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using ICSharpCode.NRefactory.MonoCSharp;
 using ITypeDefinition = ICSharpCode.NRefactory.TypeSystem.ITypeDefinition;
 using Modifiers = ICSharpCode.NRefactory.CSharp.Modifiers;
 
@@ -929,7 +926,7 @@ namespace Bridge.Contract
                     interfaceName = interfaceName.Substring(0, interfaceName.Length - 1);
                 }
 
-                return interfaceName  + JS.Vars.D + interfaceMemberName + "\"";
+                return interfaceName + JS.Vars.D + interfaceMemberName + "\"";
             }
 
             return interfaceName + (interfaceName.EndsWith(JS.Vars.D.ToString()) ? "" : JS.Vars.D.ToString()) + interfaceMemberName;
@@ -1015,7 +1012,7 @@ namespace Bridge.Contract
                 return prefix != null ? prefix + name : name;
             }
 
-            var isCtor = definition is IMethod && ((IMethod) definition).IsConstructor;
+            var isCtor = definition is IMethod && ((IMethod)definition).IsConstructor;
             if (isCtor)
             {
                 name = JS.Funcs.CONSTRUCTOR;

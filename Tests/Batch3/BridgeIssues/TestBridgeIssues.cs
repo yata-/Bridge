@@ -25,6 +25,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             new Action(() => Bridge169.Number = 2)();
         }
     }
+
     internal abstract class Bridge240A
     {
         public int Data
@@ -33,6 +34,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             set;
         }
     }
+
     internal class Bridge240B : Bridge240A
     {
         public string GetString()
@@ -41,6 +43,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             return "B";
         }
     }
+
     internal class Bridge266A
     {
         public static object Test()
@@ -51,6 +54,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             return Bridge266B.Test("test", new object());
         }
     }
+
     internal class Bridge266B
     {
         public static object Test(string arg1, object arg2)
@@ -58,6 +62,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             return arg2;
         }
     }
+
     internal class Bridge272
     {
         public enum MyEnum
@@ -72,6 +77,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             return (MyEnum)i;
         }
     }
+
     internal class Bridge294
     {
         private readonly string Name;
@@ -91,6 +97,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             return this.Name;
         }
     }
+
     internal enum Bridge277
     {
         Int
@@ -115,10 +122,12 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             this.X = "void F()";
         }
     }
+
     public interface IBridge304
     {
         void F(string x);
     }
+
     public class Bridge305 : IEnumerable<string>
     {
         public List<string> Items
@@ -142,6 +151,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             return Items.GetEnumerator();
         }
     }
+
     public class Bridge306A : Bridge306Component<Bridge306A.Props>
     {
         public static string New(Props props)
@@ -159,6 +169,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             }
         }
     }
+
     public class Bridge306B : Bridge306Component<Bridge306B.Props>
     {
         public static string New(Props props)
@@ -176,6 +187,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             }
         }
     }
+
     public abstract class Bridge306Component<TProps>
     {
         public static string New<TComponent>(TProps props) where TComponent : Bridge306Component<TProps>
@@ -183,6 +195,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             return props.GetClassName() + ":" + props;
         }
     }
+
     public class Bridge341A
     {
         public string Str
@@ -191,6 +204,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             set;
         }
     }
+
     public class Bridge341B : IEquatable<Bridge341B>
     {
         public string Str
@@ -213,6 +227,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             return this.Str.GetHashCode();
         }
     }
+
     public class Bridge342 : IDictionary<int, string>
     {
         private readonly Dictionary<int, string> _backingDictionary;
@@ -298,6 +313,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             _backingDictionary.Clear();
         }
     }
+
     [ObjectLiteral]
     public class Bridge377
     {
@@ -306,6 +322,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         public int field3;
         public int field4;
     }
+
     public class Person383
     {
         public string Name
@@ -314,6 +331,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             set;
         }
     }
+
     public static class Bridge383
     {
         public static string DoSomething(this Person383 person)
@@ -321,6 +339,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             return person.Name;
         }
     }
+
     public class Bridge395
     {
         public string Id
@@ -335,6 +354,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             set;
         }
     }
+
     internal struct Bridge407
     {
         public int A
@@ -351,6 +371,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             };
         }
     }
+
     public class Bridge418
     {
         public delegate int MyDelegate(int data);
@@ -366,12 +387,14 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             return Delegate(data);
         }
     }
+
     internal enum Bridge422
     {
         first = 0,
         next = 100,
         afterNext,
     }
+
     public class Bridge436First
     {
         public virtual string ToObject()
@@ -379,6 +402,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             return "1";
         }
     }
+
     public class Bridge436Second : Bridge436First
     {
         public override string ToObject()
@@ -386,6 +410,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             return base.ToObject() + "2";
         }
     }
+
     public class Bridge436Third : Bridge436Second
     {
         public override string ToObject()
@@ -393,6 +418,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             return base.ToObject() + "3";
         }
     }
+
     public class Bridge439
     {
         private event Action<string> _dispatcher;
@@ -407,6 +433,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             _dispatcher(s);
         }
     }
+
     public class Bridge467
     {
         public int MyProperty
@@ -434,6 +461,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             return MyProperty < 0 ? base.GetHashCode() : MyProperty.GetHashCode();
         }
     }
+
     public class Bridge470 : IEqualityComparer<Bridge470>
     {
         public int Data
@@ -974,7 +1002,6 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             EnsureNumber(DecimalMinusOne, "-1", "DecimalMinusOnein expression");
             EnsureNumber(DecimalMaxValue, "7.9228162514264337593543950335e+28", "DecimalMaxValuein expression");
             EnsureNumber(DecimalMinValue, "-7.9228162514264337593543950335e+28", "DecimalMinValuein expression");
-
 
             var numberPositiveInfinity = Script.Get<object>("Number.POSITIVE_INFINITY");
             var numberNegativeInfinity = Script.Get<object>("Number.NEGATIVE_INFINITY");

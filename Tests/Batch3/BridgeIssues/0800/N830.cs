@@ -1,6 +1,6 @@
+using Bridge.Test;
 using System;
 using System.Threading.Tasks;
-using Bridge.Test;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -21,9 +21,9 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
                 var task = Task.FromResult(new Exception("Success"));
                 if (throwException)
                 {
-                    throw new Exception("test");    
+                    throw new Exception("test");
                 }
-                
+
                 return await task;
             }
             catch (Exception exception)

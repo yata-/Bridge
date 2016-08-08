@@ -1,5 +1,5 @@
-using System.Threading.Tasks;
 using Bridge.Test;
+using System.Threading.Tasks;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -12,13 +12,13 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         {
             await Task.Delay(1);
         }
-        
+
         [Test(ExpectedCount = 1)]
         public static async void TestIfAsyncMethod()
         {
             var asyncComplete = Assert.Async();
 
-            var myvar = new [] {new {Value = 1}, new {Value = 2}};
+            var myvar = new[] { new { Value = 1 }, new { Value = 2 } };
             int sum = 0;
             await myfunc();
 

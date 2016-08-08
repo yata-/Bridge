@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Bridge.Test;
 using System.Collections;
 using System.Collections.Generic;
-using Bridge.Test;
-using Bridge.ClientTest;
 
 namespace Bridge.ClientTest.Collections.Generic
 {
@@ -17,20 +15,56 @@ namespace Bridge.ClientTest.Collections.Generic
                 Items = new List<string>(items);
             }
 
-            IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
+
             public List<string> Items { get; private set; }
 
-            public IEnumerator<string> GetEnumerator() { return Items.GetEnumerator(); }
+            public IEnumerator<string> GetEnumerator()
+            {
+                return Items.GetEnumerator();
+            }
+
             public int Count { get { return Items.Count; } }
-            public void Add(string item) { Items.Add(item); }
-            public void Clear() { Items.Clear(); }
-            public bool Contains(string item) { return Items.Contains(item); }
-            public bool Remove(string item) { return Items.Remove(item); }
+
+            public void Add(string item)
+            {
+                Items.Add(item);
+            }
+
+            public void Clear()
+            {
+                Items.Clear();
+            }
+
+            public bool Contains(string item)
+            {
+                return Items.Contains(item);
+            }
+
+            public bool Remove(string item)
+            {
+                return Items.Remove(item);
+            }
 
             public string this[int index] { get { return Items[index]; } set { Items[index] = value; } }
-            public int IndexOf(string item) { return Items.IndexOf(item); }
-            public void Insert(int index, string item) { Items.Insert(index, item); }
-            public void RemoveAt(int index) { Items.RemoveAt(index); }
+
+            public int IndexOf(string item)
+            {
+                return Items.IndexOf(item);
+            }
+
+            public void Insert(int index, string item)
+            {
+                Items.Insert(index, item);
+            }
+
+            public void RemoveAt(int index)
+            {
+                Items.RemoveAt(index);
+            }
         }
 
         private class C
@@ -46,6 +80,7 @@ namespace Bridge.ClientTest.Collections.Generic
             {
                 return o is C && _i == ((C)o)._i;
             }
+
             public override int GetHashCode()
             {
                 return _i;
@@ -111,7 +146,6 @@ namespace Bridge.ClientTest.Collections.Generic
             l[1] = "a";
             Assert.AreEqual("a", l[1]);
         }
-
 
         [Test]
         public void ClassImplementingIListCastToIListSetItemWorks()

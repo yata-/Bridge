@@ -1,6 +1,6 @@
+using Bridge.Test;
 using System;
 using System.Collections.Generic;
-using Bridge.Test;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -24,6 +24,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
                     case 1:
                         result += 1;
                         break;
+
                     case 2:
                         result += 2;
                         break;

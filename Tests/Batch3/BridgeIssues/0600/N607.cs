@@ -1,5 +1,5 @@
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -40,10 +40,10 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 
             Assert.True(c.Equals(c), "Bridge607A c");
             Assert.False(c.Equals(null), "Bridge607A null");
-            
+
             Assert.True(c1.Equals(c1), "Bridge607B c");
             Assert.False(c1.Equals(null), "Bridge607B null");
-            
+
             Assert.False(new Bridge607C().Equals(null), "Bridge607C null");
         }
     }

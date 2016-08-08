@@ -55,6 +55,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         public class ClassLink
         {
             public string name;
+
             public ClassLink(string url, string text, string name = "some")
             {
                 this.name = name;
@@ -64,6 +65,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         public class ClassLink2
         {
             public Optional2<string> name;
+
             public ClassLink2(string url, string text, Optional2<string> name = new Optional2<string>())
             {
                 this.name = name;
@@ -87,6 +89,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         public struct StructLink
         {
             public string name;
+
             public StructLink(string url, string text, string name = "some") : this()
             {
                 this.name = name;
@@ -96,6 +99,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         public struct StructLink2
         {
             public Optional2<string> name;
+
             public StructLink2(string url, string text, Optional2<string> name = new Optional2<string>()) : this()
             {
                 this.name = name;

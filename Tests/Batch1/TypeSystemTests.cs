@@ -9,13 +9,19 @@ namespace Bridge.ClientTest
     public class TypeSystemTests
     {
         public interface I1 { }
+
         public interface I2 : I1 { }
+
         public interface I3 { }
+
         public interface I4 : I3 { }
+
         public class B : I2 { }
+
         public class C : B, I4 { }
 
         public enum E1 { }
+
         [Flags]
         public enum E2 { }
 
@@ -32,33 +38,50 @@ namespace Bridge.ClientTest
             Assert.Throws<NullReferenceException>(() => { var b = t.BaseType; }, "NullReferenceException");
         }
 
-        class AssignableTypes
+        private class AssignableTypes
         {
             public class C1 { }
+
             public class C2<T> { }
+
             public interface I1 { }
+
             public interface I2<T1> { }
+
             public interface I3 : I1 { }
+
             public interface I4 { }
+
             public interface I5<T1> : I2<T1> { }
+
             public interface I6<out T> { }
+
             public interface I7<in T> { }
+
             public interface I8<out T1, in T2> : I6<T1>, I7<T2> { }
+
             public interface I9<T1, out T2> { }
+
             public interface I10<out T1, in T2> : I8<T1, T2> { }
+
             public class D1 : C1, I1 { }
+
             public class D2<T> : C2<T>, I2<T>, I1
             {
             }
+
             public class D3 : C2<int>, I2<string>
             {
             }
+
             public class D4 : I3, I4
             {
             }
+
             public class X1 : I1
             {
             }
+
             public class X2 : X1
             {
             }

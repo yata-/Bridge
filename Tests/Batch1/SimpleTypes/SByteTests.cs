@@ -1,7 +1,5 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using Bridge.Test;
-using Bridge.ClientTest;
+﻿using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.SimpleTypes
 {
@@ -92,7 +90,6 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.AreEqual(127, sbyte.MaxValue);
         }
 
-
         [Test]
         public void FormatWorks()
         {
@@ -179,7 +176,6 @@ namespace Bridge.ClientTest.SimpleTypes
             Assert.False(((sbyte)0).Equals((object)(sbyte)1));
             Assert.True(((sbyte)1).Equals((object)(sbyte)1));
         }
-
 
         [Test]
         public void IEquatableEqualsWorks()

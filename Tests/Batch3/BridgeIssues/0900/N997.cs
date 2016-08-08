@@ -3,7 +3,6 @@ using Bridge.Test;
 using System;
 using System.Collections.Generic;
 
-
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
     // Bridge[#997]
@@ -28,6 +27,5 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 
             Assert.Throws(() => l.ConvertAll(converter), "Null converter throws exception");
         }
-
     }
 }

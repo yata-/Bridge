@@ -1,4 +1,3 @@
-using Bridge;
 using System.Collections.Generic;
 
 namespace Bridge.ClientTest.Utilities
@@ -107,6 +106,7 @@ namespace Bridge.ClientTest.Utilities
             return persons;
         }
     }
+
     public class Group
     {
         public string Name

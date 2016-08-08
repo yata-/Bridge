@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 
@@ -29,7 +28,7 @@ namespace Bridge.Contract
 
         bool Cancel
         {
-            get; 
+            get;
             set;
         }
     }

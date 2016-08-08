@@ -2,7 +2,6 @@
 
 namespace Bridge
 {
-
     [External]
     [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
     [NonScriptable]

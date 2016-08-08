@@ -7,7 +7,6 @@ using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace Bridge.Translator
 {
     public partial class AbstractEmitterBlock
@@ -220,9 +219,9 @@ namespace Bridge.Translator
                                     }
                                     else
                                     {
-                                        this.WriteScript(prm.ConstantValue);    
+                                        this.WriteScript(prm.ConstantValue);
                                     }
-                                    
+
                                     this.Write("; }");
                                     this.WriteNewLine();
                                 }
@@ -237,7 +236,7 @@ namespace Bridge.Translator
                                     {
                                         this.Write(string.Format("if ({0} === void 0) {{ {0} = []; }}", prm.Name));
                                     }
-                                    
+
                                     this.WriteNewLine();
                                 }
                             }

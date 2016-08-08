@@ -187,7 +187,7 @@ namespace Bridge.Html5
         public static readonly WindowInstance Top;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Name("WebSocket")]
         public static readonly Action WebSocket;

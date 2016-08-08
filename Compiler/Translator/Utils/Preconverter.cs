@@ -1,19 +1,17 @@
 using Bridge.Contract;
 using Bridge.Contract.Constants;
 using Bridge.Translator.Utils;
-
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
+using ICSharpCode.NRefactory.Semantics;
+using ICSharpCode.NRefactory.TypeSystem;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Expression = ICSharpCode.NRefactory.CSharp.Expression;
 using ExpressionStatement = ICSharpCode.NRefactory.CSharp.ExpressionStatement;
 using ParenthesizedExpression = ICSharpCode.NRefactory.CSharp.ParenthesizedExpression;
 using Statement = ICSharpCode.NRefactory.CSharp.Statement;
-using ICSharpCode.NRefactory.Semantics;
-using ICSharpCode.NRefactory.TypeSystem;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Bridge.Translator
 {
@@ -184,6 +182,7 @@ namespace Bridge.Translator
         }
 
         private static int counter = 0;
+
         protected virtual string GetTempVarName()
         {
             return "_bridgeTmp_" + ++counter;
@@ -362,30 +361,39 @@ namespace Bridge.Translator
                     case AssignmentOperatorType.Add:
                         opType = BinaryOperatorType.Add;
                         break;
+
                     case AssignmentOperatorType.Subtract:
                         opType = BinaryOperatorType.Subtract;
                         break;
+
                     case AssignmentOperatorType.Multiply:
                         opType = BinaryOperatorType.Multiply;
                         break;
+
                     case AssignmentOperatorType.Divide:
                         opType = BinaryOperatorType.Divide;
                         break;
+
                     case AssignmentOperatorType.Modulus:
                         opType = BinaryOperatorType.Modulus;
                         break;
+
                     case AssignmentOperatorType.ShiftLeft:
                         opType = BinaryOperatorType.ShiftLeft;
                         break;
+
                     case AssignmentOperatorType.ShiftRight:
                         opType = BinaryOperatorType.ShiftRight;
                         break;
+
                     case AssignmentOperatorType.BitwiseAnd:
                         opType = BinaryOperatorType.BitwiseAnd;
                         break;
+
                     case AssignmentOperatorType.BitwiseOr:
                         opType = BinaryOperatorType.BitwiseOr;
                         break;
+
                     case AssignmentOperatorType.ExclusiveOr:
                         opType = BinaryOperatorType.ExclusiveOr;
                         break;

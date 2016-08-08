@@ -1,5 +1,5 @@
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -8,7 +8,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     public class Bridge1304
     {
         [Template("System.Console.output")]
-        static string Output;
+        private static string Output;
 
         [Bridge.Test.SetUp]
         public static void ClearOutput()

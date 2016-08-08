@@ -2,8 +2,8 @@
 // https://github.com/dotnet/corefx/blob/master/src/System.Runtime.Extensions/tests/System/Convert.FromBase64.cs
 // https://github.com/dotnet/corefx/blob/master/LICENSE
 
-using System;
 using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.ConvertTests
 {
@@ -183,14 +183,12 @@ namespace Bridge.ClientTest.ConvertTests
             Assert.Throws(() => Convert.FromBase64CharArray(inputChars, 0, -1), err => err is ArgumentOutOfRangeException);
             Assert.Throws(() => Convert.FromBase64CharArray(inputChars, 0, inputChars.Length + 1), err => err is ArgumentOutOfRangeException);
             Assert.Throws(() => Convert.FromBase64CharArray(inputChars, 1, inputChars.Length), err => err is ArgumentOutOfRangeException);
-
         }
 
         [Test]
         public static void InvalidInput()
         {
             Assert.Throws(() => Convert.FromBase64CharArray(null, 0, 3), err => err is ArgumentNullException);
-
 
             // Input must be at least 4 characters long
             VerifyInvalidInput("No");
@@ -222,7 +220,7 @@ namespace Bridge.ClientTest.ConvertTests
             foreach (char ch in invalidChars)
             {
                 var builder = "abc";
-                var addingStr = new string(new[] {ch});
+                var addingStr = new string(new[] { ch });
                 builder.Insert(1, addingStr);
                 VerifyInvalidInput(builder);
             }
@@ -252,7 +250,6 @@ namespace Bridge.ClientTest.ConvertTests
 
             Assert.Throws(() => Convert.FromBase64CharArray(inputChars, 0, inputChars.Length), err => err is FormatException);
             Assert.Throws(() => Convert.FromBase64String(input), err => err is FormatException);
-
         }
 
         private static void Verify(string input, Action<byte[]> action = null)

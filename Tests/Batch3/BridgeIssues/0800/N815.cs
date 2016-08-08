@@ -11,7 +11,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         public static void TestUseCase()
         {
             var a = new A();
-            
+
             a.Method();
             Assert.AreEqual(null, a.Property, "Bridge815 null");
 
@@ -28,16 +28,17 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             Assert.AreEqual(2, a.Property.Value.field, "Bridge815 Method2 Property.Value.field == 2");
         }
 
-        struct B
+        private struct B
         {
             public B(int i)
             {
                 field = i;
             }
+
             public int field;
         }
 
-        class A
+        private class A
         {
             public B? Property
             {

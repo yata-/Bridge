@@ -166,7 +166,7 @@
         this.System$Collections$IEnumerator$moveNext = this.moveNext;
         this.System$Collections$IEnumerator$reset = this.reset;
     };
-    
+
     System.IDisposable.$$inheritors = System.IDisposable.$$inheritors || [];
     System.IDisposable.$$inheritors.push(IEnumerator);
 
@@ -189,7 +189,6 @@
     // Enumerable constuctor
     var Enumerable = function (getEnumerator) {
         this.getEnumerator = getEnumerator;
-
     };
     System.Collections.IEnumerable.$$inheritors = System.Collections.IEnumerable.$$inheritors || [];
     System.Collections.IEnumerable.$$inheritors.push(Enumerable);
@@ -603,7 +602,6 @@
     };
 
     Enumerable.defer = function (enumerableFactory) {
-
         return new Enumerable(function () {
             var enumerator;
 
@@ -913,7 +911,6 @@
             });
         }
     };
-
 
     // Overload:function (selector<element>)
     // Overload:function (selector<element,index>)
@@ -1692,7 +1689,6 @@
     // Overload:function (keySelector,elementSelector,resultSelector)
     // Overload:function (keySelector,elementSelector,resultSelector,compareSelector)
     Enumerable.prototype.partitionBy = function (keySelector, elementSelector, resultSelector, comparer) {
-
         var source = this;
         keySelector = Utils.createLambda(keySelector);
         elementSelector = Utils.createLambda(elementSelector);
@@ -1798,7 +1794,7 @@
             } else {
                 sum += x;
             }
-            
+
             ++count;
         });
 
@@ -2076,7 +2072,6 @@
                     return (enumerator.moveNext())
                         ? this.yieldReturn(enumerator.getCurrent())
                         : false;
-
                 },
                 function () { Utils.dispose(enumerator); });
         });
@@ -2227,7 +2222,6 @@
 
     /* Convert Methods */
 
-
     Enumerable.prototype.asEnumerable = function () {
         return Enumerable.from(this);
     };
@@ -2312,7 +2306,6 @@
 
         return this.select(selector).toArray().join(separator);
     };
-
 
     /* Action Methods */
 
@@ -2906,7 +2899,7 @@
             return this.toEnumerable().getEnumerator();
         };
     };
-    
+
     System.Collections.IEnumerable.$$inheritors = System.Collections.IEnumerable.$$inheritors || [];
     System.Collections.IEnumerable.$$inheritors.push(Lookup);
 

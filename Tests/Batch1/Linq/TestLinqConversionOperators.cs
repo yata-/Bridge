@@ -1,6 +1,5 @@
-using Bridge;
-using Bridge.Test;
 using Bridge.ClientTest.Utilities;
+using Bridge.Test;
 using System.Collections.Generic;
 using System.Linq;
 

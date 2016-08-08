@@ -1,5 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using Bridge.Test;
+﻿using Bridge.Test;
+using System.Text.RegularExpressions;
 
 namespace Bridge.ClientTest.Text.RegularExpressions
 {
@@ -72,7 +72,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             ValidateCapture(ms[3], 0, 0, 37, 8, "ultimate");
         }
 
-        #endregion
+        #endregion MSDN
 
         [Test]
         public void PositiveLookaheadTest1()

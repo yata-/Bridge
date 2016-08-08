@@ -1,8 +1,5 @@
-﻿using System;
+﻿using Bridge.Test;
 using System.Collections.Generic;
-using Bridge;
-using Bridge.Test;
-using Bridge.ClientTest;
 
 namespace Bridge.ClientTest.Collections.Generic
 {
@@ -10,7 +7,7 @@ namespace Bridge.ClientTest.Collections.Generic
     [TestFixture]
     public class EqualityComparerTests
     {
-        class MyClass
+        private class MyClass
         {
             public int hashCode;
             public object other;

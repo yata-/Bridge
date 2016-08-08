@@ -1,8 +1,4 @@
-﻿using Bridge;
-using Bridge.Test;
-using Bridge.ClientTest;
-
-using System;
+﻿using Bridge.Test;
 
 namespace Bridge.ClientTest.SimpleTypes
 {
@@ -17,6 +13,7 @@ namespace Bridge.ClientTest.SimpleTypes
                 return "test";
             }
         }
+
         private class C2 : C1 { }
 
         [Test]

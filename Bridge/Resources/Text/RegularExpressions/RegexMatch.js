@@ -178,5 +178,4 @@ Bridge.define("System.Text.RegularExpressions.MatchSparse", {
         }
         return this._groupColl;
     },
-
 });

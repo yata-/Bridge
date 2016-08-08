@@ -88,6 +88,7 @@ namespace Bridge.Translator
             get;
             set;
         }
+
         public IMethod Method { get; private set; }
 
         public IAttribute Attribute { get; set; }
@@ -170,7 +171,7 @@ namespace Bridge.Translator
             this.Emitter = emitter;
             this.Expression = expression;
             this.ResolveResult = rr;
-            
+
             this.ArgumentsExpressions = new Expression[] { expression };
             this.ArgumentsNames = new string[] { rr.Member.Parameters.Count > 0 ? rr.Member.Parameters.First().Name : "{this}" };
             this.ThisArgument = expression;
@@ -459,7 +460,7 @@ namespace Bridge.Translator
                             }
                             else
                             {
-                                result[i] = new PrimitiveExpression(t);    
+                                result[i] = new PrimitiveExpression(t);
                             }
                         }
 

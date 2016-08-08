@@ -1,5 +1,3 @@
-using Bridge;
-
 namespace Bridge.ClientTest.Utilities
 {
     public class TypeHelper

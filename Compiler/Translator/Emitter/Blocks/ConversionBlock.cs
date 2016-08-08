@@ -128,7 +128,7 @@ namespace Bridge.Translator
 
                     if (!parentConversion.IsUserDefined || parentConversion.Method.Equals(conversion.Method))
                     {
-                        return level;    
+                        return level;
                     }
                 }
 
@@ -158,7 +158,7 @@ namespace Bridge.Translator
 
                 if (!(conversion.IsExplicit && conversion.IsNumericConversion))
                 {
-                    level = ConversionBlock.CheckDecimalConversion(block, expression, rr, expectedType, conversion) ? (level + 1) : level;    
+                    level = ConversionBlock.CheckDecimalConversion(block, expression, rr, expectedType, conversion) ? (level + 1) : level;
                 }
 
                 if (Helpers.IsDecimalType(expectedType, block.Emitter.Resolver) && !conversion.IsUserDefined)
@@ -177,7 +177,6 @@ namespace Bridge.Translator
                 {
                     return level;
                 }
-
 
                 if (conversion == null)
                 {
@@ -333,12 +332,12 @@ namespace Bridge.Translator
 
             if (expression is CastExpression)
             {
-                var nestedExpr = ((CastExpression) expression).Expression;
+                var nestedExpr = ((CastExpression)expression).Expression;
                 var nested_rr = block.Emitter.Resolver.ResolveNode(nestedExpr, block.Emitter);
 
                 if (!(nested_rr is ConversionResolveResult))
                 {
-                    return false;    
+                    return false;
                 }
             }
 
@@ -806,7 +805,7 @@ namespace Bridge.Translator
                     {
                         return false;
                     }
-                    
+
                     return true;
                 }
             }
@@ -850,7 +849,7 @@ namespace Bridge.Translator
                     {
                         return false;
                     }
-                    
+
                     return true;
                 }
             }
@@ -873,7 +872,7 @@ namespace Bridge.Translator
                     {
                         return false;
                     }
-                    
+
                     return true;
                 }
             }
@@ -889,13 +888,13 @@ namespace Bridge.Translator
                     {
                         return false;
                     }
-                    
+
                     if (expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
                     {
                         return false;
                     }
-                    
+
                     return true;
                 }
             }
@@ -956,7 +955,7 @@ namespace Bridge.Translator
                     {
                         return false;
                     }
-                    
+
                     return true;
                 }
                 else if (Helpers.Is64Type(rr.Type, block.Emitter.Resolver)
@@ -995,7 +994,7 @@ namespace Bridge.Translator
                     {
                         return false;
                     }
-                    
+
                     return true;
                 }
             }

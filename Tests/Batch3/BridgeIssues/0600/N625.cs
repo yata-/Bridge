@@ -30,7 +30,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             var list = new int[] { 1, 2, 3 };
 
             Dictionary<int, int> d1 = list.ToDictionary(x => x);
-            Assert.True(d1 is Dictionary<int, int>,"Bridge625 d1");
+            Assert.True(d1 is Dictionary<int, int>, "Bridge625 d1");
 
             var d2 = list.ToDictionary(x => x, new Bridge625A());
             Assert.True(d2 is Dictionary<int, int>, "Bridge625 d2");

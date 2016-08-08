@@ -16,7 +16,6 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             Assert.AreDeepEqual(new[] { 1, 2 }, list.GetRange(0, 2).ToArray(), "Bridge532 (0, 2)");
             Assert.AreDeepEqual(new[] { 2, 3 }, list.GetRange(1, 2).ToArray(), "Bridge532 (1, 2)");
             Assert.AreDeepEqual(new[] { 7, 8, 9 }, list.GetRange(6, 3).ToArray(), "Bridge532 (6, 3)");
-
         }
     }
 }

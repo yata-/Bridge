@@ -216,13 +216,13 @@
                             }
                         }
                     }
-                    
+
                     if (extend[j].$kind === "interface") {
                         interfaces.push(extend[j]);
                     }
                 }
             }
-            
+
             Class.$baseInterfaces = baseInterfaces;
             Class.$interfaces = interfaces;
             var noBase = extend ? extend[0].$kind === "interface" : true;
@@ -348,7 +348,7 @@
             if (!isGenericInstance) {
                 Bridge.Class.registerType(className, Class);
             }
-            
+
             if (Bridge.Reflection) {
                 Class.$getMetadata = Bridge.Reflection.getMetadata;
             }
@@ -496,7 +496,6 @@
                         configurable: true
                     });
                 })(scope, name, cls);
-
             } else {
                 scope[name] = cls;
             }
@@ -522,7 +521,7 @@
             return gName;
         },
 
-        generic: function (className, scope, fn, length) {            
+        generic: function (className, scope, fn, length) {
             fn.$$name = className;
             fn.$kind = "class";
 

@@ -1,5 +1,5 @@
-using System;
 using Bridge.Test;
+using System;
 using System.Threading.Tasks;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
@@ -9,7 +9,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     public class Bridge1170
     {
         private bool isDisposed = false;
-       
+
         [Test]
         public async static void TestAsyncUsing()
         {
@@ -42,7 +42,6 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             }
             Assert.True(parent.isDisposed);
             Assert.True(parent2.isDisposed);
-
 
             done();
         }
@@ -84,7 +83,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             {
                 this.parent = parent;
             }
-            
+
             public void Dispose()
             {
                 if (this.parent != null)

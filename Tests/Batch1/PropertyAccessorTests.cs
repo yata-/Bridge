@@ -1,7 +1,4 @@
-using System;
-using System.Runtime.CompilerServices;
 using Bridge.Test;
-using Bridge.ClientTest;
 
 namespace Bridge.ClientTest
 {
@@ -10,6 +7,7 @@ namespace Bridge.ClientTest
     public class PropertyAccessorTests
     {
 #pragma warning disable 649
+
         public class C1
         {
             public int F1, F2, F3;
@@ -65,6 +63,7 @@ namespace Bridge.ClientTest
             public override T P2 { get { return (dynamic)base.P2 + 1; } }
             public override T P3 { set { base.P3 = (dynamic)value - 1; } }
         }
+
 #pragma warning restore 649
 
         [Test]

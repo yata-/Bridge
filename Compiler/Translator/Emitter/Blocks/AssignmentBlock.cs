@@ -11,7 +11,6 @@ using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using System;
 using System.Linq;
 
-
 namespace Bridge.Translator
 {
     public class AssignmentBlock : AbstractEmitterBlock
@@ -246,7 +245,7 @@ namespace Bridge.Translator
                 this.Emitter.ReplaceAwaiterByVar = true;
 
                 assignmentExpression.Right.AcceptVisitor(this.Emitter);
-                
+
                 this.Write(")");
 
                 this.Emitter.ReplaceAwaiterByVar = oldValue1;
@@ -256,7 +255,7 @@ namespace Bridge.Translator
                 {
                     this.PopWriter();
                 }
-                
+
                 if (needReturnValue && !isField)
                 {
                     if (needTempVar)
@@ -374,7 +373,7 @@ namespace Bridge.Translator
 
                 if (needTempVar)
                 {
-                    this.Write(", " + variable + ")");    
+                    this.Write(", " + variable + ")");
                 }
                 else if (needReturnValue)
                 {
@@ -391,8 +390,8 @@ namespace Bridge.Translator
 
                 return;
             }
-			
-			if (isLong && isLongExpected)
+
+            if (isLong && isLongExpected)
             {
                 if (this.Emitter.Writers.Count == initCount)
                 {
@@ -408,7 +407,7 @@ namespace Bridge.Translator
 
                 if (needTempVar)
                 {
-                    this.Write(", " + variable + ")");    
+                    this.Write(", " + variable + ")");
                 }
                 else if (needReturnValue)
                 {
@@ -453,16 +452,16 @@ namespace Bridge.Translator
                         case AssignmentOperatorType.BitwiseAnd:
                             if (!isBool)
                             {
-                                this.Write("&");    
+                                this.Write("&");
                             }
                             break;
 
                         case AssignmentOperatorType.BitwiseOr:
                             if (!isBool)
                             {
-                                this.Write("|");    
+                                this.Write("|");
                             }
-                            
+
                             break;
 
                         case AssignmentOperatorType.Divide:
@@ -702,7 +701,7 @@ namespace Bridge.Translator
                 {
                     this.Write(JS.Types.SYSTEM_NULLABLE + ".");
                     string action = JS.Funcs.Math.LIFT2;
-                    
+
                     this.Write(action);
                     this.WriteOpenParentheses();
                     this.WriteScript(op_name);

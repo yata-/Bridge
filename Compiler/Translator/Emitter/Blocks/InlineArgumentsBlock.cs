@@ -5,12 +5,10 @@ using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using Object.Net.Utilities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-
 
 namespace Bridge.Translator
 {
@@ -96,7 +94,7 @@ namespace Bridge.Translator
             if (p != null)
             {
                 var idx = this.ArgumentsInfo.Attribute.Constructor.Parameters.IndexOf(p);
-                return p.IsParams ? this.ArgumentsInfo.Attribute.PositionalArguments.Skip(idx).ToList() : new List<ResolveResult> { this.ArgumentsInfo.Attribute.PositionalArguments[idx]};
+                return p.IsParams ? this.ArgumentsInfo.Attribute.PositionalArguments.Skip(idx).ToList() : new List<ResolveResult> { this.ArgumentsInfo.Attribute.PositionalArguments[idx] };
             }
 
             return new List<ResolveResult>();
@@ -141,7 +139,7 @@ namespace Bridge.Translator
         public static string ReplaceInlineArgs(AbstractEmitterBlock block, string inline, Expression[] args)
         {
             var emitter = block.Emitter;
-            inline = _formatArg.Replace(inline, delegate(Match m)
+            inline = _formatArg.Replace(inline, delegate (Match m)
             {
                 int count = emitter.Writers.Count;
                 string key = m.Groups[2].Value;
@@ -257,7 +255,7 @@ namespace Bridge.Translator
                 }
                 expandParams = argsInfo.ResolveResult.Member.Attributes.Any(a => a.AttributeType.FullName == "Bridge.ExpandParamsAttribute");
             }
-            else if(argsInfo.Method != null)
+            else if (argsInfo.Method != null)
             {
                 var paramsParam = argsInfo.Method.Parameters.FirstOrDefault(p => p.IsParams);
                 if (paramsParam != null)
@@ -297,7 +295,7 @@ namespace Bridge.Translator
 
                 if (argsInfo.ResolveResult is CSharpInvocationResolveResult)
                 {
-                    needExpand = !((CSharpInvocationResolveResult) argsInfo.ResolveResult).IsExpandedForm;
+                    needExpand = !((CSharpInvocationResolveResult)argsInfo.ResolveResult).IsExpandedForm;
                 }
 
                 if (needExpand && ignoreArray && !asRef)
@@ -364,7 +362,7 @@ namespace Bridge.Translator
             var tempVars = new Dictionary<string, string>();
             var tempMap = new Dictionary<string, string>();
 
-            inline = _formatArg.Replace(inline, delegate(Match m)
+            inline = _formatArg.Replace(inline, delegate (Match m)
             {
                 if (this.IgnoreRange != null && m.Index >= this.IgnoreRange[0] && m.Index <= this.IgnoreRange[1])
                 {
@@ -489,7 +487,7 @@ namespace Bridge.Translator
                         AstNode node = null;
                         if (argsInfo.ThisArgument is AstNode)
                         {
-                            node = (AstNode) argsInfo.ThisArgument;
+                            node = (AstNode)argsInfo.ThisArgument;
                         }
                         else
                         {
@@ -502,7 +500,7 @@ namespace Bridge.Translator
                             var type = rr.Type;
                             if (rr is MemberResolveResult)
                             {
-                                type = ((MemberResolveResult) rr).TargetResult.Type;
+                                type = ((MemberResolveResult)rr).TargetResult.Type;
                             }
 
                             bool needName = this.NeedName(type);
@@ -519,7 +517,7 @@ namespace Bridge.Translator
                                 if (thisValue != null)
                                 {
                                     this.Write(JS.Funcs.BRIDGE_GET_TYPE + "(" + thisValue + ")");
-                                } 
+                                }
                             }
                         }
                     }
@@ -531,13 +529,13 @@ namespace Bridge.Translator
                         {
                             isSimple = true;
                             this.Write(thisValue);
-                        }    
+                        }
                     }
                 }
                 else
                 {
                     IList<Expression> exprs = this.GetExpressionsByKey(expressions, key);
-                    
+
                     if (exprs.Count > 0)
                     {
                         if (modifier == "type")
@@ -632,7 +630,7 @@ namespace Bridge.Translator
                             if (!ignoreArray)
                             {
                                 this.Write("]");
-                            }   
+                            }
                         }
                         else
                         {
@@ -688,7 +686,7 @@ namespace Bridge.Translator
                                     isSimple = this.IsSimpleExpression(exprs[0]);
                                     exprs[0].AcceptVisitor(this.Emitter);
                                 }
-                                
+
                                 s = this.Emitter.Output.ToString();
                                 this.RestoreWriter(writer);
 
@@ -843,7 +841,7 @@ namespace Bridge.Translator
                             }
                             else
                             {
-                                type.AcceptVisitor(this.Emitter);    
+                                type.AcceptVisitor(this.Emitter);
                             }
                         }
                         else
@@ -908,7 +906,6 @@ namespace Bridge.Translator
                 sb.Append(")");
 
                 inline = sb.ToString();
-
             }
             this.Write(inline);
 
@@ -957,7 +954,7 @@ namespace Bridge.Translator
         {
             var def = type.GetDefinition();
             return (def != null && def.IsSealed)
-                   || type.Kind == TypeKind.Enum 
+                   || type.Kind == TypeKind.Enum
                    || type.IsKnownType(KnownTypeCode.Enum)
                    || Helpers.IsIntegerType(type, this.Emitter.Resolver)
                    || Helpers.IsFloatType(type, this.Emitter.Resolver)
@@ -977,22 +974,22 @@ namespace Bridge.Translator
             {
                 if (modifier == "defaultFn")
                 {
-                    this.Write(BridgeTypes.ToJsName((AstType) def, this.Emitter) + "." + JS.Funcs.GETDEFAULTVALUE);
+                    this.Write(BridgeTypes.ToJsName((AstType)def, this.Emitter) + "." + JS.Funcs.GETDEFAULTVALUE);
                 }
                 else
                 {
-                    this.Write(Inspector.GetStructDefaultValue((AstType) def, this.Emitter));
+                    this.Write(Inspector.GetStructDefaultValue((AstType)def, this.Emitter));
                 }
             }
             else if (def is IType)
             {
                 if (modifier == "defaultFn")
                 {
-                    this.Write(BridgeTypes.ToJsName((IType) def, this.Emitter) + "." + JS.Funcs.GETDEFAULTVALUE);
+                    this.Write(BridgeTypes.ToJsName((IType)def, this.Emitter) + "." + JS.Funcs.GETDEFAULTVALUE);
                 }
                 else
                 {
-                    this.Write(Inspector.GetStructDefaultValue((IType) def, this.Emitter));
+                    this.Write(Inspector.GetStructDefaultValue((IType)def, this.Emitter));
                 }
             }
             else if (def is RawValue)

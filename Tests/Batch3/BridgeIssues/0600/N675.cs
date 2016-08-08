@@ -1,5 +1,5 @@
-using Bridge.Test;
 using Bridge.Html5;
+using Bridge.Test;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {

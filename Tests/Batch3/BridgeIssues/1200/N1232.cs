@@ -57,7 +57,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             Assert.AreEqual("b", t1.A[1], "Second ab");
             Assert.AreEqual(1, t1.Number, "Number ab");
 
-            var t2 = new ClassA(new string[]{"a", "b", "c"});
+            var t2 = new ClassA(new string[] { "a", "b", "c" });
             Assert.AreEqual(3, t2.A.Length, "Length abc");
             Assert.AreEqual("a", t2.A[0], "First abc");
             Assert.AreEqual("b", t2.A[1], "Second abc");

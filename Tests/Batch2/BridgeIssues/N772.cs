@@ -1,11 +1,9 @@
 ﻿using Bridge.Linq;
 using Bridge.Test;
-
 using System;
-using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Linq;
 
 namespace Bridge.ClientTest.Batch2.BridgeIssues
 {
@@ -28,6 +26,7 @@ namespace Bridge.ClientTest.Batch2.BridgeIssues
             {
                 return o is C && i == ((C)o).i;
             }
+
             public override int GetHashCode()
             {
                 return i;
@@ -47,7 +46,6 @@ namespace Bridge.ClientTest.Batch2.BridgeIssues
             Assert.True(arr is IEnumerable<int>, "is IEnumerable<int> should be true");
             Assert.True(arr is IList<int>, "is IList<int> should be true");
         }
-
 
         [Test]
         public void LengthWorks()
@@ -238,6 +236,7 @@ namespace Bridge.ClientTest.Batch2.BridgeIssues
             Assert.True(new[] { 1, 2, 3, 4 }.Any(i => i > 1));
             Assert.False(new[] { 1, 2, 3, 4 }.Any(i => i > 5));
         }
+
         [Test]
         public void BinarySearch1Works()
         {

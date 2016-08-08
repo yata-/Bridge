@@ -2,7 +2,6 @@ using Bridge;
 
 using System.ComponentModel;
 
-
 namespace System.Threading
 {
     [External]

@@ -1,6 +1,5 @@
-﻿using System;
-using Bridge.Test;
-using Bridge.ClientTest;
+﻿using Bridge.Test;
+using System;
 
 namespace Bridge.ClientTest.SimpleTypes
 {

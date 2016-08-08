@@ -955,4 +955,3 @@ namespace Bridge.ClientTest.Batch2
         }
     }
 }
-

@@ -290,7 +290,7 @@ namespace Bridge.Translator
                 cloneIf.FalseStatement = block;
             }
 
-            return noblock ?  cloneIf : ifElseStatement.Clone();
+            return noblock ? cloneIf : ifElseStatement.Clone();
         }
     }
 }

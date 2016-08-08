@@ -1,4 +1,3 @@
-using Bridge;
 using Bridge.Test;
 
 using System;
@@ -9,14 +8,14 @@ namespace Bridge.ClientTest.BasicCSharp
     [TestFixture(TestNameFormat = "Enum - {0}")]
     public class TestEnum
     {
-        enum Digits
+        private enum Digits
         {
             Zero = 0,
             One,
             Two = 2
         }
 
-        enum Abc
+        private enum Abc
         {
             A = -1,
             B,
@@ -116,7 +115,6 @@ namespace Bridge.ClientTest.BasicCSharp
             Assert.AreEqual("255", Enum.Format(typeof(Digits), (Digits)255, "d"), "Format (Digits)255 d");
             Assert.AreEqual("24", Enum.Format(typeof(Pets), Pets.Rabbit | Pets.Other, "D"), "Format Pets.Rabbit | Pets.Other D");
             Assert.AreEqual("16", Enum.Format(typeof(Pets), Pets.Other, "d"), "Format Pets.Other d");
-
 
             Assert.AreEqual("Dog, Cat", Enum.Format(typeof(Pets1), Pets1.Cat | Pets1.Dog, "F"), "Format Pets1.Cat | Pets1.Dog F");
             Assert.AreEqual("Dog, Cat", Enum.Format(typeof(Pets1), Pets1.Cat | Pets1.Dog, "f"), "Format Pets1.Cat | Pets1.Dog f");
