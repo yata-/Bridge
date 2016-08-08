@@ -188,7 +188,8 @@ namespace Bridge.Translator
             {
                 if (method == CS.Ops.IS)
                 {
-                    this.Write("Bridge.hasValue(");
+                    this.Write(JS.Funcs.BRIDGE_HASVALUE);
+                    this.WriteOpenParentheses();
                 }
                 expression.AcceptVisitor(this.Emitter);
                 if (method == CS.Ops.IS)
@@ -553,12 +554,12 @@ namespace Bridge.Translator
             {
                 if (tempVar != null)
                 {
-                    castCode = string.Format("({0} = {1}, Bridge.{2}({0}, Bridge.hasValue({0}) && ({3})))", tempVar, expressionStr, method, castCode);
+                    castCode = string.Format("({0} = {1}, Bridge.{2}({0}, {4}({0}) && ({3})))", tempVar, expressionStr, method, castCode, JS.Funcs.BRIDGE_HASVALUE);
                     this.RemoveTempVar(tempVar);
                 }
                 else
                 {
-                    castCode = string.Format("Bridge.{1}({0}, Bridge.hasValue({0}) && ({2}))", expressionStr, method, castCode);
+                    castCode = string.Format("Bridge.{1}({0}, {3}({0}) && ({2}))", expressionStr, method, castCode, JS.Funcs.BRIDGE_HASVALUE);
                 }
             }
 
