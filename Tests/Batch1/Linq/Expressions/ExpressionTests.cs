@@ -12,125 +12,318 @@ namespace Bridge.ClientTest.Linq.Expressions
     [TestFixture(TestNameFormat = "LINQ Expressions - {0}")]
     public class ExpressionTests
     {
-        class MyList : IEnumerable
+        private class MyList : IEnumerable
         {
             [Reflectable]
-            public void Add(int i) { }
+            public void Add(int i)
+            {
+            }
+
             [Reflectable]
-            public void Add(int i, int j) { }
+            public void Add(int i, int j)
+            {
+            }
+
             [Reflectable]
-            public MyList() { }
-            public IEnumerator GetEnumerator() { throw new Exception(); }
+            public MyList()
+            {
+            }
+
+            public IEnumerator GetEnumerator()
+            {
+                throw new Exception();
+            }
         }
+
 #pragma warning disable 649
-        class C
+
+        private class C
         {
             [Reflectable]
-            public static C operator *(C a, C b) { return null; }
-            [Reflectable]
-            public static C operator %(C a, C b) { return null; }
-            [Reflectable]
-            public static C operator /(C a, C b) { return null; }
-            [Reflectable]
-            public static C operator +(C a, C b) { return null; }
-            [Reflectable]
-            public static C operator -(C a, C b) { return null; }
-            [Reflectable]
-            public static C operator <<(C a, int b) { return null; }
-            [Reflectable]
-            public static C operator >>(C a, int b) { return null; }
-            [Reflectable]
-            public static bool operator <(C a, C b) { return false; }
-            [Reflectable]
-            public static bool operator >(C a, C b) { return false; }
-            [Reflectable]
-            public static bool operator <=(C a, C b) { return false; }
-            [Reflectable]
-            public static bool operator >=(C a, C b) { return false; }
-            [Reflectable]
-            public static bool operator ==(C a, C b) { return false; }
-            [Reflectable]
-            public static bool operator !=(C a, C b) { return false; }
-            [Reflectable]
-            public static C operator &(C a, C b) { return null; }
-            [Reflectable]
-            public static C operator ^(C a, C b) { return null; }
-            [Reflectable]
-            public static C operator |(C a, C b) { return null; }
-            [Reflectable]
-            public static C operator +(C a) { return null; }
-            [Reflectable]
-            public static C operator -(C a) { return null; }
-            [Reflectable]
-            public static C operator ~(C a) { return null; }
-            [Reflectable]
-            public static bool operator !(C a) { return false; }
-            [Reflectable]
-            public static C op_Power(C a, C b) { return null; }
-            [Reflectable]
-            public static C operator ++(C a) { return null; }
-            [Reflectable]
-            public static C operator --(C a) { return null; }
-            [Reflectable]
-            public static bool operator true(C a) { return false; }
-            [Reflectable]
-            public static bool operator false(C a) { return false; }
-            [Reflectable]
-            public static explicit operator int (C a) { return 0; }
+            public static C operator *(C a, C b)
+            {
+                return null;
+            }
 
             [Reflectable]
-            public int M1(int a, string b) { return 0; }
-            [Reflectable]
-            public static int M2(int a, string b) { return 0; }
+            public static C operator %(C a, C b)
+            {
+                return null;
+            }
 
-            public int M3(int a) { return a + 34; }
             [Reflectable]
-            public int M4(int a) { return a + 34; }
+            public static C operator /(C a, C b)
+            {
+                return null;
+            }
+
+            [Reflectable]
+            public static C operator +(C a, C b)
+            {
+                return null;
+            }
+
+            [Reflectable]
+            public static C operator -(C a, C b)
+            {
+                return null;
+            }
+
+            [Reflectable]
+            public static C operator <<(C a, int b)
+            {
+                return null;
+            }
+
+            [Reflectable]
+            public static C operator >>(C a, int b)
+            {
+                return null;
+            }
+
+            [Reflectable]
+            public static bool operator <(C a, C b)
+            {
+                return false;
+            }
+
+            [Reflectable]
+            public static bool operator >(C a, C b)
+            {
+                return false;
+            }
+
+            [Reflectable]
+            public static bool operator <=(C a, C b)
+            {
+                return false;
+            }
+
+            [Reflectable]
+            public static bool operator >=(C a, C b)
+            {
+                return false;
+            }
+
+            [Reflectable]
+            public static bool operator ==(C a, C b)
+            {
+                return false;
+            }
+
+            [Reflectable]
+            public static bool operator !=(C a, C b)
+            {
+                return false;
+            }
+
+            [Reflectable]
+            public static C operator &(C a, C b)
+            {
+                return null;
+            }
+
+            [Reflectable]
+            public static C operator ^(C a, C b)
+            {
+                return null;
+            }
+
+            [Reflectable]
+            public static C operator |(C a, C b)
+            {
+                return null;
+            }
+
+            [Reflectable]
+            public static C operator +(C a)
+            {
+                return null;
+            }
+
+            [Reflectable]
+            public static C operator -(C a)
+            {
+                return null;
+            }
+
+            [Reflectable]
+            public static C operator ~(C a)
+            {
+                return null;
+            }
+
+            [Reflectable]
+            public static bool operator !(C a)
+            {
+                return false;
+            }
+
+            [Reflectable]
+            public static C op_Power(C a, C b)
+            {
+                return null;
+            }
+
+            [Reflectable]
+            public static C operator ++(C a)
+            {
+                return null;
+            }
+
+            [Reflectable]
+            public static C operator --(C a)
+            {
+                return null;
+            }
+
+            [Reflectable]
+            public static bool operator true(C a)
+            {
+                return false;
+            }
+
+            [Reflectable]
+            public static bool operator false(C a)
+            {
+                return false;
+            }
+
+            [Reflectable]
+            public static explicit operator int (C a)
+            {
+                return 0;
+            }
+
+            [Reflectable]
+            public int M1(int a, string b)
+            {
+                return 0;
+            }
+
+            [Reflectable]
+            public static int M2(int a, string b)
+            {
+                return 0;
+            }
+
+            public int M3(int a)
+            {
+                return a + 34;
+            }
+
+            [Reflectable]
+            public int M4(int a)
+            {
+                return a + 34;
+            }
 
             [Reflectable]
             public int F1;
+
             public int F2;
+
             [Reflectable]
-            public int P1 { get; set; }
-            public int P2 { get; set; }
+            public int P1
+            {
+                get;
+                set;
+            }
+
+            public int P2
+            {
+                get;
+                set;
+            }
 
             [Reflectable]
             public MyList LF;
+
             [Reflectable]
-            public MyList LP { get; set; }
+            public MyList LP
+            {
+                get;
+                set;
+            }
 
             [Reflectable]
             public C CF;
-            [Reflectable]
-            public C CP { get; set; }
 
             [Reflectable]
-            public string this[int a, string b] { get { return F1 + " " + a + " " + b; } }
-
-            public override bool Equals(object o) { return false; }
-            public override int GetHashCode() { return 0; }
+            public C CP
+            {
+                get;
+                set;
+            }
 
             [Reflectable]
-            public C() { F1 = 234; F2 = 24; P1 = 42; P2 = 17; }
+            public string this[int a, string b]
+            {
+                get
+                {
+                    return F1 + " " + a + " " + b;
+                }
+            }
+
+            public override bool Equals(object o)
+            {
+                return false;
+            }
+
+            public override int GetHashCode()
+            {
+                return 0;
+            }
+
             [Reflectable]
-            public C(int a, int b) { }
-            public C(int a, string b) { }
+            public C()
+            {
+                F1 = 234;
+                F2 = 24;
+                P1 = 42;
+                P2 = 17;
+            }
+
+            [Reflectable]
+            public C(int a, int b)
+            {
+            }
+
+            public C(int a, string b)
+            {
+            }
         }
+
 #pragma warning restore 649
 
-        static int F(Expression<Func<int, int>> f) { return 0; }
-
-        class MyExpression : Expression
+        private static int F(Expression<Func<int, int>> f)
         {
-            public MyExpression() : base((ExpressionType)9999, typeof(string)) { }
+            return 0;
+        }
+
+        private class MyExpression : Expression
+        {
+            public MyExpression()
+                : base((ExpressionType)9999, typeof(string))
+            {
+            }
         }
 
         private class MyEnumerable<T> : IEnumerable<T>
         {
             private bool _hasEnumerated;
             private IList<T> _items;
-            public MyEnumerable(IList<T> items) { _items = items; }
-            IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
+
+            public MyEnumerable(IList<T> items)
+            {
+                _items = items;
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
+
             public IEnumerator<T> GetEnumerator()
             {
                 if (_hasEnumerated)
@@ -1104,7 +1297,11 @@ namespace Bridge.ClientTest.Linq.Expressions
         [Test]
         public void AnonymousTypeConstructionWorks()
         {
-            Expression<Func<int, int, object>> e = (a, b) => new { A = a, B = b };
+            Expression<Func<int, int, object>> e = (a, b) => new
+            {
+                A = a,
+                B = b
+            };
             Assert.AreEqual(e.Body.NodeType, ExpressionType.Convert);
 
             var ne = ((UnaryExpression)e.Body).Operand as NewExpression;
@@ -1119,10 +1316,18 @@ namespace Bridge.ClientTest.Linq.Expressions
             var propB = ne.Members[1];
             Assert.True(propA is PropertyInfo, "A should be property");
             Assert.AreEqual(propA.Name, "A", "A name");
-            Assert.AreEqual(((PropertyInfo)propA).GetMethod.Invoke(new { A = 42, B = 17 }), 42, "A getter result");
+            Assert.AreEqual(((PropertyInfo)propA).GetMethod.Invoke(new
+            {
+                A = 42,
+                B = 17
+            }), 42, "A getter result");
             Assert.True(propB is PropertyInfo, "B should be property");
             Assert.AreEqual(propB.Name, "B", "B name");
-            Assert.AreEqual(((PropertyInfo)propB).GetMethod.Invoke(new { A = 42, B = 17 }), 17, "B getter result");
+            Assert.AreEqual(((PropertyInfo)propB).GetMethod.Invoke(new
+            {
+                A = 42,
+                B = 17
+            }), 17, "B getter result");
 
             var instance = ne.Constructor.Invoke(42, 17);
             Assert.AreEqual(((dynamic)instance).a, 42, "Constructor invocation result A");
@@ -1148,7 +1353,9 @@ namespace Bridge.ClientTest.Linq.Expressions
         public void TransparentIdentifiersWork()
         {
             var c = new ClassWithQueryPattern<int>(42);
-            Expression<Func<ClassWithQueryPattern<int>>> f = () => from a in c let b = a + 1 select a + b;
+            Expression<Func<ClassWithQueryPattern<int>>> f = () => from a in c
+                                                                   let b = a + 1
+                                                                   select a + b;
             var outer = (MethodCallExpression)f.Body;
             //var outerLambda = (LambdaExpression)outer.Arguments[0];
             var inner = (MethodCallExpression)outer.Object;
@@ -1167,10 +1374,18 @@ namespace Bridge.ClientTest.Linq.Expressions
             var propB = ne.Members[1];
             Assert.True(propA is PropertyInfo, "A should be property");
             Assert.AreEqual(propA.Name, "a", "a name");
-            Assert.AreEqual(((PropertyInfo)propA).GetMethod.Invoke(new { a = 42, b = 17 }), 42, "a getter result");
+            Assert.AreEqual(((PropertyInfo)propA).GetMethod.Invoke(new
+            {
+                a = 42,
+                b = 17
+            }), 42, "a getter result");
             Assert.True(propB is PropertyInfo, "B should be property");
             Assert.AreEqual(propB.Name, "b", "b name");
-            Assert.AreEqual(((PropertyInfo)propB).GetMethod.Invoke(new { a = 42, b = 17 }), 17, "b getter result");
+            Assert.AreEqual(((PropertyInfo)propB).GetMethod.Invoke(new
+            {
+                a = 42,
+                b = 17
+            }), 17, "b getter result");
 
             var instance = ne.Constructor.Invoke(42, 17);
             Assert.AreEqual(((dynamic)instance).a, 42, "Constructor invocation result a");
@@ -1211,8 +1426,14 @@ namespace Bridge.ClientTest.Linq.Expressions
         public void BindWorks()
         {
             var pa = Expression.Parameter(typeof(int), "a");
-            Expression<Func<int, C>> e1 = a => new C { F1 = a };
-            Expression<Func<int, C>> e2 = a => new C { P1 = a };
+            Expression<Func<int, C>> e1 = a => new C
+            {
+                F1 = a
+            };
+            Expression<Func<int, C>> e2 = a => new C
+            {
+                P1 = a
+            };
 
             MemberBinding b1 = ((MemberInitExpression)e1.Body).Bindings[0];
             MemberBinding b2 = ((MemberInitExpression)e2.Body).Bindings[0];
@@ -1300,9 +1521,18 @@ namespace Bridge.ClientTest.Linq.Expressions
 
             var pa = Expression.Parameter(typeof(int), "a");
             var pb = Expression.Parameter(typeof(int), "b");
-            Expression<Func<int, int, C>> e1 = (a, b) => new C { LF = { a, b } };
-            Expression<Func<int, int, C>> e2 = (a, b) => new C { LP = { a, b } };
-            Expression<Func<int, int, C>> e3 = (a, b) => new C { LF = { a, { a, b } } };
+            Expression<Func<int, int, C>> e1 = (a, b) => new C
+            {
+                LF = { a, b }
+            };
+            Expression<Func<int, int, C>> e2 = (a, b) => new C
+            {
+                LP = { a, b }
+            };
+            Expression<Func<int, int, C>> e3 = (a, b) => new C
+            {
+                LF = { a, { a, b } }
+            };
             MemberBinding b1 = ((MemberInitExpression)e1.Body).Bindings[0];
             MemberBinding b2 = ((MemberInitExpression)e2.Body).Bindings[0];
             MemberBinding b3 = Expression.ListBind(typeof(C).GetField("LF"), new[] { Expression.ElementInit(add1, pa), Expression.ElementInit(add1, pb) });
@@ -1338,8 +1568,22 @@ namespace Bridge.ClientTest.Linq.Expressions
         public void MemberBindWorks()
         {
             var pa = Expression.Parameter(typeof(int), "a");
-            Expression<Func<int, C>> e1 = a => new C { CF = { F1 = a, P1 = a } };
-            Expression<Func<int, C>> e2 = a => new C { CP = { F1 = a, P1 = a } };
+            Expression<Func<int, C>> e1 = a => new C
+            {
+                CF =
+                    {
+                        F1 = a,
+                        P1 = a
+                    }
+            };
+            Expression<Func<int, C>> e2 = a => new C
+            {
+                CP =
+                    {
+                        F1 = a,
+                        P1 = a
+                    }
+            };
 
             var bindings = new MemberBinding[] { Expression.Bind(typeof(C).GetField("F1"), pa), Expression.Bind(typeof(C).GetProperty("P1"), pa) };
             MemberBinding b1 = ((MemberInitExpression)e1.Body).Bindings[0];
@@ -1403,7 +1647,11 @@ namespace Bridge.ClientTest.Linq.Expressions
 
             var pa = Expression.Parameter(typeof(int), "a");
             var pb = Expression.Parameter(typeof(int), "b");
-            Expression<Func<int, int, C>> e1 = (a, b) => new C { F1 = a, P1 = b };
+            Expression<Func<int, int, C>> e1 = (a, b) => new C
+            {
+                F1 = a,
+                P1 = b
+            };
             Expression e2 = Expression.MemberInit(Expression.New(typeof(C).GetConstructor(new Type[0])), new MemberBinding[] { Expression.Bind(typeof(C).GetField("F1"), pa), Expression.Bind(typeof(C).GetProperty("P1"), pb) });
             Expression e3 = Expression.MemberInit(Expression.New(typeof(C).GetConstructor(new Type[0])), new MyEnumerable<MemberBinding>(new MemberBinding[] { Expression.Bind(typeof(C).GetField("F1"), pa), Expression.Bind(typeof(C).GetProperty("P1"), pb) }));
 
