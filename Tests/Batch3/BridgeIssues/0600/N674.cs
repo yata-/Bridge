@@ -14,8 +14,8 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             // In .Net the code below produces null and does not fail. Changing the test to reflect this
             object o = Script.Undefined;
 
-            Assert.AreEqual(null, (string)o, "Cast 'undefined' to string results in null");
-            Assert.AreEqual(null, (int[])o, "Cast 'undefined' to int[] results in null");
+            Assert.AreEqual(Script.Undefined, (string)o, "Cast 'undefined' to string results in undefined");
+            Assert.AreEqual(Script.Undefined, (int[])o, "Cast 'undefined' to int[] results in undefined");
         }
 
         [Test(ExpectedCount = 1)]

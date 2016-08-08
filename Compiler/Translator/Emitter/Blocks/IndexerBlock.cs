@@ -268,7 +268,7 @@ namespace Bridge.Translator
                 }
 
                 this.PushWriter(inlineCode, null, thisArg, range);
-                new ExpressionListBlock(this.Emitter, indexerExpression.Arguments, null).Emit();
+                new ExpressionListBlock(this.Emitter, indexerExpression.Arguments, null, null, 0).Emit();
 
                 if (!this.Emitter.IsAssignment)
                 {
@@ -288,7 +288,7 @@ namespace Bridge.Translator
                 this.PushWriter(inlineCode);
                 this.Emitter.IsAssignment = false;
                 this.Emitter.IsUnaryAccessor = false;
-                new ExpressionListBlock(this.Emitter, indexerExpression.Arguments, null).Emit();
+                new ExpressionListBlock(this.Emitter, indexerExpression.Arguments, null, null, 0).Emit();
                 this.Emitter.IsAssignment = oldIsAssignment;
                 this.Emitter.IsUnaryAccessor = oldUnary;
 
@@ -413,7 +413,7 @@ namespace Bridge.Translator
                 {
                     var oldWriter = this.SaveWriter();
                     this.NewWriter();
-                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
+                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, null, 0).Emit();
                     var paramsStr = this.Emitter.Output.ToString();
                     this.RestoreWriter(oldWriter);
 
@@ -703,7 +703,7 @@ namespace Bridge.Translator
                     }
                     
                     this.WriteOpenParentheses();
-                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
+                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, null, 0).Emit();
                     this.WriteCloseParentheses();
                 }
             }
@@ -713,7 +713,7 @@ namespace Bridge.Translator
                 {
                     var oldWriter = this.SaveWriter();
                     this.NewWriter();
-                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
+                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, null, 0).Emit();
                     var paramsStr = this.Emitter.Output.ToString();
                     this.RestoreWriter(oldWriter);
 
@@ -810,7 +810,7 @@ namespace Bridge.Translator
                     this.WriteOpenParentheses();
                     this.Emitter.IsAssignment = false;
                     this.Emitter.IsUnaryAccessor = false;
-                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
+                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, null, 0).Emit();
                     this.Emitter.IsAssignment = oldIsAssignment;
                     this.Emitter.IsUnaryAccessor = oldUnary;
                     this.PushWriter(", {0})");
@@ -927,7 +927,7 @@ namespace Bridge.Translator
                         this.Write(JS.Funcs.Property.SET);
                         this.WriteOpenParentheses();
                         this.WriteOpenBracket();
-                        new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
+                        new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, null, 0).Emit();
                         this.WriteCloseBracket();
                         this.WriteComma(false);
 
@@ -961,7 +961,7 @@ namespace Bridge.Translator
                                 this.Write(JS.Funcs.Property.GET);
                                 this.WriteOpenParentheses();
                                 this.WriteOpenBracket();
-                                new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
+                                new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, null, 0).Emit();
                                 this.WriteCloseBracket();
                                 this.WriteCloseParentheses();
                                 this.WriteCloseParentheses();
@@ -982,7 +982,7 @@ namespace Bridge.Translator
                                 this.Write(JS.Funcs.Property.GET);
                                 this.WriteOpenParentheses();
                                 this.WriteOpenBracket();
-                                new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
+                                new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, null, 0).Emit();
                                 this.WriteCloseBracket();
                                 this.WriteCloseParentheses();
                                 this.WriteDot();
@@ -1014,7 +1014,7 @@ namespace Bridge.Translator
                             this.Write(JS.Funcs.Property.GET);
                             this.WriteOpenParentheses();
                             this.WriteOpenBracket();
-                            new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
+                            new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, null, 0).Emit();
                             this.WriteCloseBracket();
                             this.WriteCloseParentheses();
 
@@ -1037,7 +1037,7 @@ namespace Bridge.Translator
                         this.Write(JS.Funcs.Property.GET);
                         this.WriteOpenParentheses();
                         this.WriteOpenBracket();
-                        new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
+                        new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, null, 0).Emit();
                         this.WriteCloseBracket();
                         this.WriteCloseParentheses();
                         this.WriteComma();
@@ -1054,7 +1054,7 @@ namespace Bridge.Translator
                         this.Write(JS.Funcs.Property.SET);
                         this.WriteOpenParentheses();
                         this.WriteOpenBracket();
-                        new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
+                        new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, null, 0).Emit();
                         this.WriteCloseBracket();
                         this.WriteComma(false);
 
@@ -1082,7 +1082,7 @@ namespace Bridge.Translator
                                 this.Write(JS.Funcs.Property.GET);
                                 this.WriteOpenParentheses();
                                 this.WriteOpenBracket();
-                                new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
+                                new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, null, 0).Emit();
                                 this.WriteCloseBracket();
                                 this.WriteCloseParentheses();
                                 this.WriteCloseParentheses();
@@ -1103,7 +1103,7 @@ namespace Bridge.Translator
                                 this.Write(JS.Funcs.Property.GET);
                                 this.WriteOpenParentheses();
                                 this.WriteOpenBracket();
-                                new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
+                                new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, null, 0).Emit();
                                 this.WriteCloseBracket();
                                 this.WriteCloseParentheses();
                                 this.WriteDot();
@@ -1158,7 +1158,7 @@ namespace Bridge.Translator
                             this.Write(JS.Funcs.Property.GET);
                             this.WriteOpenParentheses();
                             this.WriteOpenBracket();
-                            new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
+                            new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, null, 0).Emit();
                             this.WriteCloseBracket();
                             this.WriteCloseParentheses();
                         }
@@ -1189,7 +1189,7 @@ namespace Bridge.Translator
                     }
                     
                     this.WriteOpenBracket();
-                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
+                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, null, 0).Emit();
                     this.WriteCloseBracket();
                     if (!this.isRefArg)
                     {
@@ -1203,7 +1203,7 @@ namespace Bridge.Translator
                 {
                     var oldWriter = this.SaveWriter();
                     this.NewWriter();
-                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
+                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, null, 0).Emit();
                     var paramsStr = this.Emitter.Output.ToString();
                     this.RestoreWriter(oldWriter);
 
@@ -1252,7 +1252,7 @@ namespace Bridge.Translator
                     this.Write(JS.Funcs.Property.SET);
                     this.WriteOpenParentheses();
                     this.WriteOpenBracket();
-                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg).Emit();
+                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, null, 0).Emit();
                     this.WriteCloseBracket();
                     this.PushWriter(", {0})");
                 }

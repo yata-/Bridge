@@ -53,6 +53,8 @@
     <AdditionalExplicitAssemblyReferences />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Attributes\GlobalMethodsAttribute.cs" />
+    <Compile Include="Attributes\MixinAttribute.cs" />
     <Compile Include="Attributes\ImmutableAttribute.cs" />
     <Compile Include="Attributes\AccessorsIndexerAttribute.cs" />
     <Compile Include="Attributes\GlobalTargetAttribute.cs" />
@@ -65,6 +67,7 @@
     <Compile Include="Attributes\AllowAttribute.cs" />
     <Compile Include="Attributes\ConstructorAttribute.cs" />
     <Compile Include="Attributes\ReflectableAttribute.cs" />
+    <Compile Include="Attributes\ExpandParamsAttribute.cs" />
     <Compile Include="Attributes\TemplateAttribute.cs" />
     <Compile Include="Attributes\InitAttribute.cs" />
     <Compile Include="Attributes\ModuleDependencyAttribute.cs" />
@@ -88,6 +91,7 @@
     <Compile Include="System\Action.cs" />
     <Compile Include="System\Activator.cs" />
     <Compile Include="System\AppDomain.cs" />
+    <Compile Include="Bridge\Arguments.cs" />
     <Compile Include="System\CompilerServices\CallerInformationAttributes.cs" />
     <Compile Include="System\CompilerServices\FormattableStringFactory.cs" />
     <Compile Include="System\CompilerServices\RuntimeHelpers.cs" />
@@ -744,14 +748,18 @@
     <Content Include="Resources\random.js" />
     <Content Include="Resources\FormattableString.js" />
     <Content Include="Resources\Text\RegularExpressions\Regex.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexEngineBranch.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexEnginePass.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexEngineProbe.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexEngineState.js" />
     <Content Include="Resources\Text\RegularExpressions\RegexCapture.js" />
     <Content Include="Resources\Text\RegularExpressions\RegexCaptureCollection.js" />
     <Content Include="Resources\Text\RegularExpressions\RegexGroup.js" />
     <Content Include="Resources\Text\RegularExpressions\RegexGroupCollection.js" />
     <Content Include="Resources\Text\RegularExpressions\RegexMatch.js" />
     <Content Include="Resources\Text\RegularExpressions\RegexMatchCollection.js" />
-    <Content Include="Resources\Text\RegularExpressions\RegexNetEngine.js" />
-    <Content Include="Resources\Text\RegularExpressions\RegexNetEngineParser.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexEngine.js" />
+    <Content Include="Resources\Text\RegularExpressions\RegexEngineParser.js" />
     <Content Include="Resources\Text\RegularExpressions\RegexNode.js" />
     <Content Include="Resources\Text\RegularExpressions\RegexOptions.js" />
     <Content Include="Resources\Text\RegularExpressions\RegexParser.js" />

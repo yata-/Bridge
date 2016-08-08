@@ -245,6 +245,12 @@ namespace Bridge.Translator
                 }
             }
 
+            bool unbox = !NullableType.IsNullable(itype) && isCast && conversion.IsUnboxingConversion;
+            if (unbox)
+            {
+                this.Write("System.Nullable.getValue(");
+            }
+
             this.Write(JS.NS.BRIDGE);
             this.WriteDot();
             this.Write(method);
@@ -265,6 +271,11 @@ namespace Bridge.Translator
             }
 
             this.WriteCloseParentheses();
+
+            if (unbox)
+            {
+                this.Write(")");
+            }
         }
 
         private void WriteCastValue(object value, IType expectedType)

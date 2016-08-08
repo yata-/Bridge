@@ -309,7 +309,7 @@ namespace Bridge.Translator
                                     var isIgnoreClass = resolvedMethod.DeclaringTypeDefinition != null && this.Emitter.Validator.IsIgnoreType(resolvedMethod.DeclaringTypeDefinition);
 
                                     this.Write(name);
-                                    
+                                    int openPos = this.Emitter.Output.Length;
                                     this.WriteOpenParentheses();
 
                                     this.Emitter.Comma = false;
@@ -328,7 +328,7 @@ namespace Bridge.Translator
                                         this.WriteComma();
                                     }
 
-                                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, invocationExpression).Emit();
+                                    new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, invocationExpression, openPos).Emit();
 
                                     this.WriteCloseParentheses();
                                 }
@@ -359,8 +359,9 @@ namespace Bridge.Translator
                                     this.WriteDot();
                                     string name = this.Emitter.GetEntityName(resolvedMethod);
                                     this.Write(name);
+                                    int openPos = this.Emitter.Output.Length;
                                     this.WriteOpenParentheses();
-                                    new ExpressionListBlock(this.Emitter, argsExpressions.Skip(1), paramsArg, invocationExpression).Emit();
+                                    new ExpressionListBlock(this.Emitter, argsExpressions.Skip(1), paramsArg, invocationExpression, openPos).Emit();
                                     this.WriteCloseParentheses();
                                 }
 
@@ -564,7 +565,7 @@ namespace Bridge.Translator
                     {
                         this.Write("." + JS.Funcs.APPLY);
                     }
-
+                    int openPos = this.Emitter.Output.Length;
                     this.WriteOpenParentheses();
 
                     bool isIgnoreGeneric = false;
@@ -597,15 +598,15 @@ namespace Bridge.Translator
                         if (argsExpressions.Length > 1)
                         {
                             this.WriteOpenBracket();
-                            new ExpressionListBlock(this.Emitter, argsExpressions.Take(argsExpressions.Length - 1).ToArray(), paramsArg, invocationExpression).Emit();  
+                            new ExpressionListBlock(this.Emitter, argsExpressions.Take(argsExpressions.Length - 1).ToArray(), paramsArg, invocationExpression, openPos).Emit();  
                             this.WriteCloseBracket();
                             this.Write(".concat(");
-                            new ExpressionListBlock(this.Emitter, new Expression[]{argsExpressions[argsExpressions.Length - 1]}, paramsArg, invocationExpression).Emit();  
+                            new ExpressionListBlock(this.Emitter, new Expression[]{argsExpressions[argsExpressions.Length - 1]}, paramsArg, invocationExpression, openPos).Emit();  
                             this.Write(")");
                         }
                         else
                         {
-                            new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, invocationExpression).Emit();
+                            new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, invocationExpression, -1).Emit();
                         }
                     }
                     else
@@ -621,7 +622,7 @@ namespace Bridge.Translator
                             this.EnsureComma(false);    
                         }
 
-                        new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, invocationExpression).Emit();    
+                        new ExpressionListBlock(this.Emitter, argsExpressions, paramsArg, invocationExpression, openPos).Emit();    
                     }
                     
                     this.WriteCloseParentheses();

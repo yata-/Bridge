@@ -297,12 +297,19 @@ namespace Bridge.Translator
 
             foreach (var type in this.Emitter.Types)
             {
-                if (reflectedTypes.Any(t => t == type.Type))
+                var typeDef = type.Type.GetDefinition();
+                bool isGlobal = false;
+                if (typeDef != null)
+                {
+                    isGlobal = typeDef.Attributes.Any(a => a.AttributeType.FullName == "Bridge.GlobalMethodsAttribute" ||a.AttributeType.FullName == "Bridge.MixinAttribute");
+                }
+
+                if (reflectedTypes.Any(t => t == type.Type) || isGlobal)
                 {
                     continue;
                 }
 
-                var meta = MetadataUtils.ConstructTypeMetadata(type.Type.GetDefinition(), this.Emitter, true, type.TypeDeclaration.GetParent<SyntaxTree>());
+                var meta = MetadataUtils.ConstructTypeMetadata(typeDef, this.Emitter, true, type.TypeDeclaration.GetParent<SyntaxTree>());
 
                 if (meta != null)
                 {
@@ -396,7 +403,7 @@ namespace Bridge.Translator
             var config = this.Emitter.AssemblyInfo.Reflection;
             var configInternal = ((AssemblyInfo) this.Emitter.AssemblyInfo).ReflectionInternal;
 
-            bool? enable = config.Enable.HasValue ? config.Enable : (configInternal.Enable.HasValue ? configInternal.Enable : null);
+            bool? enable = config.Enabled.HasValue ? config.Enabled : (configInternal.Enabled.HasValue ? configInternal.Enabled : null);
             TypeAccessibility? typeAccessibility = config.TypeAccessibility.HasValue ? config.TypeAccessibility : (configInternal.TypeAccessibility.HasValue ? configInternal.TypeAccessibility : null);
             string filter = !string.IsNullOrEmpty(config.Filter) ? config.Filter : (!string.IsNullOrEmpty(configInternal.Filter) ? configInternal.Filter : null);
             
@@ -439,6 +446,12 @@ namespace Bridge.Translator
 
                 if (typeDef != null)
                 {
+                    var isGlobal = typeDef.Attributes.Any(a => a.AttributeType.FullName == "Bridge.GlobalMethodsAttribute" || a.AttributeType.FullName == "Bridge.MixinAttribute");
+                    if (isGlobal)
+                    {
+                        continue;
+                    }
+
                     var attr = typeDef.Attributes.FirstOrDefault(a => a.AttributeType.FullName == "Bridge.ReflectableAttribute");
 
                     if (attr != null)

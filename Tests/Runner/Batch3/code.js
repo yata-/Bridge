@@ -9294,13 +9294,13 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
                 // In .Net the code below produces null and does not fail. Changing the test to reflect this
                 var o = undefined;
     
-                Bridge.Test.Assert.areEqual$1(null, Bridge.cast(o, String), "Cast 'undefined' to string results in null");
-                Bridge.Test.Assert.areEqual$1(null, Bridge.cast(o, Array), "Cast 'undefined' to int[] results in null");
+                Bridge.Test.Assert.areEqual$1(undefined, Bridge.cast(o, String), "Cast 'undefined' to string results in undefined");
+                Bridge.Test.Assert.areEqual$1(undefined, Bridge.cast(o, Array), "Cast 'undefined' to int[] results in undefined");
             },
             testUndefinedToValueType: function () {
                 var o = undefined;
                 Bridge.Test.Assert.throws$5(function () {
-                    var i = Bridge.cast(o, System.Int32);
+                    var i = System.Nullable.getValue(Bridge.cast(o, System.Int32));
                 }, "Unable to cast 'undefined' to type int");
             }
         }
@@ -10678,7 +10678,7 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
             if (!(Bridge.is(o, Bridge.ClientTest.Batch3.BridgeIssues.Bridge795A))) {
                 return false;
             }
-            return Bridge.cast(o, Bridge.ClientTest.Batch3.BridgeIssues.Bridge795A).getValue() === this.getValue();
+            return System.Nullable.getValue(Bridge.cast(o, Bridge.ClientTest.Batch3.BridgeIssues.Bridge795A)).getValue() === this.getValue();
         },
         getHashCode: function () {
             return this.getValue();
@@ -10730,7 +10730,7 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
                 return false;
             }
     
-            return Bridge.cast(o, Bridge.ClientTest.Batch3.BridgeIssues.Bridge795B).getValue() === this.getValue();
+            return System.Nullable.getValue(Bridge.cast(o, Bridge.ClientTest.Batch3.BridgeIssues.Bridge795B)).getValue() === this.getValue();
         },
         getHashCode: function () {
             return this.getValue();

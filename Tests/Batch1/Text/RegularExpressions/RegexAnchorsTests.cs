@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Bridge.Test;
 
-namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
+namespace Bridge.ClientTest.Text.RegularExpressions
 {
     [Category(Constants.MODULE_REGEX)]
     [TestFixture(TestNameFormat = "Regex: Anchors - {0}")]
@@ -12,7 +12,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
         #region MSDN
 
         [Test]
-        public void StartOfStringOrLineTest()
+        public void MsdnStartOfStringOrLineTest()
         {
             int startPos = 0, endPos = 70;
             const string input = "Brooklyn Dodgers, National League, 1911, 1912, 1932-1957\n" +
@@ -50,7 +50,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
         }
 
         [Test]
-        public void StartOfStringOrLineMultilineModeTest()
+        public void MsdnStartOfStringOrLineMultilineModeTest()
         {
             int startPos = 0, endPos = 70;
             const string input = "Brooklyn Dodgers, National League, 1911, 1912, 1932-1957\n" +
@@ -95,7 +95,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
         }
 
         [Test]
-        public void EndOfStringOrLineTest1()
+        public void MsdnEndOfStringOrLineTest1()
         {
             // Attempting to match the entire input string
 
@@ -138,7 +138,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
         }
 
         [Test]
-        public void EndOfStringOrLineTest2()
+        public void MsdnEndOfStringOrLineTest2()
         {
             // Attempting to match each element in a string array
 
@@ -185,7 +185,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
         }
 
         [Test]
-        public void EndOfStringOrLineTest3()
+        public void MsdnEndOfStringOrLineTest3()
         {
             // Attempting to match each line of an input string with '$'
 
@@ -229,7 +229,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
         }
 
         [Test]
-        public void EndOfStringOrLineTest4()
+        public void MsdnEndOfStringOrLineTest4()
         {
             // Attempting to match each line of an input string with '\r?$'
 
@@ -281,7 +281,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
         }
 
         [Test]
-        public void StartOfStringOnlyTest()
+        public void MsdnStartOfStringOnlyTest()
         {
             int startPos = 0, endPos = 70;
             string input = "Brooklyn Dodgers, National League, 1911, 1912, 1932-1957\n" +
@@ -322,7 +322,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
         }
 
         [Test]
-        public void EndOfStringOrNewlineTest()
+        public void MsdnEndOfStringOrNewlineTest()
         {
             string[] inputs =
             {
@@ -348,7 +348,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
         }
 
         [Test]
-        public void EndOfStringOnlyTest()
+        public void MsdnEndOfStringOnlyTest()
         {
             string[] inputs =
             {
@@ -374,7 +374,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
         }
 
         [Test]
-        public void ContiguousMatchesTest()
+        public void MsdnContiguousMatchesTest()
         {
             string input = "capybara,squirrel,chipmunk,porcupine,gopher," +
                            "beaver,groundhog,hamster,guinea pig,gerbil," +
@@ -412,7 +412,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
         }
 
         [Test]
-        public void WordBoundaryTest()
+        public void MsdnWordBoundaryTest()
         {
             string input = "area bare arena mare";
             string pattern = @"\bare\w*\b";
@@ -433,7 +433,7 @@ namespace Bridge.ClientTest.Text.RegularExpressions.Msdn
         }
 
         [Test]
-        public void NonWordBoundaryTest()
+        public void MsdnNonWordBoundaryTest()
         {
             string input = "equity queen equip acquaint quiet";
             string pattern = @"\Bqu\w+";

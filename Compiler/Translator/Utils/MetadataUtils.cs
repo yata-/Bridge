@@ -354,9 +354,9 @@ namespace Bridge.Translator
                 var method = (IMethod)m;
                 var inline = emitter.GetInline(method);
 
-                if (string.IsNullOrEmpty(inline) && method.Parameters.Any(p => p.IsParams))
+                if (string.IsNullOrEmpty(inline) && method.Attributes.Any(a => a.AttributeType.FullName == "Bridge.ExpandParamsAttribute"))
                 {
-                    //properties.Add("exp", true);
+                    properties.Add("exp", true);
                 }                    
 
                 properties.Add("type", (int)MemberTypes.Method);
@@ -595,9 +595,9 @@ namespace Bridge.Translator
                 properties.Add("sm", true);
             }
                 
-            if (string.IsNullOrEmpty(inline) && constructor.Parameters.Any(p => p.IsParams))
+            if (string.IsNullOrEmpty(inline) && constructor.Attributes.Any(a => a.AttributeType.FullName == "Bridge.ExpandParamsAttribute"))
             {
-               // properties.Add("exp", true);
+                properties.Add("exp", true);
             }
 
             if (!string.IsNullOrEmpty(inline))

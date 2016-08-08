@@ -241,6 +241,7 @@ namespace Bridge.Translator
             }
 
             bool needExpand = false;
+            bool expandParams = false;
 
             string paramsName = null;
             IType paramsType = null;
@@ -254,6 +255,7 @@ namespace Bridge.Translator
                     paramsName = paramsParam.Name;
                     paramsType = paramsParam.Type;
                 }
+                expandParams = argsInfo.ResolveResult.Member.Attributes.Any(a => a.AttributeType.FullName == "Bridge.ExpandParamsAttribute");
             }
             else if(argsInfo.Method != null)
             {
@@ -264,6 +266,7 @@ namespace Bridge.Translator
                     paramsName = paramsParam.Name;
                     paramsType = paramsParam.Type;
                 }
+                expandParams = argsInfo.Method.Attributes.Any(a => a.AttributeType.FullName == "Bridge.ExpandParamsAttribute");
             }
 
             if (paramsName != null)
@@ -285,6 +288,11 @@ namespace Bridge.Translator
 
                         break;
                     }
+                }
+
+                if (expandParams)
+                {
+                    ignoreArray = true;
                 }
 
                 if (argsInfo.ResolveResult is CSharpInvocationResolveResult)
@@ -618,7 +626,7 @@ namespace Bridge.Translator
                             }
                             else
                             {
-                                new ExpressionListBlock(this.Emitter, exprs, null).Emit();
+                                new ExpressionListBlock(this.Emitter, exprs, null, null, 0).Emit();
                             }
 
                             if (!ignoreArray)

@@ -2770,680 +2770,751 @@
     Bridge.definei = Bridge.Class.definei;
     Bridge.init = Bridge.Class.init;
 
-Bridge.initAssembly = function (assemblyName, res, callback) {
-    if (!callback) {
-        callback = res;
-        res = {};
-    }
+    // @source Reflection.js
 
-    assemblyName = assemblyName || "Bridge.$Unknown";
-    var asm = System.Reflection.Assembly.assemblies[assemblyName];
-
-    if (!asm) {
-        asm = new System.Reflection.Assembly(assemblyName, res);
-    } else {
-        Bridge.apply(asm.res, res || {});
-    }
-    
-    Bridge.$currentAssembly = asm; 
-    if (callback) {
-        callback.call(Bridge.global, asm, Bridge.global);
-    }
-};
-
-Bridge.define("System.Reflection.Assembly", {
-    statics: {
-        assemblies: {}
-    },
-
-    constructor: function (name, res) {
-        this.$initialize();
-        this.name = name;
-        this.res = res || {};
-        this.$types = {}
-        System.Reflection.Assembly.assemblies[name] = this;
-    },
-
-    toString: function() {
-        return this.name;
-    },
-
-    getManifestResourceNames: function () {
-         return Object.keys(this.res);
-    },
-
-    getManifestResourceDataAsBase64: function (type, name) {
-        if (arguments.length === 1) {
-            name = type;
-            type = null;
+    Bridge.initAssembly = function (assemblyName, res, callback) {
+        if (!callback) {
+            callback = res;
+            res = {};
         }
 
-        if (type) {
-            name = Bridge.Reflection.getTypeNamespace(type) + "." + name;
-        }
+        assemblyName = assemblyName || "Bridge.$Unknown";
 
-        return this.res[name] || null;
-    },
+        var asm = System.Reflection.Assembly.assemblies[assemblyName];
 
-    getManifestResourceData: function (type, name) {
-        if (arguments.length === 1) {
-            name = type;
-            type = null;
-        }
-
-        if (type) {
-            name = Bridge.Reflection.getTypeNamespace(type) + '.' + name;
-        }
-
-        var r = this.res[name];
-        return r ? System.Convert.fromBase64String(r) : null;
-    },
-
-    getCustomAttributes: function (attributeType) {
-        if (attributeType && !Bridge.isBoolean(attributeType)) {
-            return this.attr.filter(function(a) {
-                return Bridge.is(a, attributeType);
-            });
-        }
-
-        return this.attr;
-    }
-});
-
-Bridge.$currentAssembly = new System.Reflection.Assembly("System");
-Bridge.SystemAssembly = Bridge.$currentAssembly;
-Bridge.SystemAssembly.$types["System.Reflection.Assembly"] = System.Reflection.Assembly;
-System.Reflection.Assembly.$assembly = Bridge.SystemAssembly;
-
-Bridge.Reflection = {
-    setMetadata: function (type, metadata) {
-        type.$metadata = metadata;
-    },
-
-    initMetaData: function (type, metadata) {
-        if (metadata.members) {
-            for (var i = 0; i < metadata.members.length; i++) {
-                var m = metadata.members[i];
-                m.typeDef = type;
-                if (m.adder) m.adder.typeDef = type;
-                if (m.remover) m.remover.typeDef = type;
-                if (m.getter) m.getter.typeDef = type;
-                if (m.setter) m.setter.typeDef = type;
-            }
-        }
-        type.$metadata = metadata;
-        type.$initMetaData = true;
-    },
-
-    getMetadata: function () {
-        if (!this.$metadata && this.$genericTypeDefinition) {
-            this.$metadata = this.$genericTypeDefinition.$factoryMetadata || this.$genericTypeDefinition.$metadata;
-        }
-        
-        var metadata = this.$metadata;
-
-        if (typeof (metadata) === "function") {
-            if (this.$isGenericTypeDefinition) {
-                var i,
-                    size = this.$typeArgumentCount,
-                    arr = new Array(size);
-
-                for (i = 0; i < size; i++) {
-                    arr[i] = Object;
-                }
-                this.$factoryMetadata = this.$metadata;
-                metadata = this.$metadata.apply(null, arr);
-            }
-            else if (this.$typeArguments) {
-                metadata = this.$metadata.apply(null, this.$typeArguments);
-            } else {
-                metadata = this.$metadata();
-            }
-        }
-
-        if (!this.$initMetaData && metadata) {
-            Bridge.Reflection.initMetaData(this, metadata);
-        }
-
-        return metadata;
-    },
-
-    load: function(name) {
-        return System.Reflection.Assembly.assemblies[name] || require(name);
-    },
-
-    getGenericTypeDefinition: function (type) {
-	    return type.$genericTypeDefinition || null;
-    },
-
-    getGenericParameterCount: function(type) {
-	    return type.$typeArgumentCount || 0;
-    },
-
-    getGenericArguments: function(type) {
-	    return type.$typeArguments || null;
-    },
-
-    isGenericTypeDefinition: function (type) {
-        return type.$isGenericTypeDefinition || false;
-    },
-
-    getBaseType: function(type) {
-	    if (type === Object || type.$kind === "interface") {
-		    return null;
-	    }
-	    else if (Object.getPrototypeOf) {
-		    return Object.getPrototypeOf(type.prototype).constructor;
-	    }
-	    else {
-		    var p = type.prototype;
-		    if (Object.prototype.hasOwnProperty.call(p, "constructor")) {
-		        var ownValue;
-			    try {
-				    ownValue = p.constructor;
-				    delete p.constructor;
-				    return p.constructor;
-			    }
-			    finally {
-				    p.constructor = ownValue;
-			    }
-		    }
-		    return p.constructor;
-	    }
-    },
-
-    getTypeFullName: function(obj) {
-        var str;
-
-        if (obj.$$fullname) {
-            return obj.$$fullname;
-        }
-
-        if (obj.$$name) {
-            return obj.$$name;
-        }
-
-        if ((obj).constructor === Function) {
-            str = (obj).toString();
-        } else {
-            str = (obj).constructor.toString();
-        }
-
-        var results = (/function (.{1,})\(/).exec(str);
-
-        return (results && results.length > 1) ? results[1] : "Object";
-    },
-
-    _makeQName: function(name, asm) {
-	    return name + (asm ? ', ' + asm.name : '');
-    },
-
-    getTypeQName: function(type) {
-        return Bridge.Reflection._makeQName(Bridge.Reflection.getTypeFullName(type), type.$assembly);
-    },
-
-    getTypeName: function(type) {
-        var fullName = Bridge.Reflection.getTypeFullName(type);
-	    var bIndex = fullName.indexOf('[');
-	    var nsIndex = fullName.lastIndexOf('.', bIndex >= 0 ? bIndex : fullName.length);
-	    return nsIndex > 0 ? fullName.substr(nsIndex + 1) : fullName;
-    },
-
-    getTypeNamespace: function(type) {
-        var fullName = Bridge.Reflection.getTypeFullName(type);
-	    var bIndex = fullName.indexOf('[');
-	    var nsIndex = fullName.lastIndexOf('.', bIndex >= 0 ? bIndex : fullName.length);
-	    var ns = nsIndex > 0 ? fullName.substr(0, nsIndex) : '';
-
-	    if (type.$assembly) {
-	        var parentType = Bridge.Reflection._getAssemblyType(type.$assembly, ns);
-            if (parentType) {
-                ns = Bridge.Reflection.getTypeNamespace(parentType);
-            }
-        }
-
-        return ns;
-    },
-
-    getTypeAssembly: function(type) {
-	    if (System.Array.contains([Date, Number, Boolean, String, Function, Array], type)) {
-	        return Bridge.SystemAssembly;
-	    } else {
-	        return type.$assembly || Bridge.SystemAssembly;
-	    }
-    },
-
-    _getAssemblyType: function (asm, name) {
-        var noAsm = false;
         if (!asm) {
-            asm = Bridge.SystemAssembly;
-            noAsm = true;
+            asm = new System.Reflection.Assembly(assemblyName, res);
+        } else {
+            Bridge.apply(asm.res, res || {});
         }
 
-	    if (asm.$types) {
-	        var t = asm.$types[name] || null;
+        Bridge.$currentAssembly = asm;
 
-            if (t) {
-                return t;
+        if (callback) {
+            callback.call(Bridge.global, asm, Bridge.global);
+        }
+    };
+
+    Bridge.define("System.Reflection.Assembly", {
+        statics: {
+            assemblies: {}
+        },
+
+        constructor: function (name, res) {
+            this.$initialize();
+            this.name = name;
+            this.res = res || {};
+            this.$types = {}
+
+            System.Reflection.Assembly.assemblies[name] = this;
+        },
+
+        toString: function () {
+            return this.name;
+        },
+
+        getManifestResourceNames: function () {
+            return Object.keys(this.res);
+        },
+
+        getManifestResourceDataAsBase64: function (type, name) {
+            if (arguments.length === 1) {
+                name = type;
+                type = null;
             }
 
-            if (asm.name === "System") {
-                asm = Bridge.global;
+            if (type) {
+                name = Bridge.Reflection.getTypeNamespace(type) + "." + name;
+            }
+
+            return this.res[name] || null;
+        },
+
+        getManifestResourceData: function (type, name) {
+            if (arguments.length === 1) {
+                name = type;
+                type = null;
+            }
+
+            if (type) {
+                name = Bridge.Reflection.getTypeNamespace(type) + '.' + name;
+            }
+
+            var r = this.res[name];
+
+            return r ? System.Convert.fromBase64String(r) : null;
+        },
+
+        getCustomAttributes: function (attributeType) {
+            if (attributeType && !Bridge.isBoolean(attributeType)) {
+                return this.attr.filter(function (a) {
+                    return Bridge.is(a, attributeType);
+                });
+            }
+
+            return this.attr;
+        }
+    });
+
+    Bridge.$currentAssembly = new System.Reflection.Assembly("System");
+    Bridge.SystemAssembly = Bridge.$currentAssembly;
+    Bridge.SystemAssembly.$types["System.Reflection.Assembly"] = System.Reflection.Assembly;
+    System.Reflection.Assembly.$assembly = Bridge.SystemAssembly;
+
+    Bridge.Reflection = {
+        setMetadata: function (type, metadata) {
+            type.$metadata = metadata;
+        },
+
+        initMetaData: function (type, metadata) {
+            if (metadata.members) {
+                for (var i = 0; i < metadata.members.length; i++) {
+                    var m = metadata.members[i];
+
+                    m.typeDef = type;
+
+                    if (m.adder) {
+                        m.adder.typeDef = type;
+                    }
+
+                    if (m.remover) {
+                        m.remover.typeDef = type;
+                    }
+
+                    if (m.getter) {
+                        m.getter.typeDef = type;
+                    }
+
+                    if (m.setter) {
+                        m.setter.typeDef = type;
+                    }
+                }
+            }
+
+            type.$metadata = metadata;
+            type.$initMetaData = true;
+        },
+
+        getMetadata: function () {
+            if (!this.$metadata && this.$genericTypeDefinition) {
+                this.$metadata = this.$genericTypeDefinition.$factoryMetadata || this.$genericTypeDefinition.$metadata;
+            }
+
+            var metadata = this.$metadata;
+
+            if (typeof (metadata) === "function") {
+                if (this.$isGenericTypeDefinition) {
+                    var i,
+                        size = this.$typeArgumentCount,
+                        arr = new Array(size);
+
+                    for (i = 0; i < size; i++) {
+                        arr[i] = Object;
+                    }
+
+                    this.$factoryMetadata = this.$metadata;
+                    metadata = this.$metadata.apply(null, arr);
+                } else if (this.$typeArguments) {
+                    metadata = this.$metadata.apply(null, this.$typeArguments);
+                } else {
+                    metadata = this.$metadata();
+                }
+            }
+
+            if (!this.$initMetaData && metadata) {
+                Bridge.Reflection.initMetaData(this, metadata);
+            }
+
+            return metadata;
+        },
+
+        load: function (name) {
+            return System.Reflection.Assembly.assemblies[name] || require(name);
+        },
+
+        getGenericTypeDefinition: function (type) {
+            return type.$genericTypeDefinition || null;
+        },
+
+        getGenericParameterCount: function (type) {
+            return type.$typeArgumentCount || 0;
+        },
+
+        getGenericArguments: function (type) {
+            return type.$typeArguments || null;
+        },
+
+        isGenericTypeDefinition: function (type) {
+            return type.$isGenericTypeDefinition || false;
+        },
+
+        getBaseType: function (type) {
+            if (type === Object || type.$kind === "interface") {
+                return null;
+            } else if (Object.getPrototypeOf) {
+                return Object.getPrototypeOf(type.prototype).constructor;
             } else {
+                var p = type.prototype;
+
+                if (Object.prototype.hasOwnProperty.call(p, "constructor")) {
+                    var ownValue;
+
+                    try {
+                        ownValue = p.constructor;
+                        delete p.constructor;
+                        return p.constructor;
+                    }
+                    finally {
+                        p.constructor = ownValue;
+                    }
+                }
+
+                return p.constructor;
+            }
+        },
+
+        getTypeFullName: function (obj) {
+            var str;
+
+            if (obj.$$fullname) {
+                return obj.$$fullname;
+            }
+
+            if (obj.$$name) {
+                return obj.$$name;
+            }
+
+            if ((obj).constructor === Function) {
+                str = (obj).toString();
+            } else {
+                str = (obj).constructor.toString();
+            }
+
+            var results = (/function (.{1,})\(/).exec(str);
+
+            return (results && results.length > 1) ? results[1] : "Object";
+        },
+
+        _makeQName: function (name, asm) {
+            return name + (asm ? ', ' + asm.name : '');
+        },
+
+        getTypeQName: function (type) {
+            return Bridge.Reflection._makeQName(Bridge.Reflection.getTypeFullName(type), type.$assembly);
+        },
+
+        getTypeName: function (type) {
+            var fullName = Bridge.Reflection.getTypeFullName(type);
+            var bIndex = fullName.indexOf('[');
+            var nsIndex = fullName.lastIndexOf('.', bIndex >= 0 ? bIndex : fullName.length);
+
+            return nsIndex > 0 ? fullName.substr(nsIndex + 1) : fullName;
+        },
+
+        getTypeNamespace: function (type) {
+            var fullName = Bridge.Reflection.getTypeFullName(type);
+            var bIndex = fullName.indexOf('[');
+            var nsIndex = fullName.lastIndexOf('.', bIndex >= 0 ? bIndex : fullName.length);
+            var ns = nsIndex > 0 ? fullName.substr(0, nsIndex) : '';
+
+            if (type.$assembly) {
+                var parentType = Bridge.Reflection._getAssemblyType(type.$assembly, ns);
+
+                if (parentType) {
+                    ns = Bridge.Reflection.getTypeNamespace(parentType);
+                }
+            }
+
+            return ns;
+        },
+
+        getTypeAssembly: function (type) {
+            if (System.Array.contains([Date, Number, Boolean, String, Function, Array], type)) {
+                return Bridge.SystemAssembly;
+            } else {
+                return type.$assembly || Bridge.SystemAssembly;
+            }
+        },
+
+        _getAssemblyType: function (asm, name) {
+            var noAsm = false;
+
+            if (!asm) {
+                asm = Bridge.SystemAssembly;
+                noAsm = true;
+            }
+
+            if (asm.$types) {
+                var t = asm.$types[name] || null;
+
+                if (t) {
+                    return t;
+                }
+
+                if (asm.name === "System") {
+                    asm = Bridge.global;
+                } else {
+                    return null;
+                }
+            }
+
+            var a = name.split('.'),
+                scope = asm;
+
+            for (var i = 0; i < a.length; i++) {
+                scope = scope[a[i]];
+
+                if (!scope) {
+                    return null;
+                }
+            }
+
+            if (typeof scope !== 'function' || !noAsm && scope.$assembly && asm.name !== scope.$assembly.name) {
                 return null;
             }
-	    }
-	    
-        var a = name.split('.'),
-            scope = asm;
-        
-	    for (var i = 0; i < a.length; i++) {
-	        scope = scope[a[i]];
-	        if (!scope) {
-	            return null;
-	        }
-	    }
-	    if (typeof scope !== 'function' || !noAsm && scope.$assembly && asm.name !== scope.$assembly.name) {
-	        return null;
-	    }
 
-	    return scope;
-    },
+            return scope;
+        },
 
-    getAssemblyTypes: function(asm) {
-	    var result = [];
-	    if (asm.$types) {
-		    for (var t in asm.$types) {
-			    if (asm.$types.hasOwnProperty(t))
-				    result.push(asm.$types[t]);
-		    }
-	    }
-	    else {
-		    var traverse = function(s, n) {
-			    for (var c in s) {
-				    if (s.hasOwnProperty(c)) {
-				        traverse(s[c], c);
-				    }
-			    }
-			    if (typeof(s) === 'function' && Bridge.isUpper(n.charCodeAt(0))) {
-			        result.push(s);
-			    }
-		    };
-		    traverse(asm, '');
-	    }
-	    return result;
-    },
+        getAssemblyTypes: function (asm) {
+            var result = [];
 
-    createAssemblyInstance: function(asm, typeName) {
-	    var t = Bridge.Reflection.getType(typeName, asm);
-	    return t ? Bridge.createInstance(t) : null;
-    },
+            if (asm.$types) {
+                for (var t in asm.$types) {
+                    if (asm.$types.hasOwnProperty(t)) {
+                        result.push(asm.$types[t]);
+                    }
+                }
+            } else {
+                var traverse = function (s, n) {
+                    for (var c in s) {
+                        if (s.hasOwnProperty(c)) {
+                            traverse(s[c], c);
+                        }
+                    }
 
-    getInterfaces: function(type) {
-	    if (type.$interfaces || type.$baseInterfaces) {
-	        return (type.$interfaces || []).concat(type.$baseInterfaces || []);
-	    }
-	    else if (type === Date) {
-	        return [ System.IComparable$1(Date), System.IEquatable$1(Date), System.IComparable, System.IFormattable ];
-	    }
-	    else if (type === Number) {
-	        return [ System.IComparable$1(Bridge.Int), System.IEquatable$1(Bridge.Int), System.IComparable, System.IFormattable ];
-	    }
-	    else if (type === Boolean) {
-	        return [ System.IComparable$1(Boolean), System.IEquatable$1(Boolean), System.IComparable ];
-	    }
-	    else if (type === String) {
-	        return [ System.IComparable$1(String), System.IEquatable$1(String), System.IComparable, System.ICloneable, System.Collections.IEnumerable, System.Collections.Generic.IEnumerable$1(System.Char) ];
-	    }
-	    else if (type === Array || System.Array._typedArrays[Bridge.getTypeName(type)]) {
-	        return [System.Collections.IEnumerable, System.Collections.ICollection, System.ICloneable, System.Collections.Generic.IEnumerable$1(Object), System.Collections.Generic.ICollection$1(Object), System.Collections.Generic.IList$1(Object)];
-	    } else {
-	        return [];
-	    }
-    },
+                    if (typeof (s) === 'function' && Bridge.isUpper(n.charCodeAt(0))) {
+                        result.push(s);
+                    }
+                };
 
-    isInstanceOfType: function(instance, type) {
-        return Bridge.is(instance, type);
-    },
+                traverse(asm, '');
+            }
 
-    /*isAssignableFrom: function(target, type) {
-	    return target === type || (typeof(target.isAssignableFrom) === 'function' && target.isAssignableFrom(type)) || type.prototype instanceof target;
-    },*/
+            return result;
+        },
 
-    isAssignableFrom: function (baseType, type) {
-        if (baseType == null) {
-            throw new System.NullReferenceException();
-        }
+        createAssemblyInstance: function (asm, typeName) {
+            var t = Bridge.Reflection.getType(typeName, asm);
 
-        if (type == null) {
-            return false;
-        }
+            return t ? Bridge.createInstance(t) : null;
+        },
 
-        if (baseType === type || baseType === Object) {
-            return true;
-        }
+        getInterfaces: function (type) {
+            if (type.$interfaces || type.$baseInterfaces) {
+                return (type.$interfaces || []).concat(type.$baseInterfaces || []);
+            } else if (type === Date) {
+                return [System.IComparable$1(Date), System.IEquatable$1(Date), System.IComparable, System.IFormattable];
+            } else if (type === Number) {
+                return [System.IComparable$1(Bridge.Int), System.IEquatable$1(Bridge.Int), System.IComparable, System.IFormattable];
+            } else if (type === Boolean) {
+                return [System.IComparable$1(Boolean), System.IEquatable$1(Boolean), System.IComparable];
+            } else if (type === String) {
+                return [System.IComparable$1(String), System.IEquatable$1(String), System.IComparable, System.ICloneable, System.Collections.IEnumerable, System.Collections.Generic.IEnumerable$1(System.Char)];
+            } else if (type === Array || System.Array._typedArrays[Bridge.getTypeName(type)]) {
+                return [System.Collections.IEnumerable, System.Collections.ICollection, System.ICloneable, System.Collections.Generic.IEnumerable$1(Object), System.Collections.Generic.ICollection$1(Object), System.Collections.Generic.IList$1(Object)];
+            } else {
+                return [];
+            }
+        },
 
-        if (Bridge.isFunction(baseType.isAssignableFrom)) {
-            return baseType.isAssignableFrom(type);
-        }
+        isInstanceOfType: function (instance, type) {
+            return Bridge.is(instance, type);
+        },
 
-        var inheritors = type.$$inherits,
-            i,
-            r;
+        /*isAssignableFrom: function(target, type) {
+            return target === type || (typeof(target.isAssignableFrom) === 'function' && target.isAssignableFrom(type)) || type.prototype instanceof target;
+        },*/
 
-        if (inheritors) {
-            for (i = 0; i < inheritors.length; i++) {
-                r = Bridge.Reflection.isAssignableFrom(baseType, inheritors[i]);
+        isAssignableFrom: function (baseType, type) {
+            if (baseType == null) {
+                throw new System.NullReferenceException();
+            }
 
-                if (r) {
-                    return true;
+            if (type == null) {
+                return false;
+            }
+
+            if (baseType === type || baseType === Object) {
+                return true;
+            }
+
+            if (Bridge.isFunction(baseType.isAssignableFrom)) {
+                return baseType.isAssignableFrom(type);
+            }
+
+            var inheritors = type.$$inherits,
+                i,
+                r;
+
+            if (inheritors) {
+                for (i = 0; i < inheritors.length; i++) {
+                    r = Bridge.Reflection.isAssignableFrom(baseType, inheritors[i]);
+
+                    if (r) {
+                        return true;
+                    }
                 }
             }
-        }
 
-        return false;
-    },
+            return false;
+        },
 
-    isClass: function(type) {
-	    return (type.$kind === "class" || type === Array || type === Function || type === RegExp || type === String || type === Error || type === Object);
-    },
+        isClass: function (type) {
+            return (type.$kind === "class" || type === Array || type === Function || type === RegExp || type === String || type === Error || type === Object);
+        },
 
-    isEnum: function (type) {
-        return type.$kind === "enum";
-    },
+        isEnum: function (type) {
+            return type.$kind === "enum";
+        },
 
-    isFlags: function (type) {
-        return !!(type.prototype && type.prototype.$flags);
-    },
+        isFlags: function (type) {
+            return !!(type.prototype && type.prototype.$flags);
+        },
 
-    isInterface: function(type) {
-        return type.$kind === "interface";
-    },
+        isInterface: function (type) {
+            return type.$kind === "interface";
+        },
 
-    _getType: function (typeName, asm, re) {
-	    var outer = !re;
-	    re = re || /[[,\]]/g;
-	    var last = re.lastIndex, 
-            m = re.exec(typeName), 
-            tname, 
-            targs = [],
-            t;
-	    if (m) {
-		    tname = typeName.substring(last, m.index);
-		    switch (m[0]) {
-			    case '[':
-				    if (typeName[m.index + 1] !== '[') {
-				        return null;
-				    }
-				    for (;;) {
-					    re.exec(typeName);
-					    t = Bridge.Reflection._getType(typeName, Bridge.SystemAssembly, re);
-					    if (!t) {
-					        return null;
-					    }
-					    targs.push(t);
-					    m = re.exec(typeName);
-				        if (m[0] === ']') {
-				            break;
-				        } else if (m[0] !== ',') {
-				            return null;
-				        }
-				    }
-				    m = re.exec(typeName);
-				    if (m && m[0] === ',') {
-					    re.exec(typeName);
-					    if (!(asm = System.Reflection.Assembly.assemblies[(re.lastIndex > 0 ? typeName.substring(m.index + 1, re.lastIndex - 1) : typeName.substring(m.index + 1)).trim()]))
-						    return null;
-				    }
-				    break;
+        _getType: function (typeName, asm, re) {
+            var outer = !re;
 
-			    case ']':
-				    break;
+            re = re || /[[,\]]/g;
 
-			    case ',':
-				    re.exec(typeName);
-				    if (!(asm = System.Reflection.Assembly.assemblies[(re.lastIndex > 0 ? typeName.substring(m.index + 1, re.lastIndex - 1) : typeName.substring(m.index + 1)).trim()]))
-					    return null;
-				    break;
-		    }
-	    }
-	    else {
-		    tname = typeName.substring(last);
-	    }
+            var last = re.lastIndex,
+                m = re.exec(typeName),
+                tname,
+                targs = [],
+                t;
 
-	    if (outer && re.lastIndex)
-		    return null;
+            if (m) {
+                tname = typeName.substring(last, m.index);
 
-	    t = Bridge.Reflection._getAssemblyType(asm, tname.trim());
-	    return targs.length ? t.apply(null, targs) : t;
-    },
+                switch (m[0]) {
+                    case '[':
+                        if (typeName[m.index + 1] !== '[') {
+                            return null;
+                        }
 
-    getType: function(typeName, asm) {
-        return typeName ? Bridge.Reflection._getType(typeName, asm) : null;
-    },
+                        for (; ;) {
+                            re.exec(typeName);
+                            t = Bridge.Reflection._getType(typeName, Bridge.SystemAssembly, re);
 
-    applyConstructor: function(constructor, args) {
-	    var f = function() {
-		    constructor.apply(this, args);
-	    };
-	    f.prototype = constructor.prototype;
-	    return new f();
-    },
+                            if (!t) {
+                                return null;
+                            }
 
-    getAttributes: function(type, attrType, inherit) {
-        var result = [],
-            i, t, a, md, type_md;
-	    if (inherit) {
-		    var b = Bridge.Reflection.getBaseType(type);
-		    if (b) {
-		        a = Bridge.Reflection.getAttributes(b, attrType, true);
-			    for (i = 0; i < a.length; i++) {
-			        t = Bridge.getType(a[i]);
-			        md = Bridge.getMetadata(t);
-				    if (!md || !md.attrNoInherit) {
-				        result.push(a[i]);
-				    }
-			    }
-		    }
-	    }
+                            targs.push(t);
+                            m = re.exec(typeName);
 
-	    type_md = Bridge.getMetadata(type);
-	    if (type_md && type_md.attr) {
-	        for (i = 0; i < type_md.attr.length; i++) {
-	            a = type_md.attr[i];
-			    if (attrType == null || Bridge.Reflection.isInstanceOfType(a, attrType)) {
-			        t = Bridge.getType(a);
-			        md = Bridge.getMetadata(t);
-			        if (!md || !md.attrAllowMultiple) {
-					    for (var j = result.length - 1; j >= 0; j--) {
-						    if (Bridge.Reflection.isInstanceOfType(result[j], t)) {
-						        result.splice(j, 1);
-						    }
-					    }
-				    }
-				    result.push(a);
-			    }
-		    }
-	    }
-	    return result;
-    },
+                            if (m[0] === ']') {
+                                break;
+                            } else if (m[0] !== ',') {
+                                return null;
+                            }
+                        }
 
-    getMembers: function(type, memberTypes, bindingAttr, name, params) {
-	    var result = [];
-	    if ((bindingAttr & 72) === 72 || (bindingAttr & 6) === 4) {
-	        var b = Bridge.Reflection.getBaseType(type);
-	        if (b) {
-	            result = Bridge.Reflection.getMembers(b, memberTypes & ~1, bindingAttr & (bindingAttr & 64 ? 255 : 247) & (bindingAttr & 2 ? 251 : 255), name, params);
-	        }
-	    }
+                        m = re.exec(typeName);
 
-	    var f = function(m) {
-		    if ((memberTypes & m.type) && (((bindingAttr & 4) && !m.isStatic) || ((bindingAttr & 8) && m.isStatic)) && (!name || m.name === name)) {
-			    if (params) {
-			        if ((m.params || []).length !== params.length) {
-			            return;
-			        }
-			        for (var i = 0; i < params.length; i++) {
-			            if (params[i] !== m.params[i]) {
-			                return;
-			            }
-			        }
-			    }
-			    result.push(m);
-		    }
-	    };
+                        if (m && m[0] === ',') {
+                            re.exec(typeName);
 
-	    var type_md = Bridge.getMetadata(type);
-	    if (type_md && type_md.members) {
-	        var mNames = ['getter', 'setter', 'adder', 'remover'];
-	        for (var i = 0; i < type_md.members.length; i++) {
-	            var m = type_md.members[i];
-			    f(m);
-			    for (var j = 0; j < 4; j++) {
-			        var a = mNames[j];
-				    if (m[a]) {
-				        f(m[a]);
-				    }
-			    }
-		    }
-	    }
+                            if (!(asm = System.Reflection.Assembly.assemblies[(re.lastIndex > 0 ? typeName.substring(m.index + 1, re.lastIndex - 1) : typeName.substring(m.index + 1)).trim()])) {
+                                return null;
+                            }
+                        }
+                        break;
 
-	    if (bindingAttr & 256) {
-		    while (type) {
-			    var r = [];
-			    for (var i = 0; i < result.length; i++) {
-			        if (result[i].typeDef === type) {
-			            r.push(result[i]);
-			        }
-			    }
-		        if (r.length > 1) {
-		            throw new System.Reflection.AmbiguousMatchException('Ambiguous match');
-		        } else if (r.length === 1) {
-		            return r[0];
-		        }
-		        type = Bridge.Reflection.getBaseType(type);
-		    }
-		    return null;
-	    }
+                    case ']':
+                        break;
 
-	    return result;
-    },
+                    case ',':
+                        re.exec(typeName);
 
-    midel: function(mi, target, typeArguments) {
-        if (mi.isStatic && !!target) {
-            throw new System.ArgumentException('Cannot specify target for static method');
-        } else if (!mi.isStatic && !target)
-            throw new System.ArgumentException('Must specify target for instance method');
+                        if (!(asm = System.Reflection.Assembly.assemblies[(re.lastIndex > 0 ? typeName.substring(m.index + 1, re.lastIndex - 1) : typeName.substring(m.index + 1)).trim()])) {
+                            return null;
+                        }
 
-        var method;
-	    if (mi.fget) {
-		    method = function() { return (mi.isStatic ? mi.typeDef : this)[mi.fget]; };
-	    }
-	    else if (mi.fset) {
-		    method = function(v) { (mi.isStatic ? mi.typeDef : this)[mi.fset] = v; };
-	    }
-	    else {
-		    method = mi.def || (mi.isStatic || mi.sm ? mi.typeDef[mi.sname] : target[mi.sname]);
-
-		    if (mi.tpcount) {
-		        if (!typeArguments || typeArguments.length !== mi.tpcount) {
-		            throw new System.ArgumentException('Wrong number of type arguments');
-		        }
-
-		        var gMethod = method;
-                method = function() {
-                    return gMethod.apply(this, typeArguments.concat(Array.prototype.slice.call(arguments)));
+                        break;
                 }
-		    }
-		    else {
-		        if (typeArguments && typeArguments.length) {
-		            throw new System.ArgumentException('Cannot specify type arguments for non-generic method');
-		        }
-		    }
-		    if (mi.exp) {
-			    var _m1 = method;
-			    method = function () { return _m1.apply(this, Array.prototype.slice.call(arguments, 0, arguments.length - 1).concat(arguments[arguments.length - 1])); };
-		    }
-		    if (mi.sm) {
-			    var _m2 = method;
-			    method = function() { return _m2.apply(null, [this].concat(Array.prototype.slice.call(arguments))); };
-		    }
-	    }
-	    return Bridge.fn.bind(target, method);
-    },
+            } else {
+                tname = typeName.substring(last);
+            }
 
-    invokeCI: function(ci, args) {
-        if (ci.exp) {
-            args = args.slice(0, args.length - 1).concat(args[args.length - 1]);
+            if (outer && re.lastIndex) {
+                return null;
+            }
+
+            t = Bridge.Reflection._getAssemblyType(asm, tname.trim());
+
+            return targs.length ? t.apply(null, targs) : t;
+        },
+
+        getType: function (typeName, asm) {
+            return typeName ? Bridge.Reflection._getType(typeName, asm) : null;
+        },
+
+        applyConstructor: function (constructor, args) {
+            var f = function () {
+                constructor.apply(this, args);
+            };
+
+            f.prototype = constructor.prototype;
+
+            return new f();
+        },
+
+        getAttributes: function (type, attrType, inherit) {
+            var result = [],
+                i, t, a, md, type_md;
+
+            if (inherit) {
+                var b = Bridge.Reflection.getBaseType(type);
+
+                if (b) {
+                    a = Bridge.Reflection.getAttributes(b, attrType, true);
+
+                    for (i = 0; i < a.length; i++) {
+                        t = Bridge.getType(a[i]);
+                        md = Bridge.getMetadata(t);
+
+                        if (!md || !md.attrNoInherit) {
+                            result.push(a[i]);
+                        }
+                    }
+                }
+            }
+
+            type_md = Bridge.getMetadata(type);
+
+            if (type_md && type_md.attr) {
+                for (i = 0; i < type_md.attr.length; i++) {
+                    a = type_md.attr[i];
+
+                    if (attrType == null || Bridge.Reflection.isInstanceOfType(a, attrType)) {
+                        t = Bridge.getType(a);
+                        md = Bridge.getMetadata(t);
+
+                        if (!md || !md.attrAllowMultiple) {
+                            for (var j = result.length - 1; j >= 0; j--) {
+                                if (Bridge.Reflection.isInstanceOfType(result[j], t)) {
+                                    result.splice(j, 1);
+                                }
+                            }
+                        }
+
+                        result.push(a);
+                    }
+                }
+            }
+
+            return result;
+        },
+
+        getMembers: function (type, memberTypes, bindingAttr, name, params) {
+            var result = [];
+
+            if ((bindingAttr & 72) === 72 || (bindingAttr & 6) === 4) {
+                var b = Bridge.Reflection.getBaseType(type);
+
+                if (b) {
+                    result = Bridge.Reflection.getMembers(b, memberTypes & ~1, bindingAttr & (bindingAttr & 64 ? 255 : 247) & (bindingAttr & 2 ? 251 : 255), name, params);
+                }
+            }
+
+            var f = function (m) {
+                if ((memberTypes & m.type) && (((bindingAttr & 4) && !m.isStatic) || ((bindingAttr & 8) && m.isStatic)) && (!name || m.name === name)) {
+                    if (params) {
+                        if ((m.params || []).length !== params.length) {
+                            return;
+                        }
+
+                        for (var i = 0; i < params.length; i++) {
+                            if (params[i] !== m.params[i]) {
+                                return;
+                            }
+                        }
+                    }
+                    result.push(m);
+                }
+            };
+
+            var type_md = Bridge.getMetadata(type);
+
+            if (type_md && type_md.members) {
+                var mNames = ['getter', 'setter', 'adder', 'remover'];
+
+                for (var i = 0; i < type_md.members.length; i++) {
+                    var m = type_md.members[i];
+
+                    f(m);
+
+                    for (var j = 0; j < 4; j++) {
+                        var a = mNames[j];
+
+                        if (m[a]) {
+                            f(m[a]);
+                        }
+                    }
+                }
+            }
+
+            if (bindingAttr & 256) {
+                while (type) {
+                    var r = [];
+
+                    for (var i = 0; i < result.length; i++) {
+                        if (result[i].typeDef === type) {
+                            r.push(result[i]);
+                        }
+                    }
+
+                    if (r.length > 1) {
+                        throw new System.Reflection.AmbiguousMatchException('Ambiguous match');
+                    } else if (r.length === 1) {
+                        return r[0];
+                    }
+
+                    type = Bridge.Reflection.getBaseType(type);
+                }
+
+                return null;
+            }
+
+            return result;
+        },
+
+        midel: function (mi, target, typeArguments) {
+            if (mi.isStatic && !!target) {
+                throw new System.ArgumentException('Cannot specify target for static method');
+            } else if (!mi.isStatic && !target)
+                throw new System.ArgumentException('Must specify target for instance method');
+
+            var method;
+
+            if (mi.fget) {
+                method = function () { return (mi.isStatic ? mi.typeDef : this)[mi.fget]; };
+            } else if (mi.fset) {
+                method = function (v) { (mi.isStatic ? mi.typeDef : this)[mi.fset] = v; };
+            } else {
+                method = mi.def || (mi.isStatic || mi.sm ? mi.typeDef[mi.sname] : target[mi.sname]);
+
+                if (mi.tpcount) {
+                    if (!typeArguments || typeArguments.length !== mi.tpcount) {
+                        throw new System.ArgumentException('Wrong number of type arguments');
+                    }
+
+                    var gMethod = method;
+
+                    method = function () {
+                        return gMethod.apply(this, typeArguments.concat(Array.prototype.slice.call(arguments)));
+                    }
+                } else {
+                    if (typeArguments && typeArguments.length) {
+                        throw new System.ArgumentException('Cannot specify type arguments for non-generic method');
+                    }
+                }
+
+                if (mi.exp) {
+                    var _m1 = method;
+
+                    method = function () { return _m1.apply(this, Array.prototype.slice.call(arguments, 0, arguments.length - 1).concat(arguments[arguments.length - 1])); };
+                }
+
+                if (mi.sm) {
+                    var _m2 = method;
+
+                    method = function () { return _m2.apply(null, [this].concat(Array.prototype.slice.call(arguments))); };
+                }
+            }
+
+            return Bridge.fn.bind(target, method);
+        },
+
+        invokeCI: function (ci, args) {
+            if (ci.exp) {
+                args = args.slice(0, args.length - 1).concat(args[args.length - 1]);
+            }
+
+            if (ci.def) {
+                return ci.def.apply(null, args);
+            } else if (ci.sm) {
+                return ci.typeDef[ci.sname].apply(null, args);
+            } else {
+                return Bridge.Reflection.applyConstructor(ci.sname ? ci.typeDef[ci.sname] : ci.typeDef, args);
+            }
+        },
+
+        fieldAccess: function (fi, obj) {
+            if (fi.isStatic && !!obj) {
+                throw new System.ArgumentException('Cannot specify target for static field');
+            } else if (!fi.isStatic && !obj) {
+                throw new System.ArgumentException('Must specify target for instance field');
+            }
+
+            obj = fi.isStatic ? fi.typeDef : obj;
+
+            if (arguments.length === 3) {
+                obj[fi.sname] = arguments[2];
+            } else {
+                return obj[fi.sname];
+            }
         }
+    };
 
-        if (ci.def) {
-            return ci.def.apply(null, args);
-        } else if (ci.sm) {
-            return ci.typeDef[ci.sname].apply(null, args);
-        } else {
-            return Bridge.Reflection.applyConstructor(ci.sname ? ci.typeDef[ci.sname] : ci.typeDef, args);
+    Bridge.setMetadata = Bridge.Reflection.setMetadata;
+
+    System.Reflection.ConstructorInfo = {
+        $is: function (obj) {
+            return obj != null && obj.type === 1;
         }
-    },
+    };
 
-    fieldAccess: function(fi, obj) {
-        if (fi.isStatic && !!obj) {
-            throw new System.ArgumentException('Cannot specify target for static field');
-        } else if (!fi.isStatic && !obj) {
-            throw new System.ArgumentException('Must specify target for instance field');
+    System.Reflection.EventInfo = {
+        $is: function (obj) {
+            return obj != null && obj.type === 2;
         }
-        obj = fi.isStatic ? fi.typeDef : obj;
-        if (arguments.length === 3) {
-            obj[fi.sname] = arguments[2];
-        } else {
-            return obj[fi.sname];
+    };
+
+    System.Reflection.FieldInfo = {
+        $is: function (obj) {
+            return obj != null && obj.type === 4;
         }
-    }
-};
+    };
 
-Bridge.setMetadata = Bridge.Reflection.setMetadata;
+    System.Reflection.MethodBase = {
+        $is: function (obj) {
+            return obj != null && (obj.type === 1 || obj.type === 8);
+        }
+    };
 
-System.Reflection.ConstructorInfo = {
-    $is: function(obj) {
-        return obj != null && obj.type === 1;
-    }
-};
+    System.Reflection.MethodInfo = {
+        $is: function (obj) {
+            return obj != null && obj.type === 8;
+        }
+    };
 
-System.Reflection.EventInfo = {
-    $is: function (obj) {
-        return obj != null && obj.type === 2;
-    }
-};
+    System.Reflection.PropertyInfo = {
+        $is: function (obj) {
+            return obj != null && obj.type === 16;
+        }
+    };
 
-System.Reflection.FieldInfo = {
-    $is: function (obj) {
-        return obj != null && obj.type === 4;
-    }
-};
-
-System.Reflection.MethodBase = {
-    $is: function (obj) {
-        return obj != null && (obj.type === 1 || obj.type === 8);
-    }
-};
-
-System.Reflection.MethodInfo = {
-    $is: function (obj) {
-        return obj != null && obj.type === 8;
-    }
-};
-
-System.Reflection.PropertyInfo = {
-    $is: function (obj) {
-        return obj != null && obj.type === 16;
-    }
-};
-
-System.AppDomain = {
-    getAssemblies: function() {
-        return Object.keys(System.Reflection.Assembly.assemblies).map(function (n) { return System.Reflection.Assembly.assemblies[n]; });
-    }
-};
+    System.AppDomain = {
+        getAssemblies: function () {
+            return Object.keys(System.Reflection.Assembly.assemblies).map(function (n) { return System.Reflection.Assembly.assemblies[n]; });
+        }
+    };
     // @source Interfaces.js
 
     Bridge.define("System.IFormattable", {
@@ -16536,7 +16607,8 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
             System.Text.RegularExpressions.RegexOptions.IgnoreCase |
             System.Text.RegularExpressions.RegexOptions.Multiline |
             System.Text.RegularExpressions.RegexOptions.Singleline |
-            System.Text.RegularExpressions.RegexOptions.IgnorePatternWhitespace;
+            System.Text.RegularExpressions.RegexOptions.IgnorePatternWhitespace |
+            System.Text.RegularExpressions.RegexOptions.ExplicitCapture;
 
         if ((options | supportedOptions) !== supportedOptions) {
             throw new System.NotSupportedException("Specified Regex options are not supported.");
@@ -16551,21 +16623,10 @@ Bridge.define("System.Text.RegularExpressions.Regex", {
 
         //TODO: cache
         var patternInfo = this._runner.parsePattern();
-        var slotNames = patternInfo.sparseSettings.sparseSlotNames;
 
-        this._capsize = slotNames.length;
-        this._capslist = [];
-        this._capnames = {};
-
-        var i;
-        var groupName;
-
-        // Add group without names first (their names are indexes)
-        for (i = 0; i < slotNames.length; i++) {
-            groupName = slotNames[i];
-            this._capslist.push(groupName);
-            this._capnames[groupName] = i;
-        }
+        this._capnames = patternInfo.sparseSettings.sparseSlotNameMap;
+        this._capslist = patternInfo.sparseSettings.sparseSlotNameMap.keys;
+        this._capsize = this._capslist.length;
     },
 
     getMatchTimeout: function () {
@@ -17349,7 +17410,6 @@ Bridge.define("System.Text.RegularExpressions.Match", {
     _textbeg: 0,
     _textend: 0,
     _textstart: 0,
-    _balancing: false,
     _groupColl: null,
     _textpos: 0,
 
@@ -17377,7 +17437,6 @@ Bridge.define("System.Text.RegularExpressions.Match", {
         this._textbeg = begpos;
         this._textend = begpos + len;
         this._textstart = startpos;
-        this._balancing = false;
     },
 
     getGroups: function () {
@@ -17445,51 +17504,6 @@ Bridge.define("System.Text.RegularExpressions.Match", {
         this._length = interval[1];
         this._textpos = textpos;
         this._capcount = this._matchcount[0];
-
-        if (this._balancing) {
-
-            //TODO: balancing
-
-            // The idea here is that we want to compact all of our unbalanced captures.  To do that we
-            // use j basically as a count of how many unbalanced captures we have at any given time 
-            // (really j is an index, but j/2 is the count).  First we skip past all of the real captures
-            // until we find a balance captures.  Then we check each subsequent entry.  If it's a balance
-            // capture (it's negative), we decrement j.  If it's a real capture, we increment j and copy 
-            // it down to the last free position. 
-            var cap;
-            var i;
-            var j;
-
-            for (cap = 0; cap < this._matchcount.length; cap++) {
-
-                var limit = this._matchcount[cap] * 2;
-                var matcharray = this._matches[cap];
-
-                for (i = 0; i < limit; i++) {
-                    if (matcharray[i] < 0) {
-                        break;
-                    }
-                }
-
-                for (j = i; i < limit; i++) {
-                    if (matcharray[i] < 0) {
-                        // skip negative values
-                        j--;
-                    } else {
-                        // but if we find something positive (an actual capture), copy it back to the last 
-                        // unbalanced position. 
-                        if (i !== j) {
-                            matcharray[j] = matcharray[i];
-                        }
-                        j++;
-                    }
-                }
-
-                this._matchcount[cap] = j / 2;
-            }
-
-            this._balancing = false;
-        }
     },
 
     _groupToStringImpl: function (groupnum) {
@@ -17765,10 +17779,11 @@ Bridge.define("System.Text.RegularExpressions.RegexRunner", {
         var isMultiline = (options & optionsEnum.Multiline) === optionsEnum.Multiline;
         var isSingleline = (options & optionsEnum.Singleline) === optionsEnum.Singleline;
         var isIgnoreWhitespace = (options & optionsEnum.IgnorePatternWhitespace) === optionsEnum.IgnorePatternWhitespace;
+        var isExplicitCapture = (options & optionsEnum.ExplicitCapture) === optionsEnum.ExplicitCapture;
 
         var timeoutMs = regex._matchTimeout.getTotalMilliseconds();
 
-        this._netEngine = new System.Text.RegularExpressions.RegexNetEngine(regex._pattern, isCaseInsensitive, isMultiline, isSingleline, isIgnoreWhitespace, timeoutMs);
+        this._netEngine = new System.Text.RegularExpressions.RegexEngine(regex._pattern, isCaseInsensitive, isMultiline, isSingleline, isIgnoreWhitespace, isExplicitCapture, timeoutMs);
 
     },
 
@@ -17787,7 +17802,6 @@ Bridge.define("System.Text.RegularExpressions.RegexRunner", {
         this._runtextstart = startat;
         this._quick = quick;
         this._prevlen = prevlen;
-        //TODO: internalMatchTimeout
 
         var stoppos;
         var bump;
@@ -17809,7 +17823,7 @@ Bridge.define("System.Text.RegularExpressions.RegexRunner", {
         }
 
         // Execute Regex:
-        var jsMatch = this._netEngine.match(this._runtext, this._runtextstart, this._prevlen);
+        var jsMatch = this._netEngine.match(this._runtext, this._runtextstart);
 
         // Convert the results:
         var result = this._convertNetEngineResults(jsMatch);
@@ -17822,8 +17836,6 @@ Bridge.define("System.Text.RegularExpressions.RegexRunner", {
     },
 
     _convertNetEngineResults: function (jsMatch) {
-        //TODO: var stopPos = this._runregex.getRightToLeft() ? this._runtextbeg : this._runtextend;
-
         if (jsMatch.success && this._quick) {
             return null; // in quick mode, a successful match returns null
         }
@@ -17836,7 +17848,7 @@ Bridge.define("System.Text.RegularExpressions.RegexRunner", {
         var match;
 
         if (patternInfo.sparseSettings.isSparse) {
-            match = new System.Text.RegularExpressions.MatchSparse(this._runregex, patternInfo.sparseSettings.sparseSlotNumberMap, jsMatch.groups.length, this._runtext, 0, this._runtext.length, this._runtextstart);
+            match = new System.Text.RegularExpressions.MatchSparse(this._runregex, patternInfo.sparseSettings.sparseSlotMap, jsMatch.groups.length, this._runtext, 0, this._runtext.length, this._runtextstart);
         } else {
             match = new System.Text.RegularExpressions.Match(this._runregex, jsMatch.groups.length, this._runtext, 0, this._runtext.length, this._runtextstart);
         }
@@ -19036,92 +19048,57 @@ Bridge.define("System.Text.RegularExpressions.RegexReplacement", {
         }
     }
 });
-// @source Text/RegularExpressions/RegexNetEngine.js
+// @source Text/RegularExpressions/RegexEngine.js
 
-Bridge.define("System.Text.RegularExpressions.RegexNetEngine", {
-    statics: {
-        jsRegex: function (text, textStart, pattern, isMultiLine, isCaseInsensitive, returnAllMatches, re) {
-            if (text == null) {
-                throw new System.ArgumentNullException("text");
-            }
-
-            if (textStart != null && (textStart < 0 || textStart > text.length)) {
-                throw new System.ArgumentOutOfRangeException("textStart", "Start index cannot be less than 0 or greater than input length.");
-            }
-
-            if (pattern == null) {
-                throw new System.ArgumentNullException("pattern");
-            }
-
-            var modifiers = "g"; // use "global" modifier by default to allow TextStart configuration
-
-            // use "multiline" modifier by default (corresponding anchors must be modified correspondingly)
-            modifiers += "m";
-
-            if (isCaseInsensitive) {
-                modifiers += "i";
-            }
-
-            var jsRegExp = new RegExp(pattern, modifiers);
-
-            if (textStart != null) {
-                jsRegExp.lastIndex = textStart;
-            }
-
-            var match = jsRegExp.exec(text);
-
-            if (match == null || match.length === 0) {
-                return null;
-            }
-
-            if (returnAllMatches) {
-                var matches = [];
-
-                do {
-                    matches.push(match);
-                    match = jsRegExp.exec(text);
-
-                    if (match != null && re) {
-                        re._checkTimeout();
-                    }
-                } while (match != null)
-
-                return matches;
-            }
-
-            return match;
-        }
-    },
-
+Bridge.define("System.Text.RegularExpressions.RegexEngine", {
     _pattern: "",
-    _originalPattern: "",
     _patternInfo: null,
 
-    _isCaseInsensitive: false,
-    _isMultiLine: false,
-    _isSingleline: false,
-    _isIgnoreWhitespace: false,
     _text: "",
     _textStart: 0,
     _timeoutMs: -1,
     _timeoutTime: -1,
+    _settings: null,
 
-    constructor: function (pattern, isCaseInsensitive, isMultiLine, isSingleline, isIgnoreWhitespace, timeoutMs) {
-		this.$initialize();
+    _branchType: {
+        base: 0,
+        offset: 1,
+        lazy: 2,
+        greedy: 3,
+        or: 4
+    },
+
+    _branchResultKind: {
+        ok: 1,
+        endPass: 2,
+        nextPass: 3,
+        nextBranch: 4
+    },
+
+
+    // ============================================================================================
+    // Public functions
+    // ============================================================================================
+    constructor: function (pattern, isCaseInsensitive, isMultiLine, isSingleline, isIgnoreWhitespace, isExplicitCapture, timeoutMs) {
+        this.$initialize();
+
         if (pattern == null) {
             throw new System.ArgumentNullException("pattern");
         }
 
         this._pattern = pattern;
-        this._originalPattern = pattern;
-        this._isCaseInsensitive = isCaseInsensitive;
-        this._isMultiLine = isMultiLine;
-        this._isSingleline = isSingleline;
-        this._isIgnoreWhitespace = isIgnoreWhitespace;
         this._timeoutMs = timeoutMs;
+        this._settings = {
+            ignoreCase: isCaseInsensitive,
+            multiline: isMultiLine,
+            singleline: isSingleline,
+            ignoreWhitespace: isIgnoreWhitespace,
+            explicitCapture: isExplicitCapture
+        };
+
     },
 
-    match: function (text, textStart, prevLength) {
+    match: function (text, textStart) {
         if (text == null) {
             throw new System.ArgumentNullException("text");
         }
@@ -19134,326 +19111,1075 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngine", {
         this._textStart = textStart;
         this._timeoutTime = this._timeoutMs > 0 ? new Date().getTime() + System.Convert.toInt32(this._timeoutMs + 0.5) : -1;
 
-        var match = {
-            capIndex: 0, // start index of total capture
-            capLength: 0, // length of total capture
-            success: false,
-            value: "",
-            groups: [],
-            captures: []
-        };
-
-        // Get group descriptors (+ remove group name before any processing);
+        // Get group descriptors
         var patternInfo = this.parsePattern();
         if (patternInfo.shouldFail) {
-            return match;
+            return this._getEmptyMatch();
         }
-
-        var groupDescs = patternInfo.groups;
 
         this._checkTimeout();
 
-        // Javascript does not skip "\n" symbol in multiline mode if the previous symbol is "\r"
-        // It treats "\r\n" similar to .NET pattern containing "\n\n".
-        if (prevLength >= 0 && this._textStart > 0 && this._text[this._textStart - 1] === "\r" && this._text[this._textStart] === "\n" && patternInfo.hasEndOfMultiline) {
-            this._textStart++;
+        var scanRes = this._scanAndTransformResult(textStart, patternInfo.tokens, false, null);
+        return scanRes;
+    },
+
+    parsePattern: function () {
+        if (this._patternInfo == null) {
+            var parser = System.Text.RegularExpressions.RegexEngineParser;
+            var patternInfo = parser.parsePattern(this._pattern, this._cloneSettings(this._settings));
+            this._patternInfo = patternInfo;
+        }
+        return this._patternInfo;
+    },
+
+
+    // ============================================================================================
+    // Engine main logic
+    // ============================================================================================
+    _scanAndTransformResult: function (textPos, tokens, noOffset, desiredLen) {
+        var state = this._scan(textPos, this._text.length, tokens, noOffset, desiredLen);
+        var transformedRes = this._collectScanResults(state, textPos);
+        return transformedRes;
+    },
+
+    _scan: function (textPos, textEndPos, tokens, noOffset, desiredLen) {
+        var resKind = this._branchResultKind;
+        var branches = [];
+        branches.grCaptureCache = {};
+
+        var branch = null;
+        var res = null;
+
+        // Empty pattern case:
+        if (tokens.length === 0) {
+            var state = new System.Text.RegularExpressions.RegexEngineState();
+            state.capIndex = textPos;
+            state.txtIndex = textPos;
+            state.capLength = 0;
+            return state;
         }
 
-        // The 1st run (to know the total capture):
-        var total = System.Text.RegularExpressions.RegexNetEngine.jsRegex(this._text, this._textStart, this._pattern, this._isMultiLine, this._isCaseInsensitive, false, this);
+        // Init base branch:
+        var baseBranchType = noOffset ? this._branchType.base : this._branchType.offset;
 
-        if (total == null) {
-            return match;
+        var endPos = this._patternInfo.isContiguous ? textPos : textEndPos;
+        var baseBranch = new System.Text.RegularExpressions.RegexEngineBranch(baseBranchType, textPos, textPos, endPos);
+        baseBranch.pushPass(0, tokens, this._cloneSettings(this._settings));
+        baseBranch.started = true;
+        baseBranch.state.txtIndex = textPos;
+        branches.push(baseBranch);
+
+        while (branches.length) {
+            branch = branches[branches.length - 1];
+
+            res = this._scanBranch(textEndPos, branches, branch);
+            if (res === resKind.ok && (desiredLen == null || branch.state.capLength === desiredLen)) {
+                return branch.state;
+            }
+
+            //if (!this.branchLimit) {
+            //    this.branchLimit = 1;
+            //} else {
+            //    this.branchLimit++;
+            //    if (this.branchLimit > 200000) {
+            //        alert("Too many branches :(");
+            //        break;
+            //    }
+            //}
+
+            this._advanceToNextBranch(branches, branch);
+            this._checkTimeout();
         }
 
-        if (prevLength >= 0 && patternInfo.isContiguous && total.index !== this._textStart) {
-            return match; // Contiguous requirement was not met
+        return null;
+    },
+
+    _scanBranch: function (textEndPos, branches, branch) {
+        var resKind = this._branchResultKind;
+        var pass;
+        var res;
+
+        if (branch.mustFail) {
+            branch.mustFail = false;
+            return resKind.nextBranch;
         }
 
-        if (total.index !== 0 && patternInfo.mustCaptureFirstCh) {
-            return match; // "\A" token requires that capture starts from the very beginning
-        }
+        while (branch.hasPass()) {
+            pass = branch.peekPass();
 
-        match.capIndex = total.index;
-        match.capLength = total[0].length;
-        match.success = true;
+            if (pass.tokens == null || pass.tokens.length === 0) {
+                res = resKind.endPass;
 
-        // Add total capture both to groups and captures:
-        match.captures.push({
-            capIndex: total.index,
-            capLength: total[0].length,
-            value: total[0]
-        });
-
-        match.groups.push({
-            capIndex: total.index,
-            capLength: total[0].length,
-            value: total[0],
-            success: true,
-            captures: [match.captures[0]]
-        });
-
-        // Get more details about groups and captures (if any):
-        if (total.length > 1) {
-            var descToGroupMap = {};
-            var globalCtx = {
-                text: this._text,
-                textOffset: this._textStart,
-                pattern: this._pattern,
-                patternStart: 0,
-                patternEnd: this._pattern.length
-            };
-
-            var nonCapturingCount = 0;
-            var groupMap = {}; // <Name, Group>
-            var group;
-            var groupDesc;
-            var parentGroupDesc;
-            var existingGroup;
-            var parentCapture;
-            var lastCapture;
-            var i;
-            var j;
-
-            for (i = 1; i < total.length + nonCapturingCount; i++) {
-                this._checkTimeout();
-
-                groupDesc = groupDescs[i - 1];
-                if (groupDesc.constructs.isNonCapturing) {
-                    nonCapturingCount++;
+            } else {
+                // Add alternation branches before scanning:
+                if (this._addAlternationBranches(branches, branch, pass) === resKind.nextBranch) {
+                    return resKind.nextBranch;
                 }
 
-                group = {
-                    descriptor: groupDesc,
-                    capIndex: 0,
-                    capLength: 0,
-                    value: "",
-                    valueFull: "", //TODO: Remove?
-                    success: false,
-                    captures: [],
-                    ctx: null
-                };
+                // Scan:
+                res = this._scanPass(textEndPos, branches, branch, pass);
+            }
 
-                descToGroupMap[groupDesc.exprIndex] = group;
+            switch (res) {
+                case resKind.nextBranch:
+                    // Move to the next branch:
+                    return res;
 
-                parentGroupDesc = groupDesc.parentGroup;
-                if (parentGroupDesc == null) {
-                    // Match a root group using the global context:
-                    this._matchGroup(globalCtx, group, 0);
+                case resKind.nextPass:
+                    // switch to the recently added pass
+                    continue;
 
-                    // Match the group's captures:
-                    if (group.success) {
-                        this._matchCaptures(group);
+                case resKind.endPass:
+                case resKind.ok:
+                    // End of pass has been reached:
+                    branch.popPass();
+                    break;
+
+                default:
+                    throw new System.InvalidOperationException("Unexpected branch result.");
+            }
+        }
+
+        return resKind.ok;
+    },
+
+    _scanPass: function (textEndPos, branches, branch, pass) {
+        var resKind = this._branchResultKind;
+        var passEndIndex = pass.tokens.length;
+        var token;
+        var probe;
+        var res;
+
+        while (pass.index < passEndIndex) {
+            token = pass.tokens[pass.index];
+            probe = pass.probe;
+
+            // Add probing:
+            if (probe == null) {
+                if (this._addBranchBeforeProbing(branches, branch, pass, token)) {
+                    return resKind.nextBranch;
+                }
+            } else {
+                if (probe.value < probe.min || probe.forced) {
+                    res = this._scanToken(textEndPos, branches, branch, pass, token);
+                    if (res !== resKind.ok) {
+                        return res;
                     }
-                } else {
-                    // Use the parent group's context.
-                    // However, don't match the group if the parent has not been matched successfully.
-                    var parentGroup = descToGroupMap[parentGroupDesc.exprIndex];
-
-                    if (parentGroup.success === true) {
-                        // Match the group in every single parent capture:
-                        for (j = 0; j < parentGroup.captures.length; j++) {
-                            this._checkTimeout();
-
-                            parentCapture = parentGroup.captures[j];
-                            this._matchGroup(parentCapture.ctx, group, parentCapture.capIndex);
-
-                            // Match the group's captures:
-                            if (group.success) {
-                                this._matchCaptures(group);
-                            }
-                        }
-                    }
+                    probe.value += 1;
+                    probe.forced = false;
+                    continue;
                 }
 
-                if (group.captures.length > 0) {
-                    lastCapture = group.captures[group.captures.length - 1];
-                    group.capIndex = lastCapture.capIndex;
-                    group.capLength = lastCapture.capLength;
-                    group.value = lastCapture.value;
+                this._addBranchAfterProbing(branches, branch, pass, probe);
+                if (probe.forced) {
+                    continue;
                 }
 
-                if (!groupDesc.constructs.isNonCapturing) {
-                    existingGroup = groupMap[groupDesc.name];
+                pass.probe = null;
+                pass.index++;
+                continue;
+            }
 
-                    if (existingGroup) {
-                        // Merge group results for the same named groups:
-                        existingGroup.capIndex = group.capIndex;
-                        existingGroup.capLength = group.capLength;
-                        existingGroup.value = group.value;
-                        existingGroup.success = group.success;
-                        existingGroup.captures = existingGroup.captures.concat(group.captures);
+            // Process the token:
+            res = this._scanToken(textEndPos, branches, branch, pass, token);
 
-                    } else {
-                        // Add a new group record for the uniquely named group:
-                        match.groups.push(group);
-                        groupMap[groupDesc.name] = group;
-                    }
+            // Process the result of the token scan:
+            switch (res) {
+                case resKind.nextBranch:
+                case resKind.nextPass:
+                case resKind.endPass:
+                    return res;
+
+                case resKind.ok:
+                    // Advance to the next token within the current pass:
+                    pass.index++;
+                    break;
+
+                default:
+                    throw new System.InvalidOperationException("Unexpected branch-pass result.");
+            }
+        }
+
+        return resKind.ok;
+    },
+
+    _addAlternationBranches: function (branches, branch, pass) {
+
+        var tokenTypes = System.Text.RegularExpressions.RegexEngineParser.tokenTypes;
+        var branchTypes = this._branchType;
+        var passEndIndex = pass.tokens.length;
+        var resKind = this._branchResultKind;
+        var orIndexes;
+        var newBranch;
+        var newPass;
+        var token;
+        var i;
+
+        // Scan potential alternations:
+        if (!pass.alternationHandled && !pass.tokens.noAlternation) {
+            orIndexes = [-1];
+            for (i = 0; i < passEndIndex; i++) {
+                token = pass.tokens[i];
+                if (token.type === tokenTypes.alternation) {
+                    orIndexes.push(i);
                 }
             }
 
-            // Remove internal fields:
-            var k;
-            var gr;
-            var m;
+            if (orIndexes.length > 1) {
 
-            for (k = 0; k < match.groups.length; k++) {
-                gr = match.groups[k];
-                delete gr.ctx;
-                for (m = 0; m < gr.captures.length; m++) {
-                    delete gr.captures[m].ctx;
+                for (i = 0; i < orIndexes.length; i++) {
+                    newBranch = new System.Text.RegularExpressions.RegexEngineBranch(branchTypes.or, i, 0, orIndexes.length, branch.state);
+                    newBranch.isNotFailing = true;
+                    newPass = newBranch.peekPass();
+                    newPass.alternationHandled = true;
+                    newPass.index = orIndexes[i] + 1;
+                    branches.splice(branches.length - i, 0, newBranch);
                 }
+
+                // The last branch must fail:
+                branches[branches.length - orIndexes.length].isNotFailing = false;
+
+                // The parent branch must be ended up immediately:
+                branch.mustFail = true;
+
+                pass.alternationHandled = true;
+                return resKind.nextBranch;
+
+            } else {
+                pass.tokens.noAlternation = true;
+            }
+        }
+
+        return resKind.ok;
+    },
+
+    _addBranchBeforeProbing: function (branches, branch, pass, token) {
+        // Add +, *, ? branches:
+        var probe = this._tryGetTokenProbe(token);
+        if (probe == null) {
+            return false;
+        }
+
+        pass.probe = probe;
+
+        var branchType = probe.isLazy ? this._branchType.lazy : this._branchType.greedy;
+        var newBranch = new System.Text.RegularExpressions.RegexEngineBranch(branchType, probe.value, probe.min, probe.max, branch.state);
+        branches.push(newBranch);
+        return true;
+    },
+
+    _addBranchAfterProbing: function (branches, branch, pass, probe) {
+        if (probe.isLazy) {
+            if (probe.value + 1 <= probe.max) {
+                var lazyBranch = branch.clone();
+                var lazyProbe = lazyBranch.peekPass().probe;
+                lazyBranch.value += 1;
+                lazyProbe.forced = true;
+
+                // add to the left from the current branch
+                branches.splice(branches.length - 1, 0, lazyBranch);
+                branch.isNotFailing = true;
+            }
+        } else {
+            if (probe.value + 1 <= probe.max) {
+                var greedyBranch = branch.clone();
+                greedyBranch.started = true;
+                greedyBranch.peekPass().probe = null;
+                greedyBranch.peekPass().index++;
+                branches.splice(branches.length - 1, 0, greedyBranch);
+
+                probe.forced = true;
+                branch.value += 1;
+                branch.isNotFailing = true;
+            }
+        }
+    },
+
+    _tryGetTokenProbe: function (token) {
+        var qtoken = token.qtoken;
+        if (qtoken == null) {
+            return null;
+        }
+
+        var tokenTypes = System.Text.RegularExpressions.RegexEngineParser.tokenTypes;
+        var min;
+        var max;
+
+        if (qtoken.type === tokenTypes.quantifier) {
+            switch (qtoken.value) {
+                case "*":
+                case "*?":
+                    min = 0;
+                    max = 2147483647;
+                    break;
+
+                case "+":
+                case "+?":
+                    min = 1;
+                    max = 2147483647;
+                    break;
+
+                case "?":
+                case "??":
+                    min = 0;
+                    max = 1;
+                    break;
+
+                default:
+                    throw new System.InvalidOperationException("Unexpected quantifier value.");
+            }
+        } else if (qtoken.type === tokenTypes.quantifierN) {
+            min = qtoken.data.n;
+            max = qtoken.data.n;
+        } else if (qtoken.type === tokenTypes.quantifierNM) {
+            min = qtoken.data.n;
+            max = qtoken.data.m != null ? qtoken.data.m : 2147483647;
+        } else {
+            return null;
+        }
+
+        var probe = new System.Text.RegularExpressions.RegexEngineProbe(min, max, 0, qtoken.data.isLazy);
+        return probe;
+    },
+
+    _advanceToNextBranch: function (branches, branch) {
+        if (branches.length === 0) {
+            return;
+        }
+
+        var lastBranch = branches[branches.length - 1];
+        if (!lastBranch.started) {
+            lastBranch.started = true;
+            return;
+        }
+
+        if (branch !== lastBranch) {
+            throw new System.InvalidOperationException("Current branch is supposed to be the last one.");
+        }
+
+
+        if (branches.length === 1 && branch.type === this._branchType.offset) {
+            branch.value++;
+            branch.state.txtIndex = branch.value;
+            branch.mustFail = false;
+
+            // clear state:
+            branch.state.capIndex = null;
+            branch.state.capLength = 0;
+            branch.state.groups.length = 0;
+            branch.state.passes.length = 1;
+            branch.state.passes[0].clearState(this._cloneSettings(this._settings));
+
+            if (branch.value > branch.max) {
+                branches.pop();
+            }
+
+        } else {
+            branches.pop();
+
+            if (!branch.isNotFailing) {
+                lastBranch = branches[branches.length - 1];
+                this._advanceToNextBranch(branches, lastBranch);
+                return;
+            }
+        }
+    },
+
+    _collectScanResults: function (state, textPos) {
+        var groupDescs = this._patternInfo.groups;
+        var text = this._text;
+        var processedGroupNames = {};
+        var capGroups;
+        var capGroup;
+        var groupsMap = {};
+        var groupDesc;
+        var capture;
+        var group;
+        var i;
+
+        // Create Empty match object:
+        var match = this._getEmptyMatch();
+
+        if (state != null) {
+            capGroups = state.groups;
+
+            // For successful match fill Match object:
+            this._fillMatch(match, state.capIndex, state.capLength, textPos);
+
+            // Fill group captures:
+            for (i = 0; i < capGroups.length; i++) {
+                capGroup = capGroups[i];
+                groupDesc = groupDescs[capGroup.rawIndex - 1];
+                if (groupDesc.constructs.skipCapture) {
+                    continue;
+                }
+
+                capture = {
+                    capIndex: capGroup.capIndex,
+                    capLength: capGroup.capLength,
+                    value: text.slice(capGroup.capIndex, capGroup.capIndex + capGroup.capLength)
+                };
+
+                group = groupsMap[groupDesc.name];
+                if (group == null) {
+                    group = {
+                        capIndex: 0,
+                        capLength: 0,
+                        value: "",
+                        success: false,
+                        captures: [capture]
+                    };
+
+                    groupsMap[groupDesc.name] = group;
+                } else {
+                    group.captures.push(capture);
+                }
+            }
+
+            // Add groups to Match in the required order:
+            for (i = 0; i < groupDescs.length; i++) {
+                groupDesc = groupDescs[i];
+                if (groupDesc.constructs.skipCapture) {
+                    continue;
+                }
+
+                if (processedGroupNames[groupDesc.name] === true) {
+                    continue;
+                }
+
+                group = groupsMap[groupDesc.name];
+                if (group == null) {
+                    group = {
+                        capIndex: 0,
+                        capLength: 0,
+                        value: "",
+                        success: false,
+                        captures: []
+                    };
+                } else {
+                    // Update group values with the last capture info:
+                    if (group.captures.length > 0) {
+                        capture = group.captures[group.captures.length - 1];
+
+                        group.capIndex = capture.capIndex;
+                        group.capLength = capture.capLength;
+                        group.value = capture.value;
+                        group.success = true;
+                    }
+                }
+
+                processedGroupNames[groupDesc.name] = true;
+                group.descriptor = groupDesc; // TODO: check if we can get rid of this
+                match.groups.push(group);
             }
         }
 
         return match;
     },
 
-    parsePattern: function () {
-        if (this._patternInfo == null) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
-            var patternInfo = scope.parsePattern(this._pattern, this._isCaseInsensitive, this._isMultiLine, this._isSingleline, this._isIgnoreWhitespace);
 
-            this._patternInfo = patternInfo;
-            this._pattern = patternInfo.jsPattern;
+    // ============================================================================================
+    // Token processing
+    // ============================================================================================
+    _scanToken: function (textEndPos, branches, branch, pass, token) {
+        var tokenTypes = System.Text.RegularExpressions.RegexEngineParser.tokenTypes;
+        var resKind = this._branchResultKind;
+
+        switch (token.type) {
+            case tokenTypes.group:
+            case tokenTypes.groupImnsx:
+            case tokenTypes.alternationGroup:
+                return this._scanGroupToken(textEndPos, branches, branch, pass, token);
+
+            case tokenTypes.groupImnsxMisc:
+                return this._scanGroupImnsxToken(token.group.constructs, pass.settings);
+
+            case tokenTypes.charGroup:
+                return this._scanCharGroupToken(branches, branch, pass, token, false);
+
+            case tokenTypes.charNegativeGroup:
+                return this._scanCharNegativeGroupToken(branches, branch, pass, token, false);
+
+            case tokenTypes.escChar:
+            case tokenTypes.escCharOctal:
+            case tokenTypes.escCharHex:
+            case tokenTypes.escCharUnicode:
+            case tokenTypes.escCharCtrl:
+                return this._scanLiteral(textEndPos, branches, branch, pass, token.data.ch);
+
+            case tokenTypes.escCharOther:
+            case tokenTypes.escCharClass:
+                return this._scanEscapeToken(branches, branch, pass, token);
+
+            case tokenTypes.escCharClassCategory:
+                throw new System.NotSupportedException("Unicode Category constructions are not supported.");
+
+            case tokenTypes.escCharClassBlock:
+                throw new System.NotSupportedException("Unicode Named block constructions are not supported.");
+
+            case tokenTypes.escCharClassDot:
+                return this._scanDotToken(textEndPos, branches, branch, pass);
+
+            case tokenTypes.escBackrefNumber:
+                return this._scanBackrefNumberToken(textEndPos, branches, branch, pass, token);
+
+            case tokenTypes.escBackrefName:
+                return this._scanBackrefNameToken(textEndPos, branches, branch, pass, token);
+
+            case tokenTypes.anchor:
+            case tokenTypes.escAnchor:
+                return this._scanAnchorToken(textEndPos, branches, branch, pass, token);
+
+            case tokenTypes.groupConstruct:
+            case tokenTypes.groupConstructName:
+            case tokenTypes.groupConstructImnsx:
+            case tokenTypes.groupConstructImnsxMisc:
+                return resKind.ok;
+
+            case tokenTypes.alternationGroupCondition:
+            case tokenTypes.alternationGroupRefNameCondition:
+            case tokenTypes.alternationGroupRefNumberCondition:
+                return this._scanAlternationConditionToken(textEndPos, branches, branch, pass, token);
+
+            case tokenTypes.alternation:
+                return resKind.endPass;
+
+            case tokenTypes.commentInline:
+            case tokenTypes.commentXMode:
+                return resKind.ok;
+
+            default:
+                return this._scanLiteral(textEndPos, branches, branch, pass, token.value);
         }
-        return this._patternInfo;
     },
 
-    _matchGroup: function (ctx, group, parentGroupTextOffset) {
-        var groupDesc = group.descriptor;
-        var groupStart = groupDesc.exprIndex;
-        var groupEnd = groupDesc.exprIndex + groupDesc.exprLength;
-        var groupEndFull = groupDesc.exprIndex + groupDesc.exprFull.length;
+    _scanGroupToken: function (textEndPos, branches, branch, pass, token) {
+        var tokenTypes = System.Text.RegularExpressions.RegexEngineParser.tokenTypes;
+        var resKind = this._branchResultKind;
+        var textIndex = branch.state.txtIndex;
 
-        // Use RegExp to determine the capture length for the subexpression to the left of the Group expression.
-        if (groupDesc.exprIndex > ctx.patternStart) {
-            var leftRes = this._matchSubExpr(ctx.text, ctx.textOffset, ctx.pattern, ctx.patternStart, ctx.patternEnd, ctx.patternStart, groupStart);
+        if (pass.onHold) {
 
-            if (leftRes != null) {
-                ctx.textOffset = leftRes.capIndex + leftRes.capLength;
+            if (token.type === tokenTypes.group) {
+
+                var rawIndex = token.group.rawIndex;
+                var capIndex = pass.onHoldTextIndex;
+                var capLength = textIndex - capIndex;
+
+                // Cache value to avoid proceeding with the already checked route:
+                var tokenCache = branches.grCaptureCache[rawIndex];
+                if (tokenCache == null) {
+                    tokenCache = {};
+                    branches.grCaptureCache[rawIndex] = tokenCache;
+                }
+
+                var key = capIndex.toString() + "_" + capLength.toString();
+                if (tokenCache[key] == null) {
+                    tokenCache[key] = true;
+                } else {
+                    return resKind.nextBranch;
+                }
+
+                if (!token.group.constructs.emptyCapture) {
+                    if (token.group.isBalancing) {
+                        branch.state.logCaptureGroupBalancing(token.group, capIndex);
+                    } else {
+                        branch.state.logCaptureGroup(token.group, capIndex, capLength);
+                    }
+                }
+            }
+
+            pass.onHold = false;
+            pass.onHoldTextIndex = -1;
+            return resKind.ok;
+        }
+
+        if (token.type === tokenTypes.group ||
+            token.type === tokenTypes.groupImnsx) {
+
+            var constructs = token.group.constructs;
+
+            // Update Pass settings:
+            this._scanGroupImnsxToken(constructs, pass.settings);
+
+            // Scan Grouping constructs:
+            if (constructs.isPositiveLookahead || constructs.isNegativeLookahead ||
+                constructs.isPositiveLookbehind || constructs.isNegativeLookbehind) {
+
+                var scanLookRes = this._scanLook(branch, textIndex, textEndPos, token);
+                return scanLookRes;
+
+            } else if (constructs.isNonbacktracking) {
+
+                var scanNonBacktrackingRes = this._scanNonBacktracking(branch, textIndex, textEndPos, token);
+                return scanNonBacktrackingRes;
             }
         }
 
-        // Use RegExp to determine length and location of the captured Group
-        var groupRes = this._matchSubExpr(ctx.text, ctx.textOffset, ctx.pattern, ctx.patternStart, ctx.patternEnd, groupStart, groupEndFull);
+        // Continue scanning a regular group:
+        pass.onHoldTextIndex = textIndex;
+        pass.onHold = true;
 
-        if (groupRes != null && groupRes.captureGroup != null) {
-            ctx.textOffset = groupRes.capIndex + groupRes.capLength;
-
-            group.value = groupRes.captureGroup;
-            group.valueFull = groupRes.capture;
-            group.capIndex = groupRes.capIndex + parentGroupTextOffset;
-            group.capLength = groupRes.capLength;
-            group.success = true;
-
-            // Save the current group conext for its children:
-            var groupStartStep = groupDesc.constructs.isNonCapturing ? 3 : 1;
-
-            if (groupDesc.innerGroups.length > 0) {
-                group.ctx = {
-                    text: group.valueFull, //TODO: FULL OR NOT?
-                    textOffset: 0,
-
-                    pattern: ctx.pattern,
-                    patternStart: groupStart + groupStartStep, // start index of the group content without the opening bracket
-                    patternEnd: groupEnd - 1 // end index of the group content without the closing bracket
-                };
-            }
-        }
-
-        ctx.patternStart = groupEndFull;
+        branch.pushPass(0, token.children, this._cloneSettings(pass.settings));
+        return resKind.nextPass;
     },
 
-    _matchCaptures: function (group) {
-        var groupDesc = group.descriptor;
+    _scanGroupImnsxToken: function (constructs, settings) {
+        var resKind = this._branchResultKind;
 
-        if (groupDesc.quantifier == null || groupDesc.quantifier.length === 0 || groupDesc.quantifier === "?" || group.valueFull == null || group.valueFull.length === 0) {
-            // For non-repeating groups - only 1 capture exists (the same as the group).
-            group.captures.push({
-                capIndex: group.capIndex,
-                capLength: group.capLength,
-                value: group.valueFull
-            });
+        if (constructs.isIgnoreCase != null) {
+            settings.ignoreCase = constructs.isIgnoreCase;
+        }
+
+        if (constructs.isMultiline != null) {
+            settings.multiline = constructs.isMultiline;
+        }
+
+        if (constructs.isSingleLine != null) {
+            settings.singleline = constructs.isSingleLine;
+        }
+
+        if (constructs.isIgnoreWhitespace != null) {
+            settings.ignoreWhitespace = constructs.isIgnoreWhitespace;
+        }
+
+        if (constructs.isExplicitCapture != null) {
+            settings.explicitCapture = constructs.isExplicitCapture;
+        }
+
+        return resKind.ok;
+    },
+
+    _scanAlternationConditionToken: function (textEndPos, branches, branch, pass, token) {
+        var tokenTypes = System.Text.RegularExpressions.RegexEngineParser.tokenTypes;
+        var resKind = this._branchResultKind;
+        var children = token.children;
+        var textIndex = branch.state.txtIndex;
+        var res = resKind.nextBranch;
+
+        if (token.type === tokenTypes.alternationGroupRefNameCondition ||
+            token.type === tokenTypes.alternationGroupRefNumberCondition) {
+
+            var grCapture = branch.state.resolveBackref(token.data.packedSlotId);
+            if (grCapture != null) {
+                res = resKind.ok;
+            } else {
+                res = resKind.nextBranch;
+            }
         } else {
-            // For repeating groups - find all captures:
-            var qCh = groupDesc.quantifier[0];
-
-            if (qCh === "*" || qCh === "+" || qCh === "{") {
-                var capMatches = System.Text.RegularExpressions.RegexNetEngine.jsRegex(group.valueFull, 0, groupDesc.expr, this._isMultiLine, this._isCaseInsensitive, true, this);
-
-                if (capMatches == null) {
-                    throw new System.InvalidOperationException("Can't identify captures for the already matched group.");
-                }
-
-                var capMatch;
-                var i;
-
-                for (i = 0; i < capMatches.length; i++) {
-                    capMatch = capMatches[i];
-                    group.captures.push({
-                        capIndex: capMatch.index + group.capIndex,
-                        capLength: capMatch[0].length,
-                        value: capMatch[0]
-                    });
-                }
+            // Resolve expression:
+            var state = this._scan(textIndex, textEndPos, children, true, null);
+            if (this._combineScanResults(branch, state)) {
+                res = resKind.ok;
             }
         }
 
-        // Deep copy group context to the each capture:
-        if (group.ctx != null) {
-            var j;
-            for (j = 0; j < group.captures.length; j++) {
-                group.captures[j].ctx = {
-                    text: group.captures[j].value,
-                    textOffset: 0,
-                    pattern: group.ctx.pattern,
-                    patternStart: group.ctx.patternStart,
-                    patternEnd: group.ctx.patternEnd
-                };
-            }
+        if (res === resKind.nextBranch && pass.tokens.noAlternation) {
+            res = resKind.endPass;
         }
+
+        return res;
     },
 
-    _matchSubExpr: function (text, textOffset, pattern, patternStartIndex, patternEndIndex, subExprStartIndex, subExprEndIndex) {
-        // transforms the pattern to: "<subexpression>(?=<everything else>)"
+    _scanLook: function (branch, textIndex, textEndPos, token) {
+        var constructs = token.group.constructs;
+        var resKind = this._branchResultKind;
+        var children = token.children;
+        var expectedRes;
+        var actualRes;
 
-        if (textOffset < 0 || textOffset > text.length) {
-            throw new System.ArgumentOutOfRangeException("textOffset");
-        }
-        if (patternStartIndex < 0 || patternStartIndex >= pattern.length) {
-            throw new System.ArgumentOutOfRangeException("patternStartIndex");
-        }
-        if (patternEndIndex < patternStartIndex || patternEndIndex > pattern.length) {
-            throw new System.ArgumentOutOfRangeException("patternEndIndex");
-        }
-        if (subExprStartIndex < patternStartIndex || subExprStartIndex >= patternEndIndex) {
-            throw new System.ArgumentOutOfRangeException("subExprStartIndex");
-        }
-        if (subExprEndIndex < subExprStartIndex || subExprEndIndex > patternEndIndex) {
-            throw new System.ArgumentOutOfRangeException("subExprEndIndex");
-        }
+        var isLookahead = constructs.isPositiveLookahead || constructs.isNegativeLookahead;
+        var isLookbehind = constructs.isPositiveLookbehind || constructs.isNegativeLookbehind;
 
-        if (textOffset === text.length) {
-            return null; // end of search;
-        }
+        if (isLookahead || isLookbehind) {
+            children = children.slice(1, children.length); // remove constructs
 
-        var subExpr = pattern.slice(subExprStartIndex, subExprEndIndex);
-        var restExpr = pattern.slice(subExprEndIndex, patternEndIndex);
-        var transformedPattern = subExpr + "(?=" + restExpr + ")";
+            expectedRes = constructs.isPositiveLookahead || constructs.isPositiveLookbehind;
+            if (isLookahead) {
+                actualRes = this._scanLookAhead(branch, textIndex, textEndPos, children);
+            } else {
+                actualRes = this._scanLookBehind(branch, textIndex, textEndPos, children);
+            }
 
-        var subExpRes = System.Text.RegularExpressions.RegexNetEngine.jsRegex(text, textOffset, transformedPattern, this._isMultiLine, this._isCaseInsensitive, false, this);
-
-        if (subExpRes != null) {
-            return {
-                capture: subExpRes[0],
-                captureGroup: subExpRes.length > 1 ? subExpRes[1] : null,
-                capIndex: subExpRes.index,
-                capLength: subExpRes[0].length
-            };
+            if (expectedRes === actualRes) {
+                return resKind.ok;
+            } else {
+                return resKind.nextBranch;
+            }
         }
 
         return null;
+    },
+
+    _scanLookAhead: function (branch, textIndex, textEndPos, tokens) {
+        var state = this._scan(textIndex, textEndPos, tokens, true, null);
+        return this._combineScanResults(branch, state);
+    },
+
+    _scanLookBehind: function (branch, textIndex, textEndPos, tokens) {
+        var currIndex = textIndex;
+        var strLen;
+        var state;
+
+        while (currIndex >= 0) {
+            strLen = textIndex - currIndex;
+            state = this._scan(currIndex, textEndPos, tokens, true, strLen);
+
+            if (this._combineScanResults(branch, state)) {
+                return true;
+            }
+
+            --currIndex;
+        }
+
+        return false;
+    },
+
+    _scanNonBacktracking: function (branch, textIndex, textEndPos, token) {
+        var resKind = this._branchResultKind;
+        var children = token.children;
+        children = children.slice(1, children.length); // remove constructs
+
+        var state = this._scan(textIndex, textEndPos, children, true, null);
+        if (!state) {
+            return resKind.nextBranch;
+        }
+
+        branch.state.logCapture(state.capLength);
+
+        return resKind.ok;
+    },
+
+    _scanLiteral: function (textEndPos, branches, branch, pass, literal) {
+        var resKind = this._branchResultKind;
+        var index = branch.state.txtIndex;
+
+        if (index + literal.length > textEndPos) {
+            return resKind.nextBranch;
+        }
+
+        var i;
+        if (pass.settings.ignoreCase) {
+            for (i = 0; i < literal.length; i++) {
+                if (this._text[index + i].toLowerCase() !== literal[i].toLowerCase()) {
+                    return resKind.nextBranch;
+                }
+            }
+
+        } else {
+            for (i = 0; i < literal.length; i++) {
+                if (this._text[index + i] !== literal[i]) {
+                    return resKind.nextBranch;
+                }
+            }
+        }
+
+        branch.state.logCapture(literal.length);
+        return resKind.ok;
+    },
+
+    _scanWithJsRegex: function (branches, branch, pass, token, tokenValue) {
+        var resKind = this._branchResultKind;
+        var index = branch.state.txtIndex;
+        var ch = this._text[index];
+        if (ch == null) {
+            ch = "";
+        }
+
+        var options = pass.settings.ignoreCase ? "i" : "";
+
+        var rgx = token.rgx;
+        if (rgx == null) {
+            if (tokenValue == null) {
+                tokenValue = token.value;
+            }
+            rgx = new RegExp(tokenValue, options);
+            token.rgx = rgx;
+        }
+
+        if (rgx.test(ch)) {
+            branch.state.logCapture(ch.length);
+            return resKind.ok;
+        }
+
+        return resKind.nextBranch;
+    },
+
+    _scanWithJsRegex2: function (textIndex, pattern) {
+        var resKind = this._branchResultKind;
+        var ch = this._text[textIndex];
+        if (ch == null) {
+            ch = "";
+        }
+
+        var rgx = new RegExp(pattern, "");
+        if (rgx.test(ch)) {
+            return resKind.ok;
+        }
+
+        return resKind.nextBranch;
+    },
+
+    _scanCharGroupToken: function (branches, branch, pass, token, skipLoggingCapture) {
+        var tokenTypes = System.Text.RegularExpressions.RegexEngineParser.tokenTypes;
+        var resKind = this._branchResultKind;
+        var index = branch.state.txtIndex;
+        var ch = this._text[index];
+        if (ch == null) {
+            return resKind.nextBranch;
+        }
+
+        var i;
+        var j;
+        var n = ch.charCodeAt(0);
+        var ranges = token.data.ranges;
+        var range;
+        var upperCh;
+
+        // Check susbstruct group:
+        if (token.data.substractToken != null) {
+            var substractRes;
+            if (token.data.substractToken.type === tokenTypes.charGroup) {
+                substractRes = this._scanCharGroupToken(branches, branch, pass, token.data.substractToken, true);
+            } else if (token.data.substractToken.type === tokenTypes.charNegativeGroup) {
+                substractRes = this._scanCharNegativeGroupToken(branches, branch, pass, token.data.substractToken, true);
+            } else {
+                throw new System.InvalidOperationException("Unexpected substuct group token.");
+            }
+
+            if (substractRes === resKind.ok) {
+                return token.type === tokenTypes.charGroup ? resKind.nextBranch : resKind.ok;
+            }
+        }
+
+        // Try CharClass tokens like: \s \S \d \D
+        if (ranges.charClassToken != null) {
+            var charClassRes = this._scanWithJsRegex(branches, branch, pass, ranges.charClassToken);
+            if (charClassRes === resKind.ok) {
+                return resKind.ok;
+            }
+        }
+
+        // 2 iterations - to handle both cases: upper and lower
+        for (j = 0; j < 2; j++) {
+            //TODO: [Performance] Use binary search
+            for (i = 0; i < ranges.length; i++) {
+                range = ranges[i];
+
+                if (range.n > n) {
+                    break;
+                }
+
+                if (n <= range.m) {
+                    if (!skipLoggingCapture) {
+                        branch.state.logCapture(1);
+                    }
+                    return resKind.ok;
+                }
+            }
+
+            if (upperCh == null && pass.settings.ignoreCase) {
+                upperCh = ch.toUpperCase();
+
+                // Invert case for the 2nd attempt;
+                if (ch === upperCh) {
+                    ch = ch.toLowerCase();
+                } else {
+                    ch = upperCh;
+                }
+
+                n = ch.charCodeAt(0);
+            }
+        }
+
+        return resKind.nextBranch;
+    },
+
+    _scanCharNegativeGroupToken: function (branches, branch, pass, token, skipLoggingCapture) {
+        var resKind = this._branchResultKind;
+        var index = branch.state.txtIndex;
+        var ch = this._text[index];
+        if (ch == null) {
+            return resKind.nextBranch;
+        }
+
+        // Get result for positive group:
+        var positiveRes = this._scanCharGroupToken(branches, branch, pass, token, true);
+
+        // Inverse the positive result:
+        if (positiveRes === resKind.ok) {
+            return resKind.nextBranch;
+        }
+
+        if (!skipLoggingCapture) {
+            branch.state.logCapture(1);
+        }
+
+        return resKind.ok;
+    },
+
+    _scanEscapeToken: function (branches, branch, pass, token) {
+        return this._scanWithJsRegex(branches, branch, pass, token);
+    },
+
+    _scanDotToken: function (textEndPos, branches, branch, pass) {
+        var resKind = this._branchResultKind;
+        var index = branch.state.txtIndex;
+
+        if (pass.settings.singleline) {
+            if (index < textEndPos) {
+                branch.state.logCapture(1);
+                return resKind.ok;
+            }
+        } else {
+            if (index < textEndPos && this._text[index] !== "\n") {
+                branch.state.logCapture(1);
+                return resKind.ok;
+            }
+        }
+
+        return resKind.nextBranch;
+    },
+
+    _scanBackrefNumberToken: function (textEndPos, branches, branch, pass, token) {
+        var resKind = this._branchResultKind;
+
+        var grCapture = branch.state.resolveBackref(token.data.slotId);
+        if (grCapture == null) {
+            return resKind.nextBranch;
+        }
+
+        var grCaptureTxt = this._text.slice(grCapture.capIndex, grCapture.capIndex + grCapture.capLength);
+        return this._scanLiteral(textEndPos, branches, branch, pass, grCaptureTxt);
+    },
+
+    _scanBackrefNameToken: function (textEndPos, branches, branch, pass, token) {
+        var resKind = this._branchResultKind;
+
+        var grCapture = branch.state.resolveBackref(token.data.slotId);
+        if (grCapture == null) {
+            return resKind.nextBranch;
+        }
+
+        var grCaptureTxt = this._text.slice(grCapture.capIndex, grCapture.capIndex + grCapture.capLength);
+        return this._scanLiteral(textEndPos, branches, branch, pass, grCaptureTxt);
+    },
+
+    _scanAnchorToken: function (textEndPos, branches, branch, pass, token) {
+        var resKind = this._branchResultKind;
+        var index = branch.state.txtIndex;
+
+        if (token.value === "\\b" || token.value === "\\B") {
+            var prevIsWord = index > 0 && this._scanWithJsRegex2(index - 1, "\\w") === resKind.ok;
+            var currIsWord = this._scanWithJsRegex2(index, "\\w") === resKind.ok;
+            if ((prevIsWord === currIsWord) === (token.value === "\\B")) {
+                return resKind.ok;
+            }
+        } else if (token.value === "^") {
+            if (index === 0) {
+                return resKind.ok;
+            }
+            if (pass.settings.multiline && this._text[index - 1] === "\n") {
+                return resKind.ok;
+            }
+        } else if (token.value === "$") {
+            if (index === textEndPos) {
+                return resKind.ok;
+            }
+            if (pass.settings.multiline && this._text[index] === "\n") {
+                return resKind.ok;
+            }
+        } else if (token.value === "\\A") {
+            if (index === 0) {
+                return resKind.ok;
+            }
+        } else if (token.value === "\\z") {
+            if (index === textEndPos) {
+                return resKind.ok;
+            }
+        } else if (token.value === "\\Z") {
+            if (index === textEndPos) {
+                return resKind.ok;
+            }
+            if (index === textEndPos - 1 && this._text[index] === "\n") {
+                return resKind.ok;
+            }
+        } else if (token.value === "\\G") {
+            return resKind.ok;
+        }
+
+        return resKind.nextBranch;
+    },
+
+
+    // ============================================================================================
+    // Auxiliary functions
+    // ============================================================================================
+    _cloneSettings: function (settings) {
+        var cloned = {
+            ignoreCase: settings.ignoreCase,
+            multiline: settings.multiline,
+            singleline: settings.singleline,
+            ignoreWhitespace: settings.ignoreWhitespace,
+            explicitCapture: settings.explicitCapture
+        };
+        return cloned;
+    },
+
+    _combineScanResults: function (branch, srcState) {
+        if (srcState != null) {
+            var dstGroups = branch.state.groups;
+            var srcGroups = srcState.groups;
+            var srcGroupsLen = srcGroups.length;
+            var i;
+
+            for (i = 0; i < srcGroupsLen; ++i) {
+                dstGroups.push(srcGroups[i]);
+                }
+
+            return true;
+        }
+        return false;
+    },
+
+    _getEmptyMatch: function () {
+        var match = {
+            capIndex: 0,    // start index of total capture
+            capLength: 0,   // length of total capture
+            success: false,
+            value: "",
+            groups: [],
+            captures: []
+        };
+
+        return match;
+    },
+
+    _fillMatch: function (match, capIndex, capLength, textPos) {
+        if (capIndex == null) {
+            capIndex = textPos;
+        }
+
+        match.capIndex = capIndex;
+        match.capLength = capLength;
+        match.success = true;
+        match.value = this._text.slice(capIndex, capIndex + capLength);
+
+        match.groups.push({
+            capIndex: capIndex,
+            capLength: capLength,
+            value: match.value,
+            success: true,
+            captures: [
+                {
+                    capIndex: capIndex,
+                    capLength: capLength,
+                    value: match.value
+                }
+            ]
+        });
+
+        match.captures.push(match.groups[0].captures[0]);
     },
 
     _checkTimeout: function () {
@@ -19468,9 +20194,235 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngine", {
         }
     }
 });
-// @source Text/RegularExpressions/RegexNetEngineParser.js
+// @source Text/RegularExpressions/RegexEngine.js
 
-Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
+Bridge.define("System.Text.RegularExpressions.RegexEngineBranch", {
+    type: 0,
+    value: 0,
+    min: 0,
+    max: 0,
+
+    isStarted: false,
+    isNotFailing: false,
+
+    state: null,
+
+    constructor: function (branchType, currVal, minVal, maxVal, parentState) {
+        this.$initialize();
+
+        this.type = branchType;
+
+        this.value = currVal;
+        this.min = minVal;
+        this.max = maxVal;
+
+        this.state = parentState != null ? parentState.clone() : new System.Text.RegularExpressions.RegexEngineState();
+    },
+
+    pushPass: function (index, tokens, settings) {
+        var pass = new System.Text.RegularExpressions.RegexEnginePass(index, tokens, settings);
+        this.state.passes.push(pass);
+    },
+
+    peekPass: function () {
+        return this.state.passes[this.state.passes.length - 1];
+    },
+
+    popPass: function () {
+        return this.state.passes.pop();
+    },
+
+    hasPass: function () {
+        return this.state.passes.length > 0;
+    },
+
+    clone: function () {
+        var cloned = new System.Text.RegularExpressions.RegexEngineBranch(this.type, this.value, this.min, this.max, this.state);
+        cloned.isNotFailing = this.isNotFailing;
+        return cloned;
+    }
+});
+
+// @source Text/RegularExpressions/RegexEngine.js
+
+Bridge.define("System.Text.RegularExpressions.RegexEngineState", {
+    txtIndex: 0, // current index
+    capIndex: null, // first index of captured text
+    capLength: 0, // current length
+    passes: null,
+    groups: null, // captured groups
+
+    constructor: function () {
+        this.$initialize();
+
+        this.passes = [];
+        this.groups = [];
+    },
+
+    logCapture: function (length) {
+        if (this.capIndex == null) {
+            this.capIndex = this.txtIndex;
+        }
+
+        this.txtIndex += length;
+        this.capLength += length;
+    },
+
+    logCaptureGroup: function (group, index, length) {
+        this.groups.push({ rawIndex: group.rawIndex, slotId: group.packedSlotId, capIndex: index, capLength: length });
+    },
+
+    logCaptureGroupBalancing: function (group, capIndex) {
+        var balancingSlotId = group.balancingSlotId;
+        var groups = this.groups;
+        var index = groups.length - 1;
+        var group2;
+        var group2Index;
+
+        while (index >= 0) {
+            if (groups[index].slotId === balancingSlotId) {
+                group2 = groups[index];
+                group2Index = index;
+                break;
+            }
+            --index;
+        }
+
+        if (group2 != null && group2Index != null) {
+            groups.splice(group2Index, 1); // remove group2 from the collection
+
+            // Add balancing group value:
+            if (group.constructs.name1 != null) {
+                var balCapIndex = group2.capIndex + group2.capLength;
+                var balCapLength = capIndex - balCapIndex;
+
+                this.logCaptureGroup(group, balCapIndex, balCapLength);
+            }
+
+            return true;
+        }
+
+        return false;
+    },
+
+    resolveBackref: function (packedSlotId) {
+        var groups = this.groups;
+        var index = groups.length - 1;
+
+        while (index >= 0) {
+            if (groups[index].slotId === packedSlotId) {
+                return groups[index];
+            }
+            --index;
+        }
+
+        return null;
+    },
+
+    clone: function () {
+        var cloned = new System.Text.RegularExpressions.RegexEngineState();
+        cloned.txtIndex = this.txtIndex;
+        cloned.capIndex = this.capIndex;
+        cloned.capLength = this.capLength;
+
+
+        // Clone passes:
+        var clonedPasses = cloned.passes;
+        var thisPasses = this.passes;
+        var len = thisPasses.length;
+        var clonedItem;
+        var i;
+
+        for (i = 0; i < len; i++) {
+            clonedItem = thisPasses[i].clone();
+            clonedPasses.push(clonedItem);
+        }
+
+        // Clone groups:
+        var clonedGroups = cloned.groups;
+        var thisGroups = this.groups;
+        len = thisGroups.length;
+
+        for (i = 0; i < len; i++) {
+            clonedItem = thisGroups[i];
+            clonedGroups.push(clonedItem);
+        }
+
+
+        return cloned;
+    }
+});
+
+// @source Text/RegularExpressions/RegexEngine.js
+
+Bridge.define("System.Text.RegularExpressions.RegexEnginePass", {
+    index: 0,
+    tokens: null,
+    probe: null,
+
+    onHold: false,
+    onHoldTextIndex: -1,
+    alternationHandled: false,
+
+    settings: null,
+
+    constructor: function (index, tokens, settings) {
+        this.$initialize();
+
+        this.index = index;
+        this.tokens = tokens;
+        this.settings = settings;
+    },
+
+    clearState: function (settings) {
+        this.index = 0;
+        this.probe = null;
+        this.onHold = false;
+        this.onHoldTextIndex = -1;
+        this.alternationHandled = false;
+        this.settings = settings;
+    },
+
+    clone: function () {
+        var cloned = new System.Text.RegularExpressions.RegexEnginePass(this.index, this.tokens, this.settings);
+        cloned.onHold = this.onHold;
+        cloned.onHoldTextIndex = this.onHoldTextIndex;
+        cloned.alternationHandled = this.alternationHandled;
+        cloned.probe = this.probe != null ? this.probe.clone() : null;
+        return cloned;
+    }
+});
+
+// @source Text/RegularExpressions/RegexEngine.js
+
+Bridge.define("System.Text.RegularExpressions.RegexEngineProbe", {
+    min: 0,
+    max: 0,
+    value: 0,
+    isLazy: false,
+    forced: false,
+
+    constructor: function (min, max, value, isLazy) {
+        this.$initialize();
+
+        this.min = min;
+        this.max = max;
+        this.value = value;
+        this.isLazy = isLazy;
+        this.forced = false;
+    },
+
+    clone: function () {
+        var cloned = new System.Text.RegularExpressions.RegexEngineProbe(this.min, this.max, this.value, this.isLazy);
+        cloned.forced = this.forced;
+        return cloned;
+    }
+});
+
+
+// @source Text/RegularExpressions/RegexEngineParser.js
+
+Bridge.define("System.Text.RegularExpressions.RegexEngineParser", {
     statics: {
         _hexSymbols: "0123456789abcdefABCDEF",
         _octSymbols: "01234567",
@@ -19484,6 +20436,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         _whiteSpaceChars: " \r\n\t\v\f\u00A0\uFEFF", //TODO: This is short version of .NET WhiteSpace category.
         _unicodeCategories: ["Lu", "Ll", "Lt", "Lm", "Lo", "L", "Mn", "Mc", "Me", "M", "Nd", "Nl", "No", "N", "Pc", "Pd", "Ps", "Pe", "Pi", "Pf", "Po", "P", "Sm", "Sc", "Sk", "So", "S", "Zs", "Zl", "Zp", "Z", "Cc", "Cf", "Cs", "Co", "Cn", "C"],
         _namedCharBlocks: ["IsBasicLatin", "IsLatin-1Supplement", "IsLatinExtended-A", "IsLatinExtended-B", "IsIPAExtensions", "IsSpacingModifierLetters", "IsCombiningDiacriticalMarks", "IsGreek", "IsGreekandCoptic", "IsCyrillic", "IsCyrillicSupplement", "IsArmenian", "IsHebrew", "IsArabic", "IsSyriac", "IsThaana", "IsDevanagari", "IsBengali", "IsGurmukhi", "IsGujarati", "IsOriya", "IsTamil", "IsTelugu", "IsKannada", "IsMalayalam", "IsSinhala", "IsThai", "IsLao", "IsTibetan", "IsMyanmar", "IsGeorgian", "IsHangulJamo", "IsEthiopic", "IsCherokee", "IsUnifiedCanadianAboriginalSyllabics", "IsOgham", "IsRunic", "IsTagalog", "IsHanunoo", "IsBuhid", "IsTagbanwa", "IsKhmer", "IsMongolian", "IsLimbu", "IsTaiLe", "IsKhmerSymbols", "IsPhoneticExtensions", "IsLatinExtendedAdditional", "IsGreekExtended", "IsGeneralPunctuation", "IsSuperscriptsandSubscripts", "IsCurrencySymbols", "IsCombiningDiacriticalMarksforSymbols", "IsCombiningMarksforSymbols", "IsLetterlikeSymbols", "IsNumberForms", "IsArrows", "IsMathematicalOperators", "IsMiscellaneousTechnical", "IsControlPictures", "IsOpticalCharacterRecognition", "IsEnclosedAlphanumerics", "IsBoxDrawing", "IsBlockElements", "IsGeometricShapes", "IsMiscellaneousSymbols", "IsDingbats", "IsMiscellaneousMathematicalSymbols-A", "IsSupplementalArrows-A", "IsBraillePatterns", "IsSupplementalArrows-B", "IsMiscellaneousMathematicalSymbols-B", "IsSupplementalMathematicalOperators", "IsMiscellaneousSymbolsandArrows", "IsCJKRadicalsSupplement", "IsKangxiRadicals", "IsIdeographicDescriptionCharacters", "IsCJKSymbolsandPunctuation", "IsHiragana", "IsKatakana", "IsBopomofo", "IsHangulCompatibilityJamo", "IsKanbun", "IsBopomofoExtended", "IsKatakanaPhoneticExtensions", "IsEnclosedCJKLettersandMonths", "IsCJKCompatibility", "IsCJKUnifiedIdeographsExtensionA", "IsYijingHexagramSymbols", "IsCJKUnifiedIdeographs", "IsYiSyllables", "IsYiRadicals", "IsHangulSyllables", "IsHighSurrogates", "IsHighPrivateUseSurrogates", "IsLowSurrogates", "IsPrivateUse or IsPrivateUseArea", "IsCJKCompatibilityIdeographs", "IsAlphabeticPresentationForms", "IsArabicPresentationForms-A", "IsVariationSelectors", "IsCombiningHalfMarks", "IsCJKCompatibilityForms", "IsSmallFormVariants", "IsArabicPresentationForms-B", "IsHalfwidthandFullwidthForms", "IsSpecials"],
+        _controlChars: ["@", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "[", "\\", "]", "^", "_"],
 
         tokenTypes: {
             literal: 0,
@@ -19506,14 +20459,19 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             escBackrefName: 141,
 
             charGroup: 200,
+            charNegativeGroup: 201,
+            charInterval: 202,
 
             anchor: 300,
 
             group: 400,
-            groupConstruct: 401,
-            groupConstructName: 402,
-            groupConstructImnsx: 403,
-            groupConstructImnsxMisc: 404,
+            groupImnsx: 401,
+            groupImnsxMisc: 402,
+
+            groupConstruct: 403,
+            groupConstructName: 404,
+            groupConstructImnsx: 405,
+            groupConstructImnsxMisc: 406,
 
             quantifier: 500,
             quantifierN: 501,
@@ -19521,23 +20479,16 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
 
             alternation: 600,
             alternationGroup: 601,
-            alternationGroupExpr: 602,
+            alternationGroupCondition: 602,
+            alternationGroupRefNumberCondition: 603,
+            alternationGroupRefNameCondition: 604,
 
             commentInline: 700,
-            commentXMode: 701,
-
-            toBeSkipped: 900,
-            tmpGroup: 901
+            commentXMode: 701
         },
 
-        parsePattern: function (pattern, isIgnoreCaseMode, isMultilineMode, isSinglelineMode, isIgnoreWhitespaceMode) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
-            var settings = {
-                ignoreCase: isIgnoreCaseMode,
-                multiline: isMultilineMode,
-                singleline: isSinglelineMode,
-                ignoreWhitespace: isIgnoreWhitespaceMode
-            };
+        parsePattern: function (pattern, settings) {
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
 
             // Parse tokens in the original pattern:
             var tokens = scope._parsePatternImpl(pattern, settings, 0, pattern.length);
@@ -19550,32 +20501,175 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             // Fill Sparse Info:
             var sparseSettings = scope._getGroupSparseInfo(groups);
 
+            // Fill balancing info for the groups with "name2":
+            scope._fillBalancingGroupInfo(groups, sparseSettings);
+
             // Transform tokens for usage in JS RegExp:
             scope._preTransformBackrefTokens(pattern, tokens, sparseSettings);
-            scope._transformTokensForJsPattern(settings, tokens, sparseSettings, [], [], 0);
+            scope._transformRawTokens(settings, tokens, sparseSettings, [], [], 0);
 
             // Update group descriptors as tokens have been transformed (at least indexes were changed):
             scope._updateGroupDescriptors(tokens);
 
-            // Create pattern supported by JS RegExp:
-            var jsPattern = scope._constructPattern(tokens);
-
             var result = {
-                originalPattern: pattern,
-                jsPattern: jsPattern,
                 groups: groups,
                 sparseSettings: sparseSettings,
                 isContiguous: settings.isContiguous || false,
-                mustCaptureFirstCh: settings.mustCaptureFirstCh || false,
                 shouldFail: settings.shouldFail || false,
-                hasEndOfMultiline: settings.hasEndOfMultiline || false,
+                tokens: tokens
             };
 
             return result;
         },
 
+        _transformRawTokens: function (settings, tokens, sparseSettings, allowedPackedSlotIds, nestedGroupIds, nestingLevel) {
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
+            var tokenTypes = scope.tokenTypes;
+            var prevToken;
+            var token;
+            var value;
+            var packedSlotId;
+            var groupNumber;
+            var matchRes;
+            var localNestedGroupIds;
+            var localSettings;
+            var qtoken;
+            var i;
+
+            // Transform/adjust tokens collection to work with JS RegExp:
+            for (i = 0; i < tokens.length; i++) {
+                token = tokens[i];
+
+                if (i < tokens.length - 1) {
+                    qtoken = tokens[i + 1];
+                    switch (qtoken.type) {
+                        case tokenTypes.quantifier:
+                        case tokenTypes.quantifierN:
+                        case tokenTypes.quantifierNM:
+                            token.qtoken = qtoken;
+                            tokens.splice(i + 1, 1);
+                            --i;
+                    }
+                }
+
+                if (token.type === tokenTypes.escBackrefNumber) {
+
+                    groupNumber = token.data.number;
+                    packedSlotId = sparseSettings.getPackedSlotIdBySlotNumber(groupNumber);
+                    if (packedSlotId == null) {
+                        throw new System.ArgumentException("Reference to undefined group number " + groupNumber.toString() + ".");
+                    }
+                    if (allowedPackedSlotIds.indexOf(packedSlotId) < 0) {
+                        settings.shouldFail = true; // Backreferences to unreachable group number lead to an empty match.
+                        continue;
+                    }
+
+                    token.data.slotId = packedSlotId;
+
+                } else if (token.type === tokenTypes.escBackrefName) {
+
+                    value = token.data.name;
+                    packedSlotId = sparseSettings.getPackedSlotIdBySlotName(value);
+                    if (packedSlotId == null) {
+                        // TODO: Move this code to earlier stages
+                        // If the name is number, treat the backreference as a numbered:
+                        matchRes = scope._matchChars(value, 0, value.length, scope._decSymbols);
+                        if (matchRes.matchLength === value.length) {
+                            value = "\\" + value;
+                            scope._updatePatternToken(token, tokenTypes.escBackrefNumber, token.index, value.length, value);
+                            --i; // process the token again
+                            continue;
+                        }
+                        throw new System.ArgumentException("Reference to undefined group name '" + value + "'.");
+                    }
+
+                    if (allowedPackedSlotIds.indexOf(packedSlotId) < 0) {
+                        settings.shouldFail = true; // Backreferences to unreachable group number lead to an empty match.
+                        continue;
+                    }
+
+                    token.data.slotId = packedSlotId;
+
+                } else if (token.type === tokenTypes.anchor || token.type === tokenTypes.escAnchor) {
+
+                    if (token.value === "\\G") {
+                        if (nestingLevel === 0 && i === 0) {
+                            settings.isContiguous = true;
+                        } else {
+                            settings.shouldFail = true;
+                        }
+
+                        tokens.splice(i, 1);
+                        --i;
+                        continue;
+                    }
+
+                } else if (token.type === tokenTypes.commentInline || token.type === tokenTypes.commentXMode) {
+
+                    // We can safely remove comments from the pattern
+                    tokens.splice(i, 1);
+                    --i;
+                    continue;
+
+                } else if (token.type === tokenTypes.literal) {
+
+                    // Combine literal tokens for better performance:
+                    if (i > 0 && !token.qtoken) {
+                        prevToken = tokens[i - 1];
+                        if (prevToken.type === tokenTypes.literal && !prevToken.qtoken) {
+
+                            prevToken.value += token.value;
+                            prevToken.length += token.length;
+
+                            tokens.splice(i, 1);
+                            --i;
+                            continue;
+                        }
+                    }
+
+                } else if (token.type === tokenTypes.alternationGroupCondition) {
+
+                    if (token.data != null) {
+                        if (token.data.number != null) {
+                            packedSlotId = sparseSettings.getPackedSlotIdBySlotNumber(token.data.number);
+                            if (packedSlotId == null) {
+                                throw new System.ArgumentException("Reference to undefined group number " + value + ".");
+                            }
+                            token.data.packedSlotId = packedSlotId;
+                            scope._updatePatternToken(token, tokenTypes.alternationGroupRefNumberCondition, token.index, token.length, token.value);
+                        } else {
+                            packedSlotId = sparseSettings.getPackedSlotIdBySlotName(token.data.name);
+                            if (packedSlotId != null) {
+                                token.data.packedSlotId = packedSlotId;
+                                scope._updatePatternToken(token, tokenTypes.alternationGroupRefNameCondition, token.index, token.length, token.value);
+                            } else {
+                                delete token.data;
+                            }
+                        }
+                    }
+
+                }
+
+                // Update children tokens:
+                if (token.children && token.children.length) {
+                    localNestedGroupIds = token.type === tokenTypes.group ? [token.group.rawIndex] : [];
+                    localNestedGroupIds = localNestedGroupIds.concat(nestedGroupIds);
+
+                    localSettings = token.localSettings || settings;
+                    scope._transformRawTokens(localSettings, token.children, sparseSettings, allowedPackedSlotIds, localNestedGroupIds, nestingLevel + 1);
+                    settings.shouldFail = settings.shouldFail || localSettings.shouldFail;
+                    settings.isContiguous = settings.isContiguous || localSettings.isContiguous;
+                }
+
+                // Group is processed. Now it can be referenced with Backref:
+                if (token.type === tokenTypes.group) {
+                    allowedPackedSlotIds.push(token.group.packedSlotId);
+                }
+            }
+        },
+
         _fillGroupDescriptors: function (tokens, groups) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var group;
             var i;
 
@@ -19599,21 +20693,20 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _fillGroupStructure: function (groups, tokens, parentGroup) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
             var group;
             var token;
+            var constructs;
             var constructCandidateToken;
             var hasChildren;
-            var isImnsxGroup;
             var i;
 
             for (i = 0; i < tokens.length; i++) {
                 token = tokens[i];
                 hasChildren = token.children && token.children.length;
-                isImnsxGroup = hasChildren && token.children[0].type === tokenTypes.groupConstructImnsx;
 
-                if (token.type === tokenTypes.group && !isImnsxGroup) {
+                if (token.type === tokenTypes.group || token.type === tokenTypes.groupImnsx || token.type === tokenTypes.groupImnsxMisc) {
                     group = {
                         rawIndex: groups.length + 1,
                         number: -1,
@@ -19634,16 +20727,40 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
                     };
 
                     token.group = group;
-                    groups.push(group);
 
-                    if (parentGroup != null) {
-                        token.group.parentGroup = parentGroup;
-                        parentGroup.innerGroups.push(group);
+                    if (token.type === tokenTypes.group) {
+                        groups.push(group);
+
+                        if (parentGroup != null) {
+                            token.group.parentGroup = parentGroup;
+                            parentGroup.innerGroups.push(group);
+                        }
                     }
 
                     // fill group constructs:
                     constructCandidateToken = hasChildren ? token.children[0] : null;
                     group.constructs = scope._fillGroupConstructs(constructCandidateToken);
+                    constructs = group.constructs;
+
+                    if (token.isNonCapturingExplicit) {
+                        delete token.isNonCapturingExplicit;
+                        constructs.isNonCapturingExplicit = true;
+                    }
+
+                    if (token.isEmptyCapturing) {
+                        delete token.isEmptyCapturing;
+                        constructs.emptyCapture = true;
+                    }
+
+                    constructs.skipCapture =
+                        constructs.isNonCapturing ||
+                        constructs.isNonCapturingExplicit ||
+                        constructs.isNonbacktracking ||
+                        constructs.isPositiveLookahead ||
+                        constructs.isNegativeLookahead ||
+                        constructs.isPositiveLookbehind ||
+                        constructs.isNegativeLookbehind ||
+                        (constructs.name1 == null && constructs.name2 != null);
                 }
 
                 // fill group descriptors for inner tokens:
@@ -19654,28 +20771,30 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _getGroupSparseInfo: function (groups) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
-
-            var sparseSlotNames = ["0"];
-            var sparseSlotNumbers = [0];
-
-            var sparseSlotNameMap = {};
-            var sparseSlotNumberMap = {};
-            var sparseSlotGroupsMap = {};
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
 
             var explNumberedGroups = {};
             var explNumberedGroupKeys = [];
+            var explNamedGroups = {};
             var explGroups;
 
             var numberedGroups;
             var slotNumber;
+            var slotName;
             var group;
             var i;
+            var j;
+
+            var sparseSlotMap = { 0: 0 };
+            sparseSlotMap.lastSlot = 0;
+
+            var sparseSlotNameMap = { "0": 0 };
+            sparseSlotNameMap.keys = ["0"];
 
             // Fill Explicit Numbers:
             for (i = 0; i < groups.length; i++) {
                 group = groups[i];
-                if (group.constructs.isNonCapturing) {
+                if (group.constructs.skipCapture) {
                     continue;
                 }
 
@@ -19688,6 +20807,14 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
                     } else {
                         explNumberedGroups[slotNumber] = [group];
                     }
+                } else {
+                    slotName = group.constructs.name1;
+
+                    if (explNamedGroups[slotName]) {
+                        explNamedGroups[slotName].push(group);
+                    } else {
+                        explNamedGroups[slotName] = [group];
+                    }
                 }
             }
 
@@ -19698,30 +20825,38 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             explNumberedGroupKeys.sort(sortNum);
 
 
-            // Add group without names first:
-            for (i = 0; i < groups.length; i++) {
-                group = groups[i];
-                if (group.constructs.isNonCapturing) {
-                    continue;
-                }
-
-                slotNumber = sparseSlotNumbers.length;
-                if (!group.hasName) {
-                    numberedGroups = [group];
-                    explGroups = explNumberedGroups[slotNumber];
-                    if (explGroups != null) {
-                        numberedGroups = numberedGroups.concat(explGroups);
-                        explNumberedGroups[slotNumber] = null;
+            // Add group without names first (emptyCapture = false first, than emptyCapture = true):
+            var allowEmptyCapture = false;
+            for (j = 0; j < 2; j++) {
+                for (i = 0; i < groups.length; i++) {
+                    group = groups[i];
+                    if (group.constructs.skipCapture) {
+                        continue;
                     }
 
-                    scope._addSparseSlotForSameNamedGroups(numberedGroups, slotNumber, sparseSlotNames, sparseSlotNumbers);
+                    if ((group.constructs.emptyCapture === true) !== allowEmptyCapture) {
+                        continue;
+                    }
+
+                    slotNumber = sparseSlotNameMap.keys.length;
+                    if (!group.hasName) {
+                        numberedGroups = [group];
+                        explGroups = explNumberedGroups[slotNumber];
+                        if (explGroups != null) {
+                            numberedGroups = numberedGroups.concat(explGroups);
+                            explNumberedGroups[slotNumber] = null;
+                        }
+
+                        scope._addSparseSlotForSameNamedGroups(numberedGroups, slotNumber, sparseSlotMap, sparseSlotNameMap);
+                    }
                 }
+                allowEmptyCapture = true;
             }
 
             // Then add named groups:
             for (i = 0; i < groups.length; i++) {
                 group = groups[i];
-                if (group.constructs.isNonCapturing) {
+                if (group.constructs.skipCapture) {
                     continue;
                 }
 
@@ -19731,18 +20866,35 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
 
                 // If the slot is already occupied by an explicitly numbered group,
                 // add this group to the slot:
-                slotNumber = sparseSlotNumbers.length;
+                slotNumber = sparseSlotNameMap.keys.length;
                 explGroups = explNumberedGroups[slotNumber];
                 while (explGroups != null) {
-                    scope._addSparseSlotForSameNamedGroups(explGroups, slotNumber, sparseSlotNames, sparseSlotNumbers);
+                    scope._addSparseSlotForSameNamedGroups(explGroups, slotNumber, sparseSlotMap, sparseSlotNameMap);
 
                     explNumberedGroups[slotNumber] = null; // Group is processed.
-                    slotNumber = sparseSlotNumbers.length;
+                    slotNumber = sparseSlotNameMap.keys.length;
                     explGroups = explNumberedGroups[slotNumber];
                 }
 
-                // Add the named group to the 1st free slot:
-                scope._addSparseSlot(group, slotNumber, sparseSlotNames, sparseSlotNumbers);
+                if (!group.constructs.isNumberName1) {
+                    slotNumber = sparseSlotNameMap.keys.length;
+                    explGroups = explNumberedGroups[slotNumber];
+                    while (explGroups != null) {
+                        scope._addSparseSlotForSameNamedGroups(explGroups, slotNumber, sparseSlotMap, sparseSlotNameMap);
+
+                        explNumberedGroups[slotNumber] = null; // Group is processed.
+                        slotNumber = sparseSlotNameMap.keys.length;
+                        explGroups = explNumberedGroups[slotNumber];
+                    }
+                }
+
+                // Add the named group(s) to the 1st free slot:
+                slotName = group.constructs.name1;
+                explGroups = explNamedGroups[slotName];
+                if (explGroups != null) {
+                    scope._addSparseSlotForSameNamedGroups(explGroups, slotNumber, sparseSlotMap, sparseSlotNameMap);
+                    explNamedGroups[slotName] = null;  // Group is processed.
+                }
             }
 
             // Add the rest explicitly numbered groups:
@@ -19750,93 +20902,63 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
                 slotNumber = explNumberedGroupKeys[i];
                 explGroups = explNumberedGroups[slotNumber];
                 if (explGroups != null) {
-                    scope._addSparseSlotForSameNamedGroups(explGroups, slotNumber, sparseSlotNames, sparseSlotNumbers);
-                }
-            }
+                    scope._addSparseSlotForSameNamedGroups(explGroups, slotNumber, sparseSlotMap, sparseSlotNameMap);
 
-            // Fill Name/Number map:
-            for (i = 0; i < sparseSlotNumbers.length; i++) {
-                sparseSlotNameMap[sparseSlotNames[i]] = i;
-                sparseSlotNumberMap[sparseSlotNumbers[i]] = i;
-            }
-
-            // Fill Group map:
-            for (i = 0; i < groups.length; i++) {
-                group = groups[i];
-                if (group.constructs.isNonCapturing) {
-                    continue;
-                }
-
-                if (sparseSlotGroupsMap[group.sparseSlotId]) {
-                    sparseSlotGroupsMap[group.sparseSlotId].push(group);
-                } else {
-                    sparseSlotGroupsMap[group.sparseSlotId] = [group];
+                    explNumberedGroups[slotNumber] = null; // Group is processed.
                 }
             }
 
             return {
-                isSparse: sparseSlotNumbers.length !== (1 + sparseSlotNumbers[sparseSlotNumbers.length - 1]),
-                sparseSlotNames: sparseSlotNames, // e.g. [1,2,test,5]
-                sparseSlotNumbers: sparseSlotNumbers, // e.g. [1,2,3,5] 
+                isSparse: sparseSlotMap.isSparse || false, //sparseSlotNumbers.length !== (1 + sparseSlotNumbers[sparseSlotNumbers.length - 1]),
+                sparseSlotMap: sparseSlotMap,           // <SlotNumber, PackedSlotId>
+                sparseSlotNameMap: sparseSlotNameMap,   // <SlotName, PackedSlotId>
 
-                sparseSlotNameMap: sparseSlotNameMap, // <GroupName, SlotId>
-                sparseSlotNumberMap: sparseSlotNumberMap, // <GroupNumber, SlotId>
-                sparseSlotGroupsMap: sparseSlotGroupsMap, // <SlotId, Group>
-
-                getSingleGroupByNumber: function (groupNumber) {
-                    var slotId = this.sparseSlotNumberMap[groupNumber];
-                    if (slotId == null) {
-                        return null;
-                    }
-
-                    var requestedGroup = this.getSingleGroupBySlotId(slotId);
-                    return requestedGroup;
+                getPackedSlotIdBySlotNumber: function(slotNumber) {
+                    return this.sparseSlotMap[slotNumber];
                 },
 
-                getSingleGroupByName: function (groupName) {
-                    var slotId = this.sparseSlotNameMap[groupName];
-                    if (slotId == null) {
-                        return null;
-                    }
-
-                    var requestedGroup = this.getSingleGroupBySlotId(slotId);
-                    return requestedGroup;
-                },
-
-                getSingleGroupBySlotId: function (slotId) {
-                    var slotGroups = this.sparseSlotGroupsMap[slotId];
-                    if (slotGroups.length !== 1) {
-                        throw new System.NotSupportedException("Redefined groups are not supported."); //TODO: [Intentional Variation] Can be changed when backrefereces are resolved manually (they should use the closest group/capture)
-                    }
-                    return slotGroups[0];
+                getPackedSlotIdBySlotName: function (slotName) {
+                    return this.sparseSlotNameMap[slotName];
                 }
             };
         },
 
-        _addSparseSlot: function (group, slotNumber, sparseSlotNames, sparseSlotNumbers) {
-            group.sparseSlotId = sparseSlotNames.length; // 0-based index
+        _addSparseSlot: function (group, slotNumber, sparseSlotMap, sparseSlotNameMap) {
 
-            sparseSlotNames.push(group.name); // This a generated name, it shows Seq number.
-            sparseSlotNumbers.push(slotNumber); // 1-based index
+            var packedSlotId = sparseSlotNameMap.keys.length; // 0-based index. Raw Slot number, 0,1..n (without gaps)
+
+            group.packedSlotId = packedSlotId;  
+
+            sparseSlotMap[slotNumber] = packedSlotId;
+            sparseSlotNameMap[group.name] = packedSlotId;
+            sparseSlotNameMap.keys.push(group.name);
+
+            if (!sparseSlotMap.isSparse && ((slotNumber - sparseSlotMap.lastSlot) > 1)) {
+                sparseSlotMap.isSparse = true;
+            }
+
+            sparseSlotMap.lastSlot = slotNumber;
         },
 
-        _addSparseSlotForSameNamedGroups: function (groups, slotNumber, sparseSlotNames, sparseSlotNumbers) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+        _addSparseSlotForSameNamedGroups: function (groups, slotNumber, sparseSlotMap, sparseSlotNameMap) {
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var i;
 
-            scope._addSparseSlot(groups[0], slotNumber, sparseSlotNames, sparseSlotNumbers);
-            var slotId = groups[0].sparseSlotId;
+            scope._addSparseSlot(groups[0], slotNumber, sparseSlotMap, sparseSlotNameMap);
+            var sparseSlotId = groups[0].sparseSlotId;
+            var packedSlotId = groups[0].packedSlotId;
 
             // Assign SlotID for all expl. named groups in this slot.
             if (groups.length > 1) {
                 for (i = 1; i < groups.length; i++) {
-                    groups[i].sparseSlotId = slotId;
+                    groups[i].sparseSlotId = sparseSlotId;
+                    groups[i].packedSlotId = packedSlotId;
                 }
             }
         },
 
         _fillGroupConstructs: function (childToken) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
             var constructs = {
                 name1: null,
@@ -19846,6 +20968,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
                 isNumberName2: false,
 
                 isNonCapturing: false,
+                isNonCapturingExplicit: false,
 
                 isIgnoreCase: null,
                 isMultiline: null,
@@ -19914,9 +21037,11 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
                     throw new System.ArgumentException("Invalid group name.");
                 }
 
-                constructs.name1 = groupNames[0];
-                var nameRes1 = scope._validateGroupName(groupNames[0]);
-                constructs.isNumberName1 = nameRes1.isNumberName;
+                if (groupNames[0].length) {
+                    constructs.name1 = groupNames[0];
+                    var nameRes1 = scope._validateGroupName(groupNames[0]);
+                    constructs.isNumberName1 = nameRes1.isNumberName;
+                }
 
                 if (groupNames.length === 2) {
                     constructs.name2 = groupNames[1];
@@ -19961,7 +21086,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
 
             var isDigit = name[0] >= "0" && name[0] <= "9";
             if (isDigit) {
-                var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+                var scope = System.Text.RegularExpressions.RegexEngineParser;
                 var res = scope._matchChars(name, 0, name.length, scope._decSymbols);
                 if (res.matchLength !== name.length) {
                     throw new System.ArgumentException("Invalid group name: Group names must begin with a word character.");
@@ -19973,11 +21098,29 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             };
         },
 
+        _fillBalancingGroupInfo: function (groups, sparseSettings) {
+            var group;
+            var i;
+
+            // Assign name or id:
+            for (i = 0; i < groups.length; i++) {
+                group = groups[i];
+
+                if (group.constructs.name2 != null) {
+                    group.isBalancing = true;
+
+                    group.balancingSlotId = sparseSettings.getPackedSlotIdBySlotName(group.constructs.name2);
+                    if (group.balancingSlotId == null) {
+                        throw new System.ArgumentException("Reference to undefined group name '" + group.constructs.name2 + "'.");
+                    }
+                }
+            }
+        },
+
         _preTransformBackrefTokens: function (pattern, tokens, sparseSettings) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
 
-            var groupNumberStr;
             var groupNumber;
             var octalCharToken;
             var extraLength;
@@ -19988,19 +21131,18 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             for (i = 0; i < tokens.length; i++) {
                 token = tokens[i];
                 if (token.type === tokenTypes.escBackrefNumber) {
-                    groupNumberStr = token.value.slice(1);
-                    groupNumber = parseInt(groupNumberStr, 10);
+                    groupNumber = token.data.number;
 
-                    if (groupNumber >= 1 && sparseSettings.getSingleGroupByNumber(groupNumber) != null) {
+                    if (groupNumber >= 1 && sparseSettings.getPackedSlotIdBySlotNumber(groupNumber) != null) {
                         // Expressions from \10 and greater are considered backreferences 
-                        // if there is a backreference corresponding to that number; 
+                        // if there is a group corresponding to that number; 
                         // otherwise, they are interpreted as octal codes.
                         continue; // validated
                     }
 
-                    if (groupNumberStr.length === 1) {
+                    if (groupNumber <= 9) {
                         // The expressions \1 through \9 are always interpreted as backreferences, and not as octal codes.
-                        throw new System.ArgumentException("Reference to undefined group number " + groupNumberStr + ".");
+                        throw new System.ArgumentException("Reference to undefined group number " + groupNumber.toString() + ".");
                     }
 
                     // Otherwise, transform the token to OctalNumber:
@@ -20011,6 +21153,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
 
                     extraLength = token.length - octalCharToken.length;
                     scope._modifyPatternToken(token, pattern, tokenTypes.escCharOctal, null, octalCharToken.length);
+                    token.data = octalCharToken.data;
 
                     if (extraLength > 0) {
                         literalToken = scope._createPatternToken(pattern, tokenTypes.literal, token.index + token.length, extraLength);
@@ -20024,216 +21167,8 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             }
         },
 
-        _transformTokensForJsPattern: function (settings, tokens, sparseSettings, allowedBackrefRawIds, nestedGroupIds, nestingLevel) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
-            var tokenTypes = scope.tokenTypes;
-            var extraTokenStr;
-            var extraToken;
-            var token;
-            var value;
-            var group;
-            var groupNumber;
-            var matchRes;
-            var localNestedGroupIds;
-            var localSettings;
-            var nestingLevelInc;
-            var i;
-
-            // Transform/adjust tokens collection to work with JS RegExp:
-            for (i = 0; i < tokens.length; i++) {
-                token = tokens[i];
-
-                if (token.type === tokenTypes.group) {
-
-                    if (token.children && token.children.length > 0 && token.children[0].type === tokenTypes.groupConstructImnsx) {
-                        // Replace (?m:Text$) with tmpGroup: (Text$)
-                        token.children.splice(0, 1);
-                        extraToken = scope._createPatternToken("", tokenTypes.tmpGroup, 0, 0, token.children, "", "");
-                        extraToken.localSettings = token.localSettings;
-                        tokens.splice(i, 1, extraToken);
-                        --i; // Process new token once again;
-                        continue;
-                    }
-
-                } else if (token.type === tokenTypes.groupConstructName) {
-
-                    tokens.splice(i, 1);
-                    --i;
-                    continue;
-
-                } else if (token.type === tokenTypes.escBackrefNumber) {
-
-                    if (nestingLevel > 0) {
-                        throw new System.NotSupportedException("Backreferences inside groups are not supported."); //TODO: support references inside groups
-                    }
-
-                    value = token.value.slice(1);
-                    groupNumber = parseInt(value, 10);
-                    group = sparseSettings.getSingleGroupByNumber(groupNumber);
-                    if (group == null) {
-                        throw new System.ArgumentException("Reference to undefined group number " + value + ".");
-                    }
-
-                    // Replace the group number with RawIndex as JavaScript does not change the ordering
-                    if (allowedBackrefRawIds.indexOf(group.rawIndex) < 0) {
-                        throw new System.NotSupportedException("Reference to unreachable group number " + value + "."); //TODO: [Intentional Variation] .Net returns "Success=false". However, it has no sense.
-                    }
-                    if (nestedGroupIds.indexOf(group.rawIndex) >= 0) {
-                        throw new System.NotSupportedException("References to self/parent group number " + value + " are not supported."); //TODO: [Intentional Variation] This require pattern change with every capture. Not supported.
-                    }
-                    if (group.rawIndex !== groupNumber) {
-                        value = "\\" + group.rawIndex.toString();
-                        scope._updatePatternToken(token, token.type, token.index, value.length, value);
-                    }
-
-                } else if (token.type === tokenTypes.escBackrefName) {
-
-                    if (nestingLevel > 0) {
-                        throw new System.NotSupportedException("Backreferences inside groups are not supported."); //TODO: support references inside groups
-                    }
-
-                    value = token.value.slice(3, token.length - 1);
-                    group = sparseSettings.getSingleGroupByName(value);
-                    if (group == null) {
-                        // If the name is number, treat the backreference as a numbered:
-                        matchRes = scope._matchChars(value, 0, value.length, scope._decSymbols);
-                        if (matchRes.matchLength === value.length) {
-                            value = "\\" + value;
-                            scope._updatePatternToken(token, tokenTypes.escBackrefNumber, token.index, value.length, value);
-                            --i; // process the token again
-                            continue;
-                        }
-                        throw new System.ArgumentException("Reference to undefined group name '" + value + "'.");
-                    }
-
-                    // Replace the group number with RawIndex as JavaScript does not change the ordering
-                    if (allowedBackrefRawIds.indexOf(group.rawIndex) < 0) {
-                        throw new System.NotSupportedException("Reference to unreachable group name '" + value + "'."); //TODO: [Intentional Variation] .Net returns "Success=false". However, it has no sense.
-                    }
-                    if (nestedGroupIds.indexOf(group.rawIndex) >= 0) {
-                        throw new System.NotSupportedException("References to self/parent group name '" + value + "' are not supported."); //TODO: [Intentional Variation] This require pattern change with every capture. Not supported.
-                    }
-                    value = "\\" + group.rawIndex.toString();
-                    scope._updatePatternToken(token, tokenTypes.escBackrefNumber, token.index, value.length, value);
-
-                } else if (token.type === tokenTypes.anchor || token.type === tokenTypes.escAnchor) {
-
-                    if (token.value === "$") {
-                        if (settings.multiline) {
-                            settings.hasEndOfMultiline = true;
-                            extraTokenStr = "(?=\\n|(?![\\d\\D]))"; // Multiline mode implies that "\n" will be used as an anchor as well as EOF.
-                            extraToken = scope._parseGroupToken(extraTokenStr, settings, 0, extraTokenStr.length);
-                            tokens.splice(i, 1, extraToken);
-                        } else {
-                            extraTokenStr = "(?![\\d\\D])"; // Multiline mode implies that "\n" will be used as an anchor as well as EOF.
-                            extraToken = scope._parseGroupToken(extraTokenStr, settings, 0, extraTokenStr.length);
-                            tokens.splice(i, 1, extraToken);
-                        }
-
-                        extraTokenStr = "(?!\\r)"; // JavaScript RegExp does not distinguish \r and \n
-                        extraToken = scope._parseGroupToken(extraTokenStr, settings, 0, extraTokenStr.length);
-                        tokens.splice(i, 0, extraToken);
-                        ++i;
-                    } else if (token.value === "^") {
-                        if (nestingLevel === 0 && i === 0) {
-                            if (!settings.multiline) {
-                                settings.mustCaptureFirstCh = true;
-                            }
-                        } else {
-                            settings.shouldFail = true;
-                        }
-                    } else if (token.value === "\\A") {
-                        extraTokenStr = "^"; // (?-m:^)
-                        extraToken = scope._parseAnchorToken(extraTokenStr, 0); // Replace "\A" with the construction having almost the same meaning + check the 1st captured index
-                        tokens.splice(i, 1, extraToken);
-
-                        if (nestingLevel === 0 && i === 0) {
-                            settings.mustCaptureFirstCh = true;
-                        } else {
-                            settings.shouldFail = true;
-                        }
-                    } else if (token.value === "\\Z") {
-                        extraTokenStr = "(?=\\n?(?![\\d\\D]))"; // i.e. \nEOF or EOF (without capture)
-                        extraToken = scope._parseGroupToken(extraTokenStr, settings, 0, extraTokenStr.length); // Replace "\Z" with the construction having the same meaning: "(?=\n?(?![\d\D]))"
-                        tokens.splice(i, 1, extraToken);
-                    } else if (token.value === "\\z") {
-                        // "\z" is similar to "\Z" with the only difference: "\z" doesn't match "\n" symbol.
-                        extraTokenStr = "(?![\\d\\D])"; // i.e. EOF (without capture)
-                        extraToken = scope._parseGroupToken(extraTokenStr, settings, 0, extraTokenStr.length); // Replace "\z" with the construction having the same meaning: "(?![\d\D])"
-                        tokens.splice(i, 1, extraToken);
-                        // Do not change "i", let "\\Z" to be processed as usual token
-                    } else if (token.value === "\\G") {
-                        if (nestingLevel === 0 && i === 0) {
-                            settings.isContiguous = true;
-                        } else {
-                            settings.shouldFail = true;
-                        }
-
-                        tokens.splice(i, 1);
-                        --i;
-                        continue;
-                    }
-
-                } else if (token.type === tokenTypes.escCharClassDot) {
-
-                    extraTokenStr = settings.singleline // JavaScript RegExp does not distinguish \r and \n
-                        ? "(?:.|\\r|\\n)" // Singleline mode defines that "." will capture any symbol INCLUDING "\n"
-                        : "(?:.|\\r)";
-                    extraToken = scope._parseGroupToken(extraTokenStr, settings, 0, extraTokenStr.length); // JavaScript RegExp does not distinguish \r and \n
-                    tokens.splice(i, 1, extraToken);
-
-                } else if (token.type === tokenTypes.groupConstructImnsx) {
-
-                    extraTokenStr = "?:"; // Replace (?m:Text$) with (?:Text$)
-                    extraToken = scope._parseGroupConstructToken(extraTokenStr, settings, 0, extraTokenStr.length);
-                    tokens.splice(i, 1, extraToken);
-
-                } else if (token.type === tokenTypes.groupConstructImnsxMisc) {
-
-                    // We parsed this token into the groups' local settings, so we don't need this token anymore.
-                    tokens.splice(i, 1);
-                    --i;
-                    continue;
-
-                } else if (token.type === tokenTypes.commentInline || token.type === tokenTypes.commentXMode) {
-
-                    // We can safely remove comments from the pattern
-                    tokens.splice(i, 1);
-                    --i;
-                    continue;
-
-                } else if (token.type === tokenTypes.toBeSkipped) {
-
-                    // We can safely remove this content
-                    tokens.splice(i, 1);
-                    --i;
-                    continue;
-
-                }
-
-                // Update children tokens:
-                if (token.children && token.children.length) {
-                    localNestedGroupIds = token.type === tokenTypes.group ? [token.group.rawIndex] : [];
-                    localNestedGroupIds = localNestedGroupIds.concat(nestedGroupIds);
-
-                    localSettings = token.localSettings || settings;
-                    nestingLevelInc = token.type === tokenTypes.tmpGroup ? 0 : 1;
-                    scope._transformTokensForJsPattern(localSettings, token.children, sparseSettings, allowedBackrefRawIds, localNestedGroupIds, nestingLevel + nestingLevelInc);
-                    settings.shouldFail = settings.shouldFail || localSettings.shouldFail;
-                    settings.isContiguous = settings.isContiguous || localSettings.isContiguous;
-                    settings.mustCaptureFirstCh = settings.mustCaptureFirstCh || localSettings.mustCaptureFirstCh;
-                    settings.hasEndOfMultiline = settings.hasEndOfMultiline || localSettings.hasEndOfMultiline;
-                }
-
-                // Group is processed. Now it can be referenced with Backref:
-                if (token.type === tokenTypes.group) {
-                    allowedBackrefRawIds.push(token.group.rawIndex);
-                }
-            }
-        },
-
         _updateGroupDescriptors: function (tokens, parentIndex) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
             var group;
             var token;
@@ -20276,9 +21211,6 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
 
                     group.expr = token.value;
                     group.exprFull = group.expr + (group.quantifier != null ? group.quantifier : "");
-
-                    // Remove unnecessary fields:
-                    delete token.group;
                 }
 
                 // Update current index:
@@ -20310,10 +21242,9 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
                 throw new System.ArgumentOutOfRangeException("endIndex");
             }
 
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
             var tokens = [];
-            var prevToken = null;
             var token;
             var ch;
             var i;
@@ -20338,11 +21269,6 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
                     token = scope._parseAnchorToken(pattern, i);
                 } else if (ch === "(") {
                     token = scope._parseGroupToken(pattern, settings, i, endIndex);
-                    if (token && token.children && token.children.length === 1 && token.children[0].type === tokenTypes.groupConstructImnsxMisc) {
-                        // We parsed this token into a parent group's local settings, so we don't need this token anymore.
-                        i += token.length;
-                        continue;
-                    }
                 } else if (ch === "|") {
                     token = scope._parseAlternationToken(pattern, i);
                 } else if (ch === "#" && settings.ignoreWhitespace) {
@@ -20352,19 +21278,11 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
                 }
 
                 if (token == null) {
-                    if (prevToken != null && prevToken.type === tokenTypes.literal) {
-                        prevToken.value += ch;
-                        prevToken.length++;
-                        i++;
-                        continue;
-                    }
-
                     token = scope._createPatternToken(pattern, tokenTypes.literal, i, 1);
                 }
 
                 if (token != null) {
                     tokens.push(token);
-                    prevToken = token;
                     i += token.length;
                 }
             }
@@ -20373,7 +21291,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _parseEscapeToken: function (pattern, i, endIndex) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -20390,18 +21308,20 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             if (ch >= "1" && ch <= "9") {
                 // check if the number is a group backreference
                 var groupDigits = scope._matchChars(pattern, i + 1, endIndex, scope._decSymbols, 3); // assume: there are not more than 999 groups
-                return scope._createPatternToken(pattern, tokenTypes.escBackrefNumber, i, 1 + groupDigits.matchLength); // "\nnn"
+                var backrefNumberToken = scope._createPatternToken(pattern, tokenTypes.escBackrefNumber, i, 1 + groupDigits.matchLength); // "\nnn"
+                backrefNumberToken.data = { number: parseInt(groupDigits.match, 10) };
+                return backrefNumberToken;
+            }
+
+            // Parse a sequence for "Anchors"
+            if (scope._escapedAnchors.indexOf(ch) >= 0) {
+                return scope._createPatternToken(pattern, tokenTypes.escAnchor, i, 2); // "\A" or "\Z" or "\z" or "\G" or "\b" or "\B"
             }
 
             // Parse a sequence for "Character Escapes" or "Character Classes"
             var escapedCharToken = scope._parseEscapedChar(pattern, i, endIndex);
             if (escapedCharToken != null) {
                 return escapedCharToken;
-            }
-
-            // Parse a sequence for "Anchors"
-            if (scope._escapedAnchors.indexOf(ch) >= 0) {
-                return scope._createPatternToken(pattern, tokenTypes.escAnchor, i, 2); // "\A" or "\Z" or "\z" or "\G" or "\b" or "\B"
             }
 
             // Parse a sequence for a named backreference ("Backreference Constructs")
@@ -20412,7 +21332,9 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
                         var closingCh = nameQuoteCh === "<" ? ">" : "'";
                         var refNameChars = scope._matchUntil(pattern, i + 3, endIndex, closingCh);
                         if (refNameChars.unmatchLength === 1 && refNameChars.matchLength > 0) {
-                            return scope._createPatternToken(pattern, tokenTypes.escBackrefName, i, 3 + refNameChars.matchLength + 1); // "\k<Name>" or "\k'Name'"
+                            var backrefNameToken = scope._createPatternToken(pattern, tokenTypes.escBackrefName, i, 3 + refNameChars.matchLength + 1); // "\k<Name>" or "\k'Name'"
+                            backrefNameToken.data = { name: refNameChars.match };
+                            return backrefNameToken;
                         }
                     }
                 }
@@ -20425,7 +21347,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _parseOctalCharToken: function (pattern, i, endIndex) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -20435,7 +21357,10 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
 
                 if (ch >= "0" && ch <= "7") {
                     var octalDigits = scope._matchChars(pattern, i + 1, endIndex, scope._octSymbols, 3);
-                    return scope._createPatternToken(pattern, tokenTypes.escCharOctal, i, 1 + octalDigits.matchLength); // "\0" or "\nn" or "\nnn"
+                    var octalVal = parseInt(octalDigits.match, 8);
+                    var token = scope._createPatternToken(pattern, tokenTypes.escCharOctal, i, 1 + octalDigits.matchLength); // "\0" or "\nn" or "\nnn"
+                    token.data = { n: octalVal, ch: String.fromCharCode(octalVal) };
+                    return token;
                 }
             }
 
@@ -20443,8 +21368,9 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _parseEscapedChar: function (pattern, i, endIndex) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
+            var token;
 
             var ch = pattern[i];
             if (ch !== "\\" || i + 1 >= endIndex) {
@@ -20461,15 +21387,23 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
                         throw new System.ArgumentException("Insufficient hexadecimal digits.");
                     }
 
-                    return scope._createPatternToken(pattern, tokenTypes.escCharHex, i, 4); // "\xnn"
+                    var hexVal = parseInt(hexDigits.match, 16);
+                    token = scope._createPatternToken(pattern, tokenTypes.escCharHex, i, 4); // "\xnn"
+                    token.data = { n: hexVal, ch: String.fromCharCode(hexVal) };
+                    return token;
+
                 } else if (ch === "c") {
                     if (i + 2 >= endIndex) {
                         throw new System.ArgumentException("Missing control character.");
                     }
 
                     var ctrlCh = pattern[i + 2];
-                    if ((ctrlCh >= "a" && ctrlCh <= "z") || (ctrlCh >= "A" && ctrlCh <= "Z")) {
-                        return scope._createPatternToken(pattern, tokenTypes.escCharCtrl, i, 3); // "\cx" or "\cX"
+                    ctrlCh = ctrlCh.toUpperCase();
+                    var ctrlIndex = this._controlChars.indexOf(ctrlCh);
+                    if (ctrlIndex >= 0) {
+                        token = scope._createPatternToken(pattern, tokenTypes.escCharCtrl, i, 3); // "\cx" or "\cX"
+                        token.data = { n: ctrlIndex, ch: String.fromCharCode(ctrlIndex) };
+                        return token;
                     }
 
                     throw new System.ArgumentException("Unrecognized control character.");
@@ -20479,11 +21413,46 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
                         throw new System.ArgumentException("Insufficient hexadecimal digits.");
                     }
 
-                    return scope._createPatternToken(pattern, tokenTypes.escCharUnicode, i, 6); // "\unnnn"
+                    var ucodeVal = parseInt(ucodeDigits.match, 16);
+                    token = scope._createPatternToken(pattern, tokenTypes.escCharUnicode, i, 6); // "\unnnn"
+                    token.data = { n: ucodeVal, ch: String.fromCharCode(ucodeVal) };
+                    return token;
                 }
 
-                return scope._createPatternToken(pattern, tokenTypes.escChar, i, 2); // "\a" or "\b" or "\t" or "\r" or "\v" or "f" or "n" or "e"
+                token = scope._createPatternToken(pattern, tokenTypes.escChar, i, 2); // "\a" or "\b" or "\t" or "\r" or "\v" or "f" or "n" or "e"-
+                var escVal;
+                switch (ch) {
+                    case "a":
+                        escVal = 7;
+                        break;
+                    case "b":
+                        escVal = 8;
+                        break;
+                    case "t":
+                        escVal = 9;
+                        break;
+                    case "r":
+                        escVal = 13;
+                        break;
+                    case "v":
+                        escVal = 11;
+                        break;
+                    case "f":
+                        escVal = 12;
+                        break;
+                    case "n":
+                        escVal = 10;
+                        break;
+                    case "e":
+                        escVal = 27;
+                        break;
 
+                    default:
+                        throw new System.ArgumentException("Unexpected escaped char: '" + ch + "'.");
+                }
+
+                token.data = { n: escVal, ch: String.fromCharCode(escVal) };
+                return token;
             }
 
             // Parse a sequence for an octal character("Character Escapes")
@@ -20496,11 +21465,11 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             if (scope._escapedCharClasses.indexOf(ch) >= 0) {
                 if (ch === "p" || ch === "P") {
                     var catNameChars = scope._matchUntil(pattern, i + 2, endIndex, "}"); // the longest category name is 37 + 2 brackets, but .NET does not limit the value on this step
-                    if (catNameChars.matchLength < 3 || catNameChars.match[0] !== "{" || catNameChars.unmatchLength !== 1) {
+                    if (catNameChars.matchLength < 2 || catNameChars.match[0] !== "{" || catNameChars.unmatchLength !== 1) {
                         throw new System.ArgumentException("Incomplete \p{X} character escape.");
                     }
 
-                    var catName = catNameChars.slice(1);
+                    var catName = catNameChars.match.slice(1);
 
                     if (scope._unicodeCategories.indexOf(catName) >= 0) {
                         return scope._createPatternToken(pattern, tokenTypes.escCharClassCategory, i, 2 + catNameChars.matchLength + 1); // "\p{Name}" or "\P{Name}"
@@ -20518,16 +21487,24 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
 
             // Some other literal
             if (scope._escapedSpecialSymbols.indexOf(ch) >= 0) {
-                return scope._createPatternToken(pattern, tokenTypes.escCharOther, i, 2); // "\." or "\$" or ... "\\"
+                token = scope._createPatternToken(pattern, tokenTypes.escCharOther, i, 2); // "\." or "\$" or ... "\\"
+                token.data = { n: ch.charCodeAt(0), ch: ch };
+                return token;
             }
 
             return null;
         },
 
         _parseCharRangeToken: function (pattern, i, endIndex) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
             var tokens = [];
+            var intervalToken;
+            var substractToken;
+            var token;
+            var isNegative = false;
+            var noMoreTokenAllowed = false;
+            var hasSubstractToken = false;
 
             var ch = pattern[i];
             if (ch !== "[") {
@@ -20535,44 +21512,247 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             }
 
             var index = i + 1;
-            var escapeToken;
-            var literalToken;
             var closeBracketIndex = -1;
+            var toInc;
+
+            if (index < endIndex && pattern[index] === "^") {
+                isNegative = true;
+                index ++;
+            }
 
             while (index < endIndex) {
                 ch = pattern[index];
 
-                if (ch === "\\") {
-                    escapeToken = scope._parseEscapedChar(pattern, index, endIndex);
-                    if (escapeToken == null) {
+                noMoreTokenAllowed = hasSubstractToken;
+
+                if (ch === "-" && index + 1 < endIndex && pattern[index + 1] === "[") {
+                    substractToken = scope._parseCharRangeToken(pattern, index + 1, endIndex);
+                    substractToken.childrenPrefix = "-" + substractToken.childrenPrefix;
+                    substractToken.length ++;
+                    token = substractToken;
+                    toInc = substractToken.length;
+                    hasSubstractToken = true;
+                } else if (ch === "\\") {
+                    token = scope._parseEscapedChar(pattern, index, endIndex);
+                    if (token == null) {
                         throw new System.ArgumentException("Unrecognized escape sequence \\" + ch + ".");
                     }
-                    tokens.push(escapeToken);
-                    index += escapeToken.length;
-                    continue;
+                    toInc = token.length;
 
-                }
-
-                if (ch === "]") {
+                } else if (ch === "]") {
                     closeBracketIndex = index;
                     break;
+                } else {
+                    token = scope._createPatternToken(pattern, tokenTypes.literal, index, 1);
+                    toInc = 1;
                 }
 
-                literalToken = scope._createPatternToken(pattern, tokenTypes.literal, index, 1);
-                tokens.push(literalToken);
-                ++index;
+                if (noMoreTokenAllowed) {
+                    throw new System.ArgumentException("A subtraction must be the last element in a character class.");
+                }
+
+                // Check for interval:
+                if (tokens.length > 1) {
+                    intervalToken = scope._parseCharIntervalToken(pattern, tokens[tokens.length - 2], tokens[tokens.length - 1], token);
+                    if (intervalToken != null) {
+                        tokens.pop(); //pop Dush
+                        tokens.pop(); //pop Interval start
+                        token = intervalToken;
+                    }
+                }
+
+                // Add token:
+                if (token != null) {
+                    tokens.push(token);
+                    index += toInc;
+                }
             }
 
             if (closeBracketIndex < 0 || tokens.length < 1) {
                 throw new System.ArgumentException("Unterminated [] set.");
             }
 
-            var groupToken = scope._createPatternToken(pattern, tokenTypes.charGroup, i, 1 + closeBracketIndex - i, tokens, "[", "]");
+            var groupToken;
+            if (!isNegative) {
+                groupToken = scope._createPatternToken(pattern, tokenTypes.charGroup, i, 1 + closeBracketIndex - i, tokens, "[", "]");
+            } else {
+                groupToken = scope._createPatternToken(pattern, tokenTypes.charNegativeGroup, i, 1 + closeBracketIndex - i, tokens, "[^", "]");
+            }
+
+            // Create full range data:
+            var ranges = scope._tidyCharRange(tokens);
+            groupToken.data = { ranges: ranges };
+            if (substractToken != null) {
+                groupToken.data.substractToken = substractToken;
+            }
+
             return groupToken;
         },
 
+        _parseCharIntervalToken: function (pattern, intervalStartToken, dashToken, intervalEndToken) {
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
+            var tokenTypes = scope.tokenTypes;
+
+            if (dashToken.type !== tokenTypes.literal || dashToken.value !== "-") {
+                return null;
+            }
+
+            if (intervalStartToken.type !== tokenTypes.literal &&
+                intervalStartToken.type !== tokenTypes.escChar &&
+                intervalStartToken.type !== tokenTypes.escCharOctal &&
+                intervalStartToken.type !== tokenTypes.escCharHex &&
+                intervalStartToken.type !== tokenTypes.escCharCtrl &&
+                intervalStartToken.type !== tokenTypes.escCharUnicode &&
+                intervalStartToken.type !== tokenTypes.escCharOther) {
+                return null;
+            }
+
+            if (intervalEndToken.type !== tokenTypes.literal &&
+                intervalEndToken.type !== tokenTypes.escChar &&
+                intervalEndToken.type !== tokenTypes.escCharOctal &&
+                intervalEndToken.type !== tokenTypes.escCharHex &&
+                intervalEndToken.type !== tokenTypes.escCharCtrl &&
+                intervalEndToken.type !== tokenTypes.escCharUnicode &&
+                intervalEndToken.type !== tokenTypes.escCharOther) {
+                return null;
+            }
+
+            var startN;
+            var startCh;
+            if (intervalStartToken.type === tokenTypes.literal) {
+                startN = intervalStartToken.value.charCodeAt(0);
+                startCh = intervalStartToken.value;
+            } else {
+                startN = intervalStartToken.data.n;
+                startCh = intervalStartToken.data.ch;
+            }
+
+            var endN;
+            var endCh;
+            if (intervalEndToken.type === tokenTypes.literal) {
+                endN = intervalEndToken.value.charCodeAt(0);
+                endCh = intervalEndToken.value;
+            } else {
+                endN = intervalEndToken.data.n;
+                endCh = intervalEndToken.data.ch;
+            }
+
+            if (startN > endN) {
+                throw new System.NotSupportedException("[x-y] range in reverse order.");
+            }
+                
+            var index = intervalStartToken.index;
+            var length = intervalStartToken.length + dashToken.length + intervalEndToken.length;
+            var intervalToken = scope._createPatternToken(pattern, tokenTypes.charInterval, index, length, [intervalStartToken, dashToken, intervalEndToken], "", "");
+
+            intervalToken.data = {
+                startN: startN,
+                startCh: startCh,
+                endN: endN,
+                endCh: endCh
+            };
+
+            return intervalToken;
+        },
+
+        _tidyCharRange: function (tokens) {
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
+            var tokenTypes = scope.tokenTypes;
+
+            var j;
+            var k;
+            var n;
+            var m;
+            var token;
+            var ranges = [];
+            var classTokens = [];
+
+            var range;
+            var nextRange;
+            var toSkip;
+
+            for (j = 0; j < tokens.length; j++) {
+                token = tokens[j];
+
+                if (token.type === tokenTypes.literal) {
+
+                    n = token.value.charCodeAt(0);
+                    m = n;
+
+                } else if (token.type === tokenTypes.charInterval) {
+
+                    n = token.data.startN;
+                    m = token.data.endN;
+
+                } else if (token.type === tokenTypes.literal ||
+                    token.type === tokenTypes.escChar ||
+                    token.type === tokenTypes.escCharOctal ||
+                    token.type === tokenTypes.escCharHex ||
+                    token.type === tokenTypes.escCharCtrl ||
+                    token.type === tokenTypes.escCharUnicode ||
+                    token.type === tokenTypes.escCharOther) {
+
+                    n = token.data.n;
+                    m = n;
+
+                } else if (
+                    token.type === tokenTypes.charGroup ||
+                    token.type === tokenTypes.charNegativeGroup) {
+
+                    continue;
+
+                } else {
+
+                    classTokens.push(token);
+                    continue;
+
+                }
+
+                if (ranges.length === 0) {
+                    ranges.push({ n: n, m: m });
+                    continue;
+                }
+
+                //TODO: [Performance] Use binary search
+                for (k = 0; k < ranges.length; k++) {
+                    if (ranges[k].n > n) {
+                        break;
+                    }
+                }
+
+                ranges.splice(k, 0, { n: n, m: m });
+            }
+
+            // Combine ranges:
+            for (j = 0; j < ranges.length; j++) {
+                range = ranges[j];
+
+                toSkip = 0;
+                for (k = j + 1; k < ranges.length; k++) {
+                    nextRange = ranges[k];
+                    if (nextRange.n > 1 + range.m) {
+                        break;
+                    }
+                    toSkip++;
+                    if (nextRange.m > range.m) {
+                        range.m = nextRange.m;
+                    }
+                }
+                if (toSkip > 0) {
+                    ranges.splice(j + 1, toSkip);
+                }
+            }
+
+            if (classTokens.length > 0) {
+                var charClassStr = "[" + scope._constructPattern(classTokens) + "]";
+                ranges.charClassToken = scope._createPatternToken(charClassStr, tokenTypes.charGroup, 0, charClassStr.length, tokens, "[", "]");
+            }
+
+            return ranges;
+        },
+
         _parseDotToken: function (pattern, i) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -20584,7 +21764,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _parseAnchorToken: function (pattern, i) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -20596,31 +21776,20 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _updateSettingsFromConstructs: function (settings, constructs) {
-            if (constructs.isIgnoreCase != null) {
-                settings.ignoreCase = constructs.isIgnoreCase;
-            }
-
-            if (constructs.isMultiline != null) {
-                settings.multiline = constructs.isMultiline;
-            }
-
-            if (constructs.isSingleLine != null) {
-                settings.singleline = constructs.isSingleLine;
-            }
-
             if (constructs.isIgnoreWhitespace != null) {
                 settings.ignoreWhitespace = constructs.isIgnoreWhitespace;
+            }
+            if (constructs.isExplicitCapture != null) {
+                settings.explicitCapture = constructs.isExplicitCapture;
             }
         },
 
         _parseGroupToken: function (pattern, settings, i, endIndex) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
             var groupSettings = {
-                ignoreCase: settings.ignoreCase,
-                multiline: settings.multiline,
-                singleline: settings.singleline,
-                ignoreWhitespace: settings.ignoreWhitespace
+                ignoreWhitespace: settings.ignoreWhitespace,
+                explicitCapture: settings.explicitCapture
             };
 
             var ch = pattern[i];
@@ -20635,109 +21804,120 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             var isComment = false;
             var isAlternation = false;
             var isInlineOptions = false;
+            var isImnsxConstructed = false;
+            var isNonCapturingExplicit = false;
 
             var grConstructs = null;
 
             // Parse the Group construct, if any:
             var constructToken = scope._parseGroupConstructToken(pattern, groupSettings, i + 1, endIndex);
             if (constructToken != null) {
+                grConstructs = this._fillGroupConstructs(constructToken);
+
                 bodyIndex += constructToken.length;
                 if (constructToken.type === tokenTypes.commentInline) {
                     isComment = true;
-                } else if (constructToken.type === tokenTypes.alternationGroupExpr) {
+                } else if (constructToken.type === tokenTypes.alternationGroupCondition) {
                     isAlternation = true;
                 } else if (constructToken.type === tokenTypes.groupConstructImnsx) {
-                    grConstructs = this._fillGroupConstructs(constructToken);
                     this._updateSettingsFromConstructs(groupSettings, grConstructs);
+                    isImnsxConstructed = true;
                 } else if (constructToken.type === tokenTypes.groupConstructImnsxMisc) {
-                    grConstructs = this._fillGroupConstructs(constructToken);
-                    this._updateSettingsFromConstructs(groupSettings, grConstructs);
+                    this._updateSettingsFromConstructs(settings, grConstructs); // parent settings!
                     isInlineOptions = true;
-                    bodyIndex += 1; // Skip closing bracket
                 }
             }
 
-            // Find the closing bracket of the group:
-            if (isInlineOptions) {
-                // we just need add all tokens after inline options in a temp group;
-                closeBracketIndex = endIndex;
-            } else {
-                var index = bodyIndex;
-                while (index < endIndex) {
-                    ch = pattern[index];
-                    if (ch === "\\") {
-                        index += 2; // skip the escaped char
-                        continue;
-                    }
-
-                    if (ch === "(" && !isComment) {
-                        ++bracketLvl;
-                    } else if (ch === ")") {
-                        --bracketLvl;
-                    }
-
-                    if (bracketLvl === 0) {
-                        closeBracketIndex = index;
-                        break;
-                    }
-
-                    ++index;
-                }
+            if (groupSettings.explicitCapture && (grConstructs == null || grConstructs.name1 == null)) {
+                isNonCapturingExplicit = true;
             }
+
+            var index = bodyIndex;
+            while (index < endIndex) {
+                ch = pattern[index];
+                if (ch === "\\") {
+                    index += 2; // skip the escaped char
+                    continue;
+                }
+
+                if (ch === "(" && !isComment) {
+                    ++bracketLvl;
+                } else if (ch === ")") {
+                    --bracketLvl;
+                }
+
+                if (bracketLvl === 0) {
+                    closeBracketIndex = index;
+                    break;
+                }
+
+                ++index;
+            }
+
+            var result = null;
 
             if (isComment) {
                 if (closeBracketIndex < 0) {
                     throw new System.ArgumentException("Unterminated (?#...) comment.");
                 }
-                return scope._createPatternToken(pattern, tokenTypes.commentInline, i, 1 + closeBracketIndex - i);
-            }
 
-            if (closeBracketIndex < 0) {
-                throw new System.ArgumentException("Not enough )'s.");
-            }
+                result = scope._createPatternToken(pattern, tokenTypes.commentInline, i, 1 + closeBracketIndex - i);
 
-            // Parse the "Body" of the group
-            var innerTokens = scope._parsePatternImpl(pattern, groupSettings, bodyIndex, closeBracketIndex);
-            if (constructToken != null && !isInlineOptions) {
-                innerTokens.splice(0, 0, constructToken);
-            }
-
-            // If there is an Alternation expression, treat the group as Alternation group
-            if (isAlternation) {
-                var innerTokensLen = innerTokens.length;
-                var innerToken;
-                var j;
-
-                // Check that there is only 1 alternation symbol:
-                var altCount = 0;
-                for (j = 0; j < innerTokensLen; j++) {
-                    innerToken = innerTokens[j];
-                    if (innerToken.type === tokenTypes.alternation) {
-                        ++altCount;
-                        if (altCount > 1) {
-                            throw new System.ArgumentException("Too many | in (?()|).");
-                        }
-                    }
+            } else {
+                if (closeBracketIndex < 0) {
+                    throw new System.ArgumentException("Not enough )'s.");
                 }
 
-                var altGroupToken = scope._createPatternToken(pattern, tokenTypes.alternationGroup, i, 1 + closeBracketIndex - i, innerTokens, "(", ")");
-                return altGroupToken;
+                // Parse the "Body" of the group
+                var innerTokens = scope._parsePatternImpl(pattern, groupSettings, bodyIndex, closeBracketIndex);
+                if (constructToken != null) {
+                    innerTokens.splice(0, 0, constructToken);
+                }
+
+                // If there is an Alternation expression, treat the group as Alternation group
+                if (isAlternation) {
+                    var innerTokensLen = innerTokens.length;
+                    var innerToken;
+                    var j;
+
+                    // Check that there is only 1 alternation symbol:
+                    var altCount = 0;
+                    for (j = 0; j < innerTokensLen; j++) {
+                        innerToken = innerTokens[j];
+                        if (innerToken.type === tokenTypes.alternation) {
+                            ++altCount;
+                            if (altCount > 1) {
+                                throw new System.ArgumentException("Too many | in (?()|).");
+                            }
+                        }
+                    }
+                    if (altCount === 0) {
+                        // Though .NET works with this case, it ends up with unexpected result. Let's avoid this behaviour.
+                        throw new System.NotSupportedException("Alternation group without | is not supported.");
+                    }
+
+                    var altGroupToken = scope._createPatternToken(pattern, tokenTypes.alternationGroup, i, 1 + closeBracketIndex - i, innerTokens, "(", ")");
+                    result = altGroupToken;
+                } else {
+                    // Create Group token:
+                    var tokenType = tokenTypes.group;
+                    if (isInlineOptions) {
+                        tokenType = tokenTypes.groupImnsxMisc;
+                    } else if (isImnsxConstructed) {
+                        tokenType = tokenTypes.groupImnsx;
+                    }
+
+                    var groupToken = scope._createPatternToken(pattern, tokenType, i, 1 + closeBracketIndex - i, innerTokens, "(", ")");
+                    groupToken.localSettings = groupSettings;
+                    result = groupToken;
+                }
             }
 
-            if (isInlineOptions) {
-                // Create Temp Group token:
-                var inlineToken = scope._createPatternToken(pattern, tokenTypes.toBeSkipped, i, bodyIndex - i, null);
-                innerTokens.splice(0, 0, inlineToken);
-
-                var tmpGroup = scope._createPatternToken(pattern, tokenTypes.tmpGroup, i, 1 + closeBracketIndex - i, innerTokens, "", "");
-                tmpGroup.localSettings = groupSettings;
-                return tmpGroup;
+            if (isNonCapturingExplicit) {
+                result.isNonCapturingExplicit = true;
             }
 
-            // Create Group token:
-            var groupToken = scope._createPatternToken(pattern, tokenTypes.group, i, 1 + closeBracketIndex - i, innerTokens, "(", ")");
-            groupToken.localSettings = groupSettings;
-            return groupToken;
+            return result;
         },
 
         _parseGroupConstructToken: function (pattern, settings, i, endIndex) {
@@ -20754,7 +21934,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             // ?>
             // ?#
 
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -20772,7 +21952,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             }
 
             if (ch === "(") {
-                return scope._parseAlternationGroupExprToken(pattern, settings, i, endIndex);
+                return scope._parseAlternationGroupConditionToken(pattern, settings, i, endIndex);
             }
 
             if (ch === "<" && i + 2 < endIndex) {
@@ -20790,7 +21970,7 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
                 }
 
                 var nameFirstCh = nameChars.match.slice(0, 1);
-                if ("`~@#$%^&*()-+{}[]|\\/|'\";:,.?".indexOf(nameFirstCh) >= 0) {
+                if ("`~@#$%^&*()+{}[]|\\/|'\";:,.?".indexOf(nameFirstCh) >= 0) {
                     // TODO: replace the "black list" of wrong characters with char class check:
                     // According to UTS#18 Unicode Regular Expressions (http://www.unicode.org/reports/tr18/)
                     // RL 1.4 Simple Word Boundaries  The class of <word_character> includes all Alphabetic
@@ -20813,42 +21993,67 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _parseQuantifierToken: function (pattern, i, endIndex) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
+            var token = null;
 
             var ch = pattern[i];
 
             if (ch === "*" || ch === "+" || ch === "?") {
-                return scope._createPatternToken(pattern, tokenTypes.quantifier, i, 1);
+
+                token = scope._createPatternToken(pattern, tokenTypes.quantifier, i, 1);
+                token.data = { val: ch };
+
+            } else if (ch === "{") {
+
+                var dec1Chars = scope._matchChars(pattern, i + 1, endIndex, scope._decSymbols);
+                if (dec1Chars.matchLength !== 0) {
+
+                    if (dec1Chars.unmatchCh === "}") {
+
+                        token = scope._createPatternToken(pattern, tokenTypes.quantifierN, i, 1 + dec1Chars.matchLength + 1);
+                        token.data = {
+                            n: parseInt(dec1Chars.match, 10)
+                        };
+
+                    } else if (dec1Chars.unmatchCh === ",") {
+
+                        var dec2Chars = scope._matchChars(pattern, dec1Chars.unmatchIndex + 1, endIndex, scope._decSymbols);
+                        if (dec2Chars.unmatchCh === "}") {
+                            token = scope._createPatternToken(pattern, tokenTypes.quantifierNM, i, 1 + dec1Chars.matchLength + 1 + dec2Chars.matchLength + 1);
+                            token.data = {
+                                n: parseInt(dec1Chars.match, 10),
+                                m: null
+                            };
+                            if (dec2Chars.matchLength !== 0) {
+                                token.data.m = parseInt(dec2Chars.match, 10);
+                                if (token.data.n > token.data.m) {
+                                    throw new System.ArgumentException("Illegal {x,y} with x > y.");
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
-            if (ch !== "{") {
-                return null;
+            if (token != null) {
+
+                var nextChIndex = i + token.length;
+                if (nextChIndex < endIndex) {
+                    var nextCh = pattern[nextChIndex];
+                    if (nextCh === "?") {
+                        this._modifyPatternToken(token, pattern, token.type, token.index, token.length + 1);
+                        token.data.isLazy = true;
+                    }
+                }
+
             }
 
-            var dec1Chars = scope._matchChars(pattern, i + 1, endIndex, scope._decSymbols);
-            if (dec1Chars.matchLength === 0) {
-                return null;
-            }
-
-            if (dec1Chars.unmatchCh === "}") {
-                return scope._createPatternToken(pattern, tokenTypes.quantifierN, i, 1 + dec1Chars.matchLength + 1);
-            }
-
-            if (dec1Chars.unmatchCh !== ",") {
-                return null;
-            }
-
-            var dec2Chars = scope._matchChars(pattern, dec1Chars.unmatchIndex + 1, endIndex, scope._decSymbols);
-            if (dec2Chars.matchLength === 0 && dec2Chars.unmatchCh !== "}") {
-                return null;
-            }
-
-            return scope._createPatternToken(pattern, tokenTypes.quantifierNM, i, 1 + dec1Chars.matchLength + 1 + dec2Chars.matchLength + 1);
+            return token;
         },
 
         _parseAlternationToken: function (pattern, i) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -20859,38 +22064,102 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
             return scope._createPatternToken(pattern, tokenTypes.alternation, i, 1);
         },
 
-        _parseAlternationGroupExprToken: function (pattern, settings, i, endIndex) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+        _parseAlternationGroupConditionToken: function (pattern, settings, i, endIndex) {
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
+            var constructToken;
+            var childToken;
+            var data = null;
 
             var ch = pattern[i];
             if (ch !== "?" || i + 1 >= endIndex || pattern[i + 1] !== "(") {
                 return null;
             }
 
-            // Parse Alternation expression as a group:
+            // Parse Alternation condition as a group:
             var expr = scope._parseGroupToken(pattern, settings, i + 1, endIndex);
             if (expr == null) {
                 return null;
             }
+            if (expr.type === tokenTypes.commentInline) {
+                throw new System.ArgumentException("Alternation conditions cannot be comments.");
+            }
 
-            if (expr.children && expr.children.length) {
-                //TODO: .NET Regex allows some of these. Need to be clarified:
-                switch (expr.children[0].type) {
-                    case tokenTypes.groupConstruct:
-                    case tokenTypes.groupConstructName:
-                    case tokenTypes.groupConstructImnsx:
-                    case tokenTypes.groupConstructImnsxMisc:
-                        throw new System.NotSupportedException("Group constructs are not supported for Alternation expressions.");
+            var children = expr.children;
+            if (children && children.length) {
+                constructToken = children[0];
+                if (constructToken.type === tokenTypes.groupConstructName) {
+                    throw new System.ArgumentException("Alternation conditions do not capture and cannot be named.");
+                }
+                
+                if (constructToken.type === tokenTypes.groupConstruct || constructToken.type === tokenTypes.groupConstructImnsx) {
+                    childToken = scope._findFirstGroupWithoutConstructs(children);
+                    if (childToken != null) {
+                        childToken.isEmptyCapturing = true;
+                    }
+                }
+
+                
+                if (constructToken.type === tokenTypes.literal) {
+                    var literalVal = expr.value.slice(1, expr.value.length - 1);
+                    var isDigit = literalVal[0] >= "0" && literalVal[0] <= "9";
+                    if (isDigit) {
+                        var res = scope._matchChars(literalVal, 0, literalVal.length, scope._decSymbols);
+                        if (res.matchLength !== literalVal.length) {
+                            throw new System.ArgumentException("Malformed Alternation group number: " + literalVal + ".");
+                        }
+
+                        var number = parseInt(literalVal, 10);
+                        data = { number: number };
+                    } else {
+                        data = { name: literalVal };
+                    }
                 }
             }
 
+            // Add "Noncapturing" construct if there are no other ones.
+            if (!children.length || (children[0].type !== tokenTypes.groupConstruct && children[0].type !== tokenTypes.groupConstructImnsx)) {
+                constructToken = scope._createPatternToken("?:", tokenTypes.groupConstruct, 0, 2);
+                children.splice(0, 0, constructToken);
+            }
+
             // Transform Group token to Alternation expression token:
-            return scope._createPatternToken(pattern, tokenTypes.alternationGroupExpr, expr.index - 1, 1 + expr.length, expr.children, "?(", ")");
+            var token = scope._createPatternToken(pattern, tokenTypes.alternationGroupCondition, expr.index - 1, 1 + expr.length, [expr], "?", "");
+            if (data != null) {
+                token.data = data;
+            }
+            return token;
+        },
+
+        _findFirstGroupWithoutConstructs: function (tokens) {
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
+            var tokenTypes = scope.tokenTypes;
+            var result = null;
+            var token;
+            var i;
+
+            for (i = 0; i < tokens.length; ++i) {
+                token = tokens[i];
+                if (token.type === tokenTypes.group && token.children && token.children.length) {
+                    if (token.children[0].type !== tokenTypes.groupConstruct && token.children[0].type !== tokenTypes.groupConstructImnsx) {
+                        result = token;
+                        break;
+                    }
+
+                    if (token.children && token.children.length) {
+                        result = scope._findFirstGroupWithoutConstructs(token.children);
+                        if (result != null) {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return result;
         },
 
         _parseXModeCommentToken: function (pattern, i, endIndex) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var tokenTypes = scope.tokenTypes;
 
             var ch = pattern[i];
@@ -20912,13 +22181,13 @@ Bridge.define("System.Text.RegularExpressions.RegexNetEngineParser", {
         },
 
         _createLiteralToken: function (body) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
             var token = scope._createPatternToken(body, scope.tokenTypes.literal, 0, body.length);
             return token;
         },
 
         _createPositiveLookaheadToken: function (body, settings) {
-            var scope = System.Text.RegularExpressions.RegexNetEngineParser;
+            var scope = System.Text.RegularExpressions.RegexEngineParser;
 
             var pattern = "(?=" + body + ")";
             var groupToken = scope._parseGroupToken(pattern, settings, 0, pattern.length);

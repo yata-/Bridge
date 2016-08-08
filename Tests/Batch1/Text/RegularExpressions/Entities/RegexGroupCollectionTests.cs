@@ -2,11 +2,11 @@ using System;
 using System.Text.RegularExpressions;
 using Bridge.Test;
 
-namespace Bridge.ClientTest.Text.RegularExpressions
+namespace Bridge.ClientTest.Text.RegularExpressions.Entities
 {
     [Category(Constants.MODULE_REGEX)]
-    [TestFixture(TestNameFormat = "RegexCaptureCollection - {0}")]
-    public class RegexCaptureCollectionTests : RegexTestBase
+    [TestFixture(TestNameFormat = "RegexGroupCollection Entity - {0}")]
+    public class RegexGroupCollectionTests : RegexTestBase
     {
         #region Test data
 
@@ -58,76 +58,72 @@ namespace Bridge.ClientTest.Text.RegularExpressions
         #endregion
 
         [Test]
-        public void CaptureCollectionFieldsTest()
+        public void GroupCollectionFieldsTest()
         {
             var m = GetTestDataMatch();
-            var group = m.Groups[1];
-            var captures = group.Captures;
+            var groups = m.Groups;
 
-            Assert.AreEqual(4, captures.Count, "Captures.Count");
-            Assert.AreEqual(true, captures.IsReadOnly, "Captures.IsReadOnly");
-            Assert.AreEqual(false, captures.IsSynchronized, "Captures.IsSynchronized");
-            Assert.AreEqual(group, captures.SyncRoot, "Captures.SyncRoot");
+            Assert.AreEqual(2, groups.Count, "Groups.Count");
+            Assert.AreEqual(true, groups.IsReadOnly, "Groups.IsReadOnly");
+            Assert.AreEqual(false, groups.IsSynchronized, "Groups.IsSynchronized");
+            Assert.AreEqual(m, groups.SyncRoot, "Groups.SyncRoot");
         }
 
         [Test]
-        public void CaptureCollectionForeachTest()
+        public void GroupCollectionForeachTest()
         {
             var m = GetTestDataMatch();
-            var group = m.Groups[1];
-            var captures = group.Captures;
+            var groups = m.Groups;
 
             var i = 0;
-            foreach (var captureObj in captures)
+            foreach (var groupObj in groups)
             {
-                var capture = captureObj as Capture;
-                CapturesAreEqual(captures[i], capture, "Captures[" + i + "]");
+                var group = groupObj as Group;
+                GroupsAreEqual(groups[i], group, "Groups[" + i + "]");
                 ++i;
             }
         }
 
         [Test]
-        public void CaptureCollectionEnumeratorTest()
+        public void GroupCollectionEnumeratorTest()
         {
             var m = GetTestDataMatch();
-            var group = m.Groups[1];
-            var captures = group.Captures;
+            var groups = m.Groups;
 
-            var en = captures.GetEnumerator();
+            var en = groups.GetEnumerator();
 
             Assert.True(en.MoveNext(), "First call - MoveNext()");
 
             int i = 0;
             do
             {
-                var capture = en.Current as Capture;
-                CapturesAreEqual(captures[i], capture, "Captures[" + i + "]");
+                var group = en.Current as Group;
+                GroupsAreEqual(groups[i], group, "Groups[" + i + "]");
                 ++i;
 
             } while (en.MoveNext());
 
-            Assert.AreEqual(captures.Count, i, "Captures.Count");
+            Assert.AreEqual(groups.Count, i, "Groups.Count");
         }
 
         [Test]
-        public void CaptureCollectionCopyToTest()
+        public void GroupCollectionCopyToTest()
         {
             var m = GetTestDataMatch();
-            var group = m.Groups[1];
-            var captures = group.Captures;
+            var groups = m.Groups;
 
-            var dstArray = new Capture[captures.Count];
-            captures.CopyTo(dstArray, 0);
+            var dstArray = new Group[groups.Count];
+            groups.CopyTo(dstArray, 0);
 
-            for (int i = 0; i < captures.Count; i++)
+            for (int i = 0; i < groups.Count; i++)
             {
-                CapturesAreEqual(captures[i], dstArray[i], "Captures[" + i + "]");
+                GroupsAreEqual(groups[i], dstArray[i], "Groups[" + i + "]");
             }
 
-            Assert.Throws(() => { captures.CopyTo(null, 0); },
+            Assert.Throws(() => { groups.CopyTo(null, 0); },
                 err => err.GetClassName() == typeof(ArgumentNullException).GetClassName(),
                 "Exception: Array is not null.");
-            Assert.Throws(() => { captures.CopyTo(dstArray, 1); },
+            Assert.Throws(() => { groups.CopyTo(dstArray, 1); },
                 err => err.GetClassName() == typeof(IndexOutOfRangeException).GetClassName(),
                 "Exception: Out of range.");
         }
