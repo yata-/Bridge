@@ -1,12 +1,11 @@
 using Bridge.Contract;
 using Bridge.Contract.Constants;
-
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.Resolver;
 using ICSharpCode.NRefactory.TypeSystem;
-
 using System.Collections.Generic;
 using System.Linq;
+using ICSharpCode.NRefactory.Semantics;
 
 
 namespace Bridge.Translator
@@ -88,6 +87,23 @@ namespace Bridge.Translator
                 this.ResetLocals();
             }
 
+            var rr = this.Emitter.Resolver.ResolveNode(this.Context, this.Emitter);
+
+            if (this.Context is Expression)
+            {
+                var conversion = this.Emitter.Resolver.Resolver.GetConversion((Expression)this.Context);
+                if (conversion.IsAnonymousFunctionConversion)
+                {
+                    var type = this.Emitter.Resolver.Resolver.GetExpectedType((Expression)this.Context);
+                    if (type.FullName == typeof(System.Linq.Expressions.Expression).FullName && type.TypeParameterCount == 1)
+                    {
+                        var expr = new ExpressionTreeBuilder(this.Emitter.Resolver.Compilation, this.Emitter, this.Context.GetParent<SyntaxTree>(), this).BuildExpressionTree((LambdaResolveResult)rr);
+                        this.Write(expr);
+                        return;
+                    }
+                }
+            }
+
             var oldParentVariables = this.Emitter.ParentTempVariables;
             if (this.Emitter.ParentTempVariables == null)
             {
@@ -128,6 +144,8 @@ namespace Bridge.Translator
 
         protected virtual void EmitLambda(IEnumerable<ParameterDeclaration> parameters, AstNode body, AstNode context)
         {
+            var rr = this.Emitter.Resolver.ResolveNode(context, this.Emitter);
+
             var analyzer = new CaptureAnalyzer(this.Emitter.Resolver.Resolver);
             analyzer.Analyze(this.Body, this.Parameters.Select(p => p.Name));
 
@@ -180,9 +198,9 @@ namespace Bridge.Translator
             if (isSimpleLambda)
             {
                 this.ConvertParamsToReferences(parameters);
-                var rr = this.Emitter.Resolver.ResolveNode(this.Context, this.Emitter) as LambdaResolveResult;
+                var lrr = rr as LambdaResolveResult;
 
-                if (rr == null || rr.ReturnType.Kind != TypeKind.Void)
+                if (lrr == null || lrr.ReturnType.Kind != TypeKind.Void)
                 {
                     this.WriteReturn(true);    
                 }

@@ -5,7 +5,8 @@ using Bridge;
 namespace System.Reflection
 {
 	[External]
-	public class ParameterInfo
+    [Name("Object")]
+    public class ParameterInfo
     {
 	    [Name("sname")]
 	    [FieldProperty]

@@ -1,5 +1,6 @@
 using System;
 using Bridge.Contract;
+using Bridge.Contract.Constants;
 using ICSharpCode.NRefactory.CSharp;
 using System.Collections.Generic;
 using System.Linq;
@@ -97,7 +98,7 @@ namespace Bridge.Translator
             this.WriteFinally();
             this.BeginBlock();
 
-            this.Write("if (Bridge.hasValue(" + name + ")) ");
+            this.Write("if (" + JS.Funcs.BRIDGE_HASVALUE + "(" + name + ")) ");
             this.BeginBlock();
             this.Write(name);
             this.Write(".dispose();");

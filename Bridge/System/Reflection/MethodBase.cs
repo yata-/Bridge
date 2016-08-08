@@ -5,7 +5,8 @@ using Bridge;
 namespace System.Reflection
 {
 	[External]
-	public class MethodBase : MemberInfo
+    [Name("Object")]
+    public class MethodBase : MemberInfo
     {
 	    public extern Type[] ParameterTypes
 	    {

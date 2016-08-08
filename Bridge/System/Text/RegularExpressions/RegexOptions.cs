@@ -25,11 +25,10 @@ namespace System.Text.RegularExpressions
         /// </summary>
         Multiline = 0x0002,
 
-        //TODO: Enable options when they are supported.
-        //        /// <summary>
-        //        /// Specifies that the only valid captures are explicitly named or numbered groups of the form (?&lt;name&gt;…). This allows unnamed parentheses to act as noncapturing groups without the syntactic clumsiness of the expression (?:…). For more information, see the "Explicit Captures Only" section in the Regular Expression Options topic.
-        //        /// </summary>
-        //        ExplicitCapture = 0x0004,
+        /// <summary>
+        /// Specifies that the only valid captures are explicitly named or numbered groups of the form (?&lt;name&gt;…). This allows unnamed parentheses to act as noncapturing groups without the syntactic clumsiness of the expression (?:…). For more information, see the "Explicit Captures Only" section in the Regular Expression Options topic.
+        /// </summary>
+        ExplicitCapture = 0x0004,
 
         //#if !SILVERLIGHT || FEATURE_LEGACYNETCF
         //        /// <summary>

@@ -37,7 +37,7 @@ namespace System.Collections.Generic
 
         public extern bool Contains(T item);
 
-        [Template("convertAll({TOutput}, {converter})")]
+        [Template("{this}.convertAll({TOutput}, {converter})")]
         public extern List<TOutput> ConvertAll<TOutput>(Converter<T, TOutput> converter);
 
         extern IEnumerator IEnumerable.GetEnumerator();
@@ -80,7 +80,7 @@ namespace System.Collections.Generic
 
         public extern void Sort(Func<T, T, int> comparison);
 
-        [Template("sort(Bridge.fn.bind({comparer}, {comparer}.compare))")]
+        [Template("{this}.sort(Bridge.fn.bind({comparer}, {comparer}.compare))")]
         public extern void Sort(IComparer<T> comparer);
 
         public extern void Splice(int start, int deleteCount);

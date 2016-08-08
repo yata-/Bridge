@@ -1,11 +1,9 @@
 using Bridge.Contract;
 using Bridge.Contract.Constants;
-
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
-
 using System.Collections.Generic;
 using System.Linq;
 
@@ -270,12 +268,12 @@ namespace Bridge.Translator
             }
         }
 
-        protected virtual void RemoveTempVar(string name)
+        public virtual void RemoveTempVar(string name)
         {
             this.Emitter.TempVariables[name] = false;
         }
 
-        protected virtual string GetTempVarName()
+        public virtual string GetTempVarName()
         {
             if (this.Emitter.TempVariables == null)
             {

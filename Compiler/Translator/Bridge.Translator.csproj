@@ -202,6 +202,8 @@
     <Compile Include="Emitter\Blocks\AbstractEmitterBlock.Write.cs" />
     <Compile Include="Emitter\Emitter.Log.cs" />
     <Compile Include="Emitter\EmitterOutput.cs" />
+    <Compile Include="Emitter\ExpressionTreeBuilder.cs" />
+    <Compile Include="Emitter\ResolveResultVisitor.cs" />
     <Compile Include="Emitter\TypeScript\ClassBlock.cs" />
     <Compile Include="Emitter\TypeScript\ConstructorBlock.cs" />
     <Compile Include="Emitter\TypeScript\EmitBlock.cs" />

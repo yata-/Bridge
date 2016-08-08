@@ -1074,6 +1074,52 @@
                 QUnit.test("Query - Test", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_TestLinqQueryExecution.test);
                 QUnit.test("Restriction- Test", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_TestLinqRestrictionOperators.test);
                 QUnit.test("Set - Test", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_TestLinqSetOperators.test);
+                QUnit.module("LINQ Expressions");
+                QUnit.test("LINQ Expressions - ExpressionProtectedConstructorWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.expressionProtectedConstructorWorks);
+                QUnit.test("LINQ Expressions - SimpleExpressionTreeWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.simpleExpressionTreeWorks);
+                QUnit.test("LINQ Expressions - LambdaWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.lambdaWorks);
+                QUnit.test("LINQ Expressions - ParameterAndVariableWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.parameterAndVariableWork);
+                QUnit.test("LINQ Expressions - ConstantWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.constantWorks);
+                QUnit.test("LINQ Expressions - BinaryExpressionsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.binaryExpressionsWork);
+                QUnit.test("LINQ Expressions - UnaryExpressionsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.unaryExpressionsWork);
+                QUnit.test("LINQ Expressions - ArrayLengthWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.arrayLengthWorks);
+                QUnit.test("LINQ Expressions - ConversionsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.conversionsWork);
+                QUnit.test("LINQ Expressions - ArrayIndexWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.arrayIndexWorks);
+                QUnit.test("LINQ Expressions - MultiDimensionalArrayIndexWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.multiDimensionalArrayIndexWorks);
+                QUnit.test("LINQ Expressions - ConditionWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.conditionWorks);
+                QUnit.test("LINQ Expressions - CallWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.callWorks);
+                QUnit.test("LINQ Expressions - MethodGroupConversionWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.methodGroupConversionWorks);
+                QUnit.test("LINQ Expressions - InvokeWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.invokeWorks);
+                QUnit.test("LINQ Expressions - ArrayCreationWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.arrayCreationWorks);
+                QUnit.test("LINQ Expressions - PropertiesAndFieldsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.propertiesAndFieldsWork);
+                QUnit.test("LINQ Expressions - IndexersWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.indexersWork);
+                QUnit.test("LINQ Expressions - IndexExpressionsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.indexExpressionsWork);
+                QUnit.test("LINQ Expressions - ObjectConstructionWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.objectConstructionWorks);
+                QUnit.test("LINQ Expressions - AnonymousTypeConstructionWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.anonymousTypeConstructionWorks);
+                QUnit.test("LINQ Expressions - TransparentIdentifiersWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.transparentIdentifiersWork);
+                QUnit.test("LINQ Expressions - NewExpressionWithMembersWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.newExpressionWithMembersWork);
+                QUnit.test("LINQ Expressions - BindWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.bindWorks);
+                QUnit.test("LINQ Expressions - ElementInitWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.elementInitWorks);
+                QUnit.test("LINQ Expressions - ListBindWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.listBindWorks);
+                QUnit.test("LINQ Expressions - MemberBindWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.memberBindWorks);
+                QUnit.test("LINQ Expressions - MemberInitWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.memberInitWorks);
+                QUnit.test("LINQ Expressions - ListInitWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.listInitWorks);
+                QUnit.test("LINQ Expressions - TypeIsAndTypeEqualWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.typeIsAndTypeEqualWork);
+                QUnit.test("LINQ Expressions - QuoteWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.quoteWorks);
+                QUnit.test("LINQ Expressions - LocalVariableReferenceWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.localVariableReferenceWorks);
+                QUnit.test("LINQ Expressions - ThrowAndRethrowWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.throwAndRethrowWork);
+                QUnit.test("LINQ Expressions - DefaultAndEmptyWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.defaultAndEmptyWork);
+                QUnit.test("LINQ Expressions - BlockWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.blockWorks);
+                QUnit.test("LINQ Expressions - IfThenWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.ifThenWorks);
+                QUnit.test("LINQ Expressions - LabelTargetWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.labelTargetWorks);
+                QUnit.test("LINQ Expressions - GotoWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.gotoWorks);
+                QUnit.test("LINQ Expressions - LabelExpressionWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.labelExpressionWorks);
+                QUnit.test("LINQ Expressions - LoopWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.loopWorks);
+                QUnit.test("LINQ Expressions - SwitchCaseWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.switchCaseWorks);
+                QUnit.test("LINQ Expressions - SwitchWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.switchWorks);
+                QUnit.test("LINQ Expressions - CatchBlockWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.catchBlockWorks);
+                QUnit.test("LINQ Expressions - TryWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.tryWorks);
+                QUnit.test("LINQ Expressions - DynamicWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests.dynamicWorks);
                 QUnit.module("Math");
                 QUnit.test("Math - ConstantsWork", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MathTests.constantsWork);
                 QUnit.test("Math - AbsOfDoubleWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_MathTests.absOfDoubleWorks);
@@ -1417,123 +1463,270 @@
                 QUnit.test("Reflection - TypeSystem DefaultValueOfNamedValuesEnumIsNull", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.defaultValueOfNamedValuesEnumIsNull);
                 QUnit.test("Reflection - TypeSystem DefaultValueOfImportedNamedValuesEnumIsNull", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Reflection_TypeSystemTests.defaultValueOfImportedNamedValuesEnumIsNull);
                 QUnit.module("Regex");
-                QUnit.test("Regex.IsMatch - IsMatchTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexIsMatchTests.isMatchTest);
-                QUnit.test("Regex.IsMatch - IsMatchWithOffsetTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexIsMatchTests.isMatchWithOffsetTest);
-                QUnit.test("Regex.IsMatch - IsMatchStaticTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexIsMatchTests.isMatchStaticTest);
-                QUnit.test("Regex.IsMatch - IsMatchStaticWithOptionsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexIsMatchTests.isMatchStaticWithOptionsTest);
-                QUnit.test("Regex.IsMatch - IsMatchStaticWithOptionsAndTimeoutTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexIsMatchTests.isMatchStaticWithOptionsAndTimeoutTest);
-                QUnit.test("Regex.Replace - ReplaceTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests.replaceTest1);
-                QUnit.test("Regex.Replace - ReplaceAtPositionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests.replaceAtPositionTest);
-                QUnit.test("Regex.Replace - ReplaceAtPositionAndLengthTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests.replaceAtPositionAndLengthTest);
-                QUnit.test("Regex.Replace - ReplaceWithEvaluatorTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests.replaceWithEvaluatorTest);
-                QUnit.test("Regex.Replace - ReplaceWithEvaluatorAndCountTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests.replaceWithEvaluatorAndCountTest);
-                QUnit.test("Regex.Replace - ReplaceWithEvaluatorAndCountAtPostitionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests.replaceWithEvaluatorAndCountAtPostitionTest);
-                QUnit.test("Regex.Replace - ReplaceStaticTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests.replaceStaticTest1);
-                QUnit.test("Regex.Replace - ReplaceStaticTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests.replaceStaticTest2);
-                QUnit.test("Regex.Replace - ReplaceStaticWithOptionsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests.replaceStaticWithOptionsTest);
-                QUnit.test("Regex.Replace - ReplaceStaticWithOptionsAndTimeoutTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests.replaceStaticWithOptionsAndTimeoutTest);
-                QUnit.test("Regex.Replace - ReplaceStaticWithEvaluatorTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests.replaceStaticWithEvaluatorTest);
-                QUnit.test("Regex.Replace - ReplaceStaticWithEvaluatorAndOptionsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests.replaceStaticWithEvaluatorAndOptionsTest);
-                QUnit.test("Regex.Replace - ReplaceStaticWithEvaluatorAndOptionsAndTimoutTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests.replaceStaticWithEvaluatorAndOptionsAndTimoutTest);
-                QUnit.test("Regex.Split - SplitTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests.splitTest1);
-                QUnit.test("Regex.Split - SplitTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests.splitTest2);
-                QUnit.test("Regex.Split - SplitTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests.splitTest3);
-                QUnit.test("Regex.Split - SplitTest4", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests.splitTest4);
-                QUnit.test("Regex.Split - SplitTest5", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests.splitTest5);
-                QUnit.test("Regex.Split - SplitWithCountTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests.splitWithCountTest1);
-                QUnit.test("Regex.Split - SplitWithCountTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests.splitWithCountTest2);
-                QUnit.test("Regex.Split - SplitWithCountTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests.splitWithCountTest3);
-                QUnit.test("Regex.Split - SplitWithCountTest4", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests.splitWithCountTest4);
-                QUnit.test("Regex.Split - SplitWithCountAndStartAtTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests.splitWithCountAndStartAtTest1);
-                QUnit.test("Regex.Split - SplitWithCountAndStartAtTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests.splitWithCountAndStartAtTest2);
-                QUnit.test("Regex.Split - SplitWithCountAndStartAtTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests.splitWithCountAndStartAtTest3);
-                QUnit.test("Regex.Split - SplitWithCountAndStartAtTest4", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests.splitWithCountAndStartAtTest4);
-                QUnit.test("Regex.Split - SplitStaticTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests.splitStaticTest1);
-                QUnit.test("Regex.Split - SplitStaticTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests.splitStaticTest2);
-                QUnit.test("Regex.Split - SplitStaticTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests.splitStaticTest3);
-                QUnit.test("Regex.Split - SplitStaticTest4", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests.splitStaticTest4);
-                QUnit.test("Regex.Split - SplitStaticTest5", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests.splitStaticTest5);
-                QUnit.test("Regex.Split - SplitStaticWithOptionsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests.splitStaticWithOptionsTest);
-                QUnit.test("Regex.Split - SplitStaticWithOptionsAndTimeout", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests.splitStaticWithOptionsAndTimeout);
-                QUnit.test("Regex: Anchors - StartOfStringOrLineTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.startOfStringOrLineTest);
-                QUnit.test("Regex: Anchors - StartOfStringOrLineMultilineModeTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.startOfStringOrLineMultilineModeTest);
-                QUnit.test("Regex: Anchors - EndOfStringOrLineTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.endOfStringOrLineTest1);
-                QUnit.test("Regex: Anchors - EndOfStringOrLineTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.endOfStringOrLineTest2);
-                QUnit.test("Regex: Anchors - EndOfStringOrLineTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.endOfStringOrLineTest3);
-                QUnit.test("Regex: Anchors - EndOfStringOrLineTest4", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.endOfStringOrLineTest4);
-                QUnit.test("Regex: Anchors - StartOfStringOnlyTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.startOfStringOnlyTest);
-                QUnit.test("Regex: Anchors - EndOfStringOrNewlineTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.endOfStringOrNewlineTest);
-                QUnit.test("Regex: Anchors - EndOfStringOnlyTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.endOfStringOnlyTest);
-                QUnit.test("Regex: Anchors - ContiguousMatchesTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.contiguousMatchesTest);
-                QUnit.test("Regex: Anchors - WordBoundaryTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.wordBoundaryTest);
-                QUnit.test("Regex: Anchors - NonWordBoundaryTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.nonWordBoundaryTest);
-                QUnit.test("Regex: Anchors - StartAndEndOfStringCustomTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.startAndEndOfStringCustomTest1);
-                QUnit.test("Regex: Anchors - StartAndEndOfStringCustomTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.startAndEndOfStringCustomTest2);
-                QUnit.test("Regex: Anchors - EndOfStringOrNewlineCustomTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.endOfStringOrNewlineCustomTest1);
-                QUnit.test("Regex: Anchors - EndOfStringOrNewlineCustomTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.endOfStringOrNewlineCustomTest2);
-                QUnit.test("Regex: Anchors - EndOfStringOnlyCustomTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.endOfStringOnlyCustomTest1);
-                QUnit.test("Regex: Anchors - EndOfStringOnlyCustomTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.endOfStringOnlyCustomTest2);
-                QUnit.test("Regex: Anchors - EndOfStringOnlyCustomTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.endOfStringOnlyCustomTest3);
-                QUnit.test("Regex: Anchors - ContiguousMatchesCustomTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.contiguousMatchesCustomTest1);
-                QUnit.test("Regex: Anchors - ContiguousMatchesCustomTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests.contiguousMatchesCustomTest2);
-                QUnit.test("Regex: Backreferences - MsdnNumberedBackrefTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.msdnNumberedBackrefTest);
-                QUnit.test("Regex: Backreferences - MsdnNamedBackrefTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.msdnNamedBackrefTest);
-                QUnit.test("Regex: Backreferences - MsdnNamedBackrefWithNumberAsNameTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.msdnNamedBackrefWithNumberAsNameTest);
-                QUnit.test("Regex: Backreferences - MsdnNamedBackrefWithRedefinedGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.msdnNamedBackrefWithRedefinedGroupTest);
-                QUnit.test("Regex: Backreferences - MsdnNamedBackrefWithEmptyCaptureTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.msdnNamedBackrefWithEmptyCaptureTest1);
-                QUnit.test("Regex: Backreferences - MsdnNamedBackrefWithEmptyCaptureTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.msdnNamedBackrefWithEmptyCaptureTest2);
-                QUnit.test("Regex: Backreferences - NamedBackrefToUnreachableGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.namedBackrefToUnreachableGroupTest);
-                QUnit.test("Regex: Backreferences - NamedBackrefToSelfGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.namedBackrefToSelfGroupTest);
-                QUnit.test("Regex: Backreferences - NamedBackrefToParentGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.namedBackrefToParentGroupTest);
-                QUnit.test("Regex: Backreferences - NumberedBackrefTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.numberedBackrefTest);
-                QUnit.test("Regex: Backreferences - NumberedBackrefInGroupFailsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.numberedBackrefInGroupFailsTest);
-                QUnit.test("Regex: Backreferences - NamedBackrefInGroupFailsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests.namedBackrefInGroupFailsTest);
-                QUnit.test("Regex.Escape - EscapeTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests.escapeTest);
-                QUnit.test("Regex.Escape - UnescapeTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests.unescapeTest);
-                QUnit.test("Regex.Escape - EscapeCharSetTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests.escapeCharSetTest);
-                QUnit.test("Regex.Escape - NonEscapeCharSetTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests.nonEscapeCharSetTest);
-                QUnit.test("Regex.Escape - BracketEscapeTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests.bracketEscapeTest);
-                QUnit.test("Regex.Escape - BracketEscapeInGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests.bracketEscapeInGroupTest);
-                QUnit.test("Regex.Escape - BracketEscapeInCharGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests.bracketEscapeInCharGroupTest);
-                QUnit.test("Regex.Matches - MatchesTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchesTests.matchesTest);
-                QUnit.test("Regex.Matches - MatchesAtPositionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchesTests.matchesAtPositionTest);
-                QUnit.test("Regex.Matches - MatchesStaticTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchesTests.matchesStaticTest);
-                QUnit.test("Regex.Matches - MatchesStaticWithOptionsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchesTests.matchesStaticWithOptionsTest);
-                QUnit.test("Regex.Matches - MatchesStaticWithOptionsAndTimeoutTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchesTests.matchesStaticWithOptionsAndTimeoutTest);
-                QUnit.test("Regex.Match - MatchTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchTests.matchTest);
-                QUnit.test("Regex.Match - MatchAtPositionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchTests.matchAtPositionTest);
-                QUnit.test("Regex.Match - MatchAtPositionAndLengthTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchTests.matchAtPositionAndLengthTest);
-                QUnit.test("Regex.Match - MatchStaticTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchTests.matchStaticTest);
-                QUnit.test("Regex.Match - MatchStaticWithOptionsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchTests.matchStaticWithOptionsTest);
-                QUnit.test("Regex.Match - MatchStaticWithOptionsAndTimeoutTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchTests.matchStaticWithOptionsAndTimeoutTest);
-                QUnit.test("RegexCaptureCollection - CaseDataTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCaptureCollectionTests.caseDataTest);
-                QUnit.test("RegexCaptureCollection - CaptureCollectionFieldsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCaptureCollectionTests.captureCollectionFieldsTest);
-                QUnit.test("RegexCaptureCollection - CaptureCollectionForeachTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCaptureCollectionTests.captureCollectionForeachTest);
-                QUnit.test("RegexCaptureCollection - CaptureCollectionEnumeratorTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCaptureCollectionTests.captureCollectionEnumeratorTest);
-                QUnit.test("RegexCaptureCollection - CaptureCollectionCopyToTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCaptureCollectionTests.captureCollectionCopyToTest);
-                QUnit.test("Regex Entity - CaseDataTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests.caseDataTest);
-                QUnit.test("Regex Entity - GetGroupNamesTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests.getGroupNamesTest);
-                QUnit.test("Regex Entity - GetGroupNumbersTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests.getGroupNumbersTest);
-                QUnit.test("Regex Entity - GroupNameFromNumberTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests.groupNameFromNumberTest);
-                QUnit.test("Regex Entity - GroupNumberFromNameTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests.groupNumberFromNameTest);
-                QUnit.test("Regex Entity - SupportedOptionsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests.supportedOptionsTest);
-                QUnit.test("Regex Entity - MatchNamedGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests.matchNamedGroupTest);
-                QUnit.test("Regex Entity - MatchInnerNamedGroupTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests.matchInnerNamedGroupTest1);
-                QUnit.test("Regex Entity - MatchInnerNamedGroupTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests.matchInnerNamedGroupTest2);
-                QUnit.test("Regex Entity - GroupOrderingTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests.groupOrderingTest);
-                QUnit.test("Regex Entity - RepeatingGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests.repeatingGroupTest);
-                QUnit.test("Regex Entity - ZeroResultTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests.zeroResultTest);
-                QUnit.test("Regex Entity - NonCapturingGroupsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests.nonCapturingGroupsTest);
-                QUnit.test("RegexGroupCollection - CaseDataTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexGroupCollectionTests.caseDataTest);
-                QUnit.test("RegexGroupCollection - GroupCollectionFieldsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexGroupCollectionTests.groupCollectionFieldsTest);
-                QUnit.test("RegexGroupCollection - GroupCollectionForeachTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexGroupCollectionTests.groupCollectionForeachTest);
-                QUnit.test("RegexGroupCollection - GroupCollectionEnumeratorTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexGroupCollectionTests.groupCollectionEnumeratorTest);
-                QUnit.test("RegexGroupCollection - GroupCollectionCopyToTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexGroupCollectionTests.groupCollectionCopyToTest);
+                QUnit.test("Regex.IsMatch - IsMatchTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexIsMatchTests.isMatchTest);
+                QUnit.test("Regex.IsMatch - IsMatchWithOffsetTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexIsMatchTests.isMatchWithOffsetTest);
+                QUnit.test("Regex.IsMatch - IsMatchStaticTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexIsMatchTests.isMatchStaticTest);
+                QUnit.test("Regex.IsMatch - IsMatchStaticWithOptionsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexIsMatchTests.isMatchStaticWithOptionsTest);
+                QUnit.test("Regex.IsMatch - IsMatchStaticWithOptionsAndTimeoutTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexIsMatchTests.isMatchStaticWithOptionsAndTimeoutTest);
+                QUnit.test("Regex.Replace - ReplaceTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests.replaceTest1);
+                QUnit.test("Regex.Replace - ReplaceAtPositionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests.replaceAtPositionTest);
+                QUnit.test("Regex.Replace - ReplaceAtPositionAndLengthTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests.replaceAtPositionAndLengthTest);
+                QUnit.test("Regex.Replace - ReplaceWithEvaluatorTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests.replaceWithEvaluatorTest);
+                QUnit.test("Regex.Replace - ReplaceWithEvaluatorAndCountTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests.replaceWithEvaluatorAndCountTest);
+                QUnit.test("Regex.Replace - ReplaceWithEvaluatorAndCountAtPostitionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests.replaceWithEvaluatorAndCountAtPostitionTest);
+                QUnit.test("Regex.Replace - ReplaceStaticTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests.replaceStaticTest1);
+                QUnit.test("Regex.Replace - ReplaceStaticTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests.replaceStaticTest2);
+                QUnit.test("Regex.Replace - ReplaceStaticWithOptionsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests.replaceStaticWithOptionsTest);
+                QUnit.test("Regex.Replace - ReplaceStaticWithOptionsAndTimeoutTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests.replaceStaticWithOptionsAndTimeoutTest);
+                QUnit.test("Regex.Replace - ReplaceStaticWithEvaluatorTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests.replaceStaticWithEvaluatorTest);
+                QUnit.test("Regex.Replace - ReplaceStaticWithEvaluatorAndOptionsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests.replaceStaticWithEvaluatorAndOptionsTest);
+                QUnit.test("Regex.Replace - ReplaceStaticWithEvaluatorAndOptionsAndTimoutTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests.replaceStaticWithEvaluatorAndOptionsAndTimoutTest);
+                QUnit.test("Regex.Split - SplitTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests.splitTest1);
+                QUnit.test("Regex.Split - SplitTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests.splitTest2);
+                QUnit.test("Regex.Split - SplitTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests.splitTest3);
+                QUnit.test("Regex.Split - SplitTest4", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests.splitTest4);
+                QUnit.test("Regex.Split - SplitTest5", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests.splitTest5);
+                QUnit.test("Regex.Split - SplitWithCountTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests.splitWithCountTest1);
+                QUnit.test("Regex.Split - SplitWithCountTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests.splitWithCountTest2);
+                QUnit.test("Regex.Split - SplitWithCountTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests.splitWithCountTest3);
+                QUnit.test("Regex.Split - SplitWithCountTest4", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests.splitWithCountTest4);
+                QUnit.test("Regex.Split - SplitWithCountAndStartAtTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests.splitWithCountAndStartAtTest1);
+                QUnit.test("Regex.Split - SplitWithCountAndStartAtTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests.splitWithCountAndStartAtTest2);
+                QUnit.test("Regex.Split - SplitWithCountAndStartAtTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests.splitWithCountAndStartAtTest3);
+                QUnit.test("Regex.Split - SplitWithCountAndStartAtTest4", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests.splitWithCountAndStartAtTest4);
+                QUnit.test("Regex.Split - SplitStaticTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests.splitStaticTest1);
+                QUnit.test("Regex.Split - SplitStaticTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests.splitStaticTest2);
+                QUnit.test("Regex.Split - SplitStaticTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests.splitStaticTest3);
+                QUnit.test("Regex.Split - SplitStaticTest4", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests.splitStaticTest4);
+                QUnit.test("Regex.Split - SplitStaticTest5", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests.splitStaticTest5);
+                QUnit.test("Regex.Split - SplitStaticWithOptionsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests.splitStaticWithOptionsTest);
+                QUnit.test("Regex.Split - SplitStaticWithOptionsAndTimeout", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests.splitStaticWithOptionsAndTimeout);
+                QUnit.test("RegexCaptureCollection Entity - CaseDataTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexCaptureCollectionTests.caseDataTest);
+                QUnit.test("RegexCaptureCollection Entity - CaptureCollectionFieldsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexCaptureCollectionTests.captureCollectionFieldsTest);
+                QUnit.test("RegexCaptureCollection Entity - CaptureCollectionForeachTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexCaptureCollectionTests.captureCollectionForeachTest);
+                QUnit.test("RegexCaptureCollection Entity - CaptureCollectionEnumeratorTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexCaptureCollectionTests.captureCollectionEnumeratorTest);
+                QUnit.test("RegexCaptureCollection Entity - CaptureCollectionCopyToTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexCaptureCollectionTests.captureCollectionCopyToTest);
+                QUnit.test("Regex Entity - CaseDataTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests.caseDataTest);
+                QUnit.test("Regex Entity - GetGroupNamesTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests.getGroupNamesTest);
+                QUnit.test("Regex Entity - GetGroupNumbersTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests.getGroupNumbersTest);
+                QUnit.test("Regex Entity - GroupNameFromNumberTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests.groupNameFromNumberTest);
+                QUnit.test("Regex Entity - GroupNumberFromNameTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests.groupNumberFromNameTest);
+                QUnit.test("Regex Entity - SupportedOptionsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests.supportedOptionsTest);
+                QUnit.test("Regex Entity - MatchNamedGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests.matchNamedGroupTest);
+                QUnit.test("Regex Entity - MatchInnerNamedGroupTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests.matchInnerNamedGroupTest1);
+                QUnit.test("Regex Entity - MatchInnerNamedGroupTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests.matchInnerNamedGroupTest2);
+                QUnit.test("Regex Entity - GroupOrderingTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests.groupOrderingTest);
+                QUnit.test("Regex Entity - RepeatingGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests.repeatingGroupTest);
+                QUnit.test("Regex Entity - ZeroResultTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests.zeroResultTest);
+                QUnit.test("Regex Entity - NonCapturingGroupsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests.nonCapturingGroupsTest);
+                QUnit.test("RegexGroupCollection Entity - CaseDataTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexGroupCollectionTests.caseDataTest);
+                QUnit.test("RegexGroupCollection Entity - GroupCollectionFieldsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexGroupCollectionTests.groupCollectionFieldsTest);
+                QUnit.test("RegexGroupCollection Entity - GroupCollectionForeachTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexGroupCollectionTests.groupCollectionForeachTest);
+                QUnit.test("RegexGroupCollection Entity - GroupCollectionEnumeratorTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexGroupCollectionTests.groupCollectionEnumeratorTest);
+                QUnit.test("RegexGroupCollection Entity - GroupCollectionCopyToTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexGroupCollectionTests.groupCollectionCopyToTest);
+                QUnit.test("RegexMatchCollection Entity - CaseDataTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchCollectionTests.caseDataTest);
+                QUnit.test("RegexMatchCollection Entity - MatchCollectionFieldsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchCollectionTests.matchCollectionFieldsTest);
+                QUnit.test("RegexMatchCollection Entity - MatchCollectionItemsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchCollectionTests.matchCollectionItemsTest);
+                QUnit.test("RegexMatchCollection Entity - MatchCollectionForeachTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchCollectionTests.matchCollectionForeachTest);
+                QUnit.test("RegexMatchCollection Entity - MatchCollectionEnumeratorTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchCollectionTests.matchCollectionEnumeratorTest);
+                QUnit.test("RegexMatchCollection Entity - MatchCollectionCopyToTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchCollectionTests.matchCollectionCopyToTest);
+                QUnit.test("RegexMatchCollection Entity - MatchCollectionWithEmptyPatternTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchCollectionTests.matchCollectionWithEmptyPatternTest);
+                QUnit.test("Match Entity - CaseDataTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchEntityTests.caseDataTest);
+                QUnit.test("Match Entity - MatchEmptyPatternTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchEntityTests.matchEmptyPatternTest);
+                QUnit.test("Match Entity - MatchEmptyFieldsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchEntityTests.matchEmptyFieldsTest);
+                QUnit.test("Match Entity - MatchNextMatchTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchEntityTests.matchNextMatchTest);
+                QUnit.test("Match Entity - MatchNextMatchWithEmptyPatternTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchEntityTests.matchNextMatchWithEmptyPatternTest);
+                QUnit.test("Match Entity - MatchResultTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchEntityTests.matchResultTest);
+                QUnit.test("Match Entity - MatchSearchGroupByNameTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchEntityTests.matchSearchGroupByNameTest);
+                QUnit.test("MatchSparse Entity - GroupOrderingTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchSparseTests.groupOrderingTest1);
+                QUnit.test("MatchSparse Entity - GroupOrderingTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchSparseTests.groupOrderingTest2);
+                QUnit.test("MatchSparse Entity - GroupOrderingTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchSparseTests.groupOrderingTest3);
+                QUnit.test("MatchSparse Entity - SparseOrderingTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchSparseTests.sparseOrderingTest);
+                QUnit.test("MatchSparse Entity - GroupCapturesMergeTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchSparseTests.groupCapturesMergeTest);
+                QUnit.test("Regex.Escape - MsdnEscapeTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexEscapeTests.msdnEscapeTest);
+                QUnit.test("Regex.Escape - MsdnUnescapeTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexEscapeTests.msdnUnescapeTest);
+                QUnit.test("Regex.Escape - EscapeCharSetTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexEscapeTests.escapeCharSetTest);
+                QUnit.test("Regex.Escape - NonEscapeCharSetTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexEscapeTests.nonEscapeCharSetTest);
+                QUnit.test("Regex.Matches - MatchesTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchesTests.matchesTest);
+                QUnit.test("Regex.Matches - MatchesAtPositionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchesTests.matchesAtPositionTest);
+                QUnit.test("Regex.Matches - MatchesStaticTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchesTests.matchesStaticTest);
+                QUnit.test("Regex.Matches - MatchesStaticWithOptionsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchesTests.matchesStaticWithOptionsTest);
+                QUnit.test("Regex.Matches - MatchesStaticWithOptionsAndTimeoutTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchesTests.matchesStaticWithOptionsAndTimeoutTest);
+                QUnit.test("Regex.Match - MatchTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchTests.matchTest);
+                QUnit.test("Regex.Match - MatchAtPositionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchTests.matchAtPositionTest);
+                QUnit.test("Regex.Match - MatchAtPositionAndLengthTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchTests.matchAtPositionAndLengthTest);
+                QUnit.test("Regex.Match - MatchStaticTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchTests.matchStaticTest);
+                QUnit.test("Regex.Match - MatchStaticWithOptionsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchTests.matchStaticWithOptionsTest);
+                QUnit.test("Regex.Match - MatchStaticWithOptionsAndTimeoutTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchTests.matchStaticWithOptionsAndTimeoutTest);
+                QUnit.test("Regex: Alternations - MsdnSimpleAlternationTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.msdnSimpleAlternationTest1);
+                QUnit.test("Regex: Alternations - MsdnSimpleAlternationTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.msdnSimpleAlternationTest2);
+                QUnit.test("Regex: Alternations - MsdnSimpleAlternationTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.msdnSimpleAlternationTest3);
+                QUnit.test("Regex: Alternations - MsdnAlternationExprTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.msdnAlternationExprTest1);
+                QUnit.test("Regex: Alternations - MsdnAlternationExprTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.msdnAlternationExprTest2);
+                QUnit.test("Regex: Alternations - MsdnAlternationGroupNameExprTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.msdnAlternationGroupNameExprTest1);
+                QUnit.test("Regex: Alternations - MsdnAlternationGroupNameExprTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.msdnAlternationGroupNameExprTest2);
+                QUnit.test("Regex: Alternations - MsdnAlternationGroupNumberExprTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.msdnAlternationGroupNumberExprTest);
+                QUnit.test("Regex: Alternations - SimpleAlternationTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.simpleAlternationTest);
+                QUnit.test("Regex: Alternations - SimpleAlternationTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.simpleAlternationTest2);
+                QUnit.test("Regex: Alternations - SimpleAlternationTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.simpleAlternationTest3);
+                QUnit.test("Regex: Alternations - AlternationWithGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationWithGroupTest);
+                QUnit.test("Regex: Alternations - AlternationGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupTest);
+                QUnit.test("Regex: Alternations - AlternationGroupNonCapturingTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupNonCapturingTest);
+                QUnit.test("Regex: Alternations - AlternationGroupPositiveLookaheadTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupPositiveLookaheadTest);
+                QUnit.test("Regex: Alternations - AlternationGroupNegativeLookaheadTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupNegativeLookaheadTest1);
+                QUnit.test("Regex: Alternations - AlternationGroupNegativeLookaheadTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupNegativeLookaheadTest2);
+                QUnit.test("Regex: Alternations - AlternationGroupPositiveLookbehindTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupPositiveLookbehindTest);
+                QUnit.test("Regex: Alternations - AlternationGroupNegativeLookbehindTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupNegativeLookbehindTest1);
+                QUnit.test("Regex: Alternations - AlternationGroupNegativeLookbehindTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupNegativeLookbehindTest2);
+                QUnit.test("Regex: Alternations - AlternationGroupNonBacktrackingTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupNonBacktrackingTest);
+                QUnit.test("Regex: Alternations - AlternationGroupCommentTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupCommentTest);
+                QUnit.test("Regex: Alternations - AlternationGroupWithNameInConditionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupWithNameInConditionTest);
+                QUnit.test("Regex: Alternations - AlternationGroupWithIncorrectRefTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupWithIncorrectRefTest1);
+                QUnit.test("Regex: Alternations - AlternationGroupWithIncorrectRefTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupWithIncorrectRefTest2);
+                QUnit.test("Regex: Alternations - AlternationGroupWithImnsxTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupWithImnsxTest1);
+                QUnit.test("Regex: Alternations - AlternationGroupWithImnsxTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupWithImnsxTest2);
+                QUnit.test("Regex: Alternations - AlternationGroupWithImnsxTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupWithImnsxTest3);
+                QUnit.test("Regex: Alternations - AlternationConditionWithGroupTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationConditionWithGroupTest1);
+                QUnit.test("Regex: Alternations - AlternationConditionWithGroupTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationConditionWithGroupTest2);
+                QUnit.test("Regex: Alternations - AlternationConditionWithGroupTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationConditionWithGroupTest3);
+                QUnit.test("Regex: Alternations - AlternationConditionWithGroupTest4", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationConditionWithGroupTest4);
+                QUnit.test("Regex: Alternations - AlternationConditionWithGroupTest5", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationConditionWithGroupTest5);
+                QUnit.test("Regex: Alternations - AlternationGroupNonCapturingWithGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupNonCapturingWithGroupTest);
+                QUnit.test("Regex: Alternations - AlternationGroupPositiveLookaheadWithGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupPositiveLookaheadWithGroupTest);
+                QUnit.test("Regex: Alternations - AlternationGroupNegativeLookaheadWithGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupNegativeLookaheadWithGroupTest);
+                QUnit.test("Regex: Alternations - AlternationGroupPositiveLookbehindWithGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupPositiveLookbehindWithGroupTest);
+                QUnit.test("Regex: Alternations - AlternationGroupNegativeLookbehindWithGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupNegativeLookbehindWithGroupTest);
+                QUnit.test("Regex: Alternations - AlternationGroupNonBacktrackingWithGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupNonBacktrackingWithGroupTest);
+                QUnit.test("Regex: Alternations - AlternationGroupWithImnsxAndGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupWithImnsxAndGroupTest);
+                QUnit.test("Regex: Alternations - AlternationGroupWithoutAlternativeBranchTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupWithoutAlternativeBranchTest1);
+                QUnit.test("Regex: Alternations - AlternationGroupWithoutAlternativeBranchTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupWithoutAlternativeBranchTest2);
+                QUnit.test("Regex: Alternations - AlternationGroupWithoutAlternativeBranchExceptionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests.alternationGroupWithoutAlternativeBranchExceptionTest);
+                QUnit.test("Regex: Anchors - MsdnStartOfStringOrLineTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests.msdnStartOfStringOrLineTest);
+                QUnit.test("Regex: Anchors - MsdnStartOfStringOrLineMultilineModeTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests.msdnStartOfStringOrLineMultilineModeTest);
+                QUnit.test("Regex: Anchors - MsdnEndOfStringOrLineTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests.msdnEndOfStringOrLineTest1);
+                QUnit.test("Regex: Anchors - MsdnEndOfStringOrLineTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests.msdnEndOfStringOrLineTest2);
+                QUnit.test("Regex: Anchors - MsdnEndOfStringOrLineTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests.msdnEndOfStringOrLineTest3);
+                QUnit.test("Regex: Anchors - MsdnEndOfStringOrLineTest4", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests.msdnEndOfStringOrLineTest4);
+                QUnit.test("Regex: Anchors - MsdnStartOfStringOnlyTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests.msdnStartOfStringOnlyTest);
+                QUnit.test("Regex: Anchors - MsdnEndOfStringOrNewlineTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests.msdnEndOfStringOrNewlineTest);
+                QUnit.test("Regex: Anchors - MsdnEndOfStringOnlyTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests.msdnEndOfStringOnlyTest);
+                QUnit.test("Regex: Anchors - MsdnContiguousMatchesTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests.msdnContiguousMatchesTest);
+                QUnit.test("Regex: Anchors - MsdnWordBoundaryTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests.msdnWordBoundaryTest);
+                QUnit.test("Regex: Anchors - MsdnNonWordBoundaryTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests.msdnNonWordBoundaryTest);
+                QUnit.test("Regex: Anchors - StartAndEndOfStringCustomTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests.startAndEndOfStringCustomTest1);
+                QUnit.test("Regex: Anchors - StartAndEndOfStringCustomTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests.startAndEndOfStringCustomTest2);
+                QUnit.test("Regex: Anchors - EndOfStringOrNewlineCustomTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests.endOfStringOrNewlineCustomTest1);
+                QUnit.test("Regex: Anchors - EndOfStringOrNewlineCustomTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests.endOfStringOrNewlineCustomTest2);
+                QUnit.test("Regex: Anchors - EndOfStringOnlyCustomTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests.endOfStringOnlyCustomTest1);
+                QUnit.test("Regex: Anchors - EndOfStringOnlyCustomTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests.endOfStringOnlyCustomTest2);
+                QUnit.test("Regex: Anchors - EndOfStringOnlyCustomTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests.endOfStringOnlyCustomTest3);
+                QUnit.test("Regex: Anchors - ContiguousMatchesCustomTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests.contiguousMatchesCustomTest1);
+                QUnit.test("Regex: Anchors - ContiguousMatchesCustomTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests.contiguousMatchesCustomTest2);
+                QUnit.test("Regex: Backreferences - MsdnNumberedBackrefTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests.msdnNumberedBackrefTest);
+                QUnit.test("Regex: Backreferences - MsdnNamedBackrefTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests.msdnNamedBackrefTest);
+                QUnit.test("Regex: Backreferences - MsdnNamedBackrefWithNumberAsNameTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests.msdnNamedBackrefWithNumberAsNameTest);
+                QUnit.test("Regex: Backreferences - MsdnNamedBackrefWithRedefinedGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests.msdnNamedBackrefWithRedefinedGroupTest);
+                QUnit.test("Regex: Backreferences - MsdnNamedBackrefWithEmptyCaptureTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests.msdnNamedBackrefWithEmptyCaptureTest1);
+                QUnit.test("Regex: Backreferences - MsdnNamedBackrefWithEmptyCaptureTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests.msdnNamedBackrefWithEmptyCaptureTest2);
+                QUnit.test("Regex: Backreferences - NamedBackrefToUnreachableGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests.namedBackrefToUnreachableGroupTest);
+                QUnit.test("Regex: Backreferences - NamedBackrefToSelfGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests.namedBackrefToSelfGroupTest);
+                QUnit.test("Regex: Backreferences - NamedBackrefToParentGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests.namedBackrefToParentGroupTest);
+                QUnit.test("Regex: Backreferences - NumberedBackrefTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests.numberedBackrefTest);
+                QUnit.test("Regex: Backreferences - NumberedBackrefInGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests.numberedBackrefInGroupTest);
+                QUnit.test("Regex: Backreferences - NamedBackrefInGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests.namedBackrefInGroupTest);
+                QUnit.test("Regex: Backreferences - NumberedBackrefRecursiveGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests.numberedBackrefRecursiveGroupTest);
+                QUnit.test("Regex: Backreferences - NamedBackrefRecursiveGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests.namedBackrefRecursiveGroupTest);
+                QUnit.test("Regex: Backreferences - ComplexBackrefTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests.complexBackrefTest1);
+                QUnit.test("Regex: BalancingGroups - MsdnBalancingGroupTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBalancingGroupsTests.msdnBalancingGroupTest1);
+                QUnit.test("Regex: BalancingGroups - MsdnBalancingGroupTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBalancingGroupsTests.msdnBalancingGroupTest2);
+                QUnit.test("Regex: BalancingGroups - BalancingGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBalancingGroupsTests.balancingGroupTest);
+                QUnit.test("Regex: BalancingGroups - BalancingGroupWithoutName1Test", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBalancingGroupsTests.balancingGroupWithoutName1Test);
+                QUnit.test("Regex: BalancingGroups - BalancingGroupWithQuantifierTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBalancingGroupsTests.balancingGroupWithQuantifierTest);
+                QUnit.test("Regex: BalancingGroups - BalancingGroupWithEmptyIntervalTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBalancingGroupsTests.balancingGroupWithEmptyIntervalTest);
+                QUnit.test("Regex: BalancingGroups - BalancingGroupStackApproachTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBalancingGroupsTests.balancingGroupStackApproachTest);
+                QUnit.test("Regex: BalancingGroups - BalancingGroupWithNumberReferenceTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBalancingGroupsTests.balancingGroupWithNumberReferenceTest1);
+                QUnit.test("Regex: BalancingGroups - BalancingGroupWithNumberReferenceTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBalancingGroupsTests.balancingGroupWithNumberReferenceTest2);
+                QUnit.test("Regex: BalancingGroups - BalancingGroupIncorrectReferenceTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBalancingGroupsTests.balancingGroupIncorrectReferenceTest1);
+                QUnit.test("Regex: BalancingGroups - BalancingGroupIncorrectReferenceTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBalancingGroupsTests.balancingGroupIncorrectReferenceTest2);
+                QUnit.test("Regex: Char Classes - MsdnCharGroupTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnCharGroupTest1);
+                QUnit.test("Regex: Char Classes - MsdnCharGroupTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnCharGroupTest3);
+                QUnit.test("Regex: Char Classes - MsdnNegativeCharGroupTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnNegativeCharGroupTest1);
+                QUnit.test("Regex: Char Classes - MsdnNegativeCharGroupTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnNegativeCharGroupTest2);
+                QUnit.test("Regex: Char Classes - MsdnDotCharTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnDotCharTest1);
+                QUnit.test("Regex: Char Classes - MsdnDotCharTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnDotCharTest2);
+                QUnit.test("Regex: Char Classes - MsdnDotCharTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnDotCharTest3);
+                QUnit.test("Regex: Char Classes - MsdnCharRangeInGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnCharRangeInGroupTest);
+                QUnit.test("Regex: Char Classes - MsdnWordCharTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnWordCharTest1);
+                QUnit.test("Regex: Char Classes - MsdnWordCharTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnWordCharTest2);
+                QUnit.test("Regex: Char Classes - MsdnNonWordCharTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnNonWordCharTest1);
+                QUnit.test("Regex: Char Classes - MsdnNonWordCharTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnNonWordCharTest2);
+                QUnit.test("Regex: Char Classes - MsdnSpaceCharTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnSpaceCharTest1);
+                QUnit.test("Regex: Char Classes - MsdnSpaceCharTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnSpaceCharTest2);
+                QUnit.test("Regex: Char Classes - MsdnNonSpaceCharTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnNonSpaceCharTest1);
+                QUnit.test("Regex: Char Classes - MsdnNonSpaceCharTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnNonSpaceCharTest2);
+                QUnit.test("Regex: Char Classes - MsdnDigitCharTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnDigitCharTest1);
+                QUnit.test("Regex: Char Classes - MsdnDigitCharTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnDigitCharTest2);
+                QUnit.test("Regex: Char Classes - MsdnDigitCharTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnDigitCharTest3);
+                QUnit.test("Regex: Char Classes - MsdnNonDigitCharTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnNonDigitCharTest1);
+                QUnit.test("Regex: Char Classes - MsdnNonDigitCharTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnNonDigitCharTest2);
+                QUnit.test("Regex: Char Classes - MsdnNonDigitCharTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnNonDigitCharTest3);
+                QUnit.test("Regex: Char Classes - MsdnSubstactGroupTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnSubstactGroupTest1);
+                QUnit.test("Regex: Char Classes - MsdnSubstactGroupTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnSubstactGroupTest2);
+                QUnit.test("Regex: Char Classes - MsdnSubstactGroupTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnSubstactGroupTest3);
+                QUnit.test("Regex: Char Classes - MsdnSubstactGroupTest4", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.msdnSubstactGroupTest4);
+                QUnit.test("Regex: Char Classes - CharClassesInCharGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.charClassesInCharGroupTest);
+                QUnit.test("Regex: Char Classes - CaretSymbolInCharGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.caretSymbolInCharGroupTest);
+                QUnit.test("Regex: Char Classes - NegativeCharGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.negativeCharGroupTest);
+                QUnit.test("Regex: Char Classes - CombiningCharRangesTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.combiningCharRangesTest);
+                QUnit.test("Regex: Char Classes - SubstractGroupTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.substractGroupTest1);
+                QUnit.test("Regex: Char Classes - SubstractGroupTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.substractGroupTest2);
+                QUnit.test("Regex: Char Classes - SubstractGroupTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.substractGroupTest3);
+                QUnit.test("Regex: Char Classes - SubstractNegativeGroupTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.substractNegativeGroupTest1);
+                QUnit.test("Regex: Char Classes - SubstractNegativeGroupTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.substractNegativeGroupTest2);
+                QUnit.test("Regex: Char Classes - SubstractNegativeGroupTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.substractNegativeGroupTest3);
+                QUnit.test("Regex: Char Classes - SubstractNestedGroupsTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.substractNestedGroupsTest1);
+                QUnit.test("Regex: Char Classes - SubstractNestedGroupsTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.substractNestedGroupsTest2);
+                QUnit.test("Regex: Char Classes - SubstractGroupIsNotLastTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests.substractGroupIsNotLastTest);
+                QUnit.test("Regex: Escapes - MsdnBellCharTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests.msdnBellCharTest);
+                QUnit.test("Regex: Escapes - MsdnBackspaceCharTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests.msdnBackspaceCharTest);
+                QUnit.test("Regex: Escapes - MsdnTabCharTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests.msdnTabCharTest);
+                QUnit.test("Regex: Escapes - MsdnCarriageRetCharTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests.msdnCarriageRetCharTest);
+                QUnit.test("Regex: Escapes - MsdnVerticalTabCharTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests.msdnVerticalTabCharTest);
+                QUnit.test("Regex: Escapes - MsdnFormFeedCharTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests.msdnFormFeedCharTest);
+                QUnit.test("Regex: Escapes - MsdnNewLineCharTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests.msdnNewLineCharTest);
+                QUnit.test("Regex: Escapes - MsdnEscapeCharTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests.msdnEscapeCharTest);
+                QUnit.test("Regex: Escapes - MsdnOctalEscapeTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests.msdnOctalEscapeTest);
+                QUnit.test("Regex: Escapes - MsdnHexEscapeTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests.msdnHexEscapeTest);
+                QUnit.test("Regex: Escapes - MsdnAsciiEscapeTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests.msdnAsciiEscapeTest);
+                QUnit.test("Regex: Escapes - MsdnUnicodeEscapeTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests.msdnUnicodeEscapeTest);
+                QUnit.test("Regex: Escapes - MsdnSpecialEscapesTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests.msdnSpecialEscapesTest);
+                QUnit.test("Regex: Escapes - MsdnCharEscapesExampleTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests.msdnCharEscapesExampleTest);
+                QUnit.test("Regex: Escapes - CharEscapesTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests.charEscapesTest);
+                QUnit.test("Regex: Escapes - RangeWithCharEscapesTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests.rangeWithCharEscapesTest);
+                QUnit.test("Regex: Escapes - ControlCharsTestUpperTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests.controlCharsTestUpperTest);
+                QUnit.test("Regex: Escapes - ControlCharsTestLowerTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests.controlCharsTestLowerTest);
+                QUnit.test("Regex: Examples - EmailParseTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexExamplesTests.emailParseTest);
+                QUnit.test("Regex: Examples - PhoneParseTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexExamplesTests.phoneParseTest);
+                QUnit.test("Regex: Examples - PasswordValidationTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexExamplesTests.passwordValidationTest);
+                QUnit.test("Regex: Examples - WordSlplittingTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexExamplesTests.wordSlplittingTest);
+                QUnit.test("Regex: Examples - IpAddressValidationTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexExamplesTests.ipAddressValidationTest);
+                QUnit.test("Regex: Examples - EscapeQuotedWordsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexExamplesTests.escapeQuotedWordsTest);
+                QUnit.test("Regex: Examples - CreditCardExpirationParsingTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexExamplesTests.creditCardExpirationParsingTest);
+                QUnit.test("Regex: Examples - UrlParsingTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexExamplesTests.urlParsingTest);
+                QUnit.test("Regex IMNSX - MsdnInlineOptionsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.msdnInlineOptionsTest);
+                QUnit.test("Regex IMNSX - MsdnIgnoreCaseTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.msdnIgnoreCaseTest);
                 QUnit.test("Regex IMNSX - MsdnMultilineInlineOptionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.msdnMultilineInlineOptionTest);
                 QUnit.test("Regex IMNSX - MsdnSinglelineInlineOptionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.msdnSinglelineInlineOptionTest);
                 QUnit.test("Regex IMNSX - MsdnIngoreWhitespaceInlineOptionTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.msdnIngoreWhitespaceInlineOptionTest1);
                 QUnit.test("Regex IMNSX - MsdnIngoreWhitespaceInlineOptionTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.msdnIngoreWhitespaceInlineOptionTest2);
                 QUnit.test("Regex IMNSX - MsdnIngoreWhitespaceInlineOptionTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.msdnIngoreWhitespaceInlineOptionTest3);
+                QUnit.test("Regex IMNSX - MsdnExplicitCaptureInlineOptionTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.msdnExplicitCaptureInlineOptionTest1);
+                QUnit.test("Regex IMNSX - MsdnExplicitCaptureInlineOptionTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.msdnExplicitCaptureInlineOptionTest2);
+                QUnit.test("Regex IMNSX - IgnoreCaseInlineOptionTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.ignoreCaseInlineOptionTest1);
+                QUnit.test("Regex IMNSX - IgnoreCaseInlineOptionTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.ignoreCaseInlineOptionTest2);
+                QUnit.test("Regex IMNSX - IgnoreCaseInlineOptionTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.ignoreCaseInlineOptionTest3);
+                QUnit.test("Regex IMNSX - IgnoreCaseInlineOptionTest4", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.ignoreCaseInlineOptionTest4);
+                QUnit.test("Regex IMNSX - IgnoreCaseInlineOptionTest5", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.ignoreCaseInlineOptionTest5);
                 QUnit.test("Regex IMNSX - MultilineInlineOptionTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.multilineInlineOptionTest1);
                 QUnit.test("Regex IMNSX - MultilineInlineOptionTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.multilineInlineOptionTest2);
                 QUnit.test("Regex IMNSX - MultilineInlineOptionTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.multilineInlineOptionTest3);
@@ -1554,30 +1747,48 @@
                 QUnit.test("Regex IMNSX - IngoreWhitespaceInlineOptionTest8", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.ingoreWhitespaceInlineOptionTest8);
                 QUnit.test("Regex IMNSX - IngoreWhitespaceInlineOptionTest9", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.ingoreWhitespaceInlineOptionTest9);
                 QUnit.test("Regex IMNSX - InlineCommentTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.inlineCommentTest1);
-                QUnit.test("RegexMatchCollection - CaseDataTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchCollectionTests.caseDataTest);
-                QUnit.test("RegexMatchCollection - MatchCollectionFieldsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchCollectionTests.matchCollectionFieldsTest);
-                QUnit.test("RegexMatchCollection - MatchCollectionItemsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchCollectionTests.matchCollectionItemsTest);
-                QUnit.test("RegexMatchCollection - MatchCollectionForeachTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchCollectionTests.matchCollectionForeachTest);
-                QUnit.test("RegexMatchCollection - MatchCollectionEnumeratorTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchCollectionTests.matchCollectionEnumeratorTest);
-                QUnit.test("RegexMatchCollection - MatchCollectionCopyToTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchCollectionTests.matchCollectionCopyToTest);
-                QUnit.test("RegexMatchCollection - MatchCollectionWithEmptyPatternTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchCollectionTests.matchCollectionWithEmptyPatternTest);
-                QUnit.test("Match Entity - CaseDataTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchEntityTests.caseDataTest);
-                QUnit.test("Match Entity - MatchEmptyPatternTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchEntityTests.matchEmptyPatternTest);
-                QUnit.test("Match Entity - MatchEmptyFieldsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchEntityTests.matchEmptyFieldsTest);
-                QUnit.test("Match Entity - MatchNextMatchTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchEntityTests.matchNextMatchTest);
-                QUnit.test("Match Entity - MatchNextMatchWithEmptyPatternTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchEntityTests.matchNextMatchWithEmptyPatternTest);
-                QUnit.test("Match Entity - MatchResultTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchEntityTests.matchResultTest);
-                QUnit.test("Match Entity - MatchSearchGroupByNameTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchEntityTests.matchSearchGroupByNameTest);
-                QUnit.test("MatchSparse Entity - GroupOrderingTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchSparseTests.groupOrderingTest1);
-                QUnit.test("MatchSparse Entity - GroupOrderingTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchSparseTests.groupOrderingTest2);
-                QUnit.test("MatchSparse Entity - GroupOrderingTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchSparseTests.groupOrderingTest3);
-                QUnit.test("MatchSparse Entity - SparseOrderingTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchSparseTests.sparseOrderingTest);
-                QUnit.test("MatchSparse Entity - GroupCapturesMergeTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchSparseTests.groupCapturesMergeTest);
+                QUnit.test("Regex IMNSX - ExplicitCaptureInlineOptionTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.explicitCaptureInlineOptionTest1);
+                QUnit.test("Regex IMNSX - ExplicitCaptureInlineOptionTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.explicitCaptureInlineOptionTest2);
+                QUnit.test("Regex IMNSX - ExplicitCaptureInlineOptionTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.explicitCaptureInlineOptionTest3);
+                QUnit.test("Regex IMNSX - ExplicitCaptureInlineOptionTest4", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests.explicitCaptureInlineOptionTest4);
+                QUnit.test("Regex: Lookahead - MsdnPositiveLookaheadTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookaheadTests.msdnPositiveLookaheadTest);
+                QUnit.test("Regex: Lookahead - MsdnNegativeLookaheadTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookaheadTests.msdnNegativeLookaheadTest);
+                QUnit.test("Regex: Lookahead - PositiveLookaheadTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookaheadTests.positiveLookaheadTest1);
+                QUnit.test("Regex: Lookahead - PositiveLookaheadTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookaheadTests.positiveLookaheadTest2);
+                QUnit.test("Regex: Lookahead - NegativeLookaheadTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookaheadTests.negativeLookaheadTest1);
+                QUnit.test("Regex: Lookahead - NegativeLookaheadTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookaheadTests.negativeLookaheadTest2);
+                QUnit.test("Regex: Lookahead - PositiveLookaheadWithGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookaheadTests.positiveLookaheadWithGroupTest);
+                QUnit.test("Regex: Lookahead - NegativeLookaheadWithGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookaheadTests.negativeLookaheadWithGroupTest);
+                QUnit.test("Regex: Lookahead - PositiveLookaheadWithOffsetTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookaheadTests.positiveLookaheadWithOffsetTest);
+                QUnit.test("Regex: Lookahead - NegativeLookaheadWithOffsetTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookaheadTests.negativeLookaheadWithOffsetTest);
+                QUnit.test("Regex: Lookahead - PositiveLookaheadGroupCombineTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookaheadTests.positiveLookaheadGroupCombineTest);
+                QUnit.test("Regex: Lookbehind - MsdnPositiveLookbehindTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests.msdnPositiveLookbehindTest);
+                QUnit.test("Regex: Lookbehind - MsdnNegativeLookbehindTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests.msdnNegativeLookbehindTest);
+                QUnit.test("Regex: Lookbehind - PositiveLookbehindTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests.positiveLookbehindTest1);
+                QUnit.test("Regex: Lookbehind - PositiveLookbehindTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests.positiveLookbehindTest2);
+                QUnit.test("Regex: Lookbehind - PositiveLookbehindTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests.positiveLookbehindTest3);
+                QUnit.test("Regex: Lookbehind - PositiveLookbehindWithMatchOffsetTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests.positiveLookbehindWithMatchOffsetTest);
+                QUnit.test("Regex: Lookbehind - NegativeLookbehindTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests.negativeLookbehindTest1);
+                QUnit.test("Regex: Lookbehind - NegativeLookbehindTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests.negativeLookbehindTest2);
+                QUnit.test("Regex: Lookbehind - PositiveLookbehindWithGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests.positiveLookbehindWithGroupTest);
+                QUnit.test("Regex: Lookbehind - NegativeLookbehindWithGroupTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests.negativeLookbehindWithGroupTest);
+                QUnit.test("Regex: Lookbehind - PositiveLookbehindWithOffsetTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests.positiveLookbehindWithOffsetTest);
+                QUnit.test("Regex: Lookbehind - NegativeLookbehindWithOffsetTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests.negativeLookbehindWithOffsetTest);
+                QUnit.test("Regex: Nonbacktracking - MsdnNonBacktrackingTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexNonbacktrackingTests.msdnNonBacktrackingTest1);
+                QUnit.test("Regex: Nonbacktracking - MsdnNonBacktrackingTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexNonbacktrackingTests.msdnNonBacktrackingTest2);
+                QUnit.test("Regex: Nonbacktracking - NonBacktrackingTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexNonbacktrackingTests.nonBacktrackingTest1);
+                QUnit.test("Regex: Nonbacktracking - NonBacktrackingTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexNonbacktrackingTests.nonBacktrackingTest2);
+                QUnit.test("Regex: Nonbacktracking - NonBacktrackingTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexNonbacktrackingTests.nonBacktrackingTest3);
+                QUnit.test("Regex: Nonbacktracking - NonBacktrackingTest4", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexNonbacktrackingTests.nonBacktrackingTest4);
+                QUnit.test("Regex: Nonbacktracking - NonBacktrackingTest5", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexNonbacktrackingTests.nonBacktrackingTest5);
+                QUnit.test("Regex: Nonbacktracking - NonBacktrackingWithOffsetTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexNonbacktrackingTests.nonBacktrackingWithOffsetTest);
                 QUnit.test("RegexOptions - MsdnIgnoreCaseOptionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.msdnIgnoreCaseOptionTest);
                 QUnit.test("RegexOptions - MsdnMultilineOptionTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.msdnMultilineOptionTest1);
                 QUnit.test("RegexOptions - MsdnMultilineOptionTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.msdnMultilineOptionTest2);
                 QUnit.test("RegexOptions - MsdnSinglelineOptionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.msdnSinglelineOptionTest);
                 QUnit.test("RegexOptions - MsdnIgnoreWhitespaceOptionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.msdnIgnoreWhitespaceOptionTest);
+                QUnit.test("RegexOptions - MsdnExplicitCaptureOptionTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.msdnExplicitCaptureOptionTest1);
+                QUnit.test("RegexOptions - MsdnExplicitCaptureOptionTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.msdnExplicitCaptureOptionTest2);
                 QUnit.test("RegexOptions - IgnoreCaseOptionTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.ignoreCaseOptionTest1);
                 QUnit.test("RegexOptions - IgnoreCaseOptionTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.ignoreCaseOptionTest2);
                 QUnit.test("RegexOptions - IgnoreCaseOptionTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.ignoreCaseOptionTest3);
@@ -1588,6 +1799,30 @@
                 QUnit.test("RegexOptions - SinglelineOptionTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.singlelineOptionTest);
                 QUnit.test("RegexOptions - SinglelineDotCharTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.singlelineDotCharTest);
                 QUnit.test("RegexOptions - MultilineAndSinglelineOptionsTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests.multilineAndSinglelineOptionsTest);
+                QUnit.test("Regex: Quantifiers - MsdnZeroOrMoreTimesTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.msdnZeroOrMoreTimesTest);
+                QUnit.test("Regex: Quantifiers - MsdnOneOrMoreTimesTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.msdnOneOrMoreTimesTest);
+                QUnit.test("Regex: Quantifiers - MsdnZeroOrOneTimeTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.msdnZeroOrOneTimeTest);
+                QUnit.test("Regex: Quantifiers - MsdnNTimesTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.msdnNTimesTest1);
+                QUnit.test("Regex: Quantifiers - MsdnNTimesTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.msdnNTimesTest2);
+                QUnit.test("Regex: Quantifiers - MsdnNOrMoreTimesTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.msdnNOrMoreTimesTest);
+                QUnit.test("Regex: Quantifiers - MsdnNToMTimesTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.msdnNToMTimesTest);
+                QUnit.test("Regex: Quantifiers - MsdnLazyZeroOrMoreTimesTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.msdnLazyZeroOrMoreTimesTest);
+                QUnit.test("Regex: Quantifiers - MsdnLazyOneOrMoreTimesTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.msdnLazyOneOrMoreTimesTest);
+                QUnit.test("Regex: Quantifiers - MsdnLazyZeroOrOneTimeTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.msdnLazyZeroOrOneTimeTest);
+                QUnit.test("Regex: Quantifiers - MsdnLazyNTimesTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.msdnLazyNTimesTest);
+                QUnit.test("Regex: Quantifiers - MsdnLazyNOrMoreTimesTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.msdnLazyNOrMoreTimesTest);
+                QUnit.test("Regex: Quantifiers - MsdnLazyNToMTimesTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.msdnLazyNToMTimesTest);
+                QUnit.test("Regex: Quantifiers - ZeroOrMoreTimesTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.zeroOrMoreTimesTest);
+                QUnit.test("Regex: Quantifiers - OneOrMoreTimesTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.oneOrMoreTimesTest1);
+                QUnit.test("Regex: Quantifiers - OneOrMoreTimesTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.oneOrMoreTimesTest2);
+                QUnit.test("Regex: Quantifiers - OneOrMoreTimesTest3", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.oneOrMoreTimesTest3);
+                QUnit.test("Regex: Quantifiers - ZeroOrOneTimeTest", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.zeroOrOneTimeTest);
+                QUnit.test("Regex: Quantifiers - LazyZeroOrMoreTimesTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.lazyZeroOrMoreTimesTest1);
+                QUnit.test("Regex: Quantifiers - LazyZeroOrMoreTimesTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.lazyZeroOrMoreTimesTest2);
+                QUnit.test("Regex: Quantifiers - LazyOneOrMoreTimesTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.lazyOneOrMoreTimesTest1);
+                QUnit.test("Regex: Quantifiers - LazyOneOrMoreTimesTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.lazyOneOrMoreTimesTest2);
+                QUnit.test("Regex: Quantifiers - LazyZeroOrOneTimeTest1", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.lazyZeroOrOneTimeTest1);
+                QUnit.test("Regex: Quantifiers - LazyZeroOrOneTimeTest2", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests.lazyZeroOrOneTimeTest2);
                 QUnit.test("Regex Timeouts - RegexTimeoutValidationWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexTimeoutTests.regexTimeoutValidationWorks);
                 QUnit.test("Regex Timeouts - RegexIsMatchWorksWithShortTimeout", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexTimeoutTests.regexIsMatchWorksWithShortTimeout);
                 QUnit.test("Regex Timeouts - RegexIsMatchWorksWithLongTimeout", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexTimeoutTests.regexIsMatchWorksWithLongTimeout);
@@ -5899,6 +6134,192 @@
         }
     });
     
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests)],
+        statics: {
+            expressionProtectedConstructorWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().expressionProtectedConstructorWorks();
+            },
+            simpleExpressionTreeWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().simpleExpressionTreeWorks();
+            },
+            lambdaWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().lambdaWorks();
+            },
+            parameterAndVariableWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().parameterAndVariableWork();
+            },
+            constantWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().constantWorks();
+            },
+            binaryExpressionsWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().binaryExpressionsWork();
+            },
+            unaryExpressionsWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().unaryExpressionsWork();
+            },
+            arrayLengthWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().arrayLengthWorks();
+            },
+            conversionsWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().conversionsWork();
+            },
+            arrayIndexWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().arrayIndexWorks();
+            },
+            multiDimensionalArrayIndexWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().multiDimensionalArrayIndexWorks();
+            },
+            conditionWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().conditionWorks();
+            },
+            callWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().callWorks();
+            },
+            methodGroupConversionWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().methodGroupConversionWorks();
+            },
+            invokeWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().invokeWorks();
+            },
+            arrayCreationWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().arrayCreationWorks();
+            },
+            propertiesAndFieldsWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().propertiesAndFieldsWork();
+            },
+            indexersWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().indexersWork();
+            },
+            indexExpressionsWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().indexExpressionsWork();
+            },
+            objectConstructionWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().objectConstructionWorks();
+            },
+            anonymousTypeConstructionWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().anonymousTypeConstructionWorks();
+            },
+            transparentIdentifiersWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().transparentIdentifiersWork();
+            },
+            newExpressionWithMembersWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().newExpressionWithMembersWork();
+            },
+            bindWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().bindWorks();
+            },
+            elementInitWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().elementInitWorks();
+            },
+            listBindWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().listBindWorks();
+            },
+            memberBindWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().memberBindWorks();
+            },
+            memberInitWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().memberInitWorks();
+            },
+            listInitWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().listInitWorks();
+            },
+            typeIsAndTypeEqualWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().typeIsAndTypeEqualWork();
+            },
+            quoteWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().quoteWorks();
+            },
+            localVariableReferenceWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().localVariableReferenceWorks();
+            },
+            throwAndRethrowWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().throwAndRethrowWork();
+            },
+            defaultAndEmptyWork: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().defaultAndEmptyWork();
+            },
+            blockWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().blockWorks();
+            },
+            ifThenWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().ifThenWorks();
+            },
+            labelTargetWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().labelTargetWorks();
+            },
+            gotoWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().gotoWorks();
+            },
+            labelExpressionWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().labelExpressionWorks();
+            },
+            loopWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().loopWorks();
+            },
+            switchCaseWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().switchCaseWorks();
+            },
+            switchWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().switchWorks();
+            },
+            catchBlockWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().catchBlockWorks();
+            },
+            tryWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().tryWorks();
+            },
+            dynamicWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.Expressions.ExpressionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_Expressions_ExpressionTests);
+                t.getFixture().dynamicWorks();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Linq_TestLinqAggregateOperators', {
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Linq.TestLinqAggregateOperators)],
         statics: {
@@ -9409,6 +9830,210 @@
         }
     });
     
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexCaptureCollectionTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexCaptureCollectionTests)],
+        statics: {
+            caseDataTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexCaptureCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexCaptureCollectionTests);
+                t.getFixture().caseDataTest();
+            },
+            captureCollectionFieldsTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexCaptureCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexCaptureCollectionTests);
+                t.getFixture().captureCollectionFieldsTest();
+            },
+            captureCollectionForeachTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexCaptureCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexCaptureCollectionTests);
+                t.getFixture().captureCollectionForeachTest();
+            },
+            captureCollectionEnumeratorTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexCaptureCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexCaptureCollectionTests);
+                t.getFixture().captureCollectionEnumeratorTest();
+            },
+            captureCollectionCopyToTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexCaptureCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexCaptureCollectionTests);
+                t.getFixture().captureCollectionCopyToTest();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexEntityTests)],
+        statics: {
+            caseDataTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests);
+                t.getFixture().caseDataTest();
+            },
+            getGroupNamesTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests);
+                t.getFixture().getGroupNamesTest();
+            },
+            getGroupNumbersTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests);
+                t.getFixture().getGroupNumbersTest();
+            },
+            groupNameFromNumberTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests);
+                t.getFixture().groupNameFromNumberTest();
+            },
+            groupNumberFromNameTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests);
+                t.getFixture().groupNumberFromNameTest();
+            },
+            supportedOptionsTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests);
+                t.getFixture().supportedOptionsTest();
+            },
+            matchNamedGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests);
+                t.getFixture().matchNamedGroupTest();
+            },
+            matchInnerNamedGroupTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests);
+                t.getFixture().matchInnerNamedGroupTest1();
+            },
+            matchInnerNamedGroupTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests);
+                t.getFixture().matchInnerNamedGroupTest2();
+            },
+            groupOrderingTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests);
+                t.getFixture().groupOrderingTest();
+            },
+            repeatingGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests);
+                t.getFixture().repeatingGroupTest();
+            },
+            zeroResultTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests);
+                t.getFixture().zeroResultTest();
+            },
+            nonCapturingGroupsTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexEntityTests);
+                t.getFixture().nonCapturingGroupsTest();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexGroupCollectionTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexGroupCollectionTests)],
+        statics: {
+            caseDataTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexGroupCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexGroupCollectionTests);
+                t.getFixture().caseDataTest();
+            },
+            groupCollectionFieldsTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexGroupCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexGroupCollectionTests);
+                t.getFixture().groupCollectionFieldsTest();
+            },
+            groupCollectionForeachTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexGroupCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexGroupCollectionTests);
+                t.getFixture().groupCollectionForeachTest();
+            },
+            groupCollectionEnumeratorTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexGroupCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexGroupCollectionTests);
+                t.getFixture().groupCollectionEnumeratorTest();
+            },
+            groupCollectionCopyToTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexGroupCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexGroupCollectionTests);
+                t.getFixture().groupCollectionCopyToTest();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchCollectionTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexMatchCollectionTests)],
+        statics: {
+            caseDataTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexMatchCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchCollectionTests);
+                t.getFixture().caseDataTest();
+            },
+            matchCollectionFieldsTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexMatchCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchCollectionTests);
+                t.getFixture().matchCollectionFieldsTest();
+            },
+            matchCollectionItemsTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexMatchCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchCollectionTests);
+                t.getFixture().matchCollectionItemsTest();
+            },
+            matchCollectionForeachTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexMatchCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchCollectionTests);
+                t.getFixture().matchCollectionForeachTest();
+            },
+            matchCollectionEnumeratorTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexMatchCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchCollectionTests);
+                t.getFixture().matchCollectionEnumeratorTest();
+            },
+            matchCollectionCopyToTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexMatchCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchCollectionTests);
+                t.getFixture().matchCollectionCopyToTest();
+            },
+            matchCollectionWithEmptyPatternTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexMatchCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchCollectionTests);
+                t.getFixture().matchCollectionWithEmptyPatternTest();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchEntityTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexMatchEntityTests)],
+        statics: {
+            caseDataTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexMatchEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchEntityTests);
+                t.getFixture().caseDataTest();
+            },
+            matchEmptyPatternTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexMatchEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchEntityTests);
+                t.getFixture().matchEmptyPatternTest();
+            },
+            matchEmptyFieldsTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexMatchEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchEntityTests);
+                t.getFixture().matchEmptyFieldsTest();
+            },
+            matchNextMatchTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexMatchEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchEntityTests);
+                t.getFixture().matchNextMatchTest();
+            },
+            matchNextMatchWithEmptyPatternTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexMatchEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchEntityTests);
+                t.getFixture().matchNextMatchWithEmptyPatternTest();
+            },
+            matchResultTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexMatchEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchEntityTests);
+                t.getFixture().matchResultTest();
+            },
+            matchSearchGroupByNameTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexMatchEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchEntityTests);
+                t.getFixture().matchSearchGroupByNameTest();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchSparseTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexMatchSparseTests)],
+        statics: {
+            groupOrderingTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexMatchSparseTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchSparseTests);
+                t.getFixture().groupOrderingTest1();
+            },
+            groupOrderingTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexMatchSparseTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchSparseTests);
+                t.getFixture().groupOrderingTest2();
+            },
+            groupOrderingTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexMatchSparseTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchSparseTests);
+                t.getFixture().groupOrderingTest3();
+            },
+            sparseOrderingTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexMatchSparseTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchSparseTests);
+                t.getFixture().sparseOrderingTest();
+            },
+            groupCapturesMergeTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Entities.RegexMatchSparseTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Entities_RegexMatchSparseTests);
+                t.getFixture().groupCapturesMergeTest();
+            }
+        }
+    });
+    
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_JavaScript_BridgeRegexTests', {
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.JavaScript.BridgeRegexTests)],
         statics: {
@@ -9463,516 +10088,912 @@
         }
     });
     
-    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests', {
-        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests)],
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexEscapeTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexEscapeTests)],
         statics: {
-            startOfStringOrLineTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
-                t.getFixture().startOfStringOrLineTest();
+            msdnEscapeTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexEscapeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexEscapeTests);
+                t.getFixture().msdnEscapeTest();
             },
-            startOfStringOrLineMultilineModeTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
-                t.getFixture().startOfStringOrLineMultilineModeTest();
-            },
-            endOfStringOrLineTest1: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
-                t.getFixture().endOfStringOrLineTest1();
-            },
-            endOfStringOrLineTest2: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
-                t.getFixture().endOfStringOrLineTest2();
-            },
-            endOfStringOrLineTest3: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
-                t.getFixture().endOfStringOrLineTest3();
-            },
-            endOfStringOrLineTest4: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
-                t.getFixture().endOfStringOrLineTest4();
-            },
-            startOfStringOnlyTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
-                t.getFixture().startOfStringOnlyTest();
-            },
-            endOfStringOrNewlineTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
-                t.getFixture().endOfStringOrNewlineTest();
-            },
-            endOfStringOnlyTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
-                t.getFixture().endOfStringOnlyTest();
-            },
-            contiguousMatchesTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
-                t.getFixture().contiguousMatchesTest();
-            },
-            wordBoundaryTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
-                t.getFixture().wordBoundaryTest();
-            },
-            nonWordBoundaryTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
-                t.getFixture().nonWordBoundaryTest();
-            },
-            startAndEndOfStringCustomTest1: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
-                t.getFixture().startAndEndOfStringCustomTest1();
-            },
-            startAndEndOfStringCustomTest2: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
-                t.getFixture().startAndEndOfStringCustomTest2();
-            },
-            endOfStringOrNewlineCustomTest1: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
-                t.getFixture().endOfStringOrNewlineCustomTest1();
-            },
-            endOfStringOrNewlineCustomTest2: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
-                t.getFixture().endOfStringOrNewlineCustomTest2();
-            },
-            endOfStringOnlyCustomTest1: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
-                t.getFixture().endOfStringOnlyCustomTest1();
-            },
-            endOfStringOnlyCustomTest2: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
-                t.getFixture().endOfStringOnlyCustomTest2();
-            },
-            endOfStringOnlyCustomTest3: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
-                t.getFixture().endOfStringOnlyCustomTest3();
-            },
-            contiguousMatchesCustomTest1: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
-                t.getFixture().contiguousMatchesCustomTest1();
-            },
-            contiguousMatchesCustomTest2: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexAnchorsTests);
-                t.getFixture().contiguousMatchesCustomTest2();
-            }
-        }
-    });
-    
-    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests', {
-        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests)],
-        statics: {
-            msdnNumberedBackrefTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
-                t.getFixture().msdnNumberedBackrefTest();
-            },
-            msdnNamedBackrefTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
-                t.getFixture().msdnNamedBackrefTest();
-            },
-            msdnNamedBackrefWithNumberAsNameTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
-                t.getFixture().msdnNamedBackrefWithNumberAsNameTest();
-            },
-            msdnNamedBackrefWithRedefinedGroupTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
-                t.getFixture().msdnNamedBackrefWithRedefinedGroupTest();
-            },
-            msdnNamedBackrefWithEmptyCaptureTest1: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
-                t.getFixture().msdnNamedBackrefWithEmptyCaptureTest1();
-            },
-            msdnNamedBackrefWithEmptyCaptureTest2: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
-                t.getFixture().msdnNamedBackrefWithEmptyCaptureTest2();
-            },
-            namedBackrefToUnreachableGroupTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
-                t.getFixture().namedBackrefToUnreachableGroupTest();
-            },
-            namedBackrefToSelfGroupTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
-                t.getFixture().namedBackrefToSelfGroupTest();
-            },
-            namedBackrefToParentGroupTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
-                t.getFixture().namedBackrefToParentGroupTest();
-            },
-            numberedBackrefTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
-                t.getFixture().numberedBackrefTest();
-            },
-            numberedBackrefInGroupFailsTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
-                t.getFixture().numberedBackrefInGroupFailsTest();
-            },
-            namedBackrefInGroupFailsTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexBackreferenceTests);
-                t.getFixture().namedBackrefInGroupFailsTest();
-            }
-        }
-    });
-    
-    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests', {
-        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexEscapeTests)],
-        statics: {
-            escapeTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexEscapeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests);
-                t.getFixture().escapeTest();
-            },
-            unescapeTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexEscapeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests);
-                t.getFixture().unescapeTest();
+            msdnUnescapeTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexEscapeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexEscapeTests);
+                t.getFixture().msdnUnescapeTest();
             },
             escapeCharSetTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexEscapeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests, 0);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexEscapeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexEscapeTests, 0);
                 t.getFixture().escapeCharSetTest();
             },
             nonEscapeCharSetTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexEscapeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexEscapeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexEscapeTests);
                 t.getFixture().nonEscapeCharSetTest();
-            },
-            bracketEscapeTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexEscapeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests);
-                t.getFixture().bracketEscapeTest();
-            },
-            bracketEscapeInGroupTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexEscapeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests);
-                t.getFixture().bracketEscapeInGroupTest();
-            },
-            bracketEscapeInCharGroupTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexEscapeTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexEscapeTests);
-                t.getFixture().bracketEscapeInCharGroupTest();
             }
         }
     });
     
-    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexIsMatchTests', {
-        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexIsMatchTests)],
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexIsMatchTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexIsMatchTests)],
         statics: {
             isMatchTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexIsMatchTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexIsMatchTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexIsMatchTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexIsMatchTests);
                 t.getFixture().isMatchTest();
             },
             isMatchWithOffsetTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexIsMatchTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexIsMatchTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexIsMatchTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexIsMatchTests);
                 t.getFixture().isMatchWithOffsetTest();
             },
             isMatchStaticTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexIsMatchTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexIsMatchTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexIsMatchTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexIsMatchTests);
                 t.getFixture().isMatchStaticTest();
             },
             isMatchStaticWithOptionsTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexIsMatchTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexIsMatchTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexIsMatchTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexIsMatchTests);
                 t.getFixture().isMatchStaticWithOptionsTest();
             },
             isMatchStaticWithOptionsAndTimeoutTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexIsMatchTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexIsMatchTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexIsMatchTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexIsMatchTests);
                 t.getFixture().isMatchStaticWithOptionsAndTimeoutTest();
             }
         }
     });
     
-    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchesTests', {
-        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexMatchesTests)],
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchesTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexMatchesTests)],
         statics: {
             matchesTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexMatchesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchesTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexMatchesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchesTests);
                 t.getFixture().matchesTest();
             },
             matchesAtPositionTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexMatchesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchesTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexMatchesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchesTests);
                 t.getFixture().matchesAtPositionTest();
             },
             matchesStaticTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexMatchesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchesTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexMatchesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchesTests);
                 t.getFixture().matchesStaticTest();
             },
             matchesStaticWithOptionsTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexMatchesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchesTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexMatchesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchesTests);
                 t.getFixture().matchesStaticWithOptionsTest();
             },
             matchesStaticWithOptionsAndTimeoutTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexMatchesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchesTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexMatchesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchesTests);
                 t.getFixture().matchesStaticWithOptionsAndTimeoutTest();
             }
         }
     });
     
-    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchTests', {
-        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexMatchTests)],
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexMatchTests)],
         statics: {
             matchTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexMatchTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexMatchTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchTests);
                 t.getFixture().matchTest();
             },
             matchAtPositionTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexMatchTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexMatchTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchTests);
                 t.getFixture().matchAtPositionTest();
             },
             matchAtPositionAndLengthTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexMatchTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexMatchTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchTests);
                 t.getFixture().matchAtPositionAndLengthTest();
             },
             matchStaticTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexMatchTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexMatchTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchTests);
                 t.getFixture().matchStaticTest();
             },
             matchStaticWithOptionsTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexMatchTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexMatchTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchTests);
                 t.getFixture().matchStaticWithOptionsTest();
             },
             matchStaticWithOptionsAndTimeoutTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexMatchTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexMatchTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexMatchTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexMatchTests);
                 t.getFixture().matchStaticWithOptionsAndTimeoutTest();
             }
         }
     });
     
-    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests', {
-        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexReplaceTests)],
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexReplaceTests)],
         statics: {
             replaceTest1: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests);
                 t.getFixture().replaceTest1();
             },
             replaceAtPositionTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests);
                 t.getFixture().replaceAtPositionTest();
             },
             replaceAtPositionAndLengthTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests);
                 t.getFixture().replaceAtPositionAndLengthTest();
             },
             replaceWithEvaluatorTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests);
                 t.getFixture().replaceWithEvaluatorTest();
             },
             replaceWithEvaluatorAndCountTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests);
                 t.getFixture().replaceWithEvaluatorAndCountTest();
             },
             replaceWithEvaluatorAndCountAtPostitionTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests);
                 t.getFixture().replaceWithEvaluatorAndCountAtPostitionTest();
             },
             replaceStaticTest1: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests);
                 t.getFixture().replaceStaticTest1();
             },
             replaceStaticTest2: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests);
                 t.getFixture().replaceStaticTest2();
             },
             replaceStaticWithOptionsTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests);
                 t.getFixture().replaceStaticWithOptionsTest();
             },
             replaceStaticWithOptionsAndTimeoutTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests);
                 t.getFixture().replaceStaticWithOptionsAndTimeoutTest();
             },
             replaceStaticWithEvaluatorTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests);
                 t.getFixture().replaceStaticWithEvaluatorTest();
             },
             replaceStaticWithEvaluatorAndOptionsTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests);
                 t.getFixture().replaceStaticWithEvaluatorAndOptionsTest();
             },
             replaceStaticWithEvaluatorAndOptionsAndTimoutTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexReplaceTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexReplaceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexReplaceTests);
                 t.getFixture().replaceStaticWithEvaluatorAndOptionsAndTimoutTest();
             }
         }
     });
     
-    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests', {
-        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexSplitTests)],
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexSplitTests)],
         statics: {
             splitTest1: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests);
                 t.getFixture().splitTest1();
             },
             splitTest2: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests);
                 t.getFixture().splitTest2();
             },
             splitTest3: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests);
                 t.getFixture().splitTest3();
             },
             splitTest4: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests);
                 t.getFixture().splitTest4();
             },
             splitTest5: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests);
                 t.getFixture().splitTest5();
             },
             splitWithCountTest1: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests);
                 t.getFixture().splitWithCountTest1();
             },
             splitWithCountTest2: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests);
                 t.getFixture().splitWithCountTest2();
             },
             splitWithCountTest3: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests);
                 t.getFixture().splitWithCountTest3();
             },
             splitWithCountTest4: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests);
                 t.getFixture().splitWithCountTest4();
             },
             splitWithCountAndStartAtTest1: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests);
                 t.getFixture().splitWithCountAndStartAtTest1();
             },
             splitWithCountAndStartAtTest2: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests);
                 t.getFixture().splitWithCountAndStartAtTest2();
             },
             splitWithCountAndStartAtTest3: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests);
                 t.getFixture().splitWithCountAndStartAtTest3();
             },
             splitWithCountAndStartAtTest4: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests);
                 t.getFixture().splitWithCountAndStartAtTest4();
             },
             splitStaticTest1: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests);
                 t.getFixture().splitStaticTest1();
             },
             splitStaticTest2: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests);
                 t.getFixture().splitStaticTest2();
             },
             splitStaticTest3: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests);
                 t.getFixture().splitStaticTest3();
             },
             splitStaticTest4: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests);
                 t.getFixture().splitStaticTest4();
             },
             splitStaticTest5: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests);
                 t.getFixture().splitStaticTest5();
             },
             splitStaticWithOptionsTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests);
                 t.getFixture().splitStaticWithOptionsTest();
             },
             splitStaticWithOptionsAndTimeout: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Msdn.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Msdn_RegexSplitTests);
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.Methods.RegexSplitTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_Methods_RegexSplitTests);
                 t.getFixture().splitStaticWithOptionsAndTimeout();
             }
         }
     });
     
-    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCaptureCollectionTests', {
-        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests)],
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests)],
         statics: {
-            caseDataTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCaptureCollectionTests);
-                t.getFixture().caseDataTest();
+            msdnSimpleAlternationTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().msdnSimpleAlternationTest1();
             },
-            captureCollectionFieldsTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCaptureCollectionTests);
-                t.getFixture().captureCollectionFieldsTest();
+            msdnSimpleAlternationTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().msdnSimpleAlternationTest2();
             },
-            captureCollectionForeachTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCaptureCollectionTests);
-                t.getFixture().captureCollectionForeachTest();
+            msdnSimpleAlternationTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().msdnSimpleAlternationTest3();
             },
-            captureCollectionEnumeratorTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCaptureCollectionTests);
-                t.getFixture().captureCollectionEnumeratorTest();
+            msdnAlternationExprTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().msdnAlternationExprTest1();
             },
-            captureCollectionCopyToTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCaptureCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCaptureCollectionTests);
-                t.getFixture().captureCollectionCopyToTest();
+            msdnAlternationExprTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().msdnAlternationExprTest2();
+            },
+            msdnAlternationGroupNameExprTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().msdnAlternationGroupNameExprTest1();
+            },
+            msdnAlternationGroupNameExprTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().msdnAlternationGroupNameExprTest2();
+            },
+            msdnAlternationGroupNumberExprTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().msdnAlternationGroupNumberExprTest();
+            },
+            simpleAlternationTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().simpleAlternationTest();
+            },
+            simpleAlternationTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().simpleAlternationTest2();
+            },
+            simpleAlternationTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().simpleAlternationTest3();
+            },
+            alternationWithGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationWithGroupTest();
+            },
+            alternationGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupTest();
+            },
+            alternationGroupNonCapturingTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupNonCapturingTest();
+            },
+            alternationGroupPositiveLookaheadTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupPositiveLookaheadTest();
+            },
+            alternationGroupNegativeLookaheadTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupNegativeLookaheadTest1();
+            },
+            alternationGroupNegativeLookaheadTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupNegativeLookaheadTest2();
+            },
+            alternationGroupPositiveLookbehindTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupPositiveLookbehindTest();
+            },
+            alternationGroupNegativeLookbehindTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupNegativeLookbehindTest1();
+            },
+            alternationGroupNegativeLookbehindTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupNegativeLookbehindTest2();
+            },
+            alternationGroupNonBacktrackingTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupNonBacktrackingTest();
+            },
+            alternationGroupCommentTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupCommentTest();
+            },
+            alternationGroupWithNameInConditionTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupWithNameInConditionTest();
+            },
+            alternationGroupWithIncorrectRefTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupWithIncorrectRefTest1();
+            },
+            alternationGroupWithIncorrectRefTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupWithIncorrectRefTest2();
+            },
+            alternationGroupWithImnsxTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupWithImnsxTest1();
+            },
+            alternationGroupWithImnsxTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupWithImnsxTest2();
+            },
+            alternationGroupWithImnsxTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupWithImnsxTest3();
+            },
+            alternationConditionWithGroupTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationConditionWithGroupTest1();
+            },
+            alternationConditionWithGroupTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationConditionWithGroupTest2();
+            },
+            alternationConditionWithGroupTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationConditionWithGroupTest3();
+            },
+            alternationConditionWithGroupTest4: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationConditionWithGroupTest4();
+            },
+            alternationConditionWithGroupTest5: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationConditionWithGroupTest5();
+            },
+            alternationGroupNonCapturingWithGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupNonCapturingWithGroupTest();
+            },
+            alternationGroupPositiveLookaheadWithGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupPositiveLookaheadWithGroupTest();
+            },
+            alternationGroupNegativeLookaheadWithGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupNegativeLookaheadWithGroupTest();
+            },
+            alternationGroupPositiveLookbehindWithGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupPositiveLookbehindWithGroupTest();
+            },
+            alternationGroupNegativeLookbehindWithGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupNegativeLookbehindWithGroupTest();
+            },
+            alternationGroupNonBacktrackingWithGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupNonBacktrackingWithGroupTest();
+            },
+            alternationGroupWithImnsxAndGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupWithImnsxAndGroupTest();
+            },
+            alternationGroupWithoutAlternativeBranchTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupWithoutAlternativeBranchTest1();
+            },
+            alternationGroupWithoutAlternativeBranchTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupWithoutAlternativeBranchTest2();
+            },
+            alternationGroupWithoutAlternativeBranchExceptionTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAlternationTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAlternationTests);
+                t.getFixture().alternationGroupWithoutAlternativeBranchExceptionTest();
             }
         }
     });
     
-    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests', {
-        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests)],
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAnchorsTests)],
         statics: {
-            caseDataTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests);
-                t.getFixture().caseDataTest();
+            msdnStartOfStringOrLineTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests);
+                t.getFixture().msdnStartOfStringOrLineTest();
             },
-            getGroupNamesTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests);
-                t.getFixture().getGroupNamesTest();
+            msdnStartOfStringOrLineMultilineModeTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests);
+                t.getFixture().msdnStartOfStringOrLineMultilineModeTest();
             },
-            getGroupNumbersTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests);
-                t.getFixture().getGroupNumbersTest();
+            msdnEndOfStringOrLineTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests);
+                t.getFixture().msdnEndOfStringOrLineTest1();
             },
-            groupNameFromNumberTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests);
-                t.getFixture().groupNameFromNumberTest();
+            msdnEndOfStringOrLineTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests);
+                t.getFixture().msdnEndOfStringOrLineTest2();
             },
-            groupNumberFromNameTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests);
-                t.getFixture().groupNumberFromNameTest();
+            msdnEndOfStringOrLineTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests);
+                t.getFixture().msdnEndOfStringOrLineTest3();
             },
-            supportedOptionsTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests);
-                t.getFixture().supportedOptionsTest();
+            msdnEndOfStringOrLineTest4: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests);
+                t.getFixture().msdnEndOfStringOrLineTest4();
             },
-            matchNamedGroupTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests);
-                t.getFixture().matchNamedGroupTest();
+            msdnStartOfStringOnlyTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests);
+                t.getFixture().msdnStartOfStringOnlyTest();
             },
-            matchInnerNamedGroupTest1: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests);
-                t.getFixture().matchInnerNamedGroupTest1();
+            msdnEndOfStringOrNewlineTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests);
+                t.getFixture().msdnEndOfStringOrNewlineTest();
             },
-            matchInnerNamedGroupTest2: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests);
-                t.getFixture().matchInnerNamedGroupTest2();
+            msdnEndOfStringOnlyTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests);
+                t.getFixture().msdnEndOfStringOnlyTest();
             },
-            groupOrderingTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests);
-                t.getFixture().groupOrderingTest();
+            msdnContiguousMatchesTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests);
+                t.getFixture().msdnContiguousMatchesTest();
             },
-            repeatingGroupTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests);
-                t.getFixture().repeatingGroupTest();
+            msdnWordBoundaryTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests);
+                t.getFixture().msdnWordBoundaryTest();
             },
-            zeroResultTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests);
-                t.getFixture().zeroResultTest();
+            msdnNonWordBoundaryTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests);
+                t.getFixture().msdnNonWordBoundaryTest();
             },
-            nonCapturingGroupsTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEntityTests);
-                t.getFixture().nonCapturingGroupsTest();
+            startAndEndOfStringCustomTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests);
+                t.getFixture().startAndEndOfStringCustomTest1();
+            },
+            startAndEndOfStringCustomTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests);
+                t.getFixture().startAndEndOfStringCustomTest2();
+            },
+            endOfStringOrNewlineCustomTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests);
+                t.getFixture().endOfStringOrNewlineCustomTest1();
+            },
+            endOfStringOrNewlineCustomTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests);
+                t.getFixture().endOfStringOrNewlineCustomTest2();
+            },
+            endOfStringOnlyCustomTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests);
+                t.getFixture().endOfStringOnlyCustomTest1();
+            },
+            endOfStringOnlyCustomTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests);
+                t.getFixture().endOfStringOnlyCustomTest2();
+            },
+            endOfStringOnlyCustomTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests);
+                t.getFixture().endOfStringOnlyCustomTest3();
+            },
+            contiguousMatchesCustomTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests);
+                t.getFixture().contiguousMatchesCustomTest1();
+            },
+            contiguousMatchesCustomTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexAnchorsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexAnchorsTests);
+                t.getFixture().contiguousMatchesCustomTest2();
             }
         }
     });
     
-    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexGroupCollectionTests', {
-        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests)],
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBackreferenceTests)],
         statics: {
-            caseDataTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexGroupCollectionTests);
-                t.getFixture().caseDataTest();
+            msdnNumberedBackrefTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests);
+                t.getFixture().msdnNumberedBackrefTest();
             },
-            groupCollectionFieldsTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexGroupCollectionTests);
-                t.getFixture().groupCollectionFieldsTest();
+            msdnNamedBackrefTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests);
+                t.getFixture().msdnNamedBackrefTest();
             },
-            groupCollectionForeachTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexGroupCollectionTests);
-                t.getFixture().groupCollectionForeachTest();
+            msdnNamedBackrefWithNumberAsNameTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests);
+                t.getFixture().msdnNamedBackrefWithNumberAsNameTest();
             },
-            groupCollectionEnumeratorTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexGroupCollectionTests);
-                t.getFixture().groupCollectionEnumeratorTest();
+            msdnNamedBackrefWithRedefinedGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests);
+                t.getFixture().msdnNamedBackrefWithRedefinedGroupTest();
             },
-            groupCollectionCopyToTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexGroupCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexGroupCollectionTests);
-                t.getFixture().groupCollectionCopyToTest();
+            msdnNamedBackrefWithEmptyCaptureTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests);
+                t.getFixture().msdnNamedBackrefWithEmptyCaptureTest1();
+            },
+            msdnNamedBackrefWithEmptyCaptureTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests);
+                t.getFixture().msdnNamedBackrefWithEmptyCaptureTest2();
+            },
+            namedBackrefToUnreachableGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests);
+                t.getFixture().namedBackrefToUnreachableGroupTest();
+            },
+            namedBackrefToSelfGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests);
+                t.getFixture().namedBackrefToSelfGroupTest();
+            },
+            namedBackrefToParentGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests);
+                t.getFixture().namedBackrefToParentGroupTest();
+            },
+            numberedBackrefTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests);
+                t.getFixture().numberedBackrefTest();
+            },
+            numberedBackrefInGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests);
+                t.getFixture().numberedBackrefInGroupTest();
+            },
+            namedBackrefInGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests);
+                t.getFixture().namedBackrefInGroupTest();
+            },
+            numberedBackrefRecursiveGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests);
+                t.getFixture().numberedBackrefRecursiveGroupTest();
+            },
+            namedBackrefRecursiveGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests);
+                t.getFixture().namedBackrefRecursiveGroupTest();
+            },
+            complexBackrefTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBackreferenceTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBackreferenceTests);
+                t.getFixture().complexBackrefTest1();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBalancingGroupsTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBalancingGroupsTests)],
+        statics: {
+            msdnBalancingGroupTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBalancingGroupsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBalancingGroupsTests);
+                t.getFixture().msdnBalancingGroupTest1();
+            },
+            msdnBalancingGroupTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBalancingGroupsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBalancingGroupsTests);
+                t.getFixture().msdnBalancingGroupTest2();
+            },
+            balancingGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBalancingGroupsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBalancingGroupsTests);
+                t.getFixture().balancingGroupTest();
+            },
+            balancingGroupWithoutName1Test: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBalancingGroupsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBalancingGroupsTests);
+                t.getFixture().balancingGroupWithoutName1Test();
+            },
+            balancingGroupWithQuantifierTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBalancingGroupsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBalancingGroupsTests);
+                t.getFixture().balancingGroupWithQuantifierTest();
+            },
+            balancingGroupWithEmptyIntervalTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBalancingGroupsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBalancingGroupsTests);
+                t.getFixture().balancingGroupWithEmptyIntervalTest();
+            },
+            balancingGroupStackApproachTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBalancingGroupsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBalancingGroupsTests);
+                t.getFixture().balancingGroupStackApproachTest();
+            },
+            balancingGroupWithNumberReferenceTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBalancingGroupsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBalancingGroupsTests);
+                t.getFixture().balancingGroupWithNumberReferenceTest1();
+            },
+            balancingGroupWithNumberReferenceTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBalancingGroupsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBalancingGroupsTests);
+                t.getFixture().balancingGroupWithNumberReferenceTest2();
+            },
+            balancingGroupIncorrectReferenceTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBalancingGroupsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBalancingGroupsTests);
+                t.getFixture().balancingGroupIncorrectReferenceTest1();
+            },
+            balancingGroupIncorrectReferenceTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexBalancingGroupsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexBalancingGroupsTests);
+                t.getFixture().balancingGroupIncorrectReferenceTest2();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests)],
+        statics: {
+            msdnCharGroupTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnCharGroupTest1();
+            },
+            msdnCharGroupTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnCharGroupTest3();
+            },
+            msdnNegativeCharGroupTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnNegativeCharGroupTest1();
+            },
+            msdnNegativeCharGroupTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnNegativeCharGroupTest2();
+            },
+            msdnDotCharTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnDotCharTest1();
+            },
+            msdnDotCharTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnDotCharTest2();
+            },
+            msdnDotCharTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnDotCharTest3();
+            },
+            msdnCharRangeInGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnCharRangeInGroupTest();
+            },
+            msdnWordCharTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnWordCharTest1();
+            },
+            msdnWordCharTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnWordCharTest2();
+            },
+            msdnNonWordCharTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnNonWordCharTest1();
+            },
+            msdnNonWordCharTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnNonWordCharTest2();
+            },
+            msdnSpaceCharTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnSpaceCharTest1();
+            },
+            msdnSpaceCharTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnSpaceCharTest2();
+            },
+            msdnNonSpaceCharTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnNonSpaceCharTest1();
+            },
+            msdnNonSpaceCharTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnNonSpaceCharTest2();
+            },
+            msdnDigitCharTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnDigitCharTest1();
+            },
+            msdnDigitCharTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnDigitCharTest2();
+            },
+            msdnDigitCharTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnDigitCharTest3();
+            },
+            msdnNonDigitCharTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnNonDigitCharTest1();
+            },
+            msdnNonDigitCharTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnNonDigitCharTest2();
+            },
+            msdnNonDigitCharTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnNonDigitCharTest3();
+            },
+            msdnSubstactGroupTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnSubstactGroupTest1();
+            },
+            msdnSubstactGroupTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnSubstactGroupTest2();
+            },
+            msdnSubstactGroupTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnSubstactGroupTest3();
+            },
+            msdnSubstactGroupTest4: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().msdnSubstactGroupTest4();
+            },
+            charClassesInCharGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().charClassesInCharGroupTest();
+            },
+            caretSymbolInCharGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().caretSymbolInCharGroupTest();
+            },
+            negativeCharGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().negativeCharGroupTest();
+            },
+            combiningCharRangesTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().combiningCharRangesTest();
+            },
+            substractGroupTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().substractGroupTest1();
+            },
+            substractGroupTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().substractGroupTest2();
+            },
+            substractGroupTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().substractGroupTest3();
+            },
+            substractNegativeGroupTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().substractNegativeGroupTest1();
+            },
+            substractNegativeGroupTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().substractNegativeGroupTest2();
+            },
+            substractNegativeGroupTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().substractNegativeGroupTest3();
+            },
+            substractNestedGroupsTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().substractNestedGroupsTest1();
+            },
+            substractNestedGroupsTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().substractNestedGroupsTest2();
+            },
+            substractGroupIsNotLastTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexCharClassesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexCharClassesTests);
+                t.getFixture().substractGroupIsNotLastTest();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEscapesTests)],
+        statics: {
+            msdnBellCharTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEscapesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests);
+                t.getFixture().msdnBellCharTest();
+            },
+            msdnBackspaceCharTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEscapesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests);
+                t.getFixture().msdnBackspaceCharTest();
+            },
+            msdnTabCharTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEscapesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests);
+                t.getFixture().msdnTabCharTest();
+            },
+            msdnCarriageRetCharTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEscapesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests);
+                t.getFixture().msdnCarriageRetCharTest();
+            },
+            msdnVerticalTabCharTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEscapesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests);
+                t.getFixture().msdnVerticalTabCharTest();
+            },
+            msdnFormFeedCharTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEscapesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests);
+                t.getFixture().msdnFormFeedCharTest();
+            },
+            msdnNewLineCharTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEscapesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests);
+                t.getFixture().msdnNewLineCharTest();
+            },
+            msdnEscapeCharTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEscapesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests);
+                t.getFixture().msdnEscapeCharTest();
+            },
+            msdnOctalEscapeTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEscapesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests);
+                t.getFixture().msdnOctalEscapeTest();
+            },
+            msdnHexEscapeTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEscapesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests);
+                t.getFixture().msdnHexEscapeTest();
+            },
+            msdnAsciiEscapeTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEscapesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests);
+                t.getFixture().msdnAsciiEscapeTest();
+            },
+            msdnUnicodeEscapeTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEscapesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests);
+                t.getFixture().msdnUnicodeEscapeTest();
+            },
+            msdnSpecialEscapesTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEscapesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests);
+                t.getFixture().msdnSpecialEscapesTest();
+            },
+            msdnCharEscapesExampleTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEscapesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests);
+                t.getFixture().msdnCharEscapesExampleTest();
+            },
+            charEscapesTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEscapesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests);
+                t.getFixture().charEscapesTest();
+            },
+            rangeWithCharEscapesTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEscapesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests);
+                t.getFixture().rangeWithCharEscapesTest();
+            },
+            controlCharsTestUpperTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEscapesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests);
+                t.getFixture().controlCharsTestUpperTest();
+            },
+            controlCharsTestLowerTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexEscapesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexEscapesTests);
+                t.getFixture().controlCharsTestLowerTest();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexExamplesTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexExamplesTests)],
+        statics: {
+            emailParseTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexExamplesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexExamplesTests);
+                t.getFixture().emailParseTest();
+            },
+            phoneParseTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexExamplesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexExamplesTests);
+                t.getFixture().phoneParseTest();
+            },
+            passwordValidationTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexExamplesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexExamplesTests);
+                t.getFixture().passwordValidationTest();
+            },
+            wordSlplittingTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexExamplesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexExamplesTests);
+                t.getFixture().wordSlplittingTest();
+            },
+            ipAddressValidationTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexExamplesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexExamplesTests);
+                t.getFixture().ipAddressValidationTest();
+            },
+            escapeQuotedWordsTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexExamplesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexExamplesTests);
+                t.getFixture().escapeQuotedWordsTest();
+            },
+            creditCardExpirationParsingTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexExamplesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexExamplesTests);
+                t.getFixture().creditCardExpirationParsingTest();
+            },
+            urlParsingTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexExamplesTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexExamplesTests);
+                t.getFixture().urlParsingTest();
             }
         }
     });
@@ -9980,6 +11001,14 @@
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests', {
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests)],
         statics: {
+            msdnInlineOptionsTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().msdnInlineOptionsTest();
+            },
+            msdnIgnoreCaseTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().msdnIgnoreCaseTest();
+            },
             msdnMultilineInlineOptionTest: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
                 t.getFixture().msdnMultilineInlineOptionTest();
@@ -9999,6 +11028,34 @@
             msdnIngoreWhitespaceInlineOptionTest3: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
                 t.getFixture().msdnIngoreWhitespaceInlineOptionTest3();
+            },
+            msdnExplicitCaptureInlineOptionTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().msdnExplicitCaptureInlineOptionTest1();
+            },
+            msdnExplicitCaptureInlineOptionTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().msdnExplicitCaptureInlineOptionTest2();
+            },
+            ignoreCaseInlineOptionTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().ignoreCaseInlineOptionTest1();
+            },
+            ignoreCaseInlineOptionTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().ignoreCaseInlineOptionTest2();
+            },
+            ignoreCaseInlineOptionTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().ignoreCaseInlineOptionTest3();
+            },
+            ignoreCaseInlineOptionTest4: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().ignoreCaseInlineOptionTest4();
+            },
+            ignoreCaseInlineOptionTest5: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().ignoreCaseInlineOptionTest5();
             },
             multilineInlineOptionTest1: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
@@ -10079,100 +11136,164 @@
             inlineCommentTest1: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
                 t.getFixture().inlineCommentTest1();
+            },
+            explicitCaptureInlineOptionTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().explicitCaptureInlineOptionTest1();
+            },
+            explicitCaptureInlineOptionTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().explicitCaptureInlineOptionTest2();
+            },
+            explicitCaptureInlineOptionTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().explicitCaptureInlineOptionTest3();
+            },
+            explicitCaptureInlineOptionTest4: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexInlineOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexInlineOptionsTests);
+                t.getFixture().explicitCaptureInlineOptionTest4();
             }
         }
     });
     
-    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchCollectionTests', {
-        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests)],
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookaheadTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookaheadTests)],
         statics: {
-            caseDataTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchCollectionTests);
-                t.getFixture().caseDataTest();
+            msdnPositiveLookaheadTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookaheadTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookaheadTests);
+                t.getFixture().msdnPositiveLookaheadTest();
             },
-            matchCollectionFieldsTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchCollectionTests);
-                t.getFixture().matchCollectionFieldsTest();
+            msdnNegativeLookaheadTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookaheadTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookaheadTests);
+                t.getFixture().msdnNegativeLookaheadTest();
             },
-            matchCollectionItemsTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchCollectionTests);
-                t.getFixture().matchCollectionItemsTest();
+            positiveLookaheadTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookaheadTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookaheadTests);
+                t.getFixture().positiveLookaheadTest1();
             },
-            matchCollectionForeachTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchCollectionTests);
-                t.getFixture().matchCollectionForeachTest();
+            positiveLookaheadTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookaheadTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookaheadTests);
+                t.getFixture().positiveLookaheadTest2();
             },
-            matchCollectionEnumeratorTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchCollectionTests);
-                t.getFixture().matchCollectionEnumeratorTest();
+            negativeLookaheadTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookaheadTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookaheadTests);
+                t.getFixture().negativeLookaheadTest1();
             },
-            matchCollectionCopyToTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchCollectionTests);
-                t.getFixture().matchCollectionCopyToTest();
+            negativeLookaheadTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookaheadTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookaheadTests);
+                t.getFixture().negativeLookaheadTest2();
             },
-            matchCollectionWithEmptyPatternTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchCollectionTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchCollectionTests);
-                t.getFixture().matchCollectionWithEmptyPatternTest();
+            positiveLookaheadWithGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookaheadTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookaheadTests);
+                t.getFixture().positiveLookaheadWithGroupTest();
+            },
+            negativeLookaheadWithGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookaheadTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookaheadTests);
+                t.getFixture().negativeLookaheadWithGroupTest();
+            },
+            positiveLookaheadWithOffsetTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookaheadTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookaheadTests);
+                t.getFixture().positiveLookaheadWithOffsetTest();
+            },
+            negativeLookaheadWithOffsetTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookaheadTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookaheadTests);
+                t.getFixture().negativeLookaheadWithOffsetTest();
+            },
+            positiveLookaheadGroupCombineTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookaheadTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookaheadTests);
+                t.getFixture().positiveLookaheadGroupCombineTest();
             }
         }
     });
     
-    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchEntityTests', {
-        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchEntityTests)],
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookbehindTests)],
         statics: {
-            caseDataTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchEntityTests);
-                t.getFixture().caseDataTest();
+            msdnPositiveLookbehindTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookbehindTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests);
+                t.getFixture().msdnPositiveLookbehindTest();
             },
-            matchEmptyPatternTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchEntityTests);
-                t.getFixture().matchEmptyPatternTest();
+            msdnNegativeLookbehindTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookbehindTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests);
+                t.getFixture().msdnNegativeLookbehindTest();
             },
-            matchEmptyFieldsTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchEntityTests);
-                t.getFixture().matchEmptyFieldsTest();
+            positiveLookbehindTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookbehindTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests);
+                t.getFixture().positiveLookbehindTest1();
             },
-            matchNextMatchTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchEntityTests);
-                t.getFixture().matchNextMatchTest();
+            positiveLookbehindTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookbehindTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests);
+                t.getFixture().positiveLookbehindTest2();
             },
-            matchNextMatchWithEmptyPatternTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchEntityTests);
-                t.getFixture().matchNextMatchWithEmptyPatternTest();
+            positiveLookbehindTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookbehindTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests);
+                t.getFixture().positiveLookbehindTest3();
             },
-            matchResultTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchEntityTests);
-                t.getFixture().matchResultTest();
+            positiveLookbehindWithMatchOffsetTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookbehindTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests);
+                t.getFixture().positiveLookbehindWithMatchOffsetTest();
             },
-            matchSearchGroupByNameTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchEntityTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchEntityTests);
-                t.getFixture().matchSearchGroupByNameTest();
+            negativeLookbehindTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookbehindTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests);
+                t.getFixture().negativeLookbehindTest1();
+            },
+            negativeLookbehindTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookbehindTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests);
+                t.getFixture().negativeLookbehindTest2();
+            },
+            positiveLookbehindWithGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookbehindTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests);
+                t.getFixture().positiveLookbehindWithGroupTest();
+            },
+            negativeLookbehindWithGroupTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookbehindTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests);
+                t.getFixture().negativeLookbehindWithGroupTest();
+            },
+            positiveLookbehindWithOffsetTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookbehindTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests);
+                t.getFixture().positiveLookbehindWithOffsetTest();
+            },
+            negativeLookbehindWithOffsetTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexLookbehindTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexLookbehindTests);
+                t.getFixture().negativeLookbehindWithOffsetTest();
             }
         }
     });
     
-    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchSparseTests', {
-        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchSparseTests)],
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexNonbacktrackingTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexNonbacktrackingTests)],
         statics: {
-            groupOrderingTest1: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchSparseTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchSparseTests);
-                t.getFixture().groupOrderingTest1();
+            msdnNonBacktrackingTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexNonbacktrackingTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexNonbacktrackingTests);
+                t.getFixture().msdnNonBacktrackingTest1();
             },
-            groupOrderingTest2: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchSparseTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchSparseTests);
-                t.getFixture().groupOrderingTest2();
+            msdnNonBacktrackingTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexNonbacktrackingTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexNonbacktrackingTests);
+                t.getFixture().msdnNonBacktrackingTest2();
             },
-            groupOrderingTest3: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchSparseTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchSparseTests);
-                t.getFixture().groupOrderingTest3();
+            nonBacktrackingTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexNonbacktrackingTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexNonbacktrackingTests);
+                t.getFixture().nonBacktrackingTest1();
             },
-            sparseOrderingTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchSparseTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchSparseTests);
-                t.getFixture().sparseOrderingTest();
+            nonBacktrackingTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexNonbacktrackingTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexNonbacktrackingTests);
+                t.getFixture().nonBacktrackingTest2();
             },
-            groupCapturesMergeTest: function (assert) {
-                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexMatchSparseTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexMatchSparseTests);
-                t.getFixture().groupCapturesMergeTest();
+            nonBacktrackingTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexNonbacktrackingTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexNonbacktrackingTests);
+                t.getFixture().nonBacktrackingTest3();
+            },
+            nonBacktrackingTest4: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexNonbacktrackingTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexNonbacktrackingTests);
+                t.getFixture().nonBacktrackingTest4();
+            },
+            nonBacktrackingTest5: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexNonbacktrackingTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexNonbacktrackingTests);
+                t.getFixture().nonBacktrackingTest5();
+            },
+            nonBacktrackingWithOffsetTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexNonbacktrackingTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexNonbacktrackingTests);
+                t.getFixture().nonBacktrackingWithOffsetTest();
             }
         }
     });
@@ -10199,6 +11320,14 @@
             msdnIgnoreWhitespaceOptionTest: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests);
                 t.getFixture().msdnIgnoreWhitespaceOptionTest();
+            },
+            msdnExplicitCaptureOptionTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests);
+                t.getFixture().msdnExplicitCaptureOptionTest1();
+            },
+            msdnExplicitCaptureOptionTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests);
+                t.getFixture().msdnExplicitCaptureOptionTest2();
             },
             ignoreCaseOptionTest1: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests);
@@ -10239,6 +11368,108 @@
             multilineAndSinglelineOptionsTest: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexOptionsTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexOptionsTests);
                 t.getFixture().multilineAndSinglelineOptionsTest();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests)],
+        statics: {
+            msdnZeroOrMoreTimesTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().msdnZeroOrMoreTimesTest();
+            },
+            msdnOneOrMoreTimesTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().msdnOneOrMoreTimesTest();
+            },
+            msdnZeroOrOneTimeTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().msdnZeroOrOneTimeTest();
+            },
+            msdnNTimesTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().msdnNTimesTest1();
+            },
+            msdnNTimesTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().msdnNTimesTest2();
+            },
+            msdnNOrMoreTimesTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().msdnNOrMoreTimesTest();
+            },
+            msdnNToMTimesTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().msdnNToMTimesTest();
+            },
+            msdnLazyZeroOrMoreTimesTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().msdnLazyZeroOrMoreTimesTest();
+            },
+            msdnLazyOneOrMoreTimesTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().msdnLazyOneOrMoreTimesTest();
+            },
+            msdnLazyZeroOrOneTimeTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().msdnLazyZeroOrOneTimeTest();
+            },
+            msdnLazyNTimesTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().msdnLazyNTimesTest();
+            },
+            msdnLazyNOrMoreTimesTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().msdnLazyNOrMoreTimesTest();
+            },
+            msdnLazyNToMTimesTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().msdnLazyNToMTimesTest();
+            },
+            zeroOrMoreTimesTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().zeroOrMoreTimesTest();
+            },
+            oneOrMoreTimesTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().oneOrMoreTimesTest1();
+            },
+            oneOrMoreTimesTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().oneOrMoreTimesTest2();
+            },
+            oneOrMoreTimesTest3: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().oneOrMoreTimesTest3();
+            },
+            zeroOrOneTimeTest: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().zeroOrOneTimeTest();
+            },
+            lazyZeroOrMoreTimesTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().lazyZeroOrMoreTimesTest1();
+            },
+            lazyZeroOrMoreTimesTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().lazyZeroOrMoreTimesTest2();
+            },
+            lazyOneOrMoreTimesTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().lazyOneOrMoreTimesTest1();
+            },
+            lazyOneOrMoreTimesTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().lazyOneOrMoreTimesTest2();
+            },
+            lazyZeroOrOneTimeTest1: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().lazyZeroOrOneTimeTest1();
+            },
+            lazyZeroOrOneTimeTest2: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Text.RegularExpressions.RegexQuantifiersTests).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Text_RegularExpressions_RegexQuantifiersTests);
+                t.getFixture().lazyZeroOrOneTimeTest2();
             }
         }
     });

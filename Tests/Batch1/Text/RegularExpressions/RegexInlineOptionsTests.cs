@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using Bridge.Test;
 
 namespace Bridge.ClientTest.Text.RegularExpressions
@@ -8,40 +7,70 @@ namespace Bridge.ClientTest.Text.RegularExpressions
     [TestFixture(TestNameFormat = "Regex IMNSX - {0}")]
     public class RegexInlineOptionsTests : RegexTestBase
     {
-        #region Msdn
+        #region MSDN
 
-        //TODO: uncomment when inline IgnoreCase option is supported
-        //[Test]
-        //public void MsdnIgnoreCaseTest()
-        //{
-        //    const string pattern = @"\b(?i:t)he\w*\b";
-        //    const string text = @"The man then told them about that event.";
-        //    var rgx = new Regex(pattern, RegexOptions.IgnoreCase);
-        //    var ms = rgx.Matches(text);
+        [Test]
+        public void MsdnInlineOptionsTest()
+        {
+            const string pattern = @"\b((?# case sensitive comparison)D\w+)\s(?ixn)((?#case insensitive comparison)d\w+)\b";
+            const string text = "double dare double Double a Drooling dog The Dreaded Deep";
+            var rgx = new Regex(pattern);
+            var ms = rgx.Matches(text);
 
-        //    Assert.AreEqual(3, ms.Count, "Matches count is correct.");
+            Assert.AreEqual(2, ms.Count, "Matches count is correct.");
 
-        //    // Match #0:
-        //    Assert.NotNull(ms[0], "Match[0] is not null.");
-        //    ValidateMatch(ms[0], 0, 3, "The", 1, true);
+            // Match #0:
+            Assert.NotNull(ms[0], "Match[0] is not null.");
+            ValidateMatch(ms[0], 28, 12, "Drooling dog", 2, true);
 
-        //    ValidateGroup(ms[0], 0, 0, 3, true, "The", 1);
-        //    ValidateCapture(ms[0], 0, 0, 0, 3, "The");
+            ValidateGroup(ms[0], 0, 28, 12, true, "Drooling dog", 1);
+            ValidateCapture(ms[0], 0, 0, 28, 12, "Drooling dog");
 
-        //    // Match #1:
-        //    Assert.NotNull(ms[1], "Match[1] is not null.");
-        //    ValidateMatch(ms[1], 8, 4, "then", 1, true);
+            ValidateGroup(ms[0], 1, 28, 8, true, "Drooling", 1);
+            ValidateCapture(ms[0], 1, 0, 28, 8, "Drooling");
 
-        //    ValidateGroup(ms[1], 0, 8, 4, true, "then", 1);
-        //    ValidateCapture(ms[1], 0, 0, 8, 4, "then");
+            // Match #1:
+            Assert.NotNull(ms[1], "Match[1] is not null.");
+            ValidateMatch(ms[1], 45, 12, "Dreaded Deep", 2, true);
 
-        //    // Match #2:
-        //    Assert.NotNull(ms[2], "Match[2] is not null.");
-        //    ValidateMatch(ms[2], 18, 4, "them", 1, true);
+            ValidateGroup(ms[1], 0, 45, 12, true, "Dreaded Deep", 1);
+            ValidateCapture(ms[1], 0, 0, 45, 12, "Dreaded Deep");
 
-        //    ValidateGroup(ms[2], 0, 18, 4, true, "them", 1);
-        //    ValidateCapture(ms[2], 0, 0, 18, 4, "them");
-        //}
+            ValidateGroup(ms[1], 1, 45, 7, true, "Dreaded", 1);
+            ValidateCapture(ms[1], 1, 0, 45, 7, "Dreaded");
+        }
+
+        [Test]
+        public void MsdnIgnoreCaseTest()
+        {
+            const string pattern = @"\b(?i:t)he\w*\b";
+            const string text = @"The man then told them about that event.";
+            var rgx = new Regex(pattern, RegexOptions.IgnoreCase);
+            var ms = rgx.Matches(text);
+
+            Assert.AreEqual(3, ms.Count, "Matches count is correct.");
+
+            // Match #0:
+            Assert.NotNull(ms[0], "Match[0] is not null.");
+            ValidateMatch(ms[0], 0, 3, "The", 1, true);
+
+            ValidateGroup(ms[0], 0, 0, 3, true, "The", 1);
+            ValidateCapture(ms[0], 0, 0, 0, 3, "The");
+
+            // Match #1:
+            Assert.NotNull(ms[1], "Match[1] is not null.");
+            ValidateMatch(ms[1], 8, 4, "then", 1, true);
+
+            ValidateGroup(ms[1], 0, 8, 4, true, "then", 1);
+            ValidateCapture(ms[1], 0, 0, 8, 4, "then");
+
+            // Match #2:
+            Assert.NotNull(ms[2], "Match[2] is not null.");
+            ValidateMatch(ms[2], 18, 4, "them", 1, true);
+
+            ValidateGroup(ms[2], 0, 18, 4, true, "them", 1);
+            ValidateCapture(ms[2], 0, 0, 18, 4, "them");
+        }
 
         [Test]
         public void MsdnMultilineInlineOptionTest()
@@ -235,47 +264,127 @@ namespace Bridge.ClientTest.Text.RegularExpressions
             ValidateCapture(ms[3], 1, 5, 117, 9, "paragraph");
         }
 
+        [Test]
+        public void MsdnExplicitCaptureInlineOptionTest1()
+        {
+            const string pattern = @"(?n)\b\(?((?>\w+),?\s?)+[\.!?]\)?";
+            const string text = "This is the first sentence. Is it the beginning of a literary masterpiece? I think not. Instead, it is a nonsensical paragraph.";
+            var rgx = new Regex(pattern);
+            var ms = rgx.Matches(text);
+
+            Assert.AreEqual(4, ms.Count, "Matches count is correct.");
+
+            // Match #0:
+            Assert.NotNull(ms[0], "Match[0] is not null.");
+            ValidateMatch(ms[0], 0, 27, "This is the first sentence.", 1, true);
+
+            ValidateGroup(ms[0], 0, 0, 27, true, "This is the first sentence.", 1);
+            ValidateCapture(ms[0], 0, 0, 0, 27, "This is the first sentence.");
+
+            // Match #1:
+            Assert.NotNull(ms[1], "Match[1] is not null.");
+            ValidateMatch(ms[1], 28, 46, "Is it the beginning of a literary masterpiece?", 1, true);
+
+            ValidateGroup(ms[1], 0, 28, 46, true, "Is it the beginning of a literary masterpiece?", 1);
+            ValidateCapture(ms[1], 0, 0, 28, 46, "Is it the beginning of a literary masterpiece?");
+
+            // Match #2:
+            Assert.NotNull(ms[2], "Match[2] is not null.");
+            ValidateMatch(ms[2], 75, 12, "I think not.", 1, true);
+
+            ValidateGroup(ms[2], 0, 75, 12, true, "I think not.", 1);
+            ValidateCapture(ms[2], 0, 0, 75, 12, "I think not.");
+
+            // Match #3:
+            Assert.NotNull(ms[3], "Match[3] is not null.");
+            ValidateMatch(ms[3], 88, 39, "Instead, it is a nonsensical paragraph.", 1, true);
+
+            ValidateGroup(ms[3], 0, 88, 39, true, "Instead, it is a nonsensical paragraph.", 1);
+            ValidateCapture(ms[3], 0, 0, 88, 39, "Instead, it is a nonsensical paragraph.");
+
+        }
+
+        [Test]
+        public void MsdnExplicitCaptureInlineOptionTest2()
+        {
+            const string pattern = @"\b\(?(?n:(?>\w+),?\s?)+[\.!?]\)?";
+            const string text = "This is the first sentence. Is it the beginning of a literary masterpiece? I think not. Instead, it is a nonsensical paragraph.";
+            var rgx = new Regex(pattern);
+            var ms = rgx.Matches(text);
+
+            Assert.AreEqual(4, ms.Count, "Matches count is correct.");
+
+            // Match #0:
+            Assert.NotNull(ms[0], "Match[0] is not null.");
+            ValidateMatch(ms[0], 0, 27, "This is the first sentence.", 1, true);
+
+            ValidateGroup(ms[0], 0, 0, 27, true, "This is the first sentence.", 1);
+            ValidateCapture(ms[0], 0, 0, 0, 27, "This is the first sentence.");
+
+            // Match #1:
+            Assert.NotNull(ms[1], "Match[1] is not null.");
+            ValidateMatch(ms[1], 28, 46, "Is it the beginning of a literary masterpiece?", 1, true);
+
+            ValidateGroup(ms[1], 0, 28, 46, true, "Is it the beginning of a literary masterpiece?", 1);
+            ValidateCapture(ms[1], 0, 0, 28, 46, "Is it the beginning of a literary masterpiece?");
+
+            // Match #2:
+            Assert.NotNull(ms[2], "Match[2] is not null.");
+            ValidateMatch(ms[2], 75, 12, "I think not.", 1, true);
+
+            ValidateGroup(ms[2], 0, 75, 12, true, "I think not.", 1);
+            ValidateCapture(ms[2], 0, 0, 75, 12, "I think not.");
+
+            // Match #3:
+            Assert.NotNull(ms[3], "Match[3] is not null.");
+            ValidateMatch(ms[3], 88, 39, "Instead, it is a nonsensical paragraph.", 1, true);
+
+            ValidateGroup(ms[3], 0, 88, 39, true, "Instead, it is a nonsensical paragraph.", 1);
+            ValidateCapture(ms[3], 0, 0, 88, 39, "Instead, it is a nonsensical paragraph.");
+
+        }
+
         #endregion
 
-        // TODO: remove/modify this TEST when IgnoreCase inline option is supported
-        //[Test]
-        //public void IgnoreCaseIsNotSupported()
-        //{
-        //    Assert.Throws<NotSupportedException>(() =>
-        //    {
-        //        var rgx = new Regex("(?i)Case Is Ignored");
-        //        var res = rgx.IsMatch("case is ignored");
-        //        Assert.True(res);
-        //    });
+        [Test]
+        public void IgnoreCaseInlineOptionTest1()
+        {
+            var rgx = new Regex("(?i)Case Is Ignored");
+            var res = rgx.IsMatch("case is ignored");
+            Assert.True(res);
+        }
 
-        //    Assert.Throws<NotSupportedException>(() =>
-        //    {
-        //        var rgx = new Regex("Case Is (?i)Ignored Partially");
-        //        var res = rgx.IsMatch("Case Is ignored partially");
-        //        Assert.True(res);
-        //    });
+        [Test]
+        public void IgnoreCaseInlineOptionTest2()
+        {
+            var rgx = new Regex("Case Is (?i)Ignored Partially");
+            var res = rgx.IsMatch("Case Is ignored partially");
+            Assert.True(res);
+        }
 
-        //    Assert.Throws<NotSupportedException>(() =>
-        //    {
-        //        var rgx = new Regex("(?-i)Case Sensitive", RegexOptions.IgnoreCase);
-        //        var res = rgx.IsMatch("case sensitive");
-        //        Assert.False(res);
-        //    });
+        [Test]
+        public void IgnoreCaseInlineOptionTest3()
+        {
+            var rgx = new Regex("(?-i)Case Sensitive", RegexOptions.IgnoreCase);
+            var res = rgx.IsMatch("case sensitive");
+            Assert.False(res);
+        }
 
-        //    Assert.Throws<NotSupportedException>(() =>
-        //    {
-        //        var rgx = new Regex("Case Sensitive (-?)Partially", RegexOptions.IgnoreCase);
-        //        var res = rgx.IsMatch("case sensitive Partially");
-        //        Assert.True(res);
-        //    });
+        [Test]
+        public void IgnoreCaseInlineOptionTest4()
+        {
+            var rgx = new Regex("Case Sensitive (?-i)Partially", RegexOptions.IgnoreCase);
+            var res = rgx.IsMatch("case sensitive Partially");
+            Assert.True(res);
+        }
 
-        //    Assert.Throws<NotSupportedException>(() =>
-        //    {
-        //        var rgx = new Regex("Case Sensitive (-?)Partially", RegexOptions.IgnoreCase);
-        //        var res = rgx.IsMatch("case sensitive partially");
-        //        Assert.False(res);
-        //    });
-        //}
+        [Test]
+        public void IgnoreCaseInlineOptionTest5()
+        {
+            var rgx = new Regex("Case Sensitive (?-i)Partially", RegexOptions.IgnoreCase);
+            var res = rgx.IsMatch("case sensitive partially");
+            Assert.False(res);
+        }
 
         [Test]
         public void MultilineInlineOptionTest1()
@@ -612,6 +721,95 @@ namespace Bridge.ClientTest.Text.RegularExpressions
 
             ValidateGroup(m, 0, 0, 3, true, "abc", 1);
             ValidateCapture(m, 0, 0, 0, 3, "abc");
+        }
+
+        [Test]
+        public void ExplicitCaptureInlineOptionTest1()
+        {
+            const string pattern = @"(?n)(a)(?<name1>b)(c)(?<55>d)";
+            const string text = "abcd";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 0, 4, "abcd", 3, true);
+
+            ValidateGroup(m, 0, 0, 4, true, "abcd", 1);
+            ValidateCapture(m, 0, 0, 0, 4, "abcd");
+
+            ValidateGroup(m, 1, 1, 1, true, "b", 1);
+            ValidateCapture(m, 1, 0, 1, 1, "b");
+
+            ValidateGroup(m, 55, 3, 1, true, "d", 1);
+            ValidateCapture(m, 55, 0, 3, 1, "d");
+        }
+
+        [Test]
+        public void ExplicitCaptureInlineOptionTest2()
+        {
+            const string pattern = @"(?n)(a)(?<name1>b)(?-n)(c)(?<55>d)";
+            const string text = "abcd";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 0, 4, "abcd", 4, true);
+
+            ValidateGroup(m, 0, 0, 4, true, "abcd", 1);
+            ValidateCapture(m, 0, 0, 0, 4, "abcd");
+
+            ValidateGroup(m, 1, 2, 1, true, "c", 1);
+            ValidateCapture(m, 1, 0, 2, 1, "c");
+
+            ValidateGroup(m, 2, 1, 1, true, "b", 1);
+            ValidateCapture(m, 2, 0, 1, 1, "b");
+
+            ValidateGroup(m, 55, 3, 1, true, "d", 1);
+            ValidateCapture(m, 55, 0, 3, 1, "d");
+        }
+
+        [Test]
+        public void ExplicitCaptureInlineOptionTest3()
+        {
+            const string pattern = @"(?n:a)(?<name1>b)(c)(?<55>d)";
+            const string text = "abcd";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 0, 4, "abcd", 4, true);
+
+            ValidateGroup(m, 0, 0, 4, true, "abcd", 1);
+            ValidateCapture(m, 0, 0, 0, 4, "abcd");
+
+            ValidateGroup(m, 1, 2, 1, true, "c", 1);
+            ValidateCapture(m, 1, 0, 2, 1, "c");
+
+            ValidateGroup(m, 2, 1, 1, true, "b", 1);
+            ValidateCapture(m, 2, 0, 1, 1, "b");
+
+            ValidateGroup(m, 55, 3, 1, true, "d", 1);
+            ValidateCapture(m, 55, 0, 3, 1, "d");
+        }
+
+        [Test]
+        public void ExplicitCaptureInlineOptionTest4()
+        {
+            const string pattern = @"(?n:(a)(?<name1>b)(?-n:(c))(?<55>d))";
+            const string text = "abcd";
+            var rgx = new Regex(pattern);
+            var m = rgx.Match(text);
+
+            ValidateMatch(m, 0, 4, "abcd", 4, true);
+
+            ValidateGroup(m, 0, 0, 4, true, "abcd", 1);
+            ValidateCapture(m, 0, 0, 0, 4, "abcd");
+
+            ValidateGroup(m, 1, 2, 1, true, "c", 1);
+            ValidateCapture(m, 1, 0, 2, 1, "c");
+
+            ValidateGroup(m, 2, 1, 1, true, "b", 1);
+            ValidateCapture(m, 2, 0, 1, 1, "b");
+
+            ValidateGroup(m, 55, 3, 1, true, "d", 1);
+            ValidateCapture(m, 55, 0, 3, 1, "d");
         }
     }
 }

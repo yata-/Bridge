@@ -120,9 +120,9 @@
             return arr;
         },
 
-        init: function (size, value) {
+        init: function (size, value, addFn) {
             var arr = new Array(size),
-                isFn = Bridge.isFunction(value);
+                isFn = addFn !== true && Bridge.isFunction(value);
 
             for (var i = 0; i < size; i++) {
                 arr[i] = isFn ? value() : value;

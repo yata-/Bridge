@@ -346,6 +346,11 @@ namespace Bridge.Translator
                     }
                     this.EmitBaseConstructor(ctor, ctorName);
                 }
+                else if (baseType != null && ctor.Initializer != null &&
+                         ctor.Initializer.ConstructorInitializerType == ConstructorInitializerType.Base)
+                {
+                    this.CheckBaseCtorTemplate(ctor, ref requireNewLine);
+                }
 
                 var script = this.Emitter.GetScript(ctor);
 
@@ -390,6 +395,35 @@ namespace Bridge.Translator
                 this.Emitter.Comma = true;
                 this.ClearLocalsMap(prevMap);
                 this.ClearLocalsNamesMap(prevNamesMap);
+            }
+        }
+
+        private void CheckBaseCtorTemplate(ConstructorDeclaration ctor, ref bool requireNewLine)
+        {
+            if (ctor.Initializer != null && !ctor.Initializer.IsNull)
+            {
+                var member = ((InvocationResolveResult)this.Emitter.Resolver.ResolveNode(ctor.Initializer, this.Emitter)).Member;
+
+                var inlineCode = this.Emitter.GetInline(member);
+
+                if (!string.IsNullOrEmpty(inlineCode))
+                {
+                    if (requireNewLine)
+                    {
+                        this.WriteNewLine();
+                        requireNewLine = false;
+                    }
+
+                    this.Write(JS.Funcs.BRIDGE_MERGE);
+                    this.WriteOpenParentheses();
+
+                    this.Write("this, ");
+                    var argsInfo = new ArgumentsInfo(this.Emitter, ctor.Initializer);
+                    new InlineArgumentsBlock(this.Emitter, argsInfo, inlineCode).Emit();
+                    this.WriteCloseParentheses();
+                    this.WriteSemiColon();
+                    this.WriteNewLine();
+                }
             }
         }
 

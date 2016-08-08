@@ -74,30 +74,36 @@ namespace Bridge.Translator
         public virtual void WriteScript(object value)
         {
             this.WriteIndent();
+            var s = AbstractEmitterBlock.ToJavaScript(value, this.Emitter);
+
+            this.Emitter.Output.Append(s);
+        }
+
+        public static string ToJavaScript(object value, IEmitter emitter)
+        {
             string s = null;
 
             if (value is char)
             {
-                s = this.Emitter.ToJavaScript((int)(char)value);
+                s = emitter.ToJavaScript((int) (char) value);
             }
             else if (value is decimal)
             {
-                s = JS.Types.SYSTEM_DECIMAL + "(" + this.DecimalConstant((decimal)value) + ")";
+                s = JS.Types.SYSTEM_DECIMAL + "(" + AbstractEmitterBlock.DecimalConstant((decimal) value, emitter) + ")";
             }
             else if (value is long)
             {
-                s = JS.Types.SYSTEM_INT64 + "(" + this.LongConstant((long)value) + ")";
+                s = JS.Types.SYSTEM_INT64 + "(" + AbstractEmitterBlock.LongConstant((long) value, emitter) + ")";
             }
             else if (value is ulong)
             {
-                s = JS.Types.SYSTEM_UInt64 + "(" + this.ULongConstant((ulong)value) + ")";
+                s = JS.Types.SYSTEM_UInt64 + "(" + AbstractEmitterBlock.ULongConstant((ulong) value, emitter) + ")";
             }
             else
             {
-                s = this.Emitter.ToJavaScript(value);
+                s = emitter.ToJavaScript(value);
             }
-
-            this.Emitter.Output.Append(s);
+            return s;
         }
 
         public virtual void WriteLines(IEnumerable<string> lines)
@@ -114,7 +120,7 @@ namespace Bridge.Translator
             this.WriteLines((IEnumerable<string>)lines);
         }
 
-        public string DecimalConstant(decimal value)
+        public static string DecimalConstant(decimal value, IEmitter emitter)
         {
             string s = null;
             bool similar = false;
@@ -129,44 +135,44 @@ namespace Bridge.Translator
 
             if (similar)
             {
-                s = this.Emitter.ToJavaScript((double)value);
+                s = emitter.ToJavaScript((double)value);
                 if (CultureInfo.InstalledUICulture.CompareInfo.IndexOf(s, "e", CompareOptions.IgnoreCase) > -1)
                 {
-                    s = this.Emitter.ToJavaScript(s);
+                    s = emitter.ToJavaScript(s);
                 }
             }
             else
             {
-                s = this.Emitter.ToJavaScript(value.ToString(CultureInfo.InvariantCulture));
+                s = emitter.ToJavaScript(value.ToString(CultureInfo.InvariantCulture));
             }
 
             return s;
         }
 
-        public string LongConstant(long value)
+        public static string LongConstant(long value, IEmitter emitter)
         {
             if (value > Int32.MaxValue || value < Int32.MinValue)
             {
                 int l1 = (int)(value & uint.MaxValue);
                 int l2 = (int)(value >> 32);
 
-                return this.Emitter.ToJavaScript(new int[] { l1, l2 });    
+                return emitter.ToJavaScript(new int[] { l1, l2 });    
             }
 
-            return this.Emitter.ToJavaScript(value);
+            return emitter.ToJavaScript(value);
         }
 
-        public string ULongConstant(ulong value)
+        public static string ULongConstant(ulong value, IEmitter emitter)
         {
             if (value > UInt32.MaxValue)
             {
                 int l1 = (int)(value & uint.MaxValue);
                 int l2 = (int)(value >> 32);
 
-                return this.Emitter.ToJavaScript(new int[] { l1, l2 });
+                return emitter.ToJavaScript(new int[] { l1, l2 });
             }
 
-            return this.Emitter.ToJavaScript(value);
+            return emitter.ToJavaScript(value);
         }
 
         public virtual void WriteCall(object callee = null)
@@ -205,9 +211,14 @@ namespace Bridge.Translator
             }
         }
 
+        public static string GetThisAlias(IEmitter emitter)
+        {
+            return "this";
+        }
+
         public virtual void WriteThis()
         {
-            this.Write("this");
+            this.Write(AbstractEmitterBlock.GetThisAlias(this.Emitter));
             this.Emitter.ThisRefCounter++;
         }
 
