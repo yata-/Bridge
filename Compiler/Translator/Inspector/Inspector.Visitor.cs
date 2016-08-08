@@ -739,7 +739,7 @@ namespace Bridge.Translator
 
                     if (v is bool)
                     {
-                        config.Enable = (bool)v;
+                        config.Enabled = (bool)v;
                     }
                     else if (v is string)
                     {
@@ -768,7 +768,7 @@ namespace Bridge.Translator
                 }
                 else
                 {
-                    config.Enable = true;
+                    config.Enabled = true;
                 }
 
                 return true;

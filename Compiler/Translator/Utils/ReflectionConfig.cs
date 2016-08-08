@@ -5,7 +5,7 @@ namespace Bridge.Translator
 {
     public class ReflectionConfig : IReflectionConfig
     {
-        public bool? Enable
+        public bool? Enabled
         {
             get; set;
         }
