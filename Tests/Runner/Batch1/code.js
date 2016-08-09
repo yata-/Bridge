@@ -15782,7 +15782,7 @@
     
                 for (var i2 = 0; i2 < Bridge.ClientTest.RandomTests.ITERATIONS; i2 = (i2 + 1) | 0) {
                     var x2 = r.nextDouble();
-                    Bridge.Test.Assert.true$1(x2 >= 0.0 && x2 < 1.0, x2 + " between 0.0 and 1.0  - NextDouble()");
+                    Bridge.Test.Assert.true$1(x2 >= 0.0 && x2 < 1.0, System.Double.format(x2, 'G') + " between 0.0 and 1.0  - NextDouble()");
                 }
             },
             seeded: function () {
@@ -15813,7 +15813,7 @@
     
                 for (var i = 0; i < Bridge.ClientTest.RandomTests.ITERATIONS; i = (i + 1) | 0) {
                     var d = r.exposeSample();
-                    Bridge.Test.Assert.true$1(d >= 0.0 && d < 1.0, d + " between 0.0 and 1.0  - ExposeSample()");
+                    Bridge.Test.Assert.true$1(d >= 0.0 && d < 1.0, System.Double.format(d, 'G') + " between 0.0 and 1.0  - ExposeSample()");
                 }
             }
         }
@@ -18462,8 +18462,6 @@
         statics: {
             canConvert: function (T, arg) {
                 try { /// The variable `x' is assigned but its value is never used
-    
-    
                     var x = System.Nullable.getValue(Bridge.cast(arg, T));
                     return true;
                 }
@@ -20651,12 +20649,12 @@
         },
         addWithStringWorks: function () {
             var d1 = System.Decimal(1.0);
-            var s1 = d1 + "#";
+            var s1 = System.Nullable.toString(d1) + "#";
     
             Bridge.Test.Assert.areEqual$1("1#", s1, "decimal?");
     
             var d2 = System.Decimal(2.0);
-            var s2 = d2 + "!";
+            var s2 = Bridge.Int.format(d2, 'G') + "!";
     
             Bridge.Test.Assert.areEqual$1("2!", s2, "decimal");
         },
@@ -20671,8 +20669,8 @@
             Bridge.Test.Assert.areDeepEqual(System.Decimal(7.0), System.Decimal((((((x + 7) | 0))) >>> 0)));
             Bridge.Test.Assert.areDeepEqual(System.Decimal(8.0), System.Decimal(System.Int64((((x + 8) | 0)))));
             Bridge.Test.Assert.areDeepEqual(System.Decimal(9.0), System.Decimal(Bridge.Int.clipu64((((x + 9) | 0)))));
-            Bridge.Test.Assert.areDeepEqual(System.Decimal(10.5), System.Decimal((x + 10.5)));
-            Bridge.Test.Assert.areDeepEqual(System.Decimal(11.5), System.Decimal((x + 11.5)));
+            Bridge.Test.Assert.areDeepEqual(System.Decimal(10.5), System.Decimal((x + 10.5), null, System.Single));
+            Bridge.Test.Assert.areDeepEqual(System.Decimal(11.5), System.Decimal((x + 11.5), null, System.Double));
         },
         conversionsFromDecimalWork: function () {
             var x = 0;
@@ -20685,8 +20683,8 @@
             Bridge.Test.Assert.areEqual(7, System.Decimal.toInt(System.Decimal((((x + 7) | 0))), System.UInt32));
             Bridge.Test.Assert.true(System.Int64(8).equals(System.Decimal.toInt(System.Decimal((((x + 8) | 0))), System.Int64)));
             Bridge.Test.Assert.true(System.UInt64(9).equals(System.Decimal.toInt(System.Decimal((((x + 9) | 0))), System.UInt64)));
-            Bridge.Test.Assert.areEqual(10.5, System.Decimal.toFloat(System.Decimal((x + 10.5))));
-            Bridge.Test.Assert.areEqual(11.5, System.Decimal.toFloat(System.Decimal((x + 11.5))));
+            Bridge.Test.Assert.areEqual(10.5, System.Decimal.toFloat(System.Decimal((x + 10.5), null, System.Double)));
+            Bridge.Test.Assert.areEqual(11.5, System.Decimal.toFloat(System.Decimal((x + 11.5), null, System.Double)));
         },
         operatorsWork: function () {
             var $t;
@@ -22581,7 +22579,7 @@
             test: function (x, y, comparison, testI, expected, expectedIndex) {
                 var cmpValue = 0;
                 cmpValue = System.String.compare(testI[x], testI[y], comparison);
-                Bridge.Test.Assert.areEqual$1(expected[expectedIndex], cmpValue, "String.Compare('" + testI[x] + "', '" + testI[y] + "'," + comparison + ")");
+                Bridge.Test.Assert.areEqual$1(expected[expectedIndex], cmpValue, "String.Compare('" + testI[x] + "', '" + testI[y] + "'," + System.Enum.toString(Number, comparison) + ")");
             },
             enumerable: function () {
                 var $t;

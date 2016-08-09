@@ -37,7 +37,7 @@ namespace Bridge.Translator
                 if (Helpers.IsDecimalType(expectedType, block.Emitter.Resolver) && !Helpers.IsDecimalType(fromType, block.Emitter.Resolver))
                 {
                     block.Write(JS.Types.SYSTEM_DECIMAL + "(");
-                    block.AfterOutput += ")";
+                    block.AfterOutput += ", null, " + BridgeTypes.ToJsName(fromType, block.Emitter) + ")";
                 }
                 else if (Helpers.IsDecimalType(fromType, block.Emitter.Resolver))
                 {

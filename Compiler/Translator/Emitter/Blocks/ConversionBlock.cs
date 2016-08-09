@@ -7,6 +7,7 @@ using ICSharpCode.NRefactory.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem.Implementation;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Bridge.Translator
 {

@@ -64,6 +64,27 @@ namespace Bridge.Translator
             return JS.Reserved.StaticNames.Any(n => String.Equals(name, n, StringComparison.InvariantCultureIgnoreCase));
         }
 
+        public static object ConvertConstant(object value, Expression expression, IEmitter emitter)
+        {
+            try
+            {
+                var rr = emitter.Resolver.ResolveNode(expression, emitter);
+                var conversion = emitter.Resolver.Resolver.GetConversion(expression);
+                var expectedType = emitter.Resolver.Resolver.GetExpectedType(expression);
+
+                if (conversion.IsNumericConversion && expectedType.IsKnownType(KnownTypeCode.Double) && rr.Type.IsKnownType(KnownTypeCode.Single))
+                {
+                    return (double) (float) value;
+                }
+            }
+            catch (Exception)
+            {
+                
+            }
+
+            return value;
+        }
+
         public virtual string ToJavaScript(object value)
         {
             return JsonConvert.SerializeObject(value);

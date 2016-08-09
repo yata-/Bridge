@@ -7,6 +7,7 @@ using ICSharpCode.NRefactory.TypeSystem;
 
 using System;
 using System.Linq;
+using System.Text;
 
 namespace Bridge.Translator
 {
@@ -155,7 +156,21 @@ namespace Bridge.Translator
                 return;
             }
 
-            if (!((expectedType.IsKnownType(KnownTypeCode.String) || resolveOperator.Type.IsKnownType(KnownTypeCode.String)) && binaryOperatorExpression.Operator == BinaryOperatorType.Add) && (Helpers.IsDecimalType(leftResolverResult.Type, this.Emitter.Resolver) || Helpers.IsDecimalType(rightResolverResult.Type, this.Emitter.Resolver)))
+            var resultIsString = expectedType.IsKnownType(KnownTypeCode.String) || resolveOperator.Type.IsKnownType(KnownTypeCode.String);
+            var toStringForLeft = false;
+            var toStringForRight = false;
+
+            if (charToString == -1 && resultIsString && binaryOperatorExpression.Operator == BinaryOperatorType.Add && !leftResolverResult.Type.IsKnownType(KnownTypeCode.String))
+            {
+                toStringForLeft = true;
+            }
+
+            if (charToString == -1 && resultIsString && binaryOperatorExpression.Operator == BinaryOperatorType.Add && !rightResolverResult.Type.IsKnownType(KnownTypeCode.String))
+            {
+                toStringForRight = true;
+            }
+
+            if (!(resultIsString && binaryOperatorExpression.Operator == BinaryOperatorType.Add) && (Helpers.IsDecimalType(leftResolverResult.Type, this.Emitter.Resolver) || Helpers.IsDecimalType(rightResolverResult.Type, this.Emitter.Resolver)))
             {
                 isDecimal = true;
                 isDecimalExpected = true;
@@ -170,7 +185,7 @@ namespace Bridge.Translator
             var isLeftLong = Helpers.Is64Type(leftExpected, this.Emitter.Resolver);
             var isRightLong = Helpers.Is64Type(rightExpected, this.Emitter.Resolver);
 
-            if (!((expectedType.IsKnownType(KnownTypeCode.String) || resolveOperator.Type.IsKnownType(KnownTypeCode.String)) && binaryOperatorExpression.Operator == BinaryOperatorType.Add) && (isLeftLong || isRightLong))
+            if (!(resultIsString && binaryOperatorExpression.Operator == BinaryOperatorType.Add) && (isLeftLong || isRightLong))
             {
                 isLong = true;
                 isLongExpected = true;
@@ -196,7 +211,7 @@ namespace Bridge.Translator
             {
                 if (leftIsNull || rightIsNull)
                 {
-                    binaryOperatorExpression.Left.AcceptVisitor(this.Emitter);
+                    this.WritePart(binaryOperatorExpression.Left, toStringForLeft, leftResolverResult);
 
                     if (binaryOperatorExpression.Operator == BinaryOperatorType.Equality)
                     {
@@ -207,7 +222,7 @@ namespace Bridge.Translator
                         this.Write(strictNullChecks ? " !== " : " != ");
                     }
 
-                    binaryOperatorExpression.Right.AcceptVisitor(this.Emitter);
+                    this.WritePart(binaryOperatorExpression.Right, toStringForRight, rightResolverResult);
                     return;
                 }
             }
@@ -223,9 +238,9 @@ namespace Bridge.Translator
                 ))
             {
                 this.Write(JS.Types.BRIDGE_INT + "." + JS.Funcs.Math.DIV + "(");
-                binaryOperatorExpression.Left.AcceptVisitor(this.Emitter);
+                this.WritePart(binaryOperatorExpression.Left, toStringForLeft, leftResolverResult);
                 this.Write(", ");
-                binaryOperatorExpression.Right.AcceptVisitor(this.Emitter);
+                this.WritePart(binaryOperatorExpression.Right, toStringForRight, rightResolverResult);
                 this.Write(")");
                 return;
             }
@@ -278,7 +293,7 @@ namespace Bridge.Translator
                     this.Write("!!(");
                 }
 
-                binaryOperatorExpression.Left.AcceptVisitor(this.Emitter);
+                this.WritePart(binaryOperatorExpression.Left, toStringForLeft, leftResolverResult);
 
                 if (isCoalescing)
                 {
@@ -438,7 +453,7 @@ namespace Bridge.Translator
                     this.Write(JS.Funcs.STRING_FROMCHARCODE + "(");
                 }
 
-                binaryOperatorExpression.Left.AcceptVisitor(this.Emitter);
+                this.WritePart(binaryOperatorExpression.Left, toStringForLeft, leftResolverResult);
 
                 if (charToString == 0)
                 {
@@ -457,7 +472,7 @@ namespace Bridge.Translator
                 this.Write(JS.Funcs.STRING_FROMCHARCODE + "(");
             }
 
-            binaryOperatorExpression.Right.AcceptVisitor(this.Emitter);
+            this.WritePart(binaryOperatorExpression.Right, toStringForRight, rightResolverResult);
 
             if (toBool)
             {
@@ -714,6 +729,67 @@ namespace Bridge.Translator
             }
 
             this.HandleType(resolveOperator, isUint ? KnownTypeCode.UInt64 : KnownTypeCode.Int64, op_name, action);
+        }
+
+        private void WritePart(Expression expression, bool toString, ResolveResult rr)
+        {
+            if (toString)
+            {
+                var toStringMethod = rr.Type.GetMembers().FirstOrDefault(m =>
+                {
+                    if (m.Name == "ToString" && !m.IsStatic && m.ReturnType.IsKnownType(KnownTypeCode.String) && m.IsOverride)
+                    {
+                        var method = m as IMethod;
+
+                        if (method != null && method.Parameters.Count == 0 && method.TypeParameters.Count == 0)
+                        {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                });
+
+                if (toStringMethod != null)
+                {
+                    var inline = this.Emitter.GetInline(toStringMethod);
+
+                    if (inline != null)
+                    {
+                        var writer = new Writer
+                        {
+                            InlineCode = inline,
+                            Output = this.Emitter.Output,
+                            IsNewLine = this.Emitter.IsNewLine
+                        };
+                        this.Emitter.IsNewLine = false;
+                        this.Emitter.Output = new StringBuilder();
+
+                        expression.AcceptVisitor(this.Emitter);
+
+                        string result = this.Emitter.Output.ToString();
+                        this.Emitter.Output = writer.Output;
+                        this.Emitter.IsNewLine = writer.IsNewLine;
+
+                        var argsInfo = new ArgumentsInfo(this.Emitter, expression, rr);
+                        argsInfo.ArgumentsExpressions = new Expression[] { expression };
+                        argsInfo.ArgumentsNames = new string[] { "this" };
+                        argsInfo.ThisArgument = result;
+                        new InlineArgumentsBlock(this.Emitter, argsInfo, writer.InlineCode).Emit();
+
+                        //result = writer.InlineCode.Replace("{this}", result);
+                        //this.Write(result);
+
+                        return;
+                    }
+                }
+
+                expression.AcceptVisitor(this.Emitter);
+            }
+            else
+            {
+                expression.AcceptVisitor(this.Emitter);
+            }
         }
     }
 }

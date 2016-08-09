@@ -565,6 +565,7 @@ System.Int64.clipu64 = function (x) {
 System.Int64.Zero = System.Int64(Bridge.$Long.ZERO);
 System.Int64.MinValue = System.Int64(Bridge.$Long.MIN_VALUE);
 System.Int64.MaxValue = System.Int64(Bridge.$Long.MAX_VALUE);
+System.Int64.precision = 19;
 
 /* ULONG */
 
@@ -785,3 +786,4 @@ System.UInt64.prototype.xor = System.Int64.prototype.xor;
 System.UInt64.Zero = System.UInt64(Bridge.$Long.UZERO);
 System.UInt64.MinValue = System.UInt64.Zero;
 System.UInt64.MaxValue = System.UInt64(Bridge.$Long.MAX_UNSIGNED_VALUE);
+System.UInt64.precision = 20;

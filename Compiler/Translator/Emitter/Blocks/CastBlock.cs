@@ -304,6 +304,10 @@ namespace Bridge.Translator
                 this.WriteScript(value);
                 this.WriteCloseParentheses();
             }
+            if (value is float && expectedType.IsKnownType(KnownTypeCode.Double))
+            {
+                this.WriteScript((double)(float)value);
+            }
             else
             {
                 this.WriteScript(value);

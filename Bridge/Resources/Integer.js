@@ -1,7 +1,7 @@
 ﻿    // @source Integer.js
 
     (function () {
-        var createIntType = function (name, min, max) {
+        var createIntType = function (name, min, max, precision) {
             var type = Bridge.define(name, {
                 inherits: [System.IComparable, System.IFormattable],
 
@@ -9,6 +9,7 @@
                     $number: true,
                     min: min,
                     max: max,
+                    precision: precision,
 
                     instanceOf: function (instance) {
                         return typeof (instance) === "number" && Math.floor(instance, 0) === instance && instance >= min && instance <= max;
@@ -23,7 +24,7 @@
                         return Bridge.Int.tryParseInt(s, result, min, max, radix);
                     },
                     format: function (number, format, provider) {
-                        return Bridge.Int.format(number, format, provider);
+                        return Bridge.Int.format(number, format, provider, type);
                     }
                 }
             });
@@ -31,12 +32,12 @@
             Bridge.Class.addExtend(type, [System.IComparable$1(type), System.IEquatable$1(type)]);
         };
 
-        createIntType("System.Byte", 0, 255);
-        createIntType("System.SByte", -128, 127);
-        createIntType("System.Int16", -32768, 32767);
-        createIntType("System.UInt16", 0, 65535);
-        createIntType("System.Int32", -2147483648, 2147483647);
-        createIntType("System.UInt32", 0, 4294967295);
+        createIntType("System.Byte", 0, 255, 3);
+        createIntType("System.SByte", -128, 127, 3);
+        createIntType("System.Int16", -32768, 32767, 5);
+        createIntType("System.UInt16", 0, 65535, 5);
+        createIntType("System.Int32", -2147483648, 2147483647, 10);
+        createIntType("System.UInt32", 0, 4294967295, 10);
     })();
 
     Bridge.define("Bridge.Int", {
@@ -52,13 +53,13 @@
                 return 0;
             },
 
-            format: function (number, format, provider) {
+            format: function (number, format, provider, T) {
                 var nf = (provider || System.Globalization.CultureInfo.getCurrentCulture()).getFormat(System.Globalization.NumberFormatInfo),
                     decimalSeparator = nf.numberDecimalSeparator,
                     groupSeparator = nf.numberGroupSeparator,
                     isDecimal = number instanceof System.Decimal,
                     isLong = number instanceof System.Int64 || number instanceof System.UInt64,
-                    isNeg = isDecimal || isLong ? number.isNegative() : number < 0,
+                    isNeg = isDecimal || isLong ? (number.isZero() ? false : number.isNegative()) : number < 0,
                     match,
                     precision,
                     groups,
@@ -69,7 +70,7 @@
                 }
 
                 if (!format) {
-                    return this.defaultFormat(number, 0, 0, 15, nf, true);
+                    format = "G";
                 }
 
                 match = format.match(/^([a-zA-Z])(\d*)$/);
@@ -91,7 +92,7 @@
                         case "G":
                         case "E":
                             var exponent = 0,
-                                coefficient = isDecimal || isLong ? number.abs() : Math.abs(number),
+                                coefficient = isDecimal || isLong ? (isLong && number.eq(System.Int64.MinValue) ? System.Int64(number.value.toUnsigned()) : number.abs()) : Math.abs(number),
                                 exponentPrefix = match[1],
                                 exponentPrecision = 3,
                                 minDecimals,
@@ -117,15 +118,30 @@
                             }
 
                             if (fs === "G") {
-                                if (exponent > -5 && (exponent < (precision || 15))) {
-                                    minDecimals = precision ? precision - (exponent > 0 ? exponent + 1 : 1) : 0;
-                                    maxDecimals = precision ? precision - (exponent > 0 ? exponent + 1 : 1) : 15;
+                                var noPrecision = isNaN(precision);
+                                if (noPrecision) {
+                                    if (isDecimal) {
+                                        precision = 29;
+                                    }
+                                    else if (isLong) {
+                                        precision = number instanceof System.Int64 ? 19 : 20;
+                                    }
+                                    else if (T && T.precision) {
+                                        precision = T.precision;
+                                    } else {
+                                        precision = 15;
+                                    }
+                                }
+
+                                if (exponent > -5 && exponent < precision) {
+                                    minDecimals = 0;
+                                    maxDecimals = precision - (exponent > 0 ? exponent + 1 : 1);
                                     return this.defaultFormat(number, 1, minDecimals, maxDecimals, nf, true);
                                 }
 
                                 exponentPrefix = exponentPrefix === "G" ? "E" : "e";
                                 exponentPrecision = 2;
-                                minDecimals = (precision || 1) - 1;
+                                minDecimals = 0;
                                 maxDecimals = (precision || 15) - 1;
                             } else {
                                 minDecimals = maxDecimals = isNaN(precision) ? 6 : precision;
@@ -257,7 +273,7 @@
                     buffer = "",
                     isDecimal = number instanceof System.Decimal,
                     isLong = number instanceof System.Int64 || number instanceof System.UInt64,
-                    isNeg = isDecimal || isLong ? number.isNegative() : number < 0;
+                    isNeg = isDecimal || isLong ? (number.isZero() ? false : number.isNegative()) : number < 0;
 
                 roundingFactor = Math.pow(10, maxDecLen);
 
@@ -378,7 +394,7 @@
                     wasIntPart = false,
                     isDecimal = number instanceof System.Decimal,
                     isLong = number instanceof System.Int64 || number instanceof System.UInt64,
-                    isNeg = isDecimal || isLong ? number.isNegative() : number < 0;
+                    isNeg = isDecimal || isLong ? (number.isZero() ? false : number.isNegative()) : number < 0;
 
                 name = "number";
 
@@ -429,7 +445,7 @@
                     number = number.abs().mul(roundingFactor).round().div(roundingFactor).toString();
                 }
                 if (isLong) {
-                    number = number.abs().mul(roundingFactor).div(roundingFactor).toString();
+                    number = (number.eq(System.Int64.MinValue) ? System.Int64(number.value.toUnsigned()) : number.abs()).mul(roundingFactor).div(roundingFactor).toString();
                 } else {
                     number = "" + (Math.round(Math.abs(number) * roundingFactor) / roundingFactor);
                 }
@@ -727,6 +743,7 @@
         statics: {
             min: -Number.MAX_VALUE,
             max: Number.MAX_VALUE,
+            precision: 15,
             $number: true,
 
             instanceOf: function (instance) {
@@ -742,7 +759,7 @@
                 return Bridge.Int.tryParseFloat(s, provider, result);
             },
             format: function (number, format, provider) {
-                return Bridge.Int.format(number, format, provider);
+                return Bridge.Int.format(number, format, provider, System.Double);
             }
         }
     });
@@ -753,13 +770,16 @@
         statics: {
             min: -3.40282346638528859e+38,
             max: 3.40282346638528859e+38,
+            precision: 7,
             $number: true,
 
             instanceOf: System.Double.instanceOf,
             getDefaultValue: System.Double.getDefaultValue,
             parse: System.Double.parse,
             tryParse: System.Double.tryParse,
-            format: System.Double.format
+            format: function (number, format, provider) {
+                return Bridge.Int.format(number, format, provider, System.Single);
+            }
         }
     });
 

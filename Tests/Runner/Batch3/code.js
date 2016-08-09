@@ -620,9 +620,9 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
                 var a = new Date(2015, 1 - 1, 1, 9);
                 var b = new Date(2015, 1 - 1, 1, 12, 52);
     
-                var value = System.Decimal(((Bridge.Date.subdd(b, a)).getTotalHours()));
+                var value = System.Decimal(((Bridge.Date.subdd(b, a)).getTotalHours()), null, System.Double);
     
-                Bridge.Test.Assert.areEqual("3.866666666666667", Bridge.Int.format(value, 'G'));
+                Bridge.Test.Assert.areEqual("3.86666666666667", Bridge.Int.format(value, 'G'));
             }
         }
     });
@@ -2743,7 +2743,7 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
                     Bridge.Test.Assert.areEqual$1(e, a, message);
                 }
                 else  {
-                    var m = ($t = message, $t != null ? $t : " " + (diff !== 0 ? "Diff: " + diff + "; Expected: " + e + "; Actual: " + a : ""));
+                    var m = ($t = message, $t != null ? $t : " " + (diff !== 0 ? "Diff: " + System.Double.format(diff, 'G') + "; Expected: " + e + "; Actual: " + a : ""));
                     Bridge.Test.Assert.true$1(true, m);
                 }
             },
@@ -13110,7 +13110,7 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
                     diff = -diff;
                 }
     
-                Bridge.Test.Assert.true$1(diff < 1E-08, message + "actual: " + actual + "expeted:" + expected);
+                Bridge.Test.Assert.true$1(diff < 1E-08, message + "actual: " + System.Double.format(actual, 'G') + "expeted:" + System.Double.format(expected, 'G'));
             },
             n410: function () {
                 // Decimal consts
@@ -13268,7 +13268,7 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
             },
             n428: function () {
                 var number2 = System.Decimal(11.37);
-                var sum = "0.13 + " + number2;
+                var sum = "0.13 + " + Bridge.Int.format(number2, 'G');
     
                 Bridge.Test.Assert.areEqual$1("0.13 + 11.37", sum, "0.13 + 11.37");
             },

@@ -36,7 +36,7 @@ namespace Bridge.Translator
             }
             else
             {
-                this.WriteScript(this.PrimitiveExpression.Value);
+                this.WriteScript(Bridge.Translator.Emitter.ConvertConstant(this.PrimitiveExpression.Value, this.PrimitiveExpression, this.Emitter));
             }
         }
     }
