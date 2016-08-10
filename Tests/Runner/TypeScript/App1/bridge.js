@@ -4881,7 +4881,7 @@
                                     }
                                 }
 
-                                if (exponent > -5 && exponent < precision) {
+                                if ((exponent > -5 && exponent < precision) || isDecimal && noPrecision) {
                                     minDecimals = 0;
                                     maxDecimals = precision - (exponent > 0 ? exponent + 1 : 1);
                                     return this.defaultFormat(number, 1, minDecimals, maxDecimals, nf, true);
@@ -5026,7 +5026,7 @@
                 roundingFactor = Math.pow(10, maxDecLen);
 
                 if (isDecimal) {
-                    str = number.abs().toDecimalPlaces(maxDecLen).toString();
+                    str = number.abs().toDecimalPlaces(maxDecLen).toFixed();
                 } else if (isLong) {
                     str = number.eq(System.Int64.MinValue) ? number.value.toUnsigned().toString() : number.abs().toString();
                 } else {
