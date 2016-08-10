@@ -1893,7 +1893,8 @@
         },
 
         toName: function (name) {
-            return name.charAt(0).toUpperCase() + name.slice(1);
+            return name;
+            //return name.charAt(0).toUpperCase() + name.slice(1);
         },
 
         parse: function (enumType, s, ignoreCase, silent) {
@@ -6798,13 +6799,13 @@ System.UInt64.precision = 20;
     Bridge.define("System.DayOfWeek", {
         $kind: "enum",
         $statics: {
-            sunday: 0,
-            monday: 1,
-            tuesday: 2,
-            wednesday: 3,
-            thursday: 4,
-            friday: 5,
-            saturday: 6
+            Sunday: 0,
+            Monday: 1,
+            Tuesday: 2,
+            Wednesday: 3,
+            Thursday: 4,
+            Friday: 5,
+            Saturday: 6
         }
     });
 

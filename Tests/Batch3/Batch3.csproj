@@ -242,6 +242,7 @@
     <Compile Include="BridgeIssues\1200\N1220.cs" />
     <Compile Include="BridgeIssues\1200\N1203.cs" />
     <Compile Include="BridgeIssues\1200\N1206.cs" />
+    <Compile Include="BridgeIssues\1200\N1249.cs" />
     <Compile Include="BridgeIssues\1200\N1296.cs" />
     <Compile Include="BridgeIssues\1200\N1266.cs" />
     <Compile Include="BridgeIssues\1200\N1219.cs" />
