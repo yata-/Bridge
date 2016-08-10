@@ -122,11 +122,9 @@
                                 if (noPrecision) {
                                     if (isDecimal) {
                                         precision = 29;
-                                    }
-                                    else if (isLong) {
+                                    } else if (isLong) {
                                         precision = number instanceof System.Int64 ? 19 : 20;
-                                    }
-                                    else if (T && T.precision) {
+                                    } else if (T && T.precision) {
                                         precision = T.precision;
                                     } else {
                                         precision = 15;
