@@ -498,7 +498,7 @@ namespace Bridge.Translator
                         this.Write(")");
                         this.WriteCloseParentheses();
 
-                        this.Write(" : null)");
+                        this.Write(" : null");
                         break;
 
                     case UnaryOperatorType.PostIncrement:
@@ -525,7 +525,7 @@ namespace Bridge.Translator
                         this.WriteCloseParentheses();
                         this.RemoveTempVar(valueVar);
 
-                        this.Write(" : null)");
+                        this.Write(" : null");
                         break;
                 }
 
