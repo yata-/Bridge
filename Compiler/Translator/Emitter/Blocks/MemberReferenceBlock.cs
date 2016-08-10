@@ -460,7 +460,7 @@ namespace Bridge.Translator
                     }
                 }
 
-                this.WriteScript(member.ConstantValue);
+                this.WriteScript(Bridge.Translator.Emitter.ConvertConstant(member.ConstantValue, memberReferenceExpression, this.Emitter));
 
                 if (wrap)
                 {
@@ -1322,7 +1322,7 @@ namespace Bridge.Translator
 
                     if (isConst && this.Emitter.IsInlineConst(member.Member))
                     {
-                        this.WriteScript(member.ConstantValue);
+                        this.WriteScript(Bridge.Translator.Emitter.ConvertConstant(member.ConstantValue, memberReferenceExpression, this.Emitter));
                     }
                     else
                     {

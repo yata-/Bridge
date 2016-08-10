@@ -276,6 +276,8 @@
             }
         },
 
+        $entryPoint: true,
+
         statics: {
             constructor: function () {
                 this.cultures = this.cultures || {};

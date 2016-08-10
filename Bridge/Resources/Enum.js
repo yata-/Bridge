@@ -75,6 +75,10 @@
         },
 
         toString: function (enumType, value, forceFlags) {
+            if (enumType === Number) {
+                return value.toString();
+            }
+
             System.Enum.checkEnumType(enumType);
 
             var values = enumType;

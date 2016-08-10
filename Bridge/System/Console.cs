@@ -207,7 +207,7 @@ namespace System
         /// Writes the text representation of the specified double-precision floating-point value, followed by the current line terminator, to the standard output stream.
         /// </summary>
         /// <param name="value">The value to write.</param>
-        [Template("System.Console.log({value})")]
+        [Template("System.Console.log(System.Double.format({value}))")]
         public static extern void WriteLine(double value);
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace System
         /// Writes the text representation of the specified single-precision floating-point value, followed by the current line terminator, to the standard output stream.
         /// </summary>
         /// <param name="value">The value to write.</param>
-        [Template("System.Console.log({value})")]
+        [Template("System.Console.log(System.Single.format({value}))")]
         public static extern void WriteLine(Single value);
 
         /// <summary>

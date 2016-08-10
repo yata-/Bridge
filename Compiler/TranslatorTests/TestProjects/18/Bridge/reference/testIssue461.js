@@ -34,7 +34,7 @@
             System.Console.log("ev.CurrentTarget.Value: " + ev.currentTarget.value);
     
             // Tests if ev.IsMouseEvent() compiles
-            System.Console.log("IsMouseEvent: " + Bridge.is(ev, MouseEvent));
+            System.Console.log("IsMouseEvent: " + System.Boolean.toString(Bridge.is(ev, MouseEvent)));
         },
         f2: function (ev) {
             // Tests if ev.CurrentTarget.Href compiles

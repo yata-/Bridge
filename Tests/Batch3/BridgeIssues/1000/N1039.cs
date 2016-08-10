@@ -17,7 +17,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
 
             decimal value = (decimal)((b - a).TotalHours);
 
-            Assert.AreEqual("3.866666666666667", value.ToString());
+            Assert.AreEqual("3.86666666666667", value.ToString());
         }
     }
 }
