@@ -18462,8 +18462,6 @@
         statics: {
             canConvert: function (T, arg) {
                 try { /// The variable `x' is assigned but its value is never used
-    
-    
                     var x = System.Nullable.getValue(Bridge.cast(arg, T));
                     return true;
                 }
