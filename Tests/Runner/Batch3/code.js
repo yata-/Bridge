@@ -5546,6 +5546,49 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1379', {
+        statics: {
+            testNanFiniteType: function () {
+                var value = null;
+                for (var time = 0; time < 6; time = (time + 1) | 0) {
+                    switch (time) {
+                        case 0: 
+                            {
+                                value = NaN;
+                                break;
+                            }
+                        case 1: 
+                            {
+                                value = Infinity;
+                                break;
+                            }
+                        case 2: 
+                            {
+                                value = -Infinity;
+                                break;
+                            }
+                        case 3: 
+                            {
+                                value = NaN;
+                                break;
+                            }
+                        case 4: 
+                            {
+                                value = Infinity;
+                                break;
+                            }
+                        case 5: 
+                            {
+                                value = -Infinity;
+                                break;
+                            }
+                    }
+                    Bridge.Test.Assert.areEqual("System.Double", Bridge.Reflection.getTypeFullName(Bridge.getType(value)));
+                }
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1385', {
         statics: {
             testIsTypedArray: function () {

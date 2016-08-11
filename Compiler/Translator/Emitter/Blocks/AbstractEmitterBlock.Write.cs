@@ -83,7 +83,47 @@ namespace Bridge.Translator
         {
             string s = null;
 
-            if (value is char)
+            if (value is double)
+            {
+                double d = (double) value;
+                if (double.IsNaN(d))
+                {
+                    s = "NaN";
+                }
+                else if (double.IsPositiveInfinity(d))
+                {
+                    s = "Infinity";
+                }
+                else if (double.IsNegativeInfinity(d))
+                {
+                    s = "-Infinity";
+                }
+                else
+                {
+                    s = emitter.ToJavaScript(value);
+                }
+            }
+            else if (value is float)
+            {
+                float f = (float)value;
+                if (float.IsNaN(f))
+                {
+                    s = "NaN";
+                }
+                else if (float.IsPositiveInfinity(f))
+                {
+                    s = "Infinity";
+                }
+                else if (float.IsNegativeInfinity(f))
+                {
+                    s = "-Infinity";
+                }
+                else
+                {
+                    s = emitter.ToJavaScript(value);
+                }
+            }
+            else if (value is char)
             {
                 s = emitter.ToJavaScript((int)(char)value);
             }

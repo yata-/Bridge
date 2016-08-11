@@ -20912,20 +20912,20 @@
             Bridge.Test.Assert.areEqual("1.2e+4", (12345.0).toPrecision(2));
         },
         isPositiveInfinityWorks: function () {
-            var inf = "Infinity";
+            var inf = Infinity;
             Bridge.Test.Assert.false$1((-inf === Number.POSITIVE_INFINITY), "-inf");
             Bridge.Test.Assert.false$1((0.0 === Number.POSITIVE_INFINITY), "0.0");
             Bridge.Test.Assert.false$1((Number.NaN === Number.POSITIVE_INFINITY), "Double.NaN");
         },
         isNegativeInfinityWorks: function () {
-            var inf = "Infinity";
+            var inf = Infinity;
             Bridge.Test.Assert.false((inf === Number.NEGATIVE_INFINITY));
             Bridge.Test.Assert.true((-inf === Number.NEGATIVE_INFINITY));
             Bridge.Test.Assert.false((0.0 === Number.NEGATIVE_INFINITY));
             Bridge.Test.Assert.false((Number.NaN === Number.NEGATIVE_INFINITY));
         },
         isInfinityWorks: function () {
-            var inf = "Infinity";
+            var inf = Infinity;
             Bridge.Test.Assert.true((Math.abs(inf) === Number.POSITIVE_INFINITY));
             Bridge.Test.Assert.true((Math.abs(-inf) === Number.POSITIVE_INFINITY));
             Bridge.Test.Assert.false((Math.abs(0.0) === Number.POSITIVE_INFINITY));
@@ -22378,7 +22378,7 @@
             Bridge.Test.Assert.areEqual("1.2e+4", (12345.0).toPrecision(2));
         },
         isPositiveInfinityWorks: function () {
-            var inf = "Infinity";
+            var inf = Infinity;
             // TODO Bug
             //Assert.True (float.IsPositiveInfinity(inf));
             Bridge.Test.Assert.false((-inf === Number.POSITIVE_INFINITY));
@@ -22386,14 +22386,14 @@
             Bridge.Test.Assert.false((Number.NaN === Number.POSITIVE_INFINITY));
         },
         isNegativeInfinityWorks: function () {
-            var inf = "Infinity";
+            var inf = Infinity;
             Bridge.Test.Assert.false((inf === Number.NEGATIVE_INFINITY));
             Bridge.Test.Assert.true((-inf === Number.NEGATIVE_INFINITY));
             Bridge.Test.Assert.false((0.0 === Number.NEGATIVE_INFINITY));
             Bridge.Test.Assert.false((Number.NaN === Number.NEGATIVE_INFINITY));
         },
         isInfinityWorks: function () {
-            var inf = "Infinity";
+            var inf = Infinity;
             Bridge.Test.Assert.true((Math.abs(inf) === Number.POSITIVE_INFINITY));
             Bridge.Test.Assert.true((Math.abs(-inf) === Number.POSITIVE_INFINITY));
             Bridge.Test.Assert.false((Math.abs(0.0) === Number.POSITIVE_INFINITY));
