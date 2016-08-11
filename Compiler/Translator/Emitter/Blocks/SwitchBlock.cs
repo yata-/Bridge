@@ -6,6 +6,7 @@ using ICSharpCode.NRefactory.CSharp;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ICSharpCode.NRefactory.Semantics;
 
 namespace Bridge.Translator
 {
@@ -154,9 +155,12 @@ namespace Bridge.Translator
             bool writeElse = false;
             var thisStep = this.Emitter.AsyncBlock.Steps.Last();
 
+            var rr = this.Emitter.Resolver.ResolveNode(switchStatement.Expression, this.Emitter);
+            bool is64Bit = Helpers.Is64Type(rr.Type, this.Emitter.Resolver);
+
             foreach (var switchSection in list)
             {
-                this.VisitAsyncSwitchSection(switchSection, writeElse, key);
+                this.VisitAsyncSwitchSection(switchSection, writeElse, key, is64Bit);
                 writeElse = true;
             }
 
@@ -183,7 +187,7 @@ namespace Bridge.Translator
             this.Emitter.AsyncSwitch = this.ParentAsyncSwitch;
         }
 
-        protected void VisitAsyncSwitchSection(SwitchSection switchSection, bool writeElse, string switchKey)
+        protected void VisitAsyncSwitchSection(SwitchSection switchSection, bool writeElse, string switchKey, bool is64Bit)
         {
             var list = switchSection.CaseLabels.ToList();
 
@@ -232,8 +236,22 @@ namespace Bridge.Translator
                         this.WriteSpace();
                     }
 
-                    this.Write(switchKey + " === ");
+                    this.Write(switchKey);
+                    if (is64Bit)
+                    {
+                        this.Write(".eq(");
+                    }
+                    else
+                    {
+                        this.Write(" === ");
+                    }
+                    
                     label.Expression.AcceptVisitor(this.Emitter);
+
+                    if (is64Bit)
+                    {
+                        this.Write(")");
+                    }
 
                     writeOr = true;
                 }
@@ -279,8 +297,32 @@ namespace Bridge.Translator
 
             this.WriteSwitch();
             this.WriteOpenParentheses();
+            var rr = this.Emitter.Resolver.ResolveNode(switchStatement.Expression, this.Emitter);
+            bool is64Bit = false;
+            bool wrap = true;
+
+            if (Helpers.Is64Type(rr.Type, this.Emitter.Resolver))
+            {
+                is64Bit = true;
+                wrap = !(rr is LocalResolveResult || rr is MemberResolveResult);
+            }
+
+            if (is64Bit && wrap)
+            {
+                this.WriteOpenParentheses();
+            }
 
             switchStatement.Expression.AcceptVisitor(this.Emitter);
+
+            if (is64Bit)
+            {
+                if (wrap)
+                {
+                    this.WriteCloseParentheses();
+                }
+                
+                this.Write(".toString()");
+            }
 
             this.WriteCloseParentheses();
             this.WriteSpace();
@@ -314,7 +356,26 @@ namespace Bridge.Translator
             else
             {
                 this.Write("case ");
-                caseLabel.Expression.AcceptVisitor(this.Emitter);
+
+                var rr = this.Emitter.Resolver.ResolveNode(caseLabel.Expression.GetParent<SwitchStatement>().Expression, this.Emitter);
+                var caserr = this.Emitter.Resolver.ResolveNode(caseLabel.Expression, this.Emitter);
+
+                if (Helpers.Is64Type(rr.Type, this.Emitter.Resolver))
+                {
+                    if (caserr is ConstantResolveResult)
+                    {
+                        this.WriteScript(caserr.ConstantValue.ToString());
+                    }
+                    else
+                    {
+                        caseLabel.Expression.AcceptVisitor(this.Emitter);
+                        this.Write(".toString()");
+                    }
+                }
+                else
+                {
+                    caseLabel.Expression.AcceptVisitor(this.Emitter);
+                }
             }
 
             this.WriteColon();

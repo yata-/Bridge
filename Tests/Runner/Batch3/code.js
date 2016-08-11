@@ -3501,6 +3501,41 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         $clone: function (to) { return this; }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1298', {
+        statics: {
+            testLongSwitch: function () {
+                var $t;
+                var a = [System.Int64(1), System.Int64(2), System.Int64.MaxValue];
+                $t = Bridge.getEnumerator(a);
+                while ($t.moveNext()) {
+                    var v = $t.getCurrent();
+                    switch (v.toString()) {
+                        case "1": 
+                            {
+                                Bridge.Test.Assert.true(v.equals(System.Int64(1)));
+                                break;
+                            }
+                        case "2": 
+                            {
+                                Bridge.Test.Assert.true(v.equals(System.Int64(2)));
+                                break;
+                            }
+                        case System.Int64.MaxValue.toString(): 
+                            {
+                                Bridge.Test.Assert.true(v.equals(System.Int64.MaxValue));
+                                break;
+                            }
+                        default: 
+                            {
+                                Bridge.Test.Assert.fail();
+                                break;
+                            }
+                    }
+                }
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1304', {
         statics: {
             output: null,
