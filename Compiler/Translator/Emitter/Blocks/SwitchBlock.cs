@@ -239,13 +239,15 @@ namespace Bridge.Translator
                     this.Write(switchKey);
                     if (is64Bit)
                     {
-                        this.Write(".eq(");
+                        this.WriteDot();
+                        this.Write(JS.Funcs.Math.EQ);
+                        this.WriteOpenParentheses();
                     }
                     else
                     {
                         this.Write(" === ");
                     }
-                    
+
                     label.Expression.AcceptVisitor(this.Emitter);
 
                     if (is64Bit)
@@ -320,8 +322,10 @@ namespace Bridge.Translator
                 {
                     this.WriteCloseParentheses();
                 }
-                
-                this.Write(".toString()");
+
+                this.WriteDot();
+                this.Write(JS.Funcs.TOSTIRNG);
+                this.WriteOpenCloseParentheses();
             }
 
             this.WriteCloseParentheses();
@@ -369,7 +373,9 @@ namespace Bridge.Translator
                     else
                     {
                         caseLabel.Expression.AcceptVisitor(this.Emitter);
-                        this.Write(".toString()");
+                        this.WriteDot();
+                        this.Write(JS.Funcs.TOSTIRNG);
+                        this.WriteOpenCloseParentheses();
                     }
                 }
                 else
