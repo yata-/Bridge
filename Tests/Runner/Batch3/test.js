@@ -299,6 +299,7 @@
                 QUnit.test("#1296 - TestImplicitOperator", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1296.testImplicitOperator);
                 QUnit.test("#1296 - TestIgnoreCast", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1296.testIgnoreCast);
                 QUnit.test("#1296 - TestExternalImplicit", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1296.testExternalImplicit);
+                QUnit.test("#1298 - TestLongSwitch", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1298.testLongSwitch);
                 QUnit.test("#1304 - TestWriteFormatString", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1304.testWriteFormatString);
                 QUnit.test("#1304 - TestWriteLineFormatString", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1304.testWriteLineFormatString);
                 QUnit.test("#1305 - TestAsyncIntReturnWithAssigmentFromResult", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1305.testAsyncIntReturnWithAssigmentFromResult);
@@ -1486,6 +1487,16 @@
             testExternalImplicit: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1296).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1296);
                 Bridge.ClientTest.Batch3.BridgeIssues.Bridge1296.testExternalImplicit();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1298', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1298)],
+        statics: {
+            testLongSwitch: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1298).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1298, 3);
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1298.testLongSwitch();
             }
         }
     });

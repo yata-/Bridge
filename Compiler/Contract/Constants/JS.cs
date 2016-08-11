@@ -130,6 +130,7 @@
                 public const string DEC = "dec";
                 public const string INC = "inc";
                 public const string NEG = "neg";
+                public const string EQ = "eq";
             }
         }
 
