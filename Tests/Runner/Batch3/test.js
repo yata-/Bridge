@@ -286,6 +286,7 @@
                 QUnit.test("#1232 - TestParamsInThisCtorInit", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1232.testParamsInThisCtorInit);
                 QUnit.test("#1232 - TestExtendedParamsInThisCtorInit", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1232.testExtendedParamsInThisCtorInit);
                 QUnit.test("#1241 - TestMarkElement", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1241.testMarkElement);
+                QUnit.test("#1249 - TestEnumOverflow", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1249.testEnumOverflow);
                 QUnit.test("#1253 - TestDefaultEnumMode", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1253.testDefaultEnumMode);
                 QUnit.test("#1256 - TestCaseBooleanIsLet", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1256.testCaseBooleanIsLet);
                 QUnit.test("#1256 - TestReservedFields", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1256.testReservedFields);
@@ -1392,6 +1393,16 @@
             testMarkElement: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1241).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1241, 4);
                 Bridge.ClientTest.Batch3.BridgeIssues.Bridge1241.testMarkElement();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1249', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1249)],
+        statics: {
+            testEnumOverflow: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1249).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1249, 2);
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1249.testEnumOverflow();
             }
         }
     });

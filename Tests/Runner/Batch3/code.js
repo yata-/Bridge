@@ -2947,6 +2947,26 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1249', {
+        statics: {
+            testEnumOverflow: function () {
+                var v1 = 255;
+                var v2 = 255;
+                Bridge.Test.Assert.areEqual(0, ((v1 = (v1 + 1) & 255)));
+                Bridge.Test.Assert.areEqual("a", System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1249.b, (((v2 = (v2 + 1) & 255)))));
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1249.b', {
+        $kind: "enum",
+        statics: {
+            a: 0,
+            b: 1
+        },
+        $utype: System.Byte
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1253', {
         statics: {
             testDefaultEnumMode: function () {
