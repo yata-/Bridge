@@ -29,12 +29,22 @@ namespace Bridge.Translator
 
         private static void CheckNumericConversion(ConversionBlock block, Expression expression, ResolveResult rr, IType expectedType, Conversion conversion)
         {
+            var fromType = rr.Type;
+            var toType = expectedType;
+
+            if (fromType.Kind == TypeKind.Enum)
+            {
+                fromType = fromType.GetDefinition().EnumUnderlyingType;
+            }
+
+            if (toType.Kind == TypeKind.Enum)
+            {
+                toType = toType.GetDefinition().EnumUnderlyingType;
+            }
+
             if (conversion.IsNumericConversion && conversion.IsExplicit)
             {
-                var fromType = rr.Type;
-                var toType = expectedType;
-
-                if (Helpers.IsDecimalType(expectedType, block.Emitter.Resolver) && !Helpers.IsDecimalType(fromType, block.Emitter.Resolver))
+                if (Helpers.IsDecimalType(toType, block.Emitter.Resolver) && !Helpers.IsDecimalType(fromType, block.Emitter.Resolver))
                 {
                     block.Write(JS.Types.SYSTEM_DECIMAL + "(");
                     block.AfterOutput += ", null, " + BridgeTypes.ToJsName(fromType, block.Emitter) + ")";
@@ -64,9 +74,9 @@ namespace Bridge.Translator
                 }
             }
             else if (conversion.IsNumericConversion && conversion.IsImplicit && !(expression.Parent is ArrayInitializerExpression) &&
-                     Helpers.Is64Type(rr.Type, block.Emitter.Resolver) &&
-                     Helpers.IsFloatType(expectedType, block.Emitter.Resolver) &&
-                     !Helpers.IsDecimalType(expectedType, block.Emitter.Resolver))
+                     Helpers.Is64Type(fromType, block.Emitter.Resolver) &&
+                     Helpers.IsFloatType(toType, block.Emitter.Resolver) &&
+                     !Helpers.IsDecimalType(toType, block.Emitter.Resolver))
             {
                 var be = expression.Parent as BinaryOperatorExpression;
 
@@ -80,8 +90,8 @@ namespace Bridge.Translator
                     }
                 }
             }
-            else if (((!Helpers.Is64Type(expectedType, block.Emitter.Resolver) && Helpers.IsIntegerType(expectedType, block.Emitter.Resolver)) ||
-                     (rr is OperatorResolveResult && !Helpers.Is64Type(rr.Type, block.Emitter.Resolver) && Helpers.IsIntegerType(rr.Type, block.Emitter.Resolver))) &&
+            else if (((!Helpers.Is64Type(toType, block.Emitter.Resolver) && Helpers.IsIntegerType(toType, block.Emitter.Resolver)) ||
+                     (rr is OperatorResolveResult && !Helpers.Is64Type(fromType, block.Emitter.Resolver) && Helpers.IsIntegerType(fromType, block.Emitter.Resolver))) &&
                      (expression is BinaryOperatorExpression || expression is UnaryOperatorExpression || expression.Parent is AssignmentExpression) &&
                      IsInCheckedContext(block.Emitter, expression))
             {
@@ -89,7 +99,7 @@ namespace Bridge.Translator
 
                 var be = expression as BinaryOperatorExpression;
                 bool isBitwiseOperator = be != null && (be.Operator == BinaryOperatorType.ShiftLeft || be.Operator == BinaryOperatorType.ShiftRight || be.Operator == BinaryOperatorType.BitwiseAnd || be.Operator == BinaryOperatorType.BitwiseOr || be.Operator == BinaryOperatorType.ExclusiveOr);
-                if ((Helpers.IsKnownType(KnownTypeCode.Int32, expectedType, block.Emitter.Resolver) && isBitwiseOperator) || (Helpers.IsKnownType(KnownTypeCode.UInt32, expectedType, block.Emitter.Resolver) && be != null && be.Operator == BinaryOperatorType.ShiftRight))
+                if ((Helpers.IsKnownType(KnownTypeCode.Int32, toType, block.Emitter.Resolver) && isBitwiseOperator) || (Helpers.IsKnownType(KnownTypeCode.UInt32, toType, block.Emitter.Resolver) && be != null && be.Operator == BinaryOperatorType.ShiftRight))
                 {
                     // Don't need to check even in checked context and don't need to clip
                 }
@@ -101,7 +111,7 @@ namespace Bridge.Translator
                 {
                     if (isBitwiseOperator)
                     {
-                        ClipInteger(block, expression, expectedType, false);
+                        ClipInteger(block, expression, toType, false);
                     }
                     else
                     {
@@ -124,8 +134,8 @@ namespace Bridge.Translator
                     {
                         var ae = expression.Parent as AssignmentExpression;
                         isBitwiseOperator = ae != null && (ae.Operator == AssignmentOperatorType.ShiftRight || ae.Operator == AssignmentOperatorType.ShiftLeft || ae.Operator == AssignmentOperatorType.BitwiseAnd || ae.Operator == AssignmentOperatorType.BitwiseOr || ae.Operator == AssignmentOperatorType.ExclusiveOr);
-                        if ((isBitwiseOperator && Helpers.IsKnownType(KnownTypeCode.Int32, expectedType, block.Emitter.Resolver))
-                            || (ae != null && ae.Operator == AssignmentOperatorType.ShiftRight && Helpers.IsKnownType(KnownTypeCode.UInt32, expectedType, block.Emitter.Resolver)))
+                        if ((isBitwiseOperator && Helpers.IsKnownType(KnownTypeCode.Int32, toType, block.Emitter.Resolver))
+                            || (ae != null && ae.Operator == AssignmentOperatorType.ShiftRight && Helpers.IsKnownType(KnownTypeCode.UInt32, toType, block.Emitter.Resolver)))
                         {
                             // Don't need to check even in checked context and don't need to clip
                         }
@@ -136,7 +146,7 @@ namespace Bridge.Translator
                         {
                             if (isBitwiseOperator)
                             {
-                                ClipInteger(block, expression, expectedType, false);
+                                ClipInteger(block, expression, toType, false);
                             }
                             else
                             {
@@ -146,34 +156,34 @@ namespace Bridge.Translator
                     }
                 }
 
-                if (!Helpers.IsIntegerType(expectedType, block.Emitter.Resolver))
+                if (!Helpers.IsIntegerType(toType, block.Emitter.Resolver))
                 {
                     if (rr is OperatorResolveResult)
                     {
-                        expectedType = rr.Type;
+                        toType = fromType;
                     }
                 }
 
                 if (needCheck)
                 {
-                    CheckInteger(block, expression, expectedType);
+                    CheckInteger(block, expression, toType);
                 }
             }
-            else if (((!Helpers.Is64Type(expectedType, block.Emitter.Resolver) && Helpers.IsIntegerType(expectedType, block.Emitter.Resolver)) ||
-                     (rr is OperatorResolveResult && !Helpers.Is64Type(rr.Type, block.Emitter.Resolver) && Helpers.IsIntegerType(rr.Type, block.Emitter.Resolver))) &&
+            else if (((!Helpers.Is64Type(toType, block.Emitter.Resolver) && Helpers.IsIntegerType(toType, block.Emitter.Resolver)) ||
+                     (rr is OperatorResolveResult && !Helpers.Is64Type(fromType, block.Emitter.Resolver) && Helpers.IsIntegerType(fromType, block.Emitter.Resolver))) &&
                      (expression is BinaryOperatorExpression || expression is UnaryOperatorExpression || expression.Parent is AssignmentExpression) &&
                      IsInUncheckedContext(block.Emitter, expression))
             {
-                if (ConversionBlock.IsLongConversion(block, expression, rr, expectedType, conversion) || rr is ConstantResolveResult)
+                if (ConversionBlock.IsLongConversion(block, expression, rr, toType, conversion) || rr is ConstantResolveResult)
                 {
                     return;
                 }
 
-                if (!Helpers.IsIntegerType(expectedType, block.Emitter.Resolver))
+                if (!Helpers.IsIntegerType(toType, block.Emitter.Resolver))
                 {
                     if (rr is OperatorResolveResult)
                     {
-                        expectedType = rr.Type;
+                        toType = fromType;
                     }
                 }
 
@@ -182,7 +192,7 @@ namespace Bridge.Translator
                 var be = expression as BinaryOperatorExpression;
                 bool isBitwiseOperator = be != null && (be.Operator == BinaryOperatorType.ShiftLeft || be.Operator == BinaryOperatorType.ShiftRight || be.Operator == BinaryOperatorType.BitwiseAnd || be.Operator == BinaryOperatorType.BitwiseOr || be.Operator == BinaryOperatorType.ExclusiveOr);
 
-                if ((Helpers.IsKnownType(KnownTypeCode.Int32, expectedType, block.Emitter.Resolver) && isBitwiseOperator) || (Helpers.IsKnownType(KnownTypeCode.UInt32, expectedType, block.Emitter.Resolver) && be != null && be.Operator == BinaryOperatorType.ShiftRight))
+                if ((Helpers.IsKnownType(KnownTypeCode.Int32, toType, block.Emitter.Resolver) && isBitwiseOperator) || (Helpers.IsKnownType(KnownTypeCode.UInt32, toType, block.Emitter.Resolver) && be != null && be.Operator == BinaryOperatorType.ShiftRight))
                 {
                     // Don't need to check even in checked context and don't need to clip
                 }
@@ -209,8 +219,8 @@ namespace Bridge.Translator
                     {
                         var ae = expression.Parent as AssignmentExpression;
                         isBitwiseOperator = ae != null && (ae.Operator == AssignmentOperatorType.ShiftRight || ae.Operator == AssignmentOperatorType.ShiftLeft || ae.Operator == AssignmentOperatorType.BitwiseAnd || ae.Operator == AssignmentOperatorType.BitwiseOr || ae.Operator == AssignmentOperatorType.ExclusiveOr);
-                        if ((isBitwiseOperator && Helpers.IsKnownType(KnownTypeCode.Int32, expectedType, block.Emitter.Resolver))
-                            || (ae != null && ae.Operator == AssignmentOperatorType.ShiftRight && Helpers.IsKnownType(KnownTypeCode.UInt32, expectedType, block.Emitter.Resolver)))
+                        if ((isBitwiseOperator && Helpers.IsKnownType(KnownTypeCode.Int32, toType, block.Emitter.Resolver))
+                            || (ae != null && ae.Operator == AssignmentOperatorType.ShiftRight && Helpers.IsKnownType(KnownTypeCode.UInt32, toType, block.Emitter.Resolver)))
                         {
                             // Don't need to check even in checked context and don't need to clip
                         }
@@ -226,7 +236,7 @@ namespace Bridge.Translator
 
                 if (needCheck)
                 {
-                    ClipInteger(block, expression, expectedType, false);
+                    ClipInteger(block, expression, toType, false);
                 }
             }
         }

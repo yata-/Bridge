@@ -18461,11 +18461,9 @@
     Bridge.define('Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests', {
         statics: {
             canConvert: function (T, arg) {
-                try { /// The variable `x' is assigned but its value is never used
-    
-    
+                try {
                     var x = System.Nullable.getValue(Bridge.cast(arg, T));
-                    return true;
+                    return x == null || x != null; // return true;
                 }
                 catch ($e1) {
                     $e1 = System.Exception.create($e1);
