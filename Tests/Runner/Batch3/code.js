@@ -1221,6 +1221,7 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1083', {
         statics: {
             testExternalEnum: function () {
+                var $t;
                 // simulate declaration of external enum
                 Bridge.ClientTest.Batch3.BridgeIssues.Bridge1083.Foo = {};
                 Bridge.ClientTest.Batch3.BridgeIssues.Bridge1083.Foo.OK = 'OK';
@@ -1228,7 +1229,7 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     
                 var status = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1083.Foo.OK;
     
-                Bridge.Test.Assert.areEqual("OK", System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1083.Foo, status));
+                Bridge.Test.Assert.areEqual("OK", ($t=status, System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1083.Foo, $t)));
             }
         }
     });
@@ -2950,10 +2951,11 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1249', {
         statics: {
             testEnumOverflow: function () {
+                var $t;
                 var v1 = 255;
                 var v2 = 255;
                 Bridge.Test.Assert.areEqual(0, ((v1 = (v1 + 1) & 255)));
-                Bridge.Test.Assert.areEqual("a", System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1249.b, (((v2 = (v2 + 1) & 255)))));
+                Bridge.Test.Assert.areEqual("a", ($t=(((v2 = (v2 + 1) & 255))), System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1249.b, $t)));
             }
         }
     });
@@ -5966,6 +5968,22 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1472', {
+        statics: {
+            time: true,
+            getArray: function () {
+                var $t;
+                return (($t = !Bridge.ClientTest.Batch3.BridgeIssues.Bridge1472.time, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1472.time = $t, $t)) ? [1, 2, 3, 4] : [1, 2, 3];
+            }
+        },
+        testMultiplyThisInTemplate: function () {
+            var $t;
+            var v = System.Array.init(4, 0);
+            ($t=Bridge.ClientTest.Batch3.BridgeIssues.Bridge1472.getArray(), System.Array.copy($t, 0, v, 0, $t.length));
+            Bridge.Test.Assert.areEqual(0, v[3]);
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1476', {
         testEscapedBrackets: function () {
             var r = new System.Text.RegularExpressions.Regex.$constructor("(?<leftSet>(\\[|\\())(?<left>[^,]+)?,(?<right>[^\\]\\)]+)?(?<rightSet>(\\]|\\)))");
@@ -7933,13 +7951,14 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge580', {
         statics: {
             testUseCase: function () {
+                var $t, $t1, $t2, $t3;
                 var arrs = ["s1", "s2"];
     
                 var intIndex;
     
                 var dst = System.Array.init(2, null);
                 intIndex = 0;
-                System.Array.copy(arrs, 0, dst, intIndex, arrs.length);
+                ($t=arrs, System.Array.copy($t, 0, dst, intIndex, $t.length));
     
                 Bridge.Test.Assert.areEqual$1(2, dst.length, "Bridge580 Length Int");
                 Bridge.Test.Assert.areEqual$1(arrs[0], dst[0], "Bridge580 0 Int");
@@ -7947,7 +7966,7 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     
                 dst = System.Array.init(3, null);
                 intIndex = 1;
-                System.Array.copy(arrs, 0, dst, intIndex, arrs.length);
+                ($t1=arrs, System.Array.copy($t1, 0, dst, intIndex, $t1.length));
     
                 Bridge.Test.Assert.areEqual$1(3, dst.length, "Bridge580 Length 3 Int");
                 Bridge.Test.Assert.areEqual$1(arrs[1], dst[2], "Bridge580 1_1 Int");
@@ -7956,7 +7975,7 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     
                 dst = System.Array.init(2, null);
                 longIndex = System.Int64(0);
-                System.Array.copy(arrs, 0, dst, longIndex.toNumber(), arrs.length);
+                ($t2=arrs, System.Array.copy($t2, 0, dst, longIndex.toNumber(), $t2.length));
     
                 Bridge.Test.Assert.areEqual$1(2, dst.length, "Bridge580 Length Long");
                 Bridge.Test.Assert.areEqual$1(arrs[0], dst[0], "Bridge580 0 Long");
@@ -7964,7 +7983,7 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     
                 dst = System.Array.init(3, null);
                 longIndex = System.Int64(1);
-                System.Array.copy(arrs, 0, dst, longIndex.toNumber(), arrs.length);
+                ($t3=arrs, System.Array.copy($t3, 0, dst, longIndex.toNumber(), $t3.length));
     
                 Bridge.Test.Assert.areEqual$1(3, dst.length, "Bridge580 Length 1 Long");
                 Bridge.Test.Assert.areEqual$1(arrs[1], dst[2], "Bridge580 1_1 Long");
@@ -8029,16 +8048,17 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
                 Bridge.Test.Assert.true$1(Bridge.equalsT(date5, new Date(1996, 4 - 1, 9, 17, 55, 0)), "Bridge582 TestSubtractTimeSpan date5");
             },
             testTimeOfDay: function () {
+                var $t, $t1, $t2;
                 var date = new Date(2013, 9 - 1, 14, 9, 28, 0);
-                Bridge.Test.Assert.true$1(Bridge.equalsT(new Date(date.getFullYear(), date.getMonth(), date.getDate()), new Date(2013, 9 - 1, 14)), "Bridge582 TestTimeOfDay Date 2013, 9, 14, 9, 28, 0");
+                Bridge.Test.Assert.true$1(Bridge.equalsT(($t=date, new Date($t.getFullYear(), $t.getMonth(), $t.getDate())), new Date(2013, 9 - 1, 14)), "Bridge582 TestTimeOfDay Date 2013, 9, 14, 9, 28, 0");
                 Bridge.Test.Assert.true$1(Bridge.Date.timeOfDay(date).equalsT(new System.TimeSpan(9, 28, 0)), "Bridge582 TestTimeOfDay TimeOfDay 2013, 9, 14, 9, 28, 0");
     
                 date = new Date(2011, 5 - 1, 28, 10, 35, 0);
-                Bridge.Test.Assert.true$1(Bridge.equalsT(new Date(date.getFullYear(), date.getMonth(), date.getDate()), new Date(2011, 5 - 1, 28)), "Bridge582 TestTimeOfDay Date 2011, 5, 28, 10, 35, 0");
+                Bridge.Test.Assert.true$1(Bridge.equalsT(($t1=date, new Date($t1.getFullYear(), $t1.getMonth(), $t1.getDate())), new Date(2011, 5 - 1, 28)), "Bridge582 TestTimeOfDay Date 2011, 5, 28, 10, 35, 0");
                 Bridge.Test.Assert.true$1(Bridge.Date.timeOfDay(date).equalsT(new System.TimeSpan(10, 35, 0)), "Bridge582 TestTimeOfDay TimeOfDay 2011, 5, 28, 10, 35, 0");
     
                 date = new Date(1979, 12 - 1, 25, 14, 30, 0);
-                Bridge.Test.Assert.true$1(Bridge.equalsT(new Date(date.getFullYear(), date.getMonth(), date.getDate()), new Date(1979, 12 - 1, 25)), "Bridge582 TestTimeOfDay Date 1979, 12, 25, 14, 30, 0");
+                Bridge.Test.Assert.true$1(Bridge.equalsT(($t2=date, new Date($t2.getFullYear(), $t2.getMonth(), $t2.getDate())), new Date(1979, 12 - 1, 25)), "Bridge582 TestTimeOfDay Date 1979, 12, 25, 14, 30, 0");
                 Bridge.Test.Assert.true$1(Bridge.Date.timeOfDay(date).equalsT(new System.TimeSpan(14, 30, 0)), "Bridge582 TestTimeOfDay TimeOfDay 1979, 12, 25, 14, 30, 0");
             }
         }
@@ -11536,18 +11556,19 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge893', {
         statics: {
             enumToStringWorks: function () {
-                Bridge.Test.Assert.areEqual("TestA1", System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge893A, Bridge.ClientTest.Batch3.BridgeIssues.Bridge893A.TestA1));
+                var $t, $t1, $t2, $t3, $t4;
+                Bridge.Test.Assert.areEqual("TestA1", ($t=Bridge.ClientTest.Batch3.BridgeIssues.Bridge893A.TestA1, System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge893A, $t)));
     
                 var a = 100;
-                Bridge.Test.Assert.areEqual("100", System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge893A, a));
+                Bridge.Test.Assert.areEqual("100", ($t1=a, System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge893A, $t1)));
     
-                Bridge.Test.Assert.areEqual("TestB3", System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge893B, Bridge.ClientTest.Batch3.BridgeIssues.Bridge893B.TestB3));
+                Bridge.Test.Assert.areEqual("TestB3", ($t2=Bridge.ClientTest.Batch3.BridgeIssues.Bridge893B.TestB3, System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge893B, $t2)));
     
                 var t = 3;
-                Bridge.Test.Assert.areEqual("TestB1, TestB2", System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge893B, t));
+                Bridge.Test.Assert.areEqual("TestB1, TestB2", ($t3=t, System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge893B, $t3)));
     
                 var t1 = 6;
-                Bridge.Test.Assert.areEqual("TestB2, TestB3", System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge893B, t1));
+                Bridge.Test.Assert.areEqual("TestB2, TestB3", ($t4=t1, System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge893B, $t4)));
             }
         }
     });
@@ -11592,11 +11613,12 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge905', {
         statics: {
             dayOfWeekFixed: function () {
+                var $t;
                 var dictionary = new (System.Collections.Generic.Dictionary$2(System.DayOfWeek,System.Int32))();
                 dictionary.add(0, 1);
     
                 Bridge.Test.Assert.areEqual$1(1, dictionary.get(0), "1");
-                Bridge.Test.Assert.areEqual$1("Saturday", System.Enum.toString(System.DayOfWeek, (6)), "Saturday");
+                Bridge.Test.Assert.areEqual$1("Saturday", ($t=(6), System.Enum.toString(System.DayOfWeek, $t)), "Saturday");
             }
         }
     });
@@ -12439,11 +12461,12 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge989', {
         statics: {
             dateTimeToISOStringWorks: function () {
+                var $t;
                 var d1 = new Date(2011, 10 - 1, 5, 14, 48);
                 var d2 = Bridge.Date.toUTC(d1);
     
                 // This is required to change d1 to UTC without changing time
-                d1 = new Date(d1.getFullYear(), d1.getMonth() + (((d1.getMonth() + 1) - (d2.getMonth() + 1)) | 0), d1.getDate(), d1.getHours(), d1.getMinutes(), d1.getSeconds(), d1.getMilliseconds());
+                d1 = ($t=d1, new Date($t.getFullYear(), $t.getMonth() + (((d1.getMonth() + 1) - (d2.getMonth() + 1)) | 0), $t.getDate(), $t.getHours(), $t.getMinutes(), $t.getSeconds(), $t.getMilliseconds()));
                 d1 = new Date(d1.valueOf() + Math.round((((d1.getDate() - d2.getDate()) | 0)) * 864e5));
                 d1 = new Date(d1.valueOf() + Math.round((((d1.getHours() - d2.getHours()) | 0)) * 36e5));
                 d1 = new Date(d1.valueOf() + Math.round((((d1.getMinutes() - d2.getMinutes()) | 0)) * 6e4));
