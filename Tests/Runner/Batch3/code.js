@@ -5966,6 +5966,21 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1467', {
+        statics: {
+            testHtmlElements: function () {
+                Bridge.Test.Assert.throws$6(System.InvalidCastException, function () {
+                    var $t;
+                    $t = Bridge.getEnumerator(Bridge.cast(["h"], System.Collections.IEnumerable));
+                    while ($t.moveNext()) {
+                        var a = Bridge.cast($t.getCurrent(), System.Int32);
+                        System.Console.log(a);
+                    }
+                });
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1476', {
         testEscapedBrackets: function () {
             var r = new System.Text.RegularExpressions.Regex.$constructor("(?<leftSet>(\\[|\\())(?<left>[^,]+)?,(?<right>[^\\]\\)]+)?(?<rightSet>(\\]|\\)))");
