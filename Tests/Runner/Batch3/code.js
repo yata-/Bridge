@@ -5975,6 +5975,32 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1480', {
+        testOverloadUnaryOperator: function () {
+            var $int = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1480.IntWrapper(3);
+            $int = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1480.IntWrapper.op_Increment($int);
+            Bridge.Test.Assert.areEqual(4, $int.toInt());
+            Bridge.Test.Assert.areEqual(5, ((($int = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1480.IntWrapper.op_Increment($int)))).toInt());
+            Bridge.Test.Assert.areEqual(5, (Bridge.identity($int, ($int = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1480.IntWrapper.op_Increment($int)))).toInt());
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1480.IntWrapper', {
+        statics: {
+            op_Increment: function (a) {
+                return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1480.IntWrapper(((a.value + 1) | 0));
+            }
+        },
+        value: 0,
+        constructor: function (value) {
+            this.$initialize();
+            this.value = value;
+        },
+        toInt: function () {
+            return this.value;
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1485', {
         testConstructorName: function () {
             var t1 = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1485.TestName.$constructor();
