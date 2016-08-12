@@ -6014,6 +6014,16 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1486', {
+        statics: {
+            x: System.Int64(15)
+        },
+        testConstructorName: function () {
+            Bridge.ClientTest.Batch3.BridgeIssues.Bridge1486.x = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1486.x.inc();
+            Bridge.Test.Assert.true(System.Int64(16).equals(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1486.x));
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1501', {
         testPropertyChangedEventArgs: function () {
             var ea1 = new System.ComponentModel.PropertyChangedEventArgs("prop1");
