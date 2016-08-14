@@ -6014,6 +6014,23 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1489', {
+        testLongEnum: function () {
+            var $enum = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1489.Enum.A;
+            Bridge.Test.Assert.areEqual("B", System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1489.Enum, ($enum.add(System.Int64(1)))));
+            Bridge.Test.Assert.areEqual("B", System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1489.Enum, ((($enum = $enum.add(System.Int64(1)))))));
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1489.Enum', {
+        $kind: "enum",
+        statics: {
+            A: System.Int64(1),
+            B: System.Int64(2)
+        },
+        $utype: System.Int64
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1501', {
         testPropertyChangedEventArgs: function () {
             var ea1 = new System.ComponentModel.PropertyChangedEventArgs("prop1");

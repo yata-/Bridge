@@ -185,7 +185,7 @@ namespace Bridge.Translator
             var isLeftLong = Helpers.Is64Type(leftExpected, this.Emitter.Resolver);
             var isRightLong = Helpers.Is64Type(rightExpected, this.Emitter.Resolver);
 
-            if (!(resultIsString && binaryOperatorExpression.Operator == BinaryOperatorType.Add) && (isLeftLong || isRightLong))
+            if (!(resultIsString && binaryOperatorExpression.Operator == BinaryOperatorType.Add) && (isLeftLong || isRightLong) || resolveOperator.Type.Kind == TypeKind.Enum && Helpers.Is64Type(resolveOperator.Type.GetDefinition().EnumUnderlyingType, this.Emitter.Resolver))
             {
                 isLong = true;
                 isLongExpected = true;
