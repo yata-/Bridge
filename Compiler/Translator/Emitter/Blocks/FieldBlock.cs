@@ -125,7 +125,7 @@ namespace Bridge.Translator
                 {
                     isPrimitive = true;
                     constValue = primitiveExpr.Value;
-                    writeScript = true;
+                    //writeScript = true;
                 }
 
                 if (constValue is RawValue)
