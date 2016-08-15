@@ -10054,11 +10054,11 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
                 var $t, $t1, $t2;
                 var i = 0;
                 while (i < 20) {
-                    var $t = (function () {
+                    $t = (function () {
                         while (i < 10) {
-                            var $t1 = (function () {
+                            $t1 = (function () {
                                 while (i < 5) {
-                                    var $t2 = (function () {
+                                    $t2 = (function () {
                                         if (System.Linq.Enumerable.from(testList).any(function (x) {
                                             return x === i;
                                         })) {
@@ -13398,7 +13398,7 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
                 var count = 0;
     
                 for (var i = 0; i < 10; i = (i + 1) | 0) {
-                    var $t = (function () {
+                    $t = (function () {
                         if (!System.Linq.Enumerable.from(testList).any(function (x) {
                             return x === i;
                         })) {
