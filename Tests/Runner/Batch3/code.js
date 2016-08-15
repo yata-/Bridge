@@ -6033,6 +6033,20 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1517', {
+        testTupleEquality: function () {
+            var a1 = { item1: 1 };
+            var b1 = { item1: 1 };
+            Bridge.Test.Assert.true(Bridge.objectEquals(a1, b1));
+            Bridge.Test.Assert.true(Bridge.getHashCode(a1, false, true) === Bridge.getHashCode(b1, false, true));
+    
+            var a2 = { item1: 1, item2: 2 };
+            var b2 = { item1: 1, item2: 2 };
+            Bridge.Test.Assert.true(Bridge.objectEquals(a2, b2));
+            Bridge.Test.Assert.true(Bridge.getHashCode(a2, false, true) === Bridge.getHashCode(b2, false, true));
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
