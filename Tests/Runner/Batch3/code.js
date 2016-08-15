@@ -6033,6 +6033,72 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510', {
+        statics: {
+            function: function (wrap) {
+                return wrap.v;
+            },
+            function2: function (wrap) {
+                return wrap.v;
+            },
+            function3: function (wrap) {
+                return wrap.v;
+            },
+            function4: function (wrap) {
+                return wrap.v;
+            }
+        },
+        testPropertyChangedEventArgs: function () {
+            var a = 3;
+            Bridge.Test.Assert.true(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.function(Bridge.merge(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.IntWrap(), {v:((a * 1000) | 0)})) === 3000);
+            Bridge.Test.Assert.true(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.function2(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.IntWrap2.op_Implicit(((a * 1000) | 0))) === 3000);
+            Bridge.Test.Assert.true(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.function3(Bridge.merge(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.IntWrap3(), {v:System.Int64(a * 1000)})).equals(System.Int64(3000)));
+            Bridge.Test.Assert.true(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.function4(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.IntWrap4.op_Implicit(System.Int64(((a * 1000) | 0)))).equals(System.Int64(3000)));
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.IntWrap', {
+        v: 0,
+        constructor: function (value) {
+            this.$initialize();
+            this.v = value;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.IntWrap2', {
+        statics: {
+            op_Implicit: function (v) {
+                return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.IntWrap2(v);
+            }
+        },
+        v: 0,
+        constructor: function (value) {
+            this.$initialize();
+            this.v = value;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.IntWrap3', {
+        v: System.Int64(0),
+        constructor: function (value) {
+            this.$initialize();
+            this.v = value;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.IntWrap4', {
+        statics: {
+            op_Implicit: function (v) {
+                return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.IntWrap4(v);
+            }
+        },
+        v: System.Int64(0),
+        constructor: function (value) {
+            this.$initialize();
+            this.v = value;
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
