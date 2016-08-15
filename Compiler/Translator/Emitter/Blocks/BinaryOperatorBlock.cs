@@ -259,7 +259,11 @@ namespace Bridge.Translator
             }
 
             bool nullable = orr != null && orr.IsLiftedOperator;
-            bool isCoalescing = binaryOperatorExpression.Operator == BinaryOperatorType.NullCoalescing;
+            bool isCoalescing = (this.Emitter.AssemblyInfo.StrictNullChecks || 
+                                 NullableType.IsNullable(leftResolverResult.Type) ||
+                                 leftResolverResult.Type.IsKnownType(KnownTypeCode.String) ||
+                                 leftResolverResult.Type.IsKnownType(KnownTypeCode.Object)
+                                ) && binaryOperatorExpression.Operator == BinaryOperatorType.NullCoalescing;
             string root = JS.Types.SYSTEM_NULLABLE + ".";
             bool special = nullable;
             bool rootSpecial = nullable;
@@ -362,7 +366,7 @@ namespace Bridge.Translator
                         break;
 
                     case BinaryOperatorType.NullCoalescing:
-                        this.Write(":");
+                        this.Write(isCoalescing ? ":" : "||");
                         break;
 
                     case BinaryOperatorType.ConditionalOr:
