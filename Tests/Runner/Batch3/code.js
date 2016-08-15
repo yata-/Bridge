@@ -6033,6 +6033,18 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1512', {
+        statics: {
+            method: function ($arguments) {
+                if ($arguments === void 0) { $arguments = []; }
+                Bridge.Test.Assert.areEqual(0, $arguments.length);
+            }
+        },
+        testParametersReservedNames: function () {
+            Bridge.ClientTest.Batch3.BridgeIssues.Bridge1512.method();
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
