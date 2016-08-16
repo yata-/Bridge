@@ -6033,6 +6033,30 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1519', {
+        testRefOutLocalVars: function () {
+            var $t;
+            var $boolean = true;
+            var dic = new (System.Collections.Generic.Dictionary$2(System.Int32,System.Int32))();
+            dic.add(1, 1);
+            dic.add(2, 2);
+    
+            if ($boolean) {
+                var sameVal = { };
+                if (dic.tryGetValue(1, sameVal)) {
+                    Bridge.Test.Assert.areEqual(1, sameVal.v);
+                }
+            }
+    
+            var i = 0;
+            $t = Bridge.getEnumerator(dic.getValues());
+            while ($t.moveNext()) {
+                var sameVal1 = $t.getCurrent();
+                Bridge.Test.Assert.areEqual(((i = (i + 1) | 0)), sameVal1);
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge169', {
         statics: {
             number: 0,

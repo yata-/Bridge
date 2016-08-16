@@ -82,7 +82,7 @@ namespace Bridge.Translator
             }
 
             //var iteratorName = this.GetNextIteratorName();
-            var iteratorName = this.AddLocal(this.GetTempVarName(), AstType.Null);
+            var iteratorName = this.AddLocal(this.GetTempVarName(), null, AstType.Null);
 
             //this.WriteVar();
             this.Write(iteratorName, " = ", JS.Funcs.BRIDGE_GET_ENUMERATOR);
@@ -111,7 +111,7 @@ namespace Bridge.Translator
             this.BeginBlock();
 
             this.PushLocals();
-            var varName = this.AddLocal(foreachStatement.VariableName, foreachStatement.VariableType);
+            var varName = this.AddLocal(foreachStatement.VariableName, foreachStatement.VariableNameToken, foreachStatement.VariableType);
 
             this.WriteVar();
             this.Write(varName, " = ", iteratorName);
@@ -192,7 +192,7 @@ namespace Bridge.Translator
             }
 
             var iteratorVar = this.GetTempVarName();
-            var iteratorName = this.AddLocal(iteratorVar, AstType.Null);
+            var iteratorName = this.AddLocal(iteratorVar, null, AstType.Null);
 
             //this.WriteVar();
             this.Write(iteratorName, " = ", JS.Funcs.BRIDGE_GET_ENUMERATOR);
@@ -216,7 +216,7 @@ namespace Bridge.Translator
             this.PushLocals();
             Action ac = () =>
             {
-                var varName = this.AddLocal(foreachStatement.VariableName, foreachStatement.VariableType);
+                var varName = this.AddLocal(foreachStatement.VariableName, foreachStatement.VariableNameToken, foreachStatement.VariableType);
 
                 this.WriteVar();
                 this.Write(varName, " = ", iteratorName);
