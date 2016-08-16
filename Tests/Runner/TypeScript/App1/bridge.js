@@ -6335,6 +6335,10 @@ System.UInt64.precision = 20;
             return new System.Decimal(v, provider, T);
         }
 
+        if (v == null) {
+            v = 0;
+        }
+
         if (typeof v === "string") {
             provider = provider || System.Globalization.CultureInfo.getCurrentCulture();
 

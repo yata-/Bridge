@@ -1,0 +1,26 @@
+using System;
+using Bridge.Test;
+
+namespace Bridge.ClientTest.Batch3.BridgeIssues
+{
+    [Category(Constants.MODULE_ISSUES)]
+    [TestFixture(TestNameFormat = "#1518 - {0}")]
+    public class Bridge1518
+    {
+        public class TestClass<T> where T : new()
+        {
+            public T value = new T();
+        }
+
+        [Test]
+        public void TestDefaultConstructorForTypeParameter()
+        {
+            TestClass<decimal> x = new TestClass<decimal>();
+            int y = 0;
+            Assert.True(x.value == y);
+
+            TestClass<Guid> g = new TestClass<Guid>();
+            Assert.True(g.value == Guid.Empty);
+        }
+    }
+}

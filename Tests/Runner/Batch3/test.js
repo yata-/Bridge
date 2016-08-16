@@ -121,7 +121,7 @@
             fixtureFabric: Bridge.getDefaultValue(T),
             getFixtureFabric: function () {
                 if (Bridge.Test.QUnit.TestFixture$1(T).fixtureFabric == null) {
-                    Bridge.Test.QUnit.TestFixture$1(T).fixtureFabric = new T();
+                    Bridge.Test.QUnit.TestFixture$1(T).fixtureFabric = Bridge.createInstance(T);
                 }
     
                 return Bridge.Test.QUnit.TestFixture$1(T).fixtureFabric;
@@ -376,6 +376,7 @@
                 QUnit.test("#1476 - TestEscapedBrackets", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1476.testEscapedBrackets);
                 QUnit.test("#1485 - TestConstructorName", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1485.testConstructorName);
                 QUnit.test("#1501 - TestPropertyChangedEventArgs", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1501.testPropertyChangedEventArgs);
+                QUnit.test("#1518 - TestDefaultConstructorForTypeParameter", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1518.testDefaultConstructorForTypeParameter);
                 QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge381.testUseCase);
                 QUnit.test("#447 - CheckInlineExpression", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge447.checkInlineExpression);
                 QUnit.test("#447 - CheckInlineCalls", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge447.checkInlineCalls);
@@ -1991,6 +1992,16 @@
             testPropertyChangedEventArgs: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1501).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1501);
                 t.getFixture().testPropertyChangedEventArgs();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1518', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1518)],
+        statics: {
+            testDefaultConstructorForTypeParameter: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1518).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1518);
+                t.getFixture().testDefaultConstructorForTypeParameter();
             }
         }
     });
