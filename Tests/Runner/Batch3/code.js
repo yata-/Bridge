@@ -6099,6 +6099,23 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1522', {
+        testAssignIntToDecimal: function () {
+            var x = System.Decimal(2.0);
+            x = System.Decimal(System.Decimal.toInt((x.mul(System.Decimal(60))), System.Int32));
+            Bridge.Test.Assert.true(x.gt(System.Decimal(2.0)));
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1523', {
+        testAssignDecimalToInt: function () {
+            var x = 0;
+            var y = System.Decimal(2);
+            x = (x + System.Decimal.toInt((System.Nullable.getValue(y).mul(System.Decimal(60.0))), System.Int32)) | 0;
+            Bridge.Test.Assert.areEqual(120, x);
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge169', {
         statics: {
             number: 0,

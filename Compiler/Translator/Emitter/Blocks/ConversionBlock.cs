@@ -126,134 +126,172 @@ namespace Bridge.Translator
                 var expectedType = block.Emitter.Resolver.Resolver.GetExpectedType(expression);
                 int level = 0;
 
-                if (ConversionBlock.expressionIgnoreUserDefine.Contains(expression) && conversion.IsUserDefined)
-                {
-                    expectedType = conversion.Method.Parameters.First().Type;
-                }
-
-                if (block.Emitter.IsAssignment)
-                {
-                    return level;
-                }
-
-                if (expression is ParenthesizedExpression && ((ParenthesizedExpression)expression).Expression is CastExpression)
-                {
-                    return level;
-                }
-
-                if (conversion.IsUserDefined && expression.Parent is CastExpression && ((CastExpression)expression.Parent).Expression == expression)
-                {
-                    var parentConversion = block.Emitter.Resolver.Resolver.GetConversion((CastExpression)expression.Parent);
-
-                    if (!parentConversion.IsUserDefined || parentConversion.Method.Equals(conversion.Method))
-                    {
-                        return level;
-                    }
-                }
-
-                if (rr is ConstantResolveResult && expression is CastExpression && !conversion.IsUserDefined)
-                {
-                    return level;
-                }
-
-                var convrr = rr as ConversionResolveResult;
-
-                if (convrr != null && convrr.Input is ConstantResolveResult && !convrr.Conversion.IsUserDefined)
-                {
-                    return level;
-                }
-
-                if (convrr != null && !conversion.IsUserDefined)
-                {
-                    conversion = convrr.Conversion;
-                    rr = convrr.Input;
-                    expectedType = convrr.Type;
-                }
-
-                var isNumLifted = conversion != null && conversion.IsImplicit && conversion.IsLifted && conversion.IsNumericConversion && !(expression is BinaryOperatorExpression);
-                bool skipUserConversion = conversion == null || (!conversion.IsUserDefined &&
-                                          (Helpers.IsDecimalType(expectedType, block.Emitter.Resolver) ||
-                                           Helpers.Is64Type(expectedType, block.Emitter.Resolver) ||
-                                           conversion.IsIdentityConversion ||
-                                           isNumLifted));
-                string afterUserDefined = "";
-                if (!skipUserConversion && conversion.IsUserDefined && (expression is BinaryOperatorExpression || expression is UnaryOperatorExpression || expression.Parent is AssignmentExpression))
-                {
-                    level = CheckUserDefinedConversion(block, expression, conversion, level, rr, expectedType);
-                    
-                    if (conversion.IsUserDefined && block.DisableEmitConversionExpression)
-                    {
-                        return level;
-                    }
-
-                    afterUserDefined = block.AfterOutput;
-                    block.AfterOutput = "";
-                }
-
-                if (!((expression.Parent is CastExpression) && !(expression is CastExpression)))
-                {
-                    CheckNumericConversion(block, expression, rr, expectedType, conversion);
-                }
-
-                if (!(conversion.IsExplicit && conversion.IsNumericConversion))
-                {
-                    if (ConversionBlock.CheckDecimalConversion(block, expression, rr, expectedType, conversion))
-                    {
-                        block.AfterOutput += ")";
-                    }
-                }
-
-                if (Helpers.IsDecimalType(expectedType, block.Emitter.Resolver) && !conversion.IsUserDefined)
-                {
-                    block.AfterOutput = block.AfterOutput + afterUserDefined;
-                    return level;
-                }
-
-                if (!(conversion.IsExplicit && conversion.IsNumericConversion))
-                {
-                    if (ConversionBlock.CheckLongConversion(block, expression, rr, expectedType, conversion))
-                    {
-                        block.AfterOutput += ")";
-                    }
-                }
-
-                if (Helpers.Is64Type(expectedType, block.Emitter.Resolver) && !conversion.IsUserDefined)
-                {
-                    block.AfterOutput = block.AfterOutput + afterUserDefined;
-                    return level;
-                }
-
-                if (conversion.IsIdentityConversion)
-                {
-                    block.AfterOutput = block.AfterOutput + afterUserDefined;
-                    return level;
-                }
-
-                if (isNumLifted && !conversion.IsUserDefined)
-                {
-                    block.AfterOutput = block.AfterOutput + afterUserDefined;
-                    return level;
-                }
-                bool isLifted = conversion.IsLifted && !isNumLifted && !(block is CastBlock) && !Helpers.IsDecimalType(expectedType, block.Emitter.Resolver) && !Helpers.Is64Type(expectedType, block.Emitter.Resolver) && !NullableType.IsNullable(expectedType);
-                if (isLifted)
-                {
-                    block.Write(JS.Types.SYSTEM_NULLABLE + ".getValue(");
-                    block.AfterOutput += ")";
-                }
-
-                if (conversion.IsUserDefined && !(expression is BinaryOperatorExpression || expression is UnaryOperatorExpression || expression.Parent is AssignmentExpression))
-                {
-                    level = CheckUserDefinedConversion(block, expression, conversion, level, rr, expectedType);
-                }
-
-                block.AfterOutput = block.AfterOutput + afterUserDefined;
-                return level;
+                return ConversionBlock.DoConversion(block, expression, conversion, expectedType, level, rr);
             }
             catch
             {
             }
 
             return 0;
+        }
+
+        private static int DoConversion(ConversionBlock block, Expression expression, Conversion conversion, IType expectedType,
+            int level, ResolveResult rr, bool ignoreConversionResolveResult = false)
+        {
+            if (ConversionBlock.expressionIgnoreUserDefine.Contains(expression) && conversion.IsUserDefined)
+            {
+                expectedType = conversion.Method.Parameters.First().Type;
+            }
+
+            if (block.Emitter.IsAssignment)
+            {
+                return level;
+            }
+
+            if (expression is ParenthesizedExpression && ((ParenthesizedExpression) expression).Expression is CastExpression)
+            {
+                return level;
+            }
+
+            if (conversion.IsUserDefined && expression.Parent is CastExpression &&
+                ((CastExpression) expression.Parent).Expression == expression)
+            {
+                var parentConversion = block.Emitter.Resolver.Resolver.GetConversion((CastExpression) expression.Parent);
+
+                if (!parentConversion.IsUserDefined || parentConversion.Method.Equals(conversion.Method))
+                {
+                    return level;
+                }
+            }
+
+            if (rr is ConstantResolveResult && expression is CastExpression && !conversion.IsUserDefined)
+            {
+                return level;
+            }
+
+            var convrr = rr as ConversionResolveResult;
+
+            if (convrr != null && convrr.Input is ConstantResolveResult && !convrr.Conversion.IsUserDefined)
+            {
+                return level;
+            }
+
+            string afterUserDefined = "";
+            if (convrr != null && !conversion.IsUserDefined && !ignoreConversionResolveResult)
+            {
+                if (expectedType != convrr.Type)
+                {
+                    if (expression.Parent is CastExpression &&
+                        ((CastExpression) expression.Parent).Expression == expression)
+                    {
+                        var parentExpectedType = block.Emitter.Resolver.Resolver.GetExpectedType((CastExpression) expression.Parent);
+                        var parentrr = block.Emitter.Resolver.ResolveNode(expression.Parent, block.Emitter) as ConversionResolveResult;
+
+                        if (parentrr != null && parentrr.Type != expectedType || parentrr == null && expectedType != parentExpectedType)
+                        {
+                            level = ConversionBlock.DoConversion(block, expression, conversion, expectedType, level, rr, true);
+                            afterUserDefined = block.AfterOutput;
+                            block.AfterOutput = "";
+                        }
+                    }
+                    else
+                    {
+                        level = ConversionBlock.DoConversion(block, expression, conversion, expectedType, level, rr, true);
+                        afterUserDefined = block.AfterOutput;
+                        block.AfterOutput = "";
+                    }
+                }
+
+                conversion = convrr.Conversion;
+                rr = convrr.Input;
+                expectedType = convrr.Type;
+            }
+
+            var isNumLifted = conversion != null && conversion.IsImplicit && conversion.IsLifted &&
+                              conversion.IsNumericConversion && !(expression is BinaryOperatorExpression);
+            bool skipUserConversion = conversion == null || (!conversion.IsUserDefined &&
+                                                             (Helpers.IsDecimalType(expectedType, block.Emitter.Resolver) ||
+                                                              Helpers.Is64Type(expectedType, block.Emitter.Resolver) ||
+                                                              conversion.IsIdentityConversion ||
+                                                              isNumLifted));
+            
+            if (!skipUserConversion && conversion.IsUserDefined &&
+                (expression is BinaryOperatorExpression || expression is UnaryOperatorExpression ||
+                 expression.Parent is AssignmentExpression))
+            {
+                level = ConversionBlock.CheckUserDefinedConversion(block, expression, conversion, level, rr, expectedType);
+
+                if (conversion.IsUserDefined && block.DisableEmitConversionExpression)
+                {
+                    return level;
+                }
+
+                afterUserDefined = block.AfterOutput + afterUserDefined;
+                block.AfterOutput = "";
+            }
+
+            if (!((expression.Parent is CastExpression) && !(expression is CastExpression)))
+            {
+                ConversionBlock.CheckNumericConversion(block, expression, rr, expectedType, conversion);
+            }
+
+            if (!(conversion.IsExplicit && conversion.IsNumericConversion))
+            {
+                if (ConversionBlock.CheckDecimalConversion(block, expression, rr, expectedType, conversion, ignoreConversionResolveResult))
+                {
+                    block.AfterOutput += ")";
+                }
+            }
+
+            if (Helpers.IsDecimalType(expectedType, block.Emitter.Resolver) && !conversion.IsUserDefined)
+            {
+                block.AfterOutput = block.AfterOutput + afterUserDefined;
+                return level;
+            }
+
+            if (!(conversion.IsExplicit && conversion.IsNumericConversion))
+            {
+                if (ConversionBlock.CheckLongConversion(block, expression, rr, expectedType, conversion, ignoreConversionResolveResult))
+                {
+                    block.AfterOutput += ")";
+                }
+            }
+
+            if (Helpers.Is64Type(expectedType, block.Emitter.Resolver) && !conversion.IsUserDefined)
+            {
+                block.AfterOutput = block.AfterOutput + afterUserDefined;
+                return level;
+            }
+
+            if (conversion.IsIdentityConversion)
+            {
+                block.AfterOutput = block.AfterOutput + afterUserDefined;
+                return level;
+            }
+
+            if (isNumLifted && !conversion.IsUserDefined)
+            {
+                block.AfterOutput = block.AfterOutput + afterUserDefined;
+                return level;
+            }
+            bool isLifted = conversion.IsLifted && !isNumLifted && !(block is CastBlock) &&
+                            !Helpers.IsDecimalType(expectedType, block.Emitter.Resolver) &&
+                            !Helpers.Is64Type(expectedType, block.Emitter.Resolver) && !NullableType.IsNullable(expectedType);
+            if (isLifted)
+            {
+                block.Write(JS.Types.SYSTEM_NULLABLE + ".getValue(");
+                block.AfterOutput += ")";
+            }
+
+            if (conversion.IsUserDefined &&
+                !(expression is BinaryOperatorExpression || expression is UnaryOperatorExpression ||
+                  expression.Parent is AssignmentExpression))
+            {
+                level = ConversionBlock.CheckUserDefinedConversion(block, expression, conversion, level, rr, expectedType);
+            }
+
+            block.AfterOutput = block.AfterOutput + afterUserDefined;
+            return level;
         }
 
         private static int CheckUserDefinedConversion(ConversionBlock block, Expression expression, Conversion conversion, int level, ResolveResult rr, IType expectedType)
@@ -358,7 +396,7 @@ namespace Bridge.Translator
 
         private delegate bool IsType(IType type, IMemberResolver resolver, bool allowArray = false);
 
-        private static bool CheckTypeConversion(ConversionBlock block, Expression expression, ResolveResult rr, IType expectedType, Conversion conversion, string typeName, IsType isType)
+        private static bool CheckTypeConversion(ConversionBlock block, Expression expression, ResolveResult rr, IType expectedType, Conversion conversion, string typeName, IsType isType, bool ignoreConversionResolveResult)
         {
             if (conversion.IsUserDefined)
             {
@@ -369,7 +407,7 @@ namespace Bridge.Translator
                 }
             }
 
-            if (expression is CastExpression)
+            if (expression is CastExpression && !ignoreConversionResolveResult)
             {
                 var nestedExpr = ((CastExpression)expression).Expression;
                 var nested_rr = block.Emitter.Resolver.ResolveNode(nestedExpr, block.Emitter);
@@ -403,7 +441,7 @@ namespace Bridge.Translator
                         {
                             block.Write("." + JS.Funcs.Math.LIFT);
                         }
-                        if (expression is CastExpression &&
+                        if (!ignoreConversionResolveResult && expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
                         {
                             return false;
@@ -437,7 +475,7 @@ namespace Bridge.Translator
                         {
                             block.Write("." + JS.Funcs.Math.LIFT);
                         }
-                        if (expression is CastExpression &&
+                        if (!ignoreConversionResolveResult && expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
                         {
                             return false;
@@ -465,7 +503,7 @@ namespace Bridge.Translator
                     {
                         block.Write("." + JS.Funcs.Math.LIFT);
                     }
-                    if (expression is CastExpression &&
+                    if (!ignoreConversionResolveResult && expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
                     {
                         return false;
@@ -492,7 +530,7 @@ namespace Bridge.Translator
                     {
                         block.Write("." + JS.Funcs.Math.LIFT);
                     }
-                    if (expression is CastExpression &&
+                    if (!ignoreConversionResolveResult && expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
                     {
                         return false;
@@ -521,7 +559,7 @@ namespace Bridge.Translator
                     {
                         block.Write("." + JS.Funcs.Math.LIFT);
                     }
-                    if (expression is CastExpression &&
+                    if (!ignoreConversionResolveResult && expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
                     {
                         return false;
@@ -549,7 +587,7 @@ namespace Bridge.Translator
                     {
                         block.Write("." + JS.Funcs.Math.LIFT);
                     }
-                    if (expression is CastExpression &&
+                    if (!ignoreConversionResolveResult && expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
                     {
                         return false;
@@ -576,7 +614,7 @@ namespace Bridge.Translator
                     {
                         block.Write("." + JS.Funcs.Math.LIFT);
                     }
-                    if (expression is CastExpression &&
+                    if (!ignoreConversionResolveResult && expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
                     {
                         return false;
@@ -614,7 +652,7 @@ namespace Bridge.Translator
                             {
                                 block.Write("." + JS.Funcs.Math.LIFT);
                             }
-                            if (expression is CastExpression &&
+                            if (!ignoreConversionResolveResult && expression is CastExpression &&
                                 ((CastExpression)expression).Expression is ParenthesizedExpression)
                             {
                                 return false;
@@ -701,7 +739,7 @@ namespace Bridge.Translator
                     {
                         block.Write("." + JS.Funcs.Math.LIFT);
                     }
-                    if (expression is CastExpression &&
+                    if (!ignoreConversionResolveResult && expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
                     {
                         return false;
@@ -715,7 +753,7 @@ namespace Bridge.Translator
                          && isType(rr.Type, block.Emitter.Resolver))
                 {
                     block.Write(JS.Types.SYSTEM_INT64 + ".toNumber");
-                    if (expression is CastExpression &&
+                    if (!ignoreConversionResolveResult && expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
                     {
                         return false;
@@ -748,7 +786,7 @@ namespace Bridge.Translator
                         block.Write("." + JS.Funcs.Math.LIFT);
                     }
 
-                    if (expression is CastExpression &&
+                    if (!ignoreConversionResolveResult && expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
                     {
                         return false;
@@ -1041,15 +1079,15 @@ namespace Bridge.Translator
             return false;
         }
 
-        private static bool CheckDecimalConversion(ConversionBlock block, Expression expression, ResolveResult rr, IType expectedType, Conversion conversion)
+        private static bool CheckDecimalConversion(ConversionBlock block, Expression expression, ResolveResult rr, IType expectedType, Conversion conversion, bool ignoreConversionResolveResult)
         {
-            return CheckTypeConversion(block, expression, rr, expectedType, conversion, JS.Types.SYSTEM_DECIMAL, Helpers.IsDecimalType);
+            return CheckTypeConversion(block, expression, rr, expectedType, conversion, JS.Types.SYSTEM_DECIMAL, Helpers.IsDecimalType, ignoreConversionResolveResult);
         }
 
-        private static bool CheckLongConversion(ConversionBlock block, Expression expression, ResolveResult rr, IType expectedType, Conversion conversion)
+        private static bool CheckLongConversion(ConversionBlock block, Expression expression, ResolveResult rr, IType expectedType, Conversion conversion, bool ignoreConversionResolveResult)
         {
-            return CheckTypeConversion(block, expression, rr, expectedType, conversion, JS.Types.SYSTEM_INT64, Helpers.IsLongType) ||
-                   CheckTypeConversion(block, expression, rr, expectedType, conversion, JS.Types.SYSTEM_UInt64, Helpers.IsULongType);
+            return CheckTypeConversion(block, expression, rr, expectedType, conversion, JS.Types.SYSTEM_INT64, Helpers.IsLongType, ignoreConversionResolveResult) ||
+                   CheckTypeConversion(block, expression, rr, expectedType, conversion, JS.Types.SYSTEM_UInt64, Helpers.IsULongType, ignoreConversionResolveResult);
         }
 
         private static bool IsLongConversion(ConversionBlock block, Expression expression, ResolveResult rr, IType expectedType, Conversion conversion)
