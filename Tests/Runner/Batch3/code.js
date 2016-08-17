@@ -6033,6 +6033,23 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1521', {
+        testDecimalTrueInConditionalBlock: function () {
+            var decimalValue1 = System.Decimal(5.0);
+            var decimalValue2 = System.Decimal(10.0);
+            var assign = true;
+            var test1 = assign ? System.Decimal(0) : decimalValue1;
+            var test2 = System.Decimal(!assign ? 0 : 1);
+            var test3 = !assign ? System.Decimal(0) : decimalValue1;
+            var test4 = assign ? decimalValue2 : decimalValue1;
+    
+            Bridge.Test.Assert.true(test1.equalsT(System.Decimal(0)));
+            Bridge.Test.Assert.true(test2.equalsT(System.Decimal(1)));
+            Bridge.Test.Assert.true(test3.equalsT(System.Decimal(5)));
+            Bridge.Test.Assert.true(test4.equalsT(System.Decimal(10)));
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
