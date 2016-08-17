@@ -21,6 +21,7 @@ namespace Bridge.Translator
         protected sealed override void DoEmit()
         {
             this.AfterOutput = "";
+            this.AfterExpressionOutput = "";
             var expression = this.GetExpression();
 
             if (expressionInWork.Contains(expression))
@@ -75,6 +76,12 @@ namespace Bridge.Translator
         }
 
         protected virtual string AfterOutput
+        {
+            get;
+            set;
+        }
+
+        protected virtual string AfterExpressionOutput
         {
             get;
             set;
@@ -230,11 +237,6 @@ namespace Bridge.Translator
                 block.AfterOutput = "";
             }
 
-            if (!((expression.Parent is CastExpression) && !(expression is CastExpression)))
-            {
-                ConversionBlock.CheckNumericConversion(block, expression, rr, expectedType, conversion);
-            }
-
             if (!(conversion.IsExplicit && conversion.IsNumericConversion))
             {
                 if (ConversionBlock.CheckDecimalConversion(block, expression, rr, expectedType, conversion, ignoreConversionResolveResult))
@@ -245,7 +247,14 @@ namespace Bridge.Translator
 
             if (Helpers.IsDecimalType(expectedType, block.Emitter.Resolver) && !conversion.IsUserDefined)
             {
-                block.AfterOutput = block.AfterOutput + afterUserDefined;
+                var s = block.AfterOutput;
+                block.AfterOutput = "";
+                if (!((expression.Parent is CastExpression) && !(expression is CastExpression)))
+                {
+                    ConversionBlock.CheckNumericConversion(block, expression, rr, expectedType, conversion);
+                }
+
+                block.AfterOutput =block.AfterOutput + s + afterUserDefined;
                 return level;
             }
 
@@ -259,8 +268,20 @@ namespace Bridge.Translator
 
             if (Helpers.Is64Type(expectedType, block.Emitter.Resolver) && !conversion.IsUserDefined)
             {
-                block.AfterOutput = block.AfterOutput + afterUserDefined;
+                var s = block.AfterOutput;
+                block.AfterOutput = "";
+                if (!((expression.Parent is CastExpression) && !(expression is CastExpression)))
+                {
+                    ConversionBlock.CheckNumericConversion(block, expression, rr, expectedType, conversion);
+                }
+
+                block.AfterOutput = block.AfterOutput + s + afterUserDefined;
                 return level;
+            }
+
+            if (!((expression.Parent is CastExpression) && !(expression is CastExpression)))
+            {
+                ConversionBlock.CheckNumericConversion(block, expression, rr, expectedType, conversion);
             }
 
             if (conversion.IsIdentityConversion)
