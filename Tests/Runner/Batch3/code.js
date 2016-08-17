@@ -6057,6 +6057,34 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1526', {
+        statics: {
+            getProperty1: function () {
+                var levelKey = { };
+                System.Int32.tryParse("", levelKey);
+    
+                return levelKey.v;
+            },
+            getProperty2: function () {
+                var levelKey = { v : 1 };
+                System.Int32.tryParse("", levelKey);
+    
+                return levelKey.v;
+            },
+            method: function () {
+                var levelKey = { };
+                System.Int32.tryParse("", levelKey);
+    
+                return levelKey.v;
+            }
+        },
+        testRefOutInProperty: function () {
+            Bridge.Test.Assert.areEqual(0, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1526.method());
+            Bridge.Test.Assert.areEqual(0, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1526.getProperty1());
+            Bridge.Test.Assert.areEqual(0, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1526.getProperty1());
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
