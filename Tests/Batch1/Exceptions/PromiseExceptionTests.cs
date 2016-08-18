@@ -25,7 +25,7 @@ namespace Bridge.ClientTest.Exceptions
             Assert.True((object)ex is PromiseException, "is PromiseException");
             Assert.AreEqual(args, ex.Arguments, "Arguments");
             Assert.True(ex.InnerException == null, "InnerException");
-            Assert.AreEqual("a", ex.Message, "Message");
+            Assert.AreEqual("Promise exception: [a, 1]", ex.Message, "Message");
         }
 
         [Test]
