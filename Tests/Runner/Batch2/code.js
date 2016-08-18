@@ -182,7 +182,7 @@
             $t = Bridge.getEnumerator(["x", "y"]);
             while ($t.moveNext()) {
                 var s = $t.getCurrent();
-                result += s;
+                result = [result,  s].join('');
             }
             Bridge.Test.Assert.areEqual("xy", result);
         },
@@ -219,14 +219,14 @@
         foreachWithArrayItemCallbackWorks: function () {
             var result = "";
             ["a", "b", "c"].forEach(function (s) {
-                result += s;
+                result = [result,  s].join('');
             });
             Bridge.Test.Assert.areEqual("abc", result);
         },
         foreachWithArrayCallbackWorks: function () {
             var result = "";
             Bridge.Linq.Enumerable.from(["a", "b", "c"]).forEach(function (s, i) {
-                result += s + i;
+                result = [result,  ([s,  i].join(''))].join('');
             });
             Bridge.Test.Assert.areEqual("a0b1c2", result);
         },
@@ -332,7 +332,7 @@
             $t = Bridge.getEnumerator(list);
             while ($t.moveNext()) {
                 var s = $t.getCurrent();
-                result += s;
+                result = [result,  s].join('');
             }
             Bridge.Test.Assert.areEqual("xy", result);
         },

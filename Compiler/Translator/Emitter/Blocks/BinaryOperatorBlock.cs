@@ -157,20 +157,21 @@ namespace Bridge.Translator
             }
 
             var resultIsString = expectedType.IsKnownType(KnownTypeCode.String) || resolveOperator.Type.IsKnownType(KnownTypeCode.String);
+            var isStringConcat = resultIsString && binaryOperatorExpression.Operator == BinaryOperatorType.Add;
             var toStringForLeft = false;
             var toStringForRight = false;
 
-            if (charToString == -1 && resultIsString && binaryOperatorExpression.Operator == BinaryOperatorType.Add && !leftResolverResult.Type.IsKnownType(KnownTypeCode.String))
+            if (charToString == -1 && isStringConcat && !leftResolverResult.Type.IsKnownType(KnownTypeCode.String))
             {
                 toStringForLeft = true;
             }
 
-            if (charToString == -1 && resultIsString && binaryOperatorExpression.Operator == BinaryOperatorType.Add && !rightResolverResult.Type.IsKnownType(KnownTypeCode.String))
+            if (charToString == -1 && isStringConcat && !rightResolverResult.Type.IsKnownType(KnownTypeCode.String))
             {
                 toStringForRight = true;
             }
 
-            if (!(resultIsString && binaryOperatorExpression.Operator == BinaryOperatorType.Add) && (Helpers.IsDecimalType(leftResolverResult.Type, this.Emitter.Resolver) || Helpers.IsDecimalType(rightResolverResult.Type, this.Emitter.Resolver)))
+            if (!isStringConcat && (Helpers.IsDecimalType(leftResolverResult.Type, this.Emitter.Resolver) || Helpers.IsDecimalType(rightResolverResult.Type, this.Emitter.Resolver)))
             {
                 isDecimal = true;
                 isDecimalExpected = true;
@@ -258,6 +259,11 @@ namespace Bridge.Translator
                 }
             }
 
+            if (isStringConcat)
+            {
+                this.WriteOpenBracket();
+            }
+
             bool nullable = orr != null && orr.IsLiftedOperator;
             bool isCoalescing = binaryOperatorExpression.Operator == BinaryOperatorType.NullCoalescing;
             string root = JS.Types.SYSTEM_NULLABLE + ".";
@@ -321,7 +327,7 @@ namespace Bridge.Translator
                 special = true;
             }
 
-            if (!delegateOperator)
+            if (!delegateOperator && !isStringConcat)
             {
                 if (!special)
                 {
@@ -487,6 +493,12 @@ namespace Bridge.Translator
             if (delegateOperator || special)
             {
                 this.WriteCloseParentheses();
+            }
+
+            if (isStringConcat)
+            {
+                this.WriteCloseBracket();
+                this.Write(".join('')");
             }
         }
 

@@ -62,14 +62,14 @@
             b.v = true;
         },
         method8: function (s) {
-            s.v = s.v + "Method8";
+            s.v = [s.v,  "Method8"].join('');
         },
         method9: function (i, s) {
-            s.v = s.v + i;
+            s.v = [s.v,  i].join('');
         },
         method10: function (i, b, s) {
             b.v = true;
-            s.v = s.v + i;
+            s.v = [s.v,  i].join('');
         }
     });
     
