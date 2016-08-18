@@ -6033,6 +6033,20 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1527', {
+        statics: {
+            hello: "test",
+            SomeLiteral: "this.hello",
+            getValue: function () {
+                return 1 + this.hello + 2
+            }
+        },
+        testScriptAttributeWithReference: function () {
+            var h = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1527.hello;
+            Bridge.Test.Assert.areEqual("1test2", Bridge.ClientTest.Batch3.BridgeIssues.Bridge1527.getValue());
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge169', {
         statics: {
             number: 0,

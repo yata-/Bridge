@@ -667,8 +667,22 @@ namespace Bridge.Translator
 
             foreach (var arg in attr.Arguments)
             {
-                PrimitiveExpression expr = (PrimitiveExpression)arg;
-                result.Add((string)expr.Value);
+                string value = "";
+                if (arg is PrimitiveExpression)
+                {
+                    PrimitiveExpression expr = (PrimitiveExpression) arg;
+                    value = (string) expr.Value;
+                }
+                else
+                {
+                    var rr = this.Resolver.ResolveNode(arg, this) as ConstantResolveResult;
+                    if (rr != null && rr.ConstantValue != null)
+                    {
+                        value = rr.ConstantValue.ToString();
+                    }
+                }
+                
+                result.Add(value);
             }
 
             return result;
