@@ -261,7 +261,7 @@ namespace Bridge.Translator
 
             if (isStringConcat)
             {
-                this.WriteOpenBracket();
+                this.Write("System.String.concat(");
             }
 
             bool nullable = orr != null && orr.IsLiftedOperator;
@@ -490,15 +490,9 @@ namespace Bridge.Translator
                 this.WriteCloseParentheses();
             }
 
-            if (delegateOperator || special)
+            if (delegateOperator || special || isStringConcat)
             {
                 this.WriteCloseParentheses();
-            }
-
-            if (isStringConcat)
-            {
-                this.WriteCloseBracket();
-                this.Write(".join('')");
             }
         }
 
