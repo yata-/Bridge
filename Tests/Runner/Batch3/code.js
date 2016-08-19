@@ -6004,15 +6004,80 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1467', {
         statics: {
-            testHtmlElements: function () {
-                Bridge.Test.Assert.throws$6(System.InvalidCastException, function () {
+            testForeachTypeChecking: function () {
+                var $t, $t1, $t2, $t3;
+                Bridge.Test.Assert.throws$7(System.InvalidCastException, function () {
                     var $t;
                     $t = Bridge.getEnumerator(Bridge.cast(["h"], System.Collections.IEnumerable));
                     while ($t.moveNext()) {
-                        var a = Bridge.cast($t.getCurrent(), System.Int32);
-                        System.Console.log(a);
+                        var z = Bridge.cast($t.getCurrent(), System.Int32);
+                        System.Console.log(z);
                     }
-                });
+                }, "(IEnumerable)new[] { \"h\" } foreach int");
+    
+                Bridge.Test.Assert.throws$7(System.InvalidCastException, function () {
+                    var $t;
+                    $t = Bridge.getEnumerator(Bridge.cast(["g"], System.Collections.IEnumerable));
+                    while ($t.moveNext()) {
+                        var y = Bridge.cast($t.getCurrent(), System.Char);
+                        System.Console.log(String.fromCharCode(y));
+                    }
+                }, "(IEnumerable)new[] { \"g\" } foreach char");
+    
+                $t = Bridge.getEnumerator(Bridge.cast(["k"], System.Collections.IEnumerable));
+                while ($t.moveNext()) {
+                    var z1 = Bridge.cast($t.getCurrent(), String);
+                    Bridge.Test.Assert.areEqual$1("k", z1, "string z1 in (IEnumerable)new[] { \"k\" } foreach string");
+                }
+    
+                $t1 = Bridge.getEnumerator(Bridge.cast(["j"], System.Collections.IEnumerable));
+                while ($t1.moveNext()) {
+                    var z2 = $t1.getCurrent();
+                    Bridge.Test.Assert.areEqual$1("j", z2, "string z2 in (IEnumerable)new[] { \"j\" } foreach var");
+                }
+    
+                $t2 = Bridge.getEnumerator(Bridge.cast([Bridge.merge(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1467.SomeClass1(), {
+                    setValue: 1
+                } )], System.Collections.IEnumerable));
+                while ($t2.moveNext()) {
+                    var c = Bridge.cast($t2.getCurrent(), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1467.SomeClass1);
+                    Bridge.Test.Assert.areEqual$1(1, c.getValue(), "(IEnumerable)new[] { new SomeClass1 { Value = 1} } foreach SomeClass1");
+                }
+    
+                $t3 = Bridge.getEnumerator(Bridge.cast([Bridge.merge(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1467.SomeClass2(), {
+                    setValue: 2
+                } )], System.Collections.IEnumerable));
+                while ($t3.moveNext()) {
+                    var d = Bridge.cast($t3.getCurrent(), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1467.SomeClass1);
+                    Bridge.Test.Assert.areEqual$1(2, d.getValue(), "(IEnumerable)new[] { new SomeClass2 { Value = 1} } foreach SomeClass1");
+                }
+    
+                Bridge.Test.Assert.throws$7(System.InvalidCastException, function () {
+                    var $t4;
+                    $t4 = Bridge.getEnumerator(Bridge.cast([Bridge.merge(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1467.AnotherClass(), {
+                        setValue: 3
+                    } )], System.Collections.IEnumerable));
+                    while ($t4.moveNext()) {
+                        var d1 = Bridge.cast($t4.getCurrent(), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1467.SomeClass1);
+                        System.Console.log(d1);
+                    }
+                }, "(IEnumerable)new[] { new AnotherClass { Value = 3 } } foreach SomeClass1");
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1467.AnotherClass', {
+        config: {
+            properties: {
+                Value: 0
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1467.SomeClass1', {
+        config: {
+            properties: {
+                Value: 0
             }
         }
     });
@@ -13993,6 +14058,10 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
             // 4
             this.setData(4);
         }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1467.SomeClass2', {
+        inherits: [Bridge.ClientTest.Batch3.BridgeIssues.Bridge1467.SomeClass1]
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge240B', {

@@ -228,7 +228,8 @@ namespace Bridge.Translator
                 var needCast = rr != null && rr.ElementType != rr.ElementVariable.Type;
                 if (needCast)
                 {
-                    this.Write("Bridge.cast(");
+                    this.Write(JS.Funcs.BRIDGE_CAST);
+                    this.WriteOpenParentheses();
                 }
 
                 this.Write(iteratorName);
