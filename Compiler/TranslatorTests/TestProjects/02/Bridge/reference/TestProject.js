@@ -906,7 +906,7 @@
             }
 
             if (typeof (instance) === "number") {
-                if (Math.floor(instance, 0) === instance) {
+                if (!isNaN(instance) && isFinite(instance) && Math.floor(instance, 0) === instance) {
                     return System.Int32;
                 } else {
                     return System.Double;
