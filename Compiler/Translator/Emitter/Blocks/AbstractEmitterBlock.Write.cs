@@ -88,15 +88,15 @@ namespace Bridge.Translator
                 double d = (double) value;
                 if (double.IsNaN(d))
                 {
-                    s = "NaN";
+                    s = JS.Types.Number.NaN;
                 }
                 else if (double.IsPositiveInfinity(d))
                 {
-                    s = "Infinity";
+                    s = JS.Types.Number.Infinity;
                 }
                 else if (double.IsNegativeInfinity(d))
                 {
-                    s = "-Infinity";
+                    s = JS.Types.Number.InfinityNegative;
                 }
                 else
                 {
@@ -108,15 +108,15 @@ namespace Bridge.Translator
                 float f = (float)value;
                 if (float.IsNaN(f))
                 {
-                    s = "NaN";
+                    s = JS.Types.Number.NaN;
                 }
                 else if (float.IsPositiveInfinity(f))
                 {
-                    s = "Infinity";
+                    s = JS.Types.Number.Infinity;
                 }
                 else if (float.IsNegativeInfinity(f))
                 {
-                    s = "-Infinity";
+                    s = JS.Types.Number.InfinityNegative;
                 }
                 else
                 {
