@@ -1,7 +1,4 @@
-using System;
 using Bridge.Test;
-
-using System.ComponentModel;
 
 namespace Bridge.ClientTest.Batch3.BridgeIssues
 {
@@ -9,15 +6,21 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     [TestFixture(TestNameFormat = "#1512 - {0}")]
     public class Bridge1512
     {
-        public static void Method(params object[] arguments)
+        public static void MethodParams(params object[] arguments)
         {
-            Assert.AreEqual(0, arguments.Length);
+            Assert.AreEqual(0, arguments.Length, "params");
+        }
+
+        public static void MethodDefault(string arguments = "3")
+        {
+            Assert.AreEqual("3", arguments, "default");
         }
 
         [Test]
         public void TestParametersReservedNames()
         {
-            Bridge1512.Method();
+            Bridge1512.MethodParams();
+            Bridge1512.MethodDefault();
         }
     }
 }
