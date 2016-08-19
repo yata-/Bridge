@@ -6644,7 +6644,7 @@
     
                 $t = Bridge.getEnumerator(invalidChars);
                 while ($t.moveNext()) {
-                    var ch = $t.getCurrent();
+                    var ch = Bridge.cast($t.getCurrent(), System.Char);
                     var builder = "abc";
                     var addingStr = String.fromCharCode.apply(null, [ch]);
                     System.String.insert(1, builder, addingStr);
@@ -20925,20 +20925,20 @@
             Bridge.Test.Assert.areEqual("1.2e+4", (12345.0).toPrecision(2));
         },
         isPositiveInfinityWorks: function () {
-            var inf = "Infinity";
+            var inf = Infinity;
             Bridge.Test.Assert.false$1((-inf === Number.POSITIVE_INFINITY), "-inf");
             Bridge.Test.Assert.false$1((0.0 === Number.POSITIVE_INFINITY), "0.0");
             Bridge.Test.Assert.false$1((Number.NaN === Number.POSITIVE_INFINITY), "Double.NaN");
         },
         isNegativeInfinityWorks: function () {
-            var inf = "Infinity";
+            var inf = Infinity;
             Bridge.Test.Assert.false((inf === Number.NEGATIVE_INFINITY));
             Bridge.Test.Assert.true((-inf === Number.NEGATIVE_INFINITY));
             Bridge.Test.Assert.false((0.0 === Number.NEGATIVE_INFINITY));
             Bridge.Test.Assert.false((Number.NaN === Number.NEGATIVE_INFINITY));
         },
         isInfinityWorks: function () {
-            var inf = "Infinity";
+            var inf = Infinity;
             Bridge.Test.Assert.true((Math.abs(inf) === Number.POSITIVE_INFINITY));
             Bridge.Test.Assert.true((Math.abs(-inf) === Number.POSITIVE_INFINITY));
             Bridge.Test.Assert.false((Math.abs(0.0) === Number.POSITIVE_INFINITY));
@@ -22391,7 +22391,7 @@
             Bridge.Test.Assert.areEqual("1.2e+4", (12345.0).toPrecision(2));
         },
         isPositiveInfinityWorks: function () {
-            var inf = "Infinity";
+            var inf = Infinity;
             // TODO Bug
             //Assert.True (float.IsPositiveInfinity(inf));
             Bridge.Test.Assert.false((-inf === Number.POSITIVE_INFINITY));
@@ -22399,14 +22399,14 @@
             Bridge.Test.Assert.false((Number.NaN === Number.POSITIVE_INFINITY));
         },
         isNegativeInfinityWorks: function () {
-            var inf = "Infinity";
+            var inf = Infinity;
             Bridge.Test.Assert.false((inf === Number.NEGATIVE_INFINITY));
             Bridge.Test.Assert.true((-inf === Number.NEGATIVE_INFINITY));
             Bridge.Test.Assert.false((0.0 === Number.NEGATIVE_INFINITY));
             Bridge.Test.Assert.false((Number.NaN === Number.NEGATIVE_INFINITY));
         },
         isInfinityWorks: function () {
-            var inf = "Infinity";
+            var inf = Infinity;
             Bridge.Test.Assert.true((Math.abs(inf) === Number.POSITIVE_INFINITY));
             Bridge.Test.Assert.true((Math.abs(-inf) === Number.POSITIVE_INFINITY));
             Bridge.Test.Assert.false((Math.abs(0.0) === Number.POSITIVE_INFINITY));
@@ -31129,7 +31129,7 @@
             var i = 0;
             $t = Bridge.getEnumerator(m.getGroups());
             while ($t.moveNext()) {
-                var group = $t.getCurrent();
+                var group = Bridge.cast($t.getCurrent(), System.Text.RegularExpressions.Group);
                 Bridge.Test.Assert.areEqual$1(expected.getItem(i), group.getValue(), "Group[" + i + "].Value is correct");
                 i = (i + 1) | 0;
             }
@@ -31577,7 +31577,7 @@
             var input = "He said--decisively--that the time--whatever time it was--had come.";
             $t = Bridge.getEnumerator(System.Text.RegularExpressions.Regex.matches(input, pattern));
             while ($t.moveNext()) {
-                var match = $t.getCurrent();
+                var match = Bridge.cast($t.getCurrent(), System.Text.RegularExpressions.Match);
                 var result = match.result(replacement);
                 actual.add(result);
             }
@@ -31752,7 +31752,7 @@
             var matches = System.Text.RegularExpressions.Regex.matches(input, pattern);
             $t = Bridge.getEnumerator(matches);
             while ($t.moveNext()) {
-                var match = $t.getCurrent();
+                var match = Bridge.cast($t.getCurrent(), System.Text.RegularExpressions.Match);
                 actual1.add(match.getValue());
             }
             this.validateCollection(String, expected1, actual1.toArray(), "MatchValues1");
@@ -31761,7 +31761,7 @@
             var matches2 = System.Text.RegularExpressions.Regex.matches(input, pattern);
             $t1 = Bridge.getEnumerator(matches2);
             while ($t1.moveNext()) {
-                var match1 = $t1.getCurrent();
+                var match1 = Bridge.cast($t1.getCurrent(), System.Text.RegularExpressions.Match);
                 actual2.add(match1.getValue());
             }
     
@@ -31823,7 +31823,7 @@
     
             $t = Bridge.getEnumerator(rgx.matches(sentence));
             while ($t.moveNext()) {
-                var match = $t.getCurrent();
+                var match = Bridge.cast($t.getCurrent(), System.Text.RegularExpressions.Match);
                 actualMatchValues.add(match.getValue());
                 actualMatchIndexes.add(match.getIndex());
             }
@@ -31850,7 +31850,7 @@
     
             $t = Bridge.getEnumerator(rgx.matches$1(sentence, ((match.getIndex() + match.getLength()) | 0)));
             while ($t.moveNext()) {
-                var m = $t.getCurrent();
+                var m = Bridge.cast($t.getCurrent(), System.Text.RegularExpressions.Match);
                 actualMatchValues.add(m.getValue());
                 actualMatchIndexes.add(m.getIndex());
             }
@@ -31871,7 +31871,7 @@
     
             $t = Bridge.getEnumerator(System.Text.RegularExpressions.Regex.matches(sentence, pattern));
             while ($t.moveNext()) {
-                var match = $t.getCurrent();
+                var match = Bridge.cast($t.getCurrent(), System.Text.RegularExpressions.Match);
                 actualMatchValues.add(match.getValue());
                 actualMatchIndexes.add(match.getIndex());
             }
@@ -31897,14 +31897,14 @@
             var sentence = "NOTES: Any notes or comments are optional.";
             $t = Bridge.getEnumerator(System.Text.RegularExpressions.Regex.matches$1(sentence, pattern, 0));
             while ($t.moveNext()) {
-                var match = $t.getCurrent();
+                var match = Bridge.cast($t.getCurrent(), System.Text.RegularExpressions.Match);
                 actualMatchValues1.add(match.getValue());
                 actualMatchIndexes1.add(match.getIndex());
             }
     
             $t1 = Bridge.getEnumerator(System.Text.RegularExpressions.Regex.matches$1(sentence, pattern, 1));
             while ($t1.moveNext()) {
-                var match1 = $t1.getCurrent();
+                var match1 = Bridge.cast($t1.getCurrent(), System.Text.RegularExpressions.Match);
                 actualMatchValues2.add(match1.getValue());
                 actualMatchIndexes2.add(match1.getIndex());
             }
@@ -31933,14 +31933,14 @@
             var sentence = "NOTES: Any notes or comments are optional.";
             $t = Bridge.getEnumerator(System.Text.RegularExpressions.Regex.matches$2(sentence, pattern, 0, System.TimeSpan.fromSeconds(1)));
             while ($t.moveNext()) {
-                var match = $t.getCurrent();
+                var match = Bridge.cast($t.getCurrent(), System.Text.RegularExpressions.Match);
                 actualMatchValues1.add(match.getValue());
                 actualMatchIndexes1.add(match.getIndex());
             }
     
             $t1 = Bridge.getEnumerator(System.Text.RegularExpressions.Regex.matches$2(sentence, pattern, 1, System.TimeSpan.fromSeconds(1)));
             while ($t1.moveNext()) {
-                var match1 = $t1.getCurrent();
+                var match1 = Bridge.cast($t1.getCurrent(), System.Text.RegularExpressions.Match);
                 actualMatchValues2.add(match1.getValue());
                 actualMatchIndexes2.add(match1.getIndex());
             }
@@ -32901,7 +32901,7 @@
                     var actual = System.String.format("The {0} played in the {1} in", match.getGroups().get(1).getValue(), match.getGroups().get(4).getValue());
                     $t = Bridge.getEnumerator(match.getGroups().get(5).getCaptures());
                     while ($t.moveNext()) {
-                        var capture = $t.getCurrent();
+                        var capture = Bridge.cast($t.getCurrent(), System.Text.RegularExpressions.Capture);
                         actual += capture.getValue();
                     }
                     actual += ".";
@@ -32933,7 +32933,7 @@
                     var actual = System.String.format("The {0} played in the {1} in", match.getGroups().get(1).getValue(), match.getGroups().get(4).getValue());
                     $t = Bridge.getEnumerator(match.getGroups().get(5).getCaptures());
                     while ($t.moveNext()) {
-                        var capture = $t.getCurrent();
+                        var capture = Bridge.cast($t.getCurrent(), System.Text.RegularExpressions.Capture);
                         actual += capture.getValue();
                     }
                     actual += ".";
@@ -32970,7 +32970,7 @@
                     var actual = System.String.format("The {0} played in the {1} in", match.getGroups().get(1).getValue(), match.getGroups().get(4).getValue());
                     $t = Bridge.getEnumerator(match.getGroups().get(5).getCaptures());
                     while ($t.moveNext()) {
-                        var capture = $t.getCurrent();
+                        var capture = Bridge.cast($t.getCurrent(), System.Text.RegularExpressions.Capture);
                         actual += capture.getValue();
                     }
                     actual += ".";
@@ -33013,7 +33013,7 @@
                     var actual = System.String.format("The {0} played in the {1} in", match.getGroups().get(1).getValue(), match.getGroups().get(4).getValue());
                     $t1 = Bridge.getEnumerator(match.getGroups().get(5).getCaptures());
                     while ($t1.moveNext()) {
-                        var capture = $t1.getCurrent();
+                        var capture = Bridge.cast($t1.getCurrent(), System.Text.RegularExpressions.Capture);
                         actual += capture.getValue();
                     }
                     actual += ".";
@@ -33044,7 +33044,7 @@
                     var actual = System.String.format("The {0} played in the {1} in", match.getGroups().get(1).getValue(), match.getGroups().get(4).getValue());
                     $t = Bridge.getEnumerator(match.getGroups().get(5).getCaptures());
                     while ($t.moveNext()) {
-                        var capture = $t.getCurrent();
+                        var capture = Bridge.cast($t.getCurrent(), System.Text.RegularExpressions.Capture);
                         actual += capture.getValue();
                     }
                     actual += ".";
@@ -33083,7 +33083,7 @@
                     var actual = System.String.format("The {0} played in the {1} in", match.getGroups().get(1).getValue(), match.getGroups().get(4).getValue());
                     $t = Bridge.getEnumerator(match.getGroups().get(5).getCaptures());
                     while ($t.moveNext()) {
-                        var capture = $t.getCurrent();
+                        var capture = Bridge.cast($t.getCurrent(), System.Text.RegularExpressions.Capture);
                         actual += capture.getValue();
                     }
                     actual += ".";
@@ -33116,7 +33116,7 @@
                     var actual = System.String.format("The {0} played in the {1} in", match.getGroups().get(1).getValue(), match.getGroups().get(4).getValue());
                     $t = Bridge.getEnumerator(match.getGroups().get(5).getCaptures());
                     while ($t.moveNext()) {
-                        var capture = $t.getCurrent();
+                        var capture = Bridge.cast($t.getCurrent(), System.Text.RegularExpressions.Capture);
                         actual += capture.getValue();
                     }
                     actual += ".";
@@ -33199,7 +33199,7 @@
     
             $t = Bridge.getEnumerator(System.Text.RegularExpressions.Regex.matches(input, pattern));
             while ($t.moveNext()) {
-                var match = $t.getCurrent();
+                var match = Bridge.cast($t.getCurrent(), System.Text.RegularExpressions.Match);
                 actuals.add(System.String.format("{0}_{1}", match.getValue(), match.getIndex()));
             }
     
@@ -33215,7 +33215,7 @@
     
             $t = Bridge.getEnumerator(System.Text.RegularExpressions.Regex.matches(input, pattern));
             while ($t.moveNext()) {
-                var match = $t.getCurrent();
+                var match = Bridge.cast($t.getCurrent(), System.Text.RegularExpressions.Match);
                 actuals.add(System.String.format("{0}_{1}", match.getValue(), match.getIndex()));
             }
     
