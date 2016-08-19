@@ -70,7 +70,7 @@ namespace Bridge.Translator
                     }
                 }
 
-                if (!this.Emitter.IsAsync || hasInitializer)
+                if (!this.Emitter.IsAsync || hasInitializer || isReferenceLocal)
                 {
                     if (needComma)
                     {
