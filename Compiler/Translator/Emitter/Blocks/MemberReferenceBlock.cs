@@ -410,7 +410,7 @@ namespace Bridge.Translator
                                        (mrr.TargetResult is ThisResolveResult ||
                                         mrr.TargetResult is LocalResolveResult);
 
-                        isSimple = resolveResult is ThisResolveResult || resolveResult is ConstantResolveResult || resolveResult is LocalResolveResult || isField;
+                        isSimple = (mrr != null && (mrr.TargetResult is ThisResolveResult || mrr.TargetResult is ConstantResolveResult || mrr.TargetResult is LocalResolveResult)) || isField;
                     }
                 }
 

@@ -411,7 +411,6 @@
                 }], [intArray, 0, 8, 6, intComparer, intGenericComparer, $_.Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.f2], [intArray, 1, 5, 16, intComparer, intGenericComparer, $_.Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.f4], [strArray, 0, strArray.length, "bb", strComparer, strGenericComparer, $_.Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.f2], [strArray, 3, 4, "bb", strComparer, strGenericComparer, $_.Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.f5], [strArray, 4, 3, "bb", strComparer, strGenericComparer, $_.Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.f6], [strArray, 4, 0, "bb", strComparer, strGenericComparer, $_.Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.f6], [strArray, 0, 7, null, strComparer, null, $_.Bridge.ClientTest.ArrayTests1.ArrayTestsSet2.f3]];
             },
             testArrayAsIListOfT: function () {
-                var $t, $t1, $t2;
                 var sa = ["Hello", "There"];
                 var s;
                 var idx;
@@ -435,7 +434,7 @@
                 Bridge.Test.Assert.areEqual(idx, -1);
     
                 var sa2 = System.Array.init(2, null);
-                ($t=sa, System.Array.copy($t, 0, sa2, 0, $t.length));
+                System.Array.copy(sa, 0, sa2, 0, sa.length);
                 Bridge.Test.Assert.areEqual(sa2[0], sa[0]);
                 Bridge.Test.Assert.areEqual(sa2[1], sa[1]);
     
@@ -443,12 +442,12 @@
                 var dst;
                 ia1 = [1, 2, 3, 4];
                 dst = System.Array.init(4, 0);
-                ($t1=ia1, System.Array.copy($t1, 0, dst, 0, $t1.length));
+                System.Array.copy(ia1, 0, dst, 0, ia1.length);
                 Bridge.Test.Assert.areEqual(dst, ia1);
     
                 ia1 = [1, 2, 3, 4];
                 dst = System.Array.init(6, 0);
-                ($t2=ia1, System.Array.copy($t2, 0, dst, 1, $t2.length));
+                System.Array.copy(ia1, 0, dst, 1, ia1.length);
                 Bridge.Test.Assert.areEqual(dst, [0, 1, 2, 3, 4, 0]);
     
                 var e = Bridge.getEnumerator(ils, "$1", String);
@@ -6517,9 +6516,8 @@
                 Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests.verify(input, $_.Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests.f1);
             },
             zeroLengthArray: function () {
-                var $t;
                 var input = "test";
-                var inputChars = ($t=input, System.String.toCharArray($t, 0, $t.length));
+                var inputChars = System.String.toCharArray(input, 0, input.length);
                 var result = System.Convert.fromBase64CharArray(inputChars, 0, 0);
     
                 Bridge.Test.Assert.notNull(result);
@@ -6588,9 +6586,8 @@
                 Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests.verifyRoundtrip(input, input);
             },
             invalidOffset: function () {
-                var $t;
                 var input = "test";
-                var inputChars = ($t=input, System.String.toCharArray($t, 0, $t.length));
+                var inputChars = System.String.toCharArray(input, 0, input.length);
     
                 Bridge.Test.Assert.throws$1(function () {
                     System.Convert.fromBase64CharArray(inputChars, -1, inputChars.length);
@@ -6600,9 +6597,8 @@
                 }, $_.Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests.f2);
             },
             invalidLength: function () {
-                var $t;
                 var input = "test";
-                var inputChars = ($t=input, System.String.toCharArray($t, 0, $t.length));
+                var inputChars = System.String.toCharArray(input, 0, input.length);
     
                 Bridge.Test.Assert.throws$1(function () {
                     System.Convert.fromBase64CharArray(inputChars, 0, -1);
@@ -6667,8 +6663,7 @@
                 });
             },
             verifyInvalidInput: function (input) {
-                var $t;
-                var inputChars = ($t=input, System.String.toCharArray($t, 0, $t.length));
+                var inputChars = System.String.toCharArray(input, 0, input.length);
     
                 Bridge.Test.Assert.throws$1(function () {
                     System.Convert.fromBase64CharArray(inputChars, 0, inputChars.length);
@@ -6678,10 +6673,9 @@
                 }, $_.Bridge.ClientTest.ConvertTests.ConvertFromBase64Tests.f5);
             },
             verify: function (input, action) {
-                var $t;
                 if (action === void 0) { action = null; }
                 if (!Bridge.staticEquals(action, null)) {
-                    action(System.Convert.fromBase64CharArray(($t=input, System.String.toCharArray($t, 0, $t.length)), 0, input.length));
+                    action(System.Convert.fromBase64CharArray(System.String.toCharArray(input, 0, input.length), 0, input.length));
                     action(System.Convert.fromBase64String(input));
                 }
             }
@@ -7072,9 +7066,8 @@
                 Bridge.Test.Assert.areEqual(4, c2);
             },
             validOffsetOut: function () {
-                var $t;
                 // Regression test for bug where offsetOut parameter was ignored
-                var outputBuffer = ($t=("........"), System.String.toCharArray($t, 0, $t.length));
+                var outputBuffer = System.String.toCharArray(("........"), 0, ("........").length);
                 var inputBuffer = System.Array.init(6, 0);
                 for (var i = 0; i < inputBuffer.length; inputBuffer[i] = (Bridge.identity(i, (i = (i + 1) | 0))) & 255) {
                     ;
@@ -7094,16 +7087,14 @@
                 Bridge.Test.Assert.throws$1($_.Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests.f1, $_.Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests.f2);
             },
             invalidOutputBuffer: function () {
-                var $t;
-                var inputChars = ($t=("test"), System.String.toCharArray($t, 0, $t.length));
+                var inputChars = System.String.toCharArray(("test"), 0, ("test").length);
                 var inputBytes = System.Convert.fromBase64CharArray(inputChars, 0, inputChars.length);
                 Bridge.Test.Assert.throws$1(function () {
                     System.Convert.toBase64CharArray(inputBytes, 0, inputBytes.length, null, 0, null);
                 }, $_.Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests.f2);
             },
             invalidOffsetIn: function () {
-                var $t;
-                var inputChars = ($t=("test"), System.String.toCharArray($t, 0, $t.length));
+                var inputChars = System.String.toCharArray(("test"), 0, ("test").length);
                 var inputBytes = System.Convert.fromBase64CharArray(inputChars, 0, inputChars.length);
                 var outputBuffer = System.Array.init(4, function (){
                     return new System.Char();
@@ -7117,8 +7108,7 @@
                 }, $_.Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests.f3);
             },
             invalidOffsetOut: function () {
-                var $t;
-                var inputChars = ($t=("test"), System.String.toCharArray($t, 0, $t.length));
+                var inputChars = System.String.toCharArray(("test"), 0, ("test").length);
                 var inputBytes = System.Convert.fromBase64CharArray(inputChars, 0, inputChars.length);
                 var outputBuffer = System.Array.init(4, function (){
                     return new System.Char();
@@ -7132,8 +7122,7 @@
                 }, $_.Bridge.ClientTest.ConvertTests.ConvertToBase64CharArrayTests.f3);
             },
             invalidInputLength: function () {
-                var $t;
-                var inputChars = ($t=("test"), System.String.toCharArray($t, 0, $t.length));
+                var inputChars = System.String.toCharArray(("test"), 0, ("test").length);
                 var inputBytes = System.Convert.fromBase64CharArray(inputChars, 0, inputChars.length);
                 var outputBuffer = System.Array.init(4, function (){
                     return new System.Char();
@@ -10696,12 +10685,11 @@
             return Bridge.getHashCode(this.getCanonicalString(obj));
         },
         getCanonicalString: function (word) {
-            var $t;
             if (word == null) {
                 return null;
             }
     
-            var wordChars = ($t=word, System.String.toCharArray($t, 0, $t.length));
+            var wordChars = System.String.toCharArray(word, 0, word.length);
             wordChars.sort();
     
             return String.fromCharCode.apply(null, wordChars);
@@ -11956,7 +11944,6 @@
             var e12 = { ntype: 47, type: Object, variables: Bridge.toList([v1, v2]), expressions: Bridge.toList(new (Bridge.ClientTest.Linq.Expressions.ExpressionTests.MyEnumerable$1(Object))([c1, c2])) };
     
             var asserter = function (expr, type, hasVariables, title) {
-                var $t3;
                 var be = Bridge.as(expr, Bridge.hasValue(expr) && (expr.ntype === 47));
                 Bridge.Test.Assert.true$1(be != null, title + " is BlockExpression");
                 Bridge.Test.Assert.areEqual$1(be.ntype, 47, title + " node type");
@@ -11964,7 +11951,7 @@
                 Bridge.Test.Assert.areEqual$1(be.expressions.getCount(), 2, title + " expression count");
                 Bridge.Test.Assert.true$1(Bridge.referenceEquals(be.expressions.get(0), c1), title + " expression 0");
                 Bridge.Test.Assert.true$1(Bridge.referenceEquals(be.expressions.get(1), c2), title + " expression 1");
-                Bridge.Test.Assert.true$1(Bridge.referenceEquals(($t3=be, $t3.expressions.get($t3.expressions.getCount() - 1)), c2), title + " result");
+                Bridge.Test.Assert.true$1(Bridge.referenceEquals(be.expressions.get(be.expressions.getCount() - 1), c2), title + " result");
                 if (hasVariables) {
                     Bridge.Test.Assert.areEqual$1((be.variables || Bridge.toList([])).getCount(), 2, title + " variable count");
                     Bridge.Test.Assert.true$1(Bridge.referenceEquals((be.variables || Bridge.toList([])).get(0), v1), title + " variable 0");
@@ -23213,9 +23200,8 @@
             Bridge.Test.Assert.true(System.String.contains(text,text));
         },
         toCharArrayWorks: function () {
-            var $t;
             var text = "Lorem sit dolor";
-            Bridge.Test.Assert.areDeepEqual([76, 111, 114, 101, 109, 32, 115, 105, 116, 32, 100, 111, 108, 111, 114], ($t=text, System.String.toCharArray($t, 0, $t.length)));
+            Bridge.Test.Assert.areDeepEqual([76, 111, 114, 101, 109, 32, 115, 105, 116, 32, 100, 111, 108, 111, 114], System.String.toCharArray(text, 0, text.length));
         }
     });
     
