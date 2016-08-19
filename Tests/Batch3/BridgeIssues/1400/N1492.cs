@@ -15,9 +15,10 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         public void TestEnumLong()
         {
             Enum @enum = Enum.A;
-            Assert.True(@enum == (Enum)0);
-            Assert.True(@enum == (Enum)0L);
-            Assert.True(@enum == (Enum)0u);
+
+            Assert.True(@enum == (Enum)0, "0");
+            Assert.True(@enum == (Enum)0L, "0L");
+            Assert.True(@enum == (Enum)0u, "0u");
         }
     }
 }

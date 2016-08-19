@@ -15,15 +15,16 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         public void TestEnumLong()
         {
             Enum @enum = Enum.A;
-            Assert.True(0 == (ulong)@enum);
-            Assert.True(0 == (uint)@enum);
-            Assert.True(0 == (int)@enum);
-            Assert.True(0 == (short)@enum);
-            Assert.True(0 == (ushort)@enum);
-            Assert.True(0 == (byte)@enum);
-            Assert.True(0 == (sbyte)@enum);
-            Assert.True(0 == (float)@enum);
-            Assert.True(0 == (double)@enum);
+            Assert.True(0 == (ulong)@enum, "ulong");
+            Assert.True(0 == (uint)@enum, "uint");
+            Assert.True(0 == (int)@enum, "int");
+            Assert.True(0 == (short)@enum, "short");
+            Assert.True(0 == (ushort)@enum, "ushort");
+            Assert.True(0 == (byte)@enum, "byte");
+            Assert.True(0 == (sbyte)@enum, "sbyte");
+            Assert.True(0 == (float)@enum, "float");
+            Assert.True(0 == (double)@enum, "double");
+            Assert.True(0 == (decimal)@enum, "decimal");
         }
     }
 }

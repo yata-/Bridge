@@ -6285,9 +6285,10 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1492', {
         testEnumLong: function () {
             var $enum = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1492.Enum.A;
-            Bridge.Test.Assert.true($enum.equals(System.Int64(0)));
-            Bridge.Test.Assert.true($enum.equals(System.Int64(0)));
-            Bridge.Test.Assert.true($enum.equals(System.Int64(0)));
+    
+            Bridge.Test.Assert.true$1($enum.equals(System.Int64(0)), "0");
+            Bridge.Test.Assert.true$1($enum.equals(System.Int64(0)), "0L");
+            Bridge.Test.Assert.true$1($enum.equals(System.Int64(0)), "0u");
         }
     });
     
@@ -6302,15 +6303,16 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1493', {
         testEnumLong: function () {
             var $enum = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1493.Enum.A;
-            Bridge.Test.Assert.true(System.UInt64(0).equals(System.Int64.clipu64($enum)));
-            Bridge.Test.Assert.true(0 === System.Int64.clipu32($enum));
-            Bridge.Test.Assert.true(0 === System.Int64.clip32($enum));
-            Bridge.Test.Assert.true(0 === System.Int64.clip16($enum));
-            Bridge.Test.Assert.true(0 === System.Int64.clipu16($enum));
-            Bridge.Test.Assert.true(0 === System.Int64.clipu8($enum));
-            Bridge.Test.Assert.true(0 === System.Int64.clip8($enum));
-            Bridge.Test.Assert.true(0 === System.Int64.toNumber($enum));
-            Bridge.Test.Assert.true(0 === System.Int64.toNumber($enum));
+            Bridge.Test.Assert.true$1(System.UInt64(0).equals(System.Int64.clipu64($enum)), "ulong");
+            Bridge.Test.Assert.true$1(0 === System.Int64.clipu32($enum), "uint");
+            Bridge.Test.Assert.true$1(0 === System.Int64.clip32($enum), "int");
+            Bridge.Test.Assert.true$1(0 === System.Int64.clip16($enum), "short");
+            Bridge.Test.Assert.true$1(0 === System.Int64.clipu16($enum), "ushort");
+            Bridge.Test.Assert.true$1(0 === System.Int64.clipu8($enum), "byte");
+            Bridge.Test.Assert.true$1(0 === System.Int64.clip8($enum), "sbyte");
+            Bridge.Test.Assert.true$1(0 === System.Int64.toNumber($enum), "float");
+            Bridge.Test.Assert.true$1(0 === System.Int64.toNumber($enum), "double");
+            Bridge.Test.Assert.true$1(System.Decimal(0).equalsT(System.Decimal($enum, null, System.Int64)), "decimal");
         }
     });
     
