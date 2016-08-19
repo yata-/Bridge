@@ -5613,8 +5613,8 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         statics: {
             builder: null,
             getBuilder: function () {
-                var $t, $t1;
-                return ($t = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1391.builder, $t != null ? $t : (($t1 = new System.Text.StringBuilder(), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1391.builder = $t1, $t1)));
+                var $t;
+                return Bridge.ClientTest.Batch3.BridgeIssues.Bridge1391.builder || (($t = new System.Text.StringBuilder(), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1391.builder = $t, $t));
             },
             testStaticCtorOrder: function () {
                 Bridge.ClientTest.Batch3.BridgeIssues.Bridge1391.getBuilder().clear();
@@ -5671,8 +5671,8 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
                 }
             },
             getBuilder: function () {
-                var $t, $t1;
-                return ($t = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1391ToRunInitializationOnReady.builder, $t != null ? $t : (($t1 = new System.Text.StringBuilder(), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1391ToRunInitializationOnReady.builder = $t1, $t1)));
+                var $t;
+                return Bridge.ClientTest.Batch3.BridgeIssues.Bridge1391ToRunInitializationOnReady.builder || (($t = new System.Text.StringBuilder(), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1391ToRunInitializationOnReady.builder = $t, $t));
             },
             runMe: function () {
                 Bridge.ClientTest.Batch3.BridgeIssues.Bridge1391ToRunInitializationOnReady.getBuilder().clear();
@@ -6322,6 +6322,48 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
             A: System.Int64(0)
         },
         $utype: System.Int64
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1499', {
+        testObjectStringCoalesceWorks: function () {
+            var $t, $t1, $t2, $t3, $t4, $t5, $t6, $t7, $t8, $t9, $t10, $t11, $t12, $t13, $t14, $t15, $t16;
+            var def = 1;
+            var app = null;
+            var o1 = "";
+            var o2 = "test";
+            var o3 = null;
+    
+            Bridge.Test.Assert.areStrictEqual(1, app || def);
+            Bridge.Test.Assert.areStrictEqual("", ($t = o1, $t != null ? $t : o2));
+            Bridge.Test.Assert.areStrictEqual("", ($t1 = o1, $t1 != null ? $t1 : "test"));
+            Bridge.Test.Assert.areStrictEqual("test", ($t2 = o3, $t2 != null ? $t2 : o2));
+            Bridge.Test.Assert.areStrictEqual("test", ($t3 = o3, $t3 != null ? $t3 : "test"));
+    
+            var s1 = "";
+            var s2 = "test";
+            var s3 = null;
+    
+            Bridge.Test.Assert.areStrictEqual("", ($t4 = s1, $t4 != null ? $t4 : s2));
+            Bridge.Test.Assert.areStrictEqual("", ($t5 = s1, $t5 != null ? $t5 : o2));
+            Bridge.Test.Assert.areStrictEqual("", ($t6 = s1, $t6 != null ? $t6 : "test"));
+            Bridge.Test.Assert.areStrictEqual("", ($t7 = "", $t7 != null ? $t7 : "test"));
+            Bridge.Test.Assert.areStrictEqual("test", ($t8 = s3, $t8 != null ? $t8 : s2));
+            Bridge.Test.Assert.areStrictEqual("test", ($t9 = s3, $t9 != null ? $t9 : o2));
+            Bridge.Test.Assert.areStrictEqual("test", ($t10 = s3, $t10 != null ? $t10 : "test"));
+            Bridge.Test.Assert.areStrictEqual("test", null || "test");
+    
+            var i1 = 0;
+            var i2 = 1;
+            var i3 = null;
+    
+            Bridge.Test.Assert.areStrictEqual(0, ($t11 = i1, $t11 != null ? $t11 : i2));
+            Bridge.Test.Assert.areStrictEqual(0, ($t12 = i1, $t12 != null ? $t12 : o2));
+            Bridge.Test.Assert.areStrictEqual(0, ($t13 = i1, $t13 != null ? $t13 : 1));
+            Bridge.Test.Assert.areStrictEqual(1, ($t14 = i3, $t14 != null ? $t14 : i2));
+            Bridge.Test.Assert.areStrictEqual("test", ($t15 = i3, $t15 != null ? $t15 : o2));
+            Bridge.Test.Assert.areStrictEqual(1, ($t16 = i3, $t16 != null ? $t16 : 1));
+            Bridge.Test.Assert.areStrictEqual(1, null || i2);
+        }
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1501', {
@@ -8834,10 +8876,9 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
                 return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge603B.$constructor2(value);
             },
             op_Implicit: function (value) {
-                var $t;
-                value = ($t = value, $t != null ? $t : Bridge.merge(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge603Class(), {
+                value = value || Bridge.merge(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge603Class(), {
                     setData: "[Null]"
-                } ));
+                } );
                 return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge603B.$constructor1(value);
             },
             getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge603B(); }
