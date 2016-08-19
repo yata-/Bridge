@@ -33,9 +33,10 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         {
             IntWrapper @int = new IntWrapper(3);
             @int++;
-            Assert.AreEqual(4, @int.ToInt());
-            Assert.AreEqual(5, (++@int).ToInt());
-            Assert.AreEqual(5, (@int++).ToInt());
+            Assert.AreEqual(4, @int.ToInt(), "4");
+            Assert.AreEqual(5, (++@int).ToInt(), "++4");
+            Assert.AreEqual(5, (@int++).ToInt(), "5++");
+            Assert.AreEqual(6, (@int).ToInt(), "6");
         }
     }
 }

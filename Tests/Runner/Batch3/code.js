@@ -6095,9 +6095,10 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         testOverloadUnaryOperator: function () {
             var $int = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1480.IntWrapper(3);
             $int = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1480.IntWrapper.op_Increment($int);
-            Bridge.Test.Assert.areEqual(4, $int.toInt());
-            Bridge.Test.Assert.areEqual(5, ((($int = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1480.IntWrapper.op_Increment($int)))).toInt());
-            Bridge.Test.Assert.areEqual(5, (Bridge.identity($int, ($int = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1480.IntWrapper.op_Increment($int)))).toInt());
+            Bridge.Test.Assert.areEqual$1(4, $int.toInt(), "4");
+            Bridge.Test.Assert.areEqual$1(5, ((($int = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1480.IntWrapper.op_Increment($int)))).toInt(), "++4");
+            Bridge.Test.Assert.areEqual$1(5, (Bridge.identity($int, ($int = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1480.IntWrapper.op_Increment($int)))).toInt(), "5++");
+            Bridge.Test.Assert.areEqual$1(6, ($int).toInt(), "6");
         }
     });
     
