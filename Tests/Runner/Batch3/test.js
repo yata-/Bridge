@@ -392,6 +392,7 @@
                 QUnit.test("#1493 - TestEnumLong", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1493.testEnumLong);
                 QUnit.test("#1499 - TestObjectStringCoalesceWorks", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1499.testObjectStringCoalesceWorks);
                 QUnit.test("#1501 - TestPropertyChangedEventArgs", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1501.testPropertyChangedEventArgs);
+                QUnit.test("#1512 - TestParametersReservedNames", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1512.testParametersReservedNames);
                 QUnit.test("#1520 - TestStaticDecimalInitialization", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1520.testStaticDecimalInitialization);
                 QUnit.test("#1520 - TestLocalDecimalInitialization", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1520.testLocalDecimalInitialization);
                 QUnit.test("#1520 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1520.testUseCase);
@@ -2141,6 +2142,16 @@
             testPropertyChangedEventArgs: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1501).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1501);
                 t.getFixture().testPropertyChangedEventArgs();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1512', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1512)],
+        statics: {
+            testParametersReservedNames: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1512).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1512);
+                t.getFixture().testParametersReservedNames();
             }
         }
     });

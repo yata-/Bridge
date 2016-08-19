@@ -6385,6 +6385,23 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1512', {
+        statics: {
+            methodParams: function ($arguments) {
+                if ($arguments === void 0) { $arguments = []; }
+                Bridge.Test.Assert.areEqual$1(0, $arguments.length, "params");
+            },
+            methodDefault: function ($arguments) {
+                if ($arguments === void 0) { $arguments = "3"; }
+                Bridge.Test.Assert.areEqual$1("3", $arguments, "default");
+            }
+        },
+        testParametersReservedNames: function () {
+            Bridge.ClientTest.Batch3.BridgeIssues.Bridge1512.methodParams();
+            Bridge.ClientTest.Batch3.BridgeIssues.Bridge1512.methodDefault();
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1520', {
         statics: {
             x: System.Decimal(30)
