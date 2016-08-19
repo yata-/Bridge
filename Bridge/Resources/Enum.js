@@ -20,7 +20,8 @@
         },
 
         toName: function (name) {
-            return name.charAt(0).toUpperCase() + name.slice(1);
+            return name;
+            //return name.charAt(0).toUpperCase() + name.slice(1);
         },
 
         parse: function (enumType, s, ignoreCase, silent) {
