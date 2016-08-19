@@ -19,5 +19,19 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             Assert.AreEqual("B", (@enum + 1).ToString());
             Assert.AreEqual("B", (++@enum).ToString());
         }
+
+        enum IntEnum : int
+        {
+            C = 3,
+            D = 4
+        }
+
+        [Test]
+        public void TestIntEnum()
+        {
+            IntEnum @enum = IntEnum.C;
+            Assert.AreEqual("D", (@enum + 1).ToString());
+            Assert.AreEqual("D", (++@enum).ToString());
+        }
     }
 }

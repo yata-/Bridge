@@ -386,6 +386,7 @@
                 QUnit.test("#1486 - TestStaticUlongInitialization", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1486.testStaticUlongInitialization);
                 QUnit.test("#1486 - TestLocalUlongInitialization", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1486.testLocalUlongInitialization);
                 QUnit.test("#1489 - TestLongEnum", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1489.testLongEnum);
+                QUnit.test("#1489 - TestIntEnum", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1489.testIntEnum);
                 QUnit.test("#1501 - TestPropertyChangedEventArgs", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1501.testPropertyChangedEventArgs);
                 QUnit.test("#1520 - TestStaticDecimalInitialization", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1520.testStaticDecimalInitialization);
                 QUnit.test("#1520 - TestLocalDecimalInitialization", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1520.testLocalDecimalInitialization);
@@ -2082,6 +2083,10 @@
             testLongEnum: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1489).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1489);
                 t.getFixture().testLongEnum();
+            },
+            testIntEnum: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1489).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1489);
+                t.getFixture().testIntEnum();
             }
         }
     });

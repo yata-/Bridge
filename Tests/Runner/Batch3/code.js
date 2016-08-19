@@ -6230,6 +6230,12 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
             var $enum = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1489.Enum.A;
             Bridge.Test.Assert.areEqual("B", ($t=($enum.add(System.Int64(1))), System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1489.Enum, $t)));
             Bridge.Test.Assert.areEqual("B", ($t1=((($enum = $enum.add(System.Int64(1))))), System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1489.Enum, $t1)));
+        },
+        testIntEnum: function () {
+            var $t, $t1;
+            var $enum = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1489.IntEnum.C;
+            Bridge.Test.Assert.areEqual("D", ($t=((($enum + 1) | 0)), System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1489.IntEnum, $t)));
+            Bridge.Test.Assert.areEqual("D", ($t1=((($enum = ($enum + 1) | 0))), System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1489.IntEnum, $t1)));
         }
     });
     
@@ -6240,6 +6246,14 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
             B: System.Int64(2)
         },
         $utype: System.Int64
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1489.IntEnum', {
+        $kind: "enum",
+        statics: {
+            C: 3,
+            D: 4
+        }
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1501', {
