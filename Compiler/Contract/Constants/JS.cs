@@ -34,6 +34,7 @@
             public const string BRIDGE_APPLY = "Bridge.apply";
             public const string BRIDGE_BIND = "Bridge.fn.bind";
             public const string BRIDGE_BIND_SCOPE = "Bridge.fn.bindScope";
+            public const string BRIDGE_CAST = "Bridge.cast";
             public const string BRIDGE_COMBINE = "Bridge.fn.combine";
             public const string BRIDGE_REMOVE = "Bridge.fn.remove";
             public const string BRIDGE_MERGE = "Bridge.merge";
@@ -159,6 +160,13 @@
             public const string Uint32Array = "Uint32Array";
             public const string Float32Array = "Float32Array";
             public const string Float64Array = "Float64Array";
+
+            public class Number
+            {
+                public const string NaN = "NaN";
+                public const string Infinity = "Infinity";
+                public const string InfinityNegative = "-Infinity";
+            }
         }
 
         public class Vars
