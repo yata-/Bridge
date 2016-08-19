@@ -6033,6 +6033,45 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1536', {
+        statics: {
+            config: {
+                events: {
+                    test: null
+                },
+                properties: {
+                    test1$1: 0
+                }
+            },
+            test$1: function () {
+                return "method";
+            },
+            test1: function () {
+                return 1;
+            }
+        },
+        testEventNameConflict: function () {
+            Bridge.ClientTest.Batch3.BridgeIssues.Bridge1536.addtest($_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge1536.f1);
+    
+            Bridge.Test.Assert.areEqual("method", Bridge.ClientTest.Batch3.BridgeIssues.Bridge1536.test$1());
+            Bridge.Test.Assert.areEqual("event", Bridge.ClientTest.Batch3.BridgeIssues.Bridge1536.test());
+        },
+        testPropertyNameConflict: function () {
+            Bridge.ClientTest.Batch3.BridgeIssues.Bridge1536.settest1$1(2);
+    
+            Bridge.Test.Assert.areEqual(1, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1536.test1());
+            Bridge.Test.Assert.areEqual(2, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1536.gettest1$1());
+        }
+    });
+    
+    Bridge.ns("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1536", $_);
+    
+    Bridge.apply($_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge1536, {
+        f1: function () {
+            return "event";
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
