@@ -159,6 +159,13 @@
             public const string Uint32Array = "Uint32Array";
             public const string Float32Array = "Float32Array";
             public const string Float64Array = "Float64Array";
+
+            public class Number
+            {
+                public const string NaN = "NaN";
+                public const string Infinity = "Infinity";
+                public const string InfinityNegative = "-Infinity";
+            }
         }
 
         public class Vars
