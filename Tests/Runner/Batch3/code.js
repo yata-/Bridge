@@ -6159,11 +6159,34 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1486', {
         statics: {
-            x: System.Int64(15)
+            x: System.Int64(15),
+            y: System.UInt64(27)
         },
-        testConstructorName: function () {
+        testStaticLongInitialization: function () {
+            Bridge.Test.Assert.areEqual$1("Int64", Bridge.Reflection.getTypeName(System.Int64), "long type");
+    
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge1486.x = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1486.x.inc();
-            Bridge.Test.Assert.true(System.Int64(16).equals(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1486.x));
+            Bridge.Test.Assert.true$1(System.Int64(16).equals(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1486.x), "16");
+        },
+        testLocalLongInitialization: function () {
+            var x = System.Int64(100);
+            Bridge.Test.Assert.areEqual$1("Int64", Bridge.Reflection.getTypeName(System.Int64), "long type");
+    
+            x = x.inc();
+            Bridge.Test.Assert.true$1(System.Int64(101).equals(x), "101");
+        },
+        testStaticUlongInitialization: function () {
+            Bridge.Test.Assert.areEqual$1("UInt64", Bridge.Reflection.getTypeName(System.UInt64), "ulong type");
+    
+            Bridge.ClientTest.Batch3.BridgeIssues.Bridge1486.y = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1486.y.inc();
+            Bridge.Test.Assert.true$1(System.UInt64(28).equals(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1486.y), "28");
+        },
+        testLocalUlongInitialization: function () {
+            var x = System.UInt64(250);
+            Bridge.Test.Assert.areEqual$1("UInt64", Bridge.Reflection.getTypeName(System.UInt64), "ulong type");
+    
+            x = x.inc();
+            Bridge.Test.Assert.true$1(System.UInt64(251).equals(x), "251");
         }
     });
     
@@ -6183,6 +6206,43 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
             Bridge.Test.Assert.areEqual$1("prop3", ea3.propertyName, "prop3 PropertyName");
             Bridge.Test.Assert.areEqual$1(270, ea3.oldValue, "prop3 OldValue");
             Bridge.Test.Assert.areEqual$1(120, ea3.newValue, "prop3 NewValue");
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1520', {
+        statics: {
+            x: System.Decimal(30)
+        },
+        testStaticDecimalInitialization: function () {
+            Bridge.Test.Assert.areEqual$1("Decimal", Bridge.Reflection.getTypeName(System.Decimal), "decimal type");
+    
+            Bridge.ClientTest.Batch3.BridgeIssues.Bridge1520.x = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1520.x.inc();
+            Bridge.Test.Assert.true$1(System.Decimal(31).equalsT(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1520.x), "31");
+        },
+        testLocalDecimalInitialization: function () {
+            var x = System.Decimal(100);
+            Bridge.Test.Assert.areEqual$1("Decimal", Bridge.Reflection.getTypeName(System.Decimal), "decimal type");
+    
+            x = x.inc();
+            Bridge.Test.Assert.true$1(System.Decimal(101).equalsT(x), "101");
+        },
+        testUseCase: function () {
+            var newVal = System.Decimal(12);
+            var item = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1520.CustomList();
+            item.value = item.value.add(newVal);
+    
+            Bridge.Test.Assert.areEqual$1("Decimal", Bridge.Reflection.getTypeName(System.Decimal), "decimal type");
+            Bridge.Test.Assert.true$1(System.Decimal(19).equalsT(item.value), "19");
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1520.CustomList', {
+        ranges: null,
+        value: System.Decimal(7),
+        config: {
+            init: function () {
+                this.ranges = new (System.Collections.Generic.List$1(System.Int32))();
+            }
         }
     });
     
