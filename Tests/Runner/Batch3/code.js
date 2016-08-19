@@ -2950,10 +2950,11 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1249', {
         statics: {
             testEnumOverflow: function () {
+                var $t;
                 var v1 = 255;
                 var v2 = 255;
                 Bridge.Test.Assert.areEqual(0, ((v1 = (v1 + 1) & 255)));
-                Bridge.Test.Assert.areEqual("a", System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1249.b, (((v2 = (v2 + 1) & 255)))));
+                Bridge.Test.Assert.areEqual("a", ($t=(((v2 = (v2 + 1) & 255))), System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1249.b, $t)));
             }
         }
     });
@@ -6079,6 +6080,39 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
             properties: {
                 Value: 0
             }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1472', {
+        statics: {
+            time: true,
+            getArray: function () {
+                var $t;
+                return (($t = !Bridge.ClientTest.Batch3.BridgeIssues.Bridge1472.time, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1472.time = $t, $t)) ? [1, 2, 3, 4] : [1, 2, 3];
+            }
+        },
+        testMultiplyThisInTemplate: function () {
+            var $t;
+            var v = System.Array.init(4, 0);
+            ($t=Bridge.ClientTest.Batch3.BridgeIssues.Bridge1472.getArray(), System.Array.copy($t, 0, v, 0, $t.length));
+            Bridge.Test.Assert.areEqual(0, v[3]);
+        },
+        testSimpleMultipleKeyTemplate: function () {
+            var sa = ["Hello", "There"];
+            var sa2 = System.Array.init(2, null);
+            System.Array.copy(sa, 0, sa2, 0, sa.length);
+            Bridge.Test.Assert.areEqual(sa.length, sa2.length);
+            Bridge.Test.Assert.areEqual(sa[0], sa2[0]);
+            Bridge.Test.Assert.areEqual(sa[1], sa2[1]);
+    
+            var ia1;
+            var dst;
+            ia1 = [1, 2, 3, 4];
+            dst = System.Array.init(4, 0);
+            System.Array.copy(ia1, 0, dst, 0, ia1.length);
+            Bridge.Test.Assert.areEqual(ia1.length, dst.length);
+            Bridge.Test.Assert.areEqual(ia1[0], dst[0]);
+            Bridge.Test.Assert.areEqual(ia1[3], dst[3]);
         }
     });
     
@@ -11794,12 +11828,13 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge893', {
         statics: {
             enumToStringWorks: function () {
-                Bridge.Test.Assert.areEqual("TestA1", System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge893A, Bridge.ClientTest.Batch3.BridgeIssues.Bridge893A.TestA1));
+                var $t, $t1;
+                Bridge.Test.Assert.areEqual("TestA1", ($t=Bridge.ClientTest.Batch3.BridgeIssues.Bridge893A.TestA1, System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge893A, $t)));
     
                 var a = 100;
                 Bridge.Test.Assert.areEqual("100", System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge893A, a));
     
-                Bridge.Test.Assert.areEqual("TestB3", System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge893B, Bridge.ClientTest.Batch3.BridgeIssues.Bridge893B.TestB3));
+                Bridge.Test.Assert.areEqual("TestB3", ($t1=Bridge.ClientTest.Batch3.BridgeIssues.Bridge893B.TestB3, System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge893B, $t1)));
     
                 var t = 3;
                 Bridge.Test.Assert.areEqual("TestB1, TestB2", System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge893B, t));
@@ -11850,11 +11885,12 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge905', {
         statics: {
             dayOfWeekFixed: function () {
+                var $t;
                 var dictionary = new (System.Collections.Generic.Dictionary$2(System.DayOfWeek,System.Int32))();
                 dictionary.add(0, 1);
     
                 Bridge.Test.Assert.areEqual$1(1, dictionary.get(0), "1");
-                Bridge.Test.Assert.areEqual$1("Saturday", System.Enum.toString(System.DayOfWeek, (6)), "Saturday");
+                Bridge.Test.Assert.areEqual$1("Saturday", ($t=(6), System.Enum.toString(System.DayOfWeek, $t)), "Saturday");
             }
         }
     });
