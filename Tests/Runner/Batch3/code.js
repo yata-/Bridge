@@ -5383,6 +5383,15 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1348', {
+        statics: {
+            testVoidTypeOf: function () {
+                var value = Object;
+                Bridge.Test.Assert.areEqual("Function", Bridge.Reflection.getTypeFullName(Bridge.getType(value)));
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1355', {
         statics: {
             testLocalVariableWithNameWindow: function () {
@@ -6073,6 +6082,51 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
             Bridge.Test.Assert.areEqual$1("prop3", ea3.propertyName, "prop3 PropertyName");
             Bridge.Test.Assert.areEqual$1(270, ea3.oldValue, "prop3 OldValue");
             Bridge.Test.Assert.areEqual$1(120, ea3.newValue, "prop3 NewValue");
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1653', {
+        testLiftedFunctionsWithGenericInvocation: function () {
+            var scope = $_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge1653.Table$2;
+            Bridge.Test.Assert.notNull$1(scope.f1, "scope.f1 should exists");
+            Bridge.Test.Assert.null$1(scope.f2, "scope.f2 should be null");
+            Bridge.Test.Assert.areEqual$1(scope.f1(1), "1_v4", "scope.f1(1) should be 1_v4");
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1653.Table$2', function (U, V) { return {
+        test: function () {
+            var values = [Bridge.getDefaultValue(U)];
+    
+            var v1 = System.Linq.Enumerable.from(values).select(function (value) {
+                return value + " " + Bridge.ClientTest.Batch3.BridgeIssues.Bridge1653_Extensions.getSomething(U, value);
+            });
+            var v2 = System.Linq.Enumerable.from(values).select(function (value) {
+                return value + " " + Bridge.ClientTest.Batch3.BridgeIssues.Bridge1653_Extensions.getSomething(U, value);
+            });
+            var v3 = System.Linq.Enumerable.from(values).select(function (value) {
+                return value + " " + Bridge.ClientTest.Batch3.BridgeIssues.Bridge1653_Extensions.getSomething1(U, value);
+            });
+            var v4 = System.Linq.Enumerable.from(values).select($_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge1653.Table$2.f1);
+        }
+    }; });
+    
+    Bridge.ns("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1653.Table$2", $_);
+    
+    Bridge.apply($_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge1653.Table$2, {
+        f1: function (value) {
+            return value + "_" + Bridge.ClientTest.Batch3.BridgeIssues.Bridge1653_Extensions.getSomething1(String, "v4");
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1653_Extensions', {
+        statics: {
+            getSomething1: function (T, value) {
+                return value.toString();
+            },
+            getSomething: function (T, value) {
+                return value.toString();
+            }
         }
     });
     
