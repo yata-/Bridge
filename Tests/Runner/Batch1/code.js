@@ -9374,7 +9374,7 @@
             var ex = new System.Exception();
             Bridge.Test.Assert.true$1(Bridge.is(ex, System.Exception), "is Exception");
             Bridge.Test.Assert.areEqual$1(null, ex.getInnerException(), "InnerException");
-            Bridge.Test.Assert.areEqual(null, ex.getMessage());
+            Bridge.Test.Assert.areEqual("Exception of type 'System.Exception' was thrown.", ex.getMessage());
         },
         constructorWithMessageWorks: function () {
             var ex = new System.Exception("The message");
