@@ -1198,7 +1198,9 @@
         },
 
         getMetadata: function (t) {
-            return t.$getMetadata ? t.$getMetadata() : t.$metadata;
+            var m = t.$getMetadata ? t.$getMetadata() : t.$metadata;
+
+            return m;
         }
     };
 
