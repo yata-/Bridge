@@ -19,7 +19,7 @@ namespace Bridge.Html5
         /// Is an unsigned long that represents the number of rows this cell must span. It reflects the rowspan attribute.
         /// </summary>
         [Name("rowspan")]
-        public string RowSpan;
+        public int RowSpan;
 
         /// <summary>
         /// Is a DOMSettableTokenList describing a list of id of &lt;th&gt; elements that represents headers associated with the cell. It reflects the headers attribute.
