@@ -6855,6 +6855,93 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1641', {
+        statics: {
+            _Foo: null,
+            config: {
+                init: function () {
+                    this._Foo = new (System.Collections.Generic.Dictionary$2(System.UInt32,System.UInt32))();
+                }
+            },
+            test: function () {
+                var $step = 0,
+                    $task1, 
+                    $jumpFromFinally, 
+                    $tcs = new System.Threading.Tasks.TaskCompletionSource(), 
+                    $returnValue, 
+                    bar, 
+                    $async_e, 
+                    $asyncBody = Bridge.fn.bind(this, function () {
+                        try {
+                            for (;;) {
+                                $step = System.Array.min([0,1], $step);
+                                switch ($step) {
+                                    case 0: {
+                                        $task1 = System.Threading.Tasks.Task.delay(1);
+                                        $step = 1;
+                                        $task1.continueWith($asyncBody);
+                                        return;
+                                    }
+                                    case 1: {
+                                        $task1.getAwaitedResult();
+                                        bar = { };
+                                        Bridge.ClientTest.Batch3.BridgeIssues.Bridge1641._Foo.tryGetValue(1, bar);
+                                        
+                                        $tcs.setResult(bar.v);
+                                        return;
+                                    }
+                                    default: {
+                                        $tcs.setResult(null);
+                                        return;
+                                    }
+                                }
+                            }
+                        } catch($async_e1) {
+                            $async_e = System.Exception.create($async_e1);
+                            $tcs.setException($async_e);
+                        }
+                    }, arguments);
+    
+                $asyncBody();
+                return $tcs.task;
+            }
+        },
+        testOutInAsync: function () {
+            var $step = 0,
+                $task1, 
+                $taskResult1, 
+                $jumpFromFinally, 
+                done, 
+                result, 
+                $asyncBody = Bridge.fn.bind(this, function () {
+                    for (;;) {
+                        $step = System.Array.min([0,1], $step);
+                        switch ($step) {
+                            case 0: {
+                                done = Bridge.Test.Assert.async();
+                                $task1 = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1641.test();
+                                $step = 1;
+                                $task1.continueWith($asyncBody, true);
+                                return;
+                            }
+                            case 1: {
+                                $taskResult1 = $task1.getAwaitedResult();
+                                result = $taskResult1;
+                                Bridge.Test.Assert.areEqual(0, result);
+                                done();
+                                return;
+                            }
+                            default: {
+                                return;
+                            }
+                        }
+                    }
+                }, arguments);
+    
+            $asyncBody();
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1653', {
         testLiftedFunctionsWithGenericInvocation: function () {
             var scope = $_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge1653.Table$2;
