@@ -395,7 +395,14 @@ namespace Bridge.Translator
             var writer = this.SaveWriter();
             this.AddAsyncStep();
 
-            this.Body.AcceptVisitor(this.Emitter);
+            if (this.Body.Parent is LambdaExpression && this.Body is Expression && this.IsTaskReturn)
+            {
+                new ReturnBlock(this.Emitter, (Expression)this.Body).Emit();
+            }
+            else
+            {
+                this.Body.AcceptVisitor(this.Emitter);
+            }
 
             this.RestoreWriter(writer);
 

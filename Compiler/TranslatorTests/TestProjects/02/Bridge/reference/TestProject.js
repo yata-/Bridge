@@ -675,17 +675,19 @@
         },
 
         isArray: function (obj) {
-            return Object.prototype.toString.call(obj) in {
-                "[object Array]": 1,
-                "[object Uint8Array]": 1,
-                "[object Int8Array]": 1,
-                "[object Int16Array]": 1,
-                "[object Uint16Array]": 1,
-                "[object Int32Array]": 1,
-                "[object Uint32Array]": 1,
-                "[object Float32Array]": 1,
-                "[object Float64Array]": 1
-            };
+            if (obj == null) {
+                return false;
+            }
+            var c = obj.constructor;
+            return c === Array ||
+                c === Uint8Array ||
+                c === Int8Array ||
+                c === Int16Array ||
+                c === Uint16Array ||
+                c === Int32Array ||
+                c === Uint32Array ||
+                c === Float32Array ||
+                c === Float64Array;
         },
 
         isFunction: function (obj) {
@@ -1226,7 +1228,9 @@
         },
 
         getMetadata: function (t) {
-            return t.$getMetadata ? t.$getMetadata() : t.$metadata;
+            var m = t.$getMetadata ? t.$getMetadata() : t.$metadata;
+
+            return m;
         }
     };
 
@@ -1883,6 +1887,10 @@
 
         trim: function (s, chars) {
             return System.String.trimStart(System.String.trimEnd(s, chars), chars);
+        },
+
+        concat: function(s1, s2) {
+            return (s1 == null ? "" : s1) + (s2 == null ? "" : s2);
         }
     };
 
@@ -2891,6 +2899,7 @@
 
     Bridge.Reflection = {
         setMetadata: function (type, metadata) {
+            type.$getMetadata = Bridge.Reflection.getMetadata;
             type.$metadata = metadata;
         },
 
@@ -2977,7 +2986,7 @@
         },
 
         getBaseType: function (type) {
-            if (type === Object || type.$kind === "interface") {
+            if (type === Object || type.$kind === "interface" || type.prototype == null) {
                 return null;
             } else if (Object.getPrototypeOf) {
                 return Object.getPrototypeOf(type.prototype).constructor;
@@ -3798,7 +3807,7 @@
     Bridge.define("System.Exception", {
         constructor: function (message, innerException) {
             this.$initialize();
-            this.message = message ? message : null;
+            this.message = message ? message : ("Exception of type '" + Bridge.getTypeName(this) + "' was thrown.");
             this.innerException = innerException ? innerException : null;
             this.errorStack = new Error();
             this.data = new(System.Collections.Generic.Dictionary$2(Object, Object))();
@@ -4146,8 +4155,15 @@
 
         constructor: function (args, message, innerException) {
             this.$initialize();
-            System.Exception.$constructor.call(this, message || (args.length && args[0] ? args[0].toString() : "An error occurred"), innerException);
             this.arguments = System.Array.clone(args);
+
+            if (message == null) {
+                message = "Promise exception: [";
+                message += this.arguments.map(function (item) { return item == null ? "null" : item.toString(); }).join(", ");
+                message += "]";
+            }
+
+            System.Exception.$constructor.call(this, message, innerException);
         },
 
         getArguments: function () {
