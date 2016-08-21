@@ -6497,6 +6497,30 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1518', {
+        testDefaultConstructorForTypeParameter: function () {
+            var x = new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge1518.TestClass$1(System.Decimal))();
+            var y = 0;
+            Bridge.Test.Assert.true$1(x.value.equalsT(System.Decimal(y)), "decimal");
+    
+            var g = new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge1518.TestClass$1(System.Guid))();
+            Bridge.Test.Assert.true$1(g.value === System.Guid.empty, "Guid");
+    
+            var l = new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge1518.TestClass$1(System.Int64))();
+            var z = 0;
+            Bridge.Test.Assert.true$1(l.value.equals(System.Int64(z)), "long");
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1518.TestClass$1', function (T) { return {
+        value: null,
+        config: {
+            init: function () {
+                this.value = Bridge.createInstance(T);
+            }
+        }
+    }; });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1520', {
         statics: {
             x: System.Decimal(30)
@@ -9601,7 +9625,7 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         bar: Bridge.getDefaultValue(T),
         constructor: function () {
             this.$initialize();
-            this.bar = new T();
+            this.bar = Bridge.createInstance(T);
         }
     }; });
     
@@ -9625,7 +9649,7 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         bar: Bridge.getDefaultValue(T),
         constructor: function () {
             this.$initialize();
-            this.bar = new T();
+            this.bar = Bridge.createInstance(T);
         }
     }; });
     

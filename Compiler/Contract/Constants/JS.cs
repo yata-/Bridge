@@ -35,6 +35,7 @@
             public const string BRIDGE_BIND = "Bridge.fn.bind";
             public const string BRIDGE_BIND_SCOPE = "Bridge.fn.bindScope";
             public const string BRIDGE_CAST = "Bridge.cast";
+            public const string BRIDGE_CREATEINSTANCE = "Bridge.createInstance";
             public const string BRIDGE_COMBINE = "Bridge.fn.combine";
             public const string BRIDGE_REMOVE = "Bridge.fn.remove";
             public const string BRIDGE_MERGE = "Bridge.merge";
