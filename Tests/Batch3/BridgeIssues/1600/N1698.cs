@@ -1,8 +1,6 @@
 using System;
-using Bridge.Test;
-using System.ComponentModel;
-using System.Linq;
 using Bridge;
+using Bridge.Test;
 
 [assembly: Reflectable("System.Console")]
 namespace Bridge.ClientTest.Batch3.BridgeIssues
@@ -11,11 +9,36 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     [TestFixture(TestNameFormat = "#1698 - {0}")]
     public class Bridge1698
     {
-        [Test(ExpectedCount = 0)]
+        [Test(ExpectedCount = 14)]
         public void TestReflectionForNativeTypes()
         {
-            //we cannot check result but atleast should not be exception
-            typeof(System.Console).GetMethod("WriteLine", new[] { typeof(string) }).Invoke(null, new[] { "Hello" });
+            var t = typeof(System.Console).GetMethod("WriteLine", new[] { typeof(string) });
+
+            Assert.NotNull(t, "Not null");
+            Assert.True(t.IsPublic, "IsPublic");
+            Assert.False(t.IsPrivate, "IsPrivate");
+            Assert.False(t.IsConstructor, "IsConstructor");
+            Assert.True(t.IsStatic, "IsStatic");
+            Assert.AreEqual("WriteLine", t.Name, "Name");
+            Assert.NotNull(t.ReturnType, "ReturnType not null");
+            Assert.AreEqual("Object", t.ReturnType.Name, "ReturnType");
+
+            var parameters = t.GetParameters();
+            Assert.NotNull(parameters, "parameters not null");
+            Assert.AreEqual(1, parameters.Length, "parameters length");
+            Assert.AreEqual("value", parameters[0].Name, "parameters[0] Name");
+            Assert.False(parameters[0].IsOut, "parameters[0] IsOut");
+            Assert.False(parameters[0].IsOptional, "parameters[0] IsOptional");
+
+            try
+            {
+                t.Invoke(null, new[] { "Hello" });
+                Assert.True(true, "Method executed");
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.ToString());
+            }
         }
     }
 }

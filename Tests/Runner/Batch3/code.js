@@ -7053,8 +7053,32 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1698', {
         testReflectionForNativeTypes: function () {
-            //we cannot check result but atleast should not be exception
-            Bridge.Reflection.midel(Bridge.Reflection.getMembers(console, 8, 284, "WriteLine", [String]), null).apply(null, ["Hello"]);
+            var t = Bridge.Reflection.getMembers(console, 8, 284, "WriteLine", [String]);
+    
+            Bridge.Test.Assert.notNull$1(t, "Not null");
+            Bridge.Test.Assert.true$1((t.accessibility === 2), "IsPublic");
+            Bridge.Test.Assert.false$1((t.accessibility === 1), "IsPrivate");
+            Bridge.Test.Assert.false$1((t.type === 1), "IsConstructor");
+            Bridge.Test.Assert.true$1((t.isStatic || false), "IsStatic");
+            Bridge.Test.Assert.areEqual$1("WriteLine", t.name, "Name");
+            Bridge.Test.Assert.notNull$1(t.returnType, "ReturnType not null");
+            Bridge.Test.Assert.areEqual$1("Object", Bridge.Reflection.getTypeName(t.returnType), "ReturnType");
+    
+            var parameters = (t.paramsInfo || []);
+            Bridge.Test.Assert.notNull$1(parameters, "parameters not null");
+            Bridge.Test.Assert.areEqual$1(1, parameters.length, "parameters length");
+            Bridge.Test.Assert.areEqual$1("value", parameters[0].name, "parameters[0] Name");
+            Bridge.Test.Assert.false$1((parameters[0].isOut || false), "parameters[0] IsOut");
+            Bridge.Test.Assert.false$1((parameters[0].isOptional || false), "parameters[0] IsOptional");
+    
+            try {
+                Bridge.Reflection.midel(t, null).apply(null, ["Hello"]);
+                Bridge.Test.Assert.true$1(true, "Method executed");
+            }
+            catch (ex) {
+                ex = System.Exception.create(ex);
+                Bridge.Test.Assert.fail$1(ex.toString());
+            }
         }
     });
     
