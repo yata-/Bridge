@@ -7083,12 +7083,25 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1700', {
+        testULongAsIndex: function () {
+            var array = System.Array.create(0, null, 2, 2);
+            var n = 1;
+            array.set([System.Int64.toNumber(System.Int64(n).mod(System.Int64(1))), System.Int64.toNumber(System.Int64(n).div(System.Int64(1)))], 7);
+            n = 4;
+            array.set([System.Int64.toNumber(System.Int64(n).mod(System.Int64(3))), System.Int64.toNumber(System.Int64(n).div(System.Int64(4)))], 8);
+    
+            Bridge.Test.Assert.areEqual(7, array.get([0, 1]));
+            Bridge.Test.Assert.areEqual(8, array.get([1, 1]));
+        },
         testLongAsIndex: function () {
-            var array = System.Array.create(0, null, 3, 5);
-            for (var n = 0; n < 15; n = (n + 1) | 0) {
-                array.set([System.Int64.toNumber(System.Int64(n).mod(System.Int64(3))), System.Int64.toNumber(System.Int64(n).div(System.Int64(3)))], 1);
-            }
-            Bridge.Test.Assert.areEqual(1, array.get([0, 0]));
+            var array = System.Array.create(0, null, 2, 2);
+            var n = 1;
+            array.set([System.Int64.toNumber(System.Int64(n).mod(System.Int64(1))), System.Int64.toNumber(System.Int64(n).div(System.Int64(1)))], 3);
+            n = 4;
+            array.set([System.Int64.toNumber(System.Int64(n).mod(System.Int64(3))), System.Int64.toNumber(System.Int64(n).div(System.Int64(4)))], 5);
+    
+            Bridge.Test.Assert.areEqual(3, array.get([0, 1]));
+            Bridge.Test.Assert.areEqual(5, array.get([1, 1]));
         }
     });
     
