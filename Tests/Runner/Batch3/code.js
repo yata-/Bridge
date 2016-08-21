@@ -6521,6 +6521,30 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     }; });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1519', {
+        testRefOutLocalVars: function () {
+            var $t;
+            var $boolean = true;
+            var dic = new (System.Collections.Generic.Dictionary$2(System.Int32,System.Int32))();
+            dic.add(1, 1);
+            dic.add(2, 2);
+    
+            if ($boolean) {
+                var sameVal = { };
+                if (dic.tryGetValue(1, sameVal)) {
+                    Bridge.Test.Assert.areEqual$1(1, sameVal.v, "Inside if scope");
+                }
+            }
+    
+            var i = 0;
+            $t = Bridge.getEnumerator(dic.getValues());
+            while ($t.moveNext()) {
+                var sameVal1 = $t.getCurrent();
+                Bridge.Test.Assert.areEqual$1(((i = (i + 1) | 0)), sameVal1, "Inside foreach scope");
+            }
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1520', {
         statics: {
             x: System.Decimal(30)
@@ -6589,6 +6613,84 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
             Bridge.Test.Assert.false(y1.gt(System.Decimal(1)));
             y1 = System.Nullable.hasValue(x1) ? System.Decimal(((-1 * (System.Nullable.getValue(x1))) | 0)) : System.Decimal(0.0);
             Bridge.Test.Assert.false(y1.gt(System.Decimal(1)));
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1526', {
+        statics: {
+            getStaticProperty1: function () {
+                var levelKey = { };
+                System.Int32.tryParse("", levelKey);
+    
+                return levelKey.v;
+            },
+            getStaticProperty2: function () {
+                var levelKey = { v : 1 };
+                System.Int32.tryParse("", levelKey);
+    
+                return levelKey.v;
+            },
+            testOutInClassMembers: function () {
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1526.staticMethod(), "StaticMethod");
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1526.getStaticProperty1(), "StaticProperty1");
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1526.getStaticProperty2(), "StaticProperty2");
+            },
+            staticMethod: function () {
+                var levelKey = { };
+                System.Int32.tryParse("", levelKey);
+    
+                return levelKey.v;
+            }
+        },
+        getProperty1: function () {
+            var i = { v : 1 };
+            this.refMethod(i);
+    
+            return i.v;
+        },
+        getProperty2: function () {
+            var i = { v : 2 };
+            this.refMethod(i);
+    
+            return i.v;
+        },
+        getItem: function (index) {
+            var i = { v : 4 };
+            this.refMethod(i);
+    
+            return i.v;
+        },
+        testRefInClassMembers: function () {
+            Bridge.Test.Assert.areEqual$1(1, this.getProperty1(), "Property1");
+            Bridge.Test.Assert.areEqual$1(2, this.getProperty2(), "Property2");
+            Bridge.Test.Assert.areEqual$1(3, this.method(), "Method");
+            Bridge.Test.Assert.areEqual$1(4, this.getItem(0), "Indexer");
+        },
+        method: function () {
+            var i = { v : 3 };
+            this.refMethod(i);
+    
+            return i.v;
+            ;
+        },
+        refMethod: function (i) {
+            return i.v;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1538', {
+        getItem: function (index) {
+            var i = { v : 4 };
+            this.outMethod(i);
+    
+            return i.v;
+        },
+        testOutParameterInIndexer: function () {
+            Bridge.Test.Assert.areEqual$1(7, this.getItem(0), "Indexer");
+        },
+        outMethod: function (i) {
+            i.v = 7;
+            return i.v;
         }
     });
     
