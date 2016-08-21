@@ -675,17 +675,19 @@
         },
 
         isArray: function (obj) {
-            return Object.prototype.toString.call(obj) in {
-                "[object Array]": 1,
-                "[object Uint8Array]": 1,
-                "[object Int8Array]": 1,
-                "[object Int16Array]": 1,
-                "[object Uint16Array]": 1,
-                "[object Int32Array]": 1,
-                "[object Uint32Array]": 1,
-                "[object Float32Array]": 1,
-                "[object Float64Array]": 1
-            };
+            if (obj == null) {
+                return false;
+            }
+            var c = obj.constructor;
+            return c === Array ||
+                c === Uint8Array ||
+                c === Int8Array ||
+                c === Int16Array ||
+                c === Uint16Array ||
+                c === Int32Array ||
+                c === Uint32Array ||
+                c === Float32Array ||
+                c === Float64Array;
         },
 
         isFunction: function (obj) {
