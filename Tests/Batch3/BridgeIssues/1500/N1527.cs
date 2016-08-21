@@ -9,7 +9,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         private static string hello = "test";
         public const string SomeLiteral = "this.hello";
 
-        [Script("return 1 + " + SomeLiteral + " + 2")]
+        [Script("return 1 + " + SomeLiteral + " + 2;")]
         public static string GetValue() { return null; }
 
         [Test]
