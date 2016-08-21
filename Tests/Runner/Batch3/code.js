@@ -6385,6 +6385,72 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510', {
+        statics: {
+            function: function (wrap) {
+                return wrap.v;
+            },
+            function2: function (wrap) {
+                return wrap.v;
+            },
+            function3: function (wrap) {
+                return wrap.v;
+            },
+            function4: function (wrap) {
+                return wrap.v;
+            }
+        },
+        testPropertyChangedEventArgs: function () {
+            var a = 3;
+            Bridge.Test.Assert.true(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.function(Bridge.merge(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.IntWrap(), {v:((a * 1000) | 0)})) === 3000);
+            Bridge.Test.Assert.true(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.function2(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.IntWrap2.op_Implicit(((a * 1000) | 0))) === 3000);
+            Bridge.Test.Assert.true(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.function3(Bridge.merge(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.IntWrap3(), {v:System.Int64(a * 1000)})).equals(System.Int64(3000)));
+            Bridge.Test.Assert.true(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.function4(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.IntWrap4.op_Implicit(System.Int64(((a * 1000) | 0)))).equals(System.Int64(3000)));
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.IntWrap', {
+        v: 0,
+        constructor: function (value) {
+            this.$initialize();
+            this.v = value;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.IntWrap2', {
+        statics: {
+            op_Implicit: function (v) {
+                return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.IntWrap2(v);
+            }
+        },
+        v: 0,
+        constructor: function (value) {
+            this.$initialize();
+            this.v = value;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.IntWrap3', {
+        v: System.Int64(0),
+        constructor: function (value) {
+            this.$initialize();
+            this.v = value;
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.IntWrap4', {
+        statics: {
+            op_Implicit: function (v) {
+                return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1510.IntWrap4(v);
+            }
+        },
+        v: System.Int64(0),
+        constructor: function (value) {
+            this.$initialize();
+            this.v = value;
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1512', {
         statics: {
             methodParams: function ($arguments) {
@@ -6436,6 +6502,40 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
             init: function () {
                 this.ranges = new (System.Collections.Generic.List$1(System.Int32))();
             }
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1522', {
+        testAssignIntToDecimal: function () {
+            var x = System.Decimal(2.0);
+            x = System.Decimal(System.Decimal.toInt((x.mul(System.Decimal(60))), System.Int32));
+            Bridge.Test.Assert.true(x.gt(System.Decimal(2.0)));
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1523', {
+        testAssignDecimalToInt: function () {
+            var x = 0;
+            var y = System.Decimal(2);
+            x = (x + System.Decimal.toInt((System.Nullable.getValue(y).mul(System.Decimal(60.0))), System.Int32)) | 0;
+            Bridge.Test.Assert.areEqual(120, x);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1524', {
+        testDecimalWithIntOps: function () {
+            var x = System.Decimal(3.0);
+            var y = 2;
+            var z = 1;
+            Bridge.Test.Assert.false(System.Decimal(((y - z) | 0)).gt(x));
+            var a = System.Decimal((y - z) | 0);
+            Bridge.Test.Assert.false(a.gt(System.Decimal(2)));
+    
+            var x1 = 1;
+            var y1 = System.Nullable.hasValue(x1) ? System.Decimal(((-System.Nullable.getValue(x1)) | 0)) : System.Decimal(0.0);
+            Bridge.Test.Assert.false(y1.gt(System.Decimal(1)));
+            y1 = System.Nullable.hasValue(x1) ? System.Decimal(((-1 * (System.Nullable.getValue(x1))) | 0)) : System.Decimal(0.0);
+            Bridge.Test.Assert.false(y1.gt(System.Decimal(1)));
         }
     });
     

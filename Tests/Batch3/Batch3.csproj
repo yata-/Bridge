@@ -292,6 +292,10 @@
     <Compile Include="BridgeIssues\1400\N1402.cs" />
     <Compile Include="BridgeIssues\1500\N1520.cs" />
     <Compile Include="BridgeIssues\1500\N1512.cs" />
+    <Compile Include="BridgeIssues\1500\N1524.cs" />
+    <Compile Include="BridgeIssues\1500\N1523.cs" />
+    <Compile Include="BridgeIssues\1500\N1522.cs" />
+    <Compile Include="BridgeIssues\1500\N1510.cs" />
     <Compile Include="BridgeIssues\1500\N1501.cs" />
     <Compile Include="BridgeIssues\1600\N1653.cs" />
     <Compile Include="BridgeIssues\TestBridgeIssues.cs" />
