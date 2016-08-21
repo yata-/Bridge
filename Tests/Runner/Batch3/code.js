@@ -15032,6 +15032,15 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge537B', {
         inherits: [System.Collections.Generic.IEnumerable$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge537A)],
         statics: {
+            testB2: function () {
+                var l = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge537B();
+    
+                l.add(Bridge.merge(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge537A(), {
+                    id: 103
+                } ));
+    
+                return Bridge.ClientTest.Batch3.BridgeIssues.Bridge537B.getCount(l);
+            },
             getCount: function (l) {
                 return l.list.getCount();
             },
@@ -15046,15 +15055,6 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
                 } ));
     
                 return l.getCount();
-            },
-            testB2: function () {
-                var l = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge537B();
-    
-                l.add(Bridge.merge(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge537A(), {
-                    id: 103
-                } ));
-    
-                return Bridge.ClientTest.Batch3.BridgeIssues.Bridge537B.getCount(l);
             }
         },
         list: null,
@@ -15067,6 +15067,9 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
             this.$initialize();
             this.list = new (System.Collections.Generic.List$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge537A))();
         },
+        getCount: function () {
+            return this.list.getCount();
+        },
         add: function (value) {
             this.list.add(value);
         },
@@ -15075,9 +15078,6 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         },
         System$Collections$IEnumerable$getEnumerator: function () {
             return this.list.getEnumerator();
-        },
-        getCount: function () {
-            return this.list.getCount();
         }
     });
     
