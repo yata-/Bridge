@@ -593,7 +593,7 @@ namespace Bridge.Translator
             var conditionalExpr = expression.Parent as ConditionalExpression;
             if (conditionalExpr != null && conditionalExpr.Condition != expression)
             {
-                var idx = conditionalExpr.TrueExpression == expression ? 0 : 1;
+                var idx = conditionalExpr.TrueExpression == expression ? 1 : 2;
                 var conditionalrr = block.Emitter.Resolver.ResolveNode(conditionalExpr, block.Emitter) as OperatorResolveResult;
 
                 if (conditionalrr != null && isType(conditionalrr.Operands[idx].Type, block.Emitter.Resolver) && !isType(rr.Type, block.Emitter.Resolver))

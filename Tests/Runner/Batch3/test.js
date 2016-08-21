@@ -401,6 +401,7 @@
                 QUnit.test("#1520 - TestStaticDecimalInitialization", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1520.testStaticDecimalInitialization);
                 QUnit.test("#1520 - TestLocalDecimalInitialization", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1520.testLocalDecimalInitialization);
                 QUnit.test("#1520 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1520.testUseCase);
+                QUnit.test("#1521 - TestDecimalTrueInConditionalBlock", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1521.testDecimalTrueInConditionalBlock);
                 QUnit.test("#1522 - TestAssignIntToDecimal", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1522.testAssignIntToDecimal);
                 QUnit.test("#1523 - TestAssignDecimalToInt", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1523.testAssignDecimalToInt);
                 QUnit.test("#1524 - TestDecimalWithIntOps", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1524.testDecimalWithIntOps);
@@ -2225,6 +2226,16 @@
             testUseCase: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1520).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1520);
                 t.getFixture().testUseCase();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1521', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1521)],
+        statics: {
+            testDecimalTrueInConditionalBlock: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1521).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1521);
+                t.getFixture().testDecimalTrueInConditionalBlock();
             }
         }
     });
