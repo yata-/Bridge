@@ -394,7 +394,8 @@
                 QUnit.test("#1501 - TestPropertyChangedEventArgs", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1501.testPropertyChangedEventArgs);
                 QUnit.test("#1510 - TestPropertyChangedEventArgs", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1510.testPropertyChangedEventArgs);
                 QUnit.test("#1512 - TestParametersReservedNames", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1512.testParametersReservedNames);
-                QUnit.test("#1517 - TestTupleEquality", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1517.testTupleEquality);
+                QUnit.test("#1517 - TestEqualTuples", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1517.testEqualTuples);
+                QUnit.test("#1517 - TestInequalTuples", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1517.testInequalTuples);
                 QUnit.test("#1520 - TestStaticDecimalInitialization", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1520.testStaticDecimalInitialization);
                 QUnit.test("#1520 - TestLocalDecimalInitialization", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1520.testLocalDecimalInitialization);
                 QUnit.test("#1520 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1520.testUseCase);
@@ -2174,9 +2175,13 @@
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1517', {
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1517)],
         statics: {
-            testTupleEquality: function (assert) {
+            testEqualTuples: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1517).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1517);
-                t.getFixture().testTupleEquality();
+                t.getFixture().testEqualTuples();
+            },
+            testInequalTuples: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1517).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1517);
+                t.getFixture().testInequalTuples();
             }
         }
     });
