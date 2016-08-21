@@ -309,7 +309,7 @@
             }
         },
 
-        getHashCode: function (value, safe) {
+        getHashCode: function (value, safe, deep) {
             // In CLR: mutable object should keep on returning same value
             // Bridge.NET goals: make it deterministic (to make testing easier) without breaking CLR contracts
             //     for value types it returns deterministic values (f.e. for int 3 it returns 3)
@@ -358,6 +358,23 @@
 
             if (value.$$hashCode) {
                 return value.$$hashCode;
+            }
+
+            if (deep && typeof value == "object") {
+                var result = 0,
+                    temp;
+
+                for (var property in value) {
+                    if (value.hasOwnProperty(property)) {
+                        temp = Bridge.isEmpty(value[property], true) ? 0 : Bridge.getHashCode(value[property]);
+                        result = 29 * result + temp;
+                    }
+                }
+
+                if (result !== 0) {
+                    value.$$hashCode = result;
+                    return result;
+                }
             }
 
             value.$$hashCode = (Math.random() * 0x100000000) | 0;

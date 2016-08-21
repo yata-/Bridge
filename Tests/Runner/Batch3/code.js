@@ -6468,6 +6468,35 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1517', {
+        testEqualTuples: function () {
+            var a1 = { item1: 1 };
+            var b1 = { item1: 1 };
+            Bridge.Test.Assert.true$1(Bridge.objectEquals(a1, b1), "1 equals");
+            Bridge.Test.Assert.true$1(Bridge.getHashCode(a1, false, true) === Bridge.getHashCode(b1, false, true), "1 ==");
+            Bridge.Test.Assert.false$1(Bridge.getHashCode(a1, false, true) !== Bridge.getHashCode(b1, false, true), "1 !=");
+    
+            var a2 = { item1: 1, item2: 2 };
+            var b2 = { item1: 1, item2: 2 };
+            Bridge.Test.Assert.true$1(Bridge.objectEquals(a2, b2), "2 equals");
+            Bridge.Test.Assert.true$1(Bridge.getHashCode(a2, false, true) === Bridge.getHashCode(b2, false, true), "2 ==");
+            Bridge.Test.Assert.false$1(Bridge.getHashCode(a2, false, true) !== Bridge.getHashCode(b2, false, true), "2 !=");
+        },
+        testInequalTuples: function () {
+            var a1 = { item1: 3 };
+            var b1 = { item1: 4 };
+            Bridge.Test.Assert.false$1(Bridge.objectEquals(a1, b1), "1 equals");
+            Bridge.Test.Assert.false$1(Bridge.getHashCode(a1, false, true) === Bridge.getHashCode(b1, false, true), "1 ==");
+            Bridge.Test.Assert.true$1(Bridge.getHashCode(a1, false, true) !== Bridge.getHashCode(b1, false, true), "1 !=");
+    
+            var a2 = { item1: 1, item2: 7 };
+            var b2 = { item1: 1, item2: 8 };
+            Bridge.Test.Assert.false$1(Bridge.objectEquals(a2, b2), "2 equals");
+            Bridge.Test.Assert.false$1(Bridge.getHashCode(a2, false, true) === Bridge.getHashCode(b2, false, true), "2 ==");
+            Bridge.Test.Assert.true$1(Bridge.getHashCode(a2, false, true) !== Bridge.getHashCode(b2, false, true), "2 !=");
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1520', {
         statics: {
             x: System.Decimal(30)
