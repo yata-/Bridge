@@ -419,7 +419,7 @@ namespace Bridge.Translator
             {
                 if (!this.Emitter.Locals.ContainsKey(JS.Vars.ASYNC_E))
                 {
-                    this.AddLocal(JS.Vars.ASYNC_E, AstType.Null);
+                    this.AddLocal(JS.Vars.ASYNC_E, null, AstType.Null);
                 }
 
                 this.WriteNewLine();
@@ -539,7 +539,7 @@ namespace Bridge.Translator
                 {
                     if (!this.Emitter.Locals.ContainsKey(JS.Vars.ASYNC_E))
                     {
-                        this.AddLocal(JS.Vars.ASYNC_E, AstType.Null);
+                        this.AddLocal(JS.Vars.ASYNC_E, null, AstType.Null);
                     }
 
                     this.WriteIf();

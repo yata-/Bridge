@@ -11,7 +11,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
     public class Bridge1535
     {
         [Test]
-        public async void TestPropertyChangedEventArgs()
+        public async void TestAsyncLambdaAssignmentExpression()
         {
             var done = Assert.Async();
 
