@@ -6834,6 +6834,16 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1700', {
+        testLongAsIndex: function () {
+            var array = System.Array.create(0, null, 3, 5);
+            for (var n = 0; n < 15; n = (n + 1) | 0) {
+                array.set([System.Int64.toNumber(System.Int64(n).mod(System.Int64(3))), System.Int64.toNumber(System.Int64(n).div(System.Int64(3)))], 1);
+            }
+            Bridge.Test.Assert.areEqual(1, array.get([0, 0]));
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A', {
         config: {
             properties: {

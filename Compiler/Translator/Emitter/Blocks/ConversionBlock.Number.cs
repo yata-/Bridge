@@ -42,6 +42,15 @@ namespace Bridge.Translator
                 toType = toType.GetDefinition().EnumUnderlyingType;
             }
 
+            bool isArrayIndex = false;
+            if (Helpers.Is64Type(toType, block.Emitter.Resolver) && expression.Parent is IndexerExpression &&
+                ((IndexerExpression)expression.Parent).Arguments.Contains(expression))
+            {
+                block.Write(JS.Types.SYSTEM_INT64 + ".toNumber");
+                block.Write("(");
+                isArrayIndex = true;
+            }
+
             if ((conversion.IsNumericConversion || conversion.IsEnumerationConversion) && conversion.IsExplicit)
             {
                 if (!(expression.Parent is ArrayInitializerExpression) &&
@@ -255,6 +264,11 @@ namespace Bridge.Translator
                 {
                     ClipInteger(block, expression, toType, false);
                 }
+            }
+
+            if (isArrayIndex)
+            {
+                block.AfterOutput += ")";
             }
         }
 
