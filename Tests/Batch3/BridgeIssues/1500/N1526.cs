@@ -51,7 +51,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             Assert.AreEqual(1, Property1, "Property1");
             Assert.AreEqual(2, Property2, "Property2");
             Assert.AreEqual(3, Method(), "Method");
-            Assert.AreEqual(4, this[0], "Property2");
+            Assert.AreEqual(4, this[0], "Indexer");
         }
 
         public int Property1
