@@ -42,9 +42,26 @@ namespace Bridge.Translator
                 toType = toType.GetDefinition().EnumUnderlyingType;
             }
 
-            if (conversion.IsNumericConversion && conversion.IsExplicit)
+            if ((conversion.IsNumericConversion || conversion.IsEnumerationConversion) && conversion.IsExplicit)
             {
-                if (Helpers.IsDecimalType(toType, block.Emitter.Resolver) && !Helpers.IsDecimalType(fromType, block.Emitter.Resolver))
+                if (!(expression.Parent is ArrayInitializerExpression) &&
+                     Helpers.Is64Type(fromType, block.Emitter.Resolver) &&
+                     Helpers.IsFloatType(toType, block.Emitter.Resolver) &&
+                     !Helpers.IsDecimalType(toType, block.Emitter.Resolver))
+                {
+                    var be = expression.Parent as BinaryOperatorExpression;
+
+                    if (be == null || be.Operator != BinaryOperatorType.Divide || be.Left != expression)
+                    {
+                        block.Write(JS.Types.SYSTEM_INT64 + ".toNumber");
+                        if (!(expression is CastExpression && ((CastExpression)expression).Expression is ParenthesizedExpression))
+                        {
+                            block.Write("(");
+                            block.AfterOutput += ")";
+                        }
+                    }
+                }
+                else if (Helpers.IsDecimalType(toType, block.Emitter.Resolver) && !Helpers.IsDecimalType(fromType, block.Emitter.Resolver))
                 {
                     block.Write(JS.Types.SYSTEM_DECIMAL + "(");
                     block.AfterOutput += ", null, " + BridgeTypes.ToJsName(fromType, block.Emitter) + ")";
