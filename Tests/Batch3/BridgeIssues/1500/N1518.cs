@@ -17,10 +17,14 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         {
             TestClass<decimal> x = new TestClass<decimal>();
             int y = 0;
-            Assert.True(x.value == y);
+            Assert.True(x.value == y, "decimal");
 
             TestClass<Guid> g = new TestClass<Guid>();
-            Assert.True(g.value == Guid.Empty);
+            Assert.True(g.value == Guid.Empty, "Guid");
+
+            var l = new TestClass<long>();
+            int z = 0;
+            Assert.True(l.value == z, "long");
         }
     }
 }

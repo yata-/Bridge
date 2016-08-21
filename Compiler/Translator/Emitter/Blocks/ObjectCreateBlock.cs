@@ -53,7 +53,11 @@ namespace Bridge.Translator
 
             if (isTypeParam && invocationResolveResult != null && invocationResolveResult.Member.Parameters.Count == 0)
             {
-                this.Write("Bridge.createInstance(" + resolveResult.Type.Name + ")");
+                this.Write(JS.Funcs.BRIDGE_CREATEINSTANCE);
+                this.WriteOpenParentheses();
+                this.Write(resolveResult.Type.Name);
+                this.WriteCloseParentheses();
+
                 return;
             }
 

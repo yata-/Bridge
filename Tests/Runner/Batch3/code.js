@@ -6501,10 +6501,14 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         testDefaultConstructorForTypeParameter: function () {
             var x = new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge1518.TestClass$1(System.Decimal))();
             var y = 0;
-            Bridge.Test.Assert.true(x.value.equalsT(System.Decimal(y)));
+            Bridge.Test.Assert.true$1(x.value.equalsT(System.Decimal(y)), "decimal");
     
             var g = new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge1518.TestClass$1(System.Guid))();
-            Bridge.Test.Assert.true(g.value === System.Guid.empty);
+            Bridge.Test.Assert.true$1(g.value === System.Guid.empty, "Guid");
+    
+            var l = new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge1518.TestClass$1(System.Int64))();
+            var z = 0;
+            Bridge.Test.Assert.true$1(l.value.equals(System.Int64(z)), "long");
         }
     });
     
