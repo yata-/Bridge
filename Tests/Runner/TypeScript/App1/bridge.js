@@ -320,7 +320,7 @@
             }
         },
 
-        getHashCode: function (value, safe) {
+        getHashCode: function (value, safe, deep) {
             // In CLR: mutable object should keep on returning same value
             // Bridge.NET goals: make it deterministic (to make testing easier) without breaking CLR contracts
             //     for value types it returns deterministic values (f.e. for int 3 it returns 3)
@@ -369,6 +369,23 @@
 
             if (value.$$hashCode) {
                 return value.$$hashCode;
+            }
+
+            if (deep && typeof value == "object") {
+                var result = 0,
+                    temp;
+
+                for (var property in value) {
+                    if (value.hasOwnProperty(property)) {
+                        temp = Bridge.isEmpty(value[property], true) ? 0 : Bridge.getHashCode(value[property]);
+                        result = 29 * result + temp;
+                    }
+                }
+
+                if (result !== 0) {
+                    value.$$hashCode = result;
+                    return result;
+                }
             }
 
             value.$$hashCode = (Math.random() * 0x100000000) | 0;
@@ -658,17 +675,19 @@
         },
 
         isArray: function (obj) {
-            return Object.prototype.toString.call(obj) in {
-                "[object Array]": 1,
-                "[object Uint8Array]": 1,
-                "[object Int8Array]": 1,
-                "[object Int16Array]": 1,
-                "[object Uint16Array]": 1,
-                "[object Int32Array]": 1,
-                "[object Uint32Array]": 1,
-                "[object Float32Array]": 1,
-                "[object Float64Array]": 1
-            };
+            if (obj == null) {
+                return false;
+            }
+            var c = obj.constructor;
+            return c === Array ||
+                c === Uint8Array ||
+                c === Int8Array ||
+                c === Int16Array ||
+                c === Uint16Array ||
+                c === Int32Array ||
+                c === Uint32Array ||
+                c === Float32Array ||
+                c === Float64Array;
         },
 
         isFunction: function (obj) {
@@ -1866,6 +1885,10 @@
 
         trim: function (s, chars) {
             return System.String.trimStart(System.String.trimEnd(s, chars), chars);
+        },
+
+        concat: function(s1, s2) {
+            return (s1 == null ? "" : s1) + (s2 == null ? "" : s2);
         }
     };
 
@@ -2325,7 +2348,11 @@
 
                     obj = prop.apply(null, args);
                     obj.$cacheName = name;
-                    c = Bridge.define(name, obj, true, { fn: fn, args: args});
+                    c = Bridge.define(name, obj, true, { fn: fn, args: args });
+
+                    if (!Bridge.Class.staticInitAllow) {
+                        Bridge.Class.$queue.push(c);
+                    }
 
                     return Bridge.get(c);
                 };
@@ -2557,7 +2584,7 @@
             };
 
             if (isEntryPoint) {
-                Bridge.Class.$queue.push(Class);
+                Bridge.Class.$queueEntry.push(Class);
             }
 
             Class.$staticInit = fn;
@@ -2753,15 +2780,16 @@
 
         init: function (fn) {
             Bridge.Class.staticInitAllow = true;
-
-            for (var i = 0; i < Bridge.Class.$queue.length; i++) {
-                var t = Bridge.Class.$queue[i];
+            var queue = Bridge.Class.$queue.concat(Bridge.Class.$queueEntry);
+            for (var i = 0; i < queue.length; i++) {
+                var t = queue[i];
 
                 if (t.$staticInit) {
                     t.$staticInit();
                 }
             }
             Bridge.Class.$queue.length = 0;
+            Bridge.Class.$queueEntry.length = 0;
 
             if (fn) {
                 fn();
@@ -2771,6 +2799,7 @@
 
     Bridge.Class = base;
     Bridge.Class.$queue = [];
+    Bridge.Class.$queueEntry = [];
     Bridge.define = Bridge.Class.define;
     Bridge.definei = Bridge.Class.definei;
     Bridge.init = Bridge.Class.init;
@@ -4123,8 +4152,15 @@
 
         constructor: function (args, message, innerException) {
             this.$initialize();
-            System.Exception.$constructor.call(this, message || (args.length && args[0] ? args[0].toString() : "An error occurred"), innerException);
             this.arguments = System.Array.clone(args);
+
+            if (message == null) {
+                message = "Promise exception: [";
+                message += this.arguments.map(function (item) { return item == null ? "null" : item.toString(); }).join(", ");
+                message += "]";
+            }
+
+            System.Exception.$constructor.call(this, message, innerException);
         },
 
         getArguments: function () {
@@ -6334,6 +6370,10 @@ System.UInt64.precision = 20;
     System.Decimal = function (v, provider, T) {
         if (this.constructor !== System.Decimal) {
             return new System.Decimal(v, provider, T);
+        }
+
+        if (v == null) {
+            v = 0;
         }
 
         if (typeof v === "string") {
