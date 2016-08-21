@@ -320,7 +320,7 @@
             }
         },
 
-        getHashCode: function (value, safe) {
+        getHashCode: function (value, safe, deep) {
             // In CLR: mutable object should keep on returning same value
             // Bridge.NET goals: make it deterministic (to make testing easier) without breaking CLR contracts
             //     for value types it returns deterministic values (f.e. for int 3 it returns 3)
@@ -369,6 +369,23 @@
 
             if (value.$$hashCode) {
                 return value.$$hashCode;
+            }
+
+            if (deep && typeof value == "object") {
+                var result = 0,
+                    temp;
+
+                for (var property in value) {
+                    if (value.hasOwnProperty(property)) {
+                        temp = Bridge.isEmpty(value[property], true) ? 0 : Bridge.getHashCode(value[property]);
+                        result = 29 * result + temp;
+                    }
+                }
+
+                if (result !== 0) {
+                    value.$$hashCode = result;
+                    return result;
+                }
             }
 
             value.$$hashCode = (Math.random() * 0x100000000) | 0;
@@ -906,7 +923,7 @@
             }
 
             if (typeof (instance) === "number") {
-                if (Math.floor(instance, 0) === instance) {
+                if (!isNaN(instance) && isFinite(instance) && Math.floor(instance, 0) === instance) {
                     return System.Int32;
                 } else {
                     return System.Double;
@@ -1955,11 +1972,12 @@
 
             System.Enum.checkEnumType(enumType);
 
-            var values = enumType;
+            var values = enumType,
+                isLong = System.Int64.is64Bit(value);
 
             if (((!enumType.prototype || !enumType.prototype.$flags) && forceFlags !== true) || (value === 0)) {
                 for (var i in values) {
-                    if (values[i] === value) {
+                    if (isLong && System.Int64.is64Bit(values[i]) ? (values[i].eq(value)) : (values[i] === value)) {
                         return enumMethods.toName(i);
                     }
                 }
@@ -1970,7 +1988,7 @@
                 var parts = [];
 
                 for (var i in values) {
-                    if (values[i] & value) {
+                    if (isLong && System.Int64.is64Bit(values[i]) ? (!values[i].and(value).isZero()) : (values[i] & value)) {
                         parts.push(enumMethods.toName(i));
                     }
                 }
@@ -2324,7 +2342,11 @@
 
                     obj = prop.apply(null, args);
                     obj.$cacheName = name;
-                    c = Bridge.define(name, obj, true, { fn: fn, args: args});
+                    c = Bridge.define(name, obj, true, { fn: fn, args: args });
+
+                    if (!Bridge.Class.staticInitAllow) {
+                        Bridge.Class.$queue.push(c);
+                    }
 
                     return Bridge.get(c);
                 };
@@ -2556,7 +2578,7 @@
             };
 
             if (isEntryPoint) {
-                Bridge.Class.$queue.push(Class);
+                Bridge.Class.$queueEntry.push(Class);
             }
 
             Class.$staticInit = fn;
@@ -2752,15 +2774,16 @@
 
         init: function (fn) {
             Bridge.Class.staticInitAllow = true;
-
-            for (var i = 0; i < Bridge.Class.$queue.length; i++) {
-                var t = Bridge.Class.$queue[i];
+            var queue = Bridge.Class.$queue.concat(Bridge.Class.$queueEntry);
+            for (var i = 0; i < queue.length; i++) {
+                var t = queue[i];
 
                 if (t.$staticInit) {
                     t.$staticInit();
                 }
             }
             Bridge.Class.$queue.length = 0;
+            Bridge.Class.$queueEntry.length = 0;
 
             if (fn) {
                 fn();
@@ -2770,6 +2793,7 @@
 
     Bridge.Class = base;
     Bridge.Class.$queue = [];
+    Bridge.Class.$queueEntry = [];
     Bridge.define = Bridge.Class.define;
     Bridge.definei = Bridge.Class.definei;
     Bridge.init = Bridge.Class.init;
@@ -6340,6 +6364,10 @@ System.UInt64.precision = 20;
     System.Decimal = function (v, provider, T) {
         if (this.constructor !== System.Decimal) {
             return new System.Decimal(v, provider, T);
+        }
+
+        if (v == null) {
+            v = 0;
         }
 
         if (typeof v === "string") {

@@ -221,7 +221,7 @@ namespace Bridge.Translator
 
             var conversion = this.Emitter.Resolver.Resolver.GetConversion(expression);
 
-            if (conversion.IsNumericConversion || (isCast && conversion.IsIdentityConversion))
+            if (conversion.IsNumericConversion || conversion.IsEnumerationConversion || (isCast && conversion.IsIdentityConversion))
             {
                 expression.AcceptVisitor(this.Emitter);
                 return;
