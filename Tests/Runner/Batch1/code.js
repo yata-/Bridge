@@ -9795,6 +9795,7 @@
             Bridge.Test.Assert.true$1(Bridge.is(ex, Bridge.PromiseException), "is PromiseException");
             Bridge.Test.Assert.areEqual$1(args, ex.arguments, "Arguments");
             Bridge.Test.Assert.true$1(ex.getInnerException() == null, "InnerException");
+            // #1528
             Bridge.Test.Assert.areEqual$1("Promise exception: [a, 1]", ex.getMessage(), "Message");
         },
         argumentsAndMessageConstructorWorks: function () {
