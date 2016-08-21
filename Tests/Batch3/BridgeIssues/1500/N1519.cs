@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Bridge.Test;
 
@@ -21,14 +20,14 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
                 int sameVal;
                 if (dic.TryGetValue(1, out sameVal))
                 {
-                    Assert.AreEqual(1, sameVal);
+                    Assert.AreEqual(1, sameVal, "Inside if scope");
                 }
             }
 
             int i = 0;
             foreach (int sameVal in dic.Values)
             {
-                Assert.AreEqual(++i, sameVal);
+                Assert.AreEqual(++i, sameVal, "Inside foreach scope");
             }
         }
     }

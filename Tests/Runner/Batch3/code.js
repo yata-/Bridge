@@ -6532,7 +6532,7 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
             if ($boolean) {
                 var sameVal = { };
                 if (dic.tryGetValue(1, sameVal)) {
-                    Bridge.Test.Assert.areEqual(1, sameVal.v);
+                    Bridge.Test.Assert.areEqual$1(1, sameVal.v, "Inside if scope");
                 }
             }
     
@@ -6540,7 +6540,7 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
             $t = Bridge.getEnumerator(dic.getValues());
             while ($t.moveNext()) {
                 var sameVal1 = $t.getCurrent();
-                Bridge.Test.Assert.areEqual(((i = (i + 1) | 0)), sameVal1);
+                Bridge.Test.Assert.areEqual$1(((i = (i + 1) | 0)), sameVal1, "Inside foreach scope");
             }
         }
     });
@@ -6618,29 +6618,63 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1526', {
         statics: {
-            getProperty1: function () {
+            getStaticProperty1: function () {
                 var levelKey = { };
                 System.Int32.tryParse("", levelKey);
     
                 return levelKey.v;
             },
-            getProperty2: function () {
+            getStaticProperty2: function () {
                 var levelKey = { v : 1 };
                 System.Int32.tryParse("", levelKey);
     
                 return levelKey.v;
             },
-            method: function () {
+            testOutInClassMembers: function () {
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1526.staticMethod(), "StaticMethod");
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1526.getStaticProperty1(), "StaticProperty1");
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1526.getStaticProperty2(), "StaticProperty2");
+            },
+            staticMethod: function () {
                 var levelKey = { };
                 System.Int32.tryParse("", levelKey);
     
                 return levelKey.v;
             }
         },
-        testRefOutInProperty: function () {
-            Bridge.Test.Assert.areEqual(0, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1526.method());
-            Bridge.Test.Assert.areEqual(0, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1526.getProperty1());
-            Bridge.Test.Assert.areEqual(0, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1526.getProperty1());
+        getProperty1: function () {
+            var i = { v : 1 };
+            this.refMethod(i);
+    
+            return i.v;
+        },
+        getProperty2: function () {
+            var i = { v : 2 };
+            this.refMethod(i);
+    
+            return i.v;
+        },
+        getItem: function (index) {
+            var i = { v : 4 };
+            this.refMethod(i);
+    
+            return i.v;
+        },
+        testRefInClassMembers: function () {
+            Bridge.Test.Assert.areEqual$1(1, this.getProperty1(), "Property1");
+            Bridge.Test.Assert.areEqual$1(2, this.getProperty2(), "Property2");
+            Bridge.Test.Assert.areEqual$1(3, this.method(), "Method");
+            Bridge.Test.Assert.areEqual$1(4, this.getItem(0), "Property2");
+        },
+        method: function () {
+            var i = { v : 3 };
+            this.refMethod(i);
+    
+            return i.v;
+            ;
+        },
+        refMethod: function (i) {
+            return i.v;
         }
     });
     

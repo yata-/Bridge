@@ -404,7 +404,8 @@
                 QUnit.test("#1522 - TestAssignIntToDecimal", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1522.testAssignIntToDecimal);
                 QUnit.test("#1523 - TestAssignDecimalToInt", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1523.testAssignDecimalToInt);
                 QUnit.test("#1524 - TestDecimalWithIntOps", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1524.testDecimalWithIntOps);
-                QUnit.test("#1526 - TestRefOutInProperty", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1526.testRefOutInProperty);
+                QUnit.test("#1526 - TestOutInClassMembers", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1526.testOutInClassMembers);
+                QUnit.test("#1526 - TestRefInClassMembers", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1526.testRefInClassMembers);
                 QUnit.test("#1653 - TestLiftedFunctionsWithGenericInvocation", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1653.testLiftedFunctionsWithGenericInvocation);
                 QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge381.testUseCase);
                 QUnit.test("#447 - CheckInlineExpression", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge447.checkInlineExpression);
@@ -2260,9 +2261,13 @@
     Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1526', {
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1526)],
         statics: {
-            testRefOutInProperty: function (assert) {
+            testOutInClassMembers: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1526).beforeTest(false, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1526);
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1526.testOutInClassMembers();
+            },
+            testRefInClassMembers: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1526).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1526);
-                t.getFixture().testRefOutInProperty();
+                t.getFixture().testRefInClassMembers();
             }
         }
     });
