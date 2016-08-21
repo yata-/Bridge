@@ -6725,6 +6725,81 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1535', {
+        testAsyncLambdaAssignmentExpression: function () {
+            var $step = 0,
+                $task1, 
+                $taskResult1, 
+                $jumpFromFinally, 
+                done, 
+                foo, 
+                bar, 
+                baz, 
+                $asyncBody = Bridge.fn.bind(this, function () {
+                    for (;;) {
+                        $step = System.Array.min([0,1], $step);
+                        switch ($step) {
+                            case 0: {
+                                done = Bridge.Test.Assert.async();
+                                
+                                foo = null; /// Async method lacks 'await' operators and will run synchronously
+                                
+                                
+                                bar = function () {
+                                    var $step = 0,
+                                        $jumpFromFinally, 
+                                        $tcs = new System.Threading.Tasks.TaskCompletionSource(), 
+                                        $returnValue, 
+                                        $async_e, 
+                                        $asyncBody = Bridge.fn.bind(this, function () {
+                                            try {
+                                                for (;;) {
+                                                    $step = System.Array.min([0], $step);
+                                                    switch ($step) {
+                                                        case 0: {
+                                                            $tcs.setResult((foo = 1));
+                                                            return;
+                                                        }
+                                                        default: {
+                                                            $tcs.setResult(null);
+                                                            return;
+                                                        }
+                                                    }
+                                                }
+                                            } catch($async_e1) {
+                                                $async_e = System.Exception.create($async_e1);
+                                                $tcs.setException($async_e);
+                                            }
+                                        }, arguments);
+                                
+                                    $asyncBody();
+                                    return $tcs.task;
+                                };
+                                $task1 = bar();
+                                $step = 1;
+                                $task1.continueWith($asyncBody, true);
+                                return;
+                            }
+                            case 1: {
+                                $taskResult1 = $task1.getAwaitedResult();
+                                baz = $taskResult1;
+                                Bridge.Test.Assert.areEqual(1, foo);
+                                Bridge.Test.Assert.areEqual(1, baz);
+                                
+                                done();
+                                return;
+                            }
+                            default: {
+                                return;
+                            }
+                        }
+                    }
+                }, arguments);
+    
+            $asyncBody();
+        }
+    });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1538', {
         getItem: function (index) {
             var i = { v : 4 };

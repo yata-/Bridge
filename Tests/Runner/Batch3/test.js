@@ -409,6 +409,7 @@
                 QUnit.test("#1526 - TestRefInClassMembers", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1526.testRefInClassMembers);
                 QUnit.test("#1527 - TestScriptAttributeWithReference", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1527.testScriptAttributeWithReference);
                 QUnit.test("#1533 - TestStringNullConcationation", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1533.testStringNullConcationation);
+                QUnit.test("#1535 - TestAsyncLambdaAssignmentExpression", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1535.testAsyncLambdaAssignmentExpression);
                 QUnit.test("#1538 - TestOutParameterInIndexer", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1538.testOutParameterInIndexer);
                 QUnit.test("#1653 - TestLiftedFunctionsWithGenericInvocation", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1653.testLiftedFunctionsWithGenericInvocation);
                 QUnit.test("#1684 - TestStaticInitializationForGenericClass", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1684.testStaticInitializationForGenericClass);
@@ -2303,6 +2304,16 @@
             testStringNullConcationation: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1533).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1533);
                 t.getFixture().testStringNullConcationation();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1535', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1535)],
+        statics: {
+            testAsyncLambdaAssignmentExpression: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1535).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1535);
+                t.getFixture().testAsyncLambdaAssignmentExpression();
             }
         }
     });
