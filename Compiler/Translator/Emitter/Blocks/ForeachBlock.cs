@@ -6,6 +6,9 @@ using ICSharpCode.NRefactory.CSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ICSharpCode.NRefactory.MonoCSharp;
+using ICSharpCode.NRefactory.Semantics;
+using EmptyStatement = ICSharpCode.NRefactory.CSharp.EmptyStatement;
 
 namespace Bridge.Translator
 {
@@ -219,12 +222,27 @@ namespace Bridge.Translator
                 var varName = this.AddLocal(foreachStatement.VariableName, foreachStatement.VariableNameToken, foreachStatement.VariableType);
 
                 this.WriteVar();
-                this.Write(varName, " = ", iteratorName);
+                this.Write(varName + " = ");
+
+                var rr = this.Emitter.Resolver.ResolveNode(foreachStatement, this.Emitter) as ForEachResolveResult;
+                var needCast = rr != null && rr.ElementType != rr.ElementVariable.Type;
+                if (needCast)
+                {
+                    this.Write(JS.Funcs.BRIDGE_CAST);
+                    this.WriteOpenParentheses();
+                }
+
+                this.Write(iteratorName);
 
                 this.WriteDot();
                 this.Write(JS.Funcs.GET_CURRENT);
-
                 this.WriteOpenCloseParentheses();
+
+                if (needCast)
+                {
+                    this.Write(", ", BridgeTypes.ToJsName(rr.ElementVariable.Type, this.Emitter), ")");
+                }
+
                 this.WriteSemiColon();
                 this.WriteNewLine();
             };

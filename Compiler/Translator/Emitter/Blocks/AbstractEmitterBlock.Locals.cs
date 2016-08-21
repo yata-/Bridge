@@ -220,7 +220,13 @@ namespace Bridge.Translator
                             {
                                 if (prm.IsOptional)
                                 {
-                                    this.Write(string.Format("if ({0} === void 0) {{ {0} = ", prm.Name));
+                                    var name = prm.Name;
+                                    if (Helpers.IsReservedWord(name))
+                                    {
+                                        name = Helpers.ChangeReservedWord(name);
+                                    }
+
+                                    this.Write(string.Format("if ({0} === void 0) {{ {0} = ", name));
                                     if (prm.ConstantValue == null && prm.Type.Kind == TypeKind.Struct && !prm.Type.IsKnownType(KnownTypeCode.NullableOfT))
                                     {
                                         this.Write(Inspector.GetStructDefaultValue(prm.Type, this.Emitter));
@@ -235,14 +241,20 @@ namespace Bridge.Translator
                                 }
                                 else if (prm.IsParams)
                                 {
+                                    var name = prm.Name;
+                                    if (Helpers.IsReservedWord(name))
+                                    {
+                                        name = Helpers.ChangeReservedWord(name);
+                                    }
+
                                     if (expandParams)
                                     {
                                         //var args = Array.prototype.slice.call(arguments, 1);
-                                        this.Write(string.Format("{0} = Array.prototype.slice.call(arguments, {1});", prm.Name, method.Parameters.IndexOf(prm) + method.TypeParameters.Count));
+                                        this.Write(string.Format("{0} = Array.prototype.slice.call(arguments, {1});", name, method.Parameters.IndexOf(prm) + method.TypeParameters.Count));
                                     }
                                     else
                                     {
-                                        this.Write(string.Format("if ({0} === void 0) {{ {0} = []; }}", prm.Name));
+                                        this.Write(string.Format("if ({0} === void 0) {{ {0} = []; }}", name));
                                     }
 
                                     this.WriteNewLine();
