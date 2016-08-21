@@ -139,7 +139,6 @@
         public class Types
         {
             public const string SYSTEM_UInt64 = "System.UInt64";
-            public const string SYSTEM_INT64 = "System.Int64";
             public const string SYSTEM_DECIMAL = "System.Decimal";
             public const string SYSTEM_ARRAY = "System.Array";
             public const string SYSTEM_NULLABLE = "System.Nullable";
@@ -171,14 +170,24 @@
 
             public class System
             {
-                private const string ROOT = "System.";
+                private const string DOTNAME = "System.";
 
                 public class String
                 {
-                    private const string ROOT = "String.";
+                    private const string DOTNAME = System.DOTNAME + "String.";
 
-                    public const string CONCAT = System.ROOT + String.ROOT + "concat";
+                    public const string CONCAT = DOTNAME + "concat";
                 }
+
+                public class Int64
+                {
+                    public const string NAME = System.DOTNAME + "Int64";
+                    private const string DOTNAME = System.DOTNAME + "Int64.";
+
+                    public const string TONUMBER = DOTNAME + "toNumber";
+                    public const string CHECK = DOTNAME + "check";
+                }
+
             }
         }
 

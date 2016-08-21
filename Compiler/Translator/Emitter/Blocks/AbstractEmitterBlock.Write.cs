@@ -133,7 +133,7 @@ namespace Bridge.Translator
             }
             else if (value is long)
             {
-                s = JS.Types.SYSTEM_INT64 + "(" + AbstractEmitterBlock.LongConstant((long)value, emitter) + ")";
+                s = JS.Types.System.Int64.NAME + "(" + AbstractEmitterBlock.LongConstant((long)value, emitter) + ")";
             }
             else if (value is ulong)
             {

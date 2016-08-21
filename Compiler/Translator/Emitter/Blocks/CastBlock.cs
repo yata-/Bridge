@@ -289,7 +289,7 @@ namespace Bridge.Translator
                 }
                 else if (Helpers.IsLongType(expectedType, this.Emitter.Resolver))
                 {
-                    typeName = JS.Types.SYSTEM_INT64;
+                    typeName = JS.Types.System.Int64.NAME;
                 }
                 else if (Helpers.IsULongType(expectedType, this.Emitter.Resolver))
                 {

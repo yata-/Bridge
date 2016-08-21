@@ -221,7 +221,7 @@ namespace Bridge.Translator
                                                               Helpers.Is64Type(expectedType, block.Emitter.Resolver) ||
                                                               conversion.IsIdentityConversion ||
                                                               isNumLifted));
-            
+
             if (!skipUserConversion && conversion.IsUserDefined &&
                 (expression is BinaryOperatorExpression || expression is UnaryOperatorExpression ||
                  expression.Parent is AssignmentExpression))
@@ -397,7 +397,7 @@ namespace Bridge.Translator
                 if (Helpers.Is64Type(arg.Type, block.Emitter.Resolver, arg.IsParams) && !Helpers.Is64Type(rr.Type, block.Emitter.Resolver) && !expression.IsNull)
                 {
                     var isUint = Helpers.IsULongType(arg.Type, block.Emitter.Resolver, arg.IsParams);
-                    block.Write(isUint ? JS.Types.SYSTEM_UInt64 : JS.Types.SYSTEM_INT64);
+                    block.Write(isUint ? JS.Types.SYSTEM_UInt64 : JS.Types.System.Int64.NAME);
                     if (NullableType.IsNullable(arg.Type) && ConversionBlock.ShouldBeLifted(expression))
                     {
                         block.Write("." + JS.Funcs.Math.LIFT);
@@ -773,7 +773,7 @@ namespace Bridge.Translator
                          && !Helpers.IsDecimalType(elementType, block.Emitter.Resolver)
                          && isType(rr.Type, block.Emitter.Resolver))
                 {
-                    block.Write(JS.Types.SYSTEM_INT64 + ".toNumber");
+                    block.Write(JS.Types.System.Int64.TONUMBER);
                     if (!ignoreConversionResolveResult && expression is CastExpression &&
                         ((CastExpression)expression).Expression is ParenthesizedExpression)
                     {
@@ -1107,13 +1107,13 @@ namespace Bridge.Translator
 
         private static bool CheckLongConversion(ConversionBlock block, Expression expression, ResolveResult rr, IType expectedType, Conversion conversion, bool ignoreConversionResolveResult)
         {
-            return CheckTypeConversion(block, expression, rr, expectedType, conversion, JS.Types.SYSTEM_INT64, Helpers.IsLongType, ignoreConversionResolveResult) ||
+            return CheckTypeConversion(block, expression, rr, expectedType, conversion, JS.Types.System.Int64.NAME, Helpers.IsLongType, ignoreConversionResolveResult) ||
                    CheckTypeConversion(block, expression, rr, expectedType, conversion, JS.Types.SYSTEM_UInt64, Helpers.IsULongType, ignoreConversionResolveResult);
         }
 
         private static bool IsLongConversion(ConversionBlock block, Expression expression, ResolveResult rr, IType expectedType, Conversion conversion)
         {
-            return IsTypeConversion(block, expression, rr, expectedType, conversion, JS.Types.SYSTEM_INT64, Helpers.IsLongType) ||
+            return IsTypeConversion(block, expression, rr, expectedType, conversion, JS.Types.System.Int64.NAME, Helpers.IsLongType) ||
                    IsTypeConversion(block, expression, rr, expectedType, conversion, JS.Types.SYSTEM_UInt64, Helpers.IsULongType);
         }
 
