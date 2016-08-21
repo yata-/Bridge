@@ -186,6 +186,19 @@ namespace Bridge.Translator
             var isLeftLong = Helpers.Is64Type(leftExpected, this.Emitter.Resolver);
             var isRightLong = Helpers.Is64Type(rightExpected, this.Emitter.Resolver);
 
+            if (!isLeftLong && !isRightLong)
+            {
+                if (leftExpected.Kind == TypeKind.Enum && Helpers.Is64Type(leftExpected.GetDefinition().EnumUnderlyingType, this.Emitter.Resolver))
+                {
+                    isLeftLong = true;
+                }
+
+                if (rightExpected.Kind == TypeKind.Enum && Helpers.Is64Type(rightExpected.GetDefinition().EnumUnderlyingType, this.Emitter.Resolver))
+                {
+                    isRightLong = true;
+                }
+            }
+
             if (!(resultIsString && binaryOperatorExpression.Operator == BinaryOperatorType.Add) && (isLeftLong || isRightLong))
             {
                 isLong = true;
@@ -265,7 +278,11 @@ namespace Bridge.Translator
             }
 
             bool nullable = orr != null && orr.IsLiftedOperator;
-            bool isCoalescing = binaryOperatorExpression.Operator == BinaryOperatorType.NullCoalescing;
+            bool isCoalescing = (this.Emitter.AssemblyInfo.StrictNullChecks || 
+                                 NullableType.IsNullable(leftResolverResult.Type) ||
+                                 leftResolverResult.Type.IsKnownType(KnownTypeCode.String) ||
+                                 leftResolverResult.Type.IsKnownType(KnownTypeCode.Object)
+                                ) && binaryOperatorExpression.Operator == BinaryOperatorType.NullCoalescing;
             string root = JS.Types.SYSTEM_NULLABLE + ".";
             bool special = nullable;
             bool rootSpecial = nullable;
@@ -368,7 +385,7 @@ namespace Bridge.Translator
                         break;
 
                     case BinaryOperatorType.NullCoalescing:
-                        this.Write(":");
+                        this.Write(isCoalescing ? ":" : "||");
                         break;
 
                     case BinaryOperatorType.ConditionalOr:
