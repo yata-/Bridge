@@ -274,11 +274,12 @@ namespace Bridge.Translator
 
             if (isStringConcat)
             {
-                this.Write("System.String.concat(");
+                this.Write(JS.Types.System.String.CONCAT);
+                this.WriteOpenParentheses();
             }
 
             bool nullable = orr != null && orr.IsLiftedOperator;
-            bool isCoalescing = (this.Emitter.AssemblyInfo.StrictNullChecks || 
+            bool isCoalescing = (this.Emitter.AssemblyInfo.StrictNullChecks ||
                                  NullableType.IsNullable(leftResolverResult.Type) ||
                                  leftResolverResult.Type.IsKnownType(KnownTypeCode.String) ||
                                  leftResolverResult.Type.IsKnownType(KnownTypeCode.Object)

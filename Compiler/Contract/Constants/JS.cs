@@ -168,6 +168,18 @@
                 public const string Infinity = "Infinity";
                 public const string InfinityNegative = "-Infinity";
             }
+
+            public class System
+            {
+                private const string ROOT = "System.";
+
+                public class String
+                {
+                    private const string ROOT = "String.";
+
+                    public const string CONCAT = System.ROOT + String.ROOT + "concat";
+                }
+            }
         }
 
         public class Vars
