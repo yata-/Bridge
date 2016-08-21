@@ -63,6 +63,11 @@ namespace Bridge.Translator
                     this.Found = true;
                 }
 
+                if (assignmentExpression.Operator == AssignmentOperatorType.Add && rr.Type.IsKnownType(KnownTypeCode.String))
+                {
+                    this.Found = true;
+                }
+
                 if (this.Found && !isInt && assignmentExpression.Parent is ICSharpCode.NRefactory.CSharp.LambdaExpression)
                 {
                     var lambdarr = this.Resolver.ResolveNode(assignmentExpression.Parent, null) as LambdaResolveResult;
@@ -350,6 +355,11 @@ namespace Bridge.Translator
                 {
                     found = false;
                 }
+            }
+
+            if (assignmentExpression.Operator == AssignmentOperatorType.Add && rr.Type.IsKnownType(KnownTypeCode.String))
+            {
+                found = true;
             }
 
             if (assignmentExpression.Operator != AssignmentOperatorType.Any &&
