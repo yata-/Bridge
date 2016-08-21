@@ -6770,6 +6770,47 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1684', {
+        testStaticInitializationForGenericClass: function () {
+            var setOfMessageEditState2 = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1684.Set$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1684.MessageEditState2).getEmpty().add(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1684.MessageEditState2());
+            Bridge.Test.Assert.areEqual(1, setOfMessageEditState2.getCount());
+    
+            var setOfMessageEditState = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1684.Set$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1684.MessageEditState).getEmpty().add(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1684.MessageEditState());
+            Bridge.Test.Assert.areEqual(1, setOfMessageEditState.getCount());
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1684.MessageEditState');
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1684.MessageEditState2');
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1684.Set$1', function (T) { return {
+        statics: {
+            _empty: null,
+            config: {
+                init: function () {
+                    this._empty = new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge1684.Set$1(T))();
+                }
+            },
+            getEmpty: function () {
+                return Bridge.ClientTest.Batch3.BridgeIssues.Bridge1684.Set$1(T)._empty;
+            }
+        },
+        constructor: function () {
+            this.$initialize();
+        },
+        getCount: function () {
+            return 1;
+        },
+        add: function (value) {
+            return this;
+        }
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1684.PureComponent$1', function (T) { return {
+    
+    }; });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge169', {
         statics: {
             number: 0,
@@ -14639,6 +14680,10 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1467.SomeClass2', {
         inherits: [Bridge.ClientTest.Batch3.BridgeIssues.Bridge1467.SomeClass1]
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1684.MessageTable', {
+        inherits: [Bridge.ClientTest.Batch3.BridgeIssues.Bridge1684.PureComponent$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1684.Set$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1684.MessageEditState))]
     });
     
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge240B', {
