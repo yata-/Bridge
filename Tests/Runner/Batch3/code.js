@@ -7132,6 +7132,55 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1702', {
+        testPropertyNameOnNestedClassWithinGenericClass: function () {
+            var setOne = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1702.Set$1(String).empty.insert("One");
+    
+            var s = Bridge.toArray(setOne).join(", ");
+    
+            Bridge.Test.Assert.areEqual("One", s);
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1702.Set$1', function (T) { return {
+        inherits: [System.Collections.Generic.IEnumerable$1(T)],
+        statics: {
+            empty: null,
+            config: {
+                init: function () {
+                    this.empty = new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge1702.Set$1(T))(null);
+                }
+            }
+        },
+        _headIfAny: null,
+        config: {
+            alias: [
+            "getEnumerator", "System$Collections$Generic$IEnumerable$1$" + Bridge.getTypeAlias(T) + "$getEnumerator"
+            ]
+        },
+        constructor: function (headIfAny) {
+            this.$initialize();
+            this._headIfAny = headIfAny;
+        },
+        insert: function (item) {
+            return new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge1702.Set$1(T))(Bridge.merge(new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge1702.Set$1.Node(T))(), {
+                item: item
+            } ));
+        },
+        getEnumerator: function () {
+            var $yield = [];
+            $yield.push(this._headIfAny.item$1);
+            return System.Array.toEnumerator($yield, T);
+        },
+        System$Collections$IEnumerable$getEnumerator: function () {
+            return this.getEnumerator();
+        }
+    }; });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1702.Set$1.Node', function (T) { return {
+        item$1: Bridge.getDefaultValue(T)
+    }; });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A', {
         config: {
             properties: {
