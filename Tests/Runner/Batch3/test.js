@@ -420,6 +420,7 @@
                 QUnit.test("#1698 - TestReflectionForNativeTypes", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1698.testReflectionForNativeTypes);
                 QUnit.test("#1700 - TestULongAsIndex", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1700.testULongAsIndex);
                 QUnit.test("#1700 - TestLongAsIndex", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1700.testLongAsIndex);
+                QUnit.test("#1702 - TestFieldWithItemName", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1702.testFieldWithItemName);
                 QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge381.testUseCase);
                 QUnit.test("#447 - CheckInlineExpression", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge447.checkInlineExpression);
                 QUnit.test("#447 - CheckInlineCalls", Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge447.checkInlineCalls);
@@ -2409,6 +2410,16 @@
             testLongAsIndex: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1700).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1700);
                 t.getFixture().testLongAsIndex();
+            }
+        }
+    });
+    
+    Bridge.define('Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1702', {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1702)],
+        statics: {
+            testFieldWithItemName: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1702).beforeTest(true, assert, Bridge.Test.QUnit.TestRunner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1702, 3);
+                t.getFixture().testFieldWithItemName();
             }
         }
     });
