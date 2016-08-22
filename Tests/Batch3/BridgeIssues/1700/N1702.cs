@@ -56,7 +56,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
             }
         }
 
-        [Test]
+        [Test(ExpectedCount = 3)]
         public void TestFieldWithItemName()
         {
             var set = Set<int>.Empty;
