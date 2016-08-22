@@ -6855,6 +6855,33 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
     
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1599', {
+        testCustomIEnumerableForStringJoin: function () {
+            var intValues = new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge1599.MyEnumerable$1(System.Int32))([1, 5, 6]);
+            Bridge.Test.Assert.areEqual("1, 5, 6", Bridge.toArray(intValues).join(", "));
+        }
+    });
+    
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1599.MyEnumerable$1', function (T) { return {
+        inherits: [System.Collections.Generic.IEnumerable$1(T)],
+        _items: null,
+        config: {
+            alias: [
+            "getEnumerator", "System$Collections$Generic$IEnumerable$1$" + Bridge.getTypeAlias(T) + "$getEnumerator"
+            ]
+        },
+        constructor: function (items) {
+            this.$initialize();
+            this._items = items;
+        },
+        System$Collections$IEnumerable$getEnumerator: function () {
+            return null;
+        },
+        getEnumerator: function () {
+            return Bridge.cast(System.Linq.Enumerable.from(this._items).toList(T).getEnumerator(), System.Collections.Generic.IEnumerator$1(T));
+        }
+    }; });
+    
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1641', {
         statics: {
             _Foo: null,
