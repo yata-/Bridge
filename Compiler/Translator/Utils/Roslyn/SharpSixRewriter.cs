@@ -92,13 +92,192 @@ namespace Bridge.Translator
             }
         }
 
+        private bool IsAnonymous(ITypeSymbol type)
+        {
+            if (type.IsAnonymousType)
+            {
+                return true;
+            }
+
+            var namedType = type as INamedTypeSymbol;
+            if (namedType != null && namedType.IsGenericType)
+            {
+                return namedType.TypeArguments.Any(this.IsAnonymous);
+            }
+
+            return false;
+        }
+
+        private static bool IsExpandedForm(SemanticModel semanticModel, InvocationExpressionSyntax node, IMethodSymbol method)
+        {
+            var parameters = method.Parameters;
+            var arguments = node.ArgumentList.Arguments;
+            
+
+            ExpressionSyntax target = null;
+            if (method.ReducedFrom != null)
+            {
+                var mae = (MemberAccessExpressionSyntax)node.Expression;
+                target = mae.Expression;
+            }
+
+            var isReducedExtensionMethod = target != null;
+
+            if (parameters.Length == 0 || !parameters[parameters.Length - 1].IsParams)
+                return false;   // Last parameter must be params
+
+            int actualArgumentCount = arguments.Count + (isReducedExtensionMethod ? 1 : 0);
+
+            if (actualArgumentCount < parameters.Length - 1)
+                return false;   // No default arguments are allowed
+
+            if (arguments.Any(a => a.NameColon != null))
+                return false;   // No named arguments are allowed
+
+            if (actualArgumentCount == parameters.Length - 1)
+                return true;    // Empty param array
+
+            var lastType = semanticModel.GetTypeInfo(arguments[arguments.Count - 1].Expression).ConvertedType;
+            if (Equals(((IArrayTypeSymbol)parameters[parameters.Length - 1].Type).ElementType, lastType))
+                return true;    // A param array needs to be created
+
+            return false;
+        }
+
+        public override SyntaxNode VisitArgument(ArgumentSyntax node)
+        {
+            var ti = this.semanticModel.GetTypeInfo(node.Expression);
+            
+            ITypeSymbol type = null;
+            IMethodSymbol method = null;
+            IParameterSymbol parameter = null;
+
+            if (ti.Type != null && ti.Type.TypeKind == TypeKind.Delegate)
+            {
+                type = ti.Type;
+            }
+            else if (ti.ConvertedType != null && ti.ConvertedType.TypeKind == TypeKind.Delegate)
+            {
+                type = ti.ConvertedType;
+            }
+
+            if (type != null)
+            {
+                var list = node.Parent as ArgumentListSyntax;
+                var invocation = node.Parent.Parent as InvocationExpressionSyntax;
+
+                if (list != null && invocation != null)
+                {
+                    method = this.semanticModel.GetSymbolInfo(invocation).Symbol as IMethodSymbol;
+
+                    if (method != null)
+                    {
+                        if (node.NameColon != null)
+                        {
+                            if (node.NameColon.Name != null)
+                            {
+                                var nameText = node.NameColon.Name.Identifier.ValueText;
+                                if (nameText != null)
+                                {
+                                    foreach (var p in method.Parameters)
+                                    {
+                                        if (string.Equals(p.Name, nameText, StringComparison.Ordinal))
+                                        {
+                                            parameter = p;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            var index = list.Arguments.IndexOf(node);
+                            if (index >= 0)
+                            {
+                                if (index < method.Parameters.Length)
+                                {
+                                    parameter = method.Parameters[index];
+                                }
+                                else if (index >= method.Parameters.Length && method.Parameters[method.Parameters.Length - 1].IsParams)
+                                {
+                                    parameter = method.Parameters[method.Parameters.Length - 1];
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            node = (ArgumentSyntax)base.VisitArgument(node);
+
+            if (parameter != null && !this.IsAnonymous(parameter.Type))
+            {
+                var pType = parameter.Type;
+                if (parameter.IsParams &&
+                    IsExpandedForm(this.semanticModel, (InvocationExpressionSyntax) node.Parent.Parent, method))
+                {
+                    pType = ((IArrayTypeSymbol)parameter.Type).ElementType;
+                }
+
+                if (node.Expression is CastExpressionSyntax && type.Equals(pType))
+                {
+                    return node;
+                }
+
+                if (pType.TypeKind == TypeKind.Delegate || parameter.IsParams && ((IArrayTypeSymbol)parameter.Type).ElementType.TypeKind == TypeKind.Delegate)
+                {
+                    var name = SyntaxFactory.IdentifierName(pType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)).WithoutTrivia();
+                    var expr = node.Expression;
+
+                    if (expr is LambdaExpressionSyntax)
+                    {
+                        expr = SyntaxFactory.ParenthesizedExpression(expr);
+                    }
+
+                    var cast = SyntaxFactory.CastExpression(name, expr);
+                    node = node.WithExpression(cast);
+                }
+            }
+
+            return node;
+        }
+
         public override SyntaxNode VisitInvocationExpression(InvocationExpressionSyntax node)
         {
+            var method = this.semanticModel.GetSymbolInfo(node).Symbol as IMethodSymbol;
+
             node = (InvocationExpressionSyntax)base.VisitInvocationExpression(node);
-            if (node.Expression is IdentifierNameSyntax && ((IdentifierNameSyntax)node.Expression).Identifier.Text == "nameof")
+            if (node.Expression is IdentifierNameSyntax &&
+                ((IdentifierNameSyntax) node.Expression).Identifier.Text == "nameof")
             {
                 string name = SyntaxHelper.GetSymbolName(node, semanticModel);
                 return SyntaxFactory.LiteralExpression(SyntaxKind.StringLiteralExpression, SyntaxFactory.Literal(name));
+            }
+            else
+            {
+                if (method != null && method.IsGenericMethod && !method.TypeArguments.Any(this.IsAnonymous))
+                {
+                    var expr = node.Expression;
+                    var ma = expr as MemberAccessExpressionSyntax;
+                    
+                    if (expr is IdentifierNameSyntax)
+                    {
+                        var name = (IdentifierNameSyntax) expr;
+                        var genericName = SyntaxHelper.GenerateGenericName(name.Identifier, method.TypeArguments);
+                        genericName = genericName.WithLeadingTrivia(name.GetLeadingTrivia()).WithTrailingTrivia(name.GetTrailingTrivia());
+                        node = node.WithExpression(genericName);
+                    }
+                    else if (ma != null && ma.Name is IdentifierNameSyntax)
+                    {
+                        expr = ma.Name;
+                        var name = (IdentifierNameSyntax)expr;
+                        var genericName = SyntaxHelper.GenerateGenericName(name.Identifier, method.TypeArguments);
+                        genericName = genericName.WithLeadingTrivia(name.GetLeadingTrivia()).WithTrailingTrivia(name.GetTrailingTrivia());
+                        ma = ma.WithName(genericName);
+                        node = node.WithExpression(ma);
+                    }
+                }
             }
 
             return node;
@@ -192,6 +371,12 @@ namespace Bridge.Translator
 
             if (symbol != null && symbol.IsStatic && symbol.ContainingType != null && (symbol is IMethodSymbol || symbol is IPropertySymbol || symbol is IFieldSymbol || symbol is IEventSymbol) && !(node.Parent is MemberAccessExpressionSyntax))
             {
+                if (symbol is IMethodSymbol && ((IMethodSymbol) symbol).IsGenericMethod)
+                {
+                    var genericName = SyntaxHelper.GenerateGenericName(node.Identifier, ((IMethodSymbol)symbol).TypeArguments);
+                    return genericName.WithLeadingTrivia(node.GetLeadingTrivia()).WithTrailingTrivia(node.GetTrailingTrivia());
+                }
+
                 return SyntaxFactory.IdentifierName(SyntaxFactory.Identifier(node.GetLeadingTrivia(), symbol.FullyQualifiedName(), node.GetTrailingTrivia()));
             }
 
@@ -331,24 +516,101 @@ namespace Bridge.Translator
             return node;
         }
 
+        public override SyntaxNode VisitParenthesizedLambdaExpression(ParenthesizedLambdaExpressionSyntax node)
+        {
+            var ti = this.semanticModel.GetTypeInfo(node);
+            var oldValue = this.IsExpressionOfT;
+
+            if (ti.Type != null && ti.Type.IsExpressionOfT() ||
+                ti.ConvertedType != null && ti.ConvertedType.IsExpressionOfT())
+            {
+                this.IsExpressionOfT = true;
+            }
+
+            var newNode = base.VisitParenthesizedLambdaExpression(node);
+
+            this.IsExpressionOfT = oldValue;
+
+            return newNode;
+        }
+
+        public override SyntaxNode VisitSimpleLambdaExpression(SimpleLambdaExpressionSyntax node)
+        {
+            var ti = this.semanticModel.GetTypeInfo(node);
+            var oldValue = this.IsExpressionOfT;
+
+            if (ti.Type != null && ti.Type.IsExpressionOfT() ||
+                ti.ConvertedType != null && ti.ConvertedType.IsExpressionOfT())
+            {
+                this.IsExpressionOfT = true;
+            }
+
+            var newNode = base.VisitSimpleLambdaExpression(node);
+
+            this.IsExpressionOfT = oldValue;
+
+            return newNode;
+        }
+
+        public bool IsExpressionOfT { get; set; }
+        private int indexInstance;
+
         public override SyntaxNode VisitObjectCreationExpression(ObjectCreationExpressionSyntax node)
         {
-            node = (ObjectCreationExpressionSyntax)base.VisitObjectCreationExpression(node);
+            IMethodSymbol method = null;
+            bool extensionMethodExists = false;
+            if (node.Initializer != null)
+            {
+                foreach (var init in node.Initializer.Expressions)
+                {
+                    var collectionInitializer = this.semanticModel.GetCollectionInitializerSymbolInfo(init).Symbol;
+                    var mInfo = collectionInitializer != null ? collectionInitializer as IMethodSymbol : null;
+                    if (mInfo != null)
+                    {
+                        if (mInfo.IsExtensionMethod)
+                        {
+                            extensionMethodExists = true;
+                        }
+                        method = mInfo;
+                        break;
+                    }
+                }
+            }
 
-            if (node.Initializer != null && node.Initializer.Expressions.Any(init =>
+            node = (ObjectCreationExpressionSyntax)base.VisitObjectCreationExpression(node);
+            bool isImplicitElementAccessSyntax = false;
+            if (node.Initializer != null && (method != null || node.Initializer.Expressions.Any(init =>
             {
                 if (init.Kind() == SyntaxKind.SimpleAssignmentExpression)
                 {
                     var be = (AssignmentExpressionSyntax)init;
                     if (be.Left is ImplicitElementAccessSyntax)
                     {
+                        isImplicitElementAccessSyntax = true;
                         return true;
                     }
                 }
 
                 return false;
-            }))
+            })))
             {
+                if (this.IsExpressionOfT)
+                {
+                    if (isImplicitElementAccessSyntax)
+                    {
+                        var mapped = this.semanticModel.SyntaxTree.GetLineSpan(node.Span);
+                        throw new Exception(string.Format(CultureInfo.InvariantCulture, "{2} - {3}({0},{1}): {4}", mapped.StartLinePosition.Line + 1, mapped.StartLinePosition.Character + 1, "Index collection initializer is not supported inside Expression<T>", this.semanticModel.SyntaxTree.FilePath, node.ToString()));
+                    }
+
+                    if (extensionMethodExists)
+                    {
+                        var mapped = this.semanticModel.SyntaxTree.GetLineSpan(node.Span);
+                        throw new Exception(string.Format(CultureInfo.InvariantCulture, "{2} - {3}({0},{1}): {4}", mapped.StartLinePosition.Line + 1, mapped.StartLinePosition.Character + 1, "Extension method for collection initializer is not supported inside Expression<T>", this.semanticModel.SyntaxTree.FilePath, node.ToString()));
+                    }
+
+                    return node;
+                }
+
                 var initializers = node.Initializer.Expressions;
                 ExpressionSyntax[] args = new ExpressionSyntax[2];
                 var target = node.WithInitializer(null).WithoutTrivia();
@@ -362,31 +624,91 @@ namespace Bridge.Translator
 
                 List<StatementSyntax> statements = new List<StatementSyntax>();
 
+                var parent = node.Parent;
+
+                while (parent != null && !(parent is MethodDeclarationSyntax) && !(parent is ClassDeclarationSyntax))
+                {
+                    parent = parent.Parent;
+                }
+
+                string instance = "_o" + ++indexInstance;
+                if (parent != null)
+                {
+                    var info = LocalUsageGatherer.GatherInfo(this.semanticModel, parent);
+                    while (info.DirectlyOrIndirectlyUsedLocals.Any(s => s.Name == instance))
+                    {
+                        instance = "_o" + ++indexInstance;
+                    }
+                }
+
                 foreach (var init in initializers)
                 {
-                    var be = (AssignmentExpressionSyntax)init;
-                    var indexerKeys = be.Left as ImplicitElementAccessSyntax;
-
-                    if (indexerKeys != null)
+                    var collectionInitializer = this.semanticModel.GetCollectionInitializerSymbolInfo(init).Symbol;
+                    var mInfo = collectionInitializer != null ? collectionInitializer as IMethodSymbol : null;
+                    if (mInfo != null)
                     {
-                        be = be.WithLeft(SyntaxFactory.ElementAccessExpression(SyntaxFactory.IdentifierName("o"), indexerKeys.ArgumentList.WithoutTrivia()));
+                        if (mInfo.IsStatic)
+                        {
+                            var ie = SyntaxHelper.GenerateStaticMethodCall(mInfo.Name,
+                                mInfo.ContainingType.FullyQualifiedName(),
+                                new[]
+                                {
+                                    SyntaxFactory.Argument(SyntaxFactory.IdentifierName(instance)),
+                                    SyntaxFactory.Argument(init.WithoutTrivia())
+                                }, mInfo.TypeArguments.ToArray());
+                            statements.Add(ie);
+                        }
+                        else
+                        {
+                            ArgumentSyntax[] arguments = null;
+                            if (init.Kind() == SyntaxKind.ComplexElementInitializerExpression)
+                            {
+                                var complexInit = (InitializerExpressionSyntax) init;
+
+                                arguments = new ArgumentSyntax[complexInit.Expressions.Count];
+                                for (int i = 0; i < complexInit.Expressions.Count; i++)
+                                {
+                                    arguments[i] = SyntaxFactory.Argument(complexInit.Expressions[i].WithoutTrivia());
+                                }
+                            }
+                            else
+                            {
+                                arguments = new[]
+                                {
+                                    SyntaxFactory.Argument(init.WithoutTrivia())
+                                };
+                            }
+
+                            var ie = SyntaxHelper.GenerateMethodCall(mInfo.Name, instance, arguments, mInfo.TypeArguments.ToArray());
+                            statements.Add(ie);
+                        }
                     }
                     else
                     {
-                        var identifier = (IdentifierNameSyntax)be.Left;
-                        be = be.WithLeft(SyntaxFactory.MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, SyntaxFactory.IdentifierName("o"), SyntaxFactory.IdentifierName(identifier.Identifier.ValueText)));
+                        var be = (AssignmentExpressionSyntax)init;
+                        var indexerKeys = be.Left as ImplicitElementAccessSyntax;
+
+                        if (indexerKeys != null)
+                        {
+                            be = be.WithLeft(SyntaxFactory.ElementAccessExpression(SyntaxFactory.IdentifierName(instance), indexerKeys.ArgumentList.WithoutTrivia()));
+                        }
+                        else
+                        {
+                            var identifier = (IdentifierNameSyntax)be.Left;
+                            be = be.WithLeft(SyntaxFactory.MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, SyntaxFactory.IdentifierName(instance), SyntaxFactory.IdentifierName(identifier.Identifier.ValueText)));
+                        }
+
+                        be = be.WithRight(be.Right.WithoutTrivia());
+                        be = be.WithoutTrivia();
+
+                        statements.Add(SyntaxFactory.ExpressionStatement(be, SyntaxFactory.Token(SyntaxKind.SemicolonToken)));
                     }
-
-                    be = be.WithRight(be.Right.WithoutTrivia());
-                    be = be.WithoutTrivia();
-
-                    statements.Add(SyntaxFactory.ExpressionStatement(be, SyntaxFactory.Token(SyntaxKind.SemicolonToken)));
                 }
 
-                statements.Add(SyntaxFactory.ReturnStatement(SyntaxFactory.IdentifierName("o").WithLeadingTrivia(SyntaxFactory.Space)));
+                statements.Add(SyntaxFactory.ReturnStatement(SyntaxFactory.IdentifierName(instance).WithLeadingTrivia(SyntaxFactory.Space)));
 
                 var body = SyntaxFactory.Block(statements);
-                var lambda = SyntaxFactory.ParenthesizedLambdaExpression(SyntaxFactory.ParameterList(SyntaxFactory.SeparatedList(new[] { SyntaxFactory.Parameter(SyntaxFactory.Identifier("o")) })), body);
+                var lambda = SyntaxFactory.ParenthesizedLambdaExpression(SyntaxFactory.ParameterList(SyntaxFactory.SeparatedList(new[] { SyntaxFactory.Parameter(SyntaxFactory.Identifier(instance)) })), body);
                 args[1] = lambda;
 
                 var methodIdentifier = SyntaxFactory.IdentifierName("Bridge.Script.CallFor");
