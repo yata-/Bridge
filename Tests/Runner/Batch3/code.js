@@ -11525,6 +11525,15 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
 
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge706', {
+        statics: {
+            value: 7,
+            testFieldPropertyWithInitializer: function () {
+                Bridge.Test.Assert.areEqual(7, Bridge.ClientTest.Batch3.BridgeIssues.Bridge706.value);
+            }
+        }
+    });
+
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge708', {
         statics: {
             testUseCase: function () {
