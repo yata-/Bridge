@@ -67,6 +67,7 @@ namespace Bridge.Translator
             this.Location = location;
             this.Validator = this.CreateValidator();
             this.DefineConstants = new List<string>() { "BRIDGE" };
+            this.DefaultNamespace = Translator.DefaultRootNamespace;
         }
 
         public Translator(string location, bool fromTask = false) : this(location)
