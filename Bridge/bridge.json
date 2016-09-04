@@ -18,7 +18,7 @@
       // File paths relative to project root
       "name": "bridge.js",
       "header": "Resources/.auxiliary/Header.js",
-      "remark": "// @source @{name}\n",
+      "remark": "    // @source @{name}\n",
       "files": [
         "Resources/.auxiliary/Init.js",
         "Resources/Core.js",
@@ -87,6 +87,7 @@
         "Resources/Console.js",
         "Resources/.generated/system/random.js",
         "Resources/.generated/system/threading/timer.js",
+        "Resources/.generated/bridge/console.js",
         "Resources/.auxiliary/End.js",
         "Resources/.auxiliary/Finally.js"
       ]
