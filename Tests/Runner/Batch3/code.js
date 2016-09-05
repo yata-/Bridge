@@ -6010,6 +6010,25 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
 
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1448.Plainer');
 
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1458', {
+        statics: {
+            output: null,
+            clearOutput: function () {
+                System.Console.output = "";
+            },
+            resetOutput: function () {
+                System.Console.output = null;
+            },
+            testConsoleWriteLineForLong: function () {
+                var v = System.Int64(1);
+
+                System.Console.log(v);
+                Bridge.Test.Assert.areEqual("1", System.Console.output);
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1458.clearOutput();
+            }
+        }
+    });
+
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1459', {
         statics: {
             testHtmlElements: function () {
