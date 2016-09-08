@@ -7706,6 +7706,16 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
 
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1737.SomethingElse');
 
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1741', {
+        testNumbersHashCode: function () {
+            Bridge.Test.Assert.areEqual$1(10, Bridge.getHashCode((10)), "10/10");
+            Bridge.Test.Assert.areNotEqual$1(Bridge.getHashCode((10)), Bridge.getHashCode((100)), "10/100");
+
+            Bridge.Test.Assert.areEqual$1(Bridge.getHashCode((100.1)), Bridge.getHashCode((100.1)), "100.1/100.1");
+            Bridge.Test.Assert.areNotEqual$1(Bridge.getHashCode((100.1)), Bridge.getHashCode((100.2)), "100.1/100.2");
+        }
+    });
+
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A', {
         config: {
             properties: {
