@@ -275,6 +275,9 @@
                 QUnit.test("Float32ArrayTests - ByteOffsetPropertyWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float32ArrayTests.byteOffsetPropertyWorks);
                 QUnit.test("Float32ArrayTests - ByteLengthPropertyWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float32ArrayTests.byteLengthPropertyWorks);
                 QUnit.test("Float32ArrayTests - IndexOfWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float32ArrayTests.indexOfWorks);
+                QUnit.test("Float32ArrayTests - ContainsWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float32ArrayTests.containsWorks);
+                QUnit.test("Float32ArrayTests - ForeachWorks_SPI_1401", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float32ArrayTests.foreachWorks_SPI_1401);
+                QUnit.test("Float32ArrayTests - GetEnumeratorWorks_SPI_1401", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float32ArrayTests.getEnumeratorWorks_SPI_1401);
                 QUnit.test("Float32ArrayTests - IEnumerableGetEnumeratorWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float32ArrayTests.iEnumerableGetEnumeratorWorks);
                 QUnit.test("Float32ArrayTests - ICollectionMethodsWork_SPI_1559", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float32ArrayTests.iCollectionMethodsWork_SPI_1559);
                 QUnit.test("Float32ArrayTests - IListMethodsWork_SPI_1559", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float32ArrayTests.iListMethodsWork_SPI_1559);
@@ -298,6 +301,9 @@
                 QUnit.test("Float64ArrayTests - ByteOffsetPropertyWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float64ArrayTests.byteOffsetPropertyWorks);
                 QUnit.test("Float64ArrayTests - ByteLengthPropertyWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float64ArrayTests.byteLengthPropertyWorks);
                 QUnit.test("Float64ArrayTests - IndexOfWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float64ArrayTests.indexOfWorks);
+                QUnit.test("Float64ArrayTests - ContainsWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float64ArrayTests.containsWorks);
+                QUnit.test("Float64ArrayTests - ForeachWorks_SPI_1401", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float64ArrayTests.foreachWorks_SPI_1401);
+                QUnit.test("Float64ArrayTests - GetEnumeratorWorks_SPI_1401", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float64ArrayTests.getEnumeratorWorks_SPI_1401);
                 QUnit.test("Float64ArrayTests - IEnumerableGetEnumeratorWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float64ArrayTests.iEnumerableGetEnumeratorWorks);
                 QUnit.test("Float64ArrayTests - ICollectionMethodsWork_SPI_1559", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float64ArrayTests.iCollectionMethodsWork_SPI_1559);
                 QUnit.test("Float64ArrayTests - IListMethodsWork_SPI_1559", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float64ArrayTests.iListMethodsWork_SPI_1559);
@@ -321,6 +327,9 @@
                 QUnit.test("Int16ArrayTests - ByteOffsetPropertyWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int16ArrayTests.byteOffsetPropertyWorks);
                 QUnit.test("Int16ArrayTests - ByteLengthPropertyWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int16ArrayTests.byteLengthPropertyWorks);
                 QUnit.test("Int16ArrayTests - IndexOfWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int16ArrayTests.indexOfWorks);
+                QUnit.test("Int16ArrayTests - ContainsWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int16ArrayTests.containsWorks);
+                QUnit.test("Int16ArrayTests - ForeachWorks_SPI_1401", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int16ArrayTests.foreachWorks_SPI_1401);
+                QUnit.test("Int16ArrayTests - GetEnumeratorWorks_SPI_1401", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int16ArrayTests.getEnumeratorWorks_SPI_1401);
                 QUnit.test("Int16ArrayTests - IEnumerableGetEnumeratorWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int16ArrayTests.iEnumerableGetEnumeratorWorks);
                 QUnit.test("Int16ArrayTests - ICollectionMethodsWork_SPI_1559", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int16ArrayTests.iCollectionMethodsWork_SPI_1559);
                 QUnit.test("Int16ArrayTests - IListMethodsWork_SPI_1559", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int16ArrayTests.iListMethodsWork_SPI_1559);
@@ -344,6 +353,9 @@
                 QUnit.test("Int32ArrayTests - ByteOffsetPropertyWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int32ArrayTests.byteOffsetPropertyWorks);
                 QUnit.test("Int32ArrayTests - ByteLengthPropertyWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int32ArrayTests.byteLengthPropertyWorks);
                 QUnit.test("Int32ArrayTests - IndexOfWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int32ArrayTests.indexOfWorks);
+                QUnit.test("Int32ArrayTests - ContainsWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int32ArrayTests.containsWorks);
+                QUnit.test("Int32ArrayTests - ForeachWorks_SPI_1401", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int32ArrayTests.foreachWorks_SPI_1401);
+                QUnit.test("Int32ArrayTests - GetEnumeratorWorks_SPI_1401", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int32ArrayTests.getEnumeratorWorks_SPI_1401);
                 QUnit.test("Int32ArrayTests - IEnumerableGetEnumeratorWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int32ArrayTests.iEnumerableGetEnumeratorWorks);
                 QUnit.test("Int32ArrayTests - ICollectionMethodsWork_SPI_1559", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int32ArrayTests.iCollectionMethodsWork_SPI_1559);
                 QUnit.test("Int32ArrayTests - IListMethodsWork_SPI_1559", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int32ArrayTests.iListMethodsWork_SPI_1559);
@@ -367,6 +379,9 @@
                 QUnit.test("Int8ArrayTests - ByteOffsetPropertyWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int8ArrayTests.byteOffsetPropertyWorks);
                 QUnit.test("Int8ArrayTests - ByteLengthPropertyWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int8ArrayTests.byteLengthPropertyWorks);
                 QUnit.test("Int8ArrayTests - IndexOfWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int8ArrayTests.indexOfWorks);
+                QUnit.test("Int8ArrayTests - ContainsWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int8ArrayTests.containsWorks);
+                QUnit.test("Int8ArrayTests - ForeachWorks_SPI_1401", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int8ArrayTests.foreachWorks_SPI_1401);
+                QUnit.test("Int8ArrayTests - GetEnumeratorWorks_SPI_1401", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int8ArrayTests.getEnumeratorWorks_SPI_1401);
                 QUnit.test("Int8ArrayTests - IEnumerableGetEnumeratorWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int8ArrayTests.iEnumerableGetEnumeratorWorks);
                 QUnit.test("Int8ArrayTests - ICollectionMethodsWork_SPI_1559", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int8ArrayTests.iCollectionMethodsWork_SPI_1559);
                 QUnit.test("Int8ArrayTests - IListMethodsWork_SPI_1559", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int8ArrayTests.iListMethodsWork_SPI_1559);
@@ -390,6 +405,9 @@
                 QUnit.test("Uint16ArrayTests - ByteOffsetPropertyWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint16ArrayTests.byteOffsetPropertyWorks);
                 QUnit.test("Uint16ArrayTests - ByteLengthPropertyWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint16ArrayTests.byteLengthPropertyWorks);
                 QUnit.test("Uint16ArrayTests - IndexOfWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint16ArrayTests.indexOfWorks);
+                QUnit.test("Uint16ArrayTests - ContainsWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint16ArrayTests.containsWorks);
+                QUnit.test("Uint16ArrayTests - ForeachWorks_SPI_1401", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint16ArrayTests.foreachWorks_SPI_1401);
+                QUnit.test("Uint16ArrayTests - GetEnumeratorWorks_SPI_1401", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint16ArrayTests.getEnumeratorWorks_SPI_1401);
                 QUnit.test("Uint16ArrayTests - IEnumerableGetEnumeratorWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint16ArrayTests.iEnumerableGetEnumeratorWorks);
                 QUnit.test("Uint16ArrayTests - ICollectionMethodsWork_SPI_1559", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint16ArrayTests.iCollectionMethodsWork_SPI_1559);
                 QUnit.test("Uint16ArrayTests - IListMethodsWork_SPI_1559", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint16ArrayTests.iListMethodsWork_SPI_1559);
@@ -413,6 +431,9 @@
                 QUnit.test("Uint32ArrayTests - ByteOffsetPropertyWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint32ArrayTests.byteOffsetPropertyWorks);
                 QUnit.test("Uint32ArrayTests - ByteLengthPropertyWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint32ArrayTests.byteLengthPropertyWorks);
                 QUnit.test("Uint32ArrayTests - IndexOfWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint32ArrayTests.indexOfWorks);
+                QUnit.test("Uint32ArrayTests - ContainsWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint32ArrayTests.containsWorks);
+                QUnit.test("Uint32ArrayTests - ForeachWorks_SPI_1401", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint32ArrayTests.foreachWorks_SPI_1401);
+                QUnit.test("Uint32ArrayTests - GetEnumeratorWorks_SPI_1401", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint32ArrayTests.getEnumeratorWorks_SPI_1401);
                 QUnit.test("Uint32ArrayTests - IEnumerableGetEnumeratorWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint32ArrayTests.iEnumerableGetEnumeratorWorks);
                 QUnit.test("Uint32ArrayTests - ICollectionMethodsWork_SPI_1559", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint32ArrayTests.iCollectionMethodsWork_SPI_1559);
                 QUnit.test("Uint32ArrayTests - IListMethodsWork_SPI_1559", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint32ArrayTests.iListMethodsWork_SPI_1559);
@@ -436,6 +457,9 @@
                 QUnit.test("Uint8ArrayTests - ByteOffsetPropertyWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ArrayTests.byteOffsetPropertyWorks);
                 QUnit.test("Uint8ArrayTests - ByteLengthPropertyWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ArrayTests.byteLengthPropertyWorks);
                 QUnit.test("Uint8ArrayTests - IndexOfWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ArrayTests.indexOfWorks);
+                QUnit.test("Uint8ArrayTests - ContainsWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ArrayTests.containsWorks);
+                QUnit.test("Uint8ArrayTests - ForeachWorks_SPI_1401", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ArrayTests.foreachWorks_SPI_1401);
+                QUnit.test("Uint8ArrayTests - GetEnumeratorWorks_SPI_1401", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ArrayTests.getEnumeratorWorks_SPI_1401);
                 QUnit.test("Uint8ArrayTests - IEnumerableGetEnumeratorWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ArrayTests.iEnumerableGetEnumeratorWorks);
                 QUnit.test("Uint8ArrayTests - ICollectionMethodsWork_SPI_1559", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ArrayTests.iCollectionMethodsWork_SPI_1559);
                 QUnit.test("Uint8ArrayTests - IListMethodsWork_SPI_1559", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ArrayTests.iListMethodsWork_SPI_1559);
@@ -461,6 +485,9 @@
                 QUnit.test("Uint8ClampedArrayTests - ByteOffsetPropertyWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ClampedArrayTests.byteOffsetPropertyWorks);
                 QUnit.test("Uint8ClampedArrayTests - ByteLengthPropertyWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ClampedArrayTests.byteLengthPropertyWorks);
                 QUnit.test("Uint8ClampedArrayTests - IndexOfWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ClampedArrayTests.indexOfWorks);
+                QUnit.test("Uint8ClampedArrayTests - ContainsWorks", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ClampedArrayTests.containsWorks);
+                QUnit.test("Uint8ClampedArrayTests - ForeachWorks_SPI_1401", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ClampedArrayTests.foreachWorks_SPI_1401);
+                QUnit.test("Uint8ClampedArrayTests - GetEnumeratorWorks_SPI_1401", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ClampedArrayTests.getEnumeratorWorks_SPI_1401);
                 QUnit.test("Uint8ClampedArrayTests - IEnumerableGetEnumeratorWorks_SPI_1560", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ClampedArrayTests.iEnumerableGetEnumeratorWorks_SPI_1560);
                 QUnit.test("Uint8ClampedArrayTests - ICollectionMethodsWork_SPI_1559_1560", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ClampedArrayTests.iCollectionMethodsWork_SPI_1559_1560);
                 QUnit.test("Uint8ClampedArrayTests - IListMethodsWork_SPI_1559_1560", Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ClampedArrayTests.iListMethodsWork_SPI_1559_1560);
@@ -3033,6 +3060,18 @@
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Float32ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float32ArrayTests);
                 t.getFixture().indexOfWorks();
             },
+            containsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Float32ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float32ArrayTests);
+                t.getFixture().containsWorks();
+            },
+            foreachWorks_SPI_1401: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Float32ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float32ArrayTests);
+                t.getFixture().foreachWorks_SPI_1401();
+            },
+            getEnumeratorWorks_SPI_1401: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Float32ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float32ArrayTests);
+                t.getFixture().getEnumeratorWorks_SPI_1401();
+            },
             iEnumerableGetEnumeratorWorks: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Float32ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float32ArrayTests);
                 t.getFixture().iEnumerableGetEnumeratorWorks();
@@ -3130,6 +3169,18 @@
             indexOfWorks: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Float64ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float64ArrayTests);
                 t.getFixture().indexOfWorks();
+            },
+            containsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Float64ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float64ArrayTests);
+                t.getFixture().containsWorks();
+            },
+            foreachWorks_SPI_1401: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Float64ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float64ArrayTests);
+                t.getFixture().foreachWorks_SPI_1401();
+            },
+            getEnumeratorWorks_SPI_1401: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Float64ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float64ArrayTests);
+                t.getFixture().getEnumeratorWorks_SPI_1401();
             },
             iEnumerableGetEnumeratorWorks: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Float64ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Float64ArrayTests);
@@ -3229,6 +3280,18 @@
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Int16ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int16ArrayTests);
                 t.getFixture().indexOfWorks();
             },
+            containsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Int16ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int16ArrayTests);
+                t.getFixture().containsWorks();
+            },
+            foreachWorks_SPI_1401: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Int16ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int16ArrayTests);
+                t.getFixture().foreachWorks_SPI_1401();
+            },
+            getEnumeratorWorks_SPI_1401: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Int16ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int16ArrayTests);
+                t.getFixture().getEnumeratorWorks_SPI_1401();
+            },
             iEnumerableGetEnumeratorWorks: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Int16ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int16ArrayTests);
                 t.getFixture().iEnumerableGetEnumeratorWorks();
@@ -3326,6 +3389,18 @@
             indexOfWorks: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Int32ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int32ArrayTests);
                 t.getFixture().indexOfWorks();
+            },
+            containsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Int32ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int32ArrayTests);
+                t.getFixture().containsWorks();
+            },
+            foreachWorks_SPI_1401: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Int32ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int32ArrayTests);
+                t.getFixture().foreachWorks_SPI_1401();
+            },
+            getEnumeratorWorks_SPI_1401: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Int32ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int32ArrayTests);
+                t.getFixture().getEnumeratorWorks_SPI_1401();
             },
             iEnumerableGetEnumeratorWorks: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Int32ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int32ArrayTests);
@@ -3425,6 +3500,18 @@
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Int8ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int8ArrayTests);
                 t.getFixture().indexOfWorks();
             },
+            containsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Int8ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int8ArrayTests);
+                t.getFixture().containsWorks();
+            },
+            foreachWorks_SPI_1401: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Int8ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int8ArrayTests);
+                t.getFixture().foreachWorks_SPI_1401();
+            },
+            getEnumeratorWorks_SPI_1401: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Int8ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int8ArrayTests);
+                t.getFixture().getEnumeratorWorks_SPI_1401();
+            },
             iEnumerableGetEnumeratorWorks: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Int8ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Int8ArrayTests);
                 t.getFixture().iEnumerableGetEnumeratorWorks();
@@ -3522,6 +3609,18 @@
             indexOfWorks: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Uint16ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint16ArrayTests);
                 t.getFixture().indexOfWorks();
+            },
+            containsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Uint16ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint16ArrayTests);
+                t.getFixture().containsWorks();
+            },
+            foreachWorks_SPI_1401: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Uint16ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint16ArrayTests);
+                t.getFixture().foreachWorks_SPI_1401();
+            },
+            getEnumeratorWorks_SPI_1401: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Uint16ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint16ArrayTests);
+                t.getFixture().getEnumeratorWorks_SPI_1401();
             },
             iEnumerableGetEnumeratorWorks: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Uint16ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint16ArrayTests);
@@ -3621,6 +3720,18 @@
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Uint32ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint32ArrayTests);
                 t.getFixture().indexOfWorks();
             },
+            containsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Uint32ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint32ArrayTests);
+                t.getFixture().containsWorks();
+            },
+            foreachWorks_SPI_1401: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Uint32ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint32ArrayTests);
+                t.getFixture().foreachWorks_SPI_1401();
+            },
+            getEnumeratorWorks_SPI_1401: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Uint32ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint32ArrayTests);
+                t.getFixture().getEnumeratorWorks_SPI_1401();
+            },
             iEnumerableGetEnumeratorWorks: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Uint32ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint32ArrayTests);
                 t.getFixture().iEnumerableGetEnumeratorWorks();
@@ -3718,6 +3829,18 @@
             indexOfWorks: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Uint8ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ArrayTests);
                 t.getFixture().indexOfWorks();
+            },
+            containsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Uint8ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ArrayTests);
+                t.getFixture().containsWorks();
+            },
+            foreachWorks_SPI_1401: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Uint8ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ArrayTests);
+                t.getFixture().foreachWorks_SPI_1401();
+            },
+            getEnumeratorWorks_SPI_1401: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Uint8ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ArrayTests);
+                t.getFixture().getEnumeratorWorks_SPI_1401();
             },
             iEnumerableGetEnumeratorWorks: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Uint8ArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ArrayTests);
@@ -3824,6 +3947,18 @@
             indexOfWorks: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Uint8ClampedArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ClampedArrayTests);
                 t.getFixture().indexOfWorks();
+            },
+            containsWorks: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Uint8ClampedArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ClampedArrayTests);
+                t.getFixture().containsWorks();
+            },
+            foreachWorks_SPI_1401: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Uint8ClampedArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ClampedArrayTests);
+                t.getFixture().foreachWorks_SPI_1401();
+            },
+            getEnumeratorWorks_SPI_1401: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Uint8ClampedArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ClampedArrayTests);
+                t.getFixture().getEnumeratorWorks_SPI_1401();
             },
             iEnumerableGetEnumeratorWorks_SPI_1560: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch4.Collections.TypedArrays.Uint8ClampedArrayTests).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch4_Tests_Runner.Bridge_ClientTest_Batch4_Collections_TypedArrays_Uint8ClampedArrayTests);

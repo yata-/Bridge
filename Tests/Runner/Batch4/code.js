@@ -3064,8 +3064,35 @@
         },
         indexOfWorks: function () {
             var arr = new Float32Array([3, 6, 2, 9, 5]);
-            Bridge.Test.Assert.areEqual$1(3, arr.indexOf(9), "9");
-            Bridge.Test.Assert.areEqual$1(-1, arr.indexOf(1), "1");
+            Bridge.Test.Assert.areEqual$1(3, System.Array.indexOf(arr, 9), "9");
+            Bridge.Test.Assert.areEqual$1(-1, System.Array.indexOf(arr, 1), "1");
+        },
+        containsWorks: function () {
+            var arr = new Float32Array([3, 6, 2, 9, 5]);
+            Bridge.Test.Assert.true$1(System.Array.contains(arr, 9), "9");
+            Bridge.Test.Assert.false$1(System.Array.contains(arr, 1), "1");
+        },
+        foreachWorks_SPI_1401: function () {
+            var $t;
+            var arr = new Float32Array([3, 6, 2, 9, 5]);
+            var l = new (System.Collections.Generic.List$1(System.Single))();
+            // #1401
+            $t = Bridge.getEnumerator(arr);
+            while ($t.moveNext()) {
+                var i = $t.getCurrent();
+                l.add(i);
+            }
+            Bridge.Test.Assert.areEqual(l.toArray(), [3, 6, 2, 9, 5]);
+        },
+        getEnumeratorWorks_SPI_1401: function () {
+            var arr = new Float32Array([3, 6, 2, 9, 5]);
+            var l = new (System.Collections.Generic.List$1(System.Single))();
+            // #1401
+            var enm = Bridge.getEnumerator(arr);
+            while (enm.System$Collections$IEnumerator$moveNext()) {
+                l.add(enm[Bridge.geti(enm, "System$Collections$Generic$IEnumerator$1$System$Single$getCurrent$1", "getCurrent$1")]());
+            }
+            Bridge.Test.Assert.areEqual(l.toArray(), [3, 6, 2, 9, 5]);
         },
         iEnumerableGetEnumeratorWorks: function () {
             var arr = Bridge.cast(new Float32Array([3, 6, 2, 9, 5]), System.Collections.Generic.IEnumerable$1(System.Single));
@@ -3251,8 +3278,35 @@
         },
         indexOfWorks: function () {
             var arr = new Float64Array([3, 6, 2, 9, 5]);
-            Bridge.Test.Assert.areEqual$1(3, arr.indexOf(9), "9");
-            Bridge.Test.Assert.areEqual$1(-1, arr.indexOf(1), "1");
+            Bridge.Test.Assert.areEqual$1(3, System.Array.indexOf(arr, 9), "9");
+            Bridge.Test.Assert.areEqual$1(-1, System.Array.indexOf(arr, 1), "1");
+        },
+        containsWorks: function () {
+            var arr = new Float64Array([3, 6, 2, 9, 5]);
+            Bridge.Test.Assert.true$1(System.Array.contains(arr, 9), "9");
+            Bridge.Test.Assert.false$1(System.Array.contains(arr, 1), "1");
+        },
+        foreachWorks_SPI_1401: function () {
+            var $t;
+            var arr = new Float64Array([3, 6, 2, 9, 5]);
+            var l = new (System.Collections.Generic.List$1(System.Double))();
+            // #1401
+            $t = Bridge.getEnumerator(arr);
+            while ($t.moveNext()) {
+                var i = $t.getCurrent();
+                l.add(i);
+            }
+            Bridge.Test.Assert.areEqual(l.toArray(), [3, 6, 2, 9, 5]);
+        },
+        getEnumeratorWorks_SPI_1401: function () {
+            var arr = new Float64Array([3, 6, 2, 9, 5]);
+            var l = new (System.Collections.Generic.List$1(System.Double))();
+            // #1401
+            var enm = Bridge.getEnumerator(arr);
+            while (enm.System$Collections$IEnumerator$moveNext()) {
+                l.add(enm[Bridge.geti(enm, "System$Collections$Generic$IEnumerator$1$System$Double$getCurrent$1", "getCurrent$1")]());
+            }
+            Bridge.Test.Assert.areEqual(l.toArray(), [3, 6, 2, 9, 5]);
         },
         iEnumerableGetEnumeratorWorks: function () {
             var arr = Bridge.cast(new Float64Array([3, 6, 2, 9, 5]), System.Collections.Generic.IEnumerable$1(System.Double));
@@ -3437,8 +3491,35 @@
         },
         indexOfWorks: function () {
             var arr = new Int16Array([3, 6, 2, 9, 5]);
-            Bridge.Test.Assert.areEqual$1(3, arr.indexOf(9), "9");
-            Bridge.Test.Assert.areEqual$1(-1, arr.indexOf(1), "1");
+            Bridge.Test.Assert.areEqual$1(3, System.Array.indexOf(arr, 9), "9");
+            Bridge.Test.Assert.areEqual$1(-1, System.Array.indexOf(arr, 1), "1");
+        },
+        containsWorks: function () {
+            var arr = new Int16Array([3, 6, 2, 9, 5]);
+            Bridge.Test.Assert.true$1(System.Array.contains(arr, 9), "9");
+            Bridge.Test.Assert.false$1(System.Array.contains(arr, 1), "1");
+        },
+        foreachWorks_SPI_1401: function () {
+            var $t;
+            var arr = new Int16Array([3, 6, 2, 9, 5]);
+            var l = new (System.Collections.Generic.List$1(System.Int32))();
+            // #1401
+            $t = Bridge.getEnumerator(arr);
+            while ($t.moveNext()) {
+                var i = $t.getCurrent();
+                l.add(i);
+            }
+            Bridge.Test.Assert.areEqual(l.toArray(), [3, 6, 2, 9, 5]);
+        },
+        getEnumeratorWorks_SPI_1401: function () {
+            var arr = new Int16Array([3, 6, 2, 9, 5]);
+            var l = new (System.Collections.Generic.List$1(System.Int32))();
+            // #1401
+            var enm = Bridge.getEnumerator(arr);
+            while (enm.System$Collections$IEnumerator$moveNext()) {
+                l.add(enm[Bridge.geti(enm, "System$Collections$Generic$IEnumerator$1$System$Int16$getCurrent$1", "getCurrent$1")]());
+            }
+            Bridge.Test.Assert.areEqual(l.toArray(), [3, 6, 2, 9, 5]);
         },
         iEnumerableGetEnumeratorWorks: function () {
             var arr = Bridge.cast(new Int16Array([3, 6, 2, 9, 5]), System.Collections.Generic.IEnumerable$1(System.Int16));
@@ -3622,8 +3703,35 @@
         },
         indexOfWorks: function () {
             var arr = new Int32Array([3, 6, 2, 9, 5]);
-            Bridge.Test.Assert.areEqual$1(3, arr.indexOf(9), "9");
-            Bridge.Test.Assert.areEqual$1(-1, arr.indexOf(1), "1");
+            Bridge.Test.Assert.areEqual$1(3, System.Array.indexOf(arr, 9), "9");
+            Bridge.Test.Assert.areEqual$1(-1, System.Array.indexOf(arr, 1), "1");
+        },
+        containsWorks: function () {
+            var arr = new Int32Array([3, 6, 2, 9, 5]);
+            Bridge.Test.Assert.true$1(System.Array.contains(arr, 9), "9");
+            Bridge.Test.Assert.false$1(System.Array.contains(arr, 1), "1");
+        },
+        foreachWorks_SPI_1401: function () {
+            var $t;
+            var arr = new Int32Array([3, 6, 2, 9, 5]);
+            var l = new (System.Collections.Generic.List$1(System.Int32))();
+            // #1401
+            $t = Bridge.getEnumerator(arr);
+            while ($t.moveNext()) {
+                var i = $t.getCurrent();
+                l.add(i);
+            }
+            Bridge.Test.Assert.areEqual(l.toArray(), [3, 6, 2, 9, 5]);
+        },
+        getEnumeratorWorks_SPI_1401: function () {
+            var arr = new Int32Array([3, 6, 2, 9, 5]);
+            var l = new (System.Collections.Generic.List$1(System.Int32))();
+            // #1401
+            var enm = Bridge.getEnumerator(arr);
+            while (enm.System$Collections$IEnumerator$moveNext()) {
+                l.add(enm[Bridge.geti(enm, "System$Collections$Generic$IEnumerator$1$System$Int32$getCurrent$1", "getCurrent$1")]());
+            }
+            Bridge.Test.Assert.areEqual(l.toArray(), [3, 6, 2, 9, 5]);
         },
         iEnumerableGetEnumeratorWorks: function () {
             var arr = Bridge.cast(new Int32Array([3, 6, 2, 9, 5]), System.Collections.Generic.IEnumerable$1(System.Int32));
@@ -3807,8 +3915,35 @@
         },
         indexOfWorks: function () {
             var arr = new Int8Array([3, 6, 2, 9, 5]);
-            Bridge.Test.Assert.areEqual$1(3, arr.indexOf(9), "9");
-            Bridge.Test.Assert.areEqual$1(-1, arr.indexOf(1), "1");
+            Bridge.Test.Assert.areEqual$1(3, System.Array.indexOf(arr, 9), "9");
+            Bridge.Test.Assert.areEqual$1(-1, System.Array.indexOf(arr, 1), "1");
+        },
+        containsWorks: function () {
+            var arr = new Int8Array([3, 6, 2, 9, 5]);
+            Bridge.Test.Assert.true$1(System.Array.contains(arr, 9), "9");
+            Bridge.Test.Assert.false$1(System.Array.contains(arr, 1), "1");
+        },
+        foreachWorks_SPI_1401: function () {
+            var $t;
+            var arr = new Int8Array([3, 6, 2, 9, 5]);
+            var l = new (System.Collections.Generic.List$1(System.Int32))();
+            // #1401
+            $t = Bridge.getEnumerator(arr);
+            while ($t.moveNext()) {
+                var i = $t.getCurrent();
+                l.add(i);
+            }
+            Bridge.Test.Assert.areEqual(l.toArray(), [3, 6, 2, 9, 5]);
+        },
+        getEnumeratorWorks_SPI_1401: function () {
+            var arr = new Int8Array([3, 6, 2, 9, 5]);
+            var l = new (System.Collections.Generic.List$1(System.Int32))();
+            // #1401
+            var enm = Bridge.getEnumerator(arr);
+            while (enm.System$Collections$IEnumerator$moveNext()) {
+                l.add(enm[Bridge.geti(enm, "System$Collections$Generic$IEnumerator$1$System$SByte$getCurrent$1", "getCurrent$1")]());
+            }
+            Bridge.Test.Assert.areEqual(l.toArray(), [3, 6, 2, 9, 5]);
         },
         iEnumerableGetEnumeratorWorks: function () {
             var arr = Bridge.cast(new Int8Array([3, 6, 2, 9, 5]), System.Collections.Generic.IEnumerable$1(System.SByte));
@@ -3992,8 +4127,35 @@
         },
         indexOfWorks: function () {
             var arr = new Uint16Array([3, 6, 2, 9, 5]);
-            Bridge.Test.Assert.areEqual$1(3, arr.indexOf(9), "9");
-            Bridge.Test.Assert.areEqual$1(-1, arr.indexOf(1), "1");
+            Bridge.Test.Assert.areEqual$1(3, System.Array.indexOf(arr, 9), "9");
+            Bridge.Test.Assert.areEqual$1(-1, System.Array.indexOf(arr, 1), "1");
+        },
+        containsWorks: function () {
+            var arr = new Uint16Array([3, 6, 2, 9, 5]);
+            Bridge.Test.Assert.true$1(System.Array.contains(arr, 9), "9");
+            Bridge.Test.Assert.false$1(System.Array.contains(arr, 1), "1");
+        },
+        foreachWorks_SPI_1401: function () {
+            var $t;
+            var arr = new Uint16Array([3, 6, 2, 9, 5]);
+            var l = new (System.Collections.Generic.List$1(System.Int32))();
+            // #1401
+            $t = Bridge.getEnumerator(arr);
+            while ($t.moveNext()) {
+                var i = $t.getCurrent();
+                l.add(i);
+            }
+            Bridge.Test.Assert.areEqual(l.toArray(), [3, 6, 2, 9, 5]);
+        },
+        getEnumeratorWorks_SPI_1401: function () {
+            var arr = new Uint16Array([3, 6, 2, 9, 5]);
+            var l = new (System.Collections.Generic.List$1(System.Int32))();
+            // #1401
+            var enm = Bridge.getEnumerator(arr);
+            while (enm.System$Collections$IEnumerator$moveNext()) {
+                l.add(enm[Bridge.geti(enm, "System$Collections$Generic$IEnumerator$1$System$UInt16$getCurrent$1", "getCurrent$1")]());
+            }
+            Bridge.Test.Assert.areEqual(l.toArray(), [3, 6, 2, 9, 5]);
         },
         iEnumerableGetEnumeratorWorks: function () {
             var arr = Bridge.cast(new Uint16Array([3, 6, 2, 9, 5]), System.Collections.Generic.IEnumerable$1(System.UInt16));
@@ -4177,8 +4339,35 @@
         },
         indexOfWorks: function () {
             var arr = new Uint32Array([3, 6, 2, 9, 5]);
-            Bridge.Test.Assert.areEqual$1(3, arr.indexOf(9), "9");
-            Bridge.Test.Assert.areEqual$1(-1, arr.indexOf(1), "1");
+            Bridge.Test.Assert.areEqual$1(3, System.Array.indexOf(arr, 9), "9");
+            Bridge.Test.Assert.areEqual$1(-1, System.Array.indexOf(arr, 1), "1");
+        },
+        containsWorks: function () {
+            var arr = new Uint32Array([3, 6, 2, 9, 5]);
+            Bridge.Test.Assert.true$1(System.Array.contains(arr, 9), "9");
+            Bridge.Test.Assert.false$1(System.Array.contains(arr, 1), "1");
+        },
+        foreachWorks_SPI_1401: function () {
+            var $t;
+            var arr = new Uint32Array([3, 6, 2, 9, 5]);
+            var l = new (System.Collections.Generic.List$1(System.UInt32))();
+            // #1401
+            $t = Bridge.getEnumerator(arr);
+            while ($t.moveNext()) {
+                var i = $t.getCurrent();
+                l.add(i);
+            }
+            Bridge.Test.Assert.areEqual(l.toArray(), [3, 6, 2, 9, 5]);
+        },
+        getEnumeratorWorks_SPI_1401: function () {
+            var arr = new Uint32Array([3, 6, 2, 9, 5]);
+            var l = new (System.Collections.Generic.List$1(System.UInt32))();
+            // #1401
+            var enm = Bridge.getEnumerator(arr);
+            while (enm.System$Collections$IEnumerator$moveNext()) {
+                l.add(enm[Bridge.geti(enm, "System$Collections$Generic$IEnumerator$1$System$UInt32$getCurrent$1", "getCurrent$1")]());
+            }
+            Bridge.Test.Assert.areEqual(l.toArray(), [3, 6, 2, 9, 5]);
         },
         iEnumerableGetEnumeratorWorks: function () {
             var arr = Bridge.cast(new Uint32Array([3, 6, 2, 9, 5]), System.Collections.Generic.IEnumerable$1(System.UInt32));
@@ -4362,8 +4551,35 @@
         },
         indexOfWorks: function () {
             var arr = new Uint8Array([3, 6, 2, 9, 5]);
-            Bridge.Test.Assert.areEqual$1(3, arr.indexOf(9), "9");
-            Bridge.Test.Assert.areEqual$1(-1, arr.indexOf(1), "1");
+            Bridge.Test.Assert.areEqual$1(3, System.Array.indexOf(arr, 9), "9");
+            Bridge.Test.Assert.areEqual$1(-1, System.Array.indexOf(arr, 1), "1");
+        },
+        containsWorks: function () {
+            var arr = new Uint8Array([3, 6, 2, 9, 5]);
+            Bridge.Test.Assert.true$1(System.Array.contains(arr, 9), "9");
+            Bridge.Test.Assert.false$1(System.Array.contains(arr, 1), "1");
+        },
+        foreachWorks_SPI_1401: function () {
+            var $t;
+            var arr = new Uint8Array([3, 6, 2, 9, 5]);
+            var l = new (System.Collections.Generic.List$1(System.Int32))();
+            // #1401
+            $t = Bridge.getEnumerator(arr);
+            while ($t.moveNext()) {
+                var i = $t.getCurrent();
+                l.add(i);
+            }
+            Bridge.Test.Assert.areEqual(l.toArray(), [3, 6, 2, 9, 5]);
+        },
+        getEnumeratorWorks_SPI_1401: function () {
+            var arr = new Uint8Array([3, 6, 2, 9, 5]);
+            var l = new (System.Collections.Generic.List$1(System.Int32))();
+            // #1401
+            var enm = Bridge.getEnumerator(arr);
+            while (enm.System$Collections$IEnumerator$moveNext()) {
+                l.add(enm[Bridge.geti(enm, "System$Collections$Generic$IEnumerator$1$System$Byte$getCurrent$1", "getCurrent$1")]());
+            }
+            Bridge.Test.Assert.areEqual(l.toArray(), [3, 6, 2, 9, 5]);
         },
         iEnumerableGetEnumeratorWorks: function () {
             var arr = Bridge.cast(new Uint8Array([3, 6, 2, 9, 5]), System.Collections.Generic.IEnumerable$1(System.Byte));
@@ -4560,8 +4776,35 @@
         },
         indexOfWorks: function () {
             var arr = new Uint8ClampedArray([3, 6, 2, 9, 5]);
-            Bridge.Test.Assert.areEqual$1(3, arr.indexOf(9), "9");
-            Bridge.Test.Assert.areEqual$1(-1, arr.indexOf(1), "1");
+            Bridge.Test.Assert.areEqual$1(3, System.Array.indexOf(arr, 9), "9");
+            Bridge.Test.Assert.areEqual$1(-1, System.Array.indexOf(arr, 1), "1");
+        },
+        containsWorks: function () {
+            var arr = new Uint8ClampedArray([3, 6, 2, 9, 5]);
+            Bridge.Test.Assert.true$1(System.Array.contains(arr, 9), "9");
+            Bridge.Test.Assert.false$1(System.Array.contains(arr, 1), "1");
+        },
+        foreachWorks_SPI_1401: function () {
+            var $t;
+            var arr = new Uint8ClampedArray([3, 6, 2, 9, 5]);
+            var l = new (System.Collections.Generic.List$1(System.Int32))();
+            // #1401
+            $t = Bridge.getEnumerator(arr);
+            while ($t.moveNext()) {
+                var i = $t.getCurrent();
+                l.add(i);
+            }
+            Bridge.Test.Assert.areEqual(l.toArray(), [3, 6, 2, 9, 5]);
+        },
+        getEnumeratorWorks_SPI_1401: function () {
+            var arr = new Uint8ClampedArray([3, 6, 2, 9, 5]);
+            var l = new (System.Collections.Generic.List$1(System.Int32))();
+            // #1401
+            var enm = Bridge.getEnumerator(arr);
+            while (enm.System$Collections$IEnumerator$moveNext()) {
+                l.add(enm[Bridge.geti(enm, "System$Collections$Generic$IEnumerator$1$System$Byte$getCurrent$1", "getCurrent$1")]());
+            }
+            Bridge.Test.Assert.areEqual(l.toArray(), [3, 6, 2, 9, 5]);
         },
         iEnumerableGetEnumeratorWorks_SPI_1560: function () {
             // #1560
