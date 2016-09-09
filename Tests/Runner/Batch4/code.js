@@ -15016,7 +15016,7 @@
             Bridge.Test.Assert.true(Bridge.is(b, System.IEquatable$1(Boolean)));
 
             var interfaces = Bridge.Reflection.getInterfaces(Boolean);
-            Bridge.Test.Assert.areEqual(2, interfaces.length);
+            Bridge.Test.Assert.areEqual(3, interfaces.length);
             Bridge.Test.Assert.true(System.Array.contains(interfaces, System.IComparable$1(Boolean), Function));
             Bridge.Test.Assert.true(System.Array.contains(interfaces, System.IEquatable$1(Boolean), Function));
         },
@@ -15287,7 +15287,7 @@
             // #1603
             Bridge.Test.Assert.false(Bridge.Reflection.isAssignableFrom(System.IFormattable, System.Char));
             var interfaces = Bridge.Reflection.getInterfaces(System.Char);
-            Bridge.Test.Assert.areEqual(3, interfaces.length);
+            Bridge.Test.Assert.areEqual(5, interfaces.length);
             Bridge.Test.Assert.true(System.Array.contains(interfaces, System.IComparable$1(System.Char), Function));
             Bridge.Test.Assert.true(System.Array.contains(interfaces, System.IEquatable$1(System.Char), Function));
             Bridge.Test.Assert.false(System.Array.contains(interfaces, System.IFormattable, Function));
@@ -15466,17 +15466,17 @@
         typePropertiesAreCorrect_SPI_1608_1609: function () {
             Bridge.Test.Assert.areEqual("Date", Bridge.Reflection.getTypeFullName(Date));
             //Assert.True(typeof(Date).IsClass);
-            Bridge.Test.Assert.false(Bridge.Reflection.isAssignableFrom(System.IComparable$1(Date), Date));
-            Bridge.Test.Assert.false(Bridge.Reflection.isAssignableFrom(System.IEquatable$1(Date), Date));
+            Bridge.Test.Assert.true(Bridge.Reflection.isAssignableFrom(System.IComparable$1(Date), Date));
+            Bridge.Test.Assert.true(Bridge.Reflection.isAssignableFrom(System.IEquatable$1(Date), Date));
             var o = new Date();
             Bridge.Test.Assert.true(Bridge.is(o, Date));
-            Bridge.Test.Assert.false(Bridge.is(o, System.IComparable$1(Date)));
-            Bridge.Test.Assert.false(Bridge.is(o, System.IEquatable$1(Date)));
+            Bridge.Test.Assert.true(Bridge.is(o, System.IComparable$1(Date)));
+            Bridge.Test.Assert.true(Bridge.is(o, System.IEquatable$1(Date)));
 
             var interfaces = Bridge.Reflection.getInterfaces(Date);
-            Bridge.Test.Assert.areEqual(0, interfaces.length);
-            Bridge.Test.Assert.false(System.Array.contains(interfaces, System.IComparable$1(Date), Function));
-            Bridge.Test.Assert.false(System.Array.contains(interfaces, System.IEquatable$1(Date), Function));
+            Bridge.Test.Assert.areEqual(4, interfaces.length);
+            Bridge.Test.Assert.true(System.Array.contains(interfaces, System.IComparable$1(Date), Function));
+            Bridge.Test.Assert.true(System.Array.contains(interfaces, System.IEquatable$1(Date), Function));
         },
         defaultConstructorReturnsTodaysDate: function () {
             var dt = new Date();
@@ -15828,7 +15828,7 @@
             Bridge.Test.Assert.true(Bridge.is(d, System.IFormattable));
 
             var interfaces = Bridge.Reflection.getInterfaces(Date);
-            Bridge.Test.Assert.areEqual(3, interfaces.length);
+            Bridge.Test.Assert.areEqual(4, interfaces.length);
             Bridge.Test.Assert.true(System.Array.contains(interfaces, System.IComparable$1(Date), Function));
             Bridge.Test.Assert.true(System.Array.contains(interfaces, System.IEquatable$1(Date), Function));
             Bridge.Test.Assert.true(System.Array.contains(interfaces, System.IFormattable, Function));
@@ -19201,7 +19201,7 @@
             Bridge.Test.Assert.true(Bridge.is(s, System.IEquatable$1(String)));
 
             var interfaces = Bridge.Reflection.getInterfaces(String);
-            Bridge.Test.Assert.areEqual(2, interfaces.length);
+            Bridge.Test.Assert.areEqual(6, interfaces.length);
             Bridge.Test.Assert.true(System.Array.contains(interfaces, System.IComparable$1(String), Function));
             Bridge.Test.Assert.true(System.Array.contains(interfaces, System.IEquatable$1(String), Function));
         },
