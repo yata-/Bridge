@@ -68,6 +68,14 @@
         },
 
         definei: function (className, gscope, prop) {
+            if ((prop === true || !prop) && gscope) {
+                gscope.$kind = "interface";
+            } else if (prop) {
+                prop.$kind = "interface";
+            } else {
+                gscope = { $kind: "interface" };
+            }
+
             var c = Bridge.define(className, gscope, prop);
             c.$kind = "interface";
 
@@ -174,7 +182,7 @@
             scope = Bridge.Class.set(scope, className, Class);
 
             if (gCfg) {
-                gCfg.fn.$cache.push({type: Class, args: gCfg.args});
+                gCfg.fn.$cache.push({ type: Class, args: gCfg.args });
             }
 
             Class.$$name = className;
@@ -233,7 +241,7 @@
             Class.$base = base;
             prototype = extend ? (extend[0].$$initCtor ? new extend[0].$$initCtor() : new extend[0]()) : new Object();
 
-            Class.$$initCtor = function () {};
+            Class.$$initCtor = function () { };
             Class.$$initCtor.prototype = prototype;
             Class.$$initCtor.prototype.constructor = Class;
             Class.$$initCtor.prototype.$$fullname = gCfg && isGenericInstance ? Class.$$fullname : Class.$$name;
@@ -350,16 +358,16 @@
 
             if (Class.$kind === "enum") {
                 Class.instanceOf = function (instance) {
-                     var utype = Class.prototype.$utype;
-                     if (utype === System.String) {
-                         return typeof (instance) == "string";
-                     }
+                    var utype = Class.prototype.$utype;
+                    if (utype === System.String) {
+                        return typeof (instance) == "string";
+                    }
 
-                     if (utype && utype.instanceOf) {
-                         return utype.instanceOf(instance);
-                     }
+                    if (utype && utype.instanceOf) {
+                        return utype.instanceOf(instance);
+                    }
 
-                     return typeof (instance) == "number";
+                    return typeof (instance) == "number";
                 };
             }
 
@@ -399,7 +407,7 @@
             return false;
         },
 
-        registerType : function (className, cls) {
+        registerType: function (className, cls) {
             if (Bridge.$currentAssembly) {
                 Bridge.$currentAssembly.$types[className] = cls;
                 cls.$assembly = Bridge.$currentAssembly;
@@ -430,7 +438,7 @@
                 exists,
                 i;
 
-            for (i = 0; i < (nameParts.length - 1); i++) {
+            for (i = 0; i < (nameParts.length - 1) ; i++) {
                 if (typeof scope[nameParts[i]] == "undefined") {
                     scope[nameParts[i]] = {};
                 }
@@ -520,7 +528,7 @@
             return gName;
         },
 
-        getCachedType: function(fn, args) {
+        getCachedType: function (fn, args) {
             var arr = fn.$cache,
                 len = arr.length,
                 key,
