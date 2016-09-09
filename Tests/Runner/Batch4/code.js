@@ -1939,24 +1939,25 @@
         runCheck: function (T, o) {
             return Bridge.is(o, T);
         },
+        typeTestWorksGeneric_SPI_1556: function () {
+            // #1556
+            Bridge.Test.Assert.true$1(this.runCheck(System.Collections.Generic.KeyValuePair$2(System.Int32,String), new (System.Collections.Generic.KeyValuePair$2(System.Int32,String))()), "#1");
+            Bridge.Test.Assert.false$1(this.runCheck(System.Collections.Generic.KeyValuePair$2(System.Int32,String), 5), "#2");
+        },
+        theDefaultConstructorCanBeUsed_SPI_1556: function () {
+            // #1556
+            var v = new (System.Collections.Generic.KeyValuePair$2(Date,System.Int32))();
+            Bridge.Test.Assert.true$1(Bridge.hasValue(v), "is KeyValuePair");
+            Bridge.Test.Assert.true(Bridge.hasValue(v.key));
+            Bridge.Test.Assert.areEqual(v.value, 0);
+        },
         creatingADefaultKeyValuePairCreatesAnInstanceThatIsNotNull_SPI_1556: function () {
             // #1556
-            var v = null;
+            var v = Bridge.getDefaultValue(System.Collections.Generic.KeyValuePair$2(System.Int32,String));
             Bridge.Test.Assert.true$1(Bridge.hasValue(v), "is KeyValuePair");
             Bridge.Test.Assert.notNull$1(v, "is not null");
-
-            // Test restructure to keep assertion count correct (prevent uncaught test exception)
-            var k = null;
-            Bridge.ClientTest.Batch4.TestHelper.safe(function () {
-                k = v.key;
-            });
-            Bridge.Test.Assert.notNull$1(k, "has key");
-
-            var val = null;
-            Bridge.ClientTest.Batch4.TestHelper.safe(function () {
-                val = v.value;
-            });
-            Bridge.Test.Assert.notNull$1(val, "has value");
+            Bridge.Test.Assert.areEqual$1(0, v.key, "has key");
+            Bridge.Test.Assert.null$1(v.value, "has no value");
         },
         activatorCreateInstanceWorks: function () {
             var v = Bridge.createInstance(System.Collections.Generic.KeyValuePair$2(String,String));
