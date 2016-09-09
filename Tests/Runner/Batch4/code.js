@@ -623,27 +623,27 @@
             Bridge.Test.Assert.areEqual$1("System.Collections.Generic.EqualityComparer$1[[Object]]", Bridge.Reflection.getTypeFullName(System.Collections.Generic.EqualityComparer$1(Object)), "FullName should be correct");
             Bridge.Test.Assert.true$1(Bridge.Reflection.isClass(System.Collections.Generic.EqualityComparer$1(Object)), "IsClass should be true");
 
-            var dict = new (System.Collections.Generic.EqualityComparer$1(Object))();
+            var dict = System.Collections.Generic.EqualityComparer$1(Object).def;
             Bridge.Test.Assert.true$1(Bridge.is(dict, System.Collections.Generic.EqualityComparer$1(Object)), "is EqualityComparer<object> should be true");
             Bridge.Test.Assert.true$1(Bridge.is(dict, System.Collections.Generic.IEqualityComparer$1(Object)), "is IEqualityComparer<object> should be true");
         },
         defaultComparerCanGetHashCodeOfNumber: function () {
-            Bridge.Test.Assert.areEqual(Bridge.getHashCode((12345)), new (System.Collections.Generic.EqualityComparer$1(Object))().getHashCode2(12345));
+            Bridge.Test.Assert.areEqual(Bridge.getHashCode((12345)), System.Collections.Generic.EqualityComparer$1(Object).def.getHashCode2(12345));
         },
         defaultComparerReturnsZeroAsHashCodeForNullAndUndefined: function () {
-            Bridge.Test.Assert.areEqual(0, new (System.Collections.Generic.EqualityComparer$1(Object))().getHashCode2(null));
-            Bridge.Test.Assert.areEqual(0, new (System.Collections.Generic.EqualityComparer$1(Object))().getHashCode2(undefined));
+            Bridge.Test.Assert.areEqual(0, System.Collections.Generic.EqualityComparer$1(Object).def.getHashCode2(null));
+            Bridge.Test.Assert.areEqual(0, System.Collections.Generic.EqualityComparer$1(Object).def.getHashCode2(undefined));
         },
         defaultComparerCanDetermineEquality: function () {
             var o1 = {  }, o2 = {  };
-            Bridge.Test.Assert.true(new (System.Collections.Generic.EqualityComparer$1(Object))().equals2(null, null));
-            Bridge.Test.Assert.false(new (System.Collections.Generic.EqualityComparer$1(Object))().equals2(null, o1));
-            Bridge.Test.Assert.false(new (System.Collections.Generic.EqualityComparer$1(Object))().equals2(o1, null));
-            Bridge.Test.Assert.true(new (System.Collections.Generic.EqualityComparer$1(Object))().equals2(o1, o1));
-            Bridge.Test.Assert.false(new (System.Collections.Generic.EqualityComparer$1(Object))().equals2(o1, o2));
+            Bridge.Test.Assert.true(System.Collections.Generic.EqualityComparer$1(Object).def.equals2(null, null));
+            Bridge.Test.Assert.false(System.Collections.Generic.EqualityComparer$1(Object).def.equals2(null, o1));
+            Bridge.Test.Assert.false(System.Collections.Generic.EqualityComparer$1(Object).def.equals2(o1, null));
+            Bridge.Test.Assert.true(System.Collections.Generic.EqualityComparer$1(Object).def.equals2(o1, o1));
+            Bridge.Test.Assert.false(System.Collections.Generic.EqualityComparer$1(Object).def.equals2(o1, o2));
         },
         defaultComparerInvokesOverriddenGetHashCode: function () {
-            Bridge.Test.Assert.areEqual(42158, new (System.Collections.Generic.EqualityComparer$1(Object))().getHashCode2(Bridge.merge(new Bridge.ClientTest.Batch4.Collections.Generic.EqualityComparerTests.MyClass(), {
+            Bridge.Test.Assert.areEqual(42158, System.Collections.Generic.EqualityComparer$1(Object).def.getHashCode2(Bridge.merge(new Bridge.ClientTest.Batch4.Collections.Generic.EqualityComparerTests.MyClass(), {
                 hashCode: 42158
             } )));
         },
@@ -651,17 +651,17 @@
             var c = new Bridge.ClientTest.Batch4.Collections.Generic.EqualityComparerTests.MyClass();
             var other = new Bridge.ClientTest.Batch4.Collections.Generic.EqualityComparerTests.MyClass();
             c.shouldEqual = false;
-            Bridge.Test.Assert.false(new (System.Collections.Generic.EqualityComparer$1(Object))().equals2(c, other));
+            Bridge.Test.Assert.false(System.Collections.Generic.EqualityComparer$1(Object).def.equals2(c, other));
             Bridge.Test.Assert.areStrictEqual(other, c.other);
 
             c.shouldEqual = true;
             c.other = null;
-            Bridge.Test.Assert.true(new (System.Collections.Generic.EqualityComparer$1(Object))().equals2(c, other));
+            Bridge.Test.Assert.true(System.Collections.Generic.EqualityComparer$1(Object).def.equals2(c, other));
             Bridge.Test.Assert.areStrictEqual(other, c.other);
 
             c.shouldEqual = true;
             c.other = other;
-            Bridge.Test.Assert.false(new (System.Collections.Generic.EqualityComparer$1(Object))().equals2(c, null)); // We should not invoke our own equals so its return value does not matter.
+            Bridge.Test.Assert.false(System.Collections.Generic.EqualityComparer$1(Object).def.equals2(c, null)); // We should not invoke our own equals so its return value does not matter.
             Bridge.Test.Assert.areEqual(other, c.other); // We should not invoke our own equals so the 'other' member should not be set.
         }
     });
@@ -695,14 +695,14 @@
             Bridge.Test.Assert.areEqual(0, d.getCount());
 
             // #1549
-            Bridge.Test.Assert.areStrictEqual(new (System.Collections.Generic.EqualityComparer$1(System.Int32))(), d.getComparer());
+            Bridge.Test.Assert.areStrictEqual(System.Collections.Generic.EqualityComparer$1(System.Int32).def, d.getComparer());
         },
         capacityConstructorWorks_SPI_1549: function () {
             var d = new (System.Collections.Generic.Dictionary$2(System.Int32, String))();
             Bridge.Test.Assert.areEqual(0, d.getCount());
 
             // #1549
-            Bridge.Test.Assert.areStrictEqual(new (System.Collections.Generic.EqualityComparer$1(System.Int32))(), d.getComparer());
+            Bridge.Test.Assert.areStrictEqual(System.Collections.Generic.EqualityComparer$1(System.Int32).def, d.getComparer());
         },
         capacityAndEqualityComparerWorks: function () {
             var c = new Bridge.ClientTest.Batch4.Collections.Generic.GenericDictionaryTests.TestEqualityComparer();
@@ -724,7 +724,7 @@
             Bridge.Test.Assert.areEqual(2, d2.get("b"));
 
             // #1549
-            Bridge.Test.Assert.areStrictEqual(new (System.Collections.Generic.EqualityComparer$1(String))(), d2.getComparer());
+            Bridge.Test.Assert.areStrictEqual(System.Collections.Generic.EqualityComparer$1(String).def, d2.getComparer());
         },
         equalityComparerOnlyConstructorWorks: function () {
             var c = new Bridge.ClientTest.Batch4.Collections.Generic.GenericDictionaryTests.TestEqualityComparer();
