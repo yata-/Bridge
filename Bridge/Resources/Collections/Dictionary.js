@@ -8,7 +8,7 @@
                 }
             },
 
-            constructor: function (key, value) {
+            ctor: function (key, value) {
                 if (key === undefined) {
                     key = Bridge.getDefaultValue(TKey);
                 }
@@ -61,7 +61,7 @@
                 ]
             },
 
-            constructor: function (obj, comparer) {
+            ctor: function (obj, comparer) {
                 this.$initialize();
                 this.comparer = comparer || System.Collections.Generic.EqualityComparer$1(TKey).def;
                 this.clear();
@@ -275,7 +275,7 @@
                 ]
             },
 
-            constructor: function (dictionary, keys) {
+            ctor: function (dictionary, keys) {
                 this.$initialize();
                 this.dictionary = dictionary;
                 this.keys = keys;
