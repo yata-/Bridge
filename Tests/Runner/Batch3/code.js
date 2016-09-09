@@ -7631,6 +7631,39 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
 
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1722', {
+        statics: {
+            foo: function (T) {
+                Bridge.Test.Assert.areEqual("7", Bridge.createInstance(T).toString());
+            }
+        },
+        testDelegateCreationOfGenericMethods: function () {
+            var foo = function () { return Bridge.ClientTest.Batch3.BridgeIssues.Bridge1722.foo(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1722.ClassA); };
+            foo();
+        },
+        testDelegateCreationOfGenericMethodsWithLambda: function () {
+            var foo = $_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge1722.f1;
+            foo();
+        }
+    });
+
+    Bridge.ns("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1722", $_);
+
+    Bridge.apply($_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge1722, {
+        f1: function () {
+            Bridge.ClientTest.Batch3.BridgeIssues.Bridge1722.foo(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1722.ClassA);
+        }
+    });
+
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1722.ClassA', {
+        ctor: function () {
+            this.$initialize();
+        },
+        toString: function () {
+            return "7";
+        }
+    });
+
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1735', {
         statics: {
             outDelegateMethod: function (setter) {
