@@ -7726,6 +7726,23 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
 
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1767', {
+        testBaseIndexer: function () {
+            var child = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1767.Child();
+            Bridge.Test.Assert.areEqual(1, child.getItem(1));
+            Bridge.Test.Assert.areEqual(2, child.method());
+        }
+    });
+
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1767.Base$1', function (T) { return {
+        getItem: function (i) {
+            return i;
+        },
+        method: function () {
+            return 2;
+        }
+    }; });
+
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1768', {
         testImplicitImplementation: function () {
             var c2 = new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge1768.C2$1(System.Int32))();
@@ -15785,6 +15802,16 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
 
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1737.SomethingOfSomethingElse', {
         inherits: [Bridge.ClientTest.Batch3.BridgeIssues.Bridge1737.Something$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1737.SomethingElse)]
+    });
+
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1767.Child', {
+        inherits: [Bridge.ClientTest.Batch3.BridgeIssues.Bridge1767.Base$1(Object)],
+        getItem: function (i) {
+            return Bridge.ClientTest.Batch3.BridgeIssues.Bridge1767.Base$1(Object).prototype.getItem.call(this, i);
+        },
+        method: function () {
+            return Bridge.ClientTest.Batch3.BridgeIssues.Bridge1767.Base$1(Object).prototype.method.call(this);
+        }
     });
 
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1768.C1$1', function (T) { return {
