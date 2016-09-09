@@ -14,7 +14,7 @@
 
             // #1540
             var arr = [3];
-            c = Bridge.cast(new (Bridge.ClientTest.Batch4.ActivatorTests.C2)(arr), Bridge.ClientTest.Batch4.ActivatorTests.C2);
+            c = Bridge.cast(Bridge.Reflection.applyConstructor(Bridge.ClientTest.Batch4.ActivatorTests.C2, arr), Bridge.ClientTest.Batch4.ActivatorTests.C2);
             Bridge.Test.Assert.areNotEqual(null, c);
             Bridge.Test.Assert.areEqual(3, c.i);
         },
@@ -26,7 +26,7 @@
 
             // #1541
             var arr = [7, 8];
-            c = Bridge.cast(new (Bridge.ClientTest.Batch4.ActivatorTests.C3)(arr), Bridge.ClientTest.Batch4.ActivatorTests.C3);
+            c = Bridge.cast(Bridge.Reflection.applyConstructor(Bridge.ClientTest.Batch4.ActivatorTests.C3, arr), Bridge.ClientTest.Batch4.ActivatorTests.C3);
             Bridge.Test.Assert.areNotEqual(null, c);
             Bridge.Test.Assert.areEqual(7, c.i);
             Bridge.Test.Assert.areEqual(8, c.j);
@@ -43,7 +43,7 @@
 
             // #1542
             var arr = [3];
-            c = new (Bridge.ClientTest.Batch4.ActivatorTests.C2)(arr);
+            c = Bridge.Reflection.applyConstructor(Bridge.ClientTest.Batch4.ActivatorTests.C2, arr);
             Bridge.Test.Assert.areNotEqual(null, c);
             Bridge.Test.Assert.areEqual(3, c.i);
         },
@@ -55,7 +55,7 @@
 
             // #1543
             var arr = [7, 8];
-            c = new (Bridge.ClientTest.Batch4.ActivatorTests.C3)(arr);
+            c = Bridge.Reflection.applyConstructor(Bridge.ClientTest.Batch4.ActivatorTests.C3, arr);
             Bridge.Test.Assert.areNotEqual(null, c);
             Bridge.Test.Assert.areEqual(7, c.i);
             Bridge.Test.Assert.areEqual(8, c.j);
@@ -168,6 +168,11 @@
     });
 
     Bridge.define('Bridge.ClientTest.Batch4.ActivatorTests.C5', {
+        statics: {
+            getDefaultValue: function () {
+                return { i: 42 };
+            }
+        },
         i: 0
     });
 

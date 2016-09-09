@@ -5840,6 +5840,11 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     });
 
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1411.Thing', {
+        statics: {
+            getDefaultValue: function () {
+                return 'test_string';
+            }
+        },
         config: {
             properties: {
                 Data: 0
@@ -5853,6 +5858,11 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     });
 
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1411.Gizmo', {
+        statics: {
+            getDefaultValue: function () {
+                return 'test_gizmo5';
+            }
+        },
         config: {
             properties: {
                 Data: 0
