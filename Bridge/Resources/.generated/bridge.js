@@ -354,7 +354,7 @@
             }
 
             if (Bridge.isNumber(value)) {
-                if (Math.floor(value, 0) === value) {
+                if (Math.floor(value) === value) {
                     return value;
                 }
 
