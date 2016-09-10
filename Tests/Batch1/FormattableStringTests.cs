@@ -12,7 +12,7 @@ namespace Bridge.ClientTest
     {
         private class MyFormattable : IFormattable
         {
-            public string Format(string format, IFormatProvider formatProvider)
+            public string ToString(string format, IFormatProvider formatProvider)
             {
                 return "Formatted: " + (!string.IsNullOrEmpty(format) ? format + ", " : "") + formatProvider.GetType().Name;
             }
@@ -106,7 +106,7 @@ namespace Bridge.ClientTest
         //    IFormattable s = FormattableStringFactory.Create("x = {0}, y = {0:FMT}", new MyFormattable());
         //    // #1633
         //    // #1651
-        //    Assert.AreEqual("x = Formatted: MyFormatProvider, y = Formatted: FMT, MyFormatProvider", s.Format(null, new MyFormatProvider()));
+        //    Assert.AreEqual("x = Formatted: MyFormatProvider, y = Formatted: FMT, MyFormatProvider", s.ToString(null, new MyFormatProvider()));
         //}
 
         [Test]
