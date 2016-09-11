@@ -6458,15 +6458,15 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1509', {
         testPreformanceNowIsDouble: function () {
             var p;
-            for (var i = 0; i < 10; i = (i + 1) | 0) {
+            for (var i = 1; i < 1001; i = (i + 1) | 0) {
                 p = Bridge.global.performance.now();
                 if (!this.hasNoFraction(p)) {
-                    Bridge.Test.Assert.true$1(true, "performance.now() returns float");
+                    Bridge.Test.Assert.true$1(true, System.String.concat(System.String.concat("Did ", i), " attempt(s) to check performance.now() returns float"));
                     return;
                 }
             }
 
-            Bridge.Test.Assert.fail$1("performance.now() did 10 attemps to check if it returns float");
+            Bridge.Test.Assert.fail$1("performance.now() did 1000 attemps to check if it returns float");
         },
         hasNoFraction: function (n) {
             return n % 1 === 0;

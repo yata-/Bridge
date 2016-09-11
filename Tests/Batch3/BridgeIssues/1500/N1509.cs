@@ -10,17 +10,17 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         public void TestPreformanceNowIsDouble()
         {
             double p;
-            for (int i = 0; i < 10; i++)
+            for (int i = 1; i < 1001; i++)
             {
                 p = Bridge.Html5.Global.Performance.Now();
                 if (!HasNoFraction(p))
                 {
-                    Assert.True(true, "performance.now() returns float");
+                    Assert.True(true, "Did " + i + " attempt(s) to check performance.now() returns float");
                     return;
                 }
             }
 
-            Assert.Fail("performance.now() did 10 attemps to check if it returns float");
+            Assert.Fail("performance.now() did 1000 attemps to check if it returns float");
         }
 
         private bool HasNoFraction(double n)
