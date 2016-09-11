@@ -8086,6 +8086,28 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     }; });
 
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1776', {
+        testTupleHashCode: function () {
+            var key1 = { item1: 1, item2: 2 };
+            var key2 = { item1: 1, item2: 2 };
+
+            Bridge.Test.Assert.true$1(Bridge.objectEquals(key1, key2), "Equals works");
+
+            var dic = new (System.Collections.Generic.Dictionary$2(Object,System.Int32))();
+            dic.add(key1, 1);
+
+            var output1 = { };
+            dic.tryGetValue(key1, output1);
+            Bridge.Test.Assert.areEqual$1(1, output1.v, "TryGetValue for key1");
+
+            var output2 = { };
+            dic.tryGetValue(key2, output2);
+            Bridge.Test.Assert.areEqual$1(1, output2.v, "TryGetValue for key2");
+
+            Bridge.Test.Assert.areEqual$1(Bridge.getHashCode(key1, false, true), Bridge.getHashCode(key2, false, true), "Same GetHashCode");
+        }
+    });
+
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1787', {
         testNamedParams: function () {
             var p = 7;
