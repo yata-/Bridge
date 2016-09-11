@@ -8086,6 +8086,18 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     }; });
 
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1775', {
+        testSumForEmpty: function () {
+            var decimalList = new (System.Collections.Generic.List$1(System.Decimal))();
+            var decimalSum = System.Linq.Enumerable.from(decimalList).sum(System.Decimal.Zero);
+            var lessThanOne = decimalSum.lt(System.Decimal(1));
+
+            Bridge.Test.Assert.true$1(Bridge.is(decimalSum, System.Decimal), "is decimal");
+            Bridge.Test.Assert.true$1(decimalSum.equalsT(System.Decimal(0)), "== 0");
+            Bridge.Test.Assert.true$1(lessThanOne, "less than one");
+        }
+    });
+
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1776', {
         testTupleHashCode: function () {
             var key1 = { item1: 1, item2: 2 };
@@ -14125,8 +14137,8 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
             testLinqDecimal: function () {
                 var a = [System.Decimal(1.0), System.Decimal(2.0), System.Decimal(3.0)];
 
-                Bridge.Test.Assert.true(System.Linq.Enumerable.from(a).average().equalsT(System.Decimal(2)));
-                Bridge.Test.Assert.true(System.Linq.Enumerable.from(a).sum().equalsT(System.Decimal(6)));
+                Bridge.Test.Assert.true(System.Linq.Enumerable.from(a).average(System.Decimal.Zero).equalsT(System.Decimal(2)));
+                Bridge.Test.Assert.true(System.Linq.Enumerable.from(a).sum(System.Decimal.Zero).equalsT(System.Decimal(6)));
             }
         }
     });
