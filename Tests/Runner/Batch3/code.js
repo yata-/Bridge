@@ -6025,6 +6025,17 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
 
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1448.Literal', {
+        $literal: true,
+        ctor: function () {
+            var $this = {};
+            (function(){
+                this.v = null;
+            }).call($this);
+            return $this;
+        }
+    });
+
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1448.Plainer');
 
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1458', {
@@ -8384,6 +8395,20 @@ Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         },
         clear: function () {
             this._backingDictionary.clear();
+        }
+    });
+
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge377', {
+        $literal: true,
+        ctor: function () {
+            var $this = {};
+            (function(){
+                this.field1 = null;
+                this.field2 = null;
+                this.field3 = 0;
+                this.field4 = 0;
+            }).call($this);
+            return $this;
         }
     });
 
