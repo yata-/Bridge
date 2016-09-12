@@ -1,4 +1,4 @@
-﻿Bridge.initAssembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflection.Resource2.bin":"EBESExQV","Bridge.ClientTest.Batch4.Reflection.Resource1.bin":"AAECAwQFBgc="}, function ($asm, globals) {
+﻿Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflection.Resource2.bin":"EBESExQV","Bridge.ClientTest.Batch4.Reflection.Resource1.bin":"AAECAwQFBgc="}, function ($asm, globals) {
     "use strict";
 
     Bridge.define('Bridge.ClientTest.Batch4.ActivatorTests', {

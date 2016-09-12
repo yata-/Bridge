@@ -6,7 +6,7 @@ var SomeExternalNamespace = {
 SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
 
 
-Bridge.initAssembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
+Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     "use strict";
 
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge069', {
