@@ -7738,6 +7738,22 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
 
+    Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1721', {
+        method1: function () {
+        },
+        method2: function () {
+        },
+        testDelegateEquals: function () {
+            var inst = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1721();
+            var fn1 = Bridge.fn.bind(inst, inst.method1);
+            var fn2 = Bridge.fn.bind(inst, inst.method1);
+            var fn3 = Bridge.fn.bind(inst, inst.method2);
+
+            Bridge.Test.Assert.areEqual(fn1, fn2);
+            Bridge.Test.Assert.areNotEqual(fn1, fn3);
+        }
+    });
+
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1722', {
         statics: {
             foo: function (T) {
