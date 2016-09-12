@@ -1,5 +1,5 @@
 
-    Bridge.define('TestIssue1035.StructBridge1035', {
+    Bridge.define("TestIssue1035.StructBridge1035", {
         $kind: "struct",
         statics: {
             getDefaultValue: function () { return new TestIssue1035.StructBridge1035(); }
@@ -27,7 +27,7 @@
         $clone: function (to) { return this; }
     });
 
-    Bridge.define('TestIssue379.DataDefaultValue', {
+    Bridge.define("TestIssue379.DataDefaultValue", {
         $literal: true,
         ctor: function () {
             var $this = {};
@@ -60,7 +60,7 @@
         }
     });
 
-    Bridge.define('TestIssue379.DataIgnore', {
+    Bridge.define("TestIssue379.DataIgnore", {
         $literal: true,
         ctor: function () {
             var $this = {};
@@ -93,7 +93,7 @@
         }
     });
 
-    Bridge.define('TestIssue379.DataInitializer', {
+    Bridge.define("TestIssue379.DataInitializer", {
         $literal: true,
         ctor: function () {
             var $this = {};
@@ -126,7 +126,7 @@
         }
     });
 
-    Bridge.define('TestIssue379.Tests', {
+    Bridge.define("TestIssue379.Tests", {
         testDataIgnore: function () {
             var d1 = {  };
             var d2 = { int1: 1, int2: 22, str3: "3", str4: "Str44", intNull5: 5, intNull6: 66, decimal7: System.Decimal(7), decimal8: System.Decimal(88) };
