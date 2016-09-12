@@ -6027,13 +6027,7 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
 
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1448.Literal', {
         $literal: true,
-        ctor: function () {
-            var $this = {};
-            (function(){
-                this.v = null;
-            }).call($this);
-            return $this;
-        }
+
     });
 
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1448.Plainer');
@@ -6469,7 +6463,7 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge1509', {
         testPreformanceNowIsDouble: function () {
             var p;
-            for (var i = 1; i < 1001; i = (i + 1) | 0) {
+            for (var i = 1; i < 10001; i = (i + 1) | 0) {
                 p = Bridge.global.performance.now();
                 if (!this.hasNoFraction(p)) {
                     Bridge.Test.Assert.true$1(true, System.String.concat(System.String.concat("Did ", i), " attempt(s) to check performance.now() returns float"));
@@ -8416,16 +8410,7 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
 
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge377', {
         $literal: true,
-        ctor: function () {
-            var $this = {};
-            (function(){
-                this.field1 = null;
-                this.field2 = null;
-                this.field3 = 0;
-                this.field4 = 0;
-            }).call($this);
-            return $this;
-        }
+
     });
 
     Bridge.define('Bridge.ClientTest.Batch3.BridgeIssues.Bridge381', {
