@@ -21,59 +21,47 @@ console.log("Hello, World!");
 
 ## TL;DR
 
-* Read the [Getting Started](http://bridge.net/kb/getting-started/) Knowledge Base article
-* Try [Live Bridge](http://live.bridge.net) if you want to just play
+* Read the [Getting Started](http://bridge.net/docs/getting-started/) Knowledge Base article
+* Try [Deck](http://deck.net/) if you want to just play
 * Installation:
   * Add **Bridge.NET** Visual Studio extension, or 
   * Use [NuGet](https://www.nuget.org/packages/bridge) to install into a C# Class Library project (`Install-Package Bridge`)
-* The [Attribute Reference](http://bridge.net/kb/attribute-reference/) is important
+* The [Attribute Reference](http://bridge.net/docs/attribute-reference/) is important
 * Licensed under [Apache License, Version 2.0](LICENSE)
 * Need Help? Bridge.NET [Forums](http://forums.bridge.net/) or GitHub [Issues](https://github.com/bridgedotnet/Bridge/issues)
 * [@bridgedotnet](twitter.com/bridgedotnet) on Twitter
 
 ## Getting Started
 
-A great place to start if you're new to Bridge.NET is reviewing the [Getting Started](http://bridge.net/kb/getting-started/) Knowledge Base article.
+A great place to start if you're new to Bridge.NET is reviewing the [Getting Started](http://bridge.net/docs/getting-started/) Knowledge Base article.
 
-The easiest place to see Bridge in action is [Live Bridge](http://live.bridge.net/). 
+The easiest place to see Bridge in action is [Deck](http://deck.net/). 
 
 ## Sample
 
 The following code sample demonstrates a simple **App.cs** class that will run automatically on page load and prompt with an `alert` message.
 
 ```csharp
-using Bridge;
-using Bridge.Html5;
-
-namespace Demo
+public class Program
 {
-    public class App
+    public static void Main()
     {
-        public static void Main()
-        {
-            // Simple alert() to confirm it's working
-            Window.Alert("Success");
-        }
+        Console.WriteLine("Hello World!");
     }
-} 
+}
 ```
 
-The C# class above will be compiled into JavaScript and added to **/Bridge/ouput/demo.js** within your project. By default, Bridge will use the Namespace name as the file name. In this case: **demo.js**. There are many options to control the output of your JavaScript files, and the [Attribute Reference](http://bridge.net/kb/attribute-reference/) is an important [Knowledge Base](http://bridge.net/kb/) article to review. 
+The C# class above will be compiled into JavaScript and added to **/Bridge/ouput/demo.js** within your project. By default, Bridge will use the Namespace name as the file name. In this case: **demo.js**. There are many options to control the output of your JavaScript files, and the [Attribute Reference](http://bridge.net/docs/attribute-reference/) is an important [Knowledge Base](http://bridge.net/docs/) article to review. 
 
 ```javascript
-Bridge.define('Demo.App', {
-    statics: {
-        config: {
-            init: function () {
-                Bridge.ready(this.main);
-            }
-        },
-        main: function () {
-            // Simple alert() to confirm it's working
-            window.alert("Success");
+Bridge.assembly("Demo", function ($asm, globals) {
+    "use strict";
+
+    Bridge.define("Demo.Program", {
+        $main: function () {
+            Bridge.Console.log("Hello World!");
         }
-    },
-    $entryPoint: true
+    });
 }); 
 ```
 ## Installation
@@ -103,7 +91,7 @@ Another NuGet option is installing Bridge via the NuGet Command line. Run the fo
 Install-Package Bridge
 ```
 
-More information regarding  Nuget package installation for Bridge is available in the [Knowledge Base](http://bridge.net/kb/nuget-installation/).
+More information regarding  Nuget package installation for Bridge is available in the [Knowledge Base](http://bridge.net/docs/nuget-installation/).
 
 ## Contributing
 
