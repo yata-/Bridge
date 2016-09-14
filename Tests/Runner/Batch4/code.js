@@ -107,9 +107,9 @@
             Bridge.Test.Assert.areEqual(42, c3.i);
         },
         createInstanceWithNoArgumentsWorksForClassWithJsonDefaultConstructor: function () {
-            var c1 = Bridge.createInstance(Bridge.ClientTest.Batch4.ActivatorTests.C7);
-            var c2 = Bridge.createInstance(Bridge.ClientTest.Batch4.ActivatorTests.C7);
-            var c3 = this.instantiate(Bridge.ClientTest.Batch4.ActivatorTests.C7);
+            var c1 = Bridge.createInstance(Object);
+            var c2 = Bridge.createInstance(Object);
+            var c3 = this.instantiate(Object);
 
             Bridge.Test.Assert.areEqual(Object, c1.constructor);
             Bridge.Test.Assert.areEqual(Object, c2.constructor);
@@ -181,16 +181,6 @@
         ctor: function () {
             this.$initialize();
             this.i = 42;
-        }
-    });
-
-    Bridge.define("Bridge.ClientTest.Batch4.ActivatorTests.C7", {
-        $literal: true,
-        ctor: function () {
-            var $this = {};
-            (function(){
-            }).call($this);
-            return $this;
         }
     });
 
@@ -13531,7 +13521,7 @@
         },
         castOperatorForSerializableTypeWithoutTypeCheckCodeAlwaysSucceedsGeneric: function () {
             var o = {  };
-            var b = this.cast(Bridge.ClientTest.Batch4.Reflection.TypeSystemLanguageSupportTests.OL, o);
+            var b = this.cast(Object, o);
             Bridge.Test.Assert.true(Bridge.referenceEquals(o, b));
         },
         typeCheckForSubTypeOfGenericType: function () {
@@ -13604,10 +13594,6 @@
         $kind: "interface",
         $variance: [0,1]
     }; });
-
-    Bridge.define("Bridge.ClientTest.Batch4.Reflection.TypeSystemLanguageSupportTests.OL", {
-        $literal: true
-    });
 
     Bridge.define("Bridge.ClientTest.Batch4.Reflection.TypeSystemTests", {
         fullNamePropertyReturnsTheNameWithTheNamespace: function () {
@@ -14906,7 +14892,7 @@
             Bridge.Test.Assert.areEqual("test", vs);
         },
         genericParseWorks: function () {
-            var o = Bridge.merge(new Bridge.ClientTest.Batch4.Serialization.JsonTests.TestClass2(), JSON.parse("{ \"i\": 3, \"s\": \"test\" }"));
+            var o = Bridge.merge(Bridge.createInstance(Bridge.ClientTest.Batch4.Serialization.JsonTests.TestClass2), JSON.parse("{ \"i\": 3, \"s\": \"test\" }"));
             Bridge.Test.Assert.areEqual(3, o.i);
             Bridge.Test.Assert.areEqual("test", o.s);
         },
@@ -14937,7 +14923,7 @@
             // Test restructure to keep assertion count correct (prevent uncaught test exception)
             var o = null;
             Bridge.ClientTest.Batch4.TestHelper.safe(function () {
-                o = Bridge.merge(new Bridge.ClientTest.Batch4.Serialization.JsonTests.TestClass2(), JSON.parse("{ \"i\": 3, \"s\": \"test\" }", $_.Bridge.ClientTest.Batch4.Serialization.JsonTests.f1));
+                o = Bridge.merge(Bridge.createInstance(Bridge.ClientTest.Batch4.Serialization.JsonTests.TestClass2), JSON.parse("{ \"i\": 3, \"s\": \"test\" }", $_.Bridge.ClientTest.Batch4.Serialization.JsonTests.f1));
             });
 
             var i = 0;

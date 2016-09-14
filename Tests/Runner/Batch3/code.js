@@ -1132,13 +1132,11 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     });
 
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1067.MyDictionary1", {
-        inherits: [System.Collections.Generic.Dictionary$2(System.Int32,System.Int32)],
-
+        inherits: [System.Collections.Generic.Dictionary$2(System.Int32,System.Int32)]
     });
 
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1067.MyDictionary2", {
-        inherits: [System.Collections.Generic.Dictionary$2(System.Int32,System.Int32)],
-
+        inherits: [System.Collections.Generic.Dictionary$2(System.Int32,System.Int32)]
     });
 
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1071", {
@@ -1608,7 +1606,7 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1134", {
         statics: {
             testJsonArrayParse: function () {
-                var o = Bridge.merge(new Array(), JSON.parse("[1]"));
+                var o = Bridge.merge(Bridge.createInstance(Array), JSON.parse("[1]"));
                 Bridge.Test.Assert.true(o != null);
                 Bridge.Test.Assert.areEqual(1, o.length);
                 Bridge.Test.Assert.areEqual(1, o[0]);
@@ -5934,7 +5932,7 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
 
                 Bridge.Test.Assert.notNull$1(serialized, " serialized should not be null");
 
-                var result = Bridge.merge(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1438.Foo(), JSON.parse(serialized));
+                var result = Bridge.merge(Bridge.createInstance(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1438.Foo), JSON.parse(serialized));
 
                 Bridge.Test.Assert.notNull$1(result, " result should not be null");
                 Bridge.Test.Assert.areEqual$1("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1438.Foo", Bridge.Reflection.getTypeFullName(Bridge.getType(result)), "Check result type name");
@@ -5947,7 +5945,7 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
 
                 Bridge.Test.Assert.notNull$1(serialized, " serialized should not be null");
 
-                var result = Bridge.merge(new Array(), JSON.parse(serialized), null, function(){return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1438.Foo();});
+                var result = Bridge.merge(new Array(), JSON.parse(serialized), null, function(){return Bridge.createInstance(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1438.Foo);});
 
                 Bridge.Test.Assert.notNull$1(result, " result should not be null");
                 Bridge.Test.Assert.areEqual$1("Array", Bridge.Reflection.getTypeFullName(Bridge.getType(result)), "Check result type name");
@@ -6023,11 +6021,6 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         doSomething: function () {
             return this.data;
         }
-    });
-
-    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1448.Literal", {
-        $literal: true,
-
     });
 
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1448.Plainer");
@@ -8907,6 +8900,16 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1819", {
+        testObjectLiteralWithInheritance: function () {
+            var x = { name: "test" };
+            Bridge.Test.Assert.areEqual("test", x.name);
+            Bridge.Test.Assert.true(Bridge.isPlainObject(x));
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1819.AttributeBase");
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1821", {
         testInterfaceMember1: function () {
             var ic = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1821.AAnother.create(System.Int32);
@@ -9208,11 +9211,6 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         clear: function () {
             this._backingDictionary.clear();
         }
-    });
-
-    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge377", {
-        $literal: true,
-
     });
 
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge381", {
@@ -9611,7 +9609,7 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
                 var x = JSON.stringify(a);
                 Bridge.Test.Assert.areEqual$1("{\"items\":[7]}", x, "Bridge501A");
 
-                var c = Bridge.merge(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge501A(), JSON.parse(x));
+                var c = Bridge.merge(Bridge.createInstance(Bridge.ClientTest.Batch3.BridgeIssues.Bridge501A), JSON.parse(x));
                 Bridge.Test.Assert.areEqual$1("12", c.items$1, "Bridge501A Parse c.Items");
                 Bridge.Test.Assert.areEqual$1(7, c.getItem(0), "Bridge501A Parse c[0]");
             }
@@ -10102,20 +10100,20 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge544", {
         statics: {
             testUseCase: function () {
-                var o = Bridge.merge(new Boolean(), JSON.parse("true"));
+                var o = Bridge.merge(Bridge.createInstance(Boolean), JSON.parse("true"));
                 Bridge.Test.Assert.areEqual$1(true, o, "Bridge544 bool");
             },
             testRelated: function () {
-                var i = Bridge.merge(new System.Int32(), JSON.parse("25"));
+                var i = Bridge.merge(Bridge.createInstance(System.Int32), JSON.parse("25"));
                 Bridge.Test.Assert.areEqual$1(25, i, "Bridge544 int");
 
-                var dbl = Bridge.merge(new System.Double(), JSON.parse("26.1"));
+                var dbl = Bridge.merge(Bridge.createInstance(System.Double), JSON.parse("26.1"));
                 Bridge.Test.Assert.areEqual$1(26.1, dbl, "Bridge544 double");
 
-                var d = Bridge.merge(new System.Decimal(), JSON.parse("27.2"));
+                var d = Bridge.merge(Bridge.createInstance(System.Decimal), JSON.parse("27.2"));
                 Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(d, 27.2, "Bridge544 decimal");
 
-                var s = Bridge.merge(new String(), JSON.parse("\"Some string\""));
+                var s = Bridge.merge(Bridge.createInstance(String), JSON.parse("\"Some string\""));
                 Bridge.Test.Assert.areEqual$1("Some string", s, "Bridge544 string");
             }
         }
@@ -11118,8 +11116,7 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge586A", {
         statics: {
 
-        },
-
+        }
     });
 
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge588", {
