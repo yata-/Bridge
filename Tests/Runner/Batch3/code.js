@@ -8883,6 +8883,30 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1813", {
+        statics: {
+            instance_callback: function (a) {
+                if (a === void 0) { a = null; }
+            }
+        },
+        list: null,
+        config: {
+            init: function () {
+                this.list = new (System.Collections.Generic.List$1(Object))();
+            }
+        },
+        add: function (obj) {
+            if (obj === void 0) { obj = []; }
+            this.list.addRange(obj);
+        },
+        testAddStaticMethod: function () {
+            var callbacks = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1813();
+            callbacks.add([Bridge.ClientTest.Batch3.BridgeIssues.Bridge1813.instance_callback]);
+            Bridge.Test.Assert.areEqual(1, callbacks.list.getCount());
+            Bridge.Test.Assert.true(Bridge.referenceEquals(callbacks.list.getItem(0), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1813.instance_callback));
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A", {
         config: {
             properties: {
