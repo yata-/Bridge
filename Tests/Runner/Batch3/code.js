@@ -9009,6 +9009,34 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1832", {
+        testInitWithTempVars: function () {
+            Bridge.Test.Assert.areEqual(1, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1832.IncTest.id);
+            var inst = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1832.IncTest();
+            Bridge.Test.Assert.areEqual(2, inst.id_instance);
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1832.IncTest", {
+        statics: {
+            id_counter: 0,
+            id: 0,
+            config: {
+                init: function () {
+                    var $t;
+                    this.id = (($t = (Bridge.ClientTest.Batch3.BridgeIssues.Bridge1832.IncTest.id_counter + 1) | 0, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1832.IncTest.id_counter = $t, $t));
+                }
+            }
+        },
+        id_instance: 0,
+        config: {
+            init: function () {
+                var $t;
+                this.id_instance = (($t = (Bridge.ClientTest.Batch3.BridgeIssues.Bridge1832.IncTest.id_counter + 1) | 0, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1832.IncTest.id_counter = $t, $t));
+            }
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1833", {
         testInheritedPropertyInLiteral: function () {
             var x = { id: 12, name: "test" };
