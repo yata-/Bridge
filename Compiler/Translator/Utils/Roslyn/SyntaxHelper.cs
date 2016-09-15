@@ -367,8 +367,14 @@ namespace Bridge.Translator
             {
                 return symbol.ContainingType.FullyQualifiedName() + "." + localName;
             }
-            else if (symbol.ContainingNamespace != null && !symbol.ContainingNamespace.IsGlobalNamespace)
+            else if (symbol.ContainingNamespace != null)
             {
+                if (symbol.ContainingNamespace.IsGlobalNamespace)
+                {
+                    //return "global::" + localName;
+                    return localName;
+                }
+
                 return symbol.ContainingNamespace.FullyQualifiedName() + "." + localName;
             }
             else
@@ -698,5 +704,19 @@ namespace Bridge.Translator
             return type is INamedTypeSymbol && type.OriginalDefinition.MetadataName == typeof(System.Linq.Expressions.Expression<>).Name && type.ContainingNamespace.FullyQualifiedName() == typeof(System.Linq.Expressions.Expression<>).Namespace;
         }
 
+        public static IEnumerable<ITypeSymbol> GetBaseTypesAndThis(this ITypeSymbol type)
+        {
+            var current = type;
+            while (current != null)
+            {
+                yield return current;
+                current = current.BaseType;
+            }
+        }
+
+        public static bool InheritsFromOrEquals(this ITypeSymbol type, ITypeSymbol baseType)
+        {
+            return type.GetBaseTypesAndThis().Contains(baseType);
+        }
     }
 }

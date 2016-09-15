@@ -9,6 +9,12 @@ SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
 Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     "use strict";
 
+    Bridge.define("content.ContentManagerBase", {
+        statics: {
+            PNG: ".png"
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge069", {
         statics: {
             thisKeywordInStructConstructorWorks: function () {
@@ -8900,6 +8906,12 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1814", {
+        testNamespaceConflictResolution: function () {
+            Bridge.Test.Assert.areEqual(".png", achievements.content.ContentAchievements.method());
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1819", {
         testObjectLiteralWithInheritance: function () {
             var x = { name: "test" };
@@ -16646,6 +16658,16 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
                 if (message === void 0) { message = null; }
                 Bridge.Test.Assert.areStrictEqual$1(true, Bridge.is(v, System.Decimal), message);
                 Bridge.Test.Assert.areStrictEqual$1(Bridge.Int.format(d, 'G'), v.toString(), message);
+            }
+        }
+    });
+
+    Bridge.define("achievements.content.ContentAchievements", {
+        inherits: [content.ContentManagerBase],
+        statics: {
+            method: function () {
+                var a = content.ContentManagerBase.PNG;
+                return a;
             }
         }
     });
