@@ -9120,6 +9120,33 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1842", {
+        testTypeOfConversion: function () {
+            var t;
+            var $class = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1842.Class.op_Implicit(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1842);
+            t = $class;
+            Bridge.Test.Assert.true(Bridge.referenceEquals(Bridge.getType(t), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1842.Class));
+
+            $class = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1842.Class.op_Implicit(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1842);
+            t = $class;
+            Bridge.Test.Assert.true(Bridge.referenceEquals(Bridge.getType(t), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1842.Class));
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1842.Class", {
+        statics: {
+            op_Implicit: function (t) {
+                return Bridge.merge(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1842.Class(), {
+                    type: t
+                } );
+            },
+            op_Implicit$1: function (t) {
+                return t.type;
+            }
+        },
+        type: null
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A", {
         config: {
             properties: {
