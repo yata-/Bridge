@@ -9192,6 +9192,30 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1846", {
+        testImplicitOperatorInForeachLoop: function () {
+            var $t;
+            var arr = ["a", "b"];
+            var i = 0;
+            $t = Bridge.getEnumerator(arr);
+            while ($t.moveNext()) {
+                var o = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1846.Obj.op_Implicit($t.getCurrent());
+                Bridge.Test.Assert.areEqual(arr[Bridge.identity(i, (i = (i + 1) | 0))], o.s);
+            }
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1846.Obj", {
+        statics: {
+            op_Implicit: function (str) {
+                return Bridge.merge(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1846.Obj(), {
+                    s: str
+                } );
+            }
+        },
+        s: null
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1848", {
         testExternalInterfaceProperty: function () {
             window.Bridge1848_ITest = {
