@@ -8,7 +8,7 @@
             Bridge.Test.Assert.areEqual(42, c.i);
         },
         nonGenericCreateInstanceWithOneArgumentWorks_SPI_1540: function () {
-            var c = Bridge.cast(new (Bridge.ClientTest.Batch4.ActivatorTests.C2)(3), Bridge.ClientTest.Batch4.ActivatorTests.C2);
+            var c = Bridge.cast(Bridge.createInstance(Bridge.ClientTest.Batch4.ActivatorTests.C2, [3]), Bridge.ClientTest.Batch4.ActivatorTests.C2);
             Bridge.Test.Assert.areNotEqual(null, c);
             Bridge.Test.Assert.areEqual(3, c.i);
 
@@ -19,7 +19,7 @@
             Bridge.Test.Assert.areEqual(3, c.i);
         },
         nonGenericCreateInstanceWithTwoArgumentsWorks_SPI_1541: function () {
-            var c = Bridge.cast(new (Bridge.ClientTest.Batch4.ActivatorTests.C3)(7, 8), Bridge.ClientTest.Batch4.ActivatorTests.C3);
+            var c = Bridge.cast(Bridge.createInstance(Bridge.ClientTest.Batch4.ActivatorTests.C3, [7, 8]), Bridge.ClientTest.Batch4.ActivatorTests.C3);
             Bridge.Test.Assert.areNotEqual(null, c);
             Bridge.Test.Assert.areEqual(7, c.i);
             Bridge.Test.Assert.areEqual(8, c.j);
@@ -37,7 +37,7 @@
             Bridge.Test.Assert.areEqual(42, c.i);
         },
         genericCreateInstanceWithOneArgumentWorks_SPI_1542: function () {
-            var c = new (Bridge.ClientTest.Batch4.ActivatorTests.C2)(3);
+            var c = Bridge.createInstance(Bridge.ClientTest.Batch4.ActivatorTests.C2, [3]);
             Bridge.Test.Assert.areNotEqual(null, c);
             Bridge.Test.Assert.areEqual(3, c.i);
 
@@ -48,7 +48,7 @@
             Bridge.Test.Assert.areEqual(3, c.i);
         },
         genericCreateInstanceWithTwoArgumentsWorks_SPI_1543: function () {
-            var c = new (Bridge.ClientTest.Batch4.ActivatorTests.C3)(7, 8);
+            var c = Bridge.createInstance(Bridge.ClientTest.Batch4.ActivatorTests.C3, [7, 8]);
             Bridge.Test.Assert.areNotEqual(null, c);
             Bridge.Test.Assert.areEqual(7, c.i);
             Bridge.Test.Assert.areEqual(8, c.j);

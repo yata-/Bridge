@@ -9216,6 +9216,25 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         s: null
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1847", {
+        testActivatorCreateInstanceCallProtectedConstructor: function () {
+            var instance = Bridge.createInstance(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1847.CLS, [1]);
+            Bridge.Test.Assert.areEqual("ok", instance.status);
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1847.CLS", {
+        status: null,
+        ctor: function () {
+            this.$initialize();
+            this.status = "Not ok";
+        },
+        $ctor1: function (i) {
+            this.$initialize();
+            this.status = "ok";
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1848", {
         testExternalInterfaceProperty: function () {
             window.Bridge1848_ITest = {
