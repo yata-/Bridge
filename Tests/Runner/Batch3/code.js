@@ -9147,6 +9147,51 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         type: null
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1845", {
+        testCtorMemberName: function () {
+            var b1 = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1845.Base1(null);
+            Bridge.Test.Assert.notNull$1(b1, "b1");
+            Bridge.Test.Assert.areEqual$1(1, b1.ctor$1(), "b1.ctor()");
+            Bridge.Test.Assert.areEqual$1(2, b1.ctor$2(), "b1.Ctor()");
+
+            var b2 = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1845.Base2(null);
+            Bridge.Test.Assert.notNull$1(b2, "b2");
+            Bridge.Test.Assert.areEqual$1(1, b2.getctor(), "b2.ctor");
+            Bridge.Test.Assert.areEqual$1(2, b2.getCtor(), "b2.Ctor");
+
+            var $ctor = 3;
+            Bridge.Test.Assert.areEqual$1(3, $ctor, "var ctor");
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1845.Base1", {
+        ctor: function (target) {
+            this.$initialize();
+            this.ctor$1();
+            this.ctor$2();
+        },
+        ctor$1: function () {
+            return 1;
+        },
+        ctor$2: function () {
+            return 2;
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1845.Base2", {
+        ctor: function (target) {
+            this.$initialize();
+            var r1 = this.getctor();
+            var r2 = this.getCtor();
+        },
+        getctor: function () {
+            return 1;
+        },
+        getCtor: function () {
+            return 2;
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1848", {
         testExternalInterfaceProperty: function () {
             window.Bridge1848_ITest = {
