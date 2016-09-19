@@ -455,11 +455,11 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
                 Bridge.Test.Assert.areEqual(1, ($t = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.getI11(), $t[Bridge.geti($t, "Bridge$ClientTest$Batch3$BridgeIssues$Bridge1025$I11$get", "get")])(""));
                 ($t1 = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.getI11(), $t1[Bridge.geti($t1, "Bridge$ClientTest$Batch3$BridgeIssues$Bridge1025$I11$set", "set")])(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.getI11()[1], 1);
                 Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.getI11()[1] = "";
-                Bridge.Test.Assert.areEqual(2, ($t2 = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.getI11(), $t2[Bridge.geti($t2, "Bridge$ClientTest$Batch3$BridgeIssues$Bridge1025$I11$getProp1", "getProp1")])());
-                Bridge.Test.Assert.areEqual("test", ($t3 = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.getI11(), $t3[Bridge.geti($t3, "Bridge$ClientTest$Batch3$BridgeIssues$Bridge1025$I11$getProp2", "getProp2")])());
-                ($t4 = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.getI11(), $t4[Bridge.geti($t4, "Bridge$ClientTest$Batch3$BridgeIssues$Bridge1025$I11$setProp2", "setProp2")])("");
-                ($t5 = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.getI11(), $t5[Bridge.geti($t5, "Bridge$ClientTest$Batch3$BridgeIssues$Bridge1025$I11$foo", "foo")])();
-                ($t6 = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.getI11(), $t6[Bridge.geti($t6, "Bridge$ClientTest$Batch3$BridgeIssues$Bridge1025$I11$addEvent1", "addEvent1")])($_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.f5);
+                Bridge.Test.Assert.areEqual(2, ($t2 = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.getI11())[Bridge.geti($t2, "Bridge$ClientTest$Batch3$BridgeIssues$Bridge1025$I11$getProp1", "getProp1")]());
+                Bridge.Test.Assert.areEqual("test", ($t3 = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.getI11())[Bridge.geti($t3, "Bridge$ClientTest$Batch3$BridgeIssues$Bridge1025$I11$getProp2", "getProp2")]());
+                ($t4 = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.getI11())[Bridge.geti($t4, "Bridge$ClientTest$Batch3$BridgeIssues$Bridge1025$I11$setProp2", "setProp2")]("");
+                ($t5 = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.getI11())[Bridge.geti($t5, "Bridge$ClientTest$Batch3$BridgeIssues$Bridge1025$I11$foo", "foo")]();
+                ($t6 = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.getI11())[Bridge.geti($t6, "Bridge$ClientTest$Batch3$BridgeIssues$Bridge1025$I11$addEvent1", "addEvent1")]($_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.f5);
             }
         }
     });
@@ -9267,6 +9267,40 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
 
     }; });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1854", {
+        testCase: function () {
+            var reader = Bridge.merge(new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge1854.UseReader$1(String))(), {
+                setReader: new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge1854.SomeReader$1(String))("test"),
+                setReader1: new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge1854.SomeReader$1(String))("test1")
+            } );
+            var result = reader.read();
+            Bridge.Test.Assert.areEqual("test", result);
+
+            result = reader.read1();
+            Bridge.Test.Assert.areEqual("test1", result);
+        }
+    });
+
+    Bridge.definei("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1854.IRead$1", function (T) { return {
+        $kind: "interface"
+    }; });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1854.UseReader$1", function (T) { return {
+        config: {
+            properties: {
+                Reader: null,
+                Reader1: null
+            }
+        },
+        read: function () {
+            return this.getReader()["Bridge$ClientTest$Batch3$BridgeIssues$Bridge1854$IRead$1$" + Bridge.getTypeAlias(T) + "$read"]();
+        },
+        read1: function () {
+            var $t;
+            return ($t = this.getReader1())[Bridge.geti($t, "Object$" + Bridge.getTypeAlias(T) + "$read", "read")]();
+        }
+    }; });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A", {
         config: {
             properties: {
@@ -17285,6 +17319,24 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         doSomething: function (T, name) {
         }
     });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1854.SomeReader$1", function (T) { return {
+        inherits: [Bridge.ClientTest.Batch3.BridgeIssues.Bridge1854.IRead$1(T),Object(T)],
+        _param: null,
+        config: {
+            alias: [
+            "read", "Object$" + Bridge.getTypeAlias(T) + "$read",
+            "read", "Bridge$ClientTest$Batch3$BridgeIssues$Bridge1854$IRead$1$" + Bridge.getTypeAlias(T) + "$read"
+            ]
+        },
+        ctor: function (param) {
+            this.$initialize();
+            this._param = param;
+        },
+        read: function () {
+            return this._param;
+        }
+    }; });
 
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240B", {
         inherits: [Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A],
