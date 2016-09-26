@@ -9665,6 +9665,65 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1878", {
+        testSumDefaultValue: function () {
+            var x = new (System.Collections.Generic.List$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1878.classA))();
+            x.add(Bridge.merge(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1878.classA(), {
+                setDecimalNumber: System.Decimal(1),
+                setLongNumber: System.Int64(2)
+            } ));
+            x.add(Bridge.merge(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1878.classA(), {
+                setDecimalNumber: System.Decimal(5),
+                setLongNumber: System.Int64(6)
+            } ));
+
+            var c = System.Linq.Enumerable.from(x).sum($_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge1878.f1, System.Int64.Zero);
+            Bridge.Test.Assert.areEqual(System.Int64(8), c);
+
+            var b = System.Linq.Enumerable.from(x).sum($_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge1878.f2, System.Decimal.Zero);
+            Bridge.Test.Assert.areEqual(System.Decimal(6.0), b);
+
+            var e1 = Bridge.as(x, System.Collections.Generic.IEnumerable$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1878.classA));
+
+            var c1 = System.Linq.Enumerable.from(e1).sum($_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge1878.f1, System.Int64.Zero);
+            Bridge.Test.Assert.areEqual(System.Int64(8), c1);
+
+            var b1 = System.Linq.Enumerable.from(e1).sum($_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge1878.f2, System.Decimal.Zero);
+            Bridge.Test.Assert.areEqual(System.Decimal(6.0), b1);
+
+            var y = new (System.Collections.Generic.List$1(System.Decimal))();
+            y.add(System.Decimal(7));
+            y.add(System.Decimal(8));
+
+            var a = System.Linq.Enumerable.from(y).sum(System.Decimal.Zero);
+            Bridge.Test.Assert.areEqual(System.Decimal(15.0), a);
+
+            var y1 = Bridge.as(y, System.Collections.Generic.IEnumerable$1(System.Decimal));
+            var a1 = System.Linq.Enumerable.from(y1).sum(System.Decimal.Zero);
+            Bridge.Test.Assert.areEqual(System.Decimal(15.0), a1);
+        }
+    });
+
+    Bridge.ns("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1878", $_);
+
+    Bridge.apply($_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge1878, {
+        f1: function (i) {
+            return i.getLongNumber();
+        },
+        f2: function (i) {
+            return i.getDecimalNumber();
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1878.classA", {
+        config: {
+            properties: {
+                DecimalNumber: System.Decimal(0.0),
+                LongNumber: System.Int64(0)
+            }
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A", {
         config: {
             properties: {
