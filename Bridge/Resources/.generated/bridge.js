@@ -6563,7 +6563,7 @@
                 v = v.replace(nfInfo.numberDecimalSeparator, ".");
             }
 
-            if (!/^\s*[+-]?(\d+|\d*\.\d+)((e|E)[+-]?\d+)?\s*$/.test(v)) {
+            if (!/^\s*[+-]?(\d+|\d+.|\d*\.\d+)((e|E)[+-]?\d+)?\s*$/.test(v)) {
                 throw new System.FormatException();
             }
 
@@ -12508,7 +12508,7 @@
 
                     if (isFloating) {
                         if (typeCode === typeCodes.Decimal) {
-                            if (!/^[+-]?[0-9]+[.,]?[0-9]$/.test(value)) {
+                            if (!/^[+-]?(\d+|\d+.|\d*\.\d+)$/.test(value)) {
                                 if (!/^[+-]?[0-9]+$/.test(value)) {
                                     throw new System.FormatException("Input string was not in a correct format.");
                                 }

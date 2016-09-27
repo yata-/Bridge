@@ -9883,6 +9883,16 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1886", {
+        testCase: function () {
+            Bridge.Test.Assert.true(System.Decimal(23.24).equalsT(System.Convert.toDecimal("23.24")));
+            Bridge.Test.Assert.true(System.Decimal(23.0).equalsT(System.Convert.toDecimal("23.")));
+            Bridge.Test.Assert.true(System.Decimal(23.0).equalsT(System.Convert.toDecimal("23")));
+            Bridge.Test.Assert.true(System.Decimal(0.24).equalsT(System.Convert.toDecimal(".24")));
+            Bridge.Test.Assert.true(System.Decimal(2.0).equalsT(System.Convert.toDecimal("2")));
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A", {
         config: {
             properties: {
