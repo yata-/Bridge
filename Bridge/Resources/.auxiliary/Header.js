@@ -3,5 +3,5 @@
  * @author    : Object.NET, Inc. http://bridge.net/
  * @date      : 2016-10-04
  * @copyright : Copyright 2008-{year} Object.NET, Inc. http://object.net/
- * @license   : See license.txt and https://github.com/bridgedotnet/Bridge.NET/blob/master/LICENSE.
+ * @license   : See license.txt and https://github.com/bridgedotnet/Bridge/blob/master/LICENSE.md
 */

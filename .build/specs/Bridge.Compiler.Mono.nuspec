@@ -7,7 +7,7 @@
     <authors>Object.NET, Inc.</authors>
     <iconUrl>http://speed.bridge.net/identity/bridgedotnet-100x100.png</iconUrl>
     <owners />
-    <licenseUrl>https://github.com/bridgedotnet/Bridge/blob/master/LICENSE</licenseUrl>
+    <licenseUrl>https://github.com/bridgedotnet/Bridge/blob/master/LICENSE.md</licenseUrl>
     <projectUrl>http://bridge.net</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A C# to JavaScript compiler. Write modern mobile and web apps in C#. Run them anywhere with JavaScript.</description>
@@ -29,7 +29,7 @@
   </metadata>
   <files>
     <!--content-->
-    <file src="../../LICENSE" target="content/App_Readme/Bridge.NET/LICENSE" />
+    <file src="../../LICENSE.md" target="content/App_Readme/Bridge.NET/LICENSE.md" />
 
     <!--NET40-->
     <file src="../../Compiler/Translator/bin/Release/Bridge.Translator.dll" target="lib/net40/Bridge.Translator.dll" />
