@@ -13084,7 +13084,7 @@
                 try { /// The variable `x' is assigned but its value is never used
 
 
-                    var x = System.Nullable.getValue(Bridge.cast(arg, T));
+                    var x = Bridge.cast(arg, T);
                     return true;
                 }
                 catch ($e1) {
@@ -13528,7 +13528,7 @@
             Bridge.Test.Assert.throws($_.Bridge.ClientTest.Batch4.Reflection.TypeSystemLanguageSupportTests.f2);
         },
         cast: function (T, o) {
-            return System.Nullable.getValue(Bridge.cast(o, T));
+            return Bridge.cast(o, T);
         },
         castOperatorForSerializableTypeWithoutTypeCheckCodeAlwaysSucceedsGeneric: function () {
             var o = {  };
@@ -14353,10 +14353,10 @@
             return _o71;
         },
         f2: function () {
-            var x = System.Nullable.getValue(Bridge.cast("firstValue", String));
+            var x = Bridge.cast("firstValue", String);
         },
         f3: function () {
-            var x = System.Nullable.getValue(Bridge.cast(0, String));
+            var x = Bridge.cast(0, String);
         }
     });
 
