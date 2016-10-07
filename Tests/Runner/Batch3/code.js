@@ -10085,6 +10085,21 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1909", {
+        testActivatorEnumCreation: function () {
+            var et = Bridge.createInstance(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1909.EnumType);
+            Bridge.Test.Assert.areEqual(0, et);
+            Bridge.Test.Assert.true(Bridge.is(et, System.Int32));
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1909.EnumType", {
+        $kind: "enum",
+        statics: {
+            Item1: 0
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A", {
         config: {
             properties: {
