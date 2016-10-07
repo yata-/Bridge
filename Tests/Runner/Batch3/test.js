@@ -316,6 +316,7 @@
             QUnit.test("#1899 - TestPropertyAndMethodNameConflict", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1899.testPropertyAndMethodNameConflict);
             QUnit.test("#1900 - TestOutParamInMetadata", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1900.testOutParamInMetadata);
             QUnit.test("#1904 - TestDateTimeConstructorConvertsValueToMs", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1904.testDateTimeConstructorConvertsValueToMs);
+            QUnit.test("#1906 - TestIsOperatorInaccuracy", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1906.testIsOperatorInaccuracy);
             QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge381.testUseCase);
             QUnit.test("#447 - CheckInlineExpression", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge447.checkInlineExpression);
             QUnit.test("#447 - CheckInlineCalls", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge447.checkInlineCalls);
@@ -2990,6 +2991,16 @@
             testDateTimeConstructorConvertsValueToMs: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1904).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1904);
                 t.getFixture().testDateTimeConstructorConvertsValueToMs();
+            }
+        }
+    });
+
+    Bridge.define("Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1906", {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1906)],
+        statics: {
+            testIsOperatorInaccuracy: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1906).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1906);
+                t.getFixture().testIsOperatorInaccuracy();
             }
         }
     });

@@ -10078,6 +10078,13 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1906", {
+        testIsOperatorInaccuracy: function () {
+            Bridge.Test.Assert.true(Bridge.is(true, Object));
+            Bridge.Test.Assert.true(Bridge.is("string", Object));
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A", {
         config: {
             properties: {
