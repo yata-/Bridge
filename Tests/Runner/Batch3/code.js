@@ -10188,6 +10188,18 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1914", {
+        testCase: function () {
+            var list = new (System.Collections.Generic.List$1(System.Int32))();
+            list.add(1);
+
+            var readOnlyList = new (System.Collections.ObjectModel.ReadOnlyCollection$1(System.Int32))(list);
+            list.add(2);
+
+            Bridge.Test.Assert.true(list.getCount() === readOnlyList.getCount());
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1938", {
         testIsArrayTemplate: function () {
             var type = System.Int32;
