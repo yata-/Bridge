@@ -10125,6 +10125,18 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
 
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1910.ItemValue");
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1912", {
+        testExtentionMethod: function () {
+            var Bridge1912_Item = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1912_Item();
+            var Bridge1912_Item2 = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1912_Item();
+
+            Bridge.Test.Assert.true(Bridge.is(Bridge.ClientTest.Batch3.BridgeIssues.ItemExtensions.setValue(Bridge1912_Item), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1912_Item));
+            Bridge.Test.Assert.true(Bridge.is(Bridge.ClientTest.Batch3.BridgeIssues.ItemExtensions.setValue(Bridge1912_Item2), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1912_Item));
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1912_Item");
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1913", {
         testIsSubclassOfTemplate: function () {
             var type = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1913;
@@ -10635,6 +10647,18 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
                 Bridge.Test.Assert.areEqual$1("value", pair.value, "Bridge479 Value");
                 Bridge.Test.Assert.areEqual$1("[1, value]", pair.toString(), "Bridge479 ToString");
             }
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge483", {
+        testPropertyWithNameSameAsType: function () {
+            var t = Bridge.merge(new Bridge.ClientTest.Batch3.BridgeIssues.Test(), {
+                myType: Bridge.merge(new Bridge.ClientTest.Batch3.BridgeIssues.MyType(), {
+                    value: 7
+                } )
+            } );
+
+            Bridge.Test.Assert.areEqual(7, t.getMyOtherType().value);
         }
     });
 
@@ -16748,6 +16772,18 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.ItemExtensions", {
+        statics: {
+            setValue: function (item) {
+                return item;
+            }
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.MyOtherType", {
+        value: 0
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.N1122", {
         statics: {
             assertNumber: function (expected, actual, message) {
@@ -16930,6 +16966,13 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
             properties: {
                 Name: null
             }
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Test", {
+        myType: null,
+        getMyOtherType: function () {
+            return this.myType;
         }
     });
 
@@ -18405,6 +18448,10 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         statics: {
             field1: 1
         }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.MyType", {
+        inherits: [Bridge.ClientTest.Batch3.BridgeIssues.MyOtherType]
     });
 
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1025.C15", {
