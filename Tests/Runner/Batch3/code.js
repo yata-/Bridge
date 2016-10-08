@@ -10125,6 +10125,46 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
 
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1910.ItemValue");
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1911", {
+        statics: {
+            getValue1: function (value) {
+                return value;
+            },
+            getValue2: function (value) {
+                return value;
+            }
+        },
+        testExtensionMethodOfBaseClass: function () {
+            var item = new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge1911_DerivedItem$1(System.Int32))();
+            Bridge.Test.Assert.areEqual(1, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1911_BaseItemExtensions.getValue(System.Int32, item));
+            Bridge.Test.Assert.areEqual(3, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1911_BaseItemExtensions.getValue$1(System.Int32, item, 3));
+        },
+        testExtensionMethodOfBaseClassLinqCase: function () {
+            var values = [0, 1, 2];
+
+            var max1 = System.Linq.Enumerable.from(values).select(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1911.getValue1).max();
+            var max2 = System.Linq.Enumerable.from(System.Linq.Enumerable.from(values).select(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1911.getValue2)).max();
+
+            Bridge.Test.Assert.areEqual(2, max1);
+            Bridge.Test.Assert.areEqual(2, max2);
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1911_BaseItem$1", function (T) { return {
+
+    }; });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1911_BaseItemExtensions", {
+        statics: {
+            getValue: function (T, item) {
+                return 1;
+            },
+            getValue$1: function (T, item, i) {
+                return i;
+            }
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1912", {
         testExtentionMethod: function () {
             var Bridge1912_Item = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1912_Item();
@@ -18239,6 +18279,15 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
 
         }
     });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1911_DerivedItem$1", function (T) { return {
+        inherits: [Bridge.ClientTest.Batch3.BridgeIssues.Bridge1911_BaseItem$1(T)],
+        statics: {
+            getValue: function (T1) {
+                return 2;
+            }
+        }
+    }; });
 
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240B", {
         inherits: [Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A],
