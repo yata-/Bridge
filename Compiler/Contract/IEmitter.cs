@@ -334,7 +334,12 @@ namespace Bridge.Contract
             set;
         }
 
-        Dictionary<string, OverloadsCollection> OverloadsCache
+        Dictionary<Tuple<AstNode, bool>, OverloadsCollection> OverloadsCacheNodes
+        {
+            get;
+        }
+
+        Dictionary<Tuple<IMember, bool, bool>, OverloadsCollection> OverloadsCacheMembers
         {
             get;
         }
