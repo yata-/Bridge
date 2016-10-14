@@ -10455,6 +10455,34 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1951", {
+        statics: {
+            counter: 0
+        },
+        testBindFunctionNoMemoryLeaks: function () {
+            new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1951.LeakedObject();
+            Bridge.Test.Assert.areEqual$1(1, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1951.counter, "1");
+
+            new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1951.LeakedObject();
+            Bridge.Test.Assert.areEqual$1(1, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1951.counter, "2");
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1951.LeakedObject", {
+        ctor: function () {
+            this.$initialize();
+            // This is to generate Bridge.fn.bind(this, this.method);
+            var a = Bridge.fn.bind(this, this.method);
+
+            var m = this;
+            var count = m.$$bind.length;
+            //Bridge.fn.bind save "this" to the $$bind property of the function.
+            Bridge.ClientTest.Batch3.BridgeIssues.Bridge1951.counter = count;
+        },
+        method: function () {
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A", {
         config: {
             properties: {
