@@ -569,6 +569,44 @@ namespace Bridge.Translator
                             Write(tmpVarName);
                             isSimple = true;
                         }
+                        else if (modifier == "version")
+                        {
+                            var versionTypeExp = exprs != null && exprs.Any() ? exprs[0] : null;
+
+                            var versionType = 0;
+                            if (versionTypeExp != null)
+                            {
+                                var versionTypePrimitiveExp = versionTypeExp as PrimitiveExpression;
+                                if (versionTypePrimitiveExp != null && versionTypePrimitiveExp.Value is int)
+                                {
+                                    versionType = (int)versionTypePrimitiveExp.Value;
+                                }
+                                else
+                                {
+                                    var rr = this.Emitter.Resolver.ResolveNode(versionTypeExp, this.Emitter);
+
+                                    if (rr != null && rr.ConstantValue != null && rr.ConstantValue is int)
+                                    {
+                                        versionType = (int)rr.ConstantValue;
+                                    }
+                                }
+                            }
+
+                            string version;
+
+                            if (versionType == 0)
+                            {
+                                version = this.Emitter.Translator.GetAssemblyProductVersion();
+                            }
+                            else
+                            {
+                                version= this.Emitter.Translator.GetCompilerProductVersion();
+                            }
+
+                            Write("\"", version, "\"");
+
+                            isSimple = true;
+                        }
                         else if (modifier == "gettmp")
                         {
                             var nameExpr = exprs[0] as PrimitiveExpression;

@@ -374,7 +374,7 @@ namespace Bridge.Translator
 
         private Dictionary<string, string> PrepareResourseHeaderInfo()
         {
-            var assemblyInfo = this.GetCurrentAssemblyVersion();
+            var assemblyInfo = this.GetAssemblyVersion();
 
             var nowDate = DateTime.Now;
 
@@ -569,9 +569,9 @@ namespace Bridge.Translator
                 };
 
                 var remarkBuffer = ApplyTokens(item.Remark, remarkInfo);
-                remarkBuffer.Replace("\r\n", "\n");
+                remarkBuffer.Replace(Emitter.CRLF, Emitter.NEW_LINE);
 
-                var remarkLines = remarkBuffer.ToString().Split(new[] { "\n" }, StringSplitOptions.None);
+                var remarkLines = remarkBuffer.ToString().Split(new[] { Emitter.NEW_LINE }, StringSplitOptions.None);
                 foreach (var remarkLine in remarkLines)
                 {
                     resourceBuffer.Append(remarkLine);

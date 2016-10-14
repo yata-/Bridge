@@ -37,7 +37,7 @@ namespace Bridge.ClientTest.Batch3.BridgeIssues
         }
 
         [Test]
-        public void TestCase()
+        public void TestCollectionLikeInitialization()
         {
             foreach (var item in new object[] { new { } })
             {

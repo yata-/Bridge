@@ -154,6 +154,8 @@ namespace Bridge.Translator
             emitter.SourceFiles = this.SourceFiles;
             emitter.Log = this.Log;
             emitter.Plugins = this.Plugins;
+            // Bridge.assembly() requires indent level 2
+            emitter.InitialLevel = !this.AssemblyInfo.Assembly.DisableInitAssembly ? 2 : 1;
 
             this.SortReferences();
 
@@ -256,7 +258,7 @@ namespace Bridge.Translator
                 sb.Append(line);
             }
 
-            sb.Append("\n");
+            sb.Append(Emitter.NEW_LINE);
         }
 
         public virtual Dictionary<string, string> SaveTo(string path, string defaultFileName)
@@ -934,7 +936,48 @@ namespace Bridge.Translator
             }
         }
 
-        public System.Diagnostics.FileVersionInfo GetExecutingAssemblyVersion()
+        private string GetProductVersionFromVersionInfo(System.Diagnostics.FileVersionInfo versionInfo)
+        {
+            string version = null;
+
+            if (versionInfo != null && versionInfo.ProductVersion != null)
+            {
+                version = versionInfo.ProductVersion.Trim();
+            }
+
+            // If version contains only 0 and dots like 0.0.0.0 then set it to default string.Empty
+            // This helps get compatibility with Mono when it returns empty (whitespace) when AssemblyVersion is not set
+            if (version == null || version.All(x => x == '0' || x == '.'))
+            {
+                version = Contract.Constants.JS.Types.System.Reflection.Assembly.Config.DEFAULT_VERSION;
+            }
+
+            return version;
+        }
+
+        private string compilerProductVersion = null;
+        public string GetCompilerProductVersion()
+        {
+            if (compilerProductVersion == null)
+            {
+                compilerProductVersion = GetProductVersionFromVersionInfo(GetCompilerVersion());
+            }
+
+            return compilerProductVersion;
+        }
+
+        private string assemblyProductVersion = null;
+        public string GetAssemblyProductVersion()
+        {
+            if (assemblyProductVersion == null)
+            {
+                assemblyProductVersion = GetProductVersionFromVersionInfo(GetAssemblyVersion());
+            }
+
+            return assemblyProductVersion;
+        }
+
+        public System.Diagnostics.FileVersionInfo GetCompilerVersion()
         {
             System.Diagnostics.FileVersionInfo compilerInfo = null;
             try
@@ -967,7 +1010,7 @@ namespace Bridge.Translator
             return fileVerionInfo;
         }
 
-        public System.Diagnostics.FileVersionInfo GetCurrentAssemblyVersion()
+        public System.Diagnostics.FileVersionInfo GetAssemblyVersion()
         {
             var bridgeInfo = GetAssemblyVersionByPath(this.AssemblyLocation);
 
@@ -983,7 +1026,7 @@ namespace Bridge.Translator
 
         private void LogProductInfo()
         {
-            var compilerInfo = this.GetExecutingAssemblyVersion();
+            var compilerInfo = this.GetCompilerVersion();
 
             var bridgeInfo = this.GetBridgeAssemblyVersion();
 
