@@ -19208,9 +19208,6 @@
         defaultConstructorWorks: function () {
             Bridge.Test.Assert.areEqual("", String());
         },
-        copyConstructorWorks: function () {
-            Bridge.Test.Assert.areEqual("abcd", String("abcd"));
-        },
         charAndCountConstructorWorks: function () {
             Bridge.Test.Assert.areEqual("xxxxx", System.String.fromCharCount(120, 5));
         },
