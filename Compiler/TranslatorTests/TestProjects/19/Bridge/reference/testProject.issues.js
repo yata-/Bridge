@@ -1,10 +1,5 @@
-﻿Bridge.assembly({
-        name: "TestProject",
-        compiler: "15.3.0"
-    },
-    function ($asm, globals) {
-        "use strict";
+﻿Bridge.assembly("TestProject", function ($asm, globals) {
+    "use strict";
 
-        Bridge.define("TestProject.Issues.JustClass");
-    }
-);
+    Bridge.define("TestProject.Issues.JustClass");
+});
