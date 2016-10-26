@@ -216,7 +216,7 @@ namespace Bridge.Translator
 
                 if (ifHasAttribute && MetadataUtils.GetScriptableAttributes(member.Attributes, emitter, tree).Any())
                 {
-                    memberAccessibility = new []{ MemberAccessibility.All };
+                    memberAccessibility = new[] { MemberAccessibility.All };
                 }
             }
 
@@ -240,7 +240,7 @@ namespace Bridge.Translator
                     for (int i = 0; i < attr.PositionalArguments.Count; i++)
                     {
                         object v = attr.PositionalArguments[i].ConstantValue;
-                        list.Add((MemberAccessibility) (int) v);
+                        list.Add((MemberAccessibility)(int)v);
                     }
 
                     return MetadataUtils.IsMemberReflectable(member, list.ToArray());
@@ -325,7 +325,7 @@ namespace Bridge.Translator
                         continue;
                     }
                 }
-                
+
                 if (memberAccessibility.HasFlag(MemberAccessibility.Instance) && member.IsStatic)
                 {
                     continue;
@@ -827,7 +827,7 @@ namespace Bridge.Translator
                 return "Object";
             }
 
-            var name = BridgeTypes.ToJsName(type, emitter, asDefinition);
+            var name = BridgeTypes.ToJsName(type, emitter, asDefinition, skipMethodTypeParam: true);
 
             if (emitter.NamespacesCache != null && name.StartsWith(type.Namespace + "."))
             {
