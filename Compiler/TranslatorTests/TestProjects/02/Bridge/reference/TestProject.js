@@ -5148,6 +5148,7 @@
                 }
             });
 
+            type.$kind = "";
             Bridge.Class.addExtend(type, [System.IComparable$1(type), System.IEquatable$1(type)]);
         };
 
@@ -5871,6 +5872,7 @@
         }
     });
 
+    Bridge.Int.$kind = "";
     Bridge.Class.addExtend(Bridge.Int, [System.IComparable$1(Bridge.Int), System.IEquatable$1(Bridge.Int)]);
 
     Bridge.define("System.Double", {
@@ -5906,6 +5908,7 @@
         }
     });
 
+    System.Double.$kind = "";
     Bridge.Class.addExtend(System.Double, [System.IComparable$1(System.Double), System.IEquatable$1(System.Double)]);
 
     Bridge.define("System.Single", {
@@ -5933,6 +5936,7 @@
         }
     });
 
+    System.Single.$kind = "";
     Bridge.Class.addExtend(System.Single, [System.IComparable$1(System.Single), System.IEquatable$1(System.Single)]);
 
     // @source Long.js
