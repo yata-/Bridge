@@ -10610,6 +10610,26 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1955", {
+        statics: {
+            scriptFunc: function () {
+                return 10;
+            }
+        },
+        i: 0,
+        ctor: function () {
+            this.$initialize();
+        },
+        $ctor1: function (i) {
+            this.$initialize();
+            this.i = i;
+        },
+        testScriptAttributeForExternMethods: function () {
+            Bridge.Test.Assert.areEqual(10, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1955.scriptFunc());
+            Bridge.Test.Assert.areEqual(5, new Bridge.ClientTest.Batch3.BridgeIssues.Bridge1955.$ctor1(5).i);
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1964", {
         statics: {
             getCharCode: function (s, isLast) {
