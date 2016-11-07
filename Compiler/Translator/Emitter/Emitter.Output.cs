@@ -122,7 +122,7 @@ namespace Bridge.Translator
             //  * @version 1.2.3.4
             //  * @author [AssemblyCompany]
             //  * @copyright [AssemblyCopyright]
-            //  * @compiler Bridge.NET 15.3.0
+            //  * @compiler Bridge.NET 0.0.0
             //  */
 
             if (this.AssemblyJsDocWritten)
