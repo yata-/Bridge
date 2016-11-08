@@ -11021,6 +11021,27 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2033", {
+        statics: {
+            state: "new",
+            state1: "new",
+            testClassEnumPropertiesInitialization: function () {
+                Bridge.Test.Assert.areEqual("new", Bridge.ClientTest.Batch3.BridgeIssues.Bridge2033.state);
+                Bridge.Test.Assert.areEqual("new", Bridge.ClientTest.Batch3.BridgeIssues.Bridge2033.state1);
+            }
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2033.GameState", {
+        $kind: "enum",
+        statics: {
+            new: "new",
+            playing: "playing",
+            finished: "finished"
+        },
+        $utype: System.String
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A", {
         config: {
             properties: {

@@ -10786,7 +10786,7 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
         inherits: [System.Attribute],
         config: {
             properties: {
-                E: 0
+                E: "v1"
             }
         },
         ctor: function (e) {
