@@ -6853,6 +6853,16 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1530", {
+        testObjectLiteralFieldImplementingInterface: function () {
+            var c = { name: "name" };
+            var p = c;
+
+            Bridge.Test.Assert.areEqual("name", p.name);
+            Bridge.Test.Assert.areEqual("name", c.name);
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1533", {
         testStringNullConcationation: function () {
             var s = null;
