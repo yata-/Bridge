@@ -9960,7 +9960,11 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
             }
             return Bridge.equals(this.v, o.v);
         },
-        $clone: function (to) { return this; }
+        $clone: function (to) {
+            var s = to || new Bridge.ClientTest.Batch4.NullableTests.MyType();
+            s.v = this.v;
+            return s;
+        }
     });
 
     Bridge.define("Bridge.ClientTest.Batch4.NumberFormatInfoTests", {
@@ -23918,7 +23922,11 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
             }
             return Bridge.equals(this.i, o.i);
         },
-        $clone: function (to) { return this; }
+        $clone: function (to) {
+            var s = to || new Bridge.ClientTest.Batch4.UserDefinedStructTests.S1();
+            s.i = this.i;
+            return s;
+        }
     });
 
     Bridge.define("Bridge.ClientTest.Batch4.UserDefinedStructTests.S2", {
@@ -23948,7 +23956,15 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
             }
             return Bridge.equals(this.i, o.i) && Bridge.equals(this.d, o.d) && Bridge.equals(this.DT, o.DT) && Bridge.equals(this.o, o.o) && Bridge.equals(this.t, o.t);
         },
-        $clone: function (to) { return this; }
+        $clone: function (to) {
+            var s = to || new Bridge.ClientTest.Batch4.UserDefinedStructTests.S2();
+            s.i = this.i;
+            s.d = this.d;
+            s.DT = this.DT;
+            s.o = this.o;
+            s.t = this.t;
+            return s;
+        }
     });
 
     Bridge.define("Bridge.ClientTest.Batch4.UserDefinedStructTests.S2G$1", function (TT) { return {
@@ -23978,7 +23994,15 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
             }
             return Bridge.equals(this.i, o.i) && Bridge.equals(this.d, o.d) && Bridge.equals(this.DT, o.DT) && Bridge.equals(this.o, o.o) && Bridge.equals(this.t, o.t);
         },
-        $clone: function (to) { return this; }
+        $clone: function (to) {
+            var s = to || new (Bridge.ClientTest.Batch4.UserDefinedStructTests.S2G$1(TT))();
+            s.i = this.i;
+            s.d = this.d;
+            s.DT = this.DT;
+            s.o = this.o;
+            s.t = this.t;
+            return s;
+        }
     }; });
 
     Bridge.define("Bridge.ClientTest.Batch4.UserDefinedStructTests.S3", {
@@ -24040,7 +24064,12 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
             }
             return Bridge.equals(this.I1, o.I1) && Bridge.equals(this.I2, o.I2);
         },
-        $clone: function (to) { return this; }
+        $clone: function (to) {
+            var s = to || new Bridge.ClientTest.Batch4.UserDefinedStructTests.S4();
+            s.I1 = this.I1;
+            s.I2 = this.I2;
+            return s;
+        }
     });
 
     Bridge.define("Bridge.ClientTest.Batch4.UserDefinedStructTests.S5", {
@@ -24062,7 +24091,11 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
         equals: function (o) {
             return Math.abs(((System.Nullable.getValue(Bridge.cast(o, Bridge.ClientTest.Batch4.UserDefinedStructTests.S5)).i - this.i) | 0)) <= 1;
         },
-        $clone: function (to) { return this; }
+        $clone: function (to) {
+            var s = to || new Bridge.ClientTest.Batch4.UserDefinedStructTests.S5();
+            s.i = this.i;
+            return s;
+        }
     });
 
     Bridge.define("Bridge.ClientTest.Batch4.UserDefinedStructTests.S6", {
@@ -24084,7 +24117,11 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
             }
             return Bridge.equals(this.i, o.i);
         },
-        $clone: function (to) { return this; }
+        $clone: function (to) {
+            var s = to || new Bridge.ClientTest.Batch4.UserDefinedStructTests.S6();
+            s.i = this.i;
+            return s;
+        }
     });
 
     Bridge.define("Bridge.ClientTest.Batch4.UserDefinedStructTests.S6G$1", function (TT) { return {
@@ -24106,7 +24143,11 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
             }
             return Bridge.equals(this.i, o.i);
         },
-        $clone: function (to) { return this; }
+        $clone: function (to) {
+            var s = to || new (Bridge.ClientTest.Batch4.UserDefinedStructTests.S6G$1(TT))();
+            s.i = this.i;
+            return s;
+        }
     }; });
 
     Bridge.define("Bridge.ClientTest.Batch4.UserDefinedStructTests.S7", {
@@ -24141,7 +24182,11 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
             }
             return Bridge.equals(this.i, o.i);
         },
-        $clone: function (to) { return this; }
+        $clone: function (to) {
+            var s = to || new Bridge.ClientTest.Batch4.UserDefinedStructTests.S7();
+            s.i = this.i;
+            return s;
+        }
     });
 
     Bridge.define("Bridge.ClientTest.Batch4.ExceptionTests.E2", {
