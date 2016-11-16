@@ -11103,6 +11103,15 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2045", {
+        statics: {
+            testDoubleEscapingInterpolation: function () {
+                var s = System.String.format("Hello \"World!\"", null);
+                Bridge.Test.Assert.areEqual("Hello \"World!\"", s);
+            }
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A", {
         config: {
             properties: {
