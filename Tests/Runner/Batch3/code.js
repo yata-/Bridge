@@ -11112,6 +11112,20 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2046", {
+        statics: {
+            testSafeNavigationOperator: function () {
+                var $t;
+                var dt = new Date();
+                var ndt = Bridge.cast(dt, Date, true);
+                var s1 = !Bridge.equals(System.Nullable.getValue(ndt), null) ? Bridge.Date.format(System.Nullable.getValue(ndt), "yyyy-MM-dd HH:mm:ss") : null;
+                var s2 = !Bridge.equals(($t = Bridge.cast(dt, Date, true)), null) ? Bridge.Date.format($t, "yyyy-MM-dd HH:mm:ss") : null;
+
+                Bridge.Test.Assert.areEqual(s1, s2);
+            }
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A", {
         config: {
             properties: {
