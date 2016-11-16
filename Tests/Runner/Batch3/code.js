@@ -11126,6 +11126,23 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2048", {
+        statics: {
+            testUnaryOperatorBlockCompilationError: function () {
+                var a = !new Bridge.ClientTest.Batch3.BridgeIssues.Bridge2048.Derived().getproperty();
+                Bridge.Test.Assert.true(a);
+            }
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2048.Base", {
+        getproperty: function () {
+            return false;
+        },
+        setproperty: function (value) {
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A", {
         config: {
             properties: {
@@ -19319,6 +19336,12 @@ Bridge.$N1391Result =                 r;
             this.setSomeProp((this.getSomeProp() + 11) | 0);
         }
     }; });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2048.Derived", {
+        inherits: [Bridge.ClientTest.Batch3.BridgeIssues.Bridge2048.Base],
+        setproperty: function (value) {
+        }
+    });
 
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240B", {
         inherits: [Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A],
