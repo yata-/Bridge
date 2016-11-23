@@ -11103,6 +11103,14 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2039", {
+        statics: {
+            testNaNToString: function () {
+                Bridge.Test.Assert.areEqual(System.Globalization.CultureInfo.invariantCulture.numberFormat.nanSymbol, System.Double.format(Number.NaN, 'G'));
+            }
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2045", {
         statics: {
             testDoubleEscapingInterpolation: function () {
