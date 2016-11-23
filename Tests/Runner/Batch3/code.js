@@ -11111,6 +11111,14 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2042", {
+        statics: {
+            testAppDomain: function () {
+                Bridge.Test.Assert.true(System.AppDomain.getAssemblies().length > 0);
+            }
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2045", {
         statics: {
             testDoubleEscapingInterpolation: function () {
