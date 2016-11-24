@@ -11159,6 +11159,33 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2067", {
+        statics: {
+            testGetGenericTypeDefinition: function () {
+                Bridge.Test.Assert.throws$6(System.InvalidOperationException, $_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge2067.f1);
+            }
+        }
+    });
+
+    Bridge.ns("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2067", $_);
+
+    Bridge.apply($_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge2067, {
+        f1: function () {
+            var t = Bridge.Reflection.getGenericTypeDefinition(System.Int32);
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2068", {
+        statics: {
+            testGetGenericTypeDefinition: function () {
+                var genericTypeDefinition = Bridge.Reflection.getGenericTypeDefinition(System.Collections.Generic.List$1);
+
+                Bridge.Test.Assert.areEqual(System.Collections.Generic.List$1, genericTypeDefinition);
+                Bridge.Test.Assert.areEqual("System.Collections.Generic.List$1", Bridge.Reflection.getTypeFullName(genericTypeDefinition));
+            }
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A", {
         config: {
             properties: {
