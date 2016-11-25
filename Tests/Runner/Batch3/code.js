@@ -11276,6 +11276,69 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2080", {
+        statics: {
+            config: {
+                properties: {
+                    TestProperty1: false
+                }
+            },
+            testAssigmentOrWithProperty: function () {
+                var testVariable = true;
+                var newValue1 = false;
+                testVariable = !!(testVariable | newValue1);
+                Bridge.Test.Assert.true(testVariable);
+
+                var myTestClass = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge2080.TestClass();
+                myTestClass.setTestProperty(true);
+                var newValue2 = false;
+                myTestClass.setTestProperty(!!(myTestClass.getTestProperty() | newValue2));
+                Bridge.Test.Assert.true(myTestClass.getTestProperty());
+
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2080.setTestProperty1(true);
+                var newValue3 = false;
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2080.setTestProperty1(!!(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2080.getTestProperty1() | newValue3));
+                Bridge.Test.Assert.true(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2080.getTestProperty1());
+            },
+            testAssigmentOrWithPropertyChangingCounter: function () {
+                var myTestClass = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge2080.TestClass2();
+
+                myTestClass.setTestProperty(true);
+                Bridge.Test.Assert.areEqual(0, Bridge.ClientTest.Batch3.BridgeIssues.Bridge2080.TestClass2.getCount);
+
+                var newValue2 = false;
+                myTestClass.setTestProperty(!!(myTestClass.getTestProperty() | newValue2));
+                Bridge.Test.Assert.areEqual(1, Bridge.ClientTest.Batch3.BridgeIssues.Bridge2080.TestClass2.getCount);
+
+                Bridge.Test.Assert.true(myTestClass.getTestProperty());
+                Bridge.Test.Assert.areEqual(2, Bridge.ClientTest.Batch3.BridgeIssues.Bridge2080.TestClass2.getCount);
+            }
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2080.TestClass", {
+        config: {
+            properties: {
+                TestProperty: false
+            }
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2080.TestClass2", {
+        statics: {
+            getCount: 0
+        },
+        b: false,
+        getTestProperty: function () {
+
+            Bridge.ClientTest.Batch3.BridgeIssues.Bridge2080.TestClass2.getCount = (Bridge.ClientTest.Batch3.BridgeIssues.Bridge2080.TestClass2.getCount + 1) | 0;
+            return this.b;
+        },
+        setTestProperty: function (value) {
+            this.b = value;
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A", {
         config: {
             properties: {
