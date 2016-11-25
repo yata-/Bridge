@@ -359,6 +359,7 @@
             QUnit.test("#2067 - TestGetGenericTypeDefinition", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2067.testGetGenericTypeDefinition);
             QUnit.test("#2068 - TestGetGenericTypeDefinition", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2068.testGetGenericTypeDefinition);
             QUnit.test("#2073 - TestUserDefinedWithStringConcat", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2073.testUserDefinedWithStringConcat);
+            QUnit.test("#2076 - TestLinqGlobalPollution", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2076.testLinqGlobalPollution);
             QUnit.test("#2079 - TestQueryAsArgument", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2079.testQueryAsArgument);
             QUnit.test("#2080 - TestAssigmentOrWithProperty", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2080.testAssigmentOrWithProperty);
             QUnit.test("#2080 - TestAssigmentOrWithPropertyChangingCounter", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2080.testAssigmentOrWithPropertyChangingCounter);
@@ -3452,6 +3453,16 @@
             testUserDefinedWithStringConcat: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2073).beforeTest(false, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2073);
                 Bridge.ClientTest.Batch3.BridgeIssues.Bridge2073.testUserDefinedWithStringConcat();
+            }
+        }
+    });
+
+    Bridge.define("Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2076", {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2076)],
+        statics: {
+            testLinqGlobalPollution: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2076).beforeTest(false, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2076);
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2076.testLinqGlobalPollution();
             }
         }
     });

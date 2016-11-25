@@ -6899,7 +6899,7 @@ Bridge.$N1391Result =                 r;
                                     foo = null; /// Async method lacks 'await' operators and will run synchronously
 
 
-                                    bar = function () {
+                                    bar = Bridge.fn.bind(this, function () {
                                         var $step = 0,
                                             $jumpFromFinally, 
                                             $tcs = new System.Threading.Tasks.TaskCompletionSource(), 
@@ -6928,7 +6928,7 @@ Bridge.$N1391Result =                 r;
 
                                         $asyncBody();
                                         return $tcs.task;
-                                    };
+                                    });
                                     $task1 = bar();
                                     $step = 1;
                                     $task1.continueWith($asyncBody, true);
@@ -9313,20 +9313,20 @@ Bridge.$N1391Result =                 r;
 
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1848", {
         testExternalInterfaceProperty: function () {
-            window.Bridge1848_ITest = {
-            	getNewId: function () { return 123; },
+            Bridge.Bridge1848_ITest = {
+                getNewId: function () { return 123; },
                 name: "editor"
             };
-            window.Bridge1848_ITest2 = {
-            	Bridge1848_ITest$getNewId: function () { return 123; },
+            Bridge.Bridge1848_ITest2 = {
+                Bridge1848_ITest$getNewId: function () { return 123; },
                 Bridge1848_ITest$name: "editor"
             };
 
-            var initialiser = window.Bridge1848_ITest;
+            var initialiser = Bridge.Bridge1848_ITest;
             Bridge.Test.Assert.areEqual(123, initialiser.getNewId());
             Bridge.Test.Assert.areEqual("editor", initialiser.name);
 
-            var initialiser2 = window.Bridge1848_ITest2;
+            var initialiser2 = Bridge.Bridge1848_ITest2;
             Bridge.Test.Assert.areEqual(123, initialiser2.Bridge1848_ITest$getNewId());
             Bridge.Test.Assert.areEqual("editor", initialiser2.Bridge1848_ITest$name);
         }
@@ -9657,7 +9657,7 @@ Bridge.$N1391Result =                 r;
                             case 0: {
                                 done = Bridge.Test.Assert.async();
                                     task = new System.Threading.Tasks.Task(null);
-                                    window.setTimeout(function () {
+                                    window.setTimeout(Bridge.fn.bind(this, function () {
                                         var $step = 0,
                                             $task1, 
                                             $jumpFromFinally, 
@@ -9684,7 +9684,7 @@ Bridge.$N1391Result =                 r;
                                             }, arguments);
 
                                         $asyncBody();
-                                    });
+                                    }));
 
                                     $task1 = task;
                                     $step = 1;
@@ -11222,6 +11222,15 @@ Bridge.$N1391Result =                 r;
             }
         },
         v: null
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2076", {
+        statics: {
+            testLinqGlobalPollution: function () {
+                var en = window.Enumerable;
+                Bridge.Test.Assert.null(en);
+            }
+        }
     });
 
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2079", {
