@@ -11548,6 +11548,27 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2094", {
+        statics: {
+            outer1: function (T1, value) {
+                return Bridge.ClientTest.Batch3.BridgeIssues.Bridge2094.doSomething(System.Int32, String, 123, function (value) { return Bridge.ClientTest.Batch3.BridgeIssues.Bridge2094.getName(System.Int32, value); });
+            },
+            outer2: function (T1, value) {
+                return Bridge.ClientTest.Batch3.BridgeIssues.Bridge2094.doSomething(T1, String, value, function (value) { return Bridge.ClientTest.Batch3.BridgeIssues.Bridge2094.getName(T1, value); });
+            },
+            doSomething: function (T1, T2, value, work) {
+                return work(value);
+            },
+            getName: function (T, value) {
+                return Bridge.Reflection.getTypeName(Bridge.getType(value));
+            },
+            testGenericMethodAsDelegate: function () {
+                Bridge.Test.Assert.areEqual("Int32", Bridge.ClientTest.Batch3.BridgeIssues.Bridge2094.outer1(System.Int32, 123));
+                Bridge.Test.Assert.areEqual("Int32", Bridge.ClientTest.Batch3.BridgeIssues.Bridge2094.outer2(System.Int32, 123));
+            }
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A", {
         config: {
             properties: {

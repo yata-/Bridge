@@ -423,6 +423,7 @@
     <Compile Include="BridgeIssues\2000\N2081.cs" />
     <Compile Include="BridgeIssues\2000\N2088.cs" />
     <Compile Include="BridgeIssues\2000\N2092.cs" />
+    <Compile Include="BridgeIssues\2000\N2094.cs" />
     <Compile Include="BridgeIssues\TestBridgeIssues.cs" />
     <Compile Include="Utilities\BrowserHelper.cs" />
     <Compile Include="Utilities\DecimalHelper.cs" />
