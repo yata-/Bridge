@@ -6896,6 +6896,8 @@ Bridge.$N1391Result =                 r;
                                 done = Bridge.Test.Assert.async();
 
                                     foo = null; /// Async method lacks 'await' operators and will run synchronously
+
+
                                     bar = Bridge.fn.bind(this, function () {
                                         var $step = 0,
                                             $jumpFromFinally, 
@@ -6925,7 +6927,7 @@ Bridge.$N1391Result =                 r;
 
                                         $asyncBody();
                                         return $tcs.task;
-                                    }); /// Async method lacks 'await' operators and will run synchronously
+                                    });
                                     $task1 = bar();
                                     $step = 1;
                                     $task1.continueWith($asyncBody, true);
@@ -11524,6 +11526,24 @@ Bridge.$N1391Result =                 r;
         config: {
             properties: {
                 ShouldSeeThis: 0
+            }
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2092", {
+        statics: {
+            combine: function (value, toAdd, combiner) {
+                return combiner(value, toAdd);
+            },
+            extendTuple: function (tuple, value) {
+                return { item1: tuple.item1, item2: value };
+            },
+            testIgnoreGenericForDelegate: function () {
+                var stringValueInTuple = { item1: "abc" };
+                var stringAndIntValuesInTuple = Bridge.ClientTest.Batch3.BridgeIssues.Bridge2092.combine(stringValueInTuple, 123, function (tuple, value) { return Bridge.ClientTest.Batch3.BridgeIssues.Bridge2092.extendTuple(tuple, value); });
+
+                Bridge.Test.Assert.areEqual("abc", stringAndIntValuesInTuple.item1);
+                Bridge.Test.Assert.areEqual(123, stringAndIntValuesInTuple.item2);
             }
         }
     });
