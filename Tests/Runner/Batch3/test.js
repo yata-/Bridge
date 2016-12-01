@@ -304,6 +304,7 @@ Bridge.assembly("Bridge_ClientTest_Batch3_Tests", function ($asm, globals) {
             QUnit.test("#1854 - TestCase", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1854.testCase);
             QUnit.test("#1856 - TestCase", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1856.testCase);
             QUnit.test("#1863 - TestTrueFalseOperators", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1863.testTrueFalseOperators);
+            QUnit.test("#1865 - TestObjectLiteralInterface", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1865.testObjectLiteralInterface);
             QUnit.test("#1869 - TestGenericTypeDefinition", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1869.testGenericTypeDefinition);
             QUnit.test("#1871 - TestErrorCommentNotThrowCompilerException", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1871.testErrorCommentNotThrowCompilerException);
             QUnit.test("#1872 - TestAsyncWithAnonymousDelegate", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1872.testAsyncWithAnonymousDelegate);
@@ -367,6 +368,7 @@ Bridge.assembly("Bridge_ClientTest_Batch3_Tests", function ($asm, globals) {
             QUnit.test("#2088 - TestObjectLiteralReflection", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2088.testObjectLiteralReflection);
             QUnit.test("#2092 - TestIgnoreGenericForDelegate", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2092.testIgnoreGenericForDelegate);
             QUnit.test("#2094 - TestGenericMethodAsDelegate", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2094.testGenericMethodAsDelegate);
+            QUnit.test("#2106 - TestGenericMethodInObjectLiteral", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2106.testGenericMethodInObjectLiteral);
             QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge381.testUseCase);
             QUnit.test("#447 - CheckInlineExpression", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge447.checkInlineExpression);
             QUnit.test("#447 - CheckInlineCalls", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge447.checkInlineCalls);
@@ -5857,6 +5859,30 @@ Bridge.assembly("Bridge_ClientTest_Batch3_Tests", function ($asm, globals) {
         }
     });
 
+    Bridge.define("Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1865", {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1865)],
+        statics: {
+            testObjectLiteralInterface: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1865).beforeTest(true, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1865, void 0, Bridge.merge(new Bridge.Test.QUnit.TestContext(), {
+                    method: "TestObjectLiteralInterface()",
+                    line: "40"
+                } ));
+                t.getFixture().testObjectLiteralInterface();
+            }
+        },
+        context: null,
+        getContext: function () {
+            if (this.context == null) {
+                this.context = Bridge.merge(new Bridge.Test.QUnit.FixtureContext(), {
+                    project: "Batch3",
+                    className: "Bridge.ClientTest.Batch3.BridgeIssues.Bridge1865",
+                    file: "Batch3\\BridgeIssues\\1800\\N1865.cs"
+                } );
+            }
+            return this.context;
+        }
+    });
+
     Bridge.define("Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge1869", {
         inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1869)],
         statics: {
@@ -7312,6 +7338,30 @@ Bridge.assembly("Bridge_ClientTest_Batch3_Tests", function ($asm, globals) {
                     project: "Batch3",
                     className: "Bridge.ClientTest.Batch3.BridgeIssues.Bridge2094",
                     file: "Batch3\\BridgeIssues\\2000\\N2094.cs"
+                } );
+            }
+            return this.context;
+        }
+    });
+
+    Bridge.define("Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2106", {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2106)],
+        statics: {
+            testGenericMethodInObjectLiteral: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2106).beforeTest(false, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2106, void 0, Bridge.merge(new Bridge.Test.QUnit.TestContext(), {
+                    method: "TestGenericMethodInObjectLiteral()",
+                    line: "25"
+                } ));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2106.testGenericMethodInObjectLiteral();
+            }
+        },
+        context: null,
+        getContext: function () {
+            if (this.context == null) {
+                this.context = Bridge.merge(new Bridge.Test.QUnit.FixtureContext(), {
+                    project: "Batch3",
+                    className: "Bridge.ClientTest.Batch3.BridgeIssues.Bridge2106",
+                    file: "Batch3\\BridgeIssues\\2100\\N2106.cs"
                 } );
             }
             return this.context;
@@ -11078,6 +11128,7 @@ Bridge.assembly("Bridge_ClientTest_Batch3_Tests", function ($asm, globals) {
     var $m = Bridge.setMetadata,
         $n = [System,Bridge.ClientTest.Batch3.BridgeIssues];
     $m($n[1].Bridge2088.T, function () { return {"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"ShouldSeeThis","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_ShouldSeeThis","t":8,"sn":"getShouldSeeThis","rt":$n[0].Int32},"s":{"a":2,"n":"set_ShouldSeeThis","t":8,"pi":[{"n":"value","pt":$n[0].Int32,"ps":0}],"sn":"setShouldSeeThis","rt":Object,"p":[$n[0].Int32]}},{"a":1,"n":"<ShouldSeeThis>k__BackingField","t":4,"rt":$n[0].Int32,"sn":"<ShouldSeeThis>k__BackingField"}]}; });
+    $m($n[1].Bridge2088.CompletelyUnrelatedClass, function () { return {"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"ShouldNotSeeThis","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_ShouldNotSeeThis","t":8,"rt":$n[0].Int32,"fg":"shouldNotSeeThis"},"s":{"a":2,"n":"set_ShouldNotSeeThis","t":8,"p":[$n[0].Int32],"rt":Object,"fs":"shouldNotSeeThis"},"fn":"shouldNotSeeThis"},{"a":1,"n":"<ShouldNotSeeThis>k__BackingField","t":4,"rt":$n[0].Int32,"sn":"<ShouldNotSeeThis>k__BackingField"}]}; });
     $m($n[1].Bridge2088.OL1, function () { return {"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"ShouldSeeThis1","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_ShouldSeeThis1","t":8,"rt":$n[0].Int32,"fg":"shouldSeeThis1"},"s":{"a":2,"n":"set_ShouldSeeThis1","t":8,"p":[$n[0].Int32],"rt":Object,"fs":"shouldSeeThis1"},"fn":"shouldSeeThis1"},{"a":1,"n":"<ShouldSeeThis1>k__BackingField","t":4,"rt":$n[0].Int32,"sn":"<ShouldSeeThis1>k__BackingField"}]}; });
     $m($n[1].Bridge2088.OL2, function () { return {"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"ShouldSeeThis2","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_ShouldSeeThis2","t":8,"rt":$n[0].Int32,"fg":"shouldSeeThis2"},"s":{"a":2,"n":"set_ShouldSeeThis2","t":8,"p":[$n[0].Int32],"rt":Object,"fs":"shouldSeeThis2"},"fn":"shouldSeeThis2"},{"a":1,"n":"<ShouldSeeThis2>k__BackingField","t":4,"rt":$n[0].Int32,"sn":"<ShouldSeeThis2>k__BackingField"}]}; });
 });
