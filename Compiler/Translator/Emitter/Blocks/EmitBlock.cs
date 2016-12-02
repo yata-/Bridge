@@ -289,6 +289,7 @@ namespace Bridge.Translator
 
                 this.Emitter.Output = this.GetOutputForType(typeInfo, null);
                 this.Emitter.TypeInfo = type;
+                type.JsName = BridgeTypes.ToJsName(type.Type, this.Emitter, true);
 
                 if (this.Emitter.Output.Length > 0)
                 {
