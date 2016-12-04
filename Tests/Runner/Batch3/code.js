@@ -11874,6 +11874,24 @@ Bridge.$N1391Result =                 r;
         }
     }; });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2121", {
+        statics: {
+            testLongAsDictionaryKey: function () {
+                var dict = new (System.Collections.Generic.Dictionary$2(System.Int64,String))();
+                var i = 0;
+                dict.set(System.Int64(i), "test");
+
+                var l = System.Int64(0);
+                Bridge.Test.Assert.areEqual("test", dict.get(System.Int64(i)));
+                Bridge.Test.Assert.areEqual("test", dict.get(l));
+
+                var s = ["test"];
+                Bridge.Test.Assert.areEqual("test", s[System.Int64.toNumber(l)]);
+                Bridge.Test.Assert.areEqual("test", s[System.Int64.toNumber(System.Int64(i))]);
+            }
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2127", {
         statics: {
             testNumberFormatInfoNaNSymbol: function () {
