@@ -185,6 +185,10 @@ namespace Bridge.Translator
 
                         new InlineArgumentsBlock(this.Emitter, new ArgumentsInfo(this.Emitter, this.IdentifierExpression, resolveResult), oldInline, (IMethod)memberResult.Member, targetrr).EmitFunctionReference();
                     }
+                    else if (memberResult != null && memberResult.Member is IField && inlineCode.Contains("{0}"))
+                    {
+                        this.PushWriter(inlineCode, null, thisArg, range);
+                    }
                     else
                     {
                         this.Write(inlineCode);
@@ -309,7 +313,9 @@ namespace Bridge.Translator
                 }
                 else if (Helpers.IsFieldProperty(memberResult.Member, this.Emitter))
                 {
-                    this.Write(Helpers.GetPropertyRef(memberResult.Member, this.Emitter));
+                    var name = Helpers.GetPropertyRef(memberResult.Member, this.Emitter);
+
+                    this.WriteIdentifier(name);
                 }
                 else if (!this.Emitter.IsAssignment)
                 {
@@ -535,7 +541,7 @@ namespace Bridge.Translator
                     this.PushWriter(Helpers.GetPropertyRef(memberResult.Member, this.Emitter, true) + "({0})");
                 }
             }
-            else if (memberResult != null && memberResult.Member is DefaultResolvedEvent)
+            else if (memberResult != null && memberResult.Member is IEvent)
             {
                 if (this.Emitter.IsAssignment &&
                     (this.Emitter.AssignmentType == AssignmentOperatorType.Add ||
@@ -583,6 +589,10 @@ namespace Bridge.Translator
                         if (isRefArg)
                         {
                             this.WriteScript(name);
+                        }
+                        else if (memberResult.Member is IField)
+                        {
+                            this.WriteIdentifier(name);
                         }
                         else
                         {

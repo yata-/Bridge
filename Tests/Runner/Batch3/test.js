@@ -371,6 +371,8 @@ Bridge.assembly("Bridge_ClientTest_Batch3_Tests", function ($asm, globals) {
             QUnit.test("#2092 - TestIgnoreGenericForDelegate", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2092.testIgnoreGenericForDelegate);
             QUnit.test("#2094 - TestGenericMethodAsDelegate", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2094.testGenericMethodAsDelegate);
             QUnit.test("#2106 - TestGenericMethodInObjectLiteral", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2106.testGenericMethodInObjectLiteral);
+            QUnit.test("#2114 - TestNonStandardNames", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2114.testNonStandardNames);
+            QUnit.test("#2114 - TestFieldTemplates", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2114.testFieldTemplates);
             QUnit.test("#2121 - TestLongAsDictionaryKey", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2121.testLongAsDictionaryKey);
             QUnit.test("#2127 - TestNumberFormatInfoNaNSymbol", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2127.testNumberFormatInfoNaNSymbol);
             QUnit.test("#381 - TestUseCase", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge381.testUseCase);
@@ -7397,6 +7399,37 @@ Bridge.assembly("Bridge_ClientTest_Batch3_Tests", function ($asm, globals) {
                     project: "Batch3",
                     className: "Bridge.ClientTest.Batch3.BridgeIssues.Bridge2106",
                     file: "Batch3\\BridgeIssues\\2100\\N2106.cs"
+                } );
+            }
+            return this.context;
+        }
+    });
+
+    Bridge.define("Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2114", {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2114)],
+        statics: {
+            testNonStandardNames: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2114).beforeTest(false, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2114, void 0, Bridge.merge(new Bridge.Test.QUnit.TestContext(), {
+                    method: "TestNonStandardNames()",
+                    line: "103"
+                } ));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2114.testNonStandardNames();
+            },
+            testFieldTemplates: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2114).beforeTest(false, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2114, void 0, Bridge.merge(new Bridge.Test.QUnit.TestContext(), {
+                    method: "TestFieldTemplates()",
+                    line: "125"
+                } ));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2114.testFieldTemplates();
+            }
+        },
+        context: null,
+        getContext: function () {
+            if (this.context == null) {
+                this.context = Bridge.merge(new Bridge.Test.QUnit.FixtureContext(), {
+                    project: "Batch3",
+                    className: "Bridge.ClientTest.Batch3.BridgeIssues.Bridge2114",
+                    file: "Batch3\\BridgeIssues\\2100\\N2114.cs"
                 } );
             }
             return this.context;
