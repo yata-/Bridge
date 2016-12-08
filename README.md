@@ -111,6 +111,7 @@ We need your help spreading the word about Bridge. Any of the following items wi
 6. Give a local usergroup presentation on Bridge
 7. Give a conference talk on Bridge
 8. Provide feedback ([forums](http://forums.bridge.net), [GitHub](https://github.com/bridgedotnet/Bridge/issues) or [email](mailto:hello@bridge.net))
+9. Vote for Bridge.NET on [UserVoice](https://visualstudio.uservoice.com/forums/121579-visual-studio-ide/suggestions/17335078-support-bridge-net)
 
 ## Testing
 
