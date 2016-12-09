@@ -12019,6 +12019,61 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2135", {
+        statics: {
+            testNestedTypesNames: function () {
+                Bridge.Test.Assert.areEqual("_Bridge2135_1.Config", Bridge.Reflection.getTypeFullName(_Bridge2135_1.Config));
+                Bridge.Test.Assert.areEqual("_Bridge2135_2.Class2_1$1.Config", Bridge.Reflection.getTypeFullName(_Bridge2135_2.Class2_1$1.Config));
+                Bridge.Test.Assert.areEqual("_Bridge2135_3.Config$1", Bridge.Reflection.getTypeFullName(_Bridge2135_3.Config$1));
+                Bridge.Test.Assert.areEqual("_Bridge2135_4.Class4_1$1.Config[[Object]]", Bridge.Reflection.getTypeFullName(_Bridge2135_4.Class4_1$1.Config(Object)));
+            }
+        }
+    });
+
+    Bridge.define("_Bridge2135_1");
+
+    Bridge.define("_Bridge2135_1.Config", {
+        config: {
+            properties: {
+                Msg: null
+            }
+        }
+    });
+
+    Bridge.define("_Bridge2135_2");
+
+    Bridge.define("_Bridge2135_2.Class2_1$1", function (T) { return {
+
+    }; });
+
+    Bridge.define("_Bridge2135_2.Class2_1$1.Config", {
+        config: {
+            properties: {
+                Msg: null
+            }
+        }
+    });
+
+    Bridge.define("_Bridge2135_3");
+
+    Bridge.define("_Bridge2135_3.Config$1", function (T) { return {
+        config: {
+            properties: {
+                Msg: null
+            }
+        }
+    }; });
+
+    Bridge.define("_Bridge2135_4");
+
+    Bridge.define("_Bridge2135_4.Class4_1$1", function (T) { return {
+
+    }; });
+
+    Bridge.define("_Bridge2135_4.Class4_1$1.Config", function (T) { return {
+        $literal: true
+    }; });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2137", {
         statics: {
             config: {
