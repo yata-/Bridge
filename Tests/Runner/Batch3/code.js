@@ -6147,6 +6147,22 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1430", {
+        statics: {
+            testNestedNamespaceSupport: function () {
+                Bridge.Test.Assert.areEqual("Hi from inner Level1", Bridge.ClientTest.Batch3.BridgeIssues.Inner1430_Level1.Constants.TestConst);
+
+                var d1 = new Bridge.ClientTest.Batch3.BridgeIssues.Inner1430_Level1.Do();
+                Bridge.Test.Assert.areEqual(4, d1.getFour());
+
+                Bridge.Test.Assert.areEqual("Hi from inner Level3", Bridge.ClientTest.Batch3.BridgeIssues.Inner1430_Level1.Inner1430_Level2.Constants.TestConst);
+
+                var d2 = new Bridge.ClientTest.Batch3.BridgeIssues.Inner1430_Level1.Inner1430_Level2.Do();
+                Bridge.Test.Assert.areEqual(5, d2.getFive());
+            }
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1438", {
         statics: {
             testJSONParse: function () {
@@ -18834,6 +18850,30 @@ Bridge.$N1391Result =                 r;
     Bridge.apply($asm.$.Bridge.ClientTest.Batch3.BridgeIssues.Bridge999_1, {
         f1: function (x) {
             return x;
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Inner1430_Level1.Constants", {
+        statics: {
+            TestConst: "Hi from inner Level1"
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Inner1430_Level1.Do", {
+        getFour: function () {
+            return 4;
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Inner1430_Level1.Inner1430_Level2.Constants", {
+        statics: {
+            TestConst: "Hi from inner Level3"
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Inner1430_Level1.Inner1430_Level2.Do", {
+        getFive: function () {
+            return 5;
         }
     });
 
