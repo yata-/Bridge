@@ -12412,6 +12412,39 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2157", {
+        statics: {
+            testMethod: function (TType) {
+                return Bridge.merge(new TType(), {
+                    setTestIntProperty: 2,
+                    setTestStringProperty: "initializer",
+                    setTestObjectProperty: String.fromCharCode.apply(null, [105])
+                } );
+            },
+            testCreatingGenericInstanceWithInitializer: function () {
+                Bridge.Test.Assert.areEqual(2, Bridge.ClientTest.Batch3.BridgeIssues.Bridge2157.testMethod(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2157.TestClass).getTestIntProperty());
+                Bridge.Test.Assert.areEqual("initializer", Bridge.ClientTest.Batch3.BridgeIssues.Bridge2157.testMethod(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2157.TestClass).getTestStringProperty());
+                Bridge.Test.Assert.areEqual("i", Bridge.ClientTest.Batch3.BridgeIssues.Bridge2157.testMethod(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2157.TestClass).getTestObjectProperty());
+            }
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2157.TestClass", {
+        config: {
+            properties: {
+                TestIntProperty: 0,
+                TestStringProperty: null,
+                TestObjectProperty: null
+            }
+        },
+        ctor: function () {
+            this.$initialize();
+            this.setTestIntProperty(1);
+            this.setTestStringProperty("constructor");
+            this.setTestObjectProperty(String.fromCharCode.apply(null, [99]));
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A", {
         config: {
             properties: {
