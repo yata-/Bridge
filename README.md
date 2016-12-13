@@ -29,7 +29,8 @@ Run the sample above at [Deck.NET](http://deck.net/3642cccab693782704ec59554522a
   * Add **Bridge.NET** Visual Studio extension, or 
   * Use [NuGet](https://www.nuget.org/packages/bridge) to install into a C# Class Library project (`Install-Package Bridge`), or
   * [Download](http://bridge.net/download/) the Visual Studio Code starter project
-* The [Attribute Reference](http://bridge.net/docs/attribute-reference/) is important
+* The [Attribute Reference](http://bridge.net/docs/attribute-reference/) document is important
+* The [Global Configuration](http://bridge.net/docs/global-configuration/) document is important
 * Licensed under [Apache License, Version 2.0](LICENSE)
 * Need Help? Bridge.NET [Forums](http://forums.bridge.net/) or GitHub [Issues](https://github.com/bridgedotnet/Bridge/issues)
 * [@bridgedotnet](https://twitter.com/bridgedotnet) on Twitter
