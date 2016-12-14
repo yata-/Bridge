@@ -114,7 +114,7 @@ We need your help spreading the word about Bridge. Any of the following items wi
 1. Leave a review on [Visual Studio Gallery](https://marketplace.visualstudio.com/items?itemName=BridgeNET.BridgeNET)
 1. Blog about Bridge.NET
 1. Tweet about [@bridgedotnet](https://twitter.com/bridgedotnet)
-1. Start a discussion on [Reddit](reddit.com/r/programming)
+1. Start a discussion on [Reddit](http://reddit.com/r/programming)
 1. Answer Bridge related questions on [StackOverflow](http://stackoverflow.com/questions/tagged/bridge.net)
 1. Give a local usergroup presentation on Bridge
 1. Give a conference talk on Bridge
