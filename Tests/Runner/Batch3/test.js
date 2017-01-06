@@ -11689,11 +11689,4 @@ Bridge.assembly("Bridge_ClientTest_Batch3_Tests", function ($asm, globals) {
             return this.context;
         }
     });
-
-    var $m = Bridge.setMetadata,
-        $n = [System,Bridge.ClientTest.Batch3.BridgeIssues];
-    $m($n[1].Bridge2088.T, function () { return {"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"ShouldSeeThis","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_ShouldSeeThis","t":8,"sn":"getShouldSeeThis","rt":$n[0].Int32},"s":{"a":2,"n":"set_ShouldSeeThis","t":8,"pi":[{"n":"value","pt":$n[0].Int32,"ps":0}],"sn":"setShouldSeeThis","rt":Object,"p":[$n[0].Int32]}},{"a":1,"n":"<ShouldSeeThis>k__BackingField","t":4,"rt":$n[0].Int32,"sn":"<ShouldSeeThis>k__BackingField"}]}; });
-    $m($n[1].Bridge2088.CompletelyUnrelatedClass, function () { return {"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"ShouldNotSeeThis","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_ShouldNotSeeThis","t":8,"rt":$n[0].Int32,"fg":"shouldNotSeeThis"},"s":{"a":2,"n":"set_ShouldNotSeeThis","t":8,"p":[$n[0].Int32],"rt":Object,"fs":"shouldNotSeeThis"},"fn":"shouldNotSeeThis"},{"a":1,"n":"<ShouldNotSeeThis>k__BackingField","t":4,"rt":$n[0].Int32,"sn":"<ShouldNotSeeThis>k__BackingField"}]}; });
-    $m($n[1].Bridge2088.OL1, function () { return {"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"ShouldSeeThis1","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_ShouldSeeThis1","t":8,"rt":$n[0].Int32,"fg":"shouldSeeThis1"},"s":{"a":2,"n":"set_ShouldSeeThis1","t":8,"p":[$n[0].Int32],"rt":Object,"fs":"shouldSeeThis1"},"fn":"shouldSeeThis1"},{"a":1,"n":"<ShouldSeeThis1>k__BackingField","t":4,"rt":$n[0].Int32,"sn":"<ShouldSeeThis1>k__BackingField"}]}; });
-    $m($n[1].Bridge2088.OL2, function () { return {"m":[{"a":2,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"ShouldSeeThis2","t":16,"rt":$n[0].Int32,"g":{"a":2,"n":"get_ShouldSeeThis2","t":8,"rt":$n[0].Int32,"fg":"shouldSeeThis2"},"s":{"a":2,"n":"set_ShouldSeeThis2","t":8,"p":[$n[0].Int32],"rt":Object,"fs":"shouldSeeThis2"},"fn":"shouldSeeThis2"},{"a":1,"n":"<ShouldSeeThis2>k__BackingField","t":4,"rt":$n[0].Int32,"sn":"<ShouldSeeThis2>k__BackingField"}]}; });
 });
