@@ -12729,6 +12729,15 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2181", {
+        statics: {
+            testStringPadForEmptyString: function () {
+                Bridge.Test.Assert.areEqual("LLL", System.String.alignString((""), 3, 76));
+                Bridge.Test.Assert.areEqual("RRR", System.String.alignString((""), -3, 82));
+            }
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A", {
         config: {
             properties: {
