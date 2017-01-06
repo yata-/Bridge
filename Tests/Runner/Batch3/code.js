@@ -12499,6 +12499,38 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2176", {
+        statics: {
+            testExternalObjectLiteralConstructorMode: function () {
+                
+            // This emulates external Config1
+            Bridge.ClientTest.Batch3.BridgeIssues.Bridge2176.Config1 = function()
+            {
+                return { id: 1 };
+            };
+
+            // This emulates external Config2
+            var Config2 = function()
+            {
+                return { id: 2 };
+            };
+            
+
+                var c1 = Bridge.merge(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2176.Config1(), {
+                    name: "Config1"
+                } );
+                Bridge.Test.Assert.areEqual("Config1", c1.name);
+                Bridge.Test.Assert.areEqual(1, c1.id);
+
+                var c2 = Bridge.merge(Config2(), {
+                    name: "Config2"
+                } );
+                Bridge.Test.Assert.areEqual("Config2", c2.name);
+                Bridge.Test.Assert.areEqual(2, c2.id);
+            }
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A", {
         config: {
             properties: {
