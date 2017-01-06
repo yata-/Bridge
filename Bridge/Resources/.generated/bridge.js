@@ -10168,16 +10168,11 @@
         return {
             inherits: [System.Collections.Generic.IComparer$1(T)],
 
-            config: {
-                alias: [
-                    "compare", "System$Collections$Generic$IComparer$1$" + Bridge.getTypeAlias(T) + "$compare"
-                ]
-            },
-
             ctor: function (fn) {
                 this.$initialize();
                 this.fn = fn;
                 this.compare = fn;
+                this["System$Collections$Generic$IComparer$1$" + Bridge.getTypeAlias(T) + "$compare"] = fn;
             }
         }
     });
