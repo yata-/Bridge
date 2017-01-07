@@ -6,6 +6,11 @@ var SomeExternalNamespace = {
 SomeExternalNamespace.SomeNonBridgeClass.prototype.foo = function(){return 1;};
 
 
+Bridge.$MyPerson2189 = function(name){
+    this.name = name;
+};
+
+
 /**
  * Bridge Test library - test github issues up to #1999
  * @version 15.6.0
@@ -10937,6 +10942,7 @@ Bridge.$N1391Result =                 r;
         },
         ctor: function () {
             this.$initialize();
+            System.Collections.Generic.IEnumerable$1(System.Collections.Generic.KeyValuePair$2(String,Object)).call(this);
             this.dic = new (System.Collections.Generic.Dictionary$2(String,Object))();
         },
         add: function (key, value) {
@@ -12735,6 +12741,28 @@ Bridge.$N1391Result =                 r;
                 Bridge.Test.Assert.areEqual("LLL", System.String.alignString((""), 3, 76));
                 Bridge.Test.Assert.areEqual("RRR", System.String.alignString((""), -3, 82));
             }
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2189", {
+        statics: {
+            testInheritanceFromExternalAndBaseCtor: function () {
+                var employee = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge2189.Employee("John Doe", 100);
+                var o = employee;
+                Bridge.Test.Assert.true(Bridge.is(o, Bridge.$MyPerson2189));
+                Bridge.Test.Assert.areEqual("John Doe", employee.name);
+                Bridge.Test.Assert.areEqual(100, employee.salary);
+            }
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2189.Employee", {
+        inherits: [Bridge.$MyPerson2189],
+        salary: 0,
+        ctor: function (name, salary) {
+            this.$initialize();
+            Bridge.$MyPerson2189.call(this, name);
+            this.salary = salary;
         }
     });
 
