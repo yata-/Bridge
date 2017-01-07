@@ -12774,6 +12774,32 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2195", {
+        statics: {
+            generic: function (T) {
+                return 1;
+            },
+            testGenericInvocationInTryBlock: function () {
+                var i = 0;
+                try {
+                    i = Bridge.ClientTest.Batch3.BridgeIssues.Bridge2195.generic(String);
+                    Bridge.Test.Assert.areEqual(1, i);
+                }
+                catch ($e1) {
+                    $e1 = System.Exception.create($e1);
+                    var ex;
+                    if (Bridge.is($e1, System.ArgumentException)) {
+                        ex = $e1;
+                        Bridge.Test.Assert.fail$1("Should not get into catch. However the test is to check the try/catch compiles successfully");
+                        Bridge.Console.log(ex.getMessage());
+                    } else {
+                        throw $e1;
+                    }
+                }
+            }
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A", {
         config: {
             properties: {
