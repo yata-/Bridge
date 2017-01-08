@@ -844,15 +844,38 @@ namespace Bridge.Translator
             if ((name == (Translator.Bridge_ASSEMBLY + ".Module")) ||
                 (resolveResult != null && resolveResult.Type != null && resolveResult.Type.FullName == (Translator.Bridge_ASSEMBLY + ".ModuleAttribute")))
             {
-                if (attr.Arguments.Count > 0)
+                Module module = null;
+
+                if (attr.Arguments.Count == 1)
                 {
-                    object nameObj = this.GetAttributeArgumentValue(attr, resolveResult, 0);
-                    this.AssemblyInfo.Module = nameObj != null ? nameObj.ToString() : "";
+                    var obj = this.GetAttributeArgumentValue(attr, resolveResult, 0);
+
+                    if (obj is string)
+                    {
+                        module = new Module(obj.ToString());
+                    }
+                    else if (obj is int)
+                    {
+                        module = new Module("", (ModuleType)(int)obj);
+                    }
+                    else
+                    {
+                        module = new Module();
+                    }
+                }
+                else if (attr.Arguments.Count == 2)
+                {
+                    var mtype = this.GetAttributeArgumentValue(attr, resolveResult, 0);
+                    var mname = this.GetAttributeArgumentValue(attr, resolveResult, 1);
+
+                    module = new Module(name != null ? mname.ToString() : "", (ModuleType)(int)mtype);
                 }
                 else
                 {
-                    this.AssemblyInfo.Module = "";
+                    module = new Module();
                 }
+
+                this.AssemblyInfo.Module = module;
 
                 return true;
             }

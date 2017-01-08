@@ -119,7 +119,7 @@ namespace Bridge.Translator
 
             if (name.IsEmpty())
             {
-                name = BridgeTypes.DefinitionToJsName(this.TypeInfo.Type, this.Emitter);
+                name = BridgeTypes.ToJsName(this.TypeInfo.Type, this.Emitter, true, nomodule: true);
             }
 
             if (typeDef.IsInterface && typeDef.HasGenericParameters)
@@ -267,7 +267,7 @@ namespace Bridge.Translator
             this.EnsureComma();
             this.Write(JS.Vars.SCOPE);
             this.WriteColon();
-            this.Write(JS.Vars.EXPORTS);
+            this.Write(this.TypeInfo.Module.Name);
             this.Emitter.Comma = true;
         }
 

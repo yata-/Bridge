@@ -251,7 +251,7 @@
             public const string T = "$t";
             public const string E = "$e";
             public const string YIELD = "$yield";
-            public const string EXPORTS = "exports";
+            public const string EXPORTS = "$exports";
             public const string SCOPE = "$scope";
             public const string ITERATOR = "$i";
 

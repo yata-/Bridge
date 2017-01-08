@@ -48,6 +48,12 @@ namespace Bridge.Contract
             get;
             set;
         }
+
+        public Module Module
+        {
+            get;
+            set;
+        }
     }
 
     public class BridgeTypes : Dictionary<string, BridgeType>
@@ -298,7 +304,7 @@ namespace Bridge.Contract
             return globalTarget;
         }
 
-        public static string ToJsName(IType type, IEmitter emitter, bool asDefinition = false, bool excludens = false, bool isAlias = false, bool skipMethodTypeParam = false)
+        public static string ToJsName(IType type, IEmitter emitter, bool asDefinition = false, bool excludens = false, bool isAlias = false, bool skipMethodTypeParam = false, bool nomodule = false)
         {
             var itypeDef = type.GetDefinition();
 
@@ -391,7 +397,7 @@ namespace Bridge.Contract
             }
 
             bool isCustomName = false;
-            if (bridgeType != null)
+            if (bridgeType != null && !nomodule)
             {
                 name = BridgeTypes.AddModule(name, bridgeType, out isCustomName);
             }
@@ -542,22 +548,101 @@ namespace Bridge.Contract
             return BridgeTypes.ToJsName(resolveResult.Type, emitter, astType.Parent is TypeOfExpression && symbol != null && symbol.SymbolKind == SymbolKind.TypeDefinition);
         }
 
+        public static void EnsureModule(BridgeType type)
+        {
+            var def = type.Type.GetDefinition();
+            if (def != null && type.Module == null)
+            {
+                if (def.Attributes.Count > 0)
+                {
+                    var attr = def.Attributes.FirstOrDefault(a => a.AttributeType.FullName == "Bridge.ModuleAttribute");
+
+                    if (attr != null)
+                    {
+                        BridgeTypes.ReadModuleFromAttribute(type, attr);
+                    }
+                }
+
+                if (type.Module == null)
+                {
+                    var asm = def.ParentAssembly;
+
+                    if (asm.AssemblyAttributes.Count > 0)
+                    {
+                        var attr = asm.AssemblyAttributes.FirstOrDefault(a => a.AttributeType.FullName == "Bridge.ModuleAttribute");
+
+                        if (attr != null)
+                        {
+                            BridgeTypes.ReadModuleFromAttribute(type, attr);
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void ReadModuleFromAttribute(BridgeType type, IAttribute attr)
+        {
+            Module module = null;
+
+            if (attr.PositionalArguments.Count == 1)
+            {
+                var obj = attr.PositionalArguments[0].ConstantValue;
+
+                if (obj is string)
+                {
+                    module = new Module(obj.ToString());
+                }
+                else if (obj is int)
+                {
+                    module = new Module("", (ModuleType) (int) obj);
+                }
+                else
+                {
+                    module = new Module();
+                }
+            }
+            else if (attr.PositionalArguments.Count == 2)
+            {
+                var mtype = attr.PositionalArguments[0].ConstantValue;
+                var name = attr.PositionalArguments[1].ConstantValue;
+
+                module = new Module(name != null ? name.ToString() : "", (ModuleType) (int) mtype);
+            }
+            else
+            {
+                module = new Module();
+            }
+
+            type.Module = module;
+        }
+
         public static string AddModule(string name, BridgeType type, out bool isCustomName)
         {
             isCustomName = false;
             var emitter = type.Emitter;
             var currentTypeInfo = emitter.TypeInfo;
-            string module = null;
+            Module module = null;
+            string moduleName = null;
 
-            if (currentTypeInfo != null && currentTypeInfo.Key != type.Key && type.TypeInfo != null)
+            if (type.TypeInfo == null)
             {
-                var typeInfo = type.TypeInfo;
-                module = typeInfo.Module;
-                if (typeInfo.Module != null && currentTypeInfo.Module != typeInfo.Module && !emitter.CurrentDependencies.Any(d => d.DependencyName == typeInfo.Module))
+                BridgeTypes.EnsureModule(type);
+                module = type.Module;
+            }
+            else
+            {
+                module = type.TypeInfo.Module;
+            }
+
+            if (currentTypeInfo != null && module != null)
+            {
+                moduleName = module.Name;
+                if (!emitter.DisableDependencyTracking && currentTypeInfo.Key != type.Key && !Module.Equals(currentTypeInfo.Module, module) && !emitter.CurrentDependencies.Any(d => d.DependencyName == moduleName))
                 {
                     emitter.CurrentDependencies.Add(new ModuleDependency
                     {
-                        DependencyName = typeInfo.Module
+                        DependencyName = moduleName,
+                        Type = module.Type
                     });
                 }
             }
@@ -570,9 +655,9 @@ namespace Bridge.Contract
                 name = customName;
             }
 
-            if (!String.IsNullOrEmpty(module) && currentTypeInfo.Key != type.Key && currentTypeInfo.Module != module)
+            if (!String.IsNullOrEmpty(moduleName))
             {
-                name = module + "." + name;
+                name = moduleName + "." + name;
             }
 
             return name;
