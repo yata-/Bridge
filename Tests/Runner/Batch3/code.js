@@ -632,7 +632,7 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
                 var a = new Date(2015, 1 - 1, 1, 9);
                 var b = new Date(2015, 1 - 1, 1, 12, 52);
 
-                var value = System.Decimal(((Bridge.Date.subdd(b, a)).getTotalHours()), null, System.Double);
+                var value = System.Decimal((Bridge.Date.subdd(b, a)).getTotalHours(), null, System.Double);
 
                 Bridge.Test.Assert.areEqual("3.86666666666667", Bridge.Int.format(value, 'G'));
             }
@@ -1463,19 +1463,19 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1120", {
         statics: {
             testEnumDoesNotGenerateValuesAsPowerOfTwo: function () {
-                Bridge.Test.Assert.areEqual$1(-10, -10, "-10");
-                Bridge.Test.Assert.areEqual$1(-9, -9, "-9");
-                Bridge.Test.Assert.areEqual$1(-8, -8, "-8");
-                Bridge.Test.Assert.areEqual$1(1, 1, "1");
-                Bridge.Test.Assert.areEqual$1(-9, -9, "-9");
-                Bridge.Test.Assert.areEqual$1(0, 0, "0");
-                Bridge.Test.Assert.areEqual$1(1, 1, "1");
+                Bridge.Test.Assert.areEqual$1(-10, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1120.Test.M1, "-10");
+                Bridge.Test.Assert.areEqual$1(-9, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1120.Test.M2, "-9");
+                Bridge.Test.Assert.areEqual$1(-8, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1120.Test.M3, "-8");
+                Bridge.Test.Assert.areEqual$1(1, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1120.Test.M4, "1");
+                Bridge.Test.Assert.areEqual$1(-9, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1120.Test.M5, "-9");
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1120.Test.M6, "0");
+                Bridge.Test.Assert.areEqual$1(1, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1120.Test.M7, "1");
             },
             testFlagEnumDoesNotGenerateValuesAsPowerOfTwo: function () {
-                Bridge.Test.Assert.areEqual$1(0, 0, "0");
-                Bridge.Test.Assert.areEqual$1(7, 7, "7");
-                Bridge.Test.Assert.areEqual$1(8, 8, "8");
-                Bridge.Test.Assert.areEqual$1(9, 9, "9");
+                Bridge.Test.Assert.areEqual$1(0, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1120.Baz.a, "0");
+                Bridge.Test.Assert.areEqual$1(7, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1120.Baz.b, "7");
+                Bridge.Test.Assert.areEqual$1(8, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1120.Baz.c, "8");
+                Bridge.Test.Assert.areEqual$1(9, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1120.Baz.d, "9");
             }
         }
     });
@@ -7016,7 +7016,7 @@ Bridge.$N1391Result =                 r;
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1522", {
         testAssignIntToDecimal: function () {
             var x = System.Decimal(2.0);
-            x = System.Decimal(System.Decimal.toInt((x.mul(System.Decimal(60))), System.Int32));
+            x = System.Decimal(System.Decimal.toInt(x.mul(System.Decimal(60)), System.Int32));
             Bridge.Test.Assert.true(x.gt(System.Decimal(2.0)));
         }
     });
@@ -7025,7 +7025,7 @@ Bridge.$N1391Result =                 r;
         testAssignDecimalToInt: function () {
             var x = 0;
             var y = System.Decimal(2);
-            x = (x + System.Decimal.toInt((System.Nullable.getValue(y).mul(System.Decimal(60.0))), System.Int32)) | 0;
+            x = (x + System.Decimal.toInt(System.Nullable.getValue(y).mul(System.Decimal(60.0)), System.Int32)) | 0;
             Bridge.Test.Assert.areEqual(120, x);
         }
     });
@@ -15395,14 +15395,14 @@ Bridge.$N1391Result =                 r;
         statics: {
             testUseCase: function () {
                 var i8_1 = -2;
-                var i8_2 = Bridge.Int.sxb(((i8_1 >> 4)) & 255);
+                var i8_2 = Bridge.Int.sxb((i8_1 >> 4) & 255);
                 var u8_1 = 254;
-                var u8_2 = ((u8_1 >> 4)) & 255;
+                var u8_2 = (u8_1 >> 4) & 255;
 
                 var i16_1 = -2;
-                var i16_2 = Bridge.Int.sxs(((i16_1 >> 8)) & 65535);
+                var i16_2 = Bridge.Int.sxs((i16_1 >> 8) & 65535);
                 var u16_1 = 65534;
-                var u16_2 = ((u16_1 >> 8)) & 65535;
+                var u16_2 = (u16_1 >> 8) & 65535;
 
                 var i32_1 = -2;
                 var i32_2 = i32_1 >> 16;

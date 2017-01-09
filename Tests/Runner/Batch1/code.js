@@ -10204,7 +10204,7 @@ Bridge.assembly("Bridge.ClientTest", {"Bridge.ClientTest.Batch1.Reflection.Resou
                     // See Freed, N. and N. Borenstein, RFC2045, Section 6.8 for a description of why this check is necessary.
                     Bridge.Test.Assert.areEqual(result.length, 3);
 
-                    var triplet = (((result[0] << 16) | (result[1] << 8) | result[2])) >>> 0;
+                    var triplet = ((result[0] << 16) | (result[1] << 8) | result[2]) >>> 0;
                     Bridge.Test.Assert.areEqual(triplet >>> 18, 45); // 't'
                     Bridge.Test.Assert.areEqual((((triplet << 14) >>> 0)) >>> 26, 30); // 'e'
                     Bridge.Test.Assert.areEqual((((triplet << 20) >>> 0)) >>> 26, 44); // 's'
@@ -10865,7 +10865,7 @@ Bridge.assembly("Bridge.ClientTest", {"Bridge.ClientTest.Batch1.Reflection.Resou
             knownByteSequence: function () {
                 var inputBytes = System.Array.init(4, 0, System.Byte);
                 for (var i = 0; i < 4; i = (i + 1) | 0) {
-                    inputBytes[i] = ((((i + 5) | 0))) & 255;
+                    inputBytes[i] = (((i + 5) | 0)) & 255;
                 }
 
                 // The sequence of bits for this byte array is
@@ -16731,7 +16731,7 @@ Bridge.assembly("Bridge.ClientTest", {"Bridge.ClientTest.Batch1.Reflection.Resou
             Bridge.Test.Assert.areEqual$1(ne.t, Bridge.ClientTest.Linq.Expressions.ExpressionTests.C, System.String.concat(title, " type"));
             Bridge.Test.Assert.areEqual$1(ne.arguments.getCount(), argTypes.length, System.String.concat(title, " argument count"));
             for (var i = 0; i < ne.arguments.getCount(); i = (i + 1) | 0) {
-                Bridge.Test.Assert.true$1(($t = ne.arguments.get(i), Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))) && Bridge.referenceEquals(($t = ne.arguments.get(i), Bridge.cast($t, Bridge.hasValue($t) && ($t.ntype === 38))).n, String.fromCharCode((((((97 + i) | 0))) & 65535))), System.String.concat(title, " argument ", i));
+                Bridge.Test.Assert.true$1(($t = ne.arguments.get(i), Bridge.is($t, Bridge.hasValue($t) && ($t.ntype === 38))) && Bridge.referenceEquals(($t = ne.arguments.get(i), Bridge.cast($t, Bridge.hasValue($t) && ($t.ntype === 38))).n, String.fromCharCode(((((97 + i) | 0)) & 65535))), System.String.concat(title, " argument ", i));
             }
             Bridge.Test.Assert.areEqual$1((ne.constructor.p || []).length, argTypes.length, System.String.concat(title, " constructor argument length"));
             for (var i1 = 0; i1 < (ne.constructor.p || []).length; i1 = (i1 + 1) | 0) {
@@ -23842,16 +23842,16 @@ Bridge.assembly("Bridge.ClientTest", {"Bridge.ClientTest.Batch1.Reflection.Resou
             Bridge.Test.Assert.true(((Bridge.Reflection.getMetaValue(Bridge.ClientTest.Reflection.TypeSystemTests.CS3, 'att', 0)  & 256)  != 0));
         },
         attributesWorks: function () {
-            Bridge.Test.Assert.areEqual(1048706, (Bridge.Reflection.getMetaValue(Bridge.ClientTest.Reflection.TypeSystemTests.CA1, 'att', 0)));
-            Bridge.Test.Assert.areEqual(1048706, (Bridge.Reflection.getMetaValue(Bridge.ClientTest.Reflection.TypeSystemTests.CA2, 'att', 0)));
-            Bridge.Test.Assert.areEqual(1048577, (Bridge.Reflection.getMetaValue(Bridge.ClientTest.Reflection.TypeSystemTests, 'att', 0)));
-            Bridge.Test.Assert.areEqual(1048578, (Bridge.Reflection.getMetaValue(Bridge.ClientTest.Reflection.TypeSystemTests.B, 'att', 0)));
-            Bridge.Test.Assert.areEqual(162, (Bridge.Reflection.getMetaValue(Bridge.ClientTest.Reflection.TypeSystemTests.I1, 'att', 0)));
-            Bridge.Test.Assert.areEqual(162, (Bridge.Reflection.getMetaValue(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1, 'att', 0)));
-            Bridge.Test.Assert.areEqual(1048834, (Bridge.Reflection.getMetaValue(Bridge.ClientTest.Reflection.TypeSystemTests.CS1$1, 'att', 0)));
-            Bridge.Test.Assert.areEqual(1048835, (Bridge.Reflection.getMetaValue(Bridge.ClientTest.Reflection.TypeSystemTests.CS2$2, 'att', 0)));
-            Bridge.Test.Assert.areEqual(1048837, (Bridge.Reflection.getMetaValue(Bridge.ClientTest.Reflection.TypeSystemTests.CS3, 'att', 0)));
-            Bridge.Test.Assert.areEqual(258, (Bridge.Reflection.getMetaValue(Bridge.ClientTest.Reflection.TypeSystemTests.E1, 'att', 0)));
+            Bridge.Test.Assert.areEqual(1048706, Bridge.Reflection.getMetaValue(Bridge.ClientTest.Reflection.TypeSystemTests.CA1, 'att', 0));
+            Bridge.Test.Assert.areEqual(1048706, Bridge.Reflection.getMetaValue(Bridge.ClientTest.Reflection.TypeSystemTests.CA2, 'att', 0));
+            Bridge.Test.Assert.areEqual(1048577, Bridge.Reflection.getMetaValue(Bridge.ClientTest.Reflection.TypeSystemTests, 'att', 0));
+            Bridge.Test.Assert.areEqual(1048578, Bridge.Reflection.getMetaValue(Bridge.ClientTest.Reflection.TypeSystemTests.B, 'att', 0));
+            Bridge.Test.Assert.areEqual(162, Bridge.Reflection.getMetaValue(Bridge.ClientTest.Reflection.TypeSystemTests.I1, 'att', 0));
+            Bridge.Test.Assert.areEqual(162, Bridge.Reflection.getMetaValue(Bridge.ClientTest.Reflection.TypeSystemTests.IG$1, 'att', 0));
+            Bridge.Test.Assert.areEqual(1048834, Bridge.Reflection.getMetaValue(Bridge.ClientTest.Reflection.TypeSystemTests.CS1$1, 'att', 0));
+            Bridge.Test.Assert.areEqual(1048835, Bridge.Reflection.getMetaValue(Bridge.ClientTest.Reflection.TypeSystemTests.CS2$2, 'att', 0));
+            Bridge.Test.Assert.areEqual(1048837, Bridge.Reflection.getMetaValue(Bridge.ClientTest.Reflection.TypeSystemTests.CS3, 'att', 0));
+            Bridge.Test.Assert.areEqual(258, Bridge.Reflection.getMetaValue(Bridge.ClientTest.Reflection.TypeSystemTests.E1, 'att', 0));
         },
         getEnumNamesWorks: function () {
             Bridge.Test.Assert.areEqual(System.Array.init(["V3", "V2", "V1"], String), System.Enum.getNames(Bridge.ClientTest.Reflection.TypeSystemTests.E0));
@@ -25623,31 +25623,31 @@ Bridge.assembly("Bridge.ClientTest", {"Bridge.ClientTest.Batch1.Reflection.Resou
         },
         conversionsToDecimalWork: function () {
             var x = 0;
-            Bridge.Test.Assert.areDeepEqual(System.Decimal(1.0), System.Decimal((((((x + 1) | 0))) & 255)));
-            Bridge.Test.Assert.areDeepEqual(System.Decimal(2.0), System.Decimal(Bridge.Int.sxb(((((x + 2) | 0))) & 255)));
-            Bridge.Test.Assert.areDeepEqual(System.Decimal(3.0), System.Decimal(Bridge.Int.sxs(((((x + 3) | 0))) & 65535)));
-            Bridge.Test.Assert.areDeepEqual(System.Decimal(4.0), System.Decimal((((((x + 4) | 0))) & 65535)));
-            Bridge.Test.Assert.areDeepEqual(System.Decimal(5.0), System.Decimal((((((x + 5) | 0))) & 65535)));
-            Bridge.Test.Assert.areDeepEqual(System.Decimal(6.0), System.Decimal((((x + 6) | 0))));
-            Bridge.Test.Assert.areDeepEqual(System.Decimal(7.0), System.Decimal((((((x + 7) | 0))) >>> 0)));
-            Bridge.Test.Assert.areDeepEqual(System.Decimal(8.0), System.Decimal(System.Int64((((x + 8) | 0)))));
-            Bridge.Test.Assert.areDeepEqual(System.Decimal(9.0), System.Decimal(Bridge.Int.clipu64((((x + 9) | 0)))));
-            Bridge.Test.Assert.areDeepEqual(System.Decimal(10.5), System.Decimal((x + 10.5), null, System.Single));
-            Bridge.Test.Assert.areDeepEqual(System.Decimal(11.5), System.Decimal((x + 11.5), null, System.Double));
+            Bridge.Test.Assert.areDeepEqual(System.Decimal(1.0), System.Decimal(((((x + 1) | 0)) & 255)));
+            Bridge.Test.Assert.areDeepEqual(System.Decimal(2.0), System.Decimal(Bridge.Int.sxb((((x + 2) | 0)) & 255)));
+            Bridge.Test.Assert.areDeepEqual(System.Decimal(3.0), System.Decimal(Bridge.Int.sxs((((x + 3) | 0)) & 65535)));
+            Bridge.Test.Assert.areDeepEqual(System.Decimal(4.0), System.Decimal(((((x + 4) | 0)) & 65535)));
+            Bridge.Test.Assert.areDeepEqual(System.Decimal(5.0), System.Decimal(((((x + 5) | 0)) & 65535)));
+            Bridge.Test.Assert.areDeepEqual(System.Decimal(6.0), System.Decimal(((x + 6) | 0)));
+            Bridge.Test.Assert.areDeepEqual(System.Decimal(7.0), System.Decimal(((((x + 7) | 0)) >>> 0)));
+            Bridge.Test.Assert.areDeepEqual(System.Decimal(8.0), System.Decimal(System.Int64(((x + 8) | 0))));
+            Bridge.Test.Assert.areDeepEqual(System.Decimal(9.0), System.Decimal(Bridge.Int.clipu64(((x + 9) | 0))));
+            Bridge.Test.Assert.areDeepEqual(System.Decimal(10.5), System.Decimal(x + 10.5, null, System.Single));
+            Bridge.Test.Assert.areDeepEqual(System.Decimal(11.5), System.Decimal(x + 11.5, null, System.Double));
         },
         conversionsFromDecimalWork: function () {
             var x = 0;
-            Bridge.Test.Assert.areEqual(1, System.Decimal.toInt(System.Decimal((((x + 1) | 0))), System.Byte));
-            Bridge.Test.Assert.areEqual(2, System.Decimal.toInt(System.Decimal((((x + 2) | 0))), System.SByte));
-            Bridge.Test.Assert.areEqual(3, System.Decimal.toInt(System.Decimal((((x + 3) | 0))), System.Int16));
-            Bridge.Test.Assert.areEqual(4, System.Decimal.toInt(System.Decimal((((x + 4) | 0))), System.UInt16));
-            Bridge.Test.Assert.areEqual(5, System.Decimal.toInt(System.Decimal((((x + 5) | 0))), System.Char));
-            Bridge.Test.Assert.areEqual(6, System.Decimal.toInt(System.Decimal((((x + 6) | 0))), System.Int32));
-            Bridge.Test.Assert.areEqual(7, System.Decimal.toInt(System.Decimal((((x + 7) | 0))), System.UInt32));
-            Bridge.Test.Assert.true(System.Int64(8).equals(System.Decimal.toInt(System.Decimal((((x + 8) | 0))), System.Int64)));
-            Bridge.Test.Assert.true(System.UInt64(9).equals(System.Decimal.toInt(System.Decimal((((x + 9) | 0))), System.UInt64)));
-            Bridge.Test.Assert.areEqual(10.5, System.Decimal.toFloat(System.Decimal((x + 10.5), null, System.Double)));
-            Bridge.Test.Assert.areEqual(11.5, System.Decimal.toFloat(System.Decimal((x + 11.5), null, System.Double)));
+            Bridge.Test.Assert.areEqual(1, System.Decimal.toInt(System.Decimal(((x + 1) | 0)), System.Byte));
+            Bridge.Test.Assert.areEqual(2, System.Decimal.toInt(System.Decimal(((x + 2) | 0)), System.SByte));
+            Bridge.Test.Assert.areEqual(3, System.Decimal.toInt(System.Decimal(((x + 3) | 0)), System.Int16));
+            Bridge.Test.Assert.areEqual(4, System.Decimal.toInt(System.Decimal(((x + 4) | 0)), System.UInt16));
+            Bridge.Test.Assert.areEqual(5, System.Decimal.toInt(System.Decimal(((x + 5) | 0)), System.Char));
+            Bridge.Test.Assert.areEqual(6, System.Decimal.toInt(System.Decimal(((x + 6) | 0)), System.Int32));
+            Bridge.Test.Assert.areEqual(7, System.Decimal.toInt(System.Decimal(((x + 7) | 0)), System.UInt32));
+            Bridge.Test.Assert.true(System.Int64(8).equals(System.Decimal.toInt(System.Decimal(((x + 8) | 0)), System.Int64)));
+            Bridge.Test.Assert.true(System.UInt64(9).equals(System.Decimal.toInt(System.Decimal(((x + 9) | 0)), System.UInt64)));
+            Bridge.Test.Assert.areEqual(10.5, System.Decimal.toFloat(System.Decimal(x + 10.5, null, System.Double)));
+            Bridge.Test.Assert.areEqual(11.5, System.Decimal.toFloat(System.Decimal(x + 11.5, null, System.Double)));
         },
         operatorsWork: function () {
             var $t;
