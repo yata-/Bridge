@@ -12181,7 +12181,7 @@ Bridge.$N1391Result =                 r;
                 return work(value);
             },
             getName: function (T, value) {
-                return Bridge.Reflection.getTypeName(Bridge.getType(value));
+                return Bridge.Reflection.getTypeName(Bridge.getType(value, T));
             },
             testGenericMethodAsDelegate: function () {
                 Bridge.Test.Assert.areEqual("Int32", Bridge.ClientTest.Batch3.BridgeIssues.Bridge2094.outer1(System.Int32, 123));
@@ -13012,6 +13012,38 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2199", {
+        statics: {
+            assertTypeName: function (T, value, realType) {
+                Bridge.Test.Assert.areEqual(realType, Bridge.getType(value, T));
+                Bridge.Test.Assert.areEqual(realType, T);
+            },
+            testTypeParameterName: function () {
+                var x = 2;
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2199.assertTypeName(System.UInt16, x, System.UInt16);
+
+                var f = 1.0;
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2199.assertTypeName(System.Single, f, System.Single);
+
+                var ts = System.Threading.Tasks.TaskStatus.running;
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2199.assertTypeName(System.Threading.Tasks.TaskStatus, ts, System.Threading.Tasks.TaskStatus);
+
+                var c = 97;
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2199.assertTypeName(System.Char, c, System.Char);
+
+                var l = System.Int64(1);
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2199.assertTypeName(System.Int64, l, System.Int64);
+
+                var d = System.Decimal(10);
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2199.assertTypeName(System.Decimal, d, System.Decimal);
+
+                var s = "s";
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2199.assertTypeName(String, s, String);
+
+            }
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2220", {
         statics: {
             testHasElementType: function () {
@@ -13150,7 +13182,7 @@ Bridge.$N1391Result =                 r;
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge306Component$1", function (TProps) { return {
         statics: {
             new: function (TComponent, props) {
-                return System.String.concat(Bridge.Reflection.getTypeFullName(Bridge.getType(props)), ":", props);
+                return System.String.concat(Bridge.Reflection.getTypeFullName(Bridge.getType(props, TProps)), ":", props);
             }
         }
     }; });
