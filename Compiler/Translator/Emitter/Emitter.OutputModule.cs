@@ -145,7 +145,6 @@ namespace Bridge.Translator
             }
 
             this.WriteNewLine(moduleOutput, ") {");
-            string indent = str.StartsWith(Emitter.INDENT) ? "" : Emitter.INDENT;
             moduleOutput.Append(Emitter.INDENT);
             this.WriteIndent(moduleOutput, this.InitialLevel);
             this.WriteNewLine(moduleOutput, "var " + module.Name + " = { };");
