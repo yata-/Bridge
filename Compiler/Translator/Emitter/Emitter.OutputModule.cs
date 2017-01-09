@@ -100,7 +100,7 @@ namespace Bridge.Translator
             string indent = str.StartsWith(Emitter.INDENT) ? Emitter.INDENT : (Emitter.INDENT + Emitter.INDENT);
             this.WriteIndent(moduleOutput, this.InitialLevel);
             this.WriteNewLine(moduleOutput, Emitter.INDENT + "var " + module.Name + " = { };");
-            moduleOutput.Append(indent + str.Replace(Emitter.NEW_LINE, Emitter.NEW_LINE + indent));
+            moduleOutput.Append(str);
 
             if (!str.Trim().EndsWith(Emitter.NEW_LINE))
             {
