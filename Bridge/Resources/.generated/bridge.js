@@ -30,8 +30,8 @@
             return name2;
         },
 
-        literal: function(type, obj) {
-            obj.$getType = function() {return type};
+        literal: function (type, obj) {
+            obj.$getType = function () { return type };
             return obj;
         },
 
@@ -682,8 +682,8 @@
                         }
                     } else {
                         var setter1 = "set" + key.charAt(0).toUpperCase() + key.slice(1),
-							setter2 = "set" + key,
-							getter;
+                            setter2 = "set" + key,
+                            getter;
 
                         if (typeof to[setter1] === "function" && typeof value !== "function") {
                             getter = "g" + setter1.slice(1);
@@ -1913,9 +1913,13 @@
             }
         },
 
+        getUnderlyingType: function (type) {
+            System.Enum.checkEnumType(type);
+            return type.prototype.$utype || System.Int32;
+        },
+
         toName: function (name) {
             return name;
-            //return name.charAt(0).toUpperCase() + name.slice(1);
         },
 
         parse: function (enumType, s, ignoreCase, silent) {
@@ -2021,7 +2025,9 @@
                 }
             }
 
-            return parts;
+            return parts.sort(function (i1, i2) {
+                return i1 - i2;
+            });
         },
 
         format: function (enumType, value, format) {
@@ -2059,21 +2065,33 @@
 
             for (var i in values) {
                 if (values.hasOwnProperty(i) && i.indexOf("$") < 0 && typeof values[i] !== "function") {
-                    parts.push(enumMethods.toName(i));
+                    parts.push([enumMethods.toName(i), values[i]]);
                 }
             }
 
-            return parts;
+            return parts.sort(function (i1, i2) {
+                return i1[1] - i2[1];
+            }).map(function (i) {
+                return i[0];
+            });
         },
 
         getName: function (enumType, value) {
+            if (value == null) {
+                throw new System.ArgumentNullException("value");
+            }
+
+            if (!(typeof (value) === "number" && Math.floor(value, 0) === value)) {
+                throw new System.ArgumentException("Argument must be integer", "value");
+            }
+
             System.Enum.checkEnumType(enumType);
 
             var values = enumType;
 
             for (var i in values) {
                 if (values[i] === value) {
-                    return i.charAt(0).toUpperCase() + i.slice(1);
+                    return i;
                 }
             }
 
@@ -2367,7 +2385,7 @@
 
                 fn.$cache = [];
 
-                return Bridge.Class.generic(className, gscope, fn, prop.length);
+                return Bridge.Class.generic(className, gscope, fn, prop);
             }
 
             if (!isGenericInstance) {
@@ -2487,31 +2505,7 @@
                 extend = extend();
             }
 
-            var interfaces = [],
-                baseInterfaces = [];
-
-            if (extend) {
-                for (var j = 0; j < extend.length; j++) {
-                    var baseType = extend[j],
-                        baseI = (baseType.$interfaces || []).concat(baseType.$baseInterfaces || []);
-
-                    if (baseI.length > 0) {
-                        for (var k = 0; k < baseI.length; k++) {
-                            if (baseInterfaces.indexOf(baseI[k]) < 0) {
-                                baseInterfaces.push(baseI[k]);
-                            }
-                        }
-                    }
-
-                    if (baseType.$kind === "interface") {
-                        interfaces.push(baseType);
-                    }
-                }
-            }
-
-            Class.$baseInterfaces = baseInterfaces;
-            Class.$interfaces = interfaces;
-            Class.$allInterfaces = interfaces.concat(baseInterfaces);
+            Bridge.Class.createInheritors(Class, extend);
 
             var noBase = extend ? extend[0].$kind === "interface" : true;
 
@@ -2600,20 +2594,10 @@
             }
 
             if (!extend) {
-                extend = [Object].concat(interfaces);
+                extend = [Object].concat(Class.$interfaces);
             }
 
-            Class.$$inherits = extend;
-
-            for (i = 0; i < extend.length; i++) {
-                scope = extend[i];
-
-                if (!scope.$$inheritors) {
-                    scope.$$inheritors = [];
-                }
-
-                scope.$$inheritors.push(Class);
-            }
+            Bridge.Class.setInheritors(Class, extend);
 
             fn = function () {
                 if (Bridge.Class.staticInitAllow) {
@@ -2678,6 +2662,48 @@
             }
 
             return Class;
+        },
+
+        createInheritors: function(cls, extend) {
+            var interfaces = [],
+                baseInterfaces = [];
+
+            if (extend) {
+                for (var j = 0; j < extend.length; j++) {
+                    var baseType = extend[j],
+                        baseI = (baseType.$interfaces || []).concat(baseType.$baseInterfaces || []);
+
+                    if (baseI.length > 0) {
+                        for (var k = 0; k < baseI.length; k++) {
+                            if (baseInterfaces.indexOf(baseI[k]) < 0) {
+                                baseInterfaces.push(baseI[k]);
+                            }
+                        }
+                    }
+
+                    if (baseType.$kind === "interface") {
+                        interfaces.push(baseType);
+                    }
+                }
+            }
+
+            cls.$baseInterfaces = baseInterfaces;
+            cls.$interfaces = interfaces;
+            cls.$allInterfaces = interfaces.concat(baseInterfaces);
+        },
+
+        setInheritors: function(cls, extend) {
+            cls.$$inherits = extend;
+
+            for (var i = 0; i < extend.length; i++) {
+                var scope = extend[i];
+
+                if (!scope.$$inheritors) {
+                    scope.$$inheritors = [];
+                }
+
+                scope.$$inheritors.push(cls);
+            }
         },
 
         varianceAssignable: function (source) {
@@ -2895,16 +2921,41 @@
             return null;
         },
 
-        generic: function (className, scope, fn, length) {
+        generic: function (className, scope, fn, prop) {
             fn.$$name = className;
             fn.$kind = "class";
 
             Bridge.Class.set(scope, className, fn, true);
             Bridge.Class.registerType(className, fn);
 
-            fn.$typeArgumentCount = length;
+            fn.$typeArgumentCount = prop.length;
             fn.$isGenericTypeDefinition = true;
             fn.$getMetadata = Bridge.Reflection.getMetadata;
+
+            fn.$staticInit = function() {
+                fn.$typeArguments = Bridge.Reflection.createTypeParams(prop);
+
+                var cfg = prop.apply(null, fn.$typeArguments),
+                    extend = cfg.$inherits || cfg.inherits;
+
+                if (extend && Bridge.isFunction(extend)) {
+                    extend = extend();
+                }
+
+                Bridge.Class.createInheritors(fn, extend);
+
+                if (!extend) {
+                    extend = [Object].concat(fn.$interfaces);
+                }
+
+                Bridge.Class.setInheritors(fn, extend);
+
+                var prototype = extend ? (extend[0].$$initCtor ? new extend[0].$$initCtor() : new extend[0]()) : new Object();
+                fn.prototype = prototype;
+                fn.prototype.constructor = fn;
+            };
+
+            Bridge.Class.$queue.push(fn);
 
             return fn;
         },
@@ -3076,6 +3127,12 @@
                     if (m.s) {
                         m.s.td = type;
                     }
+
+                    if (m.tprm && Bridge.isArray(m.tprm)) {
+                        for (var j = 0; j < m.tprm.length; j++) {
+                            m.tprm[j] = Bridge.Reflection.createTypeParam(m.tprm[j], type);
+                        }
+                    }
                 }
             }
 
@@ -3091,19 +3148,16 @@
             var metadata = this.$metadata;
 
             if (typeof (metadata) === "function") {
-                if (this.$isGenericTypeDefinition) {
-                    var i,
-                        size = this.$typeArgumentCount,
-                        arr = new Array(size);
-
-                    for (i = 0; i < size; i++) {
-                        arr[i] = Object;
-                    }
-
+                if (this.$isGenericTypeDefinition && !this.$factoryMetadata) {
                     this.$factoryMetadata = this.$metadata;
-                    metadata = this.$metadata.apply(null, arr);
-                } else if (this.$typeArguments) {
+                }
+
+                if (this.$typeArguments) {
                     metadata = this.$metadata.apply(null, this.$typeArguments);
+                } else if (this.$isGenericTypeDefinition) {
+                    var arr = Bridge.Reflection.createTypeParams(this.$metadata);
+                    this.$typeArguments = arr;
+                    metadata = this.$metadata.apply(null, arr);
                 } else {
                     metadata = this.$metadata();
                 }
@@ -3114,6 +3168,29 @@
             }
 
             return metadata;
+        },
+
+        createTypeParams: function (fn, t) {
+            var args,
+                names = [],
+                fnStr = fn.toString();
+
+            args = fnStr.slice(fnStr.indexOf('(') + 1, fnStr.indexOf(')')).match(/([^\s,]+)/g) || [];
+            for (var i = 0; i < args.length; i++) {
+                names.push(Bridge.Reflection.createTypeParam(args[i], t));
+            }
+
+            return names;
+        },
+
+        createTypeParam: function (name, t) {
+            var fn = function TypeParameter() { };
+            fn.$$name = name;
+            fn.$isTypeParameter = true;
+            if (t) {
+                fn.td = t;
+            }
+            return fn;
         },
 
         load: function (name) {
@@ -3137,11 +3214,19 @@
         },
 
         getGenericArguments: function (type) {
-            return type.$typeArguments || null;
+            return type.$typeArguments || [];
+        },
+
+        getMethodGenericArguments: function (m) {
+            return m.tprm || [];
         },
 
         isGenericTypeDefinition: function (type) {
             return type.$isGenericTypeDefinition || false;
+        },
+
+        isGenericType: function (type) {
+            return type.$genericTypeDefinition != null || Bridge.Reflection.isGenericTypeDefinition(type);
         },
 
         getBaseType: function (type) {
@@ -3204,7 +3289,7 @@
                 bIndex = fullName.indexOf('['),
                 nsIndex = fullName.lastIndexOf('.', bIndex >= 0 ? bIndex : fullName.length);
 
-            return nsIndex > 0 ? fullName.substr(nsIndex + 1) : fullName;
+            return nsIndex > 0 ? (bIndex >= 0 ? fullName.substring(nsIndex + 1, bIndex) : fullName.substr(nsIndex + 1)) : fullName;
         },
 
         getTypeNamespace: function (type) {
@@ -3758,6 +3843,27 @@
             } else {
                 return obj[fi.sn];
             }
+        },
+
+        getMetaValue: function (type, name, dv) {
+            var md = type.$isTypeParameter ? type : Bridge.getMetadata(type);
+            return md ? (md[name] || dv) : dv;
+        },
+
+        isArray: function (type) {
+            return Bridge.arrayTypes.indexOf(type) >= 0;
+        },
+
+        hasGenericParameters: function (type) {
+            if (type.$typeArguments) {
+                for (var i = 0; i < type.$typeArguments.length; i++) {
+                    if (type.$typeArguments[i].$isTypeParameter) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     };
 
@@ -10074,6 +10180,51 @@
         }
     });
 
+    // @source KeyValuePair.js
+
+    Bridge.define('System.Collections.Generic.KeyValuePair$2', function (TKey, TValue) {
+        return {
+            $kind: "struct",
+
+            statics: {
+                getDefaultValue: function () {
+                    return new (System.Collections.Generic.KeyValuePair$2(TKey, TValue))(Bridge.getDefaultValue(TKey), Bridge.getDefaultValue(TValue));
+                }
+            },
+
+            ctor: function (key, value) {
+                if (key === undefined) {
+                    key = Bridge.getDefaultValue(TKey);
+                }
+
+                if (value === undefined) {
+                    value = Bridge.getDefaultValue(TValue);
+                }
+
+                this.$initialize();
+                this.key = key;
+                this.value = value;
+            },
+
+            toString: function () {
+                var s = "[";
+
+                if (this.key != null) {
+                    s += this.key.toString();
+                }
+
+                s += ", ";
+
+                if (this.value != null) {
+                    s += this.value.toString();
+                }
+
+                s += "]";
+
+                return s;
+            }
+        };
+    });
     // @source Interfaces.js
 
     Bridge.define('System.Collections.IEnumerable', {
@@ -10365,50 +10516,6 @@
     });
 
     // @source Dictionary.js
-
-    Bridge.define('System.Collections.Generic.KeyValuePair$2', function (TKey, TValue) {
-        return {
-            $kind: "struct",
-
-            statics: {
-                getDefaultValue: function () {
-                    return new (System.Collections.Generic.KeyValuePair$2(TKey, TValue))(Bridge.getDefaultValue(TKey), Bridge.getDefaultValue(TValue));
-                }
-            },
-
-            ctor: function (key, value) {
-                if (key === undefined) {
-                    key = Bridge.getDefaultValue(TKey);
-                }
-
-                if (value === undefined) {
-                    value = Bridge.getDefaultValue(TValue);
-                }
-
-                this.$initialize();
-                this.key = key;
-                this.value = value;
-            },
-
-            toString: function () {
-                var s = "[";
-
-                if (this.key != null) {
-                    s += this.key.toString();
-                }
-
-                s += ", ";
-
-                if (this.value != null) {
-                    s += this.value.toString();
-                }
-
-                s += "]";
-
-                return s;
-            }
-        };
-    });
 
     Bridge.define('System.Collections.Generic.Dictionary$2', function (TKey, TValue) {
         return {

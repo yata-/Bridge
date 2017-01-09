@@ -395,6 +395,8 @@ Bridge.assembly("Bridge_ClientTest_Batch3_Tests", function ($asm, globals) {
             QUnit.test("#2147 - TestLinqExcept", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2147.testLinqExcept);
             QUnit.test("#2156 - TestLinqIntersect", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2156.testLinqIntersect);
             QUnit.test("#2157 - TestCreatingGenericInstanceWithInitializer", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2157.testCreatingGenericInstanceWithInitializer);
+            QUnit.test("#2159 - TestBaseTypeForGenericDefinition", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2159.testBaseTypeForGenericDefinition);
+            QUnit.test("#2160 - TestBaseTypeForGenericDefinition", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2160.testBaseTypeForGenericDefinition);
             QUnit.test("#2163 - TestDecimalToFormat", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2163.testDecimalToFormat);
             QUnit.test("#2167 - TestMerge", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2167.testMerge);
             QUnit.test("#2174 - TestGenericComparerDefault", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2174.testGenericComparerDefault);
@@ -7904,6 +7906,54 @@ Bridge.assembly("Bridge_ClientTest_Batch3_Tests", function ($asm, globals) {
                     project: "Batch3",
                     className: "Bridge.ClientTest.Batch3.BridgeIssues.Bridge2157",
                     file: "Batch3\\BridgeIssues\\2100\\N2157.cs"
+                } );
+            }
+            return this.context;
+        }
+    });
+
+    Bridge.define("Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2159", {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2159)],
+        statics: {
+            testBaseTypeForGenericDefinition: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2159).beforeTest(false, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2159, void 0, Bridge.merge(new Bridge.Test.QUnit.TestContext(), {
+                    method: "TestBaseTypeForGenericDefinition()",
+                    line: "17"
+                } ));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2159.testBaseTypeForGenericDefinition();
+            }
+        },
+        context: null,
+        getContext: function () {
+            if (this.context == null) {
+                this.context = Bridge.merge(new Bridge.Test.QUnit.FixtureContext(), {
+                    project: "Batch3",
+                    className: "Bridge.ClientTest.Batch3.BridgeIssues.Bridge2159",
+                    file: "Batch3\\BridgeIssues\\2100\\N2160.cs"
+                } );
+            }
+            return this.context;
+        }
+    });
+
+    Bridge.define("Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2160", {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2160)],
+        statics: {
+            testBaseTypeForGenericDefinition: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2160).beforeTest(false, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2160, void 0, Bridge.merge(new Bridge.Test.QUnit.TestContext(), {
+                    method: "TestBaseTypeForGenericDefinition()",
+                    line: "18"
+                } ));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2160.testBaseTypeForGenericDefinition();
+            }
+        },
+        context: null,
+        getContext: function () {
+            if (this.context == null) {
+                this.context = Bridge.merge(new Bridge.Test.QUnit.FixtureContext(), {
+                    project: "Batch3",
+                    className: "Bridge.ClientTest.Batch3.BridgeIssues.Bridge2160",
+                    file: "Batch3\\BridgeIssues\\2100\\N2159.cs"
                 } );
             }
             return this.context;
