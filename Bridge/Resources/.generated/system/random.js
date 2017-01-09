@@ -9,7 +9,7 @@
         seedArray: null,
         config: {
             init: function () {
-                this.seedArray = System.Array.init(56, 0);
+                this.seedArray = System.Array.init(56, 0, System.Int32);
             }
         },
         ctor: function () {
@@ -128,7 +128,7 @@
                 throw new System.ArgumentNullException("buffer");
             }
             for (var i = 0; i < buffer.length; i = (i + 1) | 0) {
-                buffer[i] = ((this.internalSample() % (256))) & 255;
+                buffer[i] = (this.internalSample() % (256)) & 255;
             }
         }
     });

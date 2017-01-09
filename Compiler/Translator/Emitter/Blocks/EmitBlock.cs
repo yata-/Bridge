@@ -294,7 +294,7 @@ namespace Bridge.Translator
 
                 this.Emitter.Output = this.GetOutputForType(typeInfo, null);
                 this.Emitter.TypeInfo = type;
-                type.JsName = BridgeTypes.ToJsName(type.Type, this.Emitter, true);
+                type.JsName = BridgeTypes.ToJsName(type.Type, this.Emitter, true, removeScope: false);
 
                 if (this.Emitter.Output.Length > 0)
                 {
@@ -309,7 +309,7 @@ namespace Bridge.Translator
                 {
                     this.Indent();
                 }
-                
+
                 new ClassBlock(this.Emitter, this.Emitter.TypeInfo).Emit();
                 this.Emitter.Translator.Plugins.AfterTypeEmit(this.Emitter, type);
 
@@ -455,7 +455,7 @@ namespace Bridge.Translator
             this.Emitter.Translator.Plugins.AfterTypesEmit(this.Emitter, this.Emitter.Types);
         }
 
-        private IType[] GetReflectableTypes()
+        public IType[] GetReflectableTypes()
         {
             var config = this.Emitter.AssemblyInfo.Reflection;
             var configInternal = ((AssemblyInfo)this.Emitter.AssemblyInfo).ReflectionInternal;
@@ -529,13 +529,17 @@ namespace Bridge.Translator
                     {
                         if (attr.PositionalArguments.Count == 0)
                         {
-                            reflectTypes.Add(type);
+                            if (thisAssembly)
+                            {
+                                reflectTypes.Add(type);
+                            }
+
                             continue;
                         }
 
                         var value = attr.PositionalArguments.First().ConstantValue;
 
-                        if (!(value is bool) || (bool)value)
+                        if ((!(value is bool) || (bool)value) && thisAssembly)
                         {
                             reflectTypes.Add(type);
                         }
@@ -544,7 +548,7 @@ namespace Bridge.Translator
                     }
                 }
 
-                if (typeAccessibility.HasValue)
+                if (typeAccessibility.HasValue && thisAssembly)
                 {
                     result = false;
 
