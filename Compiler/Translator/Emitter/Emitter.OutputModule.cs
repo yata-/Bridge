@@ -48,7 +48,7 @@ namespace Bridge.Translator
                             break;
                     }
 
-                    
+
                 }
             }
 
@@ -97,7 +97,6 @@ namespace Bridge.Translator
 
             this.WriteNewLine(moduleOutput, ") {");
 
-            string indent = str.StartsWith(Emitter.INDENT) ? Emitter.INDENT : (Emitter.INDENT + Emitter.INDENT);
             this.WriteIndent(moduleOutput, this.InitialLevel);
             this.WriteNewLine(moduleOutput, Emitter.INDENT + "var " + module.Name + " = { };");
             moduleOutput.Append(str);
@@ -279,7 +278,7 @@ namespace Bridge.Translator
 
             moduleOutput.Append(Emitter.INDENT);
             this.WriteNewLine(moduleOutput, "(function () {");
-            
+
             moduleOutput.Append(Emitter.INDENT);
             this.WriteIndent(moduleOutput, this.InitialLevel);
             this.WriteNewLine(moduleOutput, "var " + module.Name + " = { };");
