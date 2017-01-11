@@ -5,7 +5,7 @@
   "fileName": "code.js",
   "outputBy": "Project",
   "logging": {
-    "level": "Trace"
+    "level": "None"
   },
 
   "resources": [
