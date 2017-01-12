@@ -406,6 +406,7 @@ Bridge.assembly("Bridge_ClientTest_Batch3_Tests", function ($asm, globals) {
             QUnit.test("#2190 - TestInternalsVisibleTo", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2190.testInternalsVisibleTo);
             QUnit.test("#2195 - TestGenericInvocationInTryBlock", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2195.testGenericInvocationInTryBlock);
             QUnit.test("#2199 - TestTypeParameterName", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2199.testTypeParameterName);
+            QUnit.test("#2207 - TestDefaultOptionalParam", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2207.testDefaultOptionalParam);
             QUnit.test("#2213 - TestCase", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2213.testCase);
             QUnit.test("#2214 - TestCheckedULong", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2214.testCheckedULong);
             QUnit.test("#2220 - TestHasElementType", Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2220.testHasElementType);
@@ -8172,6 +8173,30 @@ Bridge.assembly("Bridge_ClientTest_Batch3_Tests", function ($asm, globals) {
                     project: "Batch3",
                     className: "Bridge.ClientTest.Batch3.BridgeIssues.Bridge2199",
                     file: "Batch3\\BridgeIssues\\2100\\N2199.cs"
+                } );
+            }
+            return this.context;
+        }
+    });
+
+    Bridge.define("Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2207", {
+        inherits: [Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2207)],
+        statics: {
+            testDefaultOptionalParam: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2207).beforeTest(false, assert, Bridge.Test.QUnit.Bridge_ClientTest_Batch3_Tests_Runner.Bridge_ClientTest_Batch3_BridgeIssues_Bridge2207, void 0, Bridge.merge(new Bridge.Test.QUnit.TestContext(), {
+                    method: "TestDefaultOptionalParam()",
+                    line: "31"
+                } ));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2207.testDefaultOptionalParam();
+            }
+        },
+        context: null,
+        getContext: function () {
+            if (this.context == null) {
+                this.context = Bridge.merge(new Bridge.Test.QUnit.FixtureContext(), {
+                    project: "Batch3",
+                    className: "Bridge.ClientTest.Batch3.BridgeIssues.Bridge2207",
+                    file: "Batch3\\BridgeIssues\\2200\\N2207.cs"
                 } );
             }
             return this.context;
