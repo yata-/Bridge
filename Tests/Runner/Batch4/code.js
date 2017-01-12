@@ -5064,19 +5064,19 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
         },
         combineDoesAddsDuplicateDelegates: function () {
             var c1 = new Bridge.ClientTest.Batch4.DelegateTests.C(), c2 = new Bridge.ClientTest.Batch4.DelegateTests.C();
-            var a = Bridge.fn.bind(c1, c1.F1);
-            a = Bridge.fn.combine(a, Bridge.fn.bind(c1, c1.F2));
+            var a = Bridge.fn.cacheBind(c1, c1.F1);
+            a = Bridge.fn.combine(a, Bridge.fn.cacheBind(c1, c1.F2));
             Bridge.Test.Assert.areEqual(2, a.$invocationList.length);
-            a = Bridge.fn.combine(a, Bridge.fn.bind(c2, c2.F1));
+            a = Bridge.fn.combine(a, Bridge.fn.cacheBind(c2, c2.F1));
             Bridge.Test.Assert.areEqual(3, a.$invocationList.length);
-            a = Bridge.fn.combine(a, Bridge.fn.bind(c1, c1.F1));
+            a = Bridge.fn.combine(a, Bridge.fn.cacheBind(c1, c1.F1));
             Bridge.Test.Assert.areEqual(4, a.$invocationList.length);
         },
         combineDoesNotAffectOriginal_SPI_1563: function () {
             // #1563
             var c = new Bridge.ClientTest.Batch4.DelegateTests.C();
-            var a = Bridge.fn.bind(c, c.F1);
-            var a2 = a + Bridge.fn.bind(c, c.F2);
+            var a = Bridge.fn.cacheBind(c, c.F1);
+            var a2 = a + Bridge.fn.cacheBind(c, c.F2);
             // Test restructure to keep assertion count correct (prevent uncaught test exception)
             var l = 0;
             Bridge.ClientTest.Batch4.TestHelper.safe(function () {
@@ -5128,8 +5128,8 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
         removeDoesNotAffectOriginal_SPI_1563: function () {
             // #1563
             var c = new Bridge.ClientTest.Batch4.DelegateTests.C();
-            var a = Bridge.fn.bind(c, c.F1);
-            var a2 = a + Bridge.fn.bind(c, c.F2);
+            var a = Bridge.fn.cacheBind(c, c.F1);
+            var a2 = a + Bridge.fn.cacheBind(c, c.F2);
             var a3 = Bridge.fn.remove(a2, a);
             // Test restructure to keep assertion count correct (prevent uncaught test exception)
             var l = 0;
@@ -5162,8 +5162,8 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
 
             var a = $asm.$.Bridge.ClientTest.Batch4.DelegateTests.f1;
 
-            var a2 = a + Bridge.fn.bind(this, this.a);
-            var a3 = a2 - Bridge.fn.bind(this, this.a);
+            var a2 = a + Bridge.fn.cacheBind(this, this.a);
+            var a3 = a2 - Bridge.fn.cacheBind(this, this.a);
 
             Bridge.Test.Assert.false(Bridge.equals(a, a2));
             Bridge.Test.Assert.true(Bridge.equals(a, a3));
@@ -5231,7 +5231,7 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
         equalityAndInequalityOperatorsAndEqualsMethod_SPI_1563: function () {
             var c1 = new Bridge.ClientTest.Batch4.DelegateTests.C(), c2 = new Bridge.ClientTest.Batch4.DelegateTests.C();
             var n = null;
-            var f11 = Bridge.fn.bind(c1, c1.F1), f11_2 = Bridge.fn.bind(c1, c1.F1), f12 = Bridge.fn.bind(c1, c1.F2), f21 = Bridge.fn.bind(c2, c2.F1);
+            var f11 = Bridge.fn.cacheBind(c1, c1.F1), f11_2 = Bridge.fn.cacheBind(c1, c1.F1), f12 = Bridge.fn.cacheBind(c1, c1.F2), f21 = Bridge.fn.cacheBind(c2, c2.F1);
 
             Bridge.Test.Assert.false$1(Bridge.staticEquals(n, f11), "n == f11");
             Bridge.Test.Assert.true$1(!Bridge.staticEquals(n, f11), "n != f11");
@@ -5286,7 +5286,7 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
         },
         getInvocationListWorksForMulticastDelegate: function () {
             var c1 = new Bridge.ClientTest.Batch4.DelegateTests.C(), c2 = new Bridge.ClientTest.Batch4.DelegateTests.C();
-            var f11 = Bridge.fn.bind(c1, c1.F1), f11_2 = Bridge.fn.bind(c1, c1.F1), f12 = Bridge.fn.bind(c1, c1.F2), f21 = Bridge.fn.bind(c2, c2.F1);
+            var f11 = Bridge.fn.cacheBind(c1, c1.F1), f11_2 = Bridge.fn.cacheBind(c1, c1.F1), f12 = Bridge.fn.cacheBind(c1, c1.F2), f21 = Bridge.fn.cacheBind(c2, c2.F1);
             var combined = Bridge.fn.combine(Bridge.fn.combine(Bridge.fn.combine(f11, f21), f12), f11_2);
             var l = combined.$invocationList;
             Bridge.Test.Assert.true(l.length === 4);
@@ -14608,7 +14608,7 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
             return System.String.concat(((((x + y) | 0) + this.m) | 0), Bridge.Reflection.getTypeName(T));
         },
         getF: function () {
-            return Bridge.fn.bind(this, this.f);
+            return Bridge.fn.cacheBind(this, this.f);
         },
         getG: function () {
             return Bridge.fn.bind(this, function (x, y) { return this.g(String, x, y); });
@@ -22010,7 +22010,7 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
             var promise = this.createPromise();
 
             this.setPromiseProgress(-1);
-            var task = System.Threading.Tasks.Task.fromPromise(promise, null, null, Bridge.fn.bind(this, this.handleProgress));
+            var task = System.Threading.Tasks.Task.fromPromise(promise, null, null, Bridge.fn.cacheBind(this, this.handleProgress));
 
             Bridge.Test.Assert.areEqual$1(System.Threading.Tasks.TaskStatus.running, task.status, "Task should be running after being created");
 
@@ -24652,7 +24652,7 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
             return System.String.concat(((((x - y) | 0) - this.m) | 0), Bridge.Reflection.getTypeName(T));
         },
         getF: function () {
-            return Bridge.fn.bind(this, Bridge.ClientTest.Batch4.Reflection.TypeSystemTests.MethodGroupConversionTypes.B.prototype.f);
+            return Bridge.fn.cacheBind(this, Bridge.ClientTest.Batch4.Reflection.TypeSystemTests.MethodGroupConversionTypes.B.prototype.f);
         },
         getG: function () {
             return Bridge.fn.bind(this, function (x, y) { return this.g(String, x, y); });
