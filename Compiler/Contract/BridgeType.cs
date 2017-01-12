@@ -601,7 +601,11 @@ namespace Bridge.Contract
             {
                 var obj = attr.PositionalArguments[0].ConstantValue;
 
-                if (obj is string)
+                if (obj is bool)
+                {
+                    module = new Module((bool)obj);
+                }
+                else if (obj is string)
                 {
                     module = new Module(obj.ToString());
                 }
@@ -616,10 +620,35 @@ namespace Bridge.Contract
             }
             else if (attr.PositionalArguments.Count == 2)
             {
+                if (attr.PositionalArguments[0].ConstantValue is string)
+                {
+                    var name = attr.PositionalArguments[0].ConstantValue;
+                    var preventName = attr.PositionalArguments[1].ConstantValue;
+
+                    module = new Module(name != null ? name.ToString() : "", (bool)preventName);
+                }
+                else if (attr.PositionalArguments[1].ConstantValue is bool)
+                {
+                    var mtype = attr.PositionalArguments[0].ConstantValue;
+                    var preventName = attr.PositionalArguments[1].ConstantValue;
+
+                    module = new Module("", (ModuleType)(int)mtype, (bool)preventName);
+                }
+                else
+                {
+                    var mtype = attr.PositionalArguments[0].ConstantValue;
+                    var name = attr.PositionalArguments[1].ConstantValue;
+
+                    module = new Module(name != null ? name.ToString() : "", (ModuleType)(int)mtype);
+                }
+            }
+            else if (attr.PositionalArguments.Count == 3)
+            {
                 var mtype = attr.PositionalArguments[0].ConstantValue;
                 var name = attr.PositionalArguments[1].ConstantValue;
+                var preventName = attr.PositionalArguments[2].ConstantValue;
 
-                module = new Module(name != null ? name.ToString() : "", (ModuleType) (int) mtype);
+                module = new Module(name != null ? name.ToString() : "", (ModuleType)(int)mtype, (bool)preventName);
             }
             else
             {
@@ -649,13 +678,18 @@ namespace Bridge.Contract
 
             if (currentTypeInfo != null && module != null)
             {
-                moduleName = module.Name;
+                if (!module.PreventModuleName || type.TypeInfo != null)
+                {
+                    moduleName = module.Name;
+                }
+                
                 if (!emitter.DisableDependencyTracking && currentTypeInfo.Key != type.Key && !Module.Equals(currentTypeInfo.Module, module) && !emitter.CurrentDependencies.Any(d => d.DependencyName == moduleName))
                 {
                     emitter.CurrentDependencies.Add(new ModuleDependency
                     {
-                        DependencyName = moduleName,
-                        Type = module.Type
+                        DependencyName = module.Name,
+                        Type = module.Type,
+                        PreventName = module.PreventModuleName
                     });
                 }
             }

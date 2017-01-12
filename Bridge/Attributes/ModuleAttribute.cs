@@ -14,7 +14,15 @@ namespace Bridge
         {
         }
 
+        public ModuleAttribute(bool preventModuleName)
+        {
+        }
+
         public ModuleAttribute(string moduleName)
+        {
+        }
+
+        public ModuleAttribute(string moduleName, bool preventModuleName)
         {
         }
 
@@ -22,7 +30,15 @@ namespace Bridge
         {
         }
 
+        public ModuleAttribute(ModuleType type, bool preventModuleName)
+        {
+        }
+
         public ModuleAttribute(ModuleType type, string moduleName)
+        {
+        }
+
+        public ModuleAttribute(ModuleType type, string moduleName, bool preventModuleName)
         {
         }
     }

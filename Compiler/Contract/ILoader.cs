@@ -14,26 +14,26 @@ namespace Bridge.Contract
             get; set;
         }
 
-        string LoaderFunction
+        string FunctionName
         {
             get; set;
         }
 
-        bool DisableAutoLoading
+        bool ManualLoading
         {
             get; set;
         }
 
-        string DisabledModulesMask
+        string ManualLoadingMask
         {
             get; set;
         }
 
-        bool SkipDisabledModulesVariables
+        bool SkipManualVariables
         {
             get; set;
         }
 
-        bool Disabled(string name);
+        bool IsManual(string name);
     }
 }

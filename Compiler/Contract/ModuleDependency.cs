@@ -20,28 +20,36 @@ namespace Bridge.Contract
         {
             get; set;
         }
+
+        public bool PreventName
+        {
+            get; set;
+        }
     }
 
     public class Module
     {
-        public Module(string name, ModuleType type)
+        public Module(string name, ModuleType type, bool preventModuleName = false)
         {
             this.Name = name;
             this.Type = type;
+            this.PreventModuleName = preventModuleName;
             this.InitName();
         }
 
-        public Module(string name)
+        public Module(string name, bool preventModuleName = false)
         {
             this.Name = name;
             this.Type = ModuleType.AMD;
+            this.PreventModuleName = preventModuleName;
             this.InitName();
         }
 
-        public Module()
+        public Module(bool preventModuleName = false)
         {
             this.Name = "";
             this.Type = ModuleType.AMD;
+            this.PreventModuleName = preventModuleName;
             this.InitName();
         }
 
@@ -55,6 +63,12 @@ namespace Bridge.Contract
         {
             get;
             set;
+        }
+
+        public bool PreventModuleName
+        {
+            get;
+            private set;
         }
 
         public bool NoName

@@ -119,7 +119,7 @@ namespace Bridge.Translator
 
             if (dependencies.ContainsKey(module.Name) && dependencies[module.Name].Count > 0)
             {
-                return dependencies[module.Name].Where(d => !loader.Disabled(d.DependencyName)).ToList();
+                return dependencies[module.Name].Where(d => !loader.IsManual(d.DependencyName)).ToList();
             }
             return new List<IPluginDependency>();
         }

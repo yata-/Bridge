@@ -245,8 +245,5 @@ namespace Bridge
 
         [Template("{o:plain}")]
         public static extern T ToObjectLiteral<T>(T o);
-
-        [Template("Bridge.loadModule({type:module})")]
-        public static extern Task LoadModule(params Type[] type);
     }
 }

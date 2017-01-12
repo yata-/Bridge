@@ -267,10 +267,10 @@ namespace Bridge.Translator
             var dependencies = output.NonModuleDependencies;
             if (dependencies != null && dependencies.Count > 0)
             {
-                var disabledDependecies = dependencies.Where(d => loader.Disabled(d.DependencyName)).ToList();
-                dependencies = dependencies.Where(d => !loader.Disabled(d.DependencyName)).ToList();
+                var disabledDependecies = dependencies.Where(d => loader.IsManual(d.DependencyName)).ToList();
+                dependencies = dependencies.Where(d => !loader.IsManual(d.DependencyName)).ToList();
 
-                if (disabledDependecies.Count > 0 && !loader.SkipDisabledModulesVariables)
+                if (disabledDependecies.Count > 0 && !loader.SkipManualVariables)
                 {
                     this.WriteIndent(tmp, level);
                     this.Write(tmp, "var ");
@@ -298,7 +298,7 @@ namespace Bridge.Translator
                 if (amd.Count > 0)
                 {
                     this.WriteIndent(tmp, level);
-                    tmp.Append(loader.LoaderFunction ?? "require");
+                    tmp.Append(loader.FunctionName ?? "require");
                     tmp.Append("([");
 
                     amd.Each(md =>

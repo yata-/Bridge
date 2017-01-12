@@ -407,7 +407,7 @@ namespace Bridge.Translator
 
                             if (rr == null)
                             {
-                                throw new EmitterException(expr, "LoadModule supports typeof expression only");
+                                throw new EmitterException(expr, "Module.Load supports typeof expression only");
                             }
 
                             var bridgeType = this.Emitter.BridgeTypes.Get(rr.ReferencedType, true);
@@ -456,10 +456,10 @@ namespace Bridge.Translator
                             this.Write(this.Emitter.ToJavaScript(cjs.ToArray()));
                         }
 
-                        if (!string.IsNullOrWhiteSpace(this.Emitter.AssemblyInfo.Loader.LoaderFunction))
+                        if (!string.IsNullOrWhiteSpace(this.Emitter.AssemblyInfo.Loader.FunctionName))
                         {
                             this.Write(", ");
-                            this.Write(this.Emitter.ToJavaScript(this.Emitter.AssemblyInfo.Loader.LoaderFunction));
+                            this.Write(this.Emitter.ToJavaScript(this.Emitter.AssemblyInfo.Loader.FunctionName));
                         }
 
                         this.Write("}, function () { ");

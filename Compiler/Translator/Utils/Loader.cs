@@ -12,36 +12,36 @@ namespace Bridge.Translator
             get; set;
         }
 
-        public string LoaderFunction
+        public string FunctionName
         {
             get; set;
         }
 
-        public bool DisableAutoLoading
+        public bool ManualLoading
         {
             get; set;
         }
 
-        public string DisabledModulesMask
+        public string ManualLoadingMask
         {
             get; set;
         }
 
-        public bool SkipDisabledModulesVariables
+        public bool SkipManualVariables
         {
             get; set;
         }
 
-        public bool Disabled(string name)
+        public bool IsManual(string name)
         {
-            if (this.DisableAutoLoading)
+            if (this.ManualLoading)
             {
                 return true;
             }
 
-            if (!string.IsNullOrWhiteSpace(this.DisabledModulesMask))
+            if (!string.IsNullOrWhiteSpace(this.ManualLoadingMask))
             {
-                var parts = this.DisabledModulesMask.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+                var parts = this.ManualLoadingMask.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
                 foreach (var part in parts)
                 {
