@@ -13076,6 +13076,29 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2213", {
+        statics: {
+            testCase: function () {
+                var t = Bridge.ClientTest.Batch3.BridgeIssues.Bridge2213.UIUtils.DataTables.getTable();
+                Bridge.Test.Assert.areEqual(1, t.i);
+            }
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2213.UIUtils");
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2213.UIUtils.DataTable", {
+        i: 0
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2213.UIUtils.DataTables", {
+        statics: {
+            getTable: function () {
+                return {i:1};
+            }
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2214", {
         statics: {
             testCheckedULong: function () {
