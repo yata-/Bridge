@@ -45,11 +45,16 @@ namespace Bridge.Contract
             this.InitName();
         }
 
-        public Module(bool preventModuleName = false)
+        public Module(bool preventModuleName): this()
+        {
+            this.PreventModuleName = preventModuleName;
+        }
+
+        public Module()
         {
             this.Name = "";
             this.Type = ModuleType.AMD;
-            this.PreventModuleName = preventModuleName;
+            this.PreventModuleName = false;
             this.InitName();
         }
 
