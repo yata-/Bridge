@@ -13078,6 +13078,34 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2203", {
+        statics: {
+            testLocalVarsRenaming: function () {
+                for (var n = 0; false; ) {
+                    ;
+                }
+
+                for (var n1 = 1; n1 < 2; n1 = (n1 + 1) | 0) {
+                    for (var n11 = 2; n11 < 3; n11 = (n11 + 1) | 0) {
+                        Bridge.Test.Assert.areEqual(1, n1);
+                        Bridge.Test.Assert.areEqual(2, n11);
+                        Bridge.Test.Assert.areEqual(1, n1);
+                        Bridge.Test.Assert.areEqual(2, n11);
+                    }
+                }
+
+                var counter = 0;
+                for (var n2 = 1; n2 < 2; n2 = (n2 + 1) | 0) {
+                    for (var n12 = 2; n12 < 4; n12 = (n12 + 1) | 0) {
+                        counter = (counter + 1) | 0;
+                    }
+                }
+
+                Bridge.Test.Assert.areEqual(2, counter);
+            }
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2207", {
         statics: {
             someMethod: function (T, input) {
