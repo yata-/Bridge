@@ -1,4 +1,5 @@
 ﻿using Bridge.Contract;
+using Bridge.Contract.Constants;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -382,7 +383,7 @@ namespace Bridge.Translator
                               thisType != null &&
                               !thisType.InheritsFromOrEquals(symbol.ContainingType) &&
                               !thisType.Equals(symbol);
-            
+
             var qns = nodeParent as QualifiedNameSyntax;
             if (qns != null && needHandle)
             {
@@ -815,7 +816,7 @@ namespace Bridge.Translator
                 if (parent != null)
                 {
                     var info = LocalUsageGatherer.GatherInfo(this.semanticModel, parent);
-                    while (info.DirectlyOrIndirectlyUsedLocals.Any(s => s.Name == instance))
+                    while (info.DirectlyOrIndirectlyUsedLocals.Any(s => s.Name == instance) || info.Names.Contains(instance))
                     {
                         instance = "_o" + ++indexInstance;
                     }
@@ -936,27 +937,77 @@ namespace Bridge.Translator
 
         public override SyntaxNode VisitTryStatement(TryStatementSyntax node)
         {
+            var replace = node.Catches.Any(c => c.Filter != null);
+            var parent = node.Parent;
+
+            if (replace)
+            {
+                while (parent != null && !(parent is MethodDeclarationSyntax) && !(parent is ClassDeclarationSyntax))
+                {
+                    parent = parent.Parent;
+                }
+            }
+
             node = (TryStatementSyntax)base.VisitTryStatement(node);
 
             List<CatchClauseSyntax> catches = new List<CatchClauseSyntax>();
-            var replace = false;
-            foreach (var catchItem in node.Catches)
+
+            if (replace)
             {
-                var newCatch = catchItem;
-
-                if (catchItem.Filter != null)
+                string instance = "_e" + ++indexInstance;
+                if (parent != null)
                 {
-                    var filter = catchItem.Filter;
-
-                    var ifStatement = SyntaxFactory.IfStatement(filter.FilterExpression, catchItem.Block.WithoutTrivia(), SyntaxFactory.ElseClause(SyntaxFactory.ThrowStatement().WithLeadingTrivia(SyntaxFactory.Space)));
-                    newCatch = catchItem.WithBlock(SyntaxFactory.Block(ifStatement)).WithFilter(null);
-                    replace = true;
+                    var info = LocalUsageGatherer.GatherInfo(this.semanticModel, parent);
+                    while (info.DirectlyOrIndirectlyUsedLocals.Any(s => s.Name == instance) || info.Names.Contains(instance))
+                    {
+                        instance = "_e" + ++indexInstance;
+                    }
                 }
 
-                catches.Add(newCatch);
+                List<StatementSyntax> statements = new List<StatementSyntax>();
+                statements.Add(CreateIfForCatch(node.Catches, 0, instance));
+
+                var catchDeclaration = SyntaxFactory.CatchDeclaration(SyntaxFactory.ParseTypeName(CS.Types.System.Exception.NAME), SyntaxFactory.Identifier(instance));
+                catches.Add(SyntaxFactory.CatchClause(catchDeclaration, null, SyntaxFactory.Block(statements)));
             }
 
-            return replace ? node.WithCatches(SyntaxFactory.List(catches)) : node;
+            return replace ? node.WithCatches(SyntaxFactory.List(catches)).NormalizeWhitespace() : node;
+        }
+
+        private IfStatementSyntax CreateIfForCatch(SyntaxList<CatchClauseSyntax> catches, int index, string varName)
+        {
+            var catchItem = catches[index];
+            ExpressionSyntax condition = SyntaxFactory.BinaryExpression(SyntaxKind.IsExpression,
+                    SyntaxFactory.IdentifierName(varName), catchItem.Declaration.Type);
+
+            if (catchItem.Filter != null)
+            {
+                var methodIdentifier = SyntaxFactory.IdentifierName("Bridge.Script.SafeFunc");
+                var lambda = SyntaxFactory.ParenthesizedLambdaExpression(SyntaxFactory.ParameterList(), catchItem.Declaration.Identifier.Kind() != SyntaxKind.None ? new IdentifierReplacer(catchItem.Declaration.Identifier.Value.ToString(), SyntaxFactory.CastExpression(catchItem.Declaration.Type, SyntaxFactory.IdentifierName(varName))).Replace(catchItem.Filter.FilterExpression) : catchItem.Filter.FilterExpression);
+                var invocation = SyntaxFactory.InvocationExpression(methodIdentifier, SyntaxFactory.ArgumentList(SyntaxFactory.SeparatedList(new [] { SyntaxFactory.Argument(
+                    lambda
+                    ) })));
+
+                condition = SyntaxFactory.BinaryExpression(SyntaxKind.LogicalAndExpression, condition, invocation);
+            }
+
+            BlockSyntax block = catchItem.Block.WithoutTrivia();
+
+            if (catchItem.Declaration.Identifier.Kind() != SyntaxKind.None)
+            {
+                var variableStatement = SyntaxFactory.LocalDeclarationStatement(SyntaxFactory.VariableDeclaration(catchItem.Declaration.Type,
+                    SyntaxFactory.SeparatedList<VariableDeclaratorSyntax>(new [] { SyntaxFactory.VariableDeclarator(SyntaxFactory.Identifier(catchItem.Declaration.Identifier.Text)).WithInitializer(
+                        SyntaxFactory.EqualsValueClause(SyntaxFactory.CastExpression(catchItem.Declaration.Type, SyntaxFactory.IdentifierName(varName)))
+                    ) })));
+
+                block = block.WithStatements(block.Statements.Insert(0, variableStatement));
+            }
+
+            var ifStatement = index < (catches.Count - 1) ?
+                                SyntaxFactory.IfStatement(condition, block, SyntaxFactory.ElseClause(CreateIfForCatch(catches, index + 1, varName))) :
+                                SyntaxFactory.IfStatement(condition, block, SyntaxFactory.ElseClause(SyntaxFactory.ThrowStatement()));
+
+            return ifStatement;
         }
 
         private class ConditionalAccessInfo
@@ -1006,6 +1057,10 @@ namespace Bridge.Translator
                 infos.Add(new ConditionalAccessInfo(semanticModel, conditionNode));
                 conditionNode = conditionNode.WhenNotNull as ConditionalAccessExpressionSyntax;
             }
+
+            bool needParenthesized = node.Parent is BinaryExpressionSyntax
+                                     || node.Parent is PostfixUnaryExpressionSyntax
+                                     || node.Parent is PrefixUnaryExpressionSyntax;
 
             node = (ConditionalAccessExpressionSyntax)base.VisitConditionalAccessExpression(node);
             var idx = 0;
@@ -1079,7 +1134,8 @@ namespace Bridge.Translator
 
             ExpressionSyntax whenFalse = lastInfo.IsResultVoid ? (ExpressionSyntax)SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression) : SyntaxFactory.CastExpression(lastInfo.ResultType, SyntaxFactory.LiteralExpression(SyntaxKind.NullLiteralExpression));
 
-            return SyntaxFactory.ConditionalExpression(condition, whenTrue, whenFalse);
+            return needParenthesized ? SyntaxFactory.ParenthesizedExpression(SyntaxFactory.ConditionalExpression(condition, whenTrue, whenFalse)) :
+                                       (SyntaxNode)SyntaxFactory.ConditionalExpression(condition, whenTrue, whenFalse);
         }
     }
 }

@@ -30,6 +30,15 @@
             return name2;
         },
 
+        safe: function(fn) {
+            try {
+                return fn();
+            } catch (ex) {
+            }
+
+            return false;
+        },
+
         literal: function (type, obj) {
             obj.$getType = function () { return type };
             return obj;
@@ -3595,6 +3604,9 @@
         },
 
         getType: function (typeName, asm) {
+            if (typeName == null) {
+                throw new System.ArgumentNullException("typeName");
+            }
             return typeName ? Bridge.Reflection._getType(typeName, asm) : null;
         },
 
