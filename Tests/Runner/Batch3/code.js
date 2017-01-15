@@ -13359,6 +13359,23 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2225", {
+        statics: {
+            testVolatile: function () {
+                var c = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge2225.VolatileTest();
+                c.test(5);
+                Bridge.Test.Assert.areEqual(5, c.i);
+            }
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2225.VolatileTest", {
+        i: 0,
+        test: function (_i) {
+            this.i = _i;
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A", {
         config: {
             properties: {
