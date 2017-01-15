@@ -57,6 +57,9 @@ Bridge.assembly("Bridge_ClientTest_Tests", function ($asm, globals) {
             QUnit.test("ConditionAccess - TestBasic", Bridge.Test.QUnit.Bridge_ClientTest_Tests_Runner.Bridge_ClientTest_CSharp6_TestConditionAccess.testBasic);
             QUnit.test("Exception filter - TestFalseFilter", Bridge.Test.QUnit.Bridge_ClientTest_Tests_Runner.Bridge_ClientTest_CSharp6_TestExceptionFilter.testFalseFilter);
             QUnit.test("Exception filter - TestTrueFilter", Bridge.Test.QUnit.Bridge_ClientTest_Tests_Runner.Bridge_ClientTest_CSharp6_TestExceptionFilter.testTrueFilter);
+            QUnit.test("Exception filter - TestMultipleCatchClauses_2223", Bridge.Test.QUnit.Bridge_ClientTest_Tests_Runner.Bridge_ClientTest_CSharp6_TestExceptionFilter.testMultipleCatchClauses_2223);
+            QUnit.test("Exception filter - TestFailedFilter_2223", Bridge.Test.QUnit.Bridge_ClientTest_Tests_Runner.Bridge_ClientTest_CSharp6_TestExceptionFilter.testFailedFilter_2223);
+            QUnit.test("Exception filter - TestFailedFilter2_2223", Bridge.Test.QUnit.Bridge_ClientTest_Tests_Runner.Bridge_ClientTest_CSharp6_TestExceptionFilter.testFailedFilter2_2223);
             QUnit.test("Expression-bodied function members - TestBasic", Bridge.Test.QUnit.Bridge_ClientTest_Tests_Runner.Bridge_ClientTest_CSharp6_TestExpressionBodyFunction.testBasic);
             QUnit.test("Index initializer - TestBasic", Bridge.Test.QUnit.Bridge_ClientTest_Tests_Runner.Bridge_ClientTest_CSharp6_TestIndexInitializer.testBasic);
             QUnit.test("Interpolated Strings - TestBasic", Bridge.Test.QUnit.Bridge_ClientTest_Tests_Runner.Bridge_ClientTest_CSharp6_TestInterpolatedStrings.testBasic);
@@ -10254,9 +10257,30 @@ Bridge.assembly("Bridge_ClientTest_Tests", function ($asm, globals) {
             testTrueFilter: function (assert) {
                 var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestExceptionFilter).beforeTest(false, assert, Bridge.Test.QUnit.Bridge_ClientTest_Tests_Runner.Bridge_ClientTest_CSharp6_TestExceptionFilter, void 0, Bridge.merge(new Bridge.Test.QUnit.TestContext(), {
                     method: "TestTrueFilter()",
-                    line: "33"
+                    line: "39"
                 } ));
                 Bridge.ClientTest.CSharp6.TestExceptionFilter.testTrueFilter();
+            },
+            testMultipleCatchClauses_2223: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestExceptionFilter).beforeTest(false, assert, Bridge.Test.QUnit.Bridge_ClientTest_Tests_Runner.Bridge_ClientTest_CSharp6_TestExceptionFilter, void 0, Bridge.merge(new Bridge.Test.QUnit.TestContext(), {
+                    method: "TestMultipleCatchClauses_2223()",
+                    line: "63"
+                } ));
+                Bridge.ClientTest.CSharp6.TestExceptionFilter.testMultipleCatchClauses_2223();
+            },
+            testFailedFilter_2223: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestExceptionFilter).beforeTest(false, assert, Bridge.Test.QUnit.Bridge_ClientTest_Tests_Runner.Bridge_ClientTest_CSharp6_TestExceptionFilter, void 0, Bridge.merge(new Bridge.Test.QUnit.TestContext(), {
+                    method: "TestFailedFilter_2223()",
+                    line: "90"
+                } ));
+                Bridge.ClientTest.CSharp6.TestExceptionFilter.testFailedFilter_2223();
+            },
+            testFailedFilter2_2223: function (assert) {
+                var t = Bridge.Test.QUnit.TestFixture$1(Bridge.ClientTest.CSharp6.TestExceptionFilter).beforeTest(false, assert, Bridge.Test.QUnit.Bridge_ClientTest_Tests_Runner.Bridge_ClientTest_CSharp6_TestExceptionFilter, void 0, Bridge.merge(new Bridge.Test.QUnit.TestContext(), {
+                    method: "TestFailedFilter2_2223()",
+                    line: "121"
+                } ));
+                Bridge.ClientTest.CSharp6.TestExceptionFilter.testFailedFilter2_2223();
             }
         },
         context: null,
