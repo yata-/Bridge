@@ -309,6 +309,7 @@ namespace Bridge.Contract
         public static string ToJsName(IType type, IEmitter emitter, bool asDefinition = false, bool excludens = false, bool isAlias = false, bool skipMethodTypeParam = false, bool removeScope = true, bool nomodule = false)
         {
             var itypeDef = type.GetDefinition();
+            BridgeType bridgeType = emitter.BridgeTypes.Get(type, true);
 
             if (itypeDef != null)
             {
@@ -316,6 +317,11 @@ namespace Bridge.Contract
 
                 if (globalTarget != null)
                 {
+                    if (bridgeType != null && !nomodule)
+                    {
+                        bool customName;
+                        globalTarget = BridgeTypes.AddModule(globalTarget, bridgeType, out customName);
+                    }
                     return globalTarget;
                 }
             }
@@ -382,8 +388,6 @@ namespace Bridge.Contract
                     return "Object";
                 }
             }
-
-            BridgeType bridgeType = emitter.BridgeTypes.Get(type, true);
 
             var name = excludens ? "" : type.Namespace;
 
@@ -704,7 +708,7 @@ namespace Bridge.Contract
 
             if (!String.IsNullOrEmpty(moduleName))
             {
-                name = moduleName + "." + name;
+                name = string.IsNullOrWhiteSpace(name) ? moduleName : (moduleName + "." + name);
             }
 
             return name;

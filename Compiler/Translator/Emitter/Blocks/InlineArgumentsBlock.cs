@@ -24,6 +24,22 @@ namespace Bridge.Translator
             argsInfo.AddExtensionParam();
             this.Method = method;
             this.TargetResolveResult = targetResolveResult;
+
+            if (argsInfo.Expression != null)
+            {
+                var rr = emitter.Resolver.ResolveNode(argsInfo.Expression, emitter) as MemberResolveResult;
+
+                if (rr != null)
+                {
+                    BridgeType bridgeType = emitter.BridgeTypes.Get(rr.Member.DeclaringType, true);
+
+                    if (bridgeType != null)
+                    {
+                        bool isCustomName;
+                        BridgeTypes.AddModule(null, bridgeType, out isCustomName);
+                    }
+                }
+            }
         }
 
         public int[] IgnoreRange
