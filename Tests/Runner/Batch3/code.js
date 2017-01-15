@@ -13192,6 +13192,31 @@ Bridge.$N1391Result =                 r;
         }
     }; });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2211", {
+        statics: {
+            testConditionAccess: function () {
+                Bridge.Test.Assert.false(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge2211.A().getIsAssistantRoot());
+                Bridge.Test.Assert.false(Bridge.merge(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge2211.A(), {
+                    parentNode: new Bridge.ClientTest.Batch3.BridgeIssues.Bridge2211.A()
+                } ).getIsAssistantRoot());
+
+                var a = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge2211.A();
+                a.parentNode = Bridge.merge(new Bridge.ClientTest.Batch3.BridgeIssues.Bridge2211.A(), {
+                    assistantsRoot: a
+                } );
+                Bridge.Test.Assert.true(a.getIsAssistantRoot());
+            }
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2211.A", {
+        assistantsRoot: null,
+        parentNode: null,
+        getIsAssistantRoot: function () {
+            return Bridge.referenceEquals((this.parentNode != null ? this.parentNode.assistantsRoot : null), this);
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2212", {
         statics: {
             testDelegateBindCache: function () {
