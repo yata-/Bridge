@@ -13420,6 +13420,28 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2246", {
+        statics: {
+            array: null,
+            isExecuted: false,
+            config: {
+                init: function () {
+                    this.array = System.Array.init(["string"], String);
+                }
+            },
+            testEntryPoint: function () {
+                Bridge.Test.Assert.true(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2246.isExecuted);
+            }
+        },
+        $main: function () {
+            if (Bridge.ClientTest.Batch3.BridgeIssues.Bridge2246.isExecuted) {
+                throw new System.InvalidOperationException("Double entry point execution");
+            }
+
+            Bridge.ClientTest.Batch3.BridgeIssues.Bridge2246.isExecuted = true;
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A", {
         config: {
             properties: {
