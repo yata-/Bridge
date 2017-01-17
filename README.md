@@ -2,7 +2,7 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/nm2f0c0u1jx0sniq/branch/master?svg=true)](https://ci.appveyor.com/project/ObjectDotNet/bridge/branch/master)
 [![Build Status](https://travis-ci.org/bridgedotnet/Bridge.svg?branch=master)](https://travis-ci.org/bridgedotnet/Bridge)
-[![NuGet Status](https://img.shields.io/nuget/v/Bridge.svg?style=flat-square)](https://www.nuget.org/packages/Bridge)
+[![NuGet Status](https://img.shields.io/nuget/v/Bridge.svg)](https://www.nuget.org/packages/Bridge)
 [![Join the chat at https://gitter.im/bridgedotnet/Bridge](https://badges.gitter.im/bridgedotnet/Bridge.svg)](https://gitter.im/bridgedotnet/Bridge?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![CLA assistant](https://cla-assistant.io/readme/badge/bridgedotnet/Bridge)](https://cla-assistant.io/bridgedotnet/Bridge)
 
