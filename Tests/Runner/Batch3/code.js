@@ -13139,6 +13139,31 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2200", {
+        statics: {
+            testSequence: function () {
+                var seq = [1, "one"];
+                Bridge.Test.Assert.areEqual(1, seq[0]);
+                Bridge.Test.Assert.areEqual("one", seq[1]);
+
+                seq[0] = 2;
+                seq[1] = "two";
+                Bridge.Test.Assert.areEqual(2, seq[0]);
+                Bridge.Test.Assert.areEqual("two", seq[1]);
+
+                seq[0] = 3;
+                seq[1] = "three";
+                Bridge.Test.Assert.areEqual(3, seq[0]);
+                Bridge.Test.Assert.areEqual("three", seq[1]);
+
+                Bridge.Test.Assert.true(Bridge.is(seq, Array));
+                Bridge.Test.Assert.areEqual(2, seq.length);
+                Bridge.Test.Assert.areEqual(3, seq[0]);
+                Bridge.Test.Assert.areEqual("three", seq[1]);
+            }
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2203", {
         statics: {
             testLocalVarsRenaming: function () {
