@@ -705,6 +705,8 @@
             Bridge.Class.staticInitAllow = true;
 
             var queue = Bridge.Class.$queue.concat(Bridge.Class.$queueEntry);
+            Bridge.Class.$queue.length = 0;
+            Bridge.Class.$queueEntry.length = 0;
 
             for (var i = 0; i < queue.length; i++) {
                 var t = queue[i];
@@ -717,9 +719,6 @@
                     Bridge.ready(t.prototype.$main);
                 }
             }
-
-            Bridge.Class.$queue.length = 0;
-            Bridge.Class.$queueEntry.length = 0;
 
             if (fn) {
                 fn();
