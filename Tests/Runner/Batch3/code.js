@@ -7170,9 +7170,7 @@ Bridge.$N1391Result =                 r;
                             case 0: {
                                 done = Bridge.Test.Assert.async();
 
-                                    foo = null; /// Async method lacks 'await' operators and will run synchronously
-
-
+                                    foo = null;
                                     bar = Bridge.fn.bind(this, function () {
                                         var $step = 0,
                                             $jumpFromFinally, 
@@ -13398,6 +13396,20 @@ Bridge.$N1391Result =                 r;
         },
         f2: function () {
             Bridge.ClientTest.Batch3.BridgeIssues.Bridge2214.uLongChecked(-1);
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2216", {
+        statics: {
+            testExternalInterface: function () {
+                var person = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge2216.Person("John Smith");
+                Bridge.Test.Assert.areEqual("John Smith", person.name);
+                Bridge.Test.Assert.areEqual("This is John Smith", person.introduce());
+
+                var iperson = Bridge.cast(person, Bridge.getInterface("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2216.IPerson"));
+                Bridge.Test.Assert.areEqual("John Smith", iperson[Bridge.geti(iperson, "Bridge$ClientTest$Batch3$BridgeIssues$Bridge2216$IPerson$name", "name")]);
+                Bridge.Test.Assert.areEqual("This is John Smith", iperson[Bridge.geti(iperson, "Bridge$ClientTest$Batch3$BridgeIssues$Bridge2216$IPerson$introduce", "introduce")]());
+            }
         }
     });
 
@@ -21910,6 +21922,24 @@ Bridge.$N1391Result =                 r;
 
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2210.LoginAgent", {
         inherits: [Bridge.ClientTest.Batch3.BridgeIssues.Bridge2210.Agent_Logic]
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2216.Person", {
+        inherits: [Bridge.getInterface("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2216.IPerson")],
+        name: null,
+        config: {
+            alias: [
+            "name", "Bridge$ClientTest$Batch3$BridgeIssues$Bridge2216$IPerson$name",
+            "introduce", "Bridge$ClientTest$Batch3$BridgeIssues$Bridge2216$IPerson$introduce"
+            ]
+        },
+        ctor: function (name) {
+            this.$initialize();
+            this.name = name;
+        },
+        introduce: function () {
+            return System.String.format("This is {0}", this.name);
+        }
     });
 
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240B", {
