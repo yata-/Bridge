@@ -16,7 +16,7 @@ Actual result here
 
 http://deck.net/ <-- Replace with a link to your Deck
 
-```cs
+```c#
 public class Program
 {
     public static void Main()
