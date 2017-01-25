@@ -1,16 +1,4 @@
-A description of the issue. 
-
-### Expected
-
-```js
-Expected result here
-```
-
-### Actual
-
-```js
-Actual result here
-```
+A description of the issue.
 
 ### Steps To Reproduce
 
@@ -24,4 +12,16 @@ public class Program
         // Place code required to reproduce here
     }
 }
+```
+
+### Expected Result
+
+```js
+Expected result here
+```
+
+### Actual Result
+
+```js
+Actual result here
 ```
