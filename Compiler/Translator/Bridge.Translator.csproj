@@ -130,6 +130,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\Messages.cs" />
     <Compile Include="Emitter\ArgumentsInfo.cs" />
     <Compile Include="Emitter\Blocks\AbstractEmitterBlock.Locals.cs" />
     <Compile Include="Emitter\Blocks\AbstractCommentBlock.cs" />
@@ -235,6 +236,7 @@
     <Compile Include="Utils\AssemblyConfigHelper.cs" />
     <Compile Include="Utils\BridgeOptions.cs" />
     <Compile Include="Utils\AnonymousTypeConfig.cs" />
+    <Compile Include="Utils\ExternalInterface.cs" />
     <Compile Include="Utils\MsBuildConditionEvaluator.cs" />
     <Compile Include="Utils\ReflectionConfig.cs" />
     <Compile Include="Utils\MetadataUtils.cs" />

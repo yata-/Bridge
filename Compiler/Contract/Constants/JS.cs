@@ -42,8 +42,6 @@
             public const string BRIDGE_COMBINE = "Bridge.fn.combine";
             public const string BRIDGE_REMOVE = "Bridge.fn.remove";
             public const string BRIDGE_MERGE = "Bridge.merge";
-            public const string BRIDGE_DEFINE = "Bridge.define";
-            public const string BRIDGE_DEFINEI = "Bridge.definei";
             public const string BRIDGE_IS = "Bridge.is";
             public const string BRIDGE_IS_DEFINED = "Bridge.isDefined";
             public const string BRIDGE_GET_ENUMERATOR = "Bridge.getEnumerator";
@@ -85,6 +83,7 @@
             public const string APPLY = "apply";
             public const string CALL = "call";
             public const string DEFINE = "define";
+            public const string DISPOSE = "dispose";
 
             public const string SLICE = "slice";
 
@@ -160,6 +159,7 @@
             public const string Uint32Array = "Uint32Array";
             public const string Float32Array = "Float32Array";
             public const string Float64Array = "Float64Array";
+            public const string TypeRef = "Bridge.TypeRef";
 
             public class Number
             {
@@ -246,6 +246,11 @@
                 public const string ASSEMBLY = DOTNAME + "assembly";
                 public const string SET_METADATA = DOTNAME + "setMetadata";
                 public const string GET_TYPE_ALIAS = DOTNAME + "getTypeAlias";
+                public const string DEFINE = DOTNAME + "define";
+                public const string DEFINE_I = DOTNAME + "definei";
+                public const string GET_INTERFACE = DOTNAME + "getInterface";
+
+
 
                 public class Reflection
                 {

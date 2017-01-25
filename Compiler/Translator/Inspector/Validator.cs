@@ -181,14 +181,61 @@ namespace Bridge.Translator
         {
             string externalAttr = Translator.Bridge_ASSEMBLY + ".ExternalInterfaceAttribute";
             var attr = typeDefinition.Attributes.FirstOrDefault(a => a.Constructor != null && (a.Constructor.DeclaringType.FullName == externalAttr));
+
+            if (attr == null)
+            {
+                attr = typeDefinition.ParentAssembly.AssemblyAttributes.FirstOrDefault(a => a.Constructor != null && (a.Constructor.DeclaringType.FullName == externalAttr));
+            }
+
             isNative = attr != null && attr.PositionalArguments.Count == 1 && (bool)attr.PositionalArguments[0].ConstantValue;
 
             if (attr == null)
             {
-                isNative = typeDefinition.ParentAssembly.AssemblyName == "Bridge" || !this.IsExternalType(typeDefinition);
+                isNative = typeDefinition.ParentAssembly.AssemblyName == CS.NS.ROOT || !this.IsExternalType(typeDefinition);
             }
 
             return attr != null;
+        }
+
+        public virtual IExternalInterface IsExternalInterface(ICSharpCode.NRefactory.TypeSystem.ITypeDefinition typeDefinition)
+        {
+            string externalAttr = Translator.Bridge_ASSEMBLY + ".ExternalInterfaceAttribute";
+            var attr = typeDefinition.Attributes.FirstOrDefault(a => a.Constructor != null && (a.Constructor.DeclaringType.FullName == externalAttr));
+
+            if (attr == null)
+            {
+                attr = typeDefinition.ParentAssembly.AssemblyAttributes.FirstOrDefault(a => a.Constructor != null && (a.Constructor.DeclaringType.FullName == externalAttr));
+            }
+
+            if (attr != null)
+            {
+                var ei = new ExternalInterface();
+                if (attr.PositionalArguments.Count == 1)
+                {
+                    bool isNative = (bool)attr.PositionalArguments[0].ConstantValue;
+
+                    if (isNative)
+                    {
+                        ei.IsNativeImplementation = true;
+                    }
+                    else
+                    {
+                        ei.IsSimpleImplementation = true;
+                    }
+                }
+
+                if (attr.NamedArguments.Count == 1)
+                {
+                    if (attr.NamedArguments[0].Key.Name == "IsVirtual")
+                    {
+                        ei.IsVirtual = (bool)attr.NamedArguments[0].Value.ConstantValue;
+                    }
+                }
+
+                return ei;
+            }
+
+            return null;
         }
 
         public virtual bool IsImmutableType(ICustomAttributeProvider type)

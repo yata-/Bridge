@@ -59,6 +59,8 @@ namespace Bridge.Contract
 
         bool IsExternalInterface(ICSharpCode.NRefactory.TypeSystem.ITypeDefinition typeDefinition, out bool isNative);
 
+        IExternalInterface IsExternalInterface(ICSharpCode.NRefactory.TypeSystem.ITypeDefinition typeDefinition);
+
         bool IsImmutableType(ICustomAttributeProvider type);
 
         bool IsExternalType(IEntity enity, bool ignoreLiteral = false);

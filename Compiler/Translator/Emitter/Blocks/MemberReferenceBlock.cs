@@ -91,21 +91,15 @@ namespace Bridge.Translator
 
         private void WriteInterfaceMember(string interfaceTempVar, MemberResolveResult resolveResult, bool isSetter, string prefix = null)
         {
-            bool nativeImplementation;
-            var externalInterface = this.Emitter.Validator.IsExternalInterface(resolveResult.Member.DeclaringTypeDefinition, out nativeImplementation);
-
-            if (nativeImplementation)
-            {
-                externalInterface = false;
-            }
-
-            if (interfaceTempVar != null && !externalInterface)
+            var externalInterface = this.Emitter.Validator.IsExternalInterface(resolveResult.Member.DeclaringTypeDefinition);
+            
+            if (interfaceTempVar != null && externalInterface == null)
             {
                 this.WriteComma();
                 this.Write(interfaceTempVar);
             }
 
-            if (externalInterface)
+            if (externalInterface != null && externalInterface.IsDualImplementation)
             {
                 if (interfaceTempVar != null)
                 {
@@ -148,7 +142,7 @@ namespace Bridge.Translator
             }
 
             this.WriteOpenBracket();
-            this.Write(OverloadsCollection.Create(Emitter, resolveResult.Member, isSetter).GetOverloadName(!nativeImplementation, prefix));
+            this.Write(OverloadsCollection.Create(Emitter, resolveResult.Member, isSetter).GetOverloadName(externalInterface != null && externalInterface.IsSimpleImplementation, prefix));
             this.WriteCloseBracket();
 
             if (interfaceTempVar != null)
@@ -385,11 +379,31 @@ namespace Bridge.Translator
             bool nativeImplementation = true;
             bool isInterface = inline == null && member != null && member.Member.DeclaringTypeDefinition != null && member.Member.DeclaringTypeDefinition.Kind == TypeKind.Interface;
             var hasTypeParemeter = isInterface && Helpers.IsTypeParameterType(member.Member.DeclaringType);
-            if (isInterface && (this.Emitter.Validator.IsExternalInterface(member.Member.DeclaringTypeDefinition, out nativeImplementation) || hasTypeParemeter))
+            if (isInterface)
             {
-                if (hasTypeParemeter || !nativeImplementation)
+                var ei = this.Emitter.Validator.IsExternalInterface(member.Member.DeclaringTypeDefinition);
+
+                if (ei != null)
                 {
-                    isInterfaceMember = true;
+                    nativeImplementation = ei.IsNativeImplementation;
+                }
+                else
+                {
+                    nativeImplementation = member.Member.DeclaringTypeDefinition.ParentAssembly.AssemblyName == CS.NS.ROOT ||
+                                           !this.Emitter.Validator.IsExternalType(member.Member.DeclaringTypeDefinition);
+                }
+
+                if (ei != null && ei.IsSimpleImplementation)
+                {
+                    nativeImplementation = false;
+                    isInterfaceMember = false;
+                }
+                else if (ei != null || hasTypeParemeter)
+                {
+                    if (hasTypeParemeter || !nativeImplementation)
+                    {
+                        isInterfaceMember = true;
+                    }
                 }
             }
 
@@ -880,7 +894,7 @@ namespace Bridge.Translator
                         {
                             throw new EmitterException(memberReferenceExpression,
                                 string.Format(
-                                    "The property {0} is marked as FieldProperty but implemented interface member has no such attribute",
+                                    Bridge.Translator.Constants.Messages.Exceptions.FIELD_PROPERTY_MARKED,
                                     member.Member.ToString()));
                         }
                     }
@@ -888,7 +902,7 @@ namespace Bridge.Translator
                     {
                         if (member.Member.ImplementedInterfaceMembers.Count > 0 && member.Member.ImplementedInterfaceMembers.Any(m => Helpers.IsFieldProperty(m, this.Emitter)))
                         {
-                            throw new EmitterException(memberReferenceExpression, string.Format("The property {0} is not marked as FieldProperty but implemented interface member has such attribute", member.Member.ToString()));
+                            throw new EmitterException(memberReferenceExpression, string.Format(Bridge.Translator.Constants.Messages.Exceptions.FIELD_PROPERTY_NOT_MARKED, member.Member.ToString()));
                         }
                     }
 

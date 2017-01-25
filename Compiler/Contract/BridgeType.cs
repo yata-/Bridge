@@ -517,6 +517,15 @@ namespace Bridge.Contract
                 }
             }
 
+            if (!isAlias && itypeDef != null && itypeDef.Kind == TypeKind.Interface)
+            {
+                var externalInterface = emitter.Validator.IsExternalInterface(itypeDef);
+                if (externalInterface != null && externalInterface.IsVirtual)
+                {
+                    name = JS.Types.Bridge.GET_INTERFACE +  "(\"" + name + "\")";
+                }
+            }
+
             return name;
         }
 
