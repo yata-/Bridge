@@ -15,7 +15,7 @@ namespace Bridge.Translator
             this.ReflectionInternal = new ReflectionConfig();
             this.Assembly = new AssemblyConfig();
             this.Resources = new ResourceConfig();
-            this.Loader = new Loader();
+            this.Loader = new ModuleLoader();
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace Bridge.Translator
             get; set;
         }
 
-        public ILoader Loader
+        public IModuleLoader Loader
         {
             get; set;
         }

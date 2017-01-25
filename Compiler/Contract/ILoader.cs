@@ -1,15 +1,15 @@
 namespace Bridge.Contract
 {
-    public enum LoaderType
+    public enum ModuleLoaderType
     {
         AMD,
         CommonJS,
         ES6
     }
 
-    public interface ILoader
+    public interface IModuleLoader
     {
-        LoaderType Type
+        ModuleLoaderType Type
         {
             get; set;
         }

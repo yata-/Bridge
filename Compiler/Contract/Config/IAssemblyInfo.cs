@@ -183,7 +183,7 @@ namespace Bridge.Contract
             get; set;
         }
 
-        ILoader Loader
+        IModuleLoader Loader
         {
             get; set;
         }

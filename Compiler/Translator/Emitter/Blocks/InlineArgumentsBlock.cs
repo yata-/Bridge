@@ -458,7 +458,7 @@ namespace Bridge.Translator
                             {
                                 if (module.Type == ModuleType.AMD ||
                                     (module.Type == ModuleType.UMD &&
-                                     this.Emitter.AssemblyInfo.Loader.Type == LoaderType.AMD))
+                                     this.Emitter.AssemblyInfo.Loader.Type == ModuleLoaderType.AMD))
                                 {
                                     amd.Add(module.Name);
                                 }

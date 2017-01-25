@@ -5,9 +5,9 @@ using System.Text.RegularExpressions;
 
 namespace Bridge.Translator
 {
-    public class Loader : ILoader
+    public class ModuleLoader : IModuleLoader
     {
-        public LoaderType Type
+        public ModuleLoaderType Type
         {
             get; set;
         }

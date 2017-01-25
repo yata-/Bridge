@@ -232,7 +232,7 @@ namespace Bridge.Translator
                 {
                     tmp.Append(level > this.InitialLevel ? Emitter.INDENT + code.Replace(Emitter.NEW_LINE, Emitter.NEW_LINE + Emitter.INDENT) : code);
                 }
-                
+
                 if (endOutput.Length > 0)
                 {
                     tmp.Append(endOutput.ToString());
@@ -281,7 +281,7 @@ namespace Bridge.Translator
                         {
                             this.WriteIndent(tmp, level + 1);
                         }
-                        
+
                         this.Write(tmp, d.VariableName.IsNotEmpty() ? d.VariableName : d.DependencyName);
                         this.Write(tmp, i == (disabledDependecies.Count - 1) ? ";" : ",");
                         this.WriteNewLine(tmp);
@@ -291,9 +291,9 @@ namespace Bridge.Translator
                 }
 
                 var type = loader.Type;
-                var amd = dependencies.Where(d => d.Type == ModuleType.AMD || ((d.Type == null || d.Type == ModuleType.UMD) && type == LoaderType.AMD)).ToList();
-                var cjs = dependencies.Where(d => d.Type == ModuleType.CommonJS || ((d.Type == null || d.Type == ModuleType.UMD) && type == LoaderType.CommonJS)).ToList();
-                var es6 = dependencies.Where(d => d.Type == ModuleType.ES6 || (d.Type == null && type == LoaderType.ES6)).ToList();
+                var amd = dependencies.Where(d => d.Type == ModuleType.AMD || ((d.Type == null || d.Type == ModuleType.UMD) && type == ModuleLoaderType.AMD)).ToList();
+                var cjs = dependencies.Where(d => d.Type == ModuleType.CommonJS || ((d.Type == null || d.Type == ModuleType.UMD) && type == ModuleLoaderType.CommonJS)).ToList();
+                var es6 = dependencies.Where(d => d.Type == ModuleType.ES6 || (d.Type == null && type == ModuleLoaderType.ES6)).ToList();
 
                 if (amd.Count > 0)
                 {
