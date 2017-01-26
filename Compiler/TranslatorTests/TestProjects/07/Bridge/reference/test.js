@@ -152,4 +152,28 @@ Bridge.assembly("TestProject", function ($asm, globals) {
         return MyModule;
     });
 
+    define("Module1", function () {
+        var Module1 = { };
+        /**
+         * @public
+         * @class Module1.TestProject.Issues.N2198
+         */
+        Bridge.define("TestProject.Issues.N2198", {
+            $scope: Module1,
+            /**
+             * @static
+             * @public
+             * @this Module1.TestProject.Issues.N2198
+             * @memberof Module1.TestProject.Issues.N2198
+             * @return  {void}
+             */
+            $main: function () {
+                Bridge.Console.log("Hello World!");
+            }
+        });
+
+        Module1.TestProject.Issues.N2198.main();
+        return Module1;
+    });
+
 });
