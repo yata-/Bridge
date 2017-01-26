@@ -318,7 +318,9 @@ namespace Bridge.Translator
 
                     this.WriteNewLine(tmp, ") {");
 
-                    //this.WriteIndent(endOutput, level);
+                    this.WriteIndent(endOutput, level);
+                    this.WriteNewLine(endOutput, "Bridge.init();");
+                    this.WriteIndent(endOutput, level);
                     this.WriteNewLine(endOutput, "});");
                     level++;
                 }
