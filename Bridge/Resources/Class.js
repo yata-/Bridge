@@ -354,6 +354,7 @@
             };
 
             if (isEntryPoint || Bridge.isFunction(prototype.$main)) {
+                Class.main = prototype.$main;
                 Bridge.Class.$queueEntry.push(Class);
             }
 
@@ -701,6 +702,14 @@
         },
 
         init: function (fn) {
+            if (fn) {
+                var old = Bridge.Class.staticInitAllow;
+                Bridge.Class.staticInitAllow = true;
+                fn();
+                Bridge.Class.staticInitAllow = old;
+                return;
+            }
+
             Bridge.Class.staticInitAllow = true;
 
             var queue = Bridge.Class.$queue.concat(Bridge.Class.$queueEntry);
@@ -716,11 +725,8 @@
 
                 if (t.prototype.$main) {
                     Bridge.ready(t.prototype.$main);
+                    t.prototype.$main = null;
                 }
-            }
-
-            if (fn) {
-                fn();
             }
         }
     };
