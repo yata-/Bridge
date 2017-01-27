@@ -3047,7 +3047,7 @@
                 }
 
                 if (t.prototype.$main) {
-                    Bridge.ready(t.prototype.$main);
+                    Bridge.ready(t.main);
                     t.prototype.$main = null;
                 }
             }
@@ -12558,7 +12558,7 @@
     // @source INotifyPropertyChanged.js
 
     Bridge.define("System.ComponentModel.INotifyPropertyChanged", {
-        $kind: "interface",
+        $kind: "interface"
     });
 
     Bridge.define("System.ComponentModel.PropertyChangedEventArgs", {

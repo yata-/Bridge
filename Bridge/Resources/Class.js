@@ -724,7 +724,7 @@
                 }
 
                 if (t.prototype.$main) {
-                    Bridge.ready(t.prototype.$main);
+                    Bridge.ready(t.main);
                     t.prototype.$main = null;
                 }
             }
