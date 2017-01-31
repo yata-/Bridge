@@ -13652,6 +13652,79 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2281", {
+        statics: {
+            testFieldMerge: function () {
+                var item = new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge2281.Optional$1(String)).$ctor1("abc");
+                Bridge.Test.NUnit.Assert.areEqual("abc", item.getValue());
+
+                var node = Bridge.merge(new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge2281.Node$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2281.Optional$1(String)))(), {
+                    item: item
+                } );
+                Bridge.Test.NUnit.Assert.areEqual(item, node.item);
+                Bridge.Test.NUnit.Assert.areEqual("abc", node.item.getValue());
+
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2281.fieldMerge(String, "xyz");
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2281.fieldMerge(System.Int32, 5);
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2281.fieldMerge(System.Decimal, System.Decimal(6.0));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2281.fieldMerge(System.Int64, System.Int64(7));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2281.fieldMerge(System.UInt64, System.UInt64(8));
+            },
+            fieldMerge: function (T, value) {
+                var item = new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge2281.Optional$1(T)).$ctor1(value);
+                Bridge.Test.NUnit.Assert.areEqual(value, item.getValue());
+
+                var node = Bridge.merge(new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge2281.Node$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2281.Optional$1(T)))(), {
+                    item: item
+                } );
+                Bridge.Test.NUnit.Assert.areEqual(item, node.item);
+                Bridge.Test.NUnit.Assert.areEqual(value, node.item.getValue());
+            }
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2281.Node$1", function (T) { return {
+        item: Bridge.getDefaultValue(T)
+    }; });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2281.Optional$1", function (T) { return {
+        $kind: "struct",
+        statics: {
+            getDefaultValue: function () { return new (Bridge.ClientTest.Batch3.BridgeIssues.Bridge2281.Optional$1(T))(); }
+        },
+        config: {
+            properties: {
+                IsDefined: false,
+                Value: Bridge.getDefaultValue(T)
+            }
+        },
+        $ctor1: function (value) {
+            Bridge.ClientTest.Batch3.BridgeIssues.Bridge2281.Optional$1(T).$ctor2.call(this, value, value != null);
+        },
+        $ctor2: function (value, isDefined) {
+            this.$initialize();
+            this.setIsDefined(isDefined && (value != null));
+            this.setValue(value);
+        },
+        ctor: function () {
+            this.$initialize();
+        },
+        toString: function () {
+            return this.getIsDefined() ? this.getValue().toString() : "{Missing}";
+        },
+        getHashCode: function () {
+            var h = Bridge.addHash([3587563198, this.IsDefined, this.Value]);
+            return h;
+        },
+        equals: function (o) {
+            if (!Bridge.is(o, Bridge.ClientTest.Batch3.BridgeIssues.Bridge2281.Optional$1(T))) {
+                return false;
+            }
+            return Bridge.equals(this.IsDefined, o.IsDefined) && Bridge.equals(this.Value, o.Value);
+        },
+        $clone: function (to) { return this; }
+    }; });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2284", {
         statics: {
             testNameAttrOnProperty: function () {
