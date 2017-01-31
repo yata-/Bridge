@@ -14903,12 +14903,12 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
         ctor: function () {
             this.$initialize();
             this.i = 42;
-            this.P(42);
+            this.setP(42);
         },
-        P2: function () {
+        getP2: function () {
             return 0;
         },
-        P3: function (value) {
+        setP3: function (value) {
         },
         raise: function () {
             if (!Bridge.staticEquals(this.Evt, null)) {
