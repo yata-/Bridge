@@ -334,51 +334,51 @@ Bridge.assembly("Bridge.Test.Bridge.ClientTest", function ($asm, globals) {
             },
             areEqual: function (expected, actual) {
                 Bridge.Test.NUnit.Assert.setStack();
-                Bridge.Test.NUnit.Assert.assert.deepEqual(actual, expected);
+                Bridge.Test.NUnit.Assert.assert.deepEqual(Bridge.unbox(actual), Bridge.unbox(expected));
             },
             areEqual$1: function (expected, actual, description) {
                 Bridge.Test.NUnit.Assert.setStack();
-                Bridge.Test.NUnit.Assert.assert.deepEqual(actual, expected, description);
+                Bridge.Test.NUnit.Assert.assert.deepEqual(Bridge.unbox(actual), Bridge.unbox(expected), description);
             },
             areDeepEqual: function (expected, actual) {
                 Bridge.Test.NUnit.Assert.setStack();
-                Bridge.Test.NUnit.Assert.assert.deepEqual(actual, expected);
+                Bridge.Test.NUnit.Assert.assert.deepEqual(Bridge.unbox(actual), Bridge.unbox(expected));
             },
             areDeepEqual$1: function (expected, actual, description) {
                 Bridge.Test.NUnit.Assert.setStack();
-                Bridge.Test.NUnit.Assert.assert.deepEqual(actual, expected, description);
+                Bridge.Test.NUnit.Assert.assert.deepEqual(Bridge.unbox(actual), Bridge.unbox(expected), description);
             },
             areStrictEqual: function (expected, actual) {
                 Bridge.Test.NUnit.Assert.setStack();
-                Bridge.Test.NUnit.Assert.assert.strictEqual(actual, expected);
+                Bridge.Test.NUnit.Assert.assert.strictEqual(Bridge.unbox(actual), Bridge.unbox(expected));
             },
             areStrictEqual$1: function (expected, actual, description) {
                 Bridge.Test.NUnit.Assert.setStack();
-                Bridge.Test.NUnit.Assert.assert.strictEqual(actual, expected, description);
+                Bridge.Test.NUnit.Assert.assert.strictEqual(Bridge.unbox(actual), Bridge.unbox(expected), description);
             },
             areNotEqual: function (expected, actual) {
                 Bridge.Test.NUnit.Assert.setStack();
-                Bridge.Test.NUnit.Assert.assert.notDeepEqual(actual, expected);
+                Bridge.Test.NUnit.Assert.assert.notDeepEqual(Bridge.unbox(actual), Bridge.unbox(expected));
             },
             areNotEqual$1: function (expected, actual, description) {
                 Bridge.Test.NUnit.Assert.setStack();
-                Bridge.Test.NUnit.Assert.assert.notDeepEqual(actual, expected, description);
+                Bridge.Test.NUnit.Assert.assert.notDeepEqual(Bridge.unbox(actual), Bridge.unbox(expected), description);
             },
             areNotDeepEqual: function (expected, actual) {
                 Bridge.Test.NUnit.Assert.setStack();
-                Bridge.Test.NUnit.Assert.assert.notDeepEqual(actual, expected);
+                Bridge.Test.NUnit.Assert.assert.notDeepEqual(Bridge.unbox(actual), Bridge.unbox(expected));
             },
             areNotDeepEqual$1: function (expected, actual, description) {
                 Bridge.Test.NUnit.Assert.setStack();
-                Bridge.Test.NUnit.Assert.assert.notDeepEqual(actual, expected, description);
+                Bridge.Test.NUnit.Assert.assert.notDeepEqual(Bridge.unbox(actual), Bridge.unbox(expected), description);
             },
             areNotStrictEqual: function (expected, actual) {
                 Bridge.Test.NUnit.Assert.setStack();
-                Bridge.Test.NUnit.Assert.assert.notStrictEqual(actual, expected);
+                Bridge.Test.NUnit.Assert.assert.notStrictEqual(Bridge.unbox(actual), Bridge.unbox(expected));
             },
             areNotStrictEqual$1: function (expected, actual, description) {
                 Bridge.Test.NUnit.Assert.setStack();
-                Bridge.Test.NUnit.Assert.assert.notStrictEqual(actual, expected, description);
+                Bridge.Test.NUnit.Assert.assert.notStrictEqual(Bridge.unbox(actual), Bridge.unbox(expected), description);
             },
             true: function (condition) {
                 Bridge.Test.NUnit.Assert.setStack();
@@ -438,11 +438,11 @@ Bridge.assembly("Bridge.Test.Bridge.ClientTest", function ($asm, globals) {
             },
             throws$3: function (block, expected) {
                 Bridge.Test.NUnit.Assert.setStack();
-                Bridge.Test.NUnit.Assert.assert.throws(block, expected);
+                Bridge.Test.NUnit.Assert.assert.throws(block, Bridge.unbox(expected));
             },
             throws$4: function (block, expected, message) {
                 Bridge.Test.NUnit.Assert.setStack();
-                Bridge.Test.NUnit.Assert.assert.throws(block, expected, message);
+                Bridge.Test.NUnit.Assert.assert.throws(block, Bridge.unbox(expected), message);
             },
             throws$1: function (block, expected) {
                 Bridge.Test.NUnit.Assert.setStack();

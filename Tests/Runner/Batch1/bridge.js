@@ -30,6 +30,51 @@
             return name2;
         },
 
+        box: function (v, T, toStr, hashCode) {
+            if (v && v.$boxed) {
+                return v;
+            }
+
+            if (v == null) {
+                return v;
+            }
+
+            return {
+                $boxed: true,
+                fn: {
+                    toString: toStr,
+                    getHashCode: hashCode
+                },
+                v: v,
+                type: T,
+                constructor: T,
+                getHashCode: function() {
+                    return this.fn.getHashCode ? this.fn.getHashCode(this.v) : Bridge.getHashCode(this.v);
+                },
+                equals: function (o) {
+                    var eq = this.equals;
+                    this.equals = null;
+                    var r = Bridge.equals(this.v, o);
+                    this.equals = eq;
+                    return r;
+                },
+                valueOf: function() {
+                    return this.v;
+                },
+                toString: function () {
+                    return this.fn.toString ? this.fn.toString(this.v) : this.v.toString();
+                }
+            };
+        },
+
+        unbox: function(o) {
+            if (o && o.$boxed) {
+                return o.v;
+            }
+
+            return o;
+        },
+
         getInterface: function (name) {
             var type = Bridge.unroll(name);
 
@@ -422,6 +467,8 @@
             //     for value types it returns deterministic values (f.e. for int 3 it returns 3)
             //     for reference types it returns random value
 
+            value = Bridge.unbox(value);
+
             if (Bridge.isEmpty(value, true)) {
                 if (safe) {
                     return 0;
@@ -532,7 +579,7 @@
         },
 
         hasValue: function (obj) {
-            return obj != null;
+            return Bridge.unbox(obj) != null;
         },
 
         hasValue$1: function () {
@@ -543,7 +590,7 @@
             var i = 0;
 
             for (i; i < arguments.length; i++) {
-                if (arguments[i] == null) {
+                if (Bridge.unbox(arguments[i]) == null) {
                     return false;
                 }
             }
@@ -554,6 +601,25 @@
         is: function (obj, type, ignoreFn, allowNull) {
             if (obj == null) {
                 return !!allowNull;
+            }
+
+            if (obj.$boxed) {
+                if (obj.type.$kind === "enum" && (obj.type.prototype.$utype === type || type === System.Enum)) {
+                    return true;
+                }
+                else if (type.$kind !== "interface" && !type.$nullable) {
+                    return obj.type === type || type === Object;
+                }
+
+                if (ignoreFn !== true && type.$is) {
+                    return type.$is(Bridge.unbox(obj));
+                }
+
+                if (Bridge.Reflection.isAssignableFrom(type, obj.type)) {
+                    return true;
+                }
+
+                obj = Bridge.unbox(obj);
             }
 
             var ctor = obj.constructor;
@@ -633,7 +699,10 @@
         },
 
         as: function (obj, type, allowNull) {
-            return Bridge.is(obj, type, false, allowNull) ? obj : null;
+            if (Bridge.is(obj, type, false, allowNull)) {
+                return obj.$boxed && type !== Object ? obj.v : obj;
+            }
+            return null;
         },
 
         cast: function (obj, type, allowNull) {
@@ -645,6 +714,10 @@
 
             if (result === null) {
                 throw new System.InvalidCastException("Unable to cast type " + (obj ? Bridge.getTypeName(obj) : "'null'") + " to type " + Bridge.getTypeName(type));
+            }
+
+            if (obj.$boxed && type !== Object) {
+                return obj.v;
             }
 
             return result;
@@ -1123,6 +1196,10 @@
         },
 
         getType: function (instance, T) {
+            if (instance && instance.$boxed) {
+                return instance.type;
+            }
+
             if (instance == null) {
                 throw new System.NullReferenceException("instance is null");
             }
@@ -1641,10 +1718,13 @@
                 value = "";
             }
 
-            if (formatStr && Bridge.is(value, System.IFormattable)) {
-                value = Bridge.format(value, formatStr, provider);
+            if (formatStr && value.$boxed && value.type.$kind === "enum") {
+                value = System.Enum.format(value.type, value.v, formatStr);
+            }
+            else if (formatStr && Bridge.is(value, System.IFormattable)) {
+                value = Bridge.format(Bridge.unbox(value), formatStr, provider);
             } else {
-                value = "" + value;
+                value = "" + value.toString();
             }
 
             if (alignment) {
@@ -2043,7 +2123,7 @@
             var intValue = {};
 
             if (System.Int32.tryParse(s, intValue)) {
-                return intValue.v;
+                return Bridge.box(intValue.v, enumType, function (obj) { return System.Enum.toString(enumType, obj); });
             }
 
             var values = enumType;
@@ -2051,7 +2131,7 @@
             if (!enumType.prototype || !enumType.prototype.$flags) {
                 for (var f in values) {
                     if (enumMethods.nameEquals(f, s, ignoreCase)) {
-                        return values[f];
+                        return Bridge.box(values[f], enumType, function (obj) { return System.Enum.toString(enumType, obj); });
                     }
                 }
             } else {
@@ -2080,7 +2160,7 @@
                 }
 
                 if (parsed) {
-                    return value;
+                    return Bridge.box(value, enumType, function (obj) { return System.Enum.toString(enumType, obj); });
                 }
             }
 
@@ -2092,6 +2172,12 @@
         },
 
         toString: function (enumType, value, forceFlags) {
+            if (value && value.$boxed && enumType === System.Enum) {
+                enumType = value.type;
+            }
+
+            value = Bridge.unbox(value);
+
             if (enumType === Number) {
                 return value.toString();
             }
@@ -2203,7 +2289,6 @@
             System.Enum.checkEnumType(enumType);
 
             var values = enumType;
-
             for (var i in values) {
                 if (values[i] === value) {
                     return i;
@@ -2234,7 +2319,7 @@
 
         tryParse: function (enumType, value, result, ignoreCase) {
             result.v = 0;
-            result.v = enumMethods.parse(enumType, value, ignoreCase, true);
+            result.v = Bridge.unbox(enumMethods.parse(enumType, value, ignoreCase, true));
 
             if (result.v == null) {
                 return false;
@@ -2744,10 +2829,13 @@
             }
 
             if (Class.$kind === "enum") {
+                if (!Class.prototype.$utype) {
+                    Class.prototype.$utype = System.Int32;
+                }
                 Class.$is = function (instance) {
                     var utype = Class.prototype.$utype;
 
-                    if (utype === System.String) {
+                    if (utype === String) {
                         return typeof (instance) == "string";
                     }
 
@@ -2761,7 +2849,7 @@
                 Class.getDefaultValue = function () {
                     var utype = Class.prototype.$utype;
 
-                    if (utype === System.String) {
+                    if (utype === String) {
                         return null;
                     }
 
@@ -4117,6 +4205,7 @@
         hasValue: Bridge.hasValue,
 
         getValue: function (obj) {
+            obj = Bridge.unbox(obj);
             if (!Bridge.hasValue(obj)) {
                 throw new System.InvalidOperationException("Nullable instance doesn't have a value.");
             }
@@ -4296,6 +4385,8 @@
             $kind: "struct",
 
             statics: {
+                $nullable: true,
+                $nullableType: T,
                 getDefaultValue: function () {
                     return null;
                 },
@@ -4486,6 +4577,14 @@
         toString$1: function (formatProvider) {
             return System.String.formatProvider.apply(System.String, [formatProvider, this.format].concat(this.args));
         }
+    });
+
+    var $box_ = {};
+
+    Bridge.ns("System.Char", $box_);
+
+    Bridge.apply($box_.System.Char, {
+        toString: function(obj) {return String.fromCharCode(obj);}
     });
 
     // @source formattableStringFactory.js
@@ -17526,7 +17625,7 @@
             }
 
             if (b.length !== 16) {
-                throw new System.ArgumentException(System.String.format(System.Guid.error1, 16));
+                throw new System.ArgumentException(System.String.format(System.Guid.error1, Bridge.box(16, System.Int32)));
             }
 
             this._a = (b[3] << 24) | (b[2] << 16) | (b[1] << 8) | b[0];
@@ -17562,7 +17661,7 @@
             }
 
             if (d.length !== 8) {
-                throw new System.ArgumentException(System.String.format(System.Guid.error1, 8));
+                throw new System.ArgumentException(System.String.format(System.Guid.error1, Bridge.box(8, System.Int32)));
             }
 
             this._a = a;
@@ -17699,10 +17798,10 @@
                     return s.replace(System.Guid.replace, "");
                 case "b": 
                 case "B": 
-                    return System.String.concat(String.fromCharCode(123), s, String.fromCharCode(125));
+                    return System.String.concat(String.fromCharCode(Bridge.box(123, System.Char, $box_.System.Char.toString)), s, String.fromCharCode(Bridge.box(125, System.Char, $box_.System.Char.toString)));
                 case "p": 
                 case "P": 
-                    return System.String.concat(String.fromCharCode(40), s, String.fromCharCode(41));
+                    return System.String.concat(String.fromCharCode(Bridge.box(40, System.Char, $box_.System.Char.toString)), s, String.fromCharCode(Bridge.box(41, System.Char, $box_.System.Char.toString)));
                 default: 
                     return s;
             }
@@ -24073,8 +24172,8 @@ Bridge.define("System.Text.RegularExpressions.RegexParser", {
                 this.closeBtn.addEventListener("mouseout", Bridge.fn.cacheBind(this, this.hideTooltip));
 
                 this.consoleDefined = Bridge.isDefined(Bridge.global) && Bridge.isDefined(Bridge.global.console);
-                this.consoleDebugDefined = this.consoleDefined && Bridge.isDefined(Bridge.global.console.debug);
-                this.operaPostErrorDefined = Bridge.isDefined(Bridge.global.opera) && Bridge.isDefined(Bridge.global.opera.postError);
+                this.consoleDebugDefined = this.consoleDefined && Bridge.isDefined(Bridge.unbox(Bridge.global.console.debug));
+                this.operaPostErrorDefined = Bridge.isDefined(Bridge.global.opera) && Bridge.isDefined(Bridge.unbox(Bridge.global.opera.postError));
             }
         },
         showTooltip: function () {
