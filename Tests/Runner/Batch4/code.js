@@ -114,9 +114,9 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
             Bridge.Test.NUnit.Assert.areEqual(42, c3.i);
         },
         createInstanceWithNoArgumentsWorksForClassWithJsonDefaultConstructor: function () {
-            var c1 = Bridge.createInstance(Bridge.ClientTest.Batch4.ActivatorTests.C7);
-            var c2 = Bridge.createInstance(Bridge.ClientTest.Batch4.ActivatorTests.C7);
-            var c3 = this.instantiate(Bridge.ClientTest.Batch4.ActivatorTests.C7);
+            var c1 = Bridge.createInstance(Object);
+            var c2 = Bridge.createInstance(Object);
+            var c3 = this.instantiate(Object);
 
             Bridge.Test.NUnit.Assert.areEqual(Object, c1.constructor);
             Bridge.Test.NUnit.Assert.areEqual(Object, c2.constructor);
@@ -189,10 +189,6 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
             this.$initialize();
             this.i = 42;
         }
-    });
-
-    Bridge.define("Bridge.ClientTest.Batch4.ActivatorTests.C7", {
-        $literal: true
     });
 
     Bridge.define("Bridge.ClientTest.Batch4.ActivatorTests.C8$1", function (T) { return {
@@ -14182,7 +14178,7 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
         },
         castOperatorForSerializableTypeWithoutTypeCheckCodeAlwaysSucceedsGeneric: function () {
             var o = {  };
-            var b = this.cast(Bridge.ClientTest.Batch4.Reflection.TypeSystemLanguageSupportTests.OL, o);
+            var b = this.cast(Object, o);
             Bridge.Test.NUnit.Assert.true(Bridge.referenceEquals(Bridge.unbox(o), b));
         },
         typeCheckForSubTypeOfGenericType: function () {
@@ -14255,10 +14251,6 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
         $kind: "interface",
         $variance: [0,1]
     }; });
-
-    Bridge.define("Bridge.ClientTest.Batch4.Reflection.TypeSystemLanguageSupportTests.OL", {
-        $literal: true
-    });
 
     Bridge.define("Bridge.ClientTest.Batch4.Reflection.TypeSystemTests", {
         getAssemblyWithVersion: function () {

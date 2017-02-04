@@ -15454,7 +15454,7 @@ Bridge.assembly("Bridge.ClientTest", {"Bridge.ClientTest.Batch1.Reflection.Resou
             Bridge.Test.NUnit.Assert.true$1(Bridge.isPlainObject(o), "IsPlainObject");
         },
         genericParseWorks: function () {
-            var o = Bridge.merge(Bridge.createInstance(Bridge.ClientTest.JsonTests.TestClass2), JSON.parse("{ \"i\": 3, \"s\": \"test\" }"));
+            var o = Bridge.merge(Bridge.createInstance(Object), JSON.parse("{ \"i\": 3, \"s\": \"test\" }"));
             Bridge.Test.NUnit.Assert.areEqual(3, o.i);
             Bridge.Test.NUnit.Assert.areEqual("test", o.s);
             Bridge.Test.NUnit.Assert.true$1(Bridge.isPlainObject(o), "IsPlainObject");
@@ -15466,7 +15466,7 @@ Bridge.assembly("Bridge.ClientTest", {"Bridge.ClientTest.Batch1.Reflection.Resou
             Bridge.Test.NUnit.Assert.true$1(Bridge.isPlainObject(o), "IsPlainObject");
         },
         genericParseWithCallbackWorks: function () {
-            var o = Bridge.merge(Bridge.createInstance(Bridge.ClientTest.JsonTests.TestClass2), JSON.parse("{ \"i\": 3, \"s\": \"test\" }", $asm.$.Bridge.ClientTest.JsonTests.f1));
+            var o = Bridge.merge(Bridge.createInstance(Object), JSON.parse("{ \"i\": 3, \"s\": \"test\" }", $asm.$.Bridge.ClientTest.JsonTests.f1));
             Bridge.Test.NUnit.Assert.areEqual(100, o.i);
             Bridge.Test.NUnit.Assert.areEqual("test", o.s);
             Bridge.Test.NUnit.Assert.true$1(Bridge.isPlainObject(o), "IsPlainObject");
@@ -15480,7 +15480,7 @@ Bridge.assembly("Bridge.ClientTest", {"Bridge.ClientTest.Batch1.Reflection.Resou
             Bridge.Test.NUnit.Assert.true$1(Bridge.isPlainObject(o), "IsPlainObject");
         },
         genericParseWorks3: function () {
-            var o = Bridge.merge(Bridge.createInstance(Bridge.ClientTest.JsonTests.TestClass3), JSON.parse("{ \"i\": 3, \"s\": \"test\" }"));
+            var o = Bridge.merge(Bridge.createInstance(Object), JSON.parse("{ \"i\": 3, \"s\": \"test\" }"));
             Bridge.Test.NUnit.Assert.areEqual(3, o.i);
             Bridge.Test.NUnit.Assert.areEqual("test", o.s);
             Bridge.Test.NUnit.Assert.areEqual(4, Bridge.ClientTest.JsonTests.TestClass3.prototype.inc.call(o));
@@ -15496,7 +15496,7 @@ Bridge.assembly("Bridge.ClientTest", {"Bridge.ClientTest.Batch1.Reflection.Resou
             Bridge.Test.NUnit.Assert.true$1(Bridge.isPlainObject(o), "IsPlainObject");
         },
         genericParseWithCallbackWorks3: function () {
-            var o = Bridge.merge(Bridge.createInstance(Bridge.ClientTest.JsonTests.TestClass3), JSON.parse("{ \"i\": 3, \"s\": \"test\" }", $asm.$.Bridge.ClientTest.JsonTests.f1));
+            var o = Bridge.merge(Bridge.createInstance(Object), JSON.parse("{ \"i\": 3, \"s\": \"test\" }", $asm.$.Bridge.ClientTest.JsonTests.f1));
             Bridge.Test.NUnit.Assert.areEqual(100, o.i);
             Bridge.Test.NUnit.Assert.areEqual("test", o.s);
             Bridge.Test.NUnit.Assert.areEqual(101, Bridge.ClientTest.JsonTests.TestClass3.prototype.inc.call(o));
@@ -15536,43 +15536,43 @@ Bridge.assembly("Bridge.ClientTest", {"Bridge.ClientTest.Batch1.Reflection.Resou
             Bridge.Test.NUnit.Assert.true$1(Bridge.isPlainObject(o), "IsPlainObject");
         },
         stringifyWorks: function () {
-            Bridge.Test.NUnit.Assert.areEqual("{\"i\":3}", JSON.stringify(Bridge.ClientTest.JsonTests.TestClass1.ctor({ i: 3 })));
+            Bridge.Test.NUnit.Assert.areEqual("{\"i\":3}", JSON.stringify({ i: 3 }));
         },
         stringifyWithSerializableMembersArrayWorks: function () {
-            Bridge.Test.NUnit.Assert.areEqual("{\"i\":3}", JSON.stringify(Bridge.ClientTest.JsonTests.TestClass2.ctor({ i: 3, s: "test" }), System.Array.init(["i"], String)));
+            Bridge.Test.NUnit.Assert.areEqual("{\"i\":3}", JSON.stringify({ i: 3, s: "test" }, System.Array.init(["i"], String)));
         },
         stringifyWithSerializableMembersArrayAndIntentCountWorks: function () {
-            Bridge.Test.NUnit.Assert.areEqual("{\n    \"i\": 3\n}", JSON.stringify(Bridge.ClientTest.JsonTests.TestClass2.ctor({ i: 3, s: "test" }), System.Array.init(["i"], String), 4));
+            Bridge.Test.NUnit.Assert.areEqual("{\n    \"i\": 3\n}", JSON.stringify({ i: 3, s: "test" }, System.Array.init(["i"], String), 4));
         },
         stringifyWithSerializableMembersArrayAndIntentTextWorks: function () {
-            Bridge.Test.NUnit.Assert.areEqual("{\n    \"i\": 3\n}", JSON.stringify(Bridge.ClientTest.JsonTests.TestClass2.ctor({ i: 3, s: "test" }), System.Array.init(["i"], String), "    "));
+            Bridge.Test.NUnit.Assert.areEqual("{\n    \"i\": 3\n}", JSON.stringify({ i: 3, s: "test" }, System.Array.init(["i"], String), "    "));
         },
         stringifyWithCallbackWorks: function () {
-            Bridge.Test.NUnit.Assert.areEqual("{\"i\":3}", JSON.stringify(Bridge.ClientTest.JsonTests.TestClass2.ctor({ i: 3, s: "test" }), $asm.$.Bridge.ClientTest.JsonTests.f2));
+            Bridge.Test.NUnit.Assert.areEqual("{\"i\":3}", JSON.stringify({ i: 3, s: "test" }, $asm.$.Bridge.ClientTest.JsonTests.f2));
         },
         stringifyWithCallbackAndIndentCountWorks: function () {
-            Bridge.Test.NUnit.Assert.areEqual("{\n    \"i\": 3\n}", JSON.stringify(Bridge.ClientTest.JsonTests.TestClass2.ctor({ i: 3, s: "test" }), $asm.$.Bridge.ClientTest.JsonTests.f2, 4));
+            Bridge.Test.NUnit.Assert.areEqual("{\n    \"i\": 3\n}", JSON.stringify({ i: 3, s: "test" }, $asm.$.Bridge.ClientTest.JsonTests.f2, 4));
         },
         stringifyWithCallbackAndIndentTextWorks: function () {
-            Bridge.Test.NUnit.Assert.areEqual("{\n    \"i\": 3\n}", JSON.stringify(Bridge.ClientTest.JsonTests.TestClass2.ctor({ i: 3, s: "test" }), $asm.$.Bridge.ClientTest.JsonTests.f2, "    "));
+            Bridge.Test.NUnit.Assert.areEqual("{\n    \"i\": 3\n}", JSON.stringify({ i: 3, s: "test" }, $asm.$.Bridge.ClientTest.JsonTests.f2, "    "));
         },
         stringifyWithSerializableMembersArrayWorks3: function () {
-            Bridge.Test.NUnit.Assert.areEqual("{\"i\":3}", JSON.stringify(Bridge.ClientTest.JsonTests.TestClass3.ctor({ i: 3, s: "test" }), System.Array.init(["i"], String)));
+            Bridge.Test.NUnit.Assert.areEqual("{\"i\":3}", JSON.stringify({ i: 3, s: "test" }, System.Array.init(["i"], String)));
         },
         stringifyWithSerializableMembersArrayAndIntentCountWorks3: function () {
-            Bridge.Test.NUnit.Assert.areEqual("{\n    \"i\": 3\n}", JSON.stringify(Bridge.ClientTest.JsonTests.TestClass3.ctor({ i: 3, s: "test" }), System.Array.init(["i"], String), 4));
+            Bridge.Test.NUnit.Assert.areEqual("{\n    \"i\": 3\n}", JSON.stringify({ i: 3, s: "test" }, System.Array.init(["i"], String), 4));
         },
         stringifyWithSerializableMembersArrayAndIntentTextWorks3: function () {
-            Bridge.Test.NUnit.Assert.areEqual("{\n    \"i\": 3\n}", JSON.stringify(Bridge.ClientTest.JsonTests.TestClass3.ctor({ i: 3, s: "test" }), System.Array.init(["i"], String), "    "));
+            Bridge.Test.NUnit.Assert.areEqual("{\n    \"i\": 3\n}", JSON.stringify({ i: 3, s: "test" }, System.Array.init(["i"], String), "    "));
         },
         stringifyWithCallbackWorks3: function () {
-            Bridge.Test.NUnit.Assert.areEqual("{\"i\":3}", JSON.stringify(Bridge.ClientTest.JsonTests.TestClass3.ctor({ i: 3, s: "test" }), $asm.$.Bridge.ClientTest.JsonTests.f2));
+            Bridge.Test.NUnit.Assert.areEqual("{\"i\":3}", JSON.stringify({ i: 3, s: "test" }, $asm.$.Bridge.ClientTest.JsonTests.f2));
         },
         stringifyWithCallbackAndIndentCountWorks3: function () {
-            Bridge.Test.NUnit.Assert.areEqual("{\n    \"i\": 3\n}", JSON.stringify(Bridge.ClientTest.JsonTests.TestClass3.ctor({ i: 3, s: "test" }), $asm.$.Bridge.ClientTest.JsonTests.f2, 4));
+            Bridge.Test.NUnit.Assert.areEqual("{\n    \"i\": 3\n}", JSON.stringify({ i: 3, s: "test" }, $asm.$.Bridge.ClientTest.JsonTests.f2, 4));
         },
         stringifyWithCallbackAndIndentTextWorks3: function () {
-            Bridge.Test.NUnit.Assert.areEqual("{\n    \"i\": 3\n}", JSON.stringify(Bridge.ClientTest.JsonTests.TestClass3.ctor({ i: 3, s: "test" }), $asm.$.Bridge.ClientTest.JsonTests.f2, "    "));
+            Bridge.Test.NUnit.Assert.areEqual("{\n    \"i\": 3\n}", JSON.stringify({ i: 3, s: "test" }, $asm.$.Bridge.ClientTest.JsonTests.f2, "    "));
         },
         stringifyWithSerializableMembersArrayWorks4: function () {
             Bridge.Test.NUnit.Assert.areEqual("{\"i\":3}", JSON.stringify(Bridge.merge(Bridge.ClientTest.JsonTests.TestClass4.ctor(), {
@@ -15618,14 +15618,6 @@ Bridge.assembly("Bridge.ClientTest", {"Bridge.ClientTest.Batch1.Reflection.Resou
         f2: function (key, value) {
             return Bridge.referenceEquals(key, "s") ? undefined : value;
         }
-    });
-
-    Bridge.define("Bridge.ClientTest.JsonTests.TestClass1", {
-        $literal: true
-    });
-
-    Bridge.define("Bridge.ClientTest.JsonTests.TestClass2", {
-        $literal: true
     });
 
     Bridge.define("Bridge.ClientTest.JsonTests.TestClass3", {
@@ -20565,8 +20557,8 @@ Bridge.assembly("Bridge.ClientTest", {"Bridge.ClientTest.Batch1.Reflection.Resou
 
     Bridge.define("Bridge.ClientTest.ObjectLiteralTests.Bridge1529", {
         testObjectLiteral: function () {
-            var c = Bridge.ClientTest.ObjectLiteralTests.Bridge1529.Config.ctor({ temp: "Frank" });
-            var tempFrank = Bridge.ClientTest.ObjectLiteralTests.Bridge1529.Config.prototype.getTmp.call(Bridge.ClientTest.ObjectLiteralTests.Bridge1529.Config.ctor({  }), c);
+            var c = { temp: "Frank" };
+            var tempFrank = Bridge.ClientTest.ObjectLiteralTests.Bridge1529.Config.prototype.getTmp.call({  }, c);
             Bridge.Test.NUnit.Assert.areEqual$1("1: Frank", tempFrank, "Check call works");
 
             var options = { data: { name: c.temp } };
@@ -20696,7 +20688,7 @@ Bridge.assembly("Bridge.ClientTest", {"Bridge.ClientTest.Batch1.Reflection.Resou
             Bridge.Test.NUnit.Assert.areEqual$1(1, config1.val1, "config1 Val1");
             Bridge.Test.NUnit.Assert.areEqual$1(11, config1.val2, "config1 Val2");
 
-            var config2 = Bridge.ClientTest.ObjectLiteralTests.CreateAndInitializationModesTests.Config2.ctor({ val1: 2, val2: 0 });
+            var config2 = { val1: 2, val2: 0 };
             Bridge.Test.NUnit.Assert.notNull$1(config2, "DefaultValue and Plain Modes config2 created");
             Bridge.Test.NUnit.Assert.areEqual$1(2, config2.val1, "config2 Val1");
             Bridge.Test.NUnit.Assert.areEqual$1(0, config2.val2, "config2 Val2");
@@ -20706,7 +20698,7 @@ Bridge.assembly("Bridge.ClientTest", {"Bridge.ClientTest.Batch1.Reflection.Resou
             Bridge.Test.NUnit.Assert.areEqual$1(3, config3.val1, "config3 Val1");
             Bridge.Test.NUnit.Assert.areEqual$1(13, config3.val2, "config3 Val2");
 
-            var config4 = Bridge.ClientTest.ObjectLiteralTests.CreateAndInitializationModesTests.Config4.ctor({  });
+            var config4 = {  };
             Bridge.Test.NUnit.Assert.notNull$1(config4, "Ignore and Plain Modes config4 created");
             Bridge.Test.NUnit.Assert.null$1(config4.val1, "config4 Val1");
             Bridge.Test.NUnit.Assert.null$1(config4.val2, "config4 Val2");
@@ -20716,7 +20708,7 @@ Bridge.assembly("Bridge.ClientTest", {"Bridge.ClientTest.Batch1.Reflection.Resou
             Bridge.Test.NUnit.Assert.areEqual$1(5, config5.val1, "config5 Val1");
             Bridge.Test.NUnit.Assert.areEqual$1(15, config5.val2, "config5 Val2");
 
-            var config6 = Bridge.ClientTest.ObjectLiteralTests.CreateAndInitializationModesTests.Config6.ctor({ val1: 6 });
+            var config6 = { val1: 6 };
             Bridge.Test.NUnit.Assert.notNull$1(config6, "Initializer and Plain Modes config6 created");
             Bridge.Test.NUnit.Assert.areEqual$1(6, config6.val1, "config6 Val1");
             Bridge.Test.NUnit.Assert.null$1(config6.val2, "config6 Val2");
@@ -20737,10 +20729,6 @@ Bridge.assembly("Bridge.ClientTest", {"Bridge.ClientTest.Batch1.Reflection.Resou
         }
     });
 
-    Bridge.define("Bridge.ClientTest.ObjectLiteralTests.CreateAndInitializationModesTests.Config2", {
-        $literal: true
-    });
-
     Bridge.define("Bridge.ClientTest.ObjectLiteralTests.CreateAndInitializationModesTests.Config3", {
         $literal: true,
         ctor: function () {
@@ -20753,10 +20741,6 @@ Bridge.assembly("Bridge.ClientTest", {"Bridge.ClientTest.Batch1.Reflection.Resou
             }).call($this);
             return $this;
         }
-    });
-
-    Bridge.define("Bridge.ClientTest.ObjectLiteralTests.CreateAndInitializationModesTests.Config4", {
-        $literal: true
     });
 
     Bridge.define("Bridge.ClientTest.ObjectLiteralTests.CreateAndInitializationModesTests.Config5", {
@@ -20773,10 +20757,6 @@ Bridge.assembly("Bridge.ClientTest", {"Bridge.ClientTest.Batch1.Reflection.Resou
         }
     });
 
-    Bridge.define("Bridge.ClientTest.ObjectLiteralTests.CreateAndInitializationModesTests.Config6", {
-        $literal: true
-    });
-
     Bridge.define("Bridge.ClientTest.ObjectLiteralTests.CreateModeTests", {
         test: function () {
             var config1 = Bridge.ClientTest.ObjectLiteralTests.CreateModeTests.Config1.ctor();
@@ -20789,12 +20769,12 @@ Bridge.assembly("Bridge.ClientTest", {"Bridge.ClientTest.Batch1.Reflection.Resou
             Bridge.Test.NUnit.Assert.areEqual$1(2, config2.val1, "config2 Val1");
             Bridge.Test.NUnit.Assert.areEqual$1(12, config2.val2, "config2 Val2");
 
-            var config3 = Bridge.ClientTest.ObjectLiteralTests.CreateModeTests.Config3.ctor({  });
+            var config3 = {  };
             Bridge.Test.NUnit.Assert.notNull$1(config3, "Plain Mode config3 created");
             Bridge.Test.NUnit.Assert.null$1(config3.val1, "config3 Val1");
             Bridge.Test.NUnit.Assert.null$1(config3.val2, "config3 Val2");
 
-            var config4 = Bridge.ClientTest.ObjectLiteralTests.CreateModeTests.Config4.ctor({  });
+            var config4 = {  };
             Bridge.Test.NUnit.Assert.notNull$1(config4, "Plain Mode config4 created");
             Bridge.Test.NUnit.Assert.null$1(config4.val1, "config4 Val1");
             Bridge.Test.NUnit.Assert.null$1(config4.val2, "config4 Val2");
@@ -20829,52 +20809,28 @@ Bridge.assembly("Bridge.ClientTest", {"Bridge.ClientTest.Batch1.Reflection.Resou
         }
     });
 
-    Bridge.define("Bridge.ClientTest.ObjectLiteralTests.CreateModeTests.Config3", {
-        $literal: true
-    });
-
-    Bridge.define("Bridge.ClientTest.ObjectLiteralTests.CreateModeTests.Config4", {
-        $literal: true
-    });
-
     Bridge.define("Bridge.ClientTest.ObjectLiteralTests.InitializationModeTests", {
         test: function () {
-            var config1 = Bridge.ClientTest.ObjectLiteralTests.InitializationModeTests.Config1.ctor({  });
+            var config1 = {  };
             Bridge.Test.NUnit.Assert.notNull$1(config1, "Default Mode config1 created");
             Bridge.Test.NUnit.Assert.null$1(config1.val1, "config1 Val1");
             Bridge.Test.NUnit.Assert.null$1(config1.val2, "config1 Val2");
 
-            var config2 = Bridge.ClientTest.ObjectLiteralTests.InitializationModeTests.Config2.ctor({ val1: 2, val2: 0 });
+            var config2 = { val1: 2, val2: 0 };
             Bridge.Test.NUnit.Assert.notNull$1(config2, "DefaultValue Mode config2 created");
             Bridge.Test.NUnit.Assert.areEqual$1(2, config2.val1, "config2 Val1");
             Bridge.Test.NUnit.Assert.areEqual$1(0, config2.val2, "config2 Val2");
 
-            var config3 = Bridge.ClientTest.ObjectLiteralTests.InitializationModeTests.Config3.ctor({ val1: 3 });
+            var config3 = { val1: 3 };
             Bridge.Test.NUnit.Assert.notNull$1(config3, "Initializer Mode config3 created");
             Bridge.Test.NUnit.Assert.areEqual$1(3, config3.val1, "config3 Val1");
             Bridge.Test.NUnit.Assert.null$1(config3.val2, "config3 Val2");
 
-            var config4 = Bridge.ClientTest.ObjectLiteralTests.InitializationModeTests.Config4.ctor({  });
+            var config4 = {  };
             Bridge.Test.NUnit.Assert.notNull$1(config4, "Ignore Mode config4 created");
             Bridge.Test.NUnit.Assert.null$1(config4.val1, "config4 Val1");
             Bridge.Test.NUnit.Assert.null$1(config4.val2, "config4 Val2");
         }
-    });
-
-    Bridge.define("Bridge.ClientTest.ObjectLiteralTests.InitializationModeTests.Config1", {
-        $literal: true
-    });
-
-    Bridge.define("Bridge.ClientTest.ObjectLiteralTests.InitializationModeTests.Config2", {
-        $literal: true
-    });
-
-    Bridge.define("Bridge.ClientTest.ObjectLiteralTests.InitializationModeTests.Config3", {
-        $literal: true
-    });
-
-    Bridge.define("Bridge.ClientTest.ObjectLiteralTests.InitializationModeTests.Config4", {
-        $literal: true
     });
 
     Bridge.define("Bridge.ClientTest.PropertyAccessorTests", {
@@ -24217,8 +24173,8 @@ Bridge.assembly("Bridge.ClientTest", {"Bridge.ClientTest.Batch1.Reflection.Resou
             return Bridge.cast(Bridge.unbox(o), T);
         },
         castOperatorForSerializableTypeWithoutTypeCheckCodeAlwaysSucceedsGeneric: function () {
-            var o = Bridge.merge(Bridge.createInstance(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.OL), JSON.parse("{}"));
-            var b = this.cast(Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.OL, o);
+            var o = Bridge.merge(Bridge.createInstance(Object), JSON.parse("{}"));
+            var b = this.cast(Object, o);
             Bridge.Test.NUnit.Assert.true(Bridge.referenceEquals(Bridge.unbox(o), b));
         },
         typeCheckForSubTypeOfGenericType: function () {
@@ -24291,10 +24247,6 @@ Bridge.assembly("Bridge.ClientTest", {"Bridge.ClientTest.Batch1.Reflection.Resou
         $kind: "interface",
         $variance: [0,1]
     }; });
-
-    Bridge.define("Bridge.ClientTest.Reflection.TypeSystemLanguageSupportTests.OL", {
-        $literal: true
-    });
 
     Bridge.define("Bridge.ClientTest.Reflection.TypeSystemTests", {
         statics: {
