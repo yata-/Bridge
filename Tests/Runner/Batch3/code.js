@@ -162,8 +162,8 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
 
                 stopwatch.stop();
 
-                Bridge.Test.NUnit.Assert.true$1(stopwatch.milliseconds().gte(System.Int64(delay - Bridge.ClientTest.Batch3.BridgeIssues.Bridge1012.DELTA)), ">= " + Bridge.box(delay, System.Int32) + ", elapsed " + Bridge.box(stopwatch.milliseconds(), System.Int64));
-                Bridge.Test.NUnit.Assert.true$1(stopwatch.milliseconds().lt(System.Int64(maxDelay)), "< " + Bridge.box(maxDelay, System.Int32) + ", elapsed " + Bridge.box(stopwatch.milliseconds(), System.Int64));
+                Bridge.Test.NUnit.Assert.true$1(stopwatch.milliseconds().gte(System.Int64(delay - Bridge.ClientTest.Batch3.BridgeIssues.Bridge1012.DELTA)), ">= " + delay + ", elapsed " + stopwatch.milliseconds());
+                Bridge.Test.NUnit.Assert.true$1(stopwatch.milliseconds().lt(System.Int64(maxDelay)), "< " + maxDelay + ", elapsed " + stopwatch.milliseconds());
             },
             testSleepInt: function () {
                 var delay = 100;
@@ -176,8 +176,8 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
 
                 stopwatch.stop();
 
-                Bridge.Test.NUnit.Assert.true$1(stopwatch.milliseconds().gte(System.Int64(delay - Bridge.ClientTest.Batch3.BridgeIssues.Bridge1012.DELTA)), ">= " + Bridge.box(delay, System.Int32) + ", elapsed " + Bridge.box(stopwatch.milliseconds(), System.Int64));
-                Bridge.Test.NUnit.Assert.true$1(stopwatch.milliseconds().lt(System.Int64(maxDelay)), "< " + Bridge.box(maxDelay, System.Int32) + ", elapsed " + Bridge.box(stopwatch.milliseconds(), System.Int64));
+                Bridge.Test.NUnit.Assert.true$1(stopwatch.milliseconds().gte(System.Int64(delay - Bridge.ClientTest.Batch3.BridgeIssues.Bridge1012.DELTA)), ">= " + delay + ", elapsed " + stopwatch.milliseconds());
+                Bridge.Test.NUnit.Assert.true$1(stopwatch.milliseconds().lt(System.Int64(maxDelay)), "< " + maxDelay + ", elapsed " + stopwatch.milliseconds());
             },
             testSleepTimeSpan: function () {
                 var delay = 100;
@@ -190,8 +190,8 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
 
                 stopwatch.stop();
 
-                Bridge.Test.NUnit.Assert.true$1(stopwatch.milliseconds().gte(System.Int64(delay - Bridge.ClientTest.Batch3.BridgeIssues.Bridge1012.DELTA)), ">= " + Bridge.box(delay, System.Int32) + ", elapsed " + Bridge.box(stopwatch.milliseconds(), System.Int64));
-                Bridge.Test.NUnit.Assert.true$1(stopwatch.milliseconds().lt(System.Int64(maxDelay)), "< " + Bridge.box(maxDelay, System.Int32) + ", elapsed " + Bridge.box(stopwatch.milliseconds(), System.Int64));
+                Bridge.Test.NUnit.Assert.true$1(stopwatch.milliseconds().gte(System.Int64(delay - Bridge.ClientTest.Batch3.BridgeIssues.Bridge1012.DELTA)), ">= " + delay + ", elapsed " + stopwatch.milliseconds());
+                Bridge.Test.NUnit.Assert.true$1(stopwatch.milliseconds().lt(System.Int64(maxDelay)), "< " + maxDelay + ", elapsed " + stopwatch.milliseconds());
             },
             testSleepThrows: function () {
                 Bridge.Test.NUnit.Assert.throws$7(System.ArgumentOutOfRangeException, $asm.$.Bridge.ClientTest.Batch3.BridgeIssues.Bridge1012.f1, "-2");
@@ -653,28 +653,28 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
                 Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(System.Decimal(5.0));
 
                 Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().div(System.Decimal(2)));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(2.5), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1(), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(2.5), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
 
                 Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().add(System.Decimal(2)));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(4.5), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1(), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.5), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
 
                 Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().inc());
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(5.5), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1(), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(5.5), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
 
                 Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().inc());
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(6.5), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1(), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.5), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
 
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(3.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().div(System.Decimal(2)), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1($t), $t)), System.Decimal, $box_.System.Decimal.toString));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(3.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1(), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(3.25), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().div(System.Decimal(2)), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1($t), $t)));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(3.25), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
 
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(4.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t1 = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().add(System.Decimal(1)), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1($t1), $t1)), System.Decimal, $box_.System.Decimal.toString));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(4.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1(), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t1 = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1().add(System.Decimal(1)), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1($t1), $t1)));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
 
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(4.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t2 = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1(), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1($t2.inc()), $t2)), System.Decimal, $box_.System.Decimal.toString));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(5.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1(), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t2 = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1(), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1($t2.inc()), $t2)));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(5.25), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
 
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(6.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t2 = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1(), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1($t2.inc()), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1())), System.Decimal, $box_.System.Decimal.toString));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(6.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1(), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.25), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t2 = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1(), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.setProp1($t2.inc()), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1())));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.25), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.getProp1());
             },
             testIndexerOps: function () {
                 var $t, $t1, $t2;
@@ -682,84 +682,84 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
                 app.setItem(0, System.Decimal(5.0));
 
                 app.setItem(0, app.getItem(0).div(System.Decimal(2)));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(2.5), System.Decimal, $box_.System.Decimal.toString), Bridge.box(app.getItem(0), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(2.5), app.getItem(0));
 
                 app.setItem(0, app.getItem(0).add(System.Decimal(2)));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(4.5), System.Decimal, $box_.System.Decimal.toString), Bridge.box(app.getItem(0), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.5), app.getItem(0));
 
                 app.setItem(0, app.getItem(0).inc());
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(5.5), System.Decimal, $box_.System.Decimal.toString), Bridge.box(app.getItem(0), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(5.5), app.getItem(0));
 
                 app.setItem(0, app.getItem(0).inc());
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(6.5), System.Decimal, $box_.System.Decimal.toString), Bridge.box(app.getItem(0), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.5), app.getItem(0));
 
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(3.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = app.getItem(0).div(System.Decimal(2)), app.setItem(0, $t), $t)), System.Decimal, $box_.System.Decimal.toString));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(3.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(app.getItem(0), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(3.25), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = app.getItem(0).div(System.Decimal(2)), app.setItem(0, $t), $t)));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(3.25), app.getItem(0));
 
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(4.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t1 = app.getItem(0).add(System.Decimal(1)), app.setItem(0, $t1), $t1)), System.Decimal, $box_.System.Decimal.toString));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(4.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(app.getItem(0), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t1 = app.getItem(0).add(System.Decimal(1)), app.setItem(0, $t1), $t1)));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), app.getItem(0));
 
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(4.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t2 = app.getItem(0), app.setItem(0, $t2.inc()), $t2)), System.Decimal, $box_.System.Decimal.toString));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(5.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(app.getItem(0), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t2 = app.getItem(0), app.setItem(0, $t2.inc()), $t2)));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(5.25), app.getItem(0));
 
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(6.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t2 = app.getItem(0), app.setItem(0, $t2.inc()), app.getItem(0))), System.Decimal, $box_.System.Decimal.toString));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(6.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(app.getItem(0), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.25), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t2 = app.getItem(0), app.setItem(0, $t2.inc()), app.getItem(0))));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.25), app.getItem(0));
             },
             testDictOps: function () {
                 var $t, $t1, $t2;
                 var dict = $asm.$.Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.f1(new (System.Collections.Generic.Dictionary$2(System.Int32,System.Decimal))());
 
                 dict.set(0, dict.get(0).div(System.Decimal(2)));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(2.5), System.Decimal, $box_.System.Decimal.toString), Bridge.box(dict.get(0), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(2.5), dict.get(0));
 
                 dict.set(0, dict.get(0).add(System.Decimal(2)));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(4.5), System.Decimal, $box_.System.Decimal.toString), Bridge.box(dict.get(0), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.5), dict.get(0));
 
                 dict.set(0, dict.get(0).inc());
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(5.5), System.Decimal, $box_.System.Decimal.toString), Bridge.box(dict.get(0), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(5.5), dict.get(0));
 
                 dict.set(0, dict.get(0).inc());
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(6.5), System.Decimal, $box_.System.Decimal.toString), Bridge.box(dict.get(0), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.5), dict.get(0));
 
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(3.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = dict.get(0).div(System.Decimal(2)), dict.set(0, $t), $t)), System.Decimal, $box_.System.Decimal.toString));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(3.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(dict.get(0), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(3.25), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = dict.get(0).div(System.Decimal(2)), dict.set(0, $t), $t)));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(3.25), dict.get(0));
 
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(4.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t1 = dict.get(0).add(System.Decimal(1)), dict.set(0, $t1), $t1)), System.Decimal, $box_.System.Decimal.toString));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(4.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(dict.get(0), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t1 = dict.get(0).add(System.Decimal(1)), dict.set(0, $t1), $t1)));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), dict.get(0));
 
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(4.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t2 = dict.get(0), dict.set(0, $t2.inc()), $t2)), System.Decimal, $box_.System.Decimal.toString));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(5.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(dict.get(0), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t2 = dict.get(0), dict.set(0, $t2.inc()), $t2)));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(5.25), dict.get(0));
 
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(6.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t2 = dict.get(0), dict.set(0, $t2.inc()), dict.get(0))), System.Decimal, $box_.System.Decimal.toString));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(6.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(dict.get(0), System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.25), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t2 = dict.get(0), dict.set(0, $t2.inc()), dict.get(0))));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.25), dict.get(0));
             },
             testVariableOps: function () {
                 var $t;
                 var i1 = System.Decimal(5);
 
                 i1 = i1.div(System.Decimal(2));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(2.5), System.Decimal, $box_.System.Decimal.toString), Bridge.box(i1, System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(2.5), i1);
 
                 i1 = i1.add(System.Decimal(2));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(4.5), System.Decimal, $box_.System.Decimal.toString), Bridge.box(i1, System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.5), i1);
 
                 i1 = i1.inc();
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(5.5), System.Decimal, $box_.System.Decimal.toString), Bridge.box(i1, System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(5.5), i1);
 
                 i1 = i1.inc();
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(6.5), System.Decimal, $box_.System.Decimal.toString), Bridge.box(i1, System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.5), i1);
 
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(3.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method((i1 = i1.div(System.Decimal(2)))), System.Decimal, $box_.System.Decimal.toString));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(3.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(i1, System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(3.25), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method((i1 = i1.div(System.Decimal(2)))));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(3.25), i1);
 
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(4.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method((i1 = i1.add(System.Decimal(1)))), System.Decimal, $box_.System.Decimal.toString));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(4.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(i1, System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method((i1 = i1.add(System.Decimal(1)))));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), i1);
 
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(4.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = i1, i1 = i1.inc(), $t)), System.Decimal, $box_.System.Decimal.toString));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(5.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(i1, System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(4.25), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method(($t = i1, i1 = i1.inc(), $t)));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(5.25), i1);
 
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(6.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method((i1 = i1.inc())), System.Decimal, $box_.System.Decimal.toString));
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal(6.25), System.Decimal, $box_.System.Decimal.toString), Bridge.box(i1, System.Decimal, $box_.System.Decimal.toString));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.25), Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.method((i1 = i1.inc())));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1041.Bridge1041Decimal.assertIsDecimalAndEqualTo(System.Decimal(6.25), i1);
             },
             method: function (i) {
                 return i;
@@ -2819,7 +2819,7 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
                 if (diff > delta || diff < -delta) {
                     Bridge.Test.NUnit.Assert.areEqual$1(e, a, message);
                 } else {
-                    var m = ($t = message, $t != null ? $t : System.String.concat(" ", (diff !== 0 ? System.String.concat("Diff: " + System.Double.format(Bridge.box(diff, System.Double, $box_.System.Double.toString), 'G') + "; Expected: ", e, "; Actual: ", a) : "")));
+                    var m = ($t = message, $t != null ? $t : System.String.concat(" ", (diff !== 0 ? System.String.concat("Diff: " + System.Double.format(diff, 'G') + "; Expected: ", e, "; Actual: ", a) : "")));
                     Bridge.Test.NUnit.Assert.true$1(true, m);
                 }
             },
@@ -4015,7 +4015,7 @@ Bridge.assembly("Bridge.ClientTest.Batch3", function ($asm, globals) {
         statics: {
             testUseCase: function () {
                 var v = 0;
-                var s = Bridge.box(v, System.Int32) + "";
+                var s = v + "";
 
                 Bridge.Test.NUnit.Assert.areEqual("0", s);
             },
@@ -6242,7 +6242,7 @@ Bridge.$N1391Result =                 r;
             }
         },
         someMethod: function () {
-            return System.String.concat("I'm ", Bridge.Reflection.getTypeFullName(Bridge.getType(this)), " and my value is ", Bridge.box(this.getValue(), System.Int32));
+            return System.String.concat("I'm ", Bridge.Reflection.getTypeFullName(Bridge.getType(this)), " and my value is ", this.getValue());
         }
     });
 
@@ -6319,7 +6319,7 @@ Bridge.$N1391Result =                 r;
                 Bridge.Console.hide();
             },
             testConsoleWriteLineForLong: function () {
-                var v = Bridge.box(System.Int64(1), System.Int64);
+                var v = System.Int64(1);
 
                 Bridge.Console.log(v);
                 Bridge.Test.NUnit.Assert.areEqual("1", Bridge.ClientTest.Batch3.BridgeIssues.Bridge1458.getOutput());
@@ -6773,7 +6773,7 @@ Bridge.$N1391Result =                 r;
             for (var i = 1; i < 10001; i = (i + 1) | 0) {
                 p = Bridge.global.performance.now();
                 if (!this.hasNoFraction(p)) {
-                    Bridge.Test.NUnit.Assert.true$1(true, "Did " + Bridge.box(i, System.Int32) + " attempt(s) to check performance.now() returns float");
+                    Bridge.Test.NUnit.Assert.true$1(true, "Did " + i + " attempt(s) to check performance.now() returns float");
                     return;
                 }
             }
@@ -7210,7 +7210,7 @@ Bridge.$N1391Result =                 r;
             s1 = System.String.concat(s1, s);
             Bridge.Test.NUnit.Assert.areEqual$1("b", s1, "s1 += s");
 
-            s = System.String.concat(s, String.fromCharCode(Bridge.box(98, System.Char, $box_.System.Char.toString)));
+            s = System.String.concat(s, String.fromCharCode(98));
             Bridge.Test.NUnit.Assert.areEqual$1("b", s, "s += 'b'");
 
             Bridge.Test.NUnit.Assert.areEqual$1("b2", System.String.concat(s, "2"), "s + \"2\"");
@@ -7376,7 +7376,7 @@ Bridge.$N1391Result =                 r;
             var sa = System.Double.format(actual, 'G');
 
             if (Bridge.referenceEquals(sa, se)) {
-                Bridge.Test.NUnit.Assert.true$1(true, "Actual:" + System.Double.format(Bridge.box(actual, System.Double, $box_.System.Double.toString), 'G') + " vs Expected:" + System.Double.format(Bridge.box(expected, System.Double, $box_.System.Double.toString), 'G'));
+                Bridge.Test.NUnit.Assert.true$1(true, "Actual:" + System.Double.format(actual, 'G') + " vs Expected:" + System.Double.format(expected, 'G'));
                 return;
             }
 
@@ -7385,7 +7385,7 @@ Bridge.$N1391Result =                 r;
                 diff = -diff;
             }
 
-            Bridge.Test.NUnit.Assert.true$1(diff < 1E-08, "Actual:" + System.Double.format(Bridge.box(actual, System.Double, $box_.System.Double.toString), 'G') + " vs Expected:" + System.Double.format(Bridge.box(expected, System.Double, $box_.System.Double.toString), 'G'));
+            Bridge.Test.NUnit.Assert.true$1(diff < 1E-08, "Actual:" + System.Double.format(actual, 'G') + " vs Expected:" + System.Double.format(expected, 'G'));
         }
     });
 
@@ -7542,13 +7542,13 @@ Bridge.$N1391Result =                 r;
             var values = System.Array.init([Bridge.getDefaultValue(U)], U);
 
             var v1 = System.Linq.Enumerable.from(values).select(function (value) {
-                    return System.String.concat(Bridge.box(value, U), " ", Bridge.ClientTest.Batch3.BridgeIssues.Bridge1653_Extensions.getSomething(U, value));
+                    return System.String.concat(value, " ", Bridge.ClientTest.Batch3.BridgeIssues.Bridge1653_Extensions.getSomething(U, value));
                 });
             var v2 = System.Linq.Enumerable.from(values).select(function (value) {
-                    return System.String.concat(Bridge.box(value, U), " ", Bridge.ClientTest.Batch3.BridgeIssues.Bridge1653_Extensions.getSomething(U, value));
+                    return System.String.concat(value, " ", Bridge.ClientTest.Batch3.BridgeIssues.Bridge1653_Extensions.getSomething(U, value));
                 });
             var v3 = System.Linq.Enumerable.from(values).select(function (value) {
-                    return System.String.concat(Bridge.box(value, U), " ", Bridge.ClientTest.Batch3.BridgeIssues.Bridge1653_Extensions.getSomething1(U, value));
+                    return System.String.concat(value, " ", Bridge.ClientTest.Batch3.BridgeIssues.Bridge1653_Extensions.getSomething1(U, value));
                 });
             var v4 = System.Linq.Enumerable.from(values).select($asm.$.Bridge.ClientTest.Batch3.BridgeIssues.Bridge1653.Table$2.f1);
         }
@@ -7974,7 +7974,7 @@ Bridge.$N1391Result =                 r;
             ]
         },
         add: function (T, item) {
-            Bridge.ClientTest.Batch3.BridgeIssues.Bridge1712.setBuffer(System.String.concat(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1712.getBuffer(), Bridge.box(item, T)));
+            Bridge.ClientTest.Batch3.BridgeIssues.Bridge1712.setBuffer(System.String.concat(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1712.getBuffer(), item));
         },
         getEnumerator: function () {
             throw new System.InvalidOperationException();
@@ -8004,7 +8004,7 @@ Bridge.$N1391Result =                 r;
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge1712MSDNExtensions", {
         statics: {
             add: function (T, collection, item) {
-                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1712.setBuffer(System.String.concat(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1712.getBuffer(), Bridge.box(item, T)));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge1712.setBuffer(System.String.concat(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1712.getBuffer(), item));
             }
         }
     });
@@ -8162,10 +8162,10 @@ Bridge.$N1391Result =                 r;
             this.$initialize();
         },
         add: function (i) {
-            Bridge.ClientTest.Batch3.BridgeIssues.Bridge1715.MyList.buffer = System.String.concat(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1715.MyList.buffer, ("Add(" + Bridge.box(i, System.Int32) + ");"));
+            Bridge.ClientTest.Batch3.BridgeIssues.Bridge1715.MyList.buffer = System.String.concat(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1715.MyList.buffer, ("Add(" + i + ");"));
         },
         add$1: function (i, j) {
-            Bridge.ClientTest.Batch3.BridgeIssues.Bridge1715.MyList.buffer = System.String.concat(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1715.MyList.buffer, ("Add(" + Bridge.box(i, System.Int32) + ", " + Bridge.box(j, System.Int32) + ");"));
+            Bridge.ClientTest.Batch3.BridgeIssues.Bridge1715.MyList.buffer = System.String.concat(Bridge.ClientTest.Batch3.BridgeIssues.Bridge1715.MyList.buffer, ("Add(" + i + ", " + j + ");"));
         },
         getEnumerator: function () {
             throw new System.Exception();
@@ -8599,7 +8599,7 @@ Bridge.$N1391Result =                 r;
             var decimalSum = System.Linq.Enumerable.from(decimalList).sum(System.Decimal.Zero);
             var lessThanOne = decimalSum.lt(System.Decimal(1));
 
-            Bridge.Test.NUnit.Assert.true$1(Bridge.is(Bridge.box(decimalSum, System.Decimal, $box_.System.Decimal.toString), System.Decimal), "is decimal");
+            Bridge.Test.NUnit.Assert.true$1(Bridge.is(decimalSum, System.Decimal), "is decimal");
             Bridge.Test.NUnit.Assert.true$1(decimalSum.equalsT(System.Decimal(0)), "== 0");
             Bridge.Test.NUnit.Assert.true$1(lessThanOne, "less than one");
         }
@@ -10579,11 +10579,11 @@ Bridge.$N1391Result =                 r;
 
             var v3 = { };
             var b3 = System.UInt32.tryParse("0x1700fffА", v3, radix);
-            Bridge.Test.NUnit.Assert.false$1(b3, "b3: " + Bridge.box(v3.v, System.UInt32));
+            Bridge.Test.NUnit.Assert.false$1(b3, "b3: " + v3.v);
 
             var v4 = { };
             var b4 = System.UInt32.tryParse("1700fffg", v4, radix);
-            Bridge.Test.NUnit.Assert.false$1(b4, "b4: " + Bridge.box(v4.v, System.UInt32));
+            Bridge.Test.NUnit.Assert.false$1(b4, "b4: " + v4.v);
         }
     });
 
@@ -10790,7 +10790,7 @@ Bridge.$N1391Result =                 r;
         value: null,
         ctor: function (value) {
             this.$initialize();
-            this.value = Bridge.box(value, T);
+            this.value = value;
         },
         getValue1: function () {
             return Bridge.cast(this.value, Bridge.ClientTest.Batch3.BridgeIssues.Bridge1910.ItemValue);
@@ -10924,20 +10924,20 @@ Bridge.$N1391Result =                 r;
             var s = System.String.concat(s1, s2, s3, s4);
             Bridge.Test.NUnit.Assert.areEqual("s1s2s3s4", s);
 
-            s = System.String.concat("a" + Bridge.box(1, System.Int32), null);
+            s = System.String.concat("a" + 1, null);
             Bridge.Test.NUnit.Assert.areEqual("a1", s);
 
-            s = System.String.concat(null, "a", Bridge.box(1, System.Int32));
+            s = System.String.concat(null, "a", 1);
             Bridge.Test.NUnit.Assert.areEqual("a1", s);
 
-            s = System.String.concat("a", null, Bridge.box(1, System.Int32));
+            s = System.String.concat("a", null, 1);
             Bridge.Test.NUnit.Assert.areEqual("a1", s);
 
-            s = "a" + Bridge.box(1, System.Int32) + "b" + "c";
+            s = "a" + 1 + "b" + "c";
             Bridge.Test.NUnit.Assert.areEqual("a1bc", s);
 
             s = null;
-            s = System.String.concat(String.fromCharCode(Bridge.box(123, System.Char, $box_.System.Char.toString)), s, String.fromCharCode(Bridge.box(125, System.Char, $box_.System.Char.toString)));
+            s = System.String.concat(String.fromCharCode(123), s, String.fromCharCode(125));
             Bridge.Test.NUnit.Assert.areEqual("{}", s);
 
             s = System.String.concat("", s, "");
@@ -10952,14 +10952,14 @@ Bridge.$N1391Result =                 r;
             s = System.String.concat(s1, "", s2, "", s3);
             Bridge.Test.NUnit.Assert.areEqual("s1s2s3", s);
 
-            s = "Test" + Bridge.box(2, System.Int32);
+            s = "Test" + 2;
             Bridge.Test.NUnit.Assert.areEqual("Test2", s);
 
             var i = 2;
-            s = "" + Bridge.box(i, System.Int32) + "";
+            s = "" + i + "";
             Bridge.Test.NUnit.Assert.areEqual("2", s);
 
-            s = "" + Bridge.box(((Bridge.Int.div(i, 2)) | 0), System.Int32);
+            s = "" + ((Bridge.Int.div(i, 2)) | 0);
             Bridge.Test.NUnit.Assert.areEqual("1", s);
         }
     });
@@ -11223,31 +11223,31 @@ Bridge.$N1391Result =                 r;
             for (var i = 0; i < p.length; i = (i + 1) | 0) {
                 s = p[i];
                 c = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1964.getCharCode(s);
-                Bridge.Test.NUnit.Assert.true$1(System.String.isNullOrWhiteSpace(s), System.String.concat("White-spaces table 1. Index:" + Bridge.box(i, System.Int32) + " Char code:", c));
+                Bridge.Test.NUnit.Assert.true$1(System.String.isNullOrWhiteSpace(s), System.String.concat("White-spaces table 1. Index:" + i + " Char code:", c));
             }
 
             for (var i1 = 0; i1 < p.length; i1 = (i1 + 1) | 0) {
                 s = System.String.concat(" ", p[i1]);
                 c = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1964.getCharCode(s);
-                Bridge.Test.NUnit.Assert.true$1(System.String.isNullOrWhiteSpace(s), System.String.concat("White-spaces table 2. Index:" + Bridge.box(i1, System.Int32) + " Char code:", c));
+                Bridge.Test.NUnit.Assert.true$1(System.String.isNullOrWhiteSpace(s), System.String.concat("White-spaces table 2. Index:" + i1 + " Char code:", c));
             }
 
             for (var i2 = 0; i2 < p.length; i2 = (i2 + 1) | 0) {
                 s = System.String.concat(p[i2], " ");
                 c = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1964.getCharCode(s, false);
-                Bridge.Test.NUnit.Assert.true$1(System.String.isNullOrWhiteSpace(s), System.String.concat("White-spaces table 3. Index:" + Bridge.box(i2, System.Int32) + " Char code:", c));
+                Bridge.Test.NUnit.Assert.true$1(System.String.isNullOrWhiteSpace(s), System.String.concat("White-spaces table 3. Index:" + i2 + " Char code:", c));
             }
 
             for (var i3 = 0; i3 < p.length; i3 = (i3 + 1) | 0) {
                 s = System.String.concat("a", p[i3]);
                 c = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1964.getCharCode(s);
-                Bridge.Test.NUnit.Assert.false$1(System.String.isNullOrWhiteSpace(s), System.String.concat("Non white-spaces table 1. Index:" + Bridge.box(i3, System.Int32) + " Char code:", c));
+                Bridge.Test.NUnit.Assert.false$1(System.String.isNullOrWhiteSpace(s), System.String.concat("Non white-spaces table 1. Index:" + i3 + " Char code:", c));
             }
 
             for (var i4 = 0; i4 < p.length; i4 = (i4 + 1) | 0) {
                 s = System.String.concat(p[i4], "b");
                 c = Bridge.ClientTest.Batch3.BridgeIssues.Bridge1964.getCharCode(s, false);
-                Bridge.Test.NUnit.Assert.false$1(System.String.isNullOrWhiteSpace(s), System.String.concat("Non white-spaces table 2. Index:" + Bridge.box(i4, System.Int32) + " Char code:", c));
+                Bridge.Test.NUnit.Assert.false$1(System.String.isNullOrWhiteSpace(s), System.String.concat("Non white-spaces table 2. Index:" + i4 + " Char code:", c));
             }
         }
     });
@@ -11552,9 +11552,9 @@ Bridge.$N1391Result =                 r;
             testToStringForEnumWhenConcatWithString: function () {
                 var $t;
                 var value = Bridge.ClientTest.Batch3.BridgeIssues.Bridge2027.Options.Whatever;
-                Bridge.Test.NUnit.Assert.areEqual("Value: Whatever", "Value: " + System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2027.Options, Bridge.box(value, Bridge.ClientTest.Batch3.BridgeIssues.Bridge2027.Options, $box_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge2027.Options.toString)));
+                Bridge.Test.NUnit.Assert.areEqual("Value: Whatever", "Value: " + System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2027.Options, value));
                 Bridge.Test.NUnit.Assert.areEqual("Value: Whatever", System.String.concat("Value: ", System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2027.Options, value)));
-                Bridge.Test.NUnit.Assert.areEqual("Value: Whatever", "Value: " + System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2027.Options, Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2027.getStatus(), Bridge.ClientTest.Batch3.BridgeIssues.Bridge2027.Options, $box_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge2027.Options.toString)));
+                Bridge.Test.NUnit.Assert.areEqual("Value: Whatever", "Value: " + System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2027.Options, Bridge.ClientTest.Batch3.BridgeIssues.Bridge2027.getStatus()));
                 Bridge.Test.NUnit.Assert.areEqual("Value: Whatever", System.String.concat("Value: ", ($t=Bridge.ClientTest.Batch3.BridgeIssues.Bridge2027.getStatus(), System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2027.Options, $t))));
             }
         }
@@ -11793,7 +11793,7 @@ Bridge.$N1391Result =                 r;
                 var my2DArray = ($t1=String, System.Array.create(Bridge.getDefaultValue($t1), null, $t1, 2, 3));
                 for (var i1 = System.Array.getLower(my2DArray, 0); i1 <= (System.Array.getLength(my2DArray, 0) - 1); i1 = (i1 + 1) | 0) {
                     for (var j = System.Array.getLower(my2DArray, 1); j <= (System.Array.getLength(my2DArray, 1) - 1); j = (j + 1) | 0) {
-                        System.Array.set(my2DArray, "abc" + Bridge.box(i1, System.Int32) + Bridge.box(j, System.Int32), i1, j);
+                        System.Array.set(my2DArray, "abc" + i1 + j, i1, j);
                     }
                 }
 
@@ -11808,7 +11808,7 @@ Bridge.$N1391Result =                 r;
                 for (var i2 = System.Array.getLower(my3DArray, 0); i2 <= (System.Array.getLength(my3DArray, 0) - 1); i2 = (i2 + 1) | 0) {
                     for (var j1 = System.Array.getLower(my3DArray, 1); j1 <= (System.Array.getLength(my3DArray, 1) - 1); j1 = (j1 + 1) | 0) {
                         for (var k = System.Array.getLower(my3DArray, 2); k <= (System.Array.getLength(my3DArray, 2) - 1); k = (k + 1) | 0) {
-                            System.Array.set(my3DArray, "abc" + Bridge.box(i2, System.Int32) + Bridge.box(j1, System.Int32) + Bridge.box(k, System.Int32), i2, j1, k);
+                            System.Array.set(my3DArray, "abc" + i2 + j1 + k, i2, j1, k);
                         }
                     }
                 }
@@ -11828,7 +11828,7 @@ Bridge.$N1391Result =                 r;
                         for (var k1 = System.Array.getLower(my4DArray, 2); k1 <= (System.Array.getLength(my4DArray, 2) - 1); k1 = (k1 + 1) | 0) {
                             for (var l = System.Array.getLower(my4DArray, 3); l <= (System.Array.getLength(my4DArray, 3) - 1); l = (l + 1) | 0) {
                                 var myIndicesArray = System.Array.init([i3, j2, k1, l], System.Int32);
-                                System.Array.set.apply(System.Array, [my4DArray, System.String.concat(System.Convert.toString(i3), Bridge.box(j2, System.Int32), Bridge.box(k1, System.Int32), Bridge.box(l, System.Int32))].concat(myIndicesArray));
+                                System.Array.set.apply(System.Array, [my4DArray, System.String.concat(System.Convert.toString(i3), j2, k1, l)].concat(myIndicesArray));
                             }
                         }
                     }
@@ -12137,7 +12137,7 @@ Bridge.$N1391Result =                 r;
                 Bridge.Console.getInstance().bufferedOutput = "";
 
                 try {
-                    Bridge.Console.log("Language: " + System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2077.Bridge1317.Enum, Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2077.Bridge1317.Enum.English, Bridge.ClientTest.Batch3.BridgeIssues.Bridge2077.Bridge1317.Enum, $box_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge2077.Bridge1317.Enum.toString)));
+                    Bridge.Console.log("Language: " + System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2077.Bridge1317.Enum, Bridge.ClientTest.Batch3.BridgeIssues.Bridge2077.Bridge1317.Enum.English));
 
                     Bridge.Test.NUnit.Assert.areEqual("Language: English", Bridge.Console.getInstance().bufferedOutput);
                 }
@@ -12158,7 +12158,7 @@ Bridge.$N1391Result =                 r;
 
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2077.Bridge1347", {
         testFixed: function () {
-            var types = System.Array.init([Bridge.box(7, System.Int32), Bridge.box(7, System.Byte), Bridge.box(7, System.UInt32), Bridge.box(System.Int64(7), System.Int64), Bridge.box(System.UInt64(7), System.UInt64), Bridge.box(7, System.Int16), Bridge.box(8, System.UInt16), Bridge.box(9, System.SByte), Bridge.box(3.0, System.Double, $box_.System.Double.toString), Bridge.box(3.0, System.Single, $box_.System.Single.toString), Bridge.box(97, System.Char, $box_.System.Char.toString), Bridge.box(System.Decimal(7.0), System.Decimal, $box_.System.Decimal.toString), new $asm.$AnonymousType$15(3), $asm.$.Bridge.ClientTest.Batch3.BridgeIssues.Bridge2077.Bridge1347.f1(new (System.Collections.Generic.List$1(System.Int32))())], Object);
+            var types = System.Array.init([Bridge.box(7, System.Int32), Bridge.box(7, System.Byte), Bridge.box(7, System.UInt32), System.Int64(7), System.UInt64(7), Bridge.box(7, System.Int16), Bridge.box(8, System.UInt16), Bridge.box(9, System.SByte), Bridge.box(3.0, System.Double, $box_.System.Double.toString), Bridge.box(3.0, System.Single, $box_.System.Single.toString), Bridge.box(97, System.Char, $box_.System.Char.toString), System.Decimal(7.0), new $asm.$AnonymousType$15(3), $asm.$.Bridge.ClientTest.Batch3.BridgeIssues.Bridge2077.Bridge1347.f1(new (System.Collections.Generic.List$1(System.Int32))())], Object);
 
             var expected = System.Array.init(["System.Int32", "System.Byte", "System.UInt32", "System.Int64", "System.UInt64", "System.Int16", "System.UInt16", "System.SByte", "System.Double", "System.Single", "System.Char", "System.Decimal", "$AnonymousType$15", "System.Collections.Generic.List$1[[System.Int32, mscorlib]]"], String);
 
@@ -12166,7 +12166,7 @@ Bridge.$N1391Result =                 r;
             var actual = System.Linq.Enumerable.from(types).toList(Object).convertAll(String, $asm.$.Bridge.ClientTest.Batch3.BridgeIssues.Bridge2077.Bridge1347.f2).toArray();
 
             for (var i = 0; i < actual.length; i = (i + 1) | 0) {
-                Bridge.Test.NUnit.Assert.areEqual$1(expected[i], actual[i], "#" + Bridge.box(i, System.Int32));
+                Bridge.Test.NUnit.Assert.areEqual$1(expected[i], actual[i], "#" + i);
             }
         }
     });
@@ -14366,6 +14366,41 @@ Bridge.$N1391Result =                 r;
         $kind: "interface"
     }; });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2318", {
+        statics: {
+            testBoxing: function () {
+                var o1 = Bridge.box(1, System.Int32);
+                var o2 = Bridge.box(1, System.Int32);
+                var o3 = System.Array.init([Bridge.box(1, System.Int32), Bridge.box(true, Boolean, $box_.Boolean.toString)], Object);
+                var o4 = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge2318.MyStruct();
+                var o5 = System.Decimal(1.0);
+                var o6 = System.Int64(1);
+
+                Bridge.Test.NUnit.Assert.areEqual(true, Bridge.unbox(o1.$boxed));
+                Bridge.Test.NUnit.Assert.areEqual(true, Bridge.unbox(o2.$boxed));
+                Bridge.Test.NUnit.Assert.areEqual(true, Bridge.unbox(o3[0].$boxed));
+                Bridge.Test.NUnit.Assert.areEqual(true, Bridge.unbox(o3[1].$boxed));
+                Bridge.Test.NUnit.Assert.null(Bridge.unbox(o4.$boxed));
+                Bridge.Test.NUnit.Assert.null(Bridge.unbox(o5.$boxed));
+                Bridge.Test.NUnit.Assert.null(Bridge.unbox(o6.$boxed));
+
+                var c = null;
+                c = {isBoxed: function (o) {return o.$boxed;}, isBoxedArray: function (o) {return o[0].$boxed;}};
+                Bridge.Test.NUnit.Assert.false(c.isBoxed(Bridge.unbox(o1)));
+                Bridge.Test.NUnit.Assert.false(c.isBoxed(Bridge.unbox(o2)));
+                Bridge.Test.NUnit.Assert.false(c.isBoxedArray(Bridge.unbox(o3)));
+            }
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2318.MyStruct", {
+        $kind: "struct",
+        statics: {
+            getDefaultValue: function () { return new Bridge.ClientTest.Batch3.BridgeIssues.Bridge2318.MyStruct(); }
+        },
+        $clone: function (to) { return this; }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge240A", {
         config: {
             properties: {
@@ -14467,7 +14502,7 @@ Bridge.$N1391Result =                 r;
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge306Component$1", function (TProps) { return {
         statics: {
             new: function (TComponent, props) {
-                return System.String.concat(Bridge.Reflection.getTypeFullName(Bridge.getType(props, TProps)), ":", Bridge.box(props, TProps));
+                return System.String.concat(Bridge.Reflection.getTypeFullName(Bridge.getType(props, TProps)), ":", props);
             }
         }
     }; });
@@ -15525,7 +15560,7 @@ Bridge.$N1391Result =                 r;
                 var srcString = "123";
                 var destString = "4";
 
-                destString = System.String.concat(destString, String.fromCharCode(Bridge.box(srcString.charCodeAt(2), System.Char, $box_.System.Char.toString)));
+                destString = System.String.concat(destString, String.fromCharCode(srcString.charCodeAt(2)));
 
                 Bridge.Test.NUnit.Assert.areEqual$1("43", destString, "Bridge538 '43'");
             }
@@ -15546,7 +15581,7 @@ Bridge.$N1391Result =                 r;
                 Bridge.Test.NUnit.Assert.areEqual$1(26.1, dbl, "Bridge544 double");
 
                 var d = Bridge.merge(Bridge.createInstance(System.Decimal), JSON.parse("27.2"));
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(d, System.Decimal, $box_.System.Decimal.toString), 27.2, "Bridge544 decimal");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(d, 27.2, "Bridge544 decimal");
 
                 var s = Bridge.merge(Bridge.createInstance(String), JSON.parse("\"Some string\""));
                 Bridge.Test.NUnit.Assert.areEqual$1("Some string", s, "Bridge544 string");
@@ -16481,75 +16516,75 @@ Bridge.$N1391Result =                 r;
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge583", {
         statics: {
             testUseCase: function () {
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(1.45), 1, 6), System.Decimal, $box_.System.Decimal.toString), System.Decimal(1.4), "Bridge583 1");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(1.55), 1, 6), System.Decimal, $box_.System.Decimal.toString), System.Decimal(1.6), "Bridge583 2");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 4, 6), System.Decimal, $box_.System.Decimal.toString), System.Decimal(123.4568), "Bridge583 3");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 6, 6), System.Decimal, $box_.System.Decimal.toString), System.Decimal(123.456789), "Bridge583 4");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 8, 6), System.Decimal, $box_.System.Decimal.toString), System.Decimal(123.456789), "Bridge583 5");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(-123.456), 0, 6), System.Decimal, $box_.System.Decimal.toString), System.Decimal(-123.0), "Bridge583 6");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(System.Decimal.toDecimalPlaces(System.Decimal(1.45), 1, 6), System.Decimal(1.4), "Bridge583 1");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(System.Decimal.toDecimalPlaces(System.Decimal(1.55), 1, 6), System.Decimal(1.6), "Bridge583 2");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 4, 6), System.Decimal(123.4568), "Bridge583 3");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 6, 6), System.Decimal(123.456789), "Bridge583 4");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 8, 6), System.Decimal(123.456789), "Bridge583 5");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo(System.Decimal.toDecimalPlaces(System.Decimal(-123.456), 0, 6), System.Decimal(-123.0), "Bridge583 6");
 
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(1.45), 1, 0), System.Decimal, $box_.System.Decimal.toString), 1.5, "Bridge583 Up 1");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(1.55), 1, 0), System.Decimal, $box_.System.Decimal.toString), 1.6, "Bridge583 Up 2");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 4, 0), System.Decimal, $box_.System.Decimal.toString), 123.4568, "Bridge583 Up 3");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 6, 0), System.Decimal, $box_.System.Decimal.toString), 123.456789, "Bridge583 Up 4");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 8, 0), System.Decimal, $box_.System.Decimal.toString), 123.456789, "Bridge583 Up 5");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(-123.456), 0, 0), System.Decimal, $box_.System.Decimal.toString), -124.0, "Bridge583 Up 6");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(1.45), 1, 0), 1.5, "Bridge583 Up 1");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(1.55), 1, 0), 1.6, "Bridge583 Up 2");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 4, 0), 123.4568, "Bridge583 Up 3");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 6, 0), 123.456789, "Bridge583 Up 4");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 8, 0), 123.456789, "Bridge583 Up 5");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(-123.456), 0, 0), -124.0, "Bridge583 Up 6");
 
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(1.45), 1, 4), System.Decimal, $box_.System.Decimal.toString), 1.5, "Bridge583 AwayFromZero 1");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(1.55), 1, 4), System.Decimal, $box_.System.Decimal.toString), 1.6, "Bridge583 AwayFromZero 2");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 4, 4), System.Decimal, $box_.System.Decimal.toString), 123.4568, "Bridge583 AwayFromZero 3");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 6, 4), System.Decimal, $box_.System.Decimal.toString), 123.456789, "Bridge583 AwayFromZero 4");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 8, 4), System.Decimal, $box_.System.Decimal.toString), 123.456789, "Bridge583 AwayFromZero 5");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(-123.456), 0, 4), System.Decimal, $box_.System.Decimal.toString), -123.0, "Bridge583 AwayFromZero 6");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(1.45), 1, 4), 1.5, "Bridge583 AwayFromZero 1");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(1.55), 1, 4), 1.6, "Bridge583 AwayFromZero 2");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 4, 4), 123.4568, "Bridge583 AwayFromZero 3");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 6, 4), 123.456789, "Bridge583 AwayFromZero 4");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 8, 4), 123.456789, "Bridge583 AwayFromZero 5");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(-123.456), 0, 4), -123.0, "Bridge583 AwayFromZero 6");
 
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(1.45), 1, 1), System.Decimal, $box_.System.Decimal.toString), 1.4, "Bridge583 Down 1");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(1.55), 1, 1), System.Decimal, $box_.System.Decimal.toString), 1.5, "Bridge583 Down 2");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 4, 1), System.Decimal, $box_.System.Decimal.toString), 123.4567, "Bridge583 Down 3");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 6, 1), System.Decimal, $box_.System.Decimal.toString), 123.456789, "Bridge583 Down 4");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 8, 1), System.Decimal, $box_.System.Decimal.toString), 123.456789, "Bridge583 Down 5");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(-123.456), 0, 1), System.Decimal, $box_.System.Decimal.toString), -123.0, "Bridge583 Down 6");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(1.45), 1, 1), 1.4, "Bridge583 Down 1");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(1.55), 1, 1), 1.5, "Bridge583 Down 2");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 4, 1), 123.4567, "Bridge583 Down 3");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 6, 1), 123.456789, "Bridge583 Down 4");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 8, 1), 123.456789, "Bridge583 Down 5");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(-123.456), 0, 1), -123.0, "Bridge583 Down 6");
 
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(1.45), 1, 2), System.Decimal, $box_.System.Decimal.toString), 1.5, "Bridge583 InfinityPos 1");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(1.55), 1, 2), System.Decimal, $box_.System.Decimal.toString), 1.6, "Bridge583 InfinityPos 2");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 4, 2), System.Decimal, $box_.System.Decimal.toString), 123.4568, "Bridge583 InfinityPos 3");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 6, 2), System.Decimal, $box_.System.Decimal.toString), 123.456789, "Bridge583 InfinityPos 4");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 8, 2), System.Decimal, $box_.System.Decimal.toString), 123.456789, "Bridge583 InfinityPos 5");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(-123.456), 0, 2), System.Decimal, $box_.System.Decimal.toString), -123.0, "Bridge583 InfinityPos 6");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(1.45), 1, 2), 1.5, "Bridge583 InfinityPos 1");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(1.55), 1, 2), 1.6, "Bridge583 InfinityPos 2");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 4, 2), 123.4568, "Bridge583 InfinityPos 3");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 6, 2), 123.456789, "Bridge583 InfinityPos 4");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 8, 2), 123.456789, "Bridge583 InfinityPos 5");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(-123.456), 0, 2), -123.0, "Bridge583 InfinityPos 6");
 
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(1.45), 1, 3), System.Decimal, $box_.System.Decimal.toString), 1.4, "Bridge583 InfinityNeg 1");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(1.55), 1, 3), System.Decimal, $box_.System.Decimal.toString), 1.5, "Bridge583 InfinityNeg 2");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 4, 3), System.Decimal, $box_.System.Decimal.toString), 123.4567, "Bridge583 InfinityNeg 3");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 6, 3), System.Decimal, $box_.System.Decimal.toString), 123.456789, "Bridge583 InfinityNeg 4");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 8, 3), System.Decimal, $box_.System.Decimal.toString), 123.456789, "Bridge583 InfinityNeg 5");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(-123.456), 0, 3), System.Decimal, $box_.System.Decimal.toString), -124.0, "Bridge583 InfinityNeg 6");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(1.45), 1, 3), 1.4, "Bridge583 InfinityNeg 1");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(1.55), 1, 3), 1.5, "Bridge583 InfinityNeg 2");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 4, 3), 123.4567, "Bridge583 InfinityNeg 3");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 6, 3), 123.456789, "Bridge583 InfinityNeg 4");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 8, 3), 123.456789, "Bridge583 InfinityNeg 5");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(-123.456), 0, 3), -124.0, "Bridge583 InfinityNeg 6");
 
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(1.45), 1, 5), System.Decimal, $box_.System.Decimal.toString), 1.4, "Bridge583 TowardsZero 1");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(1.55), 1, 5), System.Decimal, $box_.System.Decimal.toString), 1.5, "Bridge583 TowardsZero 2");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 4, 5), System.Decimal, $box_.System.Decimal.toString), 123.4568, "Bridge583 TowardsZero 3");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 6, 5), System.Decimal, $box_.System.Decimal.toString), 123.456789, "Bridge583 TowardsZero 4");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 8, 5), System.Decimal, $box_.System.Decimal.toString), 123.456789, "Bridge583 TowardsZero 5");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(-123.456), 0, 5), System.Decimal, $box_.System.Decimal.toString), -123.0, "Bridge583 TowardsZero 6");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(1.45), 1, 5), 1.4, "Bridge583 TowardsZero 1");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(1.55), 1, 5), 1.5, "Bridge583 TowardsZero 2");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 4, 5), 123.4568, "Bridge583 TowardsZero 3");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 6, 5), 123.456789, "Bridge583 TowardsZero 4");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 8, 5), 123.456789, "Bridge583 TowardsZero 5");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(-123.456), 0, 5), -123.0, "Bridge583 TowardsZero 6");
 
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(1.45), 1, 6), System.Decimal, $box_.System.Decimal.toString), 1.4, "Bridge583 ToEven 1");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(1.55), 1, 6), System.Decimal, $box_.System.Decimal.toString), 1.6, "Bridge583 ToEven 2");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 4, 6), System.Decimal, $box_.System.Decimal.toString), 123.4568, "Bridge583 ToEven 3");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 6, 6), System.Decimal, $box_.System.Decimal.toString), 123.456789, "Bridge583 ToEven 4");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 8, 6), System.Decimal, $box_.System.Decimal.toString), 123.456789, "Bridge583 ToEven 5");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(-123.456), 0, 6), System.Decimal, $box_.System.Decimal.toString), -123.0, "Bridge583 ToEven 6");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(1.45), 1, 6), 1.4, "Bridge583 ToEven 1");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(1.55), 1, 6), 1.6, "Bridge583 ToEven 2");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 4, 6), 123.4568, "Bridge583 ToEven 3");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 6, 6), 123.456789, "Bridge583 ToEven 4");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 8, 6), 123.456789, "Bridge583 ToEven 5");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(-123.456), 0, 6), -123.0, "Bridge583 ToEven 6");
 
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(1.45), 1, 7), System.Decimal, $box_.System.Decimal.toString), 1.5, "Bridge583 Ceil 1");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(1.55), 1, 7), System.Decimal, $box_.System.Decimal.toString), 1.6, "Bridge583 Ceil 2");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 4, 7), System.Decimal, $box_.System.Decimal.toString), 123.4568, "Bridge583 Ceil 3");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 6, 7), System.Decimal, $box_.System.Decimal.toString), 123.456789, "Bridge583 Ceil 4");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 8, 7), System.Decimal, $box_.System.Decimal.toString), 123.456789, "Bridge583 Ceil 5");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(-123.456), 0, 7), System.Decimal, $box_.System.Decimal.toString), -123.0, "Bridge583 Ceil 6");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(1.45), 1, 7), 1.5, "Bridge583 Ceil 1");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(1.55), 1, 7), 1.6, "Bridge583 Ceil 2");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 4, 7), 123.4568, "Bridge583 Ceil 3");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 6, 7), 123.456789, "Bridge583 Ceil 4");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 8, 7), 123.456789, "Bridge583 Ceil 5");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(-123.456), 0, 7), -123.0, "Bridge583 Ceil 6");
 
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(1.45), 1, 8), System.Decimal, $box_.System.Decimal.toString), 1.4, "Bridge583 Floor 1");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(1.55), 1, 8), System.Decimal, $box_.System.Decimal.toString), 1.5, "Bridge583 Floor 2");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 4, 8), System.Decimal, $box_.System.Decimal.toString), 123.4568, "Bridge583 Floor 3");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 6, 8), System.Decimal, $box_.System.Decimal.toString), 123.456789, "Bridge583 Floor 4");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 8, 8), System.Decimal, $box_.System.Decimal.toString), 123.456789, "Bridge583 Floor 5");
-                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(Bridge.box(System.Decimal.toDecimalPlaces(System.Decimal(-123.456), 0, 8), System.Decimal, $box_.System.Decimal.toString), -123.0, "Bridge583 Floor 6");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(1.45), 1, 8), 1.4, "Bridge583 Floor 1");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(1.55), 1, 8), 1.5, "Bridge583 Floor 2");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 4, 8), 123.4568, "Bridge583 Floor 3");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 6, 8), 123.456789, "Bridge583 Floor 4");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(123.456789), 8, 8), 123.456789, "Bridge583 Floor 5");
+                Bridge.ClientTest.Batch3.Utilities.DecimalHelper.assertIsDecimalAndEqualTo$1(System.Decimal.toDecimalPlaces(System.Decimal(-123.456), 0, 8), -123.0, "Bridge583 Floor 6");
             }
         }
     });
@@ -16785,10 +16820,10 @@ Bridge.$N1391Result =                 r;
 
     Bridge.apply($asm.$.Bridge.ClientTest.Batch3.BridgeIssues.Bridge597A, {
         f1: function (value, index) {
-            return System.String.concat(Bridge.box(index, System.Int32) + ":", value);
+            return System.String.concat(index + ":", value);
         },
         f2: function (value, index) {
-            return System.String.concat(this._something, ":", Bridge.box(index, System.Int32), ":", value);
+            return System.String.concat(this._something, ":", index, ":", value);
         }
     });
 
@@ -19165,7 +19200,7 @@ Bridge.$N1391Result =                 r;
         $kind: "struct",
         statics: {
             op_Equality: function (x, y) {
-                return x.equals(Bridge.box(y.$clone(), Bridge.ClientTest.Batch3.BridgeIssues.Bridge795A));
+                return x.equals(y.$clone());
             },
             op_Inequality: function (x, y) {
                 return !(Bridge.ClientTest.Batch3.BridgeIssues.Bridge795A.op_Equality(x, y));
@@ -21222,10 +21257,10 @@ Bridge.$N1391Result =                 r;
                 Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(0, System.UInt32), Bridge.box(y2, System.UInt32), "uint");
 
                 var z1 = Bridge.Int.clip64(Math.floor(x / 0.2));
-                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(System.Int64.MinValue, System.Int64), Bridge.box(z1, System.Int64), "long");
+                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(System.Int64.MinValue, z1, "long");
 
                 var z2 = Bridge.Int.clipu64(Math.floor(x / 0.2));
-                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(System.UInt64.MinValue, System.UInt64), Bridge.box(z2, System.UInt64), "ulong");
+                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(System.UInt64.MinValue, z2, "ulong");
             },
             testIntegerDivisionInDefaultMode: function () {
                 var x = 1.1;
@@ -21237,10 +21272,10 @@ Bridge.$N1391Result =                 r;
                 Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(0, System.UInt32), Bridge.box(y2, System.UInt32), "uint");
 
                 var z1 = Bridge.Int.clip64(1 / x);
-                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(System.Int64(0), System.Int64), Bridge.box(z1, System.Int64), "long");
+                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(System.Int64(0), z1, "long");
 
                 var z2 = Bridge.Int.clipu64(1 / x);
-                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(System.UInt64(0), System.UInt64), Bridge.box(z2, System.UInt64), "ulong");
+                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(System.UInt64(0), z2, "ulong");
             },
             testInfinityCastDefaultOverflowMode: function () {
                 var pi = Number.POSITIVE_INFINITY;
@@ -21262,8 +21297,8 @@ Bridge.$N1391Result =                 r;
                 Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(0, System.UInt16), Bridge.box(y4, System.UInt16), "PositiveInfinity -> ushort");
                 Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(-2147483648, System.Int32), Bridge.box(y5, System.Int32), "PositiveInfinity -> int");
                 Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(0, System.UInt32), Bridge.box(y6, System.UInt32), "PositiveInfinity -> uint");
-                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(System.Int64.MinValue, System.Int64), Bridge.box(y7, System.Int64), "PositiveInfinity -> long");
-                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(System.UInt64.MinValue, System.UInt64), Bridge.box(y8, System.UInt64), "PositiveInfinity -> ulong");
+                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(System.Int64.MinValue, y7, "PositiveInfinity -> long");
+                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(System.UInt64.MinValue, y8, "PositiveInfinity -> ulong");
 
                 var ni = Number.NEGATIVE_INFINITY;
 
@@ -21284,8 +21319,8 @@ Bridge.$N1391Result =                 r;
                 Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(0, System.UInt16), Bridge.box(z4, System.UInt16), "NegativeInfinity -> ushort");
                 Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(-2147483648, System.Int32), Bridge.box(z5, System.Int32), "NegativeInfinity -> int");
                 Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(0, System.UInt32), Bridge.box(z6, System.UInt32), "NegativeInfinity -> uint");
-                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(System.Int64.MinValue, System.Int64), Bridge.box(z7, System.Int64), "NegativeInfinity -> long");
-                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(System.UInt64.MinValue, System.UInt64), Bridge.box(z8, System.UInt64), "NegativeInfinity -> ulong");
+                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(System.Int64.MinValue, z7, "NegativeInfinity -> long");
+                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(System.UInt64.MinValue, z8, "NegativeInfinity -> ulong");
             },
             testInfinityCastWithNullable1DefaultOverflowMode: function () {
                 var pi = Number.POSITIVE_INFINITY;
@@ -21307,8 +21342,8 @@ Bridge.$N1391Result =                 r;
                 Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(0, System.UInt16), Bridge.box(y4, System.UInt16, $box_.System.Nullable$1.toString), "PositiveInfinity -> ushort");
                 Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(-2147483648, System.Int32), Bridge.box(y5, System.Int32, $box_.System.Nullable$1.toString), "PositiveInfinity -> int");
                 Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(0, System.UInt32), Bridge.box(y6, System.UInt32, $box_.System.Nullable$1.toString), "PositiveInfinity -> uint");
-                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(System.Int64.MinValue, System.Int64), Bridge.box(y7, System.Int64, $box_.System.Nullable$1.toString), "PositiveInfinity -> long");
-                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(System.UInt64.MinValue, System.UInt64), Bridge.box(y8, System.UInt64, $box_.System.Nullable$1.toString), "PositiveInfinity -> ulong");
+                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(System.Int64.MinValue, y7, "PositiveInfinity -> long");
+                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(System.UInt64.MinValue, y8, "PositiveInfinity -> ulong");
 
                 var ni = Number.NEGATIVE_INFINITY;
 
@@ -21329,8 +21364,8 @@ Bridge.$N1391Result =                 r;
                 Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(0, System.UInt16), Bridge.box(z4, System.UInt16, $box_.System.Nullable$1.toString), "NegativeInfinity -> ushort");
                 Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(-2147483648, System.Int32), Bridge.box(z5, System.Int32, $box_.System.Nullable$1.toString), "NegativeInfinity -> int");
                 Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(0, System.UInt32), Bridge.box(z6, System.UInt32, $box_.System.Nullable$1.toString), "NegativeInfinity -> uint");
-                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(System.Int64.MinValue, System.Int64), Bridge.box(z7, System.Int64, $box_.System.Nullable$1.toString), "NegativeInfinity -> long");
-                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(System.UInt64.MinValue, System.UInt64), Bridge.box(z8, System.UInt64, $box_.System.Nullable$1.toString), "NegativeInfinity -> ulong");
+                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(System.Int64.MinValue, z7, "NegativeInfinity -> long");
+                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(System.UInt64.MinValue, z8, "NegativeInfinity -> ulong");
             },
             testInfinityCastWithNullable2DefaultOverflowMode: function () {
                 var pi = Number.POSITIVE_INFINITY;
@@ -21352,8 +21387,8 @@ Bridge.$N1391Result =                 r;
                 Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(0, System.UInt16), Bridge.box(System.Nullable.getValue(y4), System.UInt16), "PositiveInfinity -> ushort");
                 Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(-2147483648, System.Int32), Bridge.box(System.Nullable.getValue(y5), System.Int32), "PositiveInfinity -> int");
                 Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(0, System.UInt32), Bridge.box(System.Nullable.getValue(y6), System.UInt32), "PositiveInfinity -> uint");
-                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(System.Int64.MinValue, System.Int64), Bridge.box(System.Nullable.getValue(y7), System.Int64), "PositiveInfinity -> long");
-                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(System.UInt64.MinValue, System.UInt64), Bridge.box(System.Nullable.getValue(y8), System.UInt64), "PositiveInfinity -> ulong");
+                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(System.Int64.MinValue, System.Nullable.getValue(y7), "PositiveInfinity -> long");
+                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(System.UInt64.MinValue, System.Nullable.getValue(y8), "PositiveInfinity -> ulong");
 
                 var ni = Number.NEGATIVE_INFINITY;
 
@@ -21374,8 +21409,8 @@ Bridge.$N1391Result =                 r;
                 Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(0, System.UInt16), Bridge.box(System.Nullable.getValue(z4), System.UInt16), "NegativeInfinity -> ushort");
                 Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(-2147483648, System.Int32), Bridge.box(System.Nullable.getValue(z5), System.Int32), "NegativeInfinity -> int");
                 Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(0, System.UInt32), Bridge.box(System.Nullable.getValue(z6), System.UInt32), "NegativeInfinity -> uint");
-                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(System.Int64.MinValue, System.Int64), Bridge.box(System.Nullable.getValue(z7), System.Int64), "NegativeInfinity -> long");
-                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(Bridge.box(System.UInt64.MinValue, System.UInt64), Bridge.box(System.Nullable.getValue(z8), System.UInt64), "NegativeInfinity -> ulong");
+                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(System.Int64.MinValue, System.Nullable.getValue(z7), "NegativeInfinity -> long");
+                Bridge.ClientTest.Batch3.BridgeIssues.N1122.assertNumber(System.UInt64.MinValue, System.Nullable.getValue(z8), "NegativeInfinity -> ulong");
             }
         }
     });
@@ -21727,10 +21762,10 @@ Bridge.$N1391Result =                 r;
             },
             N409: function () {
                 var a = System.Decimal.round(System.Decimal(3.5), 6);
-                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(Bridge.box(a, System.Decimal, $box_.System.Decimal.toString), "4", "Math.Round(3.5M)");
+                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(a, "4", "Math.Round(3.5M)");
 
                 var b = System.Decimal.round(System.Decimal(4.5), 6);
-                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(Bridge.box(b, System.Decimal, $box_.System.Decimal.toString), "4", "Math.Round(4.5M)");
+                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(b, "4", "Math.Round(4.5M)");
             },
             ensureNumber: function (actual, expected, message) {
                 Bridge.Test.NUnit.Assert.areEqual$1(expected, actual.toString(), message);
@@ -21741,7 +21776,7 @@ Bridge.$N1391Result =                 r;
                     diff = -diff;
                 }
 
-                Bridge.Test.NUnit.Assert.true$1(diff < 1E-08, System.String.concat(message, "actual: ", System.Double.format(Bridge.box(actual, System.Double, $box_.System.Double.toString), 'G'), "expeted:", System.Double.format(Bridge.box(expected, System.Double, $box_.System.Double.toString), 'G')));
+                Bridge.Test.NUnit.Assert.true$1(diff < 1E-08, System.String.concat(message, "actual: ", System.Double.format(actual, 'G'), "expeted:", System.Double.format(expected, 'G')));
             },
             N410: function () {
                 // Decimal consts
@@ -21751,11 +21786,11 @@ Bridge.$N1391Result =                 r;
                 var DecimalMaxValue = System.Decimal.MaxValue;
                 var DecimalMinValue = System.Decimal.MinValue;
 
-                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(Bridge.box(DecimalZero, System.Decimal, $box_.System.Decimal.toString), "0", "DecimalZero");
-                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(Bridge.box(DecimalOne, System.Decimal, $box_.System.Decimal.toString), "1", "DecimalOne");
-                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(Bridge.box(DecimalMinusOne, System.Decimal, $box_.System.Decimal.toString), "-1", "DecimalMinusOne");
-                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(Bridge.box(DecimalMaxValue, System.Decimal, $box_.System.Decimal.toString), "79228162514264337593543950335", "DecimalMaxValue");
-                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(Bridge.box(DecimalMinValue, System.Decimal, $box_.System.Decimal.toString), "-79228162514264337593543950335", "DecimalMinValue");
+                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(DecimalZero, "0", "DecimalZero");
+                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(DecimalOne, "1", "DecimalOne");
+                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(DecimalMinusOne, "-1", "DecimalMinusOne");
+                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(DecimalMaxValue, "79228162514264337593543950335", "DecimalMaxValue");
+                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(DecimalMinValue, "-79228162514264337593543950335", "DecimalMinValue");
 
                 // Decimal consts in expressions
                 var dz = System.Decimal(0.0);
@@ -21769,11 +21804,11 @@ Bridge.$N1391Result =                 r;
                 DecimalMinValue = System.Decimal.MinValue.add(dz);
                 ;
 
-                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(Bridge.box(DecimalZero, System.Decimal, $box_.System.Decimal.toString), "0", "DecimalZeroin expression");
-                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(Bridge.box(DecimalOne, System.Decimal, $box_.System.Decimal.toString), "1", "DecimalOnein expression");
-                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(Bridge.box(DecimalMinusOne, System.Decimal, $box_.System.Decimal.toString), "-1", "DecimalMinusOnein expression");
-                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(Bridge.box(DecimalMaxValue, System.Decimal, $box_.System.Decimal.toString), "79228162514264337593543950335", "DecimalMaxValuein expression");
-                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(Bridge.box(DecimalMinValue, System.Decimal, $box_.System.Decimal.toString), "-79228162514264337593543950335", "DecimalMinValuein expression");
+                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(DecimalZero, "0", "DecimalZeroin expression");
+                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(DecimalOne, "1", "DecimalOnein expression");
+                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(DecimalMinusOne, "-1", "DecimalMinusOnein expression");
+                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(DecimalMaxValue, "79228162514264337593543950335", "DecimalMaxValuein expression");
+                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(DecimalMinValue, "-79228162514264337593543950335", "DecimalMinValuein expression");
 
                 var numberPositiveInfinity = Number.POSITIVE_INFINITY;
                 var numberNegativeInfinity = Number.NEGATIVE_INFINITY;
@@ -21899,7 +21934,7 @@ Bridge.$N1391Result =                 r;
             },
             N428: function () {
                 var number2 = System.Decimal(11.37);
-                var sum = "0.13 + " + Bridge.Int.format(Bridge.box(number2, System.Decimal, $box_.System.Decimal.toString), 'G');
+                var sum = "0.13 + " + Bridge.Int.format(number2, 'G');
 
                 Bridge.Test.NUnit.Assert.areEqual$1("0.13 + 11.37", sum, "0.13 + 11.37");
             },
@@ -21938,10 +21973,10 @@ Bridge.$N1391Result =                 r;
             },
             N442: function () {
                 var a = System.Decimal(3.5);
-                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(Bridge.box(a.round(), System.Decimal, $box_.System.Decimal.toString), "4", "a.Round(3.5M)");
+                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(a.round(), "4", "a.Round(3.5M)");
 
                 var b = System.Decimal(4.5);
-                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(Bridge.box(b.round(), System.Decimal, $box_.System.Decimal.toString), "4", "b.Round(4.5M)");
+                Bridge.ClientTest.Batch3.BridgeIssues.TestBridgeIssues.ensureNumber(b.round(), "4", "b.Round(4.5M)");
             },
             N460: function () {
                 var number;
@@ -23207,13 +23242,6 @@ Bridge.$N1391Result =                 r;
 
     var $box_ = {};
 
-    Bridge.ns("System.Decimal", $box_);
-
-    Bridge.apply($box_.System.Decimal, {
-        toString: function(obj) {return Bridge.Int.format(obj, 'G');}
-    });
-
-
     Bridge.ns("System.Single", $box_);
 
     Bridge.apply($box_.System.Single, {
@@ -23235,13 +23263,6 @@ Bridge.$N1391Result =                 r;
     });
 
 
-    Bridge.ns("System.Char", $box_);
-
-    Bridge.apply($box_.System.Char, {
-        toString: function(obj) {return String.fromCharCode(obj);}
-    });
-
-
     Bridge.ns("Boolean", $box_);
 
     Bridge.apply($box_.Boolean, {
@@ -23249,10 +23270,10 @@ Bridge.$N1391Result =                 r;
     });
 
 
-    Bridge.ns("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2027.Options", $box_);
+    Bridge.ns("System.Char", $box_);
 
-    Bridge.apply($box_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge2027.Options, {
-        toString: function(obj) {return System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2027.Options, obj);}
+    Bridge.apply($box_.System.Char, {
+        toString: function(obj) {return String.fromCharCode(obj);}
     });
 
 
@@ -23270,31 +23291,10 @@ Bridge.$N1391Result =                 r;
     });
 
 
-    Bridge.ns("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2077.Bridge1317.Enum", $box_);
-
-    Bridge.apply($box_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge2077.Bridge1317.Enum, {
-        toString: function(obj) {return System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2077.Bridge1317.Enum, obj);}
-    });
-
-
     Bridge.ns("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2077.Bridge2065.VehicleType", $box_);
 
     Bridge.apply($box_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge2077.Bridge2065.VehicleType, {
         toString: function(obj) {return System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2077.Bridge2065.VehicleType, obj);}
-    });
-
-
-    Bridge.ns("System.Nullable$1", $box_);
-
-    Bridge.apply($box_.System.Nullable$1, {
-        toString: function(obj) {return System.Nullable.toString(obj);}
-    });
-
-
-    Bridge.ns("System.Nullable$1", $box_);
-
-    Bridge.apply($box_.System.Nullable$1, {
-        toString: function(obj) {return System.Nullable.toString(obj);}
     });
 
 
