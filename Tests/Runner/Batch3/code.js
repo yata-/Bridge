@@ -14437,6 +14437,24 @@ Bridge.$N1391Result =                 r;
         $clone: function (to) { return this; }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2320", {
+        statics: {
+            invoked: false,
+            config: {
+                init: function () {
+                    Bridge.ready(this.main);
+                }
+            },
+            main: function () {
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2320.invoked = true;
+            },
+            testReadyAndMain: function () {
+                Bridge.Test.NUnit.Assert.true(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2320.invoked);
+            }
+        },
+        $entryPoint: true
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2349", {
         statics: {
             testExternalIgnoreGenericClass: function () {
