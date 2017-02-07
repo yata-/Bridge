@@ -449,7 +449,11 @@ Bridge.assembly("Bridge.Test.Bridge.ClientTest.Batch3", function ($asm, globals)
             QUnit.test("#2284 - TestNameAttrOnProperty", Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge2284.testNameAttrOnProperty);
             QUnit.test("#2293 - TestAttributeUsage", Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge2293.testAttributeUsage);
             QUnit.test("#2298 - TestGenericInterfaceWithNestedTypeParameters", Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge2298.testGenericInterfaceWithNestedTypeParameters);
+            QUnit.test("#2313 - TestExternalInterfaceOverloadedMembers", Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge2313.testExternalInterfaceOverloadedMembers);
+            QUnit.test("#2313 - TestExternalClassInheritingInterface", Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge2313.testExternalClassInheritingInterface);
+            QUnit.test("#2313 - TestExternalInheritingInterfaces", Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge2313.testExternalInheritingInterfaces);
             QUnit.test("#2318 - TestBoxing", Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge2318.testBoxing);
+            QUnit.test("#2349 - TestExternalIgnoreGenericClass", Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge2349.testExternalIgnoreGenericClass);
             QUnit.test("#381 - TestUseCase", Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge381.testUseCase);
             QUnit.test("#447 - CheckInlineExpression", Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge447.checkInlineExpression);
             QUnit.test("#447 - CheckInlineCalls", Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge447.checkInlineCalls);
@@ -9165,6 +9169,44 @@ Bridge.assembly("Bridge.Test.Bridge.ClientTest.Batch3", function ($asm, globals)
         }
     });
 
+    Bridge.define("Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge2313", {
+        inherits: [Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2313)],
+        statics: {
+            testExternalInterfaceOverloadedMembers: function (assert) {
+                var t = Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2313).beforeTest(false, assert, Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge2313, void 0, Bridge.merge(new Bridge.Test.Runtime.TestContext(), {
+                    method: "TestExternalInterfaceOverloadedMembers()",
+                    line: "17"
+                } ));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2313.testExternalInterfaceOverloadedMembers();
+            },
+            testExternalClassInheritingInterface: function (assert) {
+                var t = Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2313).beforeTest(false, assert, Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge2313, void 0, Bridge.merge(new Bridge.Test.Runtime.TestContext(), {
+                    method: "TestExternalClassInheritingInterface()",
+                    line: "45"
+                } ));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2313.testExternalClassInheritingInterface();
+            },
+            testExternalInheritingInterfaces: function (assert) {
+                var t = Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2313).beforeTest(false, assert, Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge2313, void 0, Bridge.merge(new Bridge.Test.Runtime.TestContext(), {
+                    method: "TestExternalInheritingInterfaces()",
+                    line: "85"
+                } ));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2313.testExternalInheritingInterfaces();
+            }
+        },
+        context: null,
+        getContext: function () {
+            if (this.context == null) {
+                this.context = Bridge.merge(new Bridge.Test.Runtime.FixtureContext(), {
+                    project: "Batch3",
+                    className: "Bridge.ClientTest.Batch3.BridgeIssues.Bridge2313",
+                    file: "Batch3\\BridgeIssues\\2300\\N2313.cs"
+                } );
+            }
+            return this.context;
+        }
+    });
+
     Bridge.define("Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge2318", {
         inherits: [Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2318)],
         statics: {
@@ -9183,6 +9225,30 @@ Bridge.assembly("Bridge.Test.Bridge.ClientTest.Batch3", function ($asm, globals)
                     project: "Batch3",
                     className: "Bridge.ClientTest.Batch3.BridgeIssues.Bridge2318",
                     file: "Batch3\\BridgeIssues\\2300\\N2318.cs"
+                } );
+            }
+            return this.context;
+        }
+    });
+
+    Bridge.define("Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge2349", {
+        inherits: [Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2349)],
+        statics: {
+            testExternalIgnoreGenericClass: function (assert) {
+                var t = Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2349).beforeTest(false, assert, Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge2349, void 0, Bridge.merge(new Bridge.Test.Runtime.TestContext(), {
+                    method: "TestExternalIgnoreGenericClass()",
+                    line: "17"
+                } ));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2349.testExternalIgnoreGenericClass();
+            }
+        },
+        context: null,
+        getContext: function () {
+            if (this.context == null) {
+                this.context = Bridge.merge(new Bridge.Test.Runtime.FixtureContext(), {
+                    project: "Batch3",
+                    className: "Bridge.ClientTest.Batch3.BridgeIssues.Bridge2349",
+                    file: "Batch3\\BridgeIssues\\2300\\N2349.cs"
                 } );
             }
             return this.context;
