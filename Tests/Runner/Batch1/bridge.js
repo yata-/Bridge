@@ -1243,7 +1243,8 @@
             }
 
             if (T && ((bt = Bridge.Reflection.getBaseType(T)) === Object || bt === System.Object)) {
-                return T;
+                var type = Bridge.getType(instance);
+                return Bridge.Reflection.isAssignableFrom(T, type) ? type : T;
             }
 
             if (typeof (instance) === "number") {

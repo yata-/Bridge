@@ -14638,6 +14638,36 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2338", {
+        statics: {
+            foo: function (T, value) {
+                var type = Bridge.getType(value, T);
+                return type;
+            },
+            testGenericGetType: function () {
+                var bar = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge2338.Bar();
+                var type = Bridge.ClientTest.Batch3.BridgeIssues.Bridge2338.foo(System.Exception, bar);
+                Bridge.Test.NUnit.Assert.areEqual("Bar", Bridge.Reflection.getTypeName(type));
+
+                var b = 1;
+                type = Bridge.ClientTest.Batch3.BridgeIssues.Bridge2338.foo(System.Byte, b);
+                Bridge.Test.NUnit.Assert.areEqual("Byte", Bridge.Reflection.getTypeName(type));
+
+                var c = 49;
+                type = Bridge.ClientTest.Batch3.BridgeIssues.Bridge2338.foo(System.Char, c);
+                Bridge.Test.NUnit.Assert.areEqual("Char", Bridge.Reflection.getTypeName(type));
+
+                var o = {  };
+                type = Bridge.ClientTest.Batch3.BridgeIssues.Bridge2338.foo(System.Object, o);
+                Bridge.Test.NUnit.Assert.areEqual("Object", Bridge.Reflection.getTypeName(type));
+            }
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2338.Bar", {
+        inherits: [System.Exception]
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2349", {
         statics: {
             testExternalIgnoreGenericClass: function () {
