@@ -14754,6 +14754,26 @@ Bridge.$N1391Result =                 r;
         inherits: [System.Exception]
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2344", {
+        statics: {
+            testHtmlElementName: function () {
+                if (Bridge.ClientTest.Batch3.Utilities.BrowserHelper.isPhantomJs()) {
+                    Bridge.Test.NUnit.Assert.true$1(true, "The test is excluded on PhantomJS engine");
+                    return;
+                }
+
+                var instance = new Bridge.ClientTest.Batch3.BridgeIssues.Bridge2344.Foo();
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2344.Foo.someMethod(HTMLElement, System.String, instance);
+
+                Bridge.Test.NUnit.Assert.areEqual("zzz", instance.getSecond());
+            }
+        }
+    });
+
+    Bridge.definei("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2344.IFoo$2", function (T, V) { return {
+        $kind: "interface"
+    }; });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2349", {
         statics: {
             testExternalIgnoreGenericClass: function () {
@@ -16004,55 +16024,55 @@ Bridge.$N1391Result =                 r;
                 var v1 = new Float32Array(1);
                 var thisType = "Float32Array";
                 Bridge.Test.NUnit.Assert.true$1(v1 != null, System.String.concat(thisType, " created"));
-                var thisName = isSpecialTypeName ? "Object" : thisType;
+                var thisName = isSpecialTypeName ? System.String.concat(thisType, "Constructor") : thisType;
                 Bridge.Test.NUnit.Assert.areEqual$1(thisName, Bridge.Reflection.getTypeFullName(Bridge.getType(v1)), System.String.concat(thisType, " class name"));
 
                 var v2 = new Float64Array(1);
                 thisType = "Float64Array";
                 Bridge.Test.NUnit.Assert.true$1(v2 != null, System.String.concat(thisType, " created"));
-                thisName = isSpecialTypeName ? "Object" : thisType;
+                thisName = isSpecialTypeName ? System.String.concat(thisType, "Constructor") : thisType;
                 Bridge.Test.NUnit.Assert.areEqual$1(thisName, Bridge.Reflection.getTypeFullName(Bridge.getType(v2)), System.String.concat(thisType, " class name"));
 
                 var v3 = new Int16Array(1);
                 thisType = "Int16Array";
                 Bridge.Test.NUnit.Assert.true$1(v3 != null, System.String.concat(thisType, " created"));
-                thisName = isSpecialTypeName ? "Object" : thisType;
+                thisName = isSpecialTypeName ? System.String.concat(thisType, "Constructor") : thisType;
                 Bridge.Test.NUnit.Assert.areEqual$1(thisName, Bridge.Reflection.getTypeFullName(Bridge.getType(v3)), System.String.concat(thisType, " class name"));
 
                 var v4 = new Int32Array(1);
                 thisType = "Int32Array";
                 Bridge.Test.NUnit.Assert.true$1(v4 != null, System.String.concat(thisType, " created"));
-                thisName = isSpecialTypeName ? "Object" : thisType;
+                thisName = isSpecialTypeName ? System.String.concat(thisType, "Constructor") : thisType;
                 Bridge.Test.NUnit.Assert.areEqual$1(thisName, Bridge.Reflection.getTypeFullName(Bridge.getType(v4)), System.String.concat(thisType, " class name"));
 
                 var v5 = new Int8Array(1);
                 thisType = "Int8Array";
                 Bridge.Test.NUnit.Assert.true$1(v5 != null, System.String.concat(thisType, " created"));
-                thisName = isSpecialTypeName ? "Object" : thisType;
+                thisName = isSpecialTypeName ? System.String.concat(thisType, "Constructor") : thisType;
                 Bridge.Test.NUnit.Assert.areEqual$1(thisName, Bridge.Reflection.getTypeFullName(Bridge.getType(v5)), System.String.concat(thisType, " class name"));
 
                 var v6 = new Uint16Array(1);
                 thisType = "Uint16Array";
                 Bridge.Test.NUnit.Assert.true$1(v6 != null, System.String.concat(thisType, " created"));
-                thisName = isSpecialTypeName ? "Object" : thisType;
+                thisName = isSpecialTypeName ? System.String.concat(thisType, "Constructor") : thisType;
                 Bridge.Test.NUnit.Assert.areEqual$1(thisName, Bridge.Reflection.getTypeFullName(Bridge.getType(v6)), System.String.concat(thisType, " class name"));
 
                 var v7 = new Uint32Array(1);
                 thisType = "Uint32Array";
                 Bridge.Test.NUnit.Assert.true$1(v7 != null, System.String.concat(thisType, " created"));
-                thisName = isSpecialTypeName ? "Object" : thisType;
+                thisName = isSpecialTypeName ? System.String.concat(thisType, "Constructor") : thisType;
                 Bridge.Test.NUnit.Assert.areEqual$1(thisName, Bridge.Reflection.getTypeFullName(Bridge.getType(v7)), System.String.concat(thisType, " class name"));
 
                 var v8 = new Uint8Array(1);
                 thisType = "Uint8Array";
                 Bridge.Test.NUnit.Assert.true$1(v8 != null, System.String.concat(thisType, " created"));
-                thisName = isSpecialTypeName ? "Object" : thisType;
+                thisName = isSpecialTypeName ? System.String.concat(thisType, "Constructor") : thisType;
                 Bridge.Test.NUnit.Assert.areEqual$1(thisName, Bridge.Reflection.getTypeFullName(Bridge.getType(v8)), System.String.concat(thisType, " class name"));
 
                 var v9 = new Uint8ClampedArray(1);
                 thisType = "Uint8ClampedArray";
                 Bridge.Test.NUnit.Assert.true$1(v9 != null, System.String.concat(thisType, " created"));
-                thisName = isSpecialTypeName ? "Object" : thisType;
+                thisName = isSpecialTypeName ? System.String.concat(thisType, "Constructor") : thisType;
                 Bridge.Test.NUnit.Assert.areEqual$1(thisName, Bridge.Reflection.getTypeFullName(Bridge.getType(v9)), System.String.concat(thisType, " class name"));
             }
         }
@@ -23354,6 +23374,43 @@ Bridge.$N1391Result =                 r;
         },
         component_InstanceEvent: function (sender, e) {
             this.instanceEventResult = e;
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2344.Foo", {
+        inherits: [Bridge.ClientTest.Batch3.BridgeIssues.Bridge2344.IFoo$2(HTMLElement,System.String)],
+        statics: {
+            someMethod: function (T, V, instance) {
+                instance["Bridge$ClientTest$Batch3$BridgeIssues$Bridge2344$IFoo$2$" + Bridge.getTypeAlias(T) + "$" + Bridge.getTypeAlias(V) + "$addEv"](function (x) {
+                    x["Bridge$ClientTest$Batch3$BridgeIssues$Bridge2344$IFoo$2$" + Bridge.getTypeAlias(T) + "$" + Bridge.getTypeAlias(V) + "$something"]();
+                });
+                instance["Bridge$ClientTest$Batch3$BridgeIssues$Bridge2344$IFoo$2$" + Bridge.getTypeAlias(T) + "$" + Bridge.getTypeAlias(V) + "$doInvoke"]();
+            }
+        },
+        config: {
+            events: {
+                Ev: null
+            },
+            properties: {
+                First: null,
+                Second: null
+            },
+            alias: [
+            "getFirst", "Bridge$ClientTest$Batch3$BridgeIssues$Bridge2344$IFoo$2$HTMLElement$System$String$getFirst",
+            "setFirst", "Bridge$ClientTest$Batch3$BridgeIssues$Bridge2344$IFoo$2$HTMLElement$System$String$setFirst",
+            "getSecond", "Bridge$ClientTest$Batch3$BridgeIssues$Bridge2344$IFoo$2$HTMLElement$System$String$getSecond",
+            "setSecond", "Bridge$ClientTest$Batch3$BridgeIssues$Bridge2344$IFoo$2$HTMLElement$System$String$setSecond",
+            "addEv", "Bridge$ClientTest$Batch3$BridgeIssues$Bridge2344$IFoo$2$HTMLElement$System$String$addEv",
+            "removeEv", "Bridge$ClientTest$Batch3$BridgeIssues$Bridge2344$IFoo$2$HTMLElement$System$String$removeEv",
+            "something", "Bridge$ClientTest$Batch3$BridgeIssues$Bridge2344$IFoo$2$HTMLElement$System$String$something",
+            "doInvoke", "Bridge$ClientTest$Batch3$BridgeIssues$Bridge2344$IFoo$2$HTMLElement$System$String$doInvoke"
+            ]
+        },
+        something: function () {
+            this.setSecond("zzz");
+        },
+        doInvoke: function () {
+            !Bridge.staticEquals(this.Ev, null) ? this.Ev(this) : null;
         }
     });
 
