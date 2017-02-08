@@ -14580,6 +14580,40 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2330", {
+        statics: {
+            testMultipleTryCatchBlocks: function () {
+                var catched = false;
+                var message = null;
+
+                try {
+                    try {
+                    }
+                    catch (e) {
+                        e = System.Exception.create(e);
+                        throw e;
+                    }
+
+                    try {
+                        throw new System.Exception("Second try block");
+                    }
+                    catch (e1) {
+                        e1 = System.Exception.create(e1);
+                        throw e1;
+                    }
+                }
+                catch (e2) {
+                    e2 = System.Exception.create(e2);
+                    message = e2.getMessage();
+                    catched = true;
+                }
+
+                Bridge.Test.NUnit.Assert.true(catched);
+                Bridge.Test.NUnit.Assert.areEqual("Second try block", message);
+            }
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2349", {
         statics: {
             testExternalIgnoreGenericClass: function () {
