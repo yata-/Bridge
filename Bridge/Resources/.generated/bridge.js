@@ -5286,7 +5286,7 @@ Bridge.Class.addExtend(System.Boolean, [System.IComparable$1(System.Boolean), Sy
                 if (match) {
                     fs = match[1].toUpperCase();
                     precision = parseInt(match[2], 10);
-                    precision = precision > 15 ? 15 : precision;
+                    //precision = precision > 15 ? 15 : precision;
 
                     switch (fs) {
                         case "D":
