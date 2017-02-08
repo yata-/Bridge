@@ -456,6 +456,7 @@ Bridge.assembly("Bridge.Test.Bridge.ClientTest.Batch3", function ($asm, globals)
             QUnit.test("#2318 - TestBoxing", Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge2318.testBoxing);
             QUnit.test("#2320 - TestReadyAndMain", Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge2320.testReadyAndMain);
             QUnit.test("#2322 - TestSequence", Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge2322.testSequence);
+            QUnit.test("#2327 - TestEnumInterfaces", Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge2327.testEnumInterfaces);
             QUnit.test("#2330 - TestMultipleTryCatchBlocks", Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge2330.testMultipleTryCatchBlocks);
             QUnit.test("#2349 - TestExternalIgnoreGenericClass", Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge2349.testExternalIgnoreGenericClass);
             QUnit.test("#381 - TestUseCase", Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge381.testUseCase);
@@ -9301,6 +9302,30 @@ Bridge.assembly("Bridge.Test.Bridge.ClientTest.Batch3", function ($asm, globals)
                     project: "Batch3",
                     className: "Bridge.ClientTest.Batch3.BridgeIssues.Bridge2322",
                     file: "Batch3\\BridgeIssues\\2300\\N2322.cs"
+                } );
+            }
+            return this.context;
+        }
+    });
+
+    Bridge.define("Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge2327", {
+        inherits: [Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2327)],
+        statics: {
+            testEnumInterfaces: function (assert) {
+                var t = Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2327).beforeTest(false, assert, Bridge.Test.Runtime.BridgeClientTestBatch3Runner.Bridge2327, void 0, Bridge.merge(new Bridge.Test.Runtime.TestContext(), {
+                    method: "TestEnumInterfaces()",
+                    line: "15"
+                } ));
+                Bridge.ClientTest.Batch3.BridgeIssues.Bridge2327.testEnumInterfaces();
+            }
+        },
+        context: null,
+        getContext: function () {
+            if (this.context == null) {
+                this.context = Bridge.merge(new Bridge.Test.Runtime.FixtureContext(), {
+                    project: "Batch3",
+                    className: "Bridge.ClientTest.Batch3.BridgeIssues.Bridge2327",
+                    file: "Batch3\\BridgeIssues\\2300\\N2327.cs"
                 } );
             }
             return this.context;

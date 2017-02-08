@@ -491,6 +491,7 @@
     <Compile Include="BridgeIssues\2300\N2318.cs" />
     <Compile Include="BridgeIssues\2300\N2320.cs" />
     <Compile Include="BridgeIssues\2300\N2322.cs" />
+    <Compile Include="BridgeIssues\2300\N2327.cs" />
     <Compile Include="BridgeIssues\2300\N2330.cs" />
     <Compile Include="BridgeIssues\2300\N2349.cs" />
     <Compile Include="BridgeIssues\TestBridgeIssues.cs" />

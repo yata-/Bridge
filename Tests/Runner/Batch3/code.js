@@ -14580,6 +14580,30 @@ Bridge.$N1391Result =                 r;
         }
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2327", {
+        statics: {
+            testEnumInterfaces: function () {
+                var e = Bridge.box(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2327.Foo.Bar, Bridge.ClientTest.Batch3.BridgeIssues.Bridge2327.Foo, $box_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge2327.Foo.toString);
+                var comparable = e;
+                var formattable = e;
+
+                Bridge.Test.NUnit.Assert.areEqual(-1, Bridge.compare(comparable, Bridge.ClientTest.Batch3.BridgeIssues.Bridge2327.Foo.Baz));
+                Bridge.Test.NUnit.Assert.areEqual(0, Bridge.compare(comparable, Bridge.ClientTest.Batch3.BridgeIssues.Bridge2327.Foo.Bar));
+                Bridge.Test.NUnit.Assert.areEqual("Bar", Bridge.format(formattable, "G", null));
+                Bridge.Test.NUnit.Assert.true(Bridge.is(e, System.IFormattable));
+                Bridge.Test.NUnit.Assert.true(Bridge.is(e, System.IComparable));
+            }
+        }
+    });
+
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2327.Foo", {
+        $kind: "enum",
+        statics: {
+            Bar: 0,
+            Baz: 1
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2330", {
         statics: {
             testMultipleTryCatchBlocks: function () {
@@ -23579,6 +23603,13 @@ Bridge.$N1391Result =                 r;
 
     Bridge.apply($box_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge2077.Bridge2065.VehicleType, {
         toString: function(obj) {return System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2077.Bridge2065.VehicleType, obj);}
+    });
+
+
+    Bridge.ns("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2327.Foo", $box_);
+
+    Bridge.apply($box_.Bridge.ClientTest.Batch3.BridgeIssues.Bridge2327.Foo, {
+        toString: function(obj) {return System.Enum.toString(Bridge.ClientTest.Batch3.BridgeIssues.Bridge2327.Foo, obj);}
     });
 
 
