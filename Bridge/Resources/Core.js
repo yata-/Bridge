@@ -461,6 +461,10 @@
             //     for value types it returns deterministic values (f.e. for int 3 it returns 3)
             //     for reference types it returns random value
 
+            if (value && value.$boxed && value.type.getHashCode) {
+                return value.type.getHashCode(Bridge.unbox(value));
+            }
+
             value = Bridge.unbox(value);
 
             if (Bridge.isEmpty(value, true)) {
@@ -1014,6 +1018,14 @@
                 return true;
             }
 
+            if (a && a.$boxed && a.type.equals && a.type.equals.length === 2) {
+                return a.type.equals(a, b);
+            }
+
+            if (b && b.$boxed && b.type.equals && b.type.equals.length === 2) {
+                return b.type.equals(b, a);
+            }
+
             if (a && Bridge.isFunction(a.equals) && a.equals.length === 1) {
                 return a.equals(b);
             }
@@ -1164,12 +1176,12 @@
         },
 
         equalsT: function (a, b, T) {
-            if (a && a.$boxed) {
-                a = Bridge.unbox(a);
+            if (a && a.$boxed && a.type.equalsT && a.type.equalsT.length === 2) {
+                return a.type.equalsT(a, b);
             }
 
-            if (b && b.$boxed) {
-                b = Bridge.unbox(b);
+            if (b && b.$boxed && b.type.equalsT && b.type.equalsT.length === 2) {
+                return b.type.equalsT(b, a);
             }
 
             if (!Bridge.isDefined(a, true)) {
@@ -1194,12 +1206,14 @@
         },
 
         format: function (obj, formatString, provider) {
-            if (obj && obj.$boxed && Bridge.Reflection.isEnum(obj.type)) {
-                return System.Enum.format(obj.type, Bridge.unbox(obj), formatString);
-            }
-
-            if (obj && obj.$boxed && obj.type === System.Char) {
-                return System.Enum.format(Bridge.unbox(obj), formatString, provider);
+            if (obj && obj.$boxed) {
+                if (obj.type.$kind === "enum") {
+                    return System.Enum.format(obj.type, obj.v, formatString);
+                } else if (obj.type === System.Char) {
+                    return System.Char.format(Bridge.unbox(obj), formatString, provider);
+                } else if (obj.type.format) {
+                    return obj.type.format(Bridge.unbox(obj), formatString, provider);
+                }
             }
 
             if (Bridge.isNumber(obj)) {
@@ -1218,7 +1232,6 @@
         },
 
         getType: function (instance, T) {
-            var bt;
             if (instance && instance.$boxed) {
                 return instance.type;
             }
@@ -1227,7 +1240,7 @@
                 throw new System.NullReferenceException("instance is null");
             }
 
-            if (T && ((bt = Bridge.Reflection.getBaseType(T)) === Object || bt === System.Object)) {
+            if (T) {
                 var type = Bridge.getType(instance);
                 return Bridge.Reflection.isAssignableFrom(T, type) ? type : T;
             }
