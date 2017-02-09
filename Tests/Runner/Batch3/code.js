@@ -14754,6 +14754,20 @@ Bridge.$N1391Result =                 r;
         inherits: [System.Exception]
     });
 
+    Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2342", {
+        statics: {
+            testCastParanthesize: function () {
+                var bar = 2.0;
+
+                var foo1 = 1.0 / (Math.abs(bar) / Math.abs(bar));
+                Bridge.Test.NUnit.Assert.areEqual(1, foo1);
+
+                var foo2 = 1.0 / (Math.abs(bar) / Math.abs(bar));
+                Bridge.Test.NUnit.Assert.areEqual(1, foo2);
+            }
+        }
+    });
+
     Bridge.define("Bridge.ClientTest.Batch3.BridgeIssues.Bridge2343", {
         statics: {
             testBoxedEqualsAndGetHashCode: function () {
