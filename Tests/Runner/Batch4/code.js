@@ -24461,7 +24461,7 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
                 i: 42
             } );
             var s2 = s1.$clone();
-            Bridge.Test.NUnit.Assert.true(Bridge.is(s2, Bridge.ClientTest.Batch4.UserDefinedStructTests.MS1));
+            Bridge.Test.NUnit.Assert.true(Bridge.is(s2.$clone(), Bridge.ClientTest.Batch4.UserDefinedStructTests.MS1));
         },
         fieldsAreClonedWhenValueTypeIsCopied: function () {
             var s1 = Bridge.merge(new Bridge.ClientTest.Batch4.UserDefinedStructTests.MS1(), {
@@ -24531,7 +24531,7 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
             var s2 = s1.$clone();
             Bridge.Test.NUnit.Assert.areEqual(42, s2.t);
             s2.t = 43;
-            Bridge.Test.NUnit.Assert.true(Bridge.is(s2, Bridge.ClientTest.Batch4.UserDefinedStructTests.MS3$1(System.Int32)));
+            Bridge.Test.NUnit.Assert.true(Bridge.is(s2.$clone(), Bridge.ClientTest.Batch4.UserDefinedStructTests.MS3$1(System.Int32)));
             Bridge.Test.NUnit.Assert.areEqual(42, s1.t);
             Bridge.Test.NUnit.Assert.areEqual(43, s2.t);
         },
@@ -24542,7 +24542,7 @@ Bridge.assembly("Bridge.ClientTest.Batch4", {"Bridge.ClientTest.Batch4.Reflectio
             var s2 = s1.$clone();
             s1.i = 10;
             Bridge.Test.NUnit.Assert.areEqual(42, s2.i);
-            Bridge.Test.NUnit.Assert.true(Bridge.is(s2, Bridge.ClientTest.Batch4.UserDefinedStructTests.MS1));
+            Bridge.Test.NUnit.Assert.true(Bridge.is(s2.$clone(), Bridge.ClientTest.Batch4.UserDefinedStructTests.MS1));
         },
         cloningNullableValueTypesWorks: function () {
             var s1 = null;
