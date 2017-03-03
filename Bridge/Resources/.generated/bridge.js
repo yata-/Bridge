@@ -1762,6 +1762,10 @@
         parse: function (enumType, s, ignoreCase, silent) {
             System.Enum.checkEnumType(enumType);
 
+            if (enumType === Number || enumType === System.String || enumType.$number) {
+                return s;
+            }
+
             var intValue = {};
 
             if (System.Int32.tryParse(s, intValue)) {
@@ -1814,7 +1818,7 @@
         },
 
         toString: function (enumType, value, forceFlags) {
-            if (arguments.length == 0) {
+            if (arguments.length === 0) {
                 return "System.Enum";
             }
 
@@ -1824,7 +1828,7 @@
 
             value = Bridge.unbox(value, true);
 
-            if (enumType === Number) {
+            if (enumType === Number || enumType === System.String || enumType.$number) {
                 return value.toString();
             }
 
