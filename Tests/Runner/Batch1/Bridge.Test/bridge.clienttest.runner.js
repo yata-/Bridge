@@ -6774,77 +6774,77 @@ Bridge.assembly("Bridge.Test.Bridge.ClientTest", function ($asm, globals) {
             fromDouble: function (assert) {
                 var t = Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests).beforeTest(true, assert, Bridge.Test.Runtime.BridgeClientTestRunner.ConvertToSingleTests, void 0, Bridge.merge(new Bridge.Test.Runtime.TestContext(), {
                     method: "FromDouble()",
-                    line: "38"
+                    line: "40"
                 } ));
                 t.getFixture().fromDouble();
             },
             fromInt16: function (assert) {
                 var t = Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests).beforeTest(true, assert, Bridge.Test.Runtime.BridgeClientTestRunner.ConvertToSingleTests, void 0, Bridge.merge(new Bridge.Test.Runtime.TestContext(), {
                     method: "FromInt16()",
-                    line: "46"
+                    line: "48"
                 } ));
                 t.getFixture().fromInt16();
             },
             fromInt32: function (assert) {
                 var t = Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests).beforeTest(true, assert, Bridge.Test.Runtime.BridgeClientTestRunner.ConvertToSingleTests, void 0, Bridge.merge(new Bridge.Test.Runtime.TestContext(), {
                     method: "FromInt32()",
-                    line: "54"
+                    line: "56"
                 } ));
                 t.getFixture().fromInt32();
             },
             fromInt64: function (assert) {
                 var t = Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests).beforeTest(true, assert, Bridge.Test.Runtime.BridgeClientTestRunner.ConvertToSingleTests, void 0, Bridge.merge(new Bridge.Test.Runtime.TestContext(), {
                     method: "FromInt64()",
-                    line: "62"
+                    line: "64"
                 } ));
                 t.getFixture().fromInt64();
             },
             fromObject: function (assert) {
                 var t = Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests).beforeTest(true, assert, Bridge.Test.Runtime.BridgeClientTestRunner.ConvertToSingleTests, void 0, Bridge.merge(new Bridge.Test.Runtime.TestContext(), {
                     method: "FromObject()",
-                    line: "70"
+                    line: "72"
                 } ));
                 t.getFixture().fromObject();
             },
             fromSByte: function (assert) {
                 var t = Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests).beforeTest(true, assert, Bridge.Test.Runtime.BridgeClientTestRunner.ConvertToSingleTests, void 0, Bridge.merge(new Bridge.Test.Runtime.TestContext(), {
                     method: "FromSByte()",
-                    line: "81"
+                    line: "83"
                 } ));
                 t.getFixture().fromSByte();
             },
             fromSingle: function (assert) {
                 var t = Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests).beforeTest(true, assert, Bridge.Test.Runtime.BridgeClientTestRunner.ConvertToSingleTests, void 0, Bridge.merge(new Bridge.Test.Runtime.TestContext(), {
                     method: "FromSingle()",
-                    line: "89"
+                    line: "91"
                 } ));
                 t.getFixture().fromSingle();
             },
             fromString: function (assert) {
                 var t = Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests).beforeTest(true, assert, Bridge.Test.Runtime.BridgeClientTestRunner.ConvertToSingleTests, void 0, Bridge.merge(new Bridge.Test.Runtime.TestContext(), {
                     method: "FromString()",
-                    line: "97"
+                    line: "99"
                 } ));
                 t.getFixture().fromString();
             },
             fromUInt16: function (assert) {
                 var t = Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests).beforeTest(true, assert, Bridge.Test.Runtime.BridgeClientTestRunner.ConvertToSingleTests, void 0, Bridge.merge(new Bridge.Test.Runtime.TestContext(), {
                     method: "FromUInt16()",
-                    line: "113"
+                    line: "115"
                 } ));
                 t.getFixture().fromUInt16();
             },
             fromUInt32: function (assert) {
                 var t = Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests).beforeTest(true, assert, Bridge.Test.Runtime.BridgeClientTestRunner.ConvertToSingleTests, void 0, Bridge.merge(new Bridge.Test.Runtime.TestContext(), {
                     method: "FromUInt32()",
-                    line: "121"
+                    line: "123"
                 } ));
                 t.getFixture().fromUInt32();
             },
             fromUInt64: function (assert) {
                 var t = Bridge.Test.Runtime.TestFixture$1(Bridge.ClientTest.ConvertTests.ConvertToSingleTests).beforeTest(true, assert, Bridge.Test.Runtime.BridgeClientTestRunner.ConvertToSingleTests, void 0, Bridge.merge(new Bridge.Test.Runtime.TestContext(), {
                     method: "FromUInt64()",
-                    line: "129"
+                    line: "131"
                 } ));
                 t.getFixture().fromUInt64();
             }
