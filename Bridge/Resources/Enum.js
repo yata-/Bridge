@@ -168,7 +168,9 @@
                 values = enumType;
 
             for (var i in values) {
-                if ((i === "$Name") || (values.hasOwnProperty(i) && i.indexOf("$") < 0 && typeof values[i] !== "function")) {
+                if (i === "$Name") {
+                    parts.push(["Name", values[i]]);
+                } else if ((values.hasOwnProperty(i) && i.indexOf("$") < 0 && typeof values[i] !== "function")) {
                     parts.push([enumMethods.toName(i), values[i]]);
                 }
             }

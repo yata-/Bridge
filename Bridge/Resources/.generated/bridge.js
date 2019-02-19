@@ -2,7 +2,7 @@
  * @version   : 15.7.0 - Bridge.NET
  * @author    : Object.NET, Inc. http://bridge.net/
  * @date      : 2017-01-16
- * @copyright : Copyright 2008-2017 Object.NET, Inc. http://object.net/
+ * @copyright : Copyright 2008-2019 Object.NET, Inc. http://object.net/
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge/blob/master/LICENSE.md
  */
 
@@ -2033,7 +2033,7 @@
                 values = enumType;
 
             for (var i in values) {
-                if (values.hasOwnProperty(i) && i.indexOf("$") < 0 && typeof values[i] !== "function") {
+                if ((i === "$Name") || (values.hasOwnProperty(i) && i.indexOf("$") < 0 && typeof values[i] !== "function")) {
                     parts.push(values[i]);
                 }
             }
@@ -2077,7 +2077,9 @@
                 values = enumType;
 
             for (var i in values) {
-                if (values.hasOwnProperty(i) && i.indexOf("$") < 0 && typeof values[i] !== "function") {
+                if (i === "$Name") {
+                    parts.push(["Name", values[i]]);
+                } else if ((values.hasOwnProperty(i) && i.indexOf("$") < 0 && typeof values[i] !== "function")) {
                     parts.push([enumMethods.toName(i), values[i]]);
                 }
             }
