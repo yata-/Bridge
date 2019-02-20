@@ -197,6 +197,9 @@
 
             for (var i in values) {
                 if (values[i] === value) {
+                    if (i === "$Name") {
+                        return "Name";
+                    }
                     return i;
                 }
             }
