@@ -1932,6 +1932,9 @@
         },
 
         toName: function (name) {
+            if (name === "$Name") {
+                return "Name";
+            }
             return name;
         },
 
