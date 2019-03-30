@@ -30,6 +30,10 @@
         },
 
         parse: function (enumType, s, ignoreCase, silent) {
+            if (s === "Name") {
+                s = "$Name";
+            }
+
             System.Enum.checkEnumType(enumType);
 
             var intValue = {};
